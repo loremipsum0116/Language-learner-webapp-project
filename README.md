@@ -1,70 +1,63 @@
-# Getting Started with Create React App
+# Deutsch Learner (CEFR A1–C1)
+> 어휘 SRS · 문법 클로즈 · 리딩 클릭 글로스 + LangChain 기반 AI 독일어 튜터 + 사전 API(오디오·예문)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![CI](https://img.shields.io/badge/CI-GitHub%20Actions-informational)](./.github/workflows)
+[![Node](https://img.shields.io/badge/Node-18%2B%20%7C%2020%2B-blue)](https://nodejs.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Status](https://img.shields.io/badge/Status-M1%20MVP-in_progress-orange)]()
 
-## Available Scripts
+## TL;DR
+- 학습자 기능: 어휘 SRS(Leitner/SM-2 변형), 문법 클로즈, 리딩 클릭 글로스, AI 튜터 대화/교정, 사전 검색(오디오·예문)
+- 관리자 기능: CSV/JSON 업로드·검증, 라이선스 메타 관리, 로그/비용 리포트
+- 핵심 비기능: p95 < 400ms, JWT HttpOnly, GDPR 유사 데이터 권리, 관측성(토큰/비용 대시보드)
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 기능(Features)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 학습자
+- 어휘 SRS: 1/3/7/16/35일 간격, 카드 유형(뜻→형태, 오디오→철자, 콜로케이션 등)
+- 문법(클로즈): V2, 종속절 V-final, 전치사 지배(3/4격), 형용사 어미, 분리/비분리동사
+- 리딩(클릭 글로스): 토큰 클릭 시 lemma/품사/한국어 의미/예문
+- AI 튜터(랭체인): 페르소나(톤/호칭/난이도), 자유대화·역할극·교정, RAG 우선, 각주로 상위 어휘 표기
+- 사전 API: lemma/활용형, IPA, 오디오(스트리밍/캐시), CEFR 라벨 예문
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 관리자
+- 업로드/검증: CSV(어휘), JSON(문법/클로즈/리딩), 필수 필드·중복·라이선스 체크
+- 리포트: 정답률/난이도, 오답 Top, 튜터 토큰·비용·에러
 
-### `npm test`
+### 수용 기준(샘플)
+- 튜터: 어순 규칙 위반율 < 5%, 요청 레벨 외 어휘 ≤ 10%(각주), 근거 제시율 ≥ 90%
+- 사전: 상위 1,000 lemma 오디오·IPA·예문 확보, 95p < 300ms(캐시 기준)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 아키텍처
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```mermaid
+flowchart LR
+  subgraph Client[React (Vite)]
+    UI[Routes/Components]
+    TutorChat
+    DictPanel
+    SrsSession
+  end
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+  subgraph Server[Node.js Express]
+    API[/REST API/]
+    TutorGW[LangChain Gateway]
+    RAG[Retriever (dict/kb)]
+  end
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  subgraph Data[DB & Cache]
+    MySQL[(MySQL/PlanetScale)]
+    Redis[(Redis Cache)]
+    Storage[(Audio Cache)]
+  end
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  Client <-->|HTTPS| API
+  API --> MySQL
+  API --> Redis
+  API --> Storage
+  TutorGW --> RAG
+  RAG --> MySQL
