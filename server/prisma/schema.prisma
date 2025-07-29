@@ -1,0 +1,101 @@
+// server/prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider   = "mysql"
+  url        = env("DATABASE_URL")
+  // PlanetScale 사용 시 아래 옵션 권장:
+  referentialIntegrity = "prisma"
+}
+
+model User {
+  id           Int        @id @default(autoincrement())
+  email        String     @unique
+  passwordHash String
+  role         String     @default("USER") // ADMIN|USER
+  profile      Json?
+  createdAt    DateTime   @default(now())
+
+  SRSCard   SRSCard[]
+  TutorLog  TutorLog[]
+}
+
+model Vocab {
+  id        Int        @id @default(autoincrement())
+  lemma     String
+  pos       String
+  gender    String?
+  plural    String?
+  levelCEFR String
+  freq      Int?
+  dictMeta  DictEntry?
+
+  @@index([lemma])
+}
+
+model DictEntry {
+  id          Int     @id @default(autoincrement())
+  vocabId     Int     @unique
+  ipa         String?
+  audioUrl    String?
+  audioLocal  String?
+  license     String?
+  attribution String?
+  examples    Json
+
+  Vocab Vocab @relation(fields: [vocabId], references: [id])
+}
+
+model GrammarItem {
+  id       Int    @id @default(autoincrement())
+  topic    String // e.g., "V2", "Akkusativpräpositionen"
+  rule     String // markdown
+  examples Json
+}
+
+model GrammarExercise {
+  id        Int    @id @default(autoincrement())
+  topic     String
+  levelCEFR String
+  items     Json   // [{stem, answer, distractors[]}]
+}
+
+model Reading {
+  id        Int    @id @default(autoincrement())
+  title     String
+  body      String
+  levelCEFR String
+  glosses   Json   // [{token, lemma, pos, ko}]
+}
+
+model SRSCard {
+  id           Int       @id @default(autoincrement())
+  userId       Int
+  itemType     String    // "vocab" | "grammar" | "reading"
+  itemId       Int
+  stage        Int       @default(0) // 0..n
+  nextReviewAt DateTime  @default(now())
+  lastResult   String?   // "pass" | "fail"
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  User User @relation(fields: [userId], references: [id])
+
+  @@index([userId, itemType, nextReviewAt])
+}
+
+model TutorLog {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  mode      String   // "chat" | "proofread" | "roleplay"
+  input     String
+  output    String
+  tokens    Int?
+  cost      Float?
+  refs      Json?
+  createdAt DateTime  @default(now())
+
+  User User @relation(fields: [userId], references: [id])
+}
