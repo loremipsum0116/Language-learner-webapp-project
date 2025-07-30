@@ -1,57 +1,83 @@
-// server/prisma/schema.prisma
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider   = "mysql"
-  url        = env("DATABASE_URL")
-  // PlanetScale 사용 시 아래 옵션 권장:
-  referentialIntegrity = "prisma"
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  // PlanetScale 쓰는 경우 "prisma", 로컬 MySQL이면 "foreignKeys"
+  relationMode = "foreignKeys"
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
-  email        String     @unique
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
   passwordHash String
-  role         String     @default("USER") // ADMIN|USER
+  role         String   @default("USER")
   profile      Json?
-  createdAt    DateTime   @default(now())
+  createdAt    DateTime @default(now())
 
-  SRSCard   SRSCard[]
-  TutorLog  TutorLog[]
+  SRSCard  SRSCard[]
+  TutorLog TutorLog[]
+  myVocab  UserVocab[]
+
+  // ★ 추가: Category 역방향 필드(백릴레이션)
+  categories Category[]
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  name      String
+  createdAt DateTime @default(now())
+
+  // ★ User와 1:N
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // ★ 폴더에 속한 단어들
+  items UserVocab[]
+
+  @@unique([userId, name])
 }
 
 model Vocab {
-  id        Int        @id @default(autoincrement())
-  lemma     String
+  id        Int     @id @default(autoincrement())
+  lemma     String  @unique
   pos       String
   gender    String?
   plural    String?
   levelCEFR String
   freq      Int?
-  dictMeta  DictEntry?
+  source    String? // 'seed-A1', 'wiktionary' 등
+
+  dictMeta     DictEntry?
+  savedByUsers UserVocab[]
 
   @@index([lemma])
+  @@index([source])
 }
 
 model DictEntry {
-  id          Int     @id @default(autoincrement())
-  vocabId     Int     @unique
+  id          Int       @id @default(autoincrement())
+  vocabId     Int       @unique
   ipa         String?
   audioUrl    String?
   audioLocal  String?
   license     String?
   attribution String?
+  sourceUrl   String?
+  retrievedAt DateTime?
   examples    Json
+  ipaKo       String?   
 
   Vocab Vocab @relation(fields: [vocabId], references: [id])
 }
 
 model GrammarItem {
   id       Int    @id @default(autoincrement())
-  topic    String // e.g., "V2", "Akkusativpräpositionen"
-  rule     String // markdown
+  topic    String
+  rule     String
   examples Json
 }
 
@@ -59,7 +85,7 @@ model GrammarExercise {
   id        Int    @id @default(autoincrement())
   topic     String
   levelCEFR String
-  items     Json   // [{stem, answer, distractors[]}]
+  items     Json
 }
 
 model Reading {
@@ -67,19 +93,21 @@ model Reading {
   title     String
   body      String
   levelCEFR String
-  glosses   Json   // [{token, lemma, pos, ko}]
+  glosses   Json
 }
 
 model SRSCard {
-  id           Int       @id @default(autoincrement())
-  userId       Int
-  itemType     String    // "vocab" | "grammar" | "reading"
-  itemId       Int
-  stage        Int       @default(0) // 0..n
-  nextReviewAt DateTime  @default(now())
-  lastResult   String?   // "pass" | "fail"
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id             Int      @id @default(autoincrement())
+  userId         Int
+  itemType       String
+  itemId         Int
+  stage          Int      @default(0)
+  nextReviewAt   DateTime @default(now())
+  lastResult     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  correctCount   Int      @default(0)
+  incorrectCount Int      @default(0)
 
   User User @relation(fields: [userId], references: [id])
 
@@ -89,13 +117,30 @@ model SRSCard {
 model TutorLog {
   id        Int      @id @default(autoincrement())
   userId    Int
-  mode      String   // "chat" | "proofread" | "roleplay"
+  mode      String
   input     String
   output    String
   tokens    Int?
   cost      Float?
   refs      Json?
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
   User User @relation(fields: [userId], references: [id])
+}
+
+model UserVocab {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  vocabId   Int
+  createdAt DateTime @default(now())
+
+  // ★ 폴더(카테고리) 연결(선택)
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, vocabId])
+  @@index([userId, categoryId])
 }

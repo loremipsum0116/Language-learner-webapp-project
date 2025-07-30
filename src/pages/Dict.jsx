@@ -103,25 +103,32 @@ export default function Dict() {
             // 1) 우선 /vocab/search
             const d1 = await fetchJSON(`/vocab/search?q=${encodeURIComponent(q.trim())}`, withCreds());
             const items = d1?.data || [];
-            const normalized = items.map((v) => ({
-                id: v.id,
-                lemma: v.lemma,
-                pos: v.pos,
-                gender: v.gender,
-                ipa: v.dictMeta?.ipa || null,
-                audio: v.dictMeta?.audioLocal || v.dictMeta?.audioUrl || null,
-                license: v.dictMeta?.license || null,
-                attribution: v.dictMeta?.attribution || null,
-                examples: Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [],
-            }));
-            setEntries(normalized);
-            setLat(d1._latencyMs);
+            if (items.length > 0) {
+                const normalized = items.map((v) => ({
+                    id: v.id,
+                    lemma: v.lemma,
+                    pos: v.pos,
+                    gender: v.gender,
+                    ipa: v.dictMeta?.ipa || null,
+                    audio: v.dictMeta?.audioLocal || v.dictMeta?.audioUrl || null,
+                    license: v.dictMeta?.license || null,
+                    attribution: v.dictMeta?.attribution || null,
+                    examples: Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [],
+                }));
+                setEntries(normalized);
+                setLat(d1._latencyMs);
+                return; // ✅ DB에 결과가 있으면 여기서 종료
+            }
+
+            // 2) 결과가 비어 있으면 /dict/search로 폴백
+            const d2 = await fetchJSON(`/dict/search?q=${encodeURIComponent(q.trim())}`, withCreds());
+            setEntries(d2?.data?.entries || d2?.entries || []);
+            setLat(d2._latencyMs);
         } catch (e1) {
             // 2) 폴백: /dict/search (id가 없을 수 있음 → 북마크 버튼 숨김)
             try {
                 const d2 = await fetchJSON(`/dict/search?q=${encodeURIComponent(q.trim())}`, withCreds());
-                const list = d2?.entries || d2?.data?.entries || [];
-                setEntries(list);
+                setEntries(d2?.data?.entries || d2?.entries || []);
                 setLat(d2._latencyMs);
             } catch (e2) {
                 setErr(e2);
@@ -202,7 +209,19 @@ export default function Dict() {
 
                         {e.ipa && <div className="text-muted">/{e.ipa}/</div>}
                         <AudioPlayer src={e.audio} license={e.license} attribution={e.attribution} />
+                        {/* KO gloss 한 줄 표시 */}
+                        {(() => {
+                            const koGloss = Array.isArray(e.examples)
+                                ? (e.examples.find(ex => ex && (ex.kind === 'gloss' || (!ex.de && ex.ko)))?.ko)
+                                : null;
+                            return koGloss ? <div className="mt-1"><strong>뜻</strong>: {koGloss}</div> : null;
+                        })()}
 
+                        <details className="mt-1">
+                            <summary className="small text-muted">debug</summary>
+                            <pre className="mb-0 small">{JSON.stringify(e, null, 2)}</pre>
+                        </details>
+                        
                         {Array.isArray(e.examples) && e.examples.length > 0 && (
                             <ul className="mb-0">
                                 {e.examples.map((ex, idx) => (

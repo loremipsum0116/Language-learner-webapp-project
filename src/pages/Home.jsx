@@ -472,7 +472,8 @@ function ReadingTeaser() {
  * - 접근성: 라벨, 키보드 포커스, 가상 키패드
  */
 export default function Home() {
-  const { user, updateProfile } = useAuth();
+  const { user, updateProfile, loading} = useAuth();
+  console.log('Auth State in Home:', { user, loading });
   const [me, setMe] = useState(null);
   const [authErr, setAuthErr] = useState(null);
   // 서버 프로필 우선 초기값
@@ -564,6 +565,9 @@ export default function Home() {
             </Link>
             <Link className="btn btn-outline-secondary" to="/dict">
               사전 검색
+            </Link>
+            <Link className="btn btn-outline-secondary" to="/vocab">
+              전체 단어장
             </Link>
             <Link className="btn btn-outline-secondary" to="/learn/grammar">
               문법 세트

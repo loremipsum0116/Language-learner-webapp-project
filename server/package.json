@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon --watch . server.js",
-    "seed": "node prisma/seed.js"
+    "seed": "node prisma/seed.js",
+    "fixup": "node tools/fixup.js",
+    "cleanup": "node tools/cleanup_wiki_entries.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +18,8 @@
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csv-parse": "^6.1.0",
+    "csv-parser": "^3.2.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2"
