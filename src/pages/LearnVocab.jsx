@@ -14,9 +14,9 @@ function useQuery() {
 
 export default function LearnVocab() {
     const q = useQuery();
-    const idsParam = q.get('ids');          // "1,2,3"
-    const mode = q.get('mode');             // 'odat' | 'flash' | null
-    const autoParam = q.get('auto');        // "1" | null  ← URL용
+    const idsParam = q.get('ids');
+    const mode = q.get('mode');
+    const autoParam = q.get('auto');
 
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
@@ -24,12 +24,11 @@ export default function LearnVocab() {
     const [reloading, setReloading] = useState(false);
     const [err, setErr] = useState(null);
     const [userAnswer, setUserAnswer] = useState(null);
-    const [feedback, setFeedback] = useState(null); // {status:'pass'|'fail', answer}
-    const [auto, setAuto] = useState(autoParam === '1'); // ← 자동 넘김 on/off (URL ?auto=1이면 시작시 켬)
-    const [currentPron, setCurrentPron] = useState(null); // {ipa, ipaKo}
-    const [showAddMenu, setShowAddMenu] = useState(false); // (미사용 중이면 추후 제거 가능)
+    const [feedback, setFeedback] = useState(null);
+    const [auto, setAuto] = useState(autoParam === '1');
+    const [currentPron, setCurrentPron] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // URL이 바뀌면 auto 상태 동기화(선택)
     useEffect(() => {
         setAuto(autoParam === '1');
     }, [autoParam]);
@@ -70,7 +69,6 @@ export default function LearnVocab() {
 
     const current = queue[idx];
 
-    // 현재 카드 발음 정보 로드(가능한 경우)
     useEffect(() => {
         setCurrentPron(null);
         if (!current) return;
@@ -99,30 +97,49 @@ export default function LearnVocab() {
     }, [current?.question, current?.vocabId]);
 
     const submit = async () => {
-        if (!current || !userAnswer) return;
-        const ok = userAnswer === current.answer;
-        setFeedback({ status: ok ? 'pass' : 'fail', answer: current.answer });
+        if (!current || !userAnswer || isSubmitting) return;
 
-        if (current.cardId) {
-            try {
+        setIsSubmitting(true);
+        const isCorrect = userAnswer === current.answer;
+
+        try {
+            let cardId = current.cardId;
+
+            if (!cardId && current.vocabId) {
+                const { data: newCard } = await fetchJSON(
+                    `/vocab/${current.vocabId}/bookmark`,
+                    withCreds({ method: 'POST' })
+                );
+                cardId = newCard?.id;
+            }
+
+            if (cardId) {
                 await fetchJSON('/srs/answer', withCreds({
                     method: 'POST',
-                    body: JSON.stringify({ cardId: current.cardId, result: ok ? 'pass' : 'fail' }),
+                    body: JSON.stringify({ cardId, result: isCorrect ? 'pass' : 'fail' }),
                 }));
-            } catch (e) {
-                if (!isAbortError(e)) console.error('정답 기록 실패:', e);
+            } else {
+                console.error('결과를 기록할 cardId를 확보하지 못했습니다.', current);
             }
+
+        } catch (e) {
+            if (!isAbortError(e)) {
+                console.error('답변 제출 또는 카드 생성 실패:', e);
+                alert('답변을 기록하는 중 오류가 발생했습니다.');
+            }
+        } finally {
+            setFeedback({ status: isCorrect ? 'pass' : 'fail', answer: current.answer });
+            setIsSubmitting(false);
         }
     };
 
     const next = () => { setIdx(i => i + 1); setUserAnswer(null); setFeedback(null); };
 
-    // ★ 자동재생: mode=flash && auto=true 이면 3초마다 다음 카드
     useEffect(() => {
         if (mode !== 'flash' || !auto) return;
         if (!current) return;
         const t = setInterval(() => {
-            setIdx(i => (i + 1 < queue.length ? i + 1 : i)); // 마지막에서 정지
+            setIdx(i => (i + 1 < queue.length ? i + 1 : i));
         }, 3000);
         return () => clearInterval(t);
     }, [mode, auto, current, queue.length]);
@@ -174,7 +191,6 @@ export default function LearnVocab() {
         );
     }
 
-    // ★ 플래시카드 모드 렌더링 (보기 전용 + 발음 표시 + 자동재생 + 멈춤/재생)
     if (mode === 'flash') {
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
@@ -206,13 +222,14 @@ export default function LearnVocab() {
         );
     }
 
-    // 진행 중 화면 (MCQ)
     return (
         <main className="container py-4" style={{ maxWidth: 720 }}>
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <strong>{mode === 'odat' ? '오답노트 퀴즈' : 'SRS 퀴즈'}</strong>
                 <div className="d-flex align-items-center gap-2">
-                    <Link to="/odat-note" className="btn btn-sm btn-outline-secondary">오답노트</Link>
+                    {/* ▼▼▼ [수정] '퀴즈 편집' 버튼 추가 ▼▼▼ */}
+                    <Link to="/learn/srs-manager" className="btn btn-sm btn-outline-secondary">퀴즈 편집</Link>
+                    <Link to="/odat-note" className="btn btn-sm btn-outline-danger">오답노트</Link>
                     <span className="text-muted">{idx + 1} / {queue.length}</span>
                 </div>
             </div>
@@ -230,12 +247,17 @@ export default function LearnVocab() {
                                     key={opt}
                                     className={`btn btn-lg ${userAnswer === opt ? 'btn-primary' : 'btn-outline-primary'}`}
                                     onClick={() => setUserAnswer(opt)}
+                                    disabled={isSubmitting || feedback}
                                 >
                                     {opt}
                                 </button>
                             ))}
-                            <button className="btn btn-success btn-lg mt-2" disabled={!userAnswer} onClick={submit}>
-                                제출하기
+                            <button
+                                className="btn btn-success btn-lg mt-2"
+                                disabled={!userAnswer || isSubmitting || feedback}
+                                onClick={submit}
+                            >
+                                {isSubmitting ? '처리 중…' : '제출하기'}
                             </button>
                         </div>
                     )}

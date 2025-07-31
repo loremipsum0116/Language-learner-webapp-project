@@ -216,6 +216,7 @@ export default function OdatNote() {
                         value={q}
                         onChange={(e) => setQ(e.target.value)}
                     />
+                    {/* ▼▼▼ [수정] 버튼 그룹 재정렬 및 '전체 오답 퀴즈' 버튼 추가 ▼▼▼ */}
                     <button
                         className="btn btn-sm btn-outline-secondary"
                         disabled={filtered.length === 0}
@@ -241,12 +242,12 @@ export default function OdatNote() {
                     >
                         {quizLoading ? '퀴즈 준비 중…' : '선택 퀴즈 시작'}
                     </button>
+                    <Link to="/learn/vocab?mode=odat" className="btn btn-sm btn-warning">
+                        전체 오답 퀴즈
+                    </Link>
                     <button className="btn btn-sm btn-outline-primary" onClick={load}>
                         새로고침
                     </button>
-                    <Link to="/learn/vocab" className="btn btn-sm btn-outline-dark">
-                        SRS 학습 →
-                    </Link>
                 </div>
             </div>
 
@@ -279,7 +280,6 @@ export default function OdatNote() {
                                 <h5 className="mb-1" lang="de">
                                     {item.lemma}
                                 </h5>
-                                {/* ▼ 발음(IPA + 한국어 표기) */}
                                 <Pron ipa={item.ipa} ipaKo={item.ipaKo} />
                                 <div className="text-muted">{item.ko_gloss || '뜻 정보 없음'}</div>
                                 <small className="text-muted">틀린 횟수: {item.incorrectCount}</small>
@@ -331,7 +331,6 @@ export default function OdatNote() {
                                         <h2 className="display-5 mb-1" lang="de">
                                             {currentQuiz.question}
                                         </h2>
-                                        {/* ▼ 문제 단어 발음(있으면 표시) */}
                                         <div className="mb-3">
                                             <Pron
                                                 ipa={currentQuiz.pron?.ipa}
@@ -345,8 +344,8 @@ export default function OdatNote() {
                                                     <button
                                                         key={opt}
                                                         className={`btn btn-lg ${userAnswer === opt
-                                                                ? 'btn-primary'
-                                                                : 'btn-outline-primary'
+                                                            ? 'btn-primary'
+                                                            : 'btn-outline-primary'
                                                             }`}
                                                         onClick={() => setUserAnswer(opt)}
                                                     >
@@ -359,8 +358,8 @@ export default function OdatNote() {
                                         {feedback && (
                                             <div
                                                 className={`mt-3 p-3 rounded ${feedback.status === 'pass'
-                                                        ? 'bg-success-subtle'
-                                                        : 'bg-danger-subtle'
+                                                    ? 'bg-success-subtle'
+                                                    : 'bg-danger-subtle'
                                                     }`}
                                             >
                                                 <h5>

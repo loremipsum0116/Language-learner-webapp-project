@@ -23,9 +23,7 @@ function VocabDetailModal({ vocab, onClose }) {
                         <button type="button" className="btn-close" aria-label="Close" onClick={onClose} />
                     </div>
                     <div className="modal-body">
-                        {/* ▼ 모달에서도 발음 표시 */}
-                        + <Pron ipa={vocab?.dictMeta?.ipa} ipaKo={vocab?.dictMeta?.ipaKo} />
-
+                        <Pron ipa={vocab?.dictMeta?.ipa} ipaKo={vocab?.dictMeta?.ipaKo} />
                         {koGloss && <div className="mt-2"><strong>뜻</strong>: {koGloss}</div>}
                         {examples.length > 0 && (
                             <ul className="mt-2 mb-0">
@@ -62,10 +60,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     style={{ cursor: 'pointer' }}
                 >
                     <h5 className="card-title mb-1" lang="de">{vocab.lemma}</h5>
-
-                    {/* ▼ 카드에서도 발음 표시 (서버가 ipa/ipaKo를 내려주면 보임) */}
                     <Pron ipa={vocab.ipa} ipaKo={vocab.ipaKo} />
-
                     <div className="card-subtitle text-muted">{koGloss}</div>
                 </div>
                 <div className="card-footer d-flex gap-2">
@@ -104,8 +99,10 @@ export default function VocabList() {
 
     const [detail, setDetail] = useState(null);
     const [detailLoading, setDetailLoading] = useState(false);
+    
+    // ▼▼▼ [신규] 검색어 상태 추가 ▼▼▼
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // 목록 로딩 (레벨 변경 시)
     useEffect(() => {
         const ac = new AbortController();
         (async () => {
@@ -126,7 +123,6 @@ export default function VocabList() {
         return () => ac.abort();
     }, [activeLevel]);
 
-    // 내 단어장/내 SRS 보유여부
     useEffect(() => {
         if (!user) { setMyWordbookIds(new Set()); setSrsIds(new Set()); return; }
         const ac = new AbortController();
@@ -194,8 +190,18 @@ export default function VocabList() {
             alert('SRS 추가 실패');
         }
     };
+    
+    // ▼▼▼ [신규] 검색어에 따라 단어 목록 필터링 ▼▼▼
+    const filteredWords = useMemo(() => {
+        const needle = searchTerm.trim().toLowerCase();
+        if (!needle) return words;
+        return words.filter(word =>
+            word.lemma.toLowerCase().includes(needle) ||
+            (word.ko_gloss || '').toLowerCase().includes(needle)
+        );
+    }, [words, searchTerm]);
 
-    const idsInCurrent = useMemo(() => words.map(w => w.id).filter(Boolean), [words]);
+    const idsInCurrent = useMemo(() => filteredWords.map(w => w.id).filter(Boolean), [filteredWords]);
     const idsToAddAllSRS = useMemo(
         () => idsInCurrent.filter(id => !srsIds.has(id)),
         [idsInCurrent, srsIds]
@@ -225,19 +231,37 @@ export default function VocabList() {
                         className="btn btn-success btn-sm"
                         disabled={!user || idsToAddAllSRS.length === 0}
                         onClick={() => handleAddSRS(idsToAddAllSRS)}
-                        title="현재 레벨의 모든 단어를 SRS에 추가"
+                        title="현재 필터링된 모든 단어를 SRS에 추가"
                     >
-                        {activeLevel} 모든 단어 SRS 추가
+                        {searchTerm ? '검색 결과' : activeLevel} 모두 SRS 추가
                     </button>
                 </div>
             </div>
 
+            {/* ▼▼▼ [신규] 검색창 UI 추가 ▼▼▼ */}
+            <div className="mb-3">
+                <input
+                    type="search"
+                    className="form-control"
+                    placeholder="단어 검색 (독일어 또는 한국어 뜻)"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
+            </div>
+
             {loading && <div>목록 로딩 중…</div>}
             {err && <div className="alert alert-warning">해당 레벨 목록을 불러오지 못했습니다.</div>}
-            {!loading && !err && words.length === 0 && <div className="text-muted">이 레벨에 표시할 단어가 없습니다.</div>}
+            
+            {/* ▼▼▼ [수정] 검색 결과 없을 때 메시지 표시 ▼▼▼ */}
+            {!loading && !err && filteredWords.length === 0 && (
+                <div className="text-muted">
+                    {searchTerm ? '검색 결과가 없습니다.' : '이 레벨에 표시할 단어가 없습니다.'}
+                </div>
+            )}
 
             <div className="row">
-                {words.map(vocab => (
+                {/* ▼▼▼ [수정] words -> filteredWords로 변경 ▼▼▼ */}
+                {filteredWords.map(vocab => (
                     <VocabCard
                         key={vocab.id}
                         vocab={vocab}

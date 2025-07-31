@@ -28,9 +28,6 @@ app.use(express.json());
 app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 
-// ★ 추가: 요청 로깅
-app.use((req, res, next) => { console.log('>>>', req.method, req.url); next(); });
-// ★ 추가: 헬스체크
 app.get('/__ping', (req, res) => res.type('text').send('pong'));
 
 // ===== Helpers =====
@@ -67,6 +64,16 @@ function requireAdmin(req, res, next) {
     return next();
 }
 
+function buildPron(vocab) {
+    if (!vocab || !vocab.dictMeta) {
+        return { ipa: null, ipaKo: null };
+    }
+    return {
+        ipa: vocab.dictMeta.ipa || null,
+        ipaKo: vocab.dictMeta.ipaKo || null,
+    };
+}
+
 // Leitner 변형 스케줄러
 function scheduleNext(stage = 0, result) {
     const intervals = [1, 3, 7, 16, 35]; // days
@@ -78,17 +85,11 @@ function scheduleNext(stage = 0, result) {
     return { newStage, nextReviewAt };
 }
 
-// ===== Wiktionary 간단 통합 (inline) =====
-
 // ===== Wiktionary 통합 (정리판) =====
 const WIKI_API = 'https://de.wiktionary.org/w/api.php';
 
-// Node 18 미만이면 주석 해제하여 사용 (node-fetch 설치 필요: npm i node-fetch@3)
-// global.fetch ||= ((...args) => import('node-fetch').then(({default: f}) => f(...args)));
-
 function titlecaseFirst(s = '') { return s ? s[0].toUpperCase() + s.slice(1) : s; }
 
-// IPA/오디오/예문(간이)
 function parseWikitext(wikitext = '') {
     const out = { ipa: null, audioTitles: [], examples: [] };
     const ipaMatch = wikitext.match(/\{\{(?:Lautschrift|IPA)\|([^}]+)\}\}/i);
@@ -109,7 +110,6 @@ function parseWikitext(wikitext = '') {
     return out;
 }
 
-// KO 번역 추출(Ü, Üt, Ü-표 변형)
 function extractKoTranslations(wikitext = '') {
     const out = new Set();
     const push = (s) => {
@@ -118,16 +118,15 @@ function extractKoTranslations(wikitext = '') {
     };
 
     let m;
-    const re1 = /\{\{Ü\|ko\|([^}|]+)(?:\|[^}]*)?\}\}/gi;  // {{Ü|ko|...}}
+    const re1 = /\{\{Ü\|ko\|([^}|]+)(?:\|[^}]*)?\}\}/gi;
     while ((m = re1.exec(wikitext)) !== null) push(m[1]);
 
-    const re2 = /\{\{Üt\|ko\|([^}|]+)(?:\|[^}]*)?\}\}/gi; // {{Üt|ko|...}}
+    const re2 = /\{\{Üt\|ko\|([^}|]+)(?:\|[^}]*)?\}\}/gi;
     while ((m = re2.exec(wikitext)) !== null) push(m[1]);
 
-    const re3 = /\{\{Ü\|koreanisch\|([^}|]+)(?:\|[^}]*)?\}\}/gi; // 드물게 언어명 독일어
+    const re3 = /\{\{Ü\|koreanisch\|([^}|]+)(?:\|[^}]*)?\}\}/gi;
     while ((m = re3.exec(wikitext)) !== null) push(m[1]);
 
-    // {{Ü-Tabelle|...|ko=...}} 블록
     const tbl = /\{\{Ü-Tabelle[^}]*\}\}/gis;
     while ((m = tbl.exec(wikitext)) !== null) {
         const block = m[0];
@@ -146,7 +145,6 @@ async function fetchParseWikitext(title) {
     return j?.parse?.wikitext?.['*'] || '';
 }
 
-// term, TitleCase, 검색 1건까지 모아 **배열** 반환
 async function getAllCandidateWikitexts(term) {
     const tried = new Set();
     const texts = [];
@@ -192,7 +190,6 @@ async function downloadToFile(url, filepath) {
     await fs.writeFile(filepath, buf);
 }
 
-// KO/IPA/오디오/예문을 모아 dictMeta 생성/갱신
 async function enrichFromWiktionary(queryLemma) {
     const cands = await getAllCandidateWikitexts(queryLemma);
     if (cands.length === 0) return { vocab: null, entry: null };
@@ -230,7 +227,6 @@ async function enrichFromWiktionary(queryLemma) {
         ...examples
     ];
 
-    // vocab 찾기/보정
     let vocab = await prisma.vocab.findFirst({
         where: { lemma: { in: [queryLemma, titlecaseFirst(queryLemma)] } }
     });
@@ -245,7 +241,6 @@ async function enrichFromWiktionary(queryLemma) {
         });
     }
 
-    // dictMeta 생성/갱신 (KO 없을 때 갱신)
     let entry = await prisma.dictEntry.findUnique({ where: { vocabId: vocab.id } });
     if (!entry) {
         entry = await prisma.dictEntry.create({
@@ -279,8 +274,10 @@ async function enrichFromWiktionary(queryLemma) {
 
 // ===== Auth =====
 app.post('/auth/register', async (req, res) => {
-    const { email, password } = req.body || {};
+    let { email, password } = req.body || {};
     if (!email || !password) return fail(res, 400, 'email and password required');
+
+    email = email.toLowerCase().trim();
 
     const exists = await prisma.user.findUnique({ where: { email } });
     if (exists) return fail(res, 409, 'email already exists');
@@ -296,8 +293,10 @@ app.post('/auth/register', async (req, res) => {
 });
 
 app.post('/auth/login', async (req, res) => {
-    const { email, password } = req.body || {};
+    let { email, password } = req.body || {};
     if (!email || !password) return fail(res, 400, 'email and password required');
+
+    email = email.toLowerCase().trim();
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) return fail(res, 401, 'invalid credentials');
@@ -313,26 +312,6 @@ app.post('/auth/logout', (req, res) => {
     clearAuthCookie(res);
     return ok(res, { ok: true });
 });
-
-app.get('/debug/vocab-counts', async (req, res) => {
-    const rows = await prisma.$queryRaw`
-    SELECT UPPER(TRIM(levelCEFR)) AS lvl, COUNT(*) AS cnt
-    FROM Vocab
-    GROUP BY UPPER(TRIM(levelCEFR))
-    ORDER BY lvl
-  `;
-    return ok(res, rows);
-});
-
-
-app.get('/srs/cards', requireAuth, async (req, res) => {
-    const cards = await prisma.sRSCard.findMany({
-        where: { userId: req.user.id, itemType: 'vocab' },
-        select: { itemId: true },
-    });
-    return ok(res, cards.map(c => c.itemId));
-});
-
 
 app.get('/me', requireAuth, async (req, res) => {
     const user = await prisma.user.findUnique({
@@ -363,12 +342,63 @@ app.patch('/me', requireAuth, async (req, res) => {
 });
 
 // ===== SRS =====
-// 이 함수를 교체하세요
-// server/server.js
-// server/server.js
-// server/server.js
-// server/server.js
-// server/server.js
+
+app.get('/srs/all-cards', requireAuth, async (req, res) => {
+    try {
+        const cards = await prisma.sRSCard.findMany({
+            where: { userId: req.user.id, itemType: 'vocab' },
+            orderBy: { createdAt: 'desc' },
+        });
+
+        if (cards.length === 0) {
+            return ok(res, []);
+        }
+
+        const vocabIds = cards.map(card => card.itemId);
+
+        const vocabs = await prisma.vocab.findMany({
+            where: {
+                id: { in: vocabIds }
+            },
+            include: {
+                dictMeta: true,
+            },
+        });
+
+        const vocabMap = new Map(vocabs.map(v => [v.id, v]));
+
+        const result = cards
+            .map(card => {
+                const vocab = vocabMap.get(card.itemId);
+                if (!vocab) {
+                    return null;
+                }
+
+                const gloss = Array.isArray(vocab.dictMeta?.examples)
+                    ? vocab.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
+                    : null;
+
+                return {
+                    cardId: card.id,
+                    vocabId: card.itemId,
+                    lemma: vocab.lemma || 'N/A',
+                    ko_gloss: gloss,
+                    nextReviewAt: card.nextReviewAt,
+                    stage: card.stage,
+                    ipa: vocab.dictMeta?.ipa,
+                    ipaKo: vocab.dictMeta?.ipaKo,
+                };
+            })
+            .filter(Boolean);
+
+        return ok(res, result);
+    } catch (e) {
+        console.error('GET /srs/all-cards Error:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
+
+
 app.get('/srs/queue', requireAuth, async (req, res) => {
     try {
         const limit = Math.min(Number(req.query.limit || 20), 100);
@@ -389,9 +419,8 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
         });
         const vmap = new Map(vocabs.map(v => [v.id, v]));
 
-        // 오답 풀(글로스가 있는 항목) 넉넉히 확보
         const distractorPool = await prisma.vocab.findMany({
-            where: { id: { notIn: ids }, dictMeta: { isNot: null } },
+            where: { dictMeta: { isNot: null } },
             include: { dictMeta: true },
             take: 1000,
         });
@@ -408,7 +437,6 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
             const correct = v.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko;
             if (!correct) continue;
 
-            // 3개 오답 생성
             const wrong = [];
             const tried = new Set();
             while (wrong.length < 3 && tried.size < poolGlosses.length) {
@@ -417,15 +445,14 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
                 const cand = poolGlosses[idx];
                 if (cand && cand !== correct && !wrong.includes(cand)) wrong.push(cand);
             }
-            if (wrong.length < 3) continue; // MCQ 구성 불가 시 스킵
+            if (wrong.length < 3) continue;
 
             queue.push({
-                cardId: c.id,              // or card.id / null
+                cardId: c.id,
                 question: v.lemma,
                 answer: correct,
                 quizType: 'mcq',
                 options: [correct, ...wrong].sort(() => Math.random() - 0.5),
-                // ★ 추가
                 pron: buildPron(v),
             });
         }
@@ -436,11 +463,23 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
     }
 });
 
+app.post('/srs/remove-many', requireAuth, async (req, res) => {
+    try {
+        const { vocabIds } = req.body || {};
+        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+            return fail(res, 400, 'vocabIds must be a non-empty array');
+        }
+        const ids = vocabIds.map(Number).filter(Number.isFinite);
+        const result = await prisma.sRSCard.deleteMany({
+            where: { userId: req.user.id, itemType: 'vocab', itemId: { in: ids } },
+        });
+        return ok(res, { count: result.count });
+    } catch (e) {
+        console.error('POST /srs/remove-many failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
 
-
-// server/server.js
-// server/server.js
-// server/server.js
 
 app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
     try {
@@ -449,9 +488,8 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
             return fail(res, 400, 'vocabIds must be a non-empty array');
         }
         const ids = vocabIds.map(Number).filter(Number.isFinite);
-        if (ids.length === 0) return ok(res, []); // 방어
+        if (ids.length === 0) return ok(res, []);
 
-        // 선택된 단어와 카드 id 매핑
         const [vocabs, cards] = await Promise.all([
             prisma.vocab.findMany({
                 where: { id: { in: ids } },
@@ -464,7 +502,6 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
         ]);
         const cmap = new Map(cards.map(c => [c.itemId, c.id]));
 
-        // 오답 풀(글로스 있는 것만). notIn: ids
         const distractorPool = await prisma.vocab.findMany({
             where: { id: { notIn: ids }, dictMeta: { isNot: null } },
             include: { dictMeta: true },
@@ -477,7 +514,6 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
                 .filter(Boolean)
         );
 
-        // 선택 항목 자체에서 얻을 수 있는 글로스(상호 오답 보강용)
         const selectedGlosses = new Map(
             vocabs.map(v => {
                 const g = v.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko || null;
@@ -485,7 +521,6 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
             })
         );
 
-        // 유틸: 무작위에서 n개 뽑기
         const pickN = (arr, n) => {
             const a = arr.slice();
             for (let i = a.length - 1; i > 0; i--) {
@@ -500,17 +535,14 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
             const correct = selectedGlosses.get(v.id);
             if (!correct) continue;
 
-            // 오답 후보 만들기: 전역 풀 + (선택 집합 내에서 나 자신을 뺀 글로스)
             const localWrongSet = new Set(poolGlosses);
             for (const [otherId, g] of selectedGlosses.entries()) {
                 if (otherId !== v.id && g && g !== correct) localWrongSet.add(g);
             }
-            // 정답과 중복 제거
             localWrongSet.delete(correct);
 
             const wrongs = pickN(Array.from(localWrongSet), 3);
             if (wrongs.length < 3) {
-                // 오답이 3개 미만이면 이 문항은 건너뜀 (500 내지 않고 skip)
                 continue;
             }
 
@@ -530,22 +562,16 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
 
         return ok(res, items);
     } catch (e) {
-        // 원인 파악을 쉽게 로그 상세 출력
         console.error('POST /quiz/by-vocab 오류:', e && e.stack ? e.stack : e);
         console.error('요청 바디:', req.body);
         return fail(res, 500, 'Internal Server Error');
     }
 });
 
-
-// server/server.js
-// ★ 신규 API: 오답 노트 퀴즈 목록 가져오기
-// server/server.js
 app.get('/odat-note/queue', requireAuth, async (req, res) => {
     try {
         const limit = Math.min(Number(req.query.limit || 20), 100);
 
-        // 1) 오답이 1회 이상인 카드
         const incorrectCards = await prisma.sRSCard.findMany({
             where: { userId: req.user.id, itemType: 'vocab', incorrectCount: { gt: 0 } },
             orderBy: { updatedAt: 'asc' },
@@ -556,14 +582,12 @@ app.get('/odat-note/queue', requireAuth, async (req, res) => {
 
         const ids = incorrectCards.map(c => c.itemId);
 
-        // 2) 정답 후보 로드
         const vocabs = await prisma.vocab.findMany({
             where: { id: { in: ids } },
             include: { dictMeta: true },
         });
         const vocabMap = new Map(vocabs.map(v => [v.id, v]));
 
-        // 3) 오답 풀 (글로스 있는 것만)
         const distractorPool = await prisma.vocab.findMany({
             where: { id: { notIn: ids }, dictMeta: { isNot: null } },
             include: { dictMeta: true },
@@ -573,7 +597,6 @@ app.get('/odat-note/queue', requireAuth, async (req, res) => {
             .map(d => d.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko)
             .filter(Boolean);
 
-        // 4) MCQ 생성
         const quizQueue = [];
         for (const card of incorrectCards) {
             const vocab = vocabMap.get(card.itemId);
@@ -598,8 +621,7 @@ app.get('/odat-note/queue', requireAuth, async (req, res) => {
                 answer: correct,
                 quizType: 'mcq',
                 options,
-                pron: buildPron(v),
-
+                pron: buildPron(vocab),
             });
         }
 
@@ -610,11 +632,8 @@ app.get('/odat-note/queue', requireAuth, async (req, res) => {
     }
 });
 
-// ★ 오답 노트: 목록 조회(틀린 단어 리스트)
-// server/server.js
 app.get('/odat-note/list', requireAuth, async (req, res) => {
     try {
-        // 1) 오답 카드(incorrectCount > 0)만 추출
         const cards = await prisma.sRSCard.findMany({
             where: { userId: req.user.id, itemType: 'vocab', incorrectCount: { gt: 0 } },
             orderBy: { updatedAt: 'asc' },
@@ -623,7 +642,6 @@ app.get('/odat-note/list', requireAuth, async (req, res) => {
 
         if (cards.length === 0) return ok(res, []);
 
-        // 2) 해당 vocab 들을 한 번에 로드
         const ids = cards.map(c => c.itemId);
         const vocabs = await prisma.vocab.findMany({
             where: { id: { in: ids } },
@@ -631,7 +649,6 @@ app.get('/odat-note/list', requireAuth, async (req, res) => {
         });
         const vmap = new Map(vocabs.map(v => [v.id, v]));
 
-        // 3) 프런트용 행 구성
         const rows = cards.map(c => {
             const v = vmap.get(c.itemId);
             const gloss = Array.isArray(v?.dictMeta?.examples)
@@ -644,11 +661,10 @@ app.get('/odat-note/list', requireAuth, async (req, res) => {
                 ko_gloss: gloss || null,
                 incorrectCount: c.incorrectCount,
                 updatedAt: c.updatedAt,
-                // ★ 추가
                 ipa: v?.dictMeta?.ipa || null,
                 ipaKo: v?.dictMeta?.ipaKo || null,
             };
-        }).filter(r => r.lemma); // 없는 vocab 방어
+        }).filter(r => r.lemma);
 
         return ok(res, rows);
     } catch (e) {
@@ -657,7 +673,6 @@ app.get('/odat-note/list', requireAuth, async (req, res) => {
     }
 });
 
-// ★ 신규 API: 선택한 오답 카드들로 퀴즈 큐 생성
 app.post('/odat-note/quiz', requireAuth, async (req, res) => {
     try {
         const { cardIds } = req.body || {};
@@ -667,7 +682,6 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
         const ids = cardIds.map(Number).filter(Number.isFinite);
         if (ids.length === 0) return ok(res, []);
 
-        // 1) 내 카드 중 오답인 것만 필터
         const cards = await prisma.sRSCard.findMany({
             where: {
                 userId: req.user.id,
@@ -682,14 +696,12 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
 
         const vocabIds = cards.map(c => c.itemId);
 
-        // 2) 정답 후보 로드
         const vocabs = await prisma.vocab.findMany({
             where: { id: { in: vocabIds } },
             include: { dictMeta: true },
         });
         const vmap = new Map(vocabs.map(v => [v.id, v]));
 
-        // 3) 오답 풀(글로스 있는 것만) 로드
         const distractorPool = await prisma.vocab.findMany({
             where: { id: { notIn: vocabIds }, dictMeta: { isNot: null } },
             include: { dictMeta: true },
@@ -699,7 +711,6 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
             .map(d => d.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko)
             .filter(Boolean);
 
-        // 4) MCQ 생성
         const quizQueue = [];
         for (const card of cards) {
             const v = vmap.get(card.itemId);
@@ -734,14 +745,12 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
     }
 });
 
-// ★ 오답 노트: 선택 항목 일괄 정리(정답 처리 = 오답 카운트 0)
 app.post('/odat-note/resolve-many', requireAuth, async (req, res) => {
     try {
         const { cardIds } = req.body || {};
         if (!Array.isArray(cardIds) || cardIds.length === 0) {
             return fail(res, 400, 'cardIds must be a non-empty array');
         }
-        // 내 카드만 대상
         const result = await prisma.sRSCard.updateMany({
             where: { userId: req.user.id, id: { in: cardIds.map(Number).filter(Number.isFinite) } },
             data: { incorrectCount: 0, lastResult: 'pass' },
@@ -753,10 +762,6 @@ app.post('/odat-note/resolve-many', requireAuth, async (req, res) => {
     }
 });
 
-
-// ★ 수정된 API: 오답 노트에서 정답 시 incorrectCount 초기화
-// server/server.js
-// server/server.js
 app.post('/srs/answer', requireAuth, async (req, res) => {
     const { cardId, result, source } = req.body || {};
     if (!cardId || !['pass', 'fail'].includes(result)) return fail(res, 400, 'invalid payload');
@@ -777,18 +782,14 @@ app.post('/srs/answer', requireAuth, async (req, res) => {
             : { incorrectCount: { increment: 1 } }),
     };
 
-    // ★ 오답노트/선택퀴즈에서 맞춘 경우 오답 카운트 초기화
     if (result === 'pass' && source === 'odatNote') {
-        data.incorrectCount = { set: 0 }; // ← 반드시 set 사용
+        data.incorrectCount = { set: 0 };
     }
 
     const updated = await prisma.sRSCard.update({ where: { id: card.id }, data });
     return ok(res, updated);
 });
 
-
-// server/server.js
-// server/server.js
 app.post('/srs/create-many', requireAuth, async (req, res) => {
     const { vocabIds } = req.body;
     if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
@@ -799,6 +800,9 @@ app.post('/srs/create-many', requireAuth, async (req, res) => {
         userId: req.user.id,
         itemType: 'vocab',
         itemId: Number(id),
+        stage: 0,
+        nextReviewAt: new Date(),
+        lastResult: null,
     }));
 
     // 이미 있는 카드는 무시하고 없는 것만 추가
@@ -807,146 +811,14 @@ app.post('/srs/create-many', requireAuth, async (req, res) => {
         skipDuplicates: true,
     });
 
-    return ok(res, result); // result.count 에 새로 추가된 카드 개수가 담김
-});
-
-// ★ 신규 API 2: 단어 1개 내 단어장에 추가
-app.post('/my-wordbook/add', requireAuth, async (req, res) => {
-    const { vocabId } = req.body;
-    if (!vocabId) return fail(res, 400, 'vocabId is required');
-
-    // 이미 추가된 단어인지 확인 (@@unique 제약조건이 있지만, 부드러운 처리를 위해)
-    const existing = await prisma.userVocab.findUnique({
-        where: { userId_vocabId: { userId: req.user.id, vocabId: Number(vocabId) } }
-    });
-    if (existing) return ok(res, existing); // 이미 있으면 그냥 성공 응답
-
-    const newItem = await prisma.userVocab.create({
-        data: {
-            userId: req.user.id,
-            vocabId: Number(vocabId)
-        }
-    });
-    return ok(res, newItem, { created: true });
-});
-
-// ★ 신규 API 3: 여러 단어 내 단어장에 추가 (전체 추가 기능용)
-app.post('/my-wordbook/add-many', requireAuth, async (req, res) => {
-    const { vocabIds } = req.body;
-    if (!Array.isArray(vocabIds)) return fail(res, 400, 'vocabIds must be an array');
-
-    const dataToCreate = vocabIds.map(id => ({
-        userId: req.user.id,
-        vocabId: Number(id)
-    }));
-
-    // ignoreDuplicates: 이미 있는 단어는 무시하고 없는 단어만 추가
-    const result = await prisma.userVocab.createMany({
-        data: dataToCreate,
-        skipDuplicates: true,
-    });
-
-    return ok(res, result); // result.count에 추가된 개수가 담김
-});
-// ★ 신규 API 4: 단어 1개 내 단어장에서 삭제 (멱등)
-app.delete('/my-wordbook/:vocabId', requireAuth, async (req, res) => {
-    const vocabId = Number(req.params.vocabId);
-    if (!Number.isFinite(vocabId)) return fail(res, 400, 'invalid vocabId');
-    try {
-        await prisma.userVocab.delete({
-            where: { userId_vocabId: { userId: req.user.id, vocabId } }
-        });
-    } catch (e) {
-        // 이미 없는 경우(P2025)는 성공으로 간주(멱등)
-        if (e.code !== 'P2025') return fail(res, 500, 'delete failed');
-    }
-    return ok(res, { removed: 1 });
-});
-
-// ★ 신규 API 5: 여러 단어 일괄 삭제
-app.post('/my-wordbook/remove-many', requireAuth, async (req, res) => {
-    const { vocabIds } = req.body || {};
-    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-        return fail(res, 400, 'vocabIds must be a non-empty array');
-    }
-    const ids = vocabIds.map(Number).filter(Number.isFinite);
-    const result = await prisma.userVocab.deleteMany({
-        where: { userId: req.user.id, vocabId: { in: ids } }
-    });
-    return ok(res, { count: result.count });
+    return ok(res, result);
 });
 
 // ===== Vocab / Dict =====
-app.get('/vocab/search', async (req, res) => {
-    const q = (req.query.q || '').trim();
-    const level = (req.query.level || '').trim();
-    const where = {
-        ...(q ? { lemma: { contains: q } } : {}),
-        ...(level ? { levelCEFR: level } : {}),
-    };
-
-    let items = await prisma.vocab.findMany({
-        where,
-        take: 20,
-        orderBy: [{ freq: 'asc' }, { lemma: 'asc' }],
-        include: { dictMeta: true }
-    });
-
-    const lacksKo = (v) => !v.dictMeta
-        || !Array.isArray(v.dictMeta.examples)
-        || !v.dictMeta.examples.some(ex => ex && ex.ko);
-
-    if (items.length && items.every(lacksKo) && !q.includes(' ')) {
-        try {
-            await enrichFromWiktionary(items[0].lemma);
-            items = await prisma.vocab.findMany({
-                where,
-                take: 20,
-                orderBy: [{ freq: 'asc' }, { lemma: 'asc' }],
-                include: { dictMeta: true }
-            });
-        } catch { }
-    }
-
-    return ok(res, items);
-});
-
-// ★ 신규 API 엔드포인트: 레벨별로 단어 그룹화하여 반환
-
-// ★ 수정된 API: 'Internal Seed' 출처의 단어만 필터링
-// 이 함수 전체를 교체하세요
-// 이 함수를 교체하세요
-app.get('/vocab/by-level', async (req, res) => {
-    try {
-        const allVocab = await prisma.vocab.findMany({
-            where: { source: { startsWith: 'seed-' } }, // 'seed-A1', 'seed-A2' 등 모두 포함
-            orderBy: [{ levelCEFR: 'asc' }, { lemma: 'asc' }],
-            // ★ include 제거: 여기서 더 이상 상세 정보를 불러오지 않습니다.
-        });
-
-        const groupedByLevel = allVocab.reduce((acc, vocab) => {
-            const level = vocab.levelCEFR || 'UNCATEGORIZED';
-            if (!acc[level]) acc[level] = [];
-            acc[level].push(vocab); // 이제 가공 없이 그대로 전달
-            return acc;
-        }, {});
-
-        return ok(res, groupedByLevel);
-    } catch (e) {
-        console.error(e);
-        return fail(res, 500, '단어 목록을 불러오는 데 실패했습니다.');
-    }
-});
-
-// ★ 숫자 id 라우트보다 위에 둘 것
-// /vocab/:id 보다 위에 유지
-// /vocab/:id 보다 위에 유지
-// server/server.js - /vocab/:id 라우트보다 위에 유지
 app.get('/vocab/list', async (req, res) => {
     const level = String(req.query.level || 'A1').toUpperCase();
 
     try {
-        // 1) 레벨 정규화해 id만 추출 (공백/대소문자 오염 방지)
         const rows = await prisma.$queryRaw`
       SELECT id
       FROM Vocab
@@ -957,7 +829,6 @@ app.get('/vocab/list', async (req, res) => {
         const ids = rows.map(r => r.id);
         if (ids.length === 0) return ok(res, []);
 
-        // 2) 필요한 필드만 로드 (예문만 포함)
         const vocabs = await prisma.vocab.findMany({
             where: { id: { in: ids } },
             orderBy: { lemma: 'asc' },
@@ -973,12 +844,10 @@ app.get('/vocab/list', async (req, res) => {
                 lemma: v.lemma,
                 levelCEFR: v.levelCEFR,
                 ko_gloss: gloss || null,
-                // ★ 추가
                 ipa: v.dictMeta?.ipa || null,
                 ipaKo: v.dictMeta?.ipaKo || null,
             };
         });
-
 
         return ok(res, items);
     } catch (e) {
@@ -987,12 +856,7 @@ app.get('/vocab/list', async (req, res) => {
     }
 });
 
-
-
-
-// ★ 이 함수를 새로 추가하세요
 app.get('/vocab/:id', requireAuth, async (req, res) => {
-
     try {
         const vocabId = Number(req.params.id);
         const vocab = await prisma.vocab.findUnique({
@@ -1006,6 +870,7 @@ app.get('/vocab/:id', requireAuth, async (req, res) => {
         return fail(res, 500, '상세 정보를 불러오는 데 실패했습니다.');
     }
 });
+
 app.post('/vocab/:id/bookmark', requireAuth, async (req, res) => {
     const vid = Number(req.params.id);
     const vocab = await prisma.vocab.findUnique({ where: { id: vid } });
@@ -1026,10 +891,9 @@ app.post('/vocab/:id/bookmark', requireAuth, async (req, res) => {
             lastResult: null
         }
     });
-    return ok(res, card);
+    return ok(res, card, { created: true });
 });
 
-// 사전 검색: DB → 미스면 보강(enrich) 시도 → 재조회 → 최종 폴백
 app.get('/dict/search', async (req, res) => {
     const q = (req.query.q || '').trim();
     if (!q) return ok(res, { entries: [] });
@@ -1071,71 +935,78 @@ app.get('/dict/search', async (req, res) => {
     return ok(res, { entries: [] });
 });
 
+// ===== My Wordbook & Categories =====
+app.get('/my-wordbook', requireAuth, async (req, res) => {
+    const q = req.query.categoryId;
+    const where = { userId: req.user.id };
 
+    if (q === 'none') {
+        where.categoryId = null;
+    } else if (q !== undefined && q !== '') {
+        const cid = Number(q);
+        if (!Number.isFinite(cid)) return fail(res, 400, 'invalid categoryId');
+        where.categoryId = cid;
+    }
 
-// Wiktionary 보강 수동 트리거(로그인 필요: 악용 방지)
-app.get('/dict/enrich', requireAuth, async (req, res) => {
-    const lemma = (req.query.lemma || '').trim();
-    if (!lemma) return fail(res, 400, 'lemma required');
-    const { vocab, entry } = await enrichFromWiktionary(lemma);
-    if (!entry) return fail(res, 404, 'wiktionary not found');
-    return ok(res, { id: vocab.id, lemma: vocab.lemma, ...entry });
+    const rows = await prisma.userVocab.findMany({
+        where,
+        include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true } } } } },
+        orderBy: { createdAt: 'desc' },
+    });
+    const words = rows.map(r => r.vocab);
+    return ok(res, words);
 });
 
-// 오디오 로컬 캐시(관리자 전용)
-app.post('/dict/cache-audio', requireAuth, requireAdmin, async (req, res) => {
-    const { vocabId } = req.body || {};
-    if (!vocabId) return fail(res, 400, 'vocabId required');
+app.post('/my-wordbook/add', requireAuth, async (req, res) => {
+    const { vocabId } = req.body;
+    if (!vocabId) return fail(res, 400, 'vocabId is required');
 
-    const entry = await prisma.dictEntry.findUnique({ where: { vocabId: Number(vocabId) } });
-    if (!entry?.audioUrl) return fail(res, 404, 'audio url not found');
+    const existing = await prisma.userVocab.findUnique({
+        where: { userId_vocabId: { userId: req.user.id, vocabId: Number(vocabId) } }
+    });
+    if (existing) return ok(res, existing);
 
-    const ext = path.extname(new URL(entry.audioUrl).pathname) || '.ogg';
-    const localName = `v${vocabId}${ext}`;
-    const localPath = path.join(AUDIO_DIR, localName);
+    const newItem = await prisma.userVocab.create({
+        data: {
+            userId: req.user.id,
+            vocabId: Number(vocabId)
+        }
+    });
+    return ok(res, newItem, { created: true });
+});
 
-    await downloadToFile(entry.audioUrl, localPath);
-    const rel = `/static/audio/${localName}`;
+app.post('/my-wordbook/remove-many', requireAuth, async (req, res) => {
+    const { vocabIds } = req.body || {};
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
+    const ids = vocabIds.map(Number).filter(Number.isFinite);
+    const result = await prisma.userVocab.deleteMany({
+        where: { userId: req.user.id, vocabId: { in: ids } }
+    });
+    return ok(res, { count: result.count });
+});
 
-    const updated = await prisma.dictEntry.update({
-        where: { vocabId: Number(vocabId) },
-        data: { audioLocal: rel }
+app.patch('/my-wordbook/assign', requireAuth, async (req, res) => {
+    const { vocabIds, categoryId } = req.body || {};
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds required');
+    }
+
+    let cid = null;
+    if (categoryId !== undefined && categoryId !== null && categoryId !== '' && categoryId !== 'none') {
+        cid = Number(categoryId);
+        if (!Number.isFinite(cid)) return fail(res, 400, 'invalid categoryId');
+    }
+
+    const result = await prisma.userVocab.updateMany({
+        where: { userId: req.user.id, vocabId: { in: vocabIds.map(Number) } },
+        data: { categoryId: cid },
     });
 
-    return ok(res, updated);
+    return ok(res, { updated: result.count });
 });
 
-// ===== Reading =====
-app.get('/reading/list', (req, res) => {
-    return ok(res, [
-        { id: 1, title: 'Mein Tag', levelCEFR: 'A1' },
-        { id: 2, title: 'Berliner Geschichte', levelCEFR: 'B1' },
-        { id: 3, title: 'Umwelt und Politik', levelCEFR: 'B2' }
-    ]);
-});
-
-// ===== Tutor (mock) =====
-app.post('/tutor/chat', requireAuth, (req, res) => {
-    return ok(res, {
-        de_answer: 'Das klingt gut. Achten Sie auf die Verbzweitstellung im Hauptsatz.',
-        ko_explain: '좋습니다. 주절에서는 동사가 두 번째 위치에 와야 합니다.',
-        tips: ['주어 뒤 동사 위치 확인', '종속절에서는 동사가 문장 끝'],
-        refs: ['kb:V2', 'kb:Subclause-Vfinal', 'dict:stehen'],
-    });
-});
-
-// ===== Admin (mock shell) =====
-app.post('/admin/upload/vocab', requireAuth, requireAdmin, (req, res) => fail(res, 501, 'Not implemented'));
-app.post('/admin/upload/grammar', requireAuth, requireAdmin, (req, res) => fail(res, 501, 'Not implemented'));
-app.post('/admin/upload/reading', requireAuth, requireAdmin, (req, res) => fail(res, 501, 'Not implemented'));
-app.get('/admin/reports', requireAuth, requireAdmin, (req, res) => ok(res, { vocabAccuracy: 0.78, grammarAccuracy: 0.64, readingAccuracy: 0.71 }));
-
-// ===== Root =====
-app.get('/', (req, res) => {
-    res.type('html').send('<h1>Mock API</h1><p>/auth/*, /me, /srs/*, /vocab/*, /dict/*, /reading/list, /admin/*</p>');
-});
-
-// ---------- Category(Folder) APIs ----------
 app.get('/categories', requireAuth, async (req, res) => {
     const cats = await prisma.category.findMany({
         where: { userId: req.user.id },
@@ -1161,99 +1032,6 @@ app.post('/categories', requireAuth, async (req, res) => {
     return ok(res, c);
 });
 
-app.patch('/categories/:id', requireAuth, async (req, res) => {
-    const id = Number(req.params.id);
-    const name = String(req.body?.name || '').trim();
-    if (!name) return fail(res, 400, 'name required');
-    const c = await prisma.category.update({ where: { id }, data: { name } });
-    return ok(res, c);
-});
-
-app.delete('/categories/:id', requireAuth, async (req, res) => {
-    const id = Number(req.params.id);
-    await prisma.userVocab.updateMany({
-        where: { userId: req.user.id, categoryId: id },
-        data: { categoryId: null },
-    });
-    await prisma.category.delete({ where: { id } });
-    return ok(res, { ok: true });
-});
-
-app.patch('/my-wordbook/assign', requireAuth, async (req, res) => {
-    const { vocabIds, categoryId } = req.body || {};
-    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-        return fail(res, 400, 'vocabIds required');
-    }
-
-    let cid = null;
-    if (categoryId !== undefined && categoryId !== null && categoryId !== '' && categoryId !== 'none') {
-        cid = Number(categoryId);
-        if (!Number.isFinite(cid)) return fail(res, 400, 'invalid categoryId');
-    }
-
-    const result = await prisma.userVocab.updateMany({
-        where: { userId: req.user.id, vocabId: { in: vocabIds.map(Number) } },
-        data: { categoryId: cid },
-    });
-
-    return ok(res, { updated: result.count });
-});
-
-// SRS 카드 여러 개 삭제 (또는 전체 삭제)
-app.post('/srs/remove-many', requireAuth, async (req, res) => {
-    try {
-        const { vocabIds, all } = req.body || {};
-        if (all === true) {
-            const result = await prisma.sRSCard.deleteMany({
-                where: { userId: req.user.id, itemType: 'vocab' },
-            });
-            return ok(res, { count: result.count });
-        }
-        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-            return fail(res, 400, 'vocabIds must be a non-empty array or use all:true');
-        }
-        const ids = vocabIds.map(Number).filter(Number.isFinite);
-        const result = await prisma.sRSCard.deleteMany({
-            where: { userId: req.user.id, itemType: 'vocab', itemId: { in: ids } },
-        });
-        return ok(res, { count: result.count });
-    } catch (e) {
-        console.error('POST /srs/remove-many failed:', e);
-        return fail(res, 500, 'Internal Server Error');
-    }
-});
-
-// ---------- Category(Folder) APIs ----------
-// ... /categories, /categories/:id, /my-wordbook/assign 다음에 붙이세요.
-
-app.get('/my-wordbook', requireAuth, async (req, res) => {
-    const q = req.query.categoryId; // '123' | 'none' | undefined | ''
-    const where = { userId: req.user.id };
-
-    if (q === 'none') {
-        where.categoryId = null;                 // 미분류만
-    } else if (q !== undefined && q !== '') {
-        const cid = Number(q);
-        if (!Number.isFinite(cid)) return fail(res, 400, 'invalid categoryId');
-        where.categoryId = cid;                  // 특정 폴더
-    }
-    // q가 undefined 또는 ''이면 전체
-
-    const rows = await prisma.userVocab.findMany({
-        where,
-        include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true } } } } },
-        orderBy: { createdAt: 'desc' },
-    });
-    const words = rows.map(r => r.vocab);
-    return ok(res, words);
-});
-
-
-// 카테고리 필터 지원: ?categoryId=123 | ?categoryId=none | (없음/빈문자열=전체)
-
-
-
-
 // ===== Global error handler =====
 app.use((err, req, res, next) => {
     console.error(err);
@@ -1261,5 +1039,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`API http://localhost:${PORT}`);
+    console.log(`API http://localhost:${PORT}`)
 });

@@ -14,6 +14,7 @@ import VocabList from './pages/VocabList';
 import MyWordbook from './pages/MyWordbook';
 import OdatNote from './pages/OdatNote';
 import LearnStart from "./pages/LearnStart";
+import SrsManager from "./pages/SrsManager"; // ▼▼▼ [수정] 신규 페이지 import ▼▼▼
 
 const Placeholder = ({ title }) => <div className="container py-4"><h2>{title}</h2><p>구현 예정</p></div>;
 
@@ -25,14 +26,17 @@ export default function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/logout" element={<Logout />} />
-      <Route path="/odat-note" element={<OdatNote />} /> {/* ★ 이 줄 추가 */}
+      <Route path="/odat-note" element={<OdatNote />} />
       <Route path="/vocab" element={<VocabList />} />
+      
       {/* 보호 라우트: 로그인 필요 */}
       <Route element={<ProtectedRoute />}>
         <Route path="/learn" element={<LearnStart />} />
         <Route path="/learn/vocab" element={<LearnVocab />} />
+        {/* ▼▼▼ [수정] 신규 페이지 라우트 추가 ▼▼▼ */}
+        <Route path="/learn/srs-manager" element={<SrsManager />} />
         <Route path="/dashboard" element={<Placeholder title="대시보드" />} />
-        <Route path="/my-wordbook" element={<MyWordbook />} /> {/* ★ 이 줄 추가 */}
+        <Route path="/my-wordbook" element={<MyWordbook />} />
         <Route element={<AdminRoute />}>
           <Route path="/admin" element={<Admin />} />
         </Route>

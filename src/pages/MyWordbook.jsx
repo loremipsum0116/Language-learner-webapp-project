@@ -1,5 +1,5 @@
 // src/pages/MyWordbook.jsx
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
 import Pron from '../components/Pron';
@@ -99,42 +99,32 @@ export default function MyWordbook() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
 
-    // 좌측 폴더
-    const [categories, setCategories] = useState([]); // [{id,name,count,...}]
+    const [categories, setCategories] = useState([]);
     const [uncategorized, setUncategorized] = useState(0);
-
-    // 우측 단어 리스트
     const [words, setWords] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    // 선택/이동
     const [selectedIds, setSelectedIds] = useState(new Set());
-    const [moveTarget, setMoveTarget] = useState('none'); // 'none' | number
-
-    // 상세 모달
+    const [moveTarget, setMoveTarget] = useState('none');
     const [detail, setDetail] = useState(null);
     const [detailLoading, setDetailLoading] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
 
-    // URL → 초기 필터
     const readFilterFromURL = useCallback(() => {
-        const v = searchParams.get('cat'); // 'all' | 'none' | '<number>'
+        const v = searchParams.get('cat');
         if (v === 'none') return 'none';
         if (!v || v === 'all') return 'all';
         const n = Number(v);
         return Number.isFinite(n) ? n : 'all';
     }, [searchParams]);
 
-    // filter: 'all' | 'none' | number
     const [filter, setFilter] = useState(readFilterFromURL);
 
-    /** 카테고리 목록/카운트 */
     const loadCategories = useCallback(async () => {
         const { data } = await fetchJSON('/categories', withCreds());
         setCategories(data?.categories || []);
         setUncategorized(data?.uncategorized || 0);
     }, []);
 
-    /** 단어장 로드(필터 반영) */
     const loadWordbook = useCallback(async (f) => {
         setLoading(true);
         try {
@@ -148,7 +138,6 @@ export default function MyWordbook() {
         }
     }, []);
 
-    /** 최초 로드: URL 기준 */
     useEffect(() => {
         (async () => {
             await loadCategories();
@@ -156,10 +145,22 @@ export default function MyWordbook() {
             setFilter(init);
             await loadWordbook(init);
         })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    /** 폴더 클릭 */
+    const filteredWords = useMemo(() => {
+        const needle = searchTerm.trim().toLowerCase();
+        if (!needle) return words;
+        return words.filter(word => {
+            const gloss = Array.isArray(word?.dictMeta?.examples)
+                ? word.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
+                : null;
+            return (
+                word.lemma.toLowerCase().includes(needle) ||
+                (gloss && gloss.toLowerCase().includes(needle))
+            );
+        });
+    }, [words, searchTerm]);
+
     const onClickFolder = async (f) => {
         setFilter(f);
         setSelectedIds(new Set());
@@ -169,7 +170,6 @@ export default function MyWordbook() {
         await loadWordbook(f);
     };
 
-    /** 체크 선택 */
     const toggleSelect = (id) => {
         setSelectedIds(prev => {
             const n = new Set(prev);
@@ -178,11 +178,10 @@ export default function MyWordbook() {
             return n;
         });
     };
-    const clearSelection = () => setSelectedIds(new Set());
-    const selectAll = () => setSelectedIds(new Set(words.map(w => w.id)));
-    const unselectAll = () => clearSelection();
 
-    /** 선택 이동 */
+    const selectAll = () => setSelectedIds(new Set(filteredWords.map(w => w.id)));
+    const unselectAll = () => setSelectedIds(new Set());
+
     const onMoveClick = async () => {
         const ids = Array.from(selectedIds);
         if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
@@ -197,7 +196,7 @@ export default function MyWordbook() {
             }));
             await loadCategories();
             await loadWordbook(filter);
-            clearSelection();
+            unselectAll();
             alert('이동 완료');
         } catch (e) {
             console.error(e);
@@ -205,7 +204,6 @@ export default function MyWordbook() {
         }
     };
 
-    /** 상세 모달 열기 */
     const openDetail = async (id, e) => {
         e?.preventDefault?.();
         e?.stopPropagation?.();
@@ -221,17 +219,52 @@ export default function MyWordbook() {
         }
     };
 
-    /** 선택 단어로 퀴즈 시작 */
-    const startSelectedQuiz = () => {
+    const handleAddSelectedToSRS = async () => {
         const ids = Array.from(selectedIds);
-        if (ids.length === 0) return alert('퀴즈로 풀 단어를 선택하세요.');
-        navigate(`/learn/vocab?ids=${ids.join(',')}`);
+        if (ids.length === 0) {
+            alert('SRS에 추가할 단어를 선택하세요.');
+            return;
+        }
+        try {
+            const result = await fetchJSON('/srs/create-many', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ vocabIds: ids }),
+            }));
+            const count = result?.data?.count ?? result?.count ?? 0;
+            if (count > 0) {
+                alert(`${count}개의 단어를 SRS에 새로 추가했습니다.`);
+            } else {
+                alert('선택된 단어들은 이미 SRS에 모두 존재합니다.');
+            }
+            unselectAll();
+        } catch (e) {
+            console.error('SRS 추가 실패:', e);
+            alert('SRS에 단어를 추가하는 데 실패했습니다.');
+        }
     };
 
-    const startSelectedFlashAuto = () => {
+    const handleDeleteSelected = async () => {
         const ids = Array.from(selectedIds);
-        if (ids.length === 0) return alert('자동학습할 단어를 선택하세요.');
-        navigate(`/learn/vocab?ids=${ids.join(',')}&mode=flash&auto=1`);
+        if (ids.length === 0) {
+            alert('삭제할 단어를 선택하세요.');
+            return;
+        }
+
+        if (window.confirm(`${ids.length}개의 단어를 내 단어장에서 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.`)) {
+            try {
+                await fetchJSON('/my-wordbook/remove-many', {
+                    method: 'POST',
+                    body: JSON.stringify({ vocabIds: ids }),
+                    ...withCreds(),
+                });
+                alert(`${ids.length}개의 단어를 삭제했습니다.`);
+                await loadWordbook(filter);
+                unselectAll();
+            } catch (e) {
+                console.error('단어 삭제 실패:', e);
+                alert('단어 삭제에 실패했습니다.');
+            }
+        }
     };
 
     const isActive = (f) =>
@@ -244,19 +277,13 @@ export default function MyWordbook() {
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">
+                    <Link to="/vocab" className="btn btn-info">단어 추가하기</Link>
                     <Link to="/learn/vocab" className="btn btn-primary">SRS 학습 시작 →</Link>
-                    <Link to="/learn/vocab?mode=odat" className="btn btn-outline-danger">오답노트</Link>
-                    <button className="btn btn-outline-primary" onClick={startSelectedQuiz}>
-                        선택 단어로 퀴즈 시작
-                    </button>
-                    <button className="btn btn-success" onClick={startSelectedFlashAuto}>
-                        선택 자동학습(3초)
-                    </button>
+                    <Link to="/odat-note" className="btn btn-outline-danger">오답노트</Link>
                 </div>
             </div>
 
             <div className="row">
-                {/* Left: 폴더/카테고리 */}
                 <aside className="col-12 col-md-3 mb-3">
                     <div className="list-group">
                         <button
@@ -283,22 +310,20 @@ export default function MyWordbook() {
                             </button>
                         ))}
                     </div>
-
                     <NewCategoryForm onCreated={loadCategories} />
                 </aside>
 
-                {/* Right: 단어 목록 + 이동 컨트롤 */}
                 <section className="col-12 col-md-9">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <div className="small text-muted">
-                            {loading ? '로딩 중...' : `${words.length}개 항목`}
+                            {loading ? '로딩 중...' : `${filteredWords.length}개 항목`}
                             {selectedIds.size > 0 ? ` / 선택됨 ${selectedIds.size}` : ''}
                         </div>
-                        <div className="d-flex gap-2">
+                        <div className="d-flex gap-2 align-items-center">
                             <button
                                 className="btn btn-sm btn-outline-secondary"
                                 onClick={selectAll}
-                                disabled={loading || words.length === 0}
+                                disabled={loading || filteredWords.length === 0}
                             >
                                 전체 선택
                             </button>
@@ -310,10 +335,9 @@ export default function MyWordbook() {
                                 선택 해제
                             </button>
 
-                            {/* 이동 대상 */}
                             <select
                                 className="form-select form-select-sm"
-                                style={{ width: 180 }}
+                                style={{ width: 150 }}
                                 value={String(moveTarget)}
                                 onChange={(e) =>
                                     setMoveTarget(e.target.value === 'none' ? 'none' : Number(e.target.value))
@@ -329,13 +353,37 @@ export default function MyWordbook() {
                                 onClick={onMoveClick}
                                 disabled={selectedIds.size === 0}
                             >
-                                선택항목 이동
+                                이동
+                            </button>
+                            <button
+                                className="btn btn-sm btn-success"
+                                onClick={handleAddSelectedToSRS}
+                                disabled={selectedIds.size === 0}
+                            >
+                                SRS에 추가
+                            </button>
+                            <button
+                                className="btn btn-sm btn-danger"
+                                onClick={handleDeleteSelected}
+                                disabled={selectedIds.size === 0}
+                            >
+                                삭제
                             </button>
                         </div>
                     </div>
 
+                    <div className="mb-3">
+                        <input
+                            type="search"
+                            className="form-control"
+                            placeholder="내 단어장에서 검색 (단어 또는 뜻)"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                    </div>
+
                     <div className="list-group">
-                        {words.map((v) => {
+                        {filteredWords.map((v) => {
                             const gloss = Array.isArray(v?.dictMeta?.examples)
                                 ? v.dictMeta.examples.find((ex) => ex && ex.kind === 'gloss')?.ko
                                 : null;
@@ -345,7 +393,7 @@ export default function MyWordbook() {
                                 <div
                                     key={v.id}
                                     className="list-group-item d-flex justify-content-between align-items-center"
-                                    onClick={(e) => openDetail(v.id, e)} // 행 클릭 = 모달
+                                    onClick={(e) => openDetail(v.id, e)}
                                     style={{ cursor: 'pointer' }}
                                 >
                                     <div className="d-flex align-items-center gap-2">
@@ -353,7 +401,7 @@ export default function MyWordbook() {
                                             type="checkbox"
                                             className="form-check-input"
                                             checked={checked}
-                                            onClick={(e) => e.stopPropagation()} // 모달 열림 전파 방지
+                                            onClick={(e) => e.stopPropagation()}
                                             onChange={() => toggleSelect(v.id)}
                                         />
                                         <div>
@@ -375,8 +423,12 @@ export default function MyWordbook() {
                                 </div>
                             );
                         })}
-                        {!loading && words.length === 0 && (
-                            <div className="alert alert-light mb-0">이 폴더에 단어가 없습니다.</div>
+                        {!loading && filteredWords.length === 0 && (
+                            <div className="alert alert-light mb-0">
+                                {searchTerm
+                                    ? '해당 단어가 없습니다.'
+                                    : '이 폴더에 단어가 없습니다.'}
+                            </div>
                         )}
                     </div>
                 </section>
