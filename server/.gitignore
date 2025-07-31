@@ -1,5 +1,13 @@
-node_modules
-# Keep environment variables out of version control
+# server/.gitignore
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
 .env
 
-/generated/prisma
+# Prisma - Local database file
+prisma/dev.db
