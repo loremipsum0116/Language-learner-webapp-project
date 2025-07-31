@@ -1,39 +1,18 @@
 // server/tools/seed.js
-require('dotenv').config({ path: '../.env' }); // 상위 폴더의 .env 파일을 로드
-const fs = require('fs');
-const path = require('path');
-const csv = require('csv-parser');
+require('dotenv').config({ path: '../.env' });
 const { PrismaClient } = require('@prisma/client');
+const vocabData = require('../data/A1_vocab.js'); // ★ CSV 대신 JS 파일을 직접 임포트
+
 const prisma = new PrismaClient();
-
-const CSV_PATH = path.join(__dirname, '..', 'data', 'A1_vocab.csv');
-
-// ▼▼▼ [수정] 헤더에 'audioUrl' 추가 ▼▼▼
-const HEADERS = ['lemma', 'ko', 'pos', 'gender', 'plural', 'levelCEFR', 'ipa', 'examples', 'ipa_ko', 'audioUrl'];
 
 // 소문자 -> 대문자 보정 (ex: stadt -> Stadt)
 const titlecaseFirst = (s = '') => (s ? s[0].toUpperCase() + s.slice(1) : s);
 
 async function main() {
-    console.log('🌱 A1 단어 데이터베이스 시딩을 시작합니다...');
+    console.log('🌱 A1 단어 데이터베이스 시딩을 시작합니다 (JS 모듈 방식)...');
 
-    if (!fs.existsSync(CSV_PATH)) {
-        console.error(`❌ 에러: 데이터 파일(${CSV_PATH})을 찾을 수 없습니다.`);
-        return;
-    }
-
-    const stream = fs.createReadStream(CSV_PATH)
-        .pipe(csv({
-            headers: HEADERS,
-            skipLines: 1 // CSV 파일의 첫 번째 줄(헤더)은 건너뜁니다.
-        }));
-
-    for await (const row of stream) {
-        // Nomen (명사), Verben (동사) 같은 섹션 구분자는 건너뜁니다.
-        if (row.lemma.includes('(') && !row.ko) {
-            continue;
-        }
-
+    // ★ CSV 스트림 대신, JS 배열을 직접 순회합니다.
+    for (const row of vocabData) {
         const lemma = titlecaseFirst(row.lemma);
         const ko = row.ko;
 
@@ -51,7 +30,7 @@ async function main() {
                     gender: row.gender || null,
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
-                    source: 'seed-A1',
+                    source: 'seed-A1-js',
                 },
                 create: {
                     lemma: lemma,
@@ -59,19 +38,13 @@ async function main() {
                     gender: row.gender || null,
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
-                    source: 'seed-A1',
+                    source: 'seed-A1-js',
                 },
             });
 
-            let examplesJson = [];
-            try {
-                if (row.examples && row.examples.startsWith('[')) {
-                    examplesJson = JSON.parse(row.examples);
-                }
-            } catch (e) {
-                console.warn(`⚠️ 예문(examples) JSON 파싱 실패: ${lemma}`);
-            }
-
+            // ★ 더 이상 JSON.parse가 필요 없습니다. row.examples는 이미 배열입니다.
+            const examplesJson = Array.isArray(row.examples) ? row.examples : [];
+            
             const hasKoGloss = examplesJson.some(ex => ex.kind === 'gloss');
             if (!hasKoGloss) {
                 examplesJson.unshift({ de: '', ko: ko, source: 'seed-A1', kind: 'gloss' });
@@ -83,7 +56,6 @@ async function main() {
                 update: {
                     ipa: row.ipa || null,
                     ipaKo: row.ipa_ko || null,
-                    // ▼▼▼ [수정] audioUrl 필드 추가 ▼▼▼
                     audioUrl: row.audioUrl || null,
                     examples: examplesJson,
                     attribution: 'Internal Seed',
@@ -93,7 +65,6 @@ async function main() {
                     vocabId: vocab.id,
                     ipa: row.ipa || null,
                     ipaKo: row.ipa_ko || null,
-                    // ▼▼▼ [수정] audioUrl 필드 추가 ▼▼▼
                     audioUrl: row.audioUrl || null,
                     examples: examplesJson,
                     attribution: 'Internal Seed',
