@@ -49,8 +49,10 @@ function VocabDetailModal({ vocab, onClose }) {
 }
 
 /** 카드 */
-function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS }) {
+function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId }) {
     const koGloss = vocab.ko_gloss || '뜻 정보 없음';
+    const isEnriching = enrichingId === vocab.id;
+
     return (
         <div className="col-md-6 col-lg-4 mb-3">
             <div className="card h-100">
@@ -80,6 +82,21 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     >
                         {inSRS ? 'SRS에 있음' : 'SRS 추가'}
                     </button>
+                    <button
+                        className="btn btn-sm btn-outline-info"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onPlayAudio(vocab);
+                        }}
+                        disabled={isEnriching}
+                        title="음성 듣기"
+                    >
+                        {isEnriching ? (
+                            <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        ) : (
+                            '음성'
+                        )}
+                    </button>
                 </div>
             </div>
         </div>
@@ -89,19 +106,62 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
 export default function VocabList() {
     const { user } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
-
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [srsIds, setSrsIds] = useState(new Set());
-
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
-
     const [detail, setDetail] = useState(null);
     const [detailLoading, setDetailLoading] = useState(false);
-    
-    // ▼▼▼ [신규] 검색어 상태 추가 ▼▼▼
     const [searchTerm, setSearchTerm] = useState('');
+    const [audio, setAudio] = useState(null);
+    const [enrichingId, setEnrichingId] = useState(null);
+
+    const playAudio = async (vocab) => {
+        if (audio) {
+            audio.pause();
+        }
+
+        if (vocab.audio) {
+            const newAudio = new Audio(vocab.audio);
+            newAudio.play().catch(e => console.error("오디오 재생 실패:", e));
+            setAudio(newAudio);
+            return;
+        }
+
+        try {
+            setEnrichingId(vocab.id);
+            const { data: updatedVocab } = await fetchJSON(
+                `/vocab/${vocab.id}/enrich`,
+                withCreds({ method: 'POST' })
+            );
+
+            setWords(prevWords =>
+                prevWords.map(w => (w.id === updatedVocab.id ? updatedVocab : w))
+            );
+
+            if (updatedVocab.audio) {
+                const newAudio = new Audio(updatedVocab.audio);
+                newAudio.play().catch(e => console.error("오디오 재생 실패:", e));
+                setAudio(newAudio);
+            } else {
+                alert(`'${vocab.lemma}'에 대한 음성 파일을 찾을 수 없습니다.`);
+            }
+        } catch (e) {
+            console.error("Enrichment failed:", e);
+            alert("음성 정보를 가져오는 데 실패했습니다.");
+        } finally {
+            setEnrichingId(null);
+        }
+    };
+
+    useEffect(() => {
+        return () => {
+            if (audio) {
+                audio.pause();
+            }
+        };
+    }, [audio]);
 
     useEffect(() => {
         const ac = new AbortController();
@@ -191,7 +251,6 @@ export default function VocabList() {
         }
     };
     
-    // ▼▼▼ [신규] 검색어에 따라 단어 목록 필터링 ▼▼▼
     const filteredWords = useMemo(() => {
         const needle = searchTerm.trim().toLowerCase();
         if (!needle) return words;
@@ -238,7 +297,6 @@ export default function VocabList() {
                 </div>
             </div>
 
-            {/* ▼▼▼ [신규] 검색창 UI 추가 ▼▼▼ */}
             <div className="mb-3">
                 <input
                     type="search"
@@ -252,7 +310,6 @@ export default function VocabList() {
             {loading && <div>목록 로딩 중…</div>}
             {err && <div className="alert alert-warning">해당 레벨 목록을 불러오지 못했습니다.</div>}
             
-            {/* ▼▼▼ [수정] 검색 결과 없을 때 메시지 표시 ▼▼▼ */}
             {!loading && !err && filteredWords.length === 0 && (
                 <div className="text-muted">
                     {searchTerm ? '검색 결과가 없습니다.' : '이 레벨에 표시할 단어가 없습니다.'}
@@ -260,7 +317,6 @@ export default function VocabList() {
             )}
 
             <div className="row">
-                {/* ▼▼▼ [수정] words -> filteredWords로 변경 ▼▼▼ */}
                 {filteredWords.map(vocab => (
                     <VocabCard
                         key={vocab.id}
@@ -270,6 +326,8 @@ export default function VocabList() {
                         onAddSRS={handleAddSRS}
                         inWordbook={myWordbookIds.has(vocab.id)}
                         inSRS={srsIds.has(vocab.id)}
+                        onPlayAudio={playAudio}
+                        enrichingId={enrichingId}
                     />
                 ))}
             </div>

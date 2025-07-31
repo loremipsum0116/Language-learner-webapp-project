@@ -8,7 +8,8 @@ const prisma = new PrismaClient();
 
 const CSV_PATH = path.join(__dirname, '..', 'data', 'A1_vocab.csv');
 
-const HEADERS = ['lemma', 'ko', 'pos', 'gender', 'plural', 'levelCEFR', 'ipa', 'examples'];
+// ▼▼▼ [수정] 헤더에 'audioUrl' 추가 ▼▼▼
+const HEADERS = ['lemma', 'ko', 'pos', 'gender', 'plural', 'levelCEFR', 'ipa', 'examples', 'ipa_ko', 'audioUrl'];
 
 // 소문자 -> 대문자 보정 (ex: stadt -> Stadt)
 const titlecaseFirst = (s = '') => (s ? s[0].toUpperCase() + s.slice(1) : s);
@@ -28,6 +29,11 @@ async function main() {
         }));
 
     for await (const row of stream) {
+        // Nomen (명사), Verben (동사) 같은 섹션 구분자는 건너뜁니다.
+        if (row.lemma.includes('(') && !row.ko) {
+            continue;
+        }
+
         const lemma = titlecaseFirst(row.lemma);
         const ko = row.ko;
 
@@ -45,7 +51,7 @@ async function main() {
                     gender: row.gender || null,
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
-                    source: 'seed-A1', // ★ 이 줄 추가
+                    source: 'seed-A1',
                 },
                 create: {
                     lemma: lemma,
@@ -53,14 +59,12 @@ async function main() {
                     gender: row.gender || null,
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
-                    source: 'seed-A1', // ★ 이 줄 추가
+                    source: 'seed-A1',
                 },
             });
 
-            // ★ 변경됨: ipa, examples 처리
             let examplesJson = [];
             try {
-                // CSV의 예문이 JSON 형식이면 파싱, 아니면 무시
                 if (row.examples && row.examples.startsWith('[')) {
                     examplesJson = JSON.parse(row.examples);
                 }
@@ -68,24 +72,29 @@ async function main() {
                 console.warn(`⚠️ 예문(examples) JSON 파싱 실패: ${lemma}`);
             }
 
-            // KO 뜻을 예문 맨 앞에 gloss 형태로 추가 (중복 방지)
             const hasKoGloss = examplesJson.some(ex => ex.kind === 'gloss');
             if (!hasKoGloss) {
                 examplesJson.unshift({ de: '', ko: ko, source: 'seed-A1', kind: 'gloss' });
             }
 
-            // 2. DictEntry 테이블에 IPA, 예문 등 상세 정보 주입
+            // 2. DictEntry 테이블에 상세 정보 주입
             await prisma.dictEntry.upsert({
                 where: { vocabId: vocab.id },
-                update: { // 이미 존재하면 업데이트
+                update: {
                     ipa: row.ipa || null,
+                    ipaKo: row.ipa_ko || null,
+                    // ▼▼▼ [수정] audioUrl 필드 추가 ▼▼▼
+                    audioUrl: row.audioUrl || null,
                     examples: examplesJson,
                     attribution: 'Internal Seed',
                     license: 'Proprietary',
                 },
-                create: { // 없으면 새로 생성
+                create: {
                     vocabId: vocab.id,
                     ipa: row.ipa || null,
+                    ipaKo: row.ipa_ko || null,
+                    // ▼▼▼ [수정] audioUrl 필드 추가 ▼▼▼
+                    audioUrl: row.audioUrl || null,
                     examples: examplesJson,
                     attribution: 'Internal Seed',
                     license: 'Proprietary',
