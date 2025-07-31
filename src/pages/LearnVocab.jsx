@@ -174,7 +174,7 @@ export default function LearnVocab() {
         if (!current) return;
         const t = setInterval(() => {
             setIdx(i => (i + 1 < queue.length ? i + 1 : i));
-        }, 5000);
+        }, 8000);
         return () => clearInterval(t);
     }, [mode, auto, current, queue.length]);
 

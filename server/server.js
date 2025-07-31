@@ -1004,7 +1004,14 @@ app.get('/vocab/list', async (req, res) => {
             include: { dictMeta: { select: { examples: true, ipa: true, ipaKo: true, audioUrl: true, audioLocal: true } } },
         });
 
-        const items = vocabs.map(v => {
+        // ▼ 예문(examples) 중 audio 필드가 있는 경우만 통과
+        const filtered = vocabs.filter(v => {
+            const exs = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+            const hasExampleAudio = exs.some(ex => ex?.audio || ex?.audioUrl || ex?.audioLocal);
+            return hasExampleAudio;
+        });
+
+        const items = filtered.map(v => {
             const gloss = Array.isArray(v.dictMeta?.examples)
                 ? v.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
                 : null;
@@ -1117,13 +1124,43 @@ app.get('/my-wordbook', requireAuth, async (req, res) => {
         if (!Number.isFinite(cid)) return fail(res, 400, 'invalid categoryId');
         where.categoryId = cid;
     }
+    // 예문 오디오가 있는지 판단
+    function hasExampleAudio(dictMeta) {
+        const exs = Array.isArray(dictMeta?.examples) ? dictMeta.examples : [];
+        return exs.some(ex => ex?.audio || ex?.audioUrl || ex?.audioLocal);
+    }
 
+    // POST /my-wordbook/purge-uncategorized-no-audio
+    // 미분류( categoryId = null ) 중 예문 오디오 없는 항목을 전부 삭제
+    app.post('/my-wordbook/purge-uncategorized-no-audio', requireAuth, async (req, res) => {
+        try {
+            const rows = await prisma.userVocab.findMany({
+                where: { userId: req.user.id, categoryId: null },
+                include: { vocab: { include: { dictMeta: { select: { examples: true, audioUrl: true, audioLocal: true } } } } },
+            });
+            const targetVocabIds = rows
+                .filter(r => !hasExampleAudio(r.vocab?.dictMeta))
+                .map(r => r.vocabId);
+            if (targetVocabIds.length === 0) return ok(res, { count: 0 });
+
+            const result = await prisma.userVocab.deleteMany({
+                where: { userId: req.user.id, categoryId: null, vocabId: { in: targetVocabIds } }
+            });
+        } catch (e) {
+            console.error('purge-uncategorized-no-audio failed:', e);
+            return fail(res, 500, 'Internal Server Error');
+        }
+    });
     const rows = await prisma.userVocab.findMany({
         where,
-        include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true } } } } },
+        include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true, audioUrl: true, audioLocal: true } } } } },
         orderBy: { createdAt: 'desc' },
     });
-    return ok(res, rows);
+    const filtered = rows.filter(r => {
+        const exs = Array.isArray(r.vocab?.dictMeta?.examples) ? r.vocab.dictMeta.examples : [];
+        return exs.some(ex => ex?.audio || ex?.audioUrl || ex?.audioLocal);
+    });
+    return ok(res, filtered);
 });
 
 app.post('/my-wordbook/add', requireAuth, async (req, res) => {
