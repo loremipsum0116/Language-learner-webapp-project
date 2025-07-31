@@ -1,7 +1,7 @@
 // src/pages/LearnVocab.jsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { fetchJSON, withCreds } from '../api/client';
+import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 
 const isAbortError = (e) =>
@@ -17,7 +17,9 @@ export default function LearnVocab() {
     const idsParam = q.get('ids');
     const mode = q.get('mode');
     const autoParam = q.get('auto');
-
+    const [flipped, setFlipped] = useState(false);
+    const [audioEl, setAudioEl] = useState(null);
+    const [currentDetail, setCurrentDetail] = useState(null); // 예문/오디오 포함 상세
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -67,7 +69,24 @@ export default function LearnVocab() {
         return () => ac.abort();
     }, [idsParam, mode]);
 
+    const playUrl = (url) => {
+        if (!url) return;
+        if (audioEl) { try { audioEl.pause(); } catch { } }
+        const full = url.startsWith('/') ? `${API_BASE}${url}` : url;
+        const a = new Audio(full);
+        a.play().catch(e => console.error('오디오 재생 실패:', e, full));
+        setAudioEl(a);
+    };
+
+    const stopAudio = () => {
+        if (audioEl) { try { audioEl.pause(); } catch { } }
+        setAudioEl(null);
+    };
+
     const current = queue[idx];
+
+    useEffect(() => () => stopAudio(), []); // 언마운트 시 정지
+    useEffect(() => { stopAudio(); setFlipped(false); }, [idx]); // 카드 이동 시 앞면으로 복귀
 
     useEffect(() => {
         setCurrentPron(null);
@@ -77,10 +96,25 @@ export default function LearnVocab() {
             try {
                 if (current.vocabId) {
                     const { data } = await fetchJSON(`/vocab/${current.vocabId}`, withCreds({ signal: ac.signal }), 15000);
-                    setCurrentPron({
-                        ipa: data?.dictMeta?.ipa || null,
-                        ipaKo: data?.dictMeta?.ipaKo || null,
-                    });
+                    setCurrentDetail(data || null);
+                    setCurrentPron({ ipa: data?.dictMeta?.ipa || null, ipaKo: data?.dictMeta?.ipaKo || null });
+                    // 플래시 앞면 진입 시 단어 오디오 자동 재생
+                    if (mode === 'flash' && !flipped) {
+                        let audioUrl = data?.dictMeta?.audioLocal || data?.dictMeta?.audioUrl || null;
+                        if (!audioUrl) {
+                            try {
+                                const { data: enriched } = await fetchJSON(
+                                    `/vocab/${current.vocabId}/enrich`,
+                                    withCreds({ method: 'POST', signal: ac.signal }),
+                                    20000
+                                );
+                                audioUrl = enriched?.dictMeta?.audioLocal || enriched?.dictMeta?.audioUrl || null;
+                            } catch (e) {
+                                console.warn('enrich 실패(오디오 없음 가능):', e);
+                            }
+                        }
+                        if (audioUrl) playUrl(audioUrl);
+                    }
                     return;
                 }
                 if (current.question) {
@@ -94,7 +128,7 @@ export default function LearnVocab() {
             } catch (_) { /* no-op */ }
         })();
         return () => ac.abort();
-    }, [current?.question, current?.vocabId]);
+    }, [current?.question, current?.vocabId, mode, flipped]);
 
     const submit = async () => {
         if (!current || !userAnswer || isSubmitting) return;
@@ -140,7 +174,7 @@ export default function LearnVocab() {
         if (!current) return;
         const t = setInterval(() => {
             setIdx(i => (i + 1 < queue.length ? i + 1 : i));
-        }, 3000);
+        }, 5000);
         return () => clearInterval(t);
     }, [mode, auto, current, queue.length]);
 
@@ -208,14 +242,55 @@ export default function LearnVocab() {
                     </div>
                 </div>
                 <div className="card">
-                    <div className="card-body text-center p-5">
-                        <h2 className="display-5 mb-3" lang="de">{current.question}</h2>
-                        <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
-                        <p className="lead mt-3">뜻: {current.answer}</p>
+                    <div
+                        className="card-body text-center p-5"
+                        role="button"
+                        onClick={() => setFlipped(f => !f)}
+                        title="카드를 클릭하면 앞/뒤가 전환됩니다"
+                    >
+                        {!flipped ? (
+                            <>
+                                <h2 className="display-5 mb-3" lang="de">{current.question}</h2>
+                                <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
+                                <div className="text-muted mt-2">카드를 클릭하면 뜻/예문이 표시됩니다.</div>
+                            </>
+                        ) : (
+                            <>
+                                <div className="lead mb-2"><strong>뜻:</strong> {current.answer}</div>
+                                {Array.isArray(currentDetail?.dictMeta?.examples) && (
+                                    <ul className="list-unstyled text-start mx-auto" style={{ maxWidth: 560 }}>
+                                        {currentDetail.dictMeta.examples
+                                            .filter(ex => ex && ex.kind !== 'gloss')
+                                            .slice(0, 5)
+                                            .map((ex, i) => (
+                                                <li key={i} className="mb-2 d-flex justify-content-between align-items-start">
+                                                    <div>
+                                                        <span lang="de">{ex.de}</span>
+                                                        {ex.ko ? <div className="text-muted small">— {ex.ko}</div> : null}
+                                                    </div>
+                                                    {ex.audioUrl ? (
+                                                        <button
+                                                            className="btn btn-sm btn-outline-secondary ms-2"
+                                                            onClick={(e) => { e.stopPropagation(); playUrl(ex.audioUrl); }}
+                                                            title="예문 듣기"
+                                                        >▶</button>
+                                                    ) : null}
+                                                </li>
+                                            ))}
+                                    </ul>
+                                )}
+                            </>
+                        )}
                     </div>
                     <div className="card-footer d-flex gap-2">
-                        <button className="btn btn-outline-secondary w-100" onClick={() => setIdx(i => Math.max(0, i - 1))}>← 이전</button>
-                        <button className="btn btn-primary w-100" onClick={() => setIdx(i => Math.min(queue.length - 1, i + 1))}>다음 →</button>
+                        <button
+                            className="btn btn-outline-secondary w-25"
+                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.max(0, i - 1)); }}
+                        >← 이전</button>
+                        <button
+                            className="btn btn-primary w-75"
+                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.min(queue.length - 1, i + 1)); }}
+                        >다음 →</button>
                     </div>
                 </div>
             </main>

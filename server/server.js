@@ -237,7 +237,7 @@ async function enrichFromWiktionary(queryLemma) {
             if (audioTag.length) return audioTag.attr('src');
             return null;
         };
-        
+
         const horbeispieleSection = findSection('Hörbeispiele');
         audioUrl = findAudio(horbeispieleSection);
         if (!audioUrl) {
@@ -246,7 +246,7 @@ async function enrichFromWiktionary(queryLemma) {
         if (!audioUrl) {
             audioUrl = findAudio($('body')); // 최후의 수단
         }
-        
+
         if (audioUrl && audioUrl.startsWith('//')) {
             audioUrl = 'https:' + audioUrl;
         }
@@ -302,24 +302,126 @@ async function enrichFromWiktionary(queryLemma) {
 
 // ===== Auth =====
 app.post('/auth/register', async (req, res) => {
-    let { email, password } = req.body || {};
-    if (!email || !password) return fail(res, 400, 'email and password required');
+    const { email, password } = req.body;
+    if (!email || !password) {
+        return fail(res, 400, 'Email and password are required');
+    }
 
-    email = email.toLowerCase().trim();
+    try {
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) {
+            return fail(res, 409, 'User with this email already exists');
+        }
 
-    const exists = await prisma.user.findUnique({ where: { email } });
-    if (exists) return fail(res, 409, 'email already exists');
+        const passwordHash = await bcrypt.hash(password, 10);
 
-    const passwordHash = await bcrypt.hash(password, 11);
-    const user = await prisma.user.create({
-        data: { email, passwordHash, role: 'USER', profile: { level: 'A2', tone: 'formal', address: 'Sie' } },
-        select: { id: true, email: true, role: true, profile: true }
-    });
+        // ★★★★★ 관리자 계정 지정 로직 ★★★★★
+        // 특정 이메일 주소일 경우 'admin' 역할을 부여합니다.
+        const userRole = email === 'super@naver.com' ? 'admin' : 'USER';
 
-    setAuthCookie(res, signToken({ id: user.id, email: user.email, role: user.role }));
-    return ok(res, user);
+        const user = await prisma.user.create({
+            data: {
+                email,
+                passwordHash,
+                role: userRole, // ★ role 필드에 userRole 변수 할당
+            },
+        });
+
+        // DELETE /vocab/:id - 단어 영구 삭제 (관리자용)
+        app.delete('/vocab/:id', requireAuth, async (req, res) => {
+            // 관리자 권한이 있는지 확인합니다.
+            if (req.user.role !== 'admin') {
+                return fail(res, 403, 'Forbidden: Admins only');
+            }
+
+            const id = Number(req.params.id);
+            if (!Number.isFinite(id)) {
+                return fail(res, 400, 'Invalid ID');
+            }
+
+            try {
+                // 트랜잭션을 사용하여 단어와 관련된 모든 데이터를 (사전 정보, 내 단어장, SRS 카드 등)
+                // 한 번에 안전하게 삭제합니다.
+                await prisma.$transaction(async (tx) => {
+                    await tx.userVocab.deleteMany({ where: { vocabId: id } });
+                    await tx.sRSCard.deleteMany({ where: { itemType: 'vocab', itemId: id } });
+                    await tx.dictEntry.deleteMany({ where: { vocabId: id } });
+                    await tx.vocab.delete({ where: { id } });
+                });
+
+                return ok(res, { message: `Vocab ID ${id} and all related data deleted successfully.` });
+            } catch (e) {
+                // Prisma에서 "삭제할 레코드가 없습니다" 오류가 발생한 경우
+                if (e.code === 'P2025') {
+                    return fail(res, 404, 'Vocab not found');
+                }
+                console.error(`DELETE /vocab/${id} failed:`, e);
+                return fail(res, 500, 'Internal Server Error');
+            }
+        });
+        // 회원가입 성공 후 바로 로그인 처리
+        const token = jwt.sign({ id: user.id, email: user.email, role: user.role }, JWT_SECRET, {
+            expiresIn: `${SLIDING_MINUTES}m`,
+        });
+
+        res.cookie(COOKIE_NAME, token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            maxAge: SLIDING_MINUTES * 60 * 1000,
+        });
+
+        // 비밀번호 해시를 제외하고 사용자 정보 반환
+        const { passwordHash: _, ...userSafe } = user;
+        return ok(res, userSafe);
+
+    } catch (e) {
+        console.error('POST /auth/register failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
 });
+// POST /my-wordbook/add-many - 여러 단어를 내 단어장에 추가
+app.post('/my-wordbook/add-many', requireAuth, async (req, res) => {
+    const { vocabIds } = req.body;
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
 
+    const userId = req.user.id;
+    let newCount = 0;
+
+    try {
+        // 이미 단어장에 있는 단어는 건너뛰고, 새로운 단어만 추가합니다.
+        const dataToCreate = vocabIds.map(id => ({
+            userId,
+            vocabId: Number(id),
+        }));
+
+        // createMany는 중복을 허용하지 않으므로, 먼저 존재하는 항목을 찾습니다.
+        const existingEntries = await prisma.userVocab.findMany({
+            where: {
+                userId,
+                vocabId: { in: vocabIds.map(Number) },
+            },
+            select: { vocabId: true },
+        });
+        const existingVocabIds = new Set(existingEntries.map(e => e.vocabId));
+
+        const newEntries = dataToCreate.filter(d => !existingVocabIds.has(d.vocabId));
+
+        if (newEntries.length > 0) {
+            const result = await prisma.userVocab.createMany({
+                data: newEntries,
+            });
+            newCount = result.count;
+        }
+
+        return ok(res, { count: newCount });
+    } catch (e) {
+        console.error('POST /my-wordbook/add-many failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
 app.post('/auth/login', async (req, res) => {
     let { email, password } = req.body || {};
     if (!email || !password) return fail(res, 400, 'email and password required');
@@ -1021,8 +1123,7 @@ app.get('/my-wordbook', requireAuth, async (req, res) => {
         include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true } } } } },
         orderBy: { createdAt: 'desc' },
     });
-    const words = rows.map(r => r.vocab);
-    return ok(res, words);
+    return ok(res, rows);
 });
 
 app.post('/my-wordbook/add', requireAuth, async (req, res) => {

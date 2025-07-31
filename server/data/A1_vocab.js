@@ -132,7 +132,6 @@ module.exports = [
     ipa: "[haʊ̯s]",
     examples: [
       { "de": "Das Haus ist alt.", "ko": "그 집은 오래되었습니다.", "audioUrl": "/static/audio/sentence/pronunciation_de_das_haus_ist_alt..mp3" },
-      { "de": "Das Haus ist größer als ich dachte!", "ko": "그 집은 내가 생각했던 것보다 더 큽니다!", "audioUrl": "/static/audio/sentence/pronunciation_de_das_haus_ist_größer_als_ich_dachte!.mp3" }
     ],
     ipa_ko: "하우스",
     audioUrl: ""
@@ -158,7 +157,6 @@ module.exports = [
     levelCEFR: "A1",
     ipa: "[ʃtat]",
     examples: [
-      { "de": "Die schöne Stadt ist klein.", "ko": "그 아름다운 도시는 작습니다.", "audioUrl": "/static/audio/sentence/pronunciation_de_die_schöne_stadt_ist_klein..mp3" },
       { "de": "Morgen muss ich in die Stadt.", "ko": "내일 시내에 가야 해요.", "audioUrl": "/static/audio/sentence/pronunciation_de_morgen_muss_ich_in_die_stadt..mp3" }
     ],
     ipa_ko: "슈타트",
@@ -405,7 +403,7 @@ module.exports = [
     levelCEFR: "A1",
     ipa: "[ɡʁoːs]",
     examples: [
-      { "de": "Das Haus ist größer als ich dachte!", "ko": "그 집은 내가 생각했던 것보다 더 큽니다!", "audioUrl": "/static/audio/sentence/pronunciation_de_das_haus_ist_größer_als_ich_dachte!.mp3" }
+              { "de": "Das Haus ist größer als ich dachte!", "ko": "그 집은 내가 생각했던 것보다 더 큽니다!", "audioUrl": "/static/audio/sentence/pronunciation_de_das_haus_ist_größer_als_ich_dachte!.mp3" }
     ],
     ipa_ko: "그로스",
     audioUrl: ""
