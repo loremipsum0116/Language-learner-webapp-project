@@ -473,6 +473,50 @@ app.patch('/me', requireAuth, async (req, res) => {
 
 // ===== SRS =====
 
+// server.js
+
+// [추가] SRS 덱을 통째로 교체하는 API
+app.post('/srs/replace-deck', requireAuth, async (req, res) => {
+    const { vocabIds } = req.body;
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
+
+    const userId = req.user.id;
+    // 중복 제거 및 유효한 숫자 ID만 필터링
+    const uniqueVocabIds = [...new Set(vocabIds.map(Number).filter(Boolean))];
+
+    try {
+        // 트랜잭션으로 원자적 실행 보장
+        await prisma.$transaction(async (tx) => {
+            // 1단계: 사용자의 기존 SRS 카드 모두 삭제
+            await tx.sRSCard.deleteMany({
+                where: { userId: userId, itemType: 'vocab' },
+            });
+
+            // 2단계: 제공된 단어 ID로 새 카드 생성
+            const dataToCreate = uniqueVocabIds.map(id => ({
+                userId: userId,
+                itemType: 'vocab',
+                itemId: id,
+                stage: 0,
+                nextReviewAt: new Date(), // 즉시 복습 가능하도록 설정
+            }));
+
+            if (dataToCreate.length > 0) {
+                await tx.sRSCard.createMany({
+                    data: dataToCreate,
+                });
+            }
+        });
+
+        return ok(res, { message: `Successfully replaced SRS deck with ${uniqueVocabIds.length} cards.` });
+    } catch (e) {
+        console.error('POST /srs/replace-deck failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
+
 app.get('/srs/all-cards', requireAuth, async (req, res) => {
     try {
         const cards = await prisma.sRSCard.findMany({
@@ -579,6 +623,7 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
 
             queue.push({
                 cardId: c.id,
+                vocabId: v.id,
                 question: v.lemma,
                 answer: correct,
                 quizType: 'mcq',
@@ -747,6 +792,7 @@ app.get('/odat-note/queue', requireAuth, async (req, res) => {
             const options = [correct, ...wrong].sort(() => Math.random() - 0.5);
             quizQueue.push({
                 cardId: card.id,
+                vocabId: vocab.id,
                 question: vocab.lemma,
                 answer: correct,
                 quizType: 'mcq',
@@ -860,6 +906,7 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
 
             quizQueue.push({
                 cardId: card.id,
+                vocabId: v.id,
                 question: v.lemma,
                 answer: correct,
                 options: [correct, ...wrong].sort(() => Math.random() - 0.5),

@@ -1,11 +1,28 @@
 // src/pages/LearnVocab.jsx
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 
 const isAbortError = (e) =>
     e?.name === 'AbortError' || e?.message?.toLowerCase?.().includes('abort');
+
+// ★★★★★ 2. 셔플 기능 추가 ★★★★★
+// 배열을 무작위로 섞는 Fisher-Yates 알고리즘 함수
+function shuffleArray(array) {
+    let currentIndex = array.length, randomIndex;
+    // 배열에 요소가 남아있는 동안
+    while (currentIndex !== 0) {
+        // 남은 요소 중 하나를 선택
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // 현재 요소와 교환
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+    }
+    return array;
+}
+
 
 function useQuery() {
     const { search } = useLocation();
@@ -13,13 +30,15 @@ function useQuery() {
 }
 
 export default function LearnVocab() {
+    const navigate = useNavigate();
+    const location = useLocation();
     const q = useQuery();
     const idsParam = q.get('ids');
     const mode = q.get('mode');
     const autoParam = q.get('auto');
     const [flipped, setFlipped] = useState(false);
     const [audioEl, setAudioEl] = useState(null);
-    const [currentDetail, setCurrentDetail] = useState(null); // 예문/오디오 포함 상세
+    const [currentDetail, setCurrentDetail] = useState(null);
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -35,6 +54,21 @@ export default function LearnVocab() {
         setAuto(autoParam === '1');
     }, [autoParam]);
 
+    const reload = async () => {
+        try {
+            setReloading(true);
+            const { data } = await fetchJSON('/srs/queue?limit=100', withCreds(), 15000);
+            setQueue(Array.isArray(data) ? data : []);
+            setIdx(0);
+            setUserAnswer(null);
+            setFeedback(null);
+        } catch (e) {
+            if (!isAbortError(e)) setErr(e);
+        } finally {
+            setReloading(false);
+        }
+    };
+
     useEffect(() => {
         const ac = new AbortController();
         (async () => {
@@ -43,23 +77,37 @@ export default function LearnVocab() {
                 setIdx(0); setUserAnswer(null); setFeedback(null);
 
                 let data;
+                let isDefaultSrsMode = false;
                 if (mode === 'odat') {
-                    ({ data } = await fetchJSON(
-                        '/odat-note/queue?limit=100',
-                        withCreds({ signal: ac.signal }),
-                        20000
-                    ));
+                    ({ data } = await fetchJSON('/odat-note/queue?limit=100', withCreds({ signal: ac.signal }), 20000));
                 } else if (idsParam) {
                     const vocabIds = idsParam.split(',').map(n => Number(n)).filter(Number.isFinite);
-                    ({ data } = await fetchJSON(
-                        '/quiz/by-vocab',
-                        withCreds({ method: 'POST', body: JSON.stringify({ vocabIds }), signal: ac.signal }),
-                        20000
-                    ));
+                    ({ data } = await fetchJSON('/quiz/by-vocab', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds }), signal: ac.signal }), 20000));
                 } else {
+                    isDefaultSrsMode = true;
                     ({ data } = await fetchJSON('/srs/queue?limit=100', withCreds({ signal: ac.signal }), 15000));
                 }
-                setQueue(Array.isArray(data) ? data : []);
+                
+                let fetchedQueue = Array.isArray(data) ? data : [];
+
+                // ★★★★★ 2. 자동학습(flash) 모드일 때 큐를 섞음 ★★★★★
+                if (mode === 'flash') {
+                    fetchedQueue = shuffleArray(fetchedQueue);
+                }
+                setQueue(fetchedQueue);
+
+                if (isDefaultSrsMode && fetchedQueue.length === 0) {
+                    if (window.confirm("현재 학습할 SRS 문제가 없습니다. 단어를 추가하시겠습니까?")) {
+                        if (window.confirm("내 단어장으로 이동하시겠습니까?\n(취소 시 '전체 단어장'으로 이동합니다.)")) {
+                            navigate('/my-wordbook');
+                        } else {
+                            navigate('/vocab');
+                        }
+                    } else {
+                        navigate('/learn');
+                    }
+                }
+
             } catch (e) {
                 if (!isAbortError(e)) setErr(e);
             } finally {
@@ -67,8 +115,10 @@ export default function LearnVocab() {
             }
         })();
         return () => ac.abort();
-    }, [idsParam, mode]);
+    }, [idsParam, mode, navigate]);
 
+    // ... (playUrl, stopAudio, current 등 나머지 함수는 모두 동일)
+    
     const playUrl = (url) => {
         if (!url) return;
         if (audioEl) { try { audioEl.pause(); } catch { } }
@@ -85,8 +135,8 @@ export default function LearnVocab() {
 
     const current = queue[idx];
 
-    useEffect(() => () => stopAudio(), []); // 언마운트 시 정지
-    useEffect(() => { stopAudio(); setFlipped(false); }, [idx]); // 카드 이동 시 앞면으로 복귀
+    useEffect(() => () => stopAudio(), []);
+    useEffect(() => { stopAudio(); setFlipped(false); }, [idx]);
 
     useEffect(() => {
         setCurrentPron(null);
@@ -98,7 +148,6 @@ export default function LearnVocab() {
                     const { data } = await fetchJSON(`/vocab/${current.vocabId}`, withCreds({ signal: ac.signal }), 15000);
                     setCurrentDetail(data || null);
                     setCurrentPron({ ipa: data?.dictMeta?.ipa || null, ipaKo: data?.dictMeta?.ipaKo || null });
-                    // 플래시 앞면 진입 시 단어 오디오 자동 재생
                     if (mode === 'flash' && !flipped) {
                         let audioUrl = data?.dictMeta?.audioLocal || data?.dictMeta?.audioUrl || null;
                         if (!audioUrl) {
@@ -132,13 +181,10 @@ export default function LearnVocab() {
 
     const submit = async () => {
         if (!current || !userAnswer || isSubmitting) return;
-
         setIsSubmitting(true);
         const isCorrect = userAnswer === current.answer;
-
         try {
             let cardId = current.cardId;
-
             if (!cardId && current.vocabId) {
                 const { data: newCard } = await fetchJSON(
                     `/vocab/${current.vocabId}/bookmark`,
@@ -146,7 +192,6 @@ export default function LearnVocab() {
                 );
                 cardId = newCard?.id;
             }
-
             if (cardId) {
                 await fetchJSON('/srs/answer', withCreds({
                     method: 'POST',
@@ -155,7 +200,6 @@ export default function LearnVocab() {
             } else {
                 console.error('결과를 기록할 cardId를 확보하지 못했습니다.', current);
             }
-
         } catch (e) {
             if (!isAbortError(e)) {
                 console.error('답변 제출 또는 카드 생성 실패:', e);
@@ -169,44 +213,48 @@ export default function LearnVocab() {
 
     const next = () => { setIdx(i => i + 1); setUserAnswer(null); setFeedback(null); };
 
-    // ★★★★★ [수정] 자동 넘김 시간 20초로 변경 ★★★★★
     useEffect(() => {
         if (mode !== 'flash' || !auto || !current) return;
         const timer = setInterval(() => {
-            setIdx(i => (i + 1 < queue.length ? i + 1 : i));
-        }, 20000); // 20초로 변경
+            setIdx(i => i + 1);
+        }, 20000);
         return () => clearInterval(timer);
     }, [mode, auto, current, queue.length]);
 
-    // ★★★★★ [추가] 자동 뒤집기 기능 (5초 간격) ★★★★★
     useEffect(() => {
         if (mode !== 'flash' || !auto) return;
-    
         const flipInterval = setInterval(() => {
             setFlipped(f => !f);
-        }, 5000); // 5초마다 뒤집기
-    
+        }, 5000);
         return () => clearInterval(flipInterval);
-    }, [idx, mode, auto]); // 카드가 바뀔 때마다 타이머를 재설정
+    }, [idx, mode, auto]);
 
-    const reload = async () => {
+    const handleRestart = () => {
+        setIdx(0);
+        setUserAnswer(null);
+        setFeedback(null);
+        setFlipped(false);
+    };
+
+    const handleReplaceSrsAndLearn = async () => {
+        setReloading(true);
         try {
-            setReloading(true);
-            if (mode === 'odat') {
-                const { data } = await fetchJSON('/odat-note/queue?limit=100', withCreds(), 20000);
-                setQueue(Array.isArray(data) ? data : []);
-            } else if (idsParam) {
-                const vocabIds = idsParam.split(',').map(n => Number(n)).filter(Number.isFinite);
-                const { data } = await fetchJSON('/quiz/by-vocab', withCreds({
-                    method: 'POST', body: JSON.stringify({ vocabIds })
-                }), 20000);
-                setQueue(Array.isArray(data) ? data : []);
-            } else {
-                const { data } = await fetchJSON('/srs/queue?limit=100', withCreds(), 15000);
-                setQueue(Array.isArray(data) ? data : []);
+            const vocabIds = queue.map(item => item.vocabId).filter(Boolean);
+            if (vocabIds.length === 0) {
+                alert("학습할 단어가 없습니다.");
+                return;
             }
-            setIdx(0); setUserAnswer(null); setFeedback(null);
-        } finally { setReloading(false); }
+            await fetchJSON('/srs/replace-deck', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ vocabIds }),
+            }));
+            navigate('/learn/vocab', { state: { fromFlashcardSrs: true } });
+        } catch (e) {
+            console.error("SRS 덱 교체 실패:", e);
+            alert("SRS 학습으로 이동하는 데 실패했습니다.");
+        } finally {
+            setReloading(false);
+        }
     };
 
     if (loading) return <main className="container py-4"><h4>퀴즈 로딩 중…</h4></main>;
@@ -220,22 +268,37 @@ export default function LearnVocab() {
             </main>
         );
     }
+    
     if (!current) {
+        const fromFlashcardSrs = location.state?.fromFlashcardSrs;
+
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
                 <div className="p-4 bg-light rounded text-center">
-                    <h4 className="mb-2">학습 완료</h4>
-                    <div className="d-flex justify-content-center gap-2">
-                        <button className="btn btn-primary" onClick={reload} disabled={reloading}>
-                            {reloading ? '불러오는 중…' : '새로 불러오기'}
+                    <h4 className="mb-2">🎉 학습 완료!</h4>
+                    <p className="text-muted">학습을 모두 마쳤습니다. 다음 단계를 선택하세요.</p>
+                    <div className="d-flex justify-content-center gap-3 mt-4">
+                        {/* ★★★★★ 1. '다시 학습하기' 버튼이 항상 현재 큐를 재시작하도록 수정 ★★★★★ */}
+                        <button className="btn btn-outline-secondary" onClick={handleRestart} disabled={reloading}>
+                            다시 학습하기
                         </button>
-                        <Link to="/my-wordbook" className="btn btn-outline-secondary">내 단어장</Link>
+                        
+                        {fromFlashcardSrs ? (
+                            <Link to="/odat-note" className="btn btn-primary">
+                                틀린 문제 다시 풀기
+                            </Link>
+                        ) : (
+                            <button className="btn btn-primary" onClick={handleReplaceSrsAndLearn} disabled={reloading}>
+                                {reloading ? "준비 중..." : "지금 단어들로 SRS 학습하기"}
+                            </button>
+                        )}
                     </div>
                 </div>
             </main>
         );
     }
 
+    // ... (나머지 JSX 렌더링 코드는 모두 동일)
     if (mode === 'flash') {
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
@@ -253,7 +316,6 @@ export default function LearnVocab() {
                     </div>
                 </div>
                 <div className="card">
-                    {/* ★★★★★ [수정] 카드 높이 3.5배 증가 및 내용 세로 정렬 ★★★★★ */}
                     <div
                         className="card-body text-center p-5 d-flex flex-column justify-content-center"
                         role="button"
@@ -302,7 +364,7 @@ export default function LearnVocab() {
                         >← 이전</button>
                         <button
                             className="btn btn-primary w-75"
-                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.min(queue.length - 1, i + 1)); }}
+                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => i + 1); }}
                         >다음 →</button>
                     </div>
                 </div>

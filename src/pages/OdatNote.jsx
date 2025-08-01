@@ -10,19 +10,17 @@ const isAbort = (e) =>
 export default function OdatNote() {
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
-    // item: {cardId, vocabId, lemma, ko_gloss, incorrectCount, updatedAt, ipa?, ipaKo?}
     const [items, setItems] = useState([]);
     const [selected, setSelected] = useState(new Set());
     const [q, setQ] = useState('');
-
-    // ★ 퀴즈 상태
     const [quizOpen, setQuizOpen] = useState(false);
     const [quizLoading, setQuizLoading] = useState(false);
-    // quiz item: {cardId, question, answer, options, pron?: {ipa, ipaKo}}
     const [quizQueue, setQuizQueue] = useState([]);
     const [quizIndex, setQuizIndex] = useState(0);
     const [userAnswer, setUserAnswer] = useState(null);
-    const [feedback, setFeedback] = useState(null); // {status:'pass'|'fail', answer:string}
+    const [feedback, setFeedback] = useState(null);
+
+    // 퀴즈 실행 중 배경 제어 로직은 더 이상 필요 없으므로 삭제합니다.
 
     const load = async () => {
         const ac = new AbortController();
@@ -68,7 +66,6 @@ export default function OdatNote() {
         });
     };
 
-    // ★ 단건 정답 처리(= 오답노트에서 제거)
     const resolveOne = async (cardId) => {
         try {
             await fetchJSON(
@@ -89,7 +86,6 @@ export default function OdatNote() {
         }
     };
 
-    // ★ 선택 항목 일괄 정답 처리
     const resolveSelected = async () => {
         const ids = Array.from(selected);
         if (ids.length === 0) return;
@@ -114,7 +110,6 @@ export default function OdatNote() {
         }
     };
 
-    // ★ 선택 퀴즈 시작
     const startSelectedQuiz = async () => {
         const ids = Array.from(selected);
         if (ids.length === 0) {
@@ -148,7 +143,6 @@ export default function OdatNote() {
         }
     };
 
-    // ★ 퀴즈 제출 -> 정답이면 서버에 pass 전송 + 리스트에서 제거
     const currentQuiz = quizQueue[quizIndex];
     const submitQuizAnswer = async (isCorrect) => {
         if (!currentQuiz) return;
@@ -168,7 +162,6 @@ export default function OdatNote() {
                         }),
                     })
                 );
-                // 화면에서 즉시 제거
                 setItems((prev) =>
                     prev.filter((x) => x.cardId !== currentQuiz.cardId)
                 );
@@ -216,7 +209,6 @@ export default function OdatNote() {
                         value={q}
                         onChange={(e) => setQ(e.target.value)}
                     />
-                    {/* ▼▼▼ [수정] 버튼 그룹 재정렬 및 '전체 오답 퀴즈' 버튼 추가 ▼▼▼ */}
                     <button
                         className="btn btn-sm btn-outline-secondary"
                         disabled={filtered.length === 0}
@@ -242,9 +234,6 @@ export default function OdatNote() {
                     >
                         {quizLoading ? '퀴즈 준비 중…' : '선택 퀴즈 시작'}
                     </button>
-                    <Link to="/learn/vocab?mode=odat" className="btn btn-sm btn-warning">
-                        전체 오답 퀴즈
-                    </Link>
                     <button className="btn btn-sm btn-outline-primary" onClick={load}>
                         새로고침
                     </button>
@@ -276,7 +265,7 @@ export default function OdatNote() {
                                 checked={selected.has(item.cardId)}
                                 onChange={() => toggle(item.cardId)}
                             />
-                            <div>
+                              <div>
                                 <h5 className="mb-1" lang="de">
                                     {item.lemma}
                                 </h5>
@@ -297,11 +286,11 @@ export default function OdatNote() {
                 ))}
             </div>
 
-            {/* ★ 선택 퀴즈 모달 */}
             {quizOpen && (
                 <div
                     className="modal show"
-                    style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}
+                    // ★★★★★ 1. 배경을 불투명한 흰색으로 변경 ★★★★★
+                    style={{ display: 'block', backgroundColor: 'white' }}
                 >
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">

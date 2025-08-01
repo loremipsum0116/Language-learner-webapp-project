@@ -2,14 +2,19 @@
 /* 1. CSS 변수를 사용한 새로운 디자인 시스템 정의 */
 :root {
   --font-sans: 'Inter', sans-serif;
-  --color-primary: #FF7A00; /* Vibrant Orange */
+  --color-primary: #FF7A00;
+  /* Vibrant Orange */
   --color-primary-dark: #E66E00;
-  --color-charcoal: #2D3748; /* Charcoal Navy */
-  --color-slate: #718096;   /* Slate Gray */
+  --color-charcoal: #2D3748;
+  /* Charcoal Navy */
+  --color-slate: #718096;
+  /* Slate Gray */
   --color-light-gray: #F7FAFC;
   --color-border: #E2E8F0;
-  --border-radius-sm: 0.375rem; /* 6px */
-  --border-radius-md: 0.5rem;   /* 8px */
+  --border-radius-sm: 0.375rem;
+  /* 6px */
+  --border-radius-md: 0.5rem;
+  /* 8px */
   --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
@@ -31,7 +36,9 @@ body {
   border-radius: var(--border-radius-sm);
   transition: all 0.2s ease-in-out;
 }
-.btn-primary:hover, .btn-primary:focus {
+
+.btn-primary:hover,
+.btn-primary:focus {
   background-color: var(--color-primary-dark);
   border-color: var(--color-primary-dark);
   box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
@@ -43,12 +50,14 @@ body {
   font-weight: 600;
   border-radius: var(--border-radius-sm);
 }
+
 .btn-outline-primary:hover {
   background-color: var(--color-primary);
   color: white;
 }
 
-.btn-secondary, .btn-outline-secondary {
+.btn-secondary,
+.btn-outline-secondary {
   border-radius: var(--border-radius-sm);
 }
 
@@ -59,11 +68,14 @@ body {
   box-shadow: var(--shadow-sm);
   transition: all 0.2s ease-in-out;
 }
+
 .card:hover {
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
 }
-.card-header, .card-footer {
+
+.card-header,
+.card-footer {
   background-color: #fff;
   border-color: var(--color-border);
 }
@@ -73,17 +85,21 @@ body {
   box-shadow: var(--shadow-sm);
   border-bottom-color: var(--color-border) !important;
 }
+
 .navbar-brand {
   color: var(--color-primary) !important;
   font-weight: 700;
 }
 
 /* 폼 컨트롤 */
-.form-control, .form-select {
+.form-control,
+.form-select {
   border-radius: var(--border-radius-sm);
   border-color: var(--color-border);
 }
-.form-control:focus, .form-select:focus {
+
+.form-control:focus,
+.form-select:focus {
   border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
 }
@@ -99,6 +115,15 @@ body {
 
 /* 리스트 그룹 (단어장) */
 .list-group-item.active {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* src/App.css */
+
+/* 퀴즈 모달이 열렸을 때 body의 배경을 제어하기 위한 스타일 */
+body.quiz-modal-open {
+  background-image: none;
+  background-color: var(--color-light-gray);
+  /* 기본 배경색으로 대체 */
 }
