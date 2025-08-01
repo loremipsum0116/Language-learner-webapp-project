@@ -169,14 +169,25 @@ export default function LearnVocab() {
 
     const next = () => { setIdx(i => i + 1); setUserAnswer(null); setFeedback(null); };
 
+    // ★★★★★ [수정] 자동 넘김 시간 20초로 변경 ★★★★★
+    useEffect(() => {
+        if (mode !== 'flash' || !auto || !current) return;
+        const timer = setInterval(() => {
+            setIdx(i => (i + 1 < queue.length ? i + 1 : i));
+        }, 20000); // 20초로 변경
+        return () => clearInterval(timer);
+    }, [mode, auto, current, queue.length]);
+
+    // ★★★★★ [추가] 자동 뒤집기 기능 (5초 간격) ★★★★★
     useEffect(() => {
         if (mode !== 'flash' || !auto) return;
-        if (!current) return;
-        const t = setInterval(() => {
-            setIdx(i => (i + 1 < queue.length ? i + 1 : i));
-        }, 8000);
-        return () => clearInterval(t);
-    }, [mode, auto, current, queue.length]);
+    
+        const flipInterval = setInterval(() => {
+            setFlipped(f => !f);
+        }, 5000); // 5초마다 뒤집기
+    
+        return () => clearInterval(flipInterval);
+    }, [idx, mode, auto]); // 카드가 바뀔 때마다 타이머를 재설정
 
     const reload = async () => {
         try {
@@ -242,11 +253,13 @@ export default function LearnVocab() {
                     </div>
                 </div>
                 <div className="card">
+                    {/* ★★★★★ [수정] 카드 높이 3.5배 증가 및 내용 세로 정렬 ★★★★★ */}
                     <div
-                        className="card-body text-center p-5"
+                        className="card-body text-center p-5 d-flex flex-column justify-content-center"
                         role="button"
                         onClick={() => setFlipped(f => !f)}
                         title="카드를 클릭하면 앞/뒤가 전환됩니다"
+                        style={{ minHeight: '40rem' }}
                     >
                         {!flipped ? (
                             <>
@@ -302,7 +315,6 @@ export default function LearnVocab() {
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <strong>{mode === 'odat' ? '오답노트 퀴즈' : 'SRS 퀴즈'}</strong>
                 <div className="d-flex align-items-center gap-2">
-                    {/* ▼▼▼ [수정] '퀴즈 편집' 버튼 추가 ▼▼▼ */}
                     <Link to="/learn/srs-manager" className="btn btn-sm btn-outline-secondary">퀴즈 편집</Link>
                     <Link to="/odat-note" className="btn btn-sm btn-outline-danger">오답노트</Link>
                     <span className="text-muted">{idx + 1} / {queue.length}</span>

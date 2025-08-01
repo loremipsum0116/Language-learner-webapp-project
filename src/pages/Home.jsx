@@ -472,7 +472,7 @@ function ReadingTeaser() {
  * - 접근성: 라벨, 키보드 포커스, 가상 키패드
  */
 export default function Home() {
-  const { user, updateProfile, loading} = useAuth();
+  const { user, updateProfile, loading } = useAuth();
   console.log('Auth State in Home:', { user, loading });
   const [me, setMe] = useState(null);
   const [authErr, setAuthErr] = useState(null);
@@ -528,10 +528,9 @@ export default function Home() {
   return (
     <main className="container py-4">
       {/* 헤더/내비 */}
-      <nav className="navbar navbar-expand-lg mb-4" aria-label="main navigation">
-        <div className="container-fluid">
-          <span className="navbar-brand fw-bold">Deutsch Learner</span>
-          <div className="ms-auto d-flex gap-2">
+
+      <div className="container-fluid">
+        {/* <div className="ms-auto d-flex gap-2">
             {user ? (
               <>
                 <Link className="btn btn-outline-secondary btn-sm" to="/dashboard">대시보드</Link>
@@ -544,12 +543,12 @@ export default function Home() {
               </>
             )}
 
-          </div>
-        </div>
-      </nav>
+          </div> */}
+      </div>
+
 
       {/* 히어로 */}
-      <section className="mb-4">
+      <section className="mb-4 hero-section">
         <div className="p-4 p-md-5 bg-light rounded-3">
           <h1 className="display-6 mb-2">CEFR A1–C1 독일어 학습</h1>
           <p className="mb-3">

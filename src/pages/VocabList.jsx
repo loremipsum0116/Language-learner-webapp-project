@@ -33,8 +33,8 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                                 title="단어 듣기"
                             >
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
                                 </svg>
                             </button>
                         </div>
@@ -59,8 +59,8 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                                                 title="예문 듣기"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-circle" viewBox="0 0 16 16">
-                                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-                                                  <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"/>
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
                                                 </svg>
                                             </button>
                                         )}
@@ -144,8 +144,8 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                             title="단어 삭제 (관리자)"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-trash" viewBox="0 0 16 16">
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
-                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                             </svg>
                         </button>
                     )}
@@ -239,8 +239,9 @@ export default function VocabList() {
         }
     };
 
+    // 수정된 VocabList.jsx의 playVocabAudio 함수
     const playVocabAudio = async (vocab) => {
-        const targetUrl = vocab.audioUrl || vocab.dictMeta?.audioUrl;
+        const targetUrl = vocab.audio; // ★ 수정된 부분
         if (targetUrl) {
             playUrl(targetUrl);
             return;
@@ -249,7 +250,7 @@ export default function VocabList() {
             setEnrichingId(vocab.id);
             const { data: updatedVocab } = await fetchJSON(`/vocab/${vocab.id}/enrich`, withCreds({ method: 'POST' }));
             setWords(prevWords => prevWords.map(w => (w.id === updatedVocab.id ? updatedVocab : w)));
-            const enrichedUrl = updatedVocab.audioUrl || updatedVocab.dictMeta?.audioUrl;
+            const enrichedUrl = updatedVocab.audio; // ★ 수정된 부분
             if (enrichedUrl) {
                 playUrl(enrichedUrl);
             } else {
@@ -363,7 +364,7 @@ export default function VocabList() {
                     ))}
                 </div>
             </div>
-            
+
             <div className="d-flex justify-content-between align-items-center mb-3 p-2 rounded bg-light">
                 <div className="form-check">
                     <input
@@ -389,7 +390,7 @@ export default function VocabList() {
                     <Link to="/my-wordbook" className="btn btn-outline-secondary btn-sm">내 단어장 가기</Link>
                 </div>
             </div>
-            
+
             <div className="mb-3">
                 <input
                     type="search"
@@ -435,10 +436,10 @@ export default function VocabList() {
                                     <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>
                                 </div>
                             ) : (
-                                <VocabDetailModal 
-                                    vocab={detail} 
+                                <VocabDetailModal
+                                    vocab={detail}
                                     onClose={() => setDetail(null)}
-                                    onPlayUrl={playUrl} 
+                                    onPlayUrl={playUrl}
                                     onPlayVocabAudio={playVocabAudio}
                                 />
                             )}

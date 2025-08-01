@@ -358,15 +358,14 @@ export default function MyWordbook() {
 
     return (
         <main className="container py-4">
-            <div className="d-flex justify-content-between align-items-center mb-3">
+             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">
-                    <Link to="/vocab" className="btn btn-info">단어 추가하기</Link>
-                    <Link to="/learn/vocab" className="btn btn-primary">SRS 학습 시작 →</Link>
-                    <Link to="/odat-note" className="btn btn-outline-danger">오답노트</Link>
-                </div>+    <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
-                    선택 자동학습(5초)
-                </button>
+                    <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
+                        선택 자동학습
+                    </button>
+                    <Link to="/vocab" className="btn-outline-primary ">단어 추가하기</Link>
+                </div>
             </div>
 
             <div className="row">

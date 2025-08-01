@@ -1,49 +1,104 @@
-.App {
-  text-align: center;
+/* src/App.css */
+/* 1. CSS 변수를 사용한 새로운 디자인 시스템 정의 */
+:root {
+  --font-sans: 'Inter', sans-serif;
+  --color-primary: #FF7A00; /* Vibrant Orange */
+  --color-primary-dark: #E66E00;
+  --color-charcoal: #2D3748; /* Charcoal Navy */
+  --color-slate: #718096;   /* Slate Gray */
+  --color-light-gray: #F7FAFC;
+  --color-border: #E2E8F0;
+  --border-radius-sm: 0.375rem; /* 6px */
+  --border-radius-md: 0.5rem;   /* 8px */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* 2. Body 및 전역 스타일 리셋 */
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-light-gray);
+  color: var(--color-charcoal);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* 3. 부트스트랩 컴포넌트 스타일 오버라이드 */
+
+/* 버튼 */
+.btn-primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s ease-in-out;
+}
+.btn-primary:hover, .btn-primary:focus {
+  background-color: var(--color-primary-dark);
+  border-color: var(--color-primary-dark);
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.btn-outline-primary {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  font-weight: 600;
+  border-radius: var(--border-radius-sm);
+}
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
   color: white;
 }
 
-.card-clickable {
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.btn-secondary, .btn-outline-secondary {
+  border-radius: var(--border-radius-sm);
 }
 
-.card-clickable:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* 카드 */
+.card {
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease-in-out;
+}
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.card-header, .card-footer {
+  background-color: #fff;
+  border-color: var(--color-border);
 }
 
-.App-link {
-  color: #61dafb;
+/* 네비게이션 바 (헤더) */
+.navbar {
+  box-shadow: var(--shadow-sm);
+  border-bottom-color: var(--color-border) !important;
+}
+.navbar-brand {
+  color: var(--color-primary) !important;
+  font-weight: 700;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+/* 폼 컨트롤 */
+.form-control, .form-select {
+  border-radius: var(--border-radius-sm);
+  border-color: var(--color-border);
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
+}
 
-  to {
-    transform: rotate(360deg);
-  }
+/* 히어로 섹션 (Home) */
+.hero-section {
+  background: white;
+  border: 1px solid var(--color-border);
+  padding: 2.5rem;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 리스트 그룹 (단어장) */
+.list-group-item.active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
 }
