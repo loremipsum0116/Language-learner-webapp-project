@@ -1,4 +1,3 @@
-// src/pages/LearnVocab.jsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
@@ -49,6 +48,7 @@ export default function LearnVocab() {
     const [auto, setAuto] = useState(autoParam === '1');
     const [currentPron, setCurrentPron] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isExamplePlaying, setIsExamplePlaying] = useState(false); // ★ 수정됨: 오디오 재생 상태 state 추가
 
     useEffect(() => {
         setAuto(autoParam === '1');
@@ -117,14 +117,26 @@ export default function LearnVocab() {
         return () => ac.abort();
     }, [idsParam, mode, navigate]);
 
-    // ... (playUrl, stopAudio, current 등 나머지 함수는 모두 동일)
-    
+    // ★ 수정됨: playUrl 함수 수정
     const playUrl = (url) => {
         if (!url) return;
         if (audioEl) { try { audioEl.pause(); } catch { } }
         const full = url.startsWith('/') ? `${API_BASE}${url}` : url;
         const a = new Audio(full);
-        a.play().catch(e => console.error('오디오 재생 실패:', e, full));
+
+        setIsExamplePlaying(true);
+        a.onended = () => {
+            setIsExamplePlaying(false);
+        };
+        a.onerror = () => {
+            console.error('오디오 재생 중 에러 발생');
+            setIsExamplePlaying(false);
+        };
+
+        a.play().catch(e => {
+            console.error('오디오 재생 실패:', e, full);
+            setIsExamplePlaying(false);
+        });
         setAudioEl(a);
     };
 
@@ -221,13 +233,16 @@ export default function LearnVocab() {
         return () => clearInterval(timer);
     }, [mode, auto, current, queue.length]);
 
+    // ★ 수정됨: 카드 뒤집기 useEffect 수정
     useEffect(() => {
-        if (mode !== 'flash' || !auto) return;
+        if (mode !== 'flash' || !auto || isExamplePlaying) {
+            return;
+        }
         const flipInterval = setInterval(() => {
             setFlipped(f => !f);
-        }, 5000);
+        }, 2000);
         return () => clearInterval(flipInterval);
-    }, [idx, mode, auto]);
+    }, [idx, mode, auto, isExamplePlaying]);
 
     const handleRestart = () => {
         setIdx(0);
@@ -298,7 +313,6 @@ export default function LearnVocab() {
         );
     }
 
-    // ... (나머지 JSX 렌더링 코드는 모두 동일)
     if (mode === 'flash') {
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
