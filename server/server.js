@@ -244,36 +244,25 @@ app.get('/dict/search', async (req, res) => {
     const isKoreanQuery = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q);
     let hits = [];
 
-    // --- 1. 한국어 검색 처리 (새로운 방식) ---
     if (isKoreanQuery) {
-        // DB에 있는 모든 단어의 상세 정보를 일단 가져옵니다.
         const allEntries = await prisma.dictEntry.findMany({
-            include: {
-                Vocab: true // 연결된 Vocab 정보도 함께 로드
-            }
+            include: { Vocab: true }
         });
 
-        // 가져온 정보들 중에서 한국어 뜻이 일치하는 것을 찾습니다.
+        // 한국어 검색 로직을 한국어 뜻이 포함된 'gloss' 예문 필드에 대해서만 수행합니다.
         for (const entry of allEntries) {
-            if (Array.isArray(entry.examples)) {
-                for (const example of entry.examples) {
-                    // 'ko' 필드가 있고, 검색어를 포함하면 'hits' 배열에 추가
-                    if (example.ko && example.ko.includes(q)) {
-                        hits.push({
-                            ...entry.Vocab,
-                            dictMeta: entry
-                        });
-                        break; // 같은 단어가 중복 추가되지 않도록 중단
-                    }
-                }
+            const glossExample = Array.isArray(entry.examples) ? entry.examples.find(ex => ex.kind === 'gloss') : null;
+            if (glossExample && glossExample.ko && glossExample.ko.includes(q)) {
+                hits.push({
+                    ...entry.Vocab,
+                    dictMeta: entry
+                });
+                if (hits.length >= 5) break;
             }
-            if (hits.length >= 5) break; // 최대 5개까지만 찾음
         }
-    }
-    // --- 2. 영어 검색 처리 (기존 로직) ---
-    else {
+    } else {
         const queryDB = () => prisma.vocab.findMany({
-            where: { lemma: { contains: q } },
+            where: { lemma: { contains: q, mode: 'insensitive' } }, // 대소문자 구분 없이 검색
             take: 5,
             include: { dictMeta: true }
         });
@@ -287,7 +276,6 @@ app.get('/dict/search', async (req, res) => {
         }
     }
 
-    // --- 3. 결과 포맷팅 (수정 불필요) ---
     const entries = hits.map(v => ({
         id: v.id,
         lemma: v.lemma,
@@ -303,22 +291,22 @@ app.get('/dict/search', async (req, res) => {
 });
 app.get('/vocab/list', async (req, res) => {
     try {
-        // ▼▼▼ 핵심 수정 사항: levelCEFR 대신 source 필드로 조회합니다 ▼▼▼
+        const { level } = req.query; // activeLevel을 쿼리 파라미터로 받습니다.
+        const sourceMap = {
+            'A1': 'seed-ielts-api',
+            'B2': 'seed-wiktionary',
+        };
+        const source = sourceMap[level] || 'seed-ielts-api'; // 기본값 설정
+
         const vocabs = await prisma.vocab.findMany({
-            where: {
-                // 시딩 스크립트가 남긴 source 값을 기준으로 필터링
-                source: 'seed-ielts-api'
-            },
-            orderBy: {
-                lemma: 'asc'
-            },
+            where: { source: source },
+            orderBy: { lemma: 'asc' },
             include: {
                 dictMeta: {
                     select: { examples: true, ipa: true, ipaKo: true, audioUrl: true }
                 }
             },
         });
-        // ▲▲▲ 여기까지 수정 ▲▲▲
 
         if (vocabs.length === 0) return ok(res, []);
 

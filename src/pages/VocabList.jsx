@@ -157,7 +157,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
 
 export default function VocabList() {
     const { user } = useAuth();
-    const [activeLevel, setActiveLevel] = useState('A1'); 
+    const [activeLevel, setActiveLevel] = useState('A1');
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [srsIds, setSrsIds] = useState(new Set());
@@ -285,6 +285,8 @@ export default function VocabList() {
         (async () => {
             try {
                 setLoading(true); setErr(null);
+                // ★★★★★ 수정된 부분 ★★★★★
+                // activeLevel 상태를 쿼리 파라미터로 전달
                 const { data } = await fetchJSON(`/vocab/list?level=${encodeURIComponent(activeLevel)}`, withCreds({ signal: ac.signal }), 15000);
                 setWords(Array.isArray(data) ? data : []);
             } catch (e) {

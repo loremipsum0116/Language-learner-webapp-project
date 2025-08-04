@@ -1,0 +1,132 @@
+[
+  {
+    "lemma": "house",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A structure built or serving as an abode of human beings.",
+    "example": "This is my house and my family's ancestral home.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/house-1-ca.mp3",
+    "koGloss": "집",
+    "koExample": "우리는 새집으로 이사했다."
+  },
+  {
+    "lemma": "car",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A wheeled vehicle that moves independently, with at least three wheels, powered mechanically, steered by a driver and mostly for personal transportation.",
+    "example": "She drove her car to the mall.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/car-uk.mp3",
+    "koGloss": "자동차",
+    "koExample": "그는 새 차를 샀다."
+  },
+  {
+    "lemma": "city",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A large settlement, bigger than a town; sometimes with a specific legal definition, depending on the place.",
+    "example": "São Paulo is the largest city in South America.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/city-au.mp3",
+    "koGloss": "도시",
+    "koExample": "나는 작은 도시에서 산다."
+  },
+  {
+    "lemma": "street",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A paved part of road, usually in a village or a town.",
+    "example": "Walk down the street until you see a hotel on the right.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/street-uk.mp3",
+    "koGloss": "거리",
+    "koExample": "아이들이 거리에서 놀고 있다."
+  },
+  {
+    "lemma": "job",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A task.",
+    "example": "A job half done is hardly done at all.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/job-uk.mp3",
+    "koGloss": "직업",
+    "koExample": "그는 좋은 직장을 구했다."
+  },
+  {
+    "lemma": "work",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "(heading) Employment.",
+    "example": "We don't have much time. Let's get to work piling up those sandbags.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/work-uk.mp3",
+    "koGloss": "일하다",
+    "koExample": "나는 아침 9시부터 오후 5시까지 일한다."
+  },
+  {
+    "lemma": "eat",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "Something to be eaten; a meal; a food item.",
+    "example": "What’s eating you?",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eat-uk.mp3",
+    "koGloss": "먹다",
+    "koExample": "나는 매일 아침을 먹는다."
+  },
+  {
+    "lemma": "drink",
+    "pos": "verb",
+    "levelCEFR": "A1",
+    "definition": "To consume (a liquid) through the mouth.",
+    "example": "He drank the water I gave him.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/drink-us.mp3",
+    "koGloss": "마시다",
+    "koExample": "목이 마르다. 물을 좀 마셔야겠다."
+  },
+  {
+    "lemma": "read",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A reading or an act of reading, especially an actor's part of a play.",
+    "example": "His thrillers are always a gripping read.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/read-1-uk.mp3",
+    "koGloss": "읽다",
+    "koExample": "나는 책 읽는 것을 좋아한다."
+  },
+  {
+    "lemma": "write",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "The act or style of writing.",
+    "example": "How many writes per second can this hard disk handle?",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/write-uk.mp3",
+    "koGloss": "쓰다",
+    "koExample": "그는 편지를 쓰고 있다."
+  },
+  {
+    "lemma": "speak",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "A low class bar, a speakeasy.",
+    "example": "Corporate speak; IT speak.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/speak-uk.mp3",
+    "koGloss": "말하다",
+    "koExample": "그녀는 세 가지 언어를 말할 수 있다."
+  },
+  {
+    "lemma": "sleep",
+    "pos": "verb",
+    "levelCEFR": "A1",
+    "definition": "To rest in a state of reduced consciousness.",
+    "example": "You should sleep 8 hours a day.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sleep-us.mp3",
+    "koGloss": "자다",
+    "koExample": "나는 밤에 일찍 잔다."
+  },
+  {
+    "lemma": "listen",
+    "pos": "noun",
+    "levelCEFR": "A1",
+    "definition": "An instance of listening.",
+    "example": "Give the motor a listen and tell me if it sounds off.",
+    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/listen-au.mp3",
+    "koGloss": "듣다",
+    "koExample": "그는 라디오를 듣고 있다."
+  }
+]
