@@ -70,7 +70,7 @@ model DictEntry {
   examples    Json
   ipaKo       String?   
 
-  Vocab Vocab @relation(fields: [vocabId], references: [id])
+ Vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 }
 
 model GrammarItem {

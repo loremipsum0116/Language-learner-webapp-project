@@ -1,51 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-// import { fetchJSON, withCreds, API_BASE } from "../api/client"; // fetchJSON, withCreds 임포트 경로 수정
-// import RefDrawer from "../components/RefDrawer"; // RefDrawer를 별도 컴포넌트로 분리했다고 가정
-
-
-/**
- * Config
- */
-const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:3000";
-const withCreds = (opts = {}) => ({
-  credentials: "include", // JWT HttpOnly 쿠키 전달
-  headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
-  ...opts,
-});
-
-/**
- * 공용 유틸: fetch JSON + 타임아웃 + p95 지표용 간단 지연 측정
- */
-async function fetchJSON(url, opts = {}, timeoutMs = 8000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeoutMs);
-  const t0 = performance.now();
-  try {
-    const res = await fetch(url, { ...opts, signal: controller.signal });
-    const t1 = performance.now();
-    const latency = Math.round(t1 - t0);
-    if (res.status === 401) {
-      const err = new Error("Unauthorized");
-      err.status = 401;
-      err.latency = latency;
-      throw err;
-    }
-    if (!res.ok) {
-      const text = await res.text();
-      const err = new Error(text || "HTTP Error");
-      err.status = res.status;
-      err.latency = latency;
-      throw err;
-    }
-    const data = await res.json();
-    data._latencyMs = latency;
-    return data;
-  } finally {
-    clearTimeout(id);
-  }
-}
+// 다른 페이지들과 동일하게 중앙 API 클라이언트를 import 합니다.
+import { fetchJSON, withCreds } from "../api/client";
 
 /**
  * 독일어 특수문자 가상 키패드 (ä/ö/ü/ß)
@@ -180,13 +137,16 @@ function SrsWidget() {
 
   useEffect(() => {
     let mounted = true;
-    fetchJSON(`${API_BASE}/srs/queue?limit=100`, withCreds())
-      .then((data) => {
-        if (!mounted) return;
-        setCount(Array.isArray(data?.data) ? data.data.length : 0);
-        setLat(data._latencyMs);
-      })
-      .catch((e) => setErr(e));
+    (async () => {
+        try {
+            const data = await fetchJSON('/srs/queue?limit=100', withCreds());
+            if (!mounted) return;
+            setCount(Array.isArray(data?.data) ? data.data.length : 0);
+            setLat(data._latencyMs);
+        } catch (e) {
+            if (mounted) setErr(e);
+        }
+    })();
     return () => {
       mounted = false;
     };
@@ -218,8 +178,6 @@ function SrsWidget() {
 
 /**
  * 사전 검색 퀵패널 (GET /dict/search)
- * - IPA/오디오/예문/라이선스 표기
- * - 가상 키보드로 특수문자 입력
  */
 function DictQuickPanel() {
   const [q, setQ] = useState("");
@@ -236,7 +194,7 @@ function DictQuickPanel() {
     setErr(null);
     try {
       const data = await fetchJSON(`/dict/search?q=${encodeURIComponent(q.trim())}`, withCreds());
-      setEntries(data?.entries || data?.data?.entries || []);
+      setEntries(data?.data?.entries || data?.entries || []);
       setLat(data._latencyMs);
     } catch (e) {
       setErr(e);
@@ -254,7 +212,6 @@ function DictQuickPanel() {
           <input
             ref={inputRef}
             className="form-control"
-            // ★★★★★ 수정된 부분 ★★★★★
             placeholder="예: apple / beautiful"
             value={q}
             onChange={(e) => setQ(e.target.value)}
@@ -267,7 +224,6 @@ function DictQuickPanel() {
             상세 보기 →
           </Link>
         </form>
-        {/* ★★★★★ 수정된 부분: GermanKeypad 삭제 ★★★★★ */}
         {err && err.status === 401 && (
           <div className="alert alert-warning mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
         )}
@@ -281,7 +237,6 @@ function DictQuickPanel() {
             <div key={idx} className="border rounded p-2 mb-2">
               <div className="d-flex justify-content-between">
                 <strong>{e.lemma}</strong>
-                {/* ★★★★★ 수정된 부분: gender 표시 로직 삭제 ★★★★★ */}
                 <span className="text-muted">{e.pos}</span>
               </div>
               {e.ipa && <div className="text-muted">/{e.ipa}/</div>}
@@ -308,9 +263,6 @@ function DictQuickPanel() {
 
 /**
  * 튜터 퀵챗 (POST /tutor/chat)
- * - 페르소나 사용
- * - refs 표시 (사전/KB 근거)
- * - 간단 오류 처리 및 로딩 스피너
  */
 function TutorQuickChat({ persona }) {
   const [prompt, setPrompt] = useState("");
@@ -327,7 +279,7 @@ function TutorQuickChat({ persona }) {
     setResp(null);
     try {
       const data = await fetchJSON(
-        `${API_BASE}/tutor/chat`,
+        `/tutor/chat`, // API_BASE is prepended by the imported fetchJSON
         withCreds({
           method: "POST",
           body: JSON.stringify({
@@ -414,12 +366,15 @@ function ReadingTeaser() {
   const [err, setErr] = useState(null);
   useEffect(() => {
     let mounted = true;
-    fetchJSON(`${API_BASE}/reading/list?level=`, withCreds())
-      .then((d) => {
-        if (!mounted) return;
-        setList(d?.data || d || []);
-      })
-      .catch(setErr);
+    (async () => {
+        try {
+            const d = await fetchJSON(`/reading/list?level=`, withCreds());
+            if (!mounted) return;
+            setList(d?.data || d || []);
+        } catch (e) {
+            if (mounted) setErr(e);
+        }
+    })();
     return () => {
       mounted = false;
     };
@@ -451,22 +406,16 @@ function ReadingTeaser() {
 
 /**
  * 홈(메인) 페이지
- * - 인증 상태에 따라 CTA 노출
- * - 핵심 모듈 진입 링크
- * - 접근성: 라벨, 키보드 포커스, 가상 키패드
  */
 export default function Home() {
-  const { user, updateProfile, loading } = useAuth();
-  console.log('Auth State in Home:', { user, loading });
-  const [me, setMe] = useState(null);
+  const { user, updateProfile } = useAuth();
   const [authErr, setAuthErr] = useState(null);
-  // 서버 프로필 우선 초기값
   const [persona, setPersona] = useState({ level: "A2", tone: "formal", address: "Sie" });
   useEffect(() => {
     if (user?.profile) {
       setPersona((prev) => ({
         ...prev,
-        ...user.profile, // 서버값 우선
+        ...user.profile,
       }));
     }
   }, [user]);
@@ -491,15 +440,15 @@ export default function Home() {
     }
   }
 
-
   useEffect(() => {
     let mounted = true;
-    fetchJSON(`${API_BASE}/me`, withCreds())
-      .then((d) => {
-        if (!mounted) return;
-        setMe(d?.data || d);
-      })
-      .catch((e) => setAuthErr(e));
+    (async () => {
+        try {
+            await fetchJSON(`/me`, withCreds());
+        } catch (e) {
+            if (mounted) setAuthErr(e);
+        }
+    })();
     return () => {
       mounted = false;
     };
@@ -513,7 +462,6 @@ export default function Home() {
     <main className="container py-4">
       <section className="mb-4 hero-section">
         <div className="p-4 p-md-5 bg-light rounded-3">
-          {/* ★★★★★ 수정된 부분 ★★★★★ */}
           <h1 className="display-6 mb-2">효율적인 영어 학습 플랫폼</h1>
           <p className="mb-3">
             SRS 어휘, 문법 연습, 지문 독해. <strong>AI 영어 튜터</strong>와{" "}
@@ -538,7 +486,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-      {/* 알림: 인증 만료 처리 가이드 */}
       {authErr && authErr.status === 401 && (
         <div className="alert alert-warning" role="alert">
           세션이 만료되었습니다(401). 15분 유휴 정책에 따라 재로그인이 필요할 수 있습니다.{" "}
@@ -546,7 +493,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* 그리드: SRS / 사전 / 튜터 / 리딩 */}
       <section className="row g-3">
         <div className="col-md-6 col-lg-4">
           <SrsWidget />
@@ -580,7 +526,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 퀵 링크 + 접근성 */}
       <section className="mt-4">
         <div className="card">
           <div className="card-body">
