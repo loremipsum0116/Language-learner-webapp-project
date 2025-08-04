@@ -14,6 +14,7 @@ const {
     parseWikitext,
     fetchWiktionaryWikitext,
     fetchCommonsFileUrl,
+    findEnglishTranslation, 
 } = require('./integrations/wiktionary');
 
 const app = express();
@@ -234,51 +235,94 @@ app.patch('/me', requireAuth, async (req, res) => {
 });
 
 // --- Vocab / Dict ---
+// server.js 파일의 app.get('/dict/search', ...) 부분을 아래 코드로 교체합니다.
+
 app.get('/dict/search', async (req, res) => {
     const q = (req.query.q || '').trim();
     if (!q) return ok(res, { entries: [] });
-    const queryDB = () => prisma.vocab.findMany({
-        where: { lemma: { contains: q } },
-        take: 5,
-        include: { dictMeta: true }
-    });
-    let hits = await queryDB();
-    const lacksKo = (v) => !v.dictMeta?.examples?.some(ex => ex && ex.ko);
-    if (hits.length === 0 || hits.every(lacksKo)) {
-        await enrichFromWiktionary(q);
-        hits = await queryDB();
+
+    const isKoreanQuery = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q);
+    let hits = [];
+
+    // --- 1. 한국어 검색 처리 (새로운 방식) ---
+    if (isKoreanQuery) {
+        // DB에 있는 모든 단어의 상세 정보를 일단 가져옵니다.
+        const allEntries = await prisma.dictEntry.findMany({
+            include: {
+                Vocab: true // 연결된 Vocab 정보도 함께 로드
+            }
+        });
+
+        // 가져온 정보들 중에서 한국어 뜻이 일치하는 것을 찾습니다.
+        for (const entry of allEntries) {
+            if (Array.isArray(entry.examples)) {
+                for (const example of entry.examples) {
+                    // 'ko' 필드가 있고, 검색어를 포함하면 'hits' 배열에 추가
+                    if (example.ko && example.ko.includes(q)) {
+                        hits.push({
+                            ...entry.Vocab,
+                            dictMeta: entry
+                        });
+                        break; // 같은 단어가 중복 추가되지 않도록 중단
+                    }
+                }
+            }
+            if (hits.length >= 5) break; // 최대 5개까지만 찾음
+        }
     }
+    // --- 2. 영어 검색 처리 (기존 로직) ---
+    else {
+        const queryDB = () => prisma.vocab.findMany({
+            where: { lemma: { contains: q } },
+            take: 5,
+            include: { dictMeta: true }
+        });
+        
+        hits = await queryDB();
+        
+        const lacksKo = (v) => !v.dictMeta?.examples?.some(ex => ex && ex.kind === 'gloss' && ex.ko);
+        if (hits.length === 0 || hits.every(lacksKo)) {
+            await enrichFromWiktionary(q);
+            hits = await queryDB();
+        }
+    }
+
+    // --- 3. 결과 포맷팅 (수정 불필요) ---
     const entries = hits.map(v => ({
         id: v.id,
         lemma: v.lemma,
         pos: v.pos,
         ipa: v.dictMeta?.ipa || null,
-        audio: v.dictMeta?.audioLocal || v.dictMeta?.audioUrl || null,
+        audio: v.dictMeta?.audioUrl || null,
         license: v.dictMeta?.license || null,
         attribution: v.dictMeta?.attribution || null,
         examples: Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : []
     }));
+
     return ok(res, { entries });
 });
-
 app.get('/vocab/list', async (req, res) => {
-    const level = String(req.query.level || 'A1').toUpperCase();
     try {
-        const rows = await prisma.$queryRaw`
-      SELECT id FROM Vocab WHERE UPPER(TRIM(levelCEFR)) = ${level} ORDER BY lemma ASC LIMIT 1000`;
-        const ids = rows.map(r => r.id);
-        if (ids.length === 0) return ok(res, []);
+        // ▼▼▼ 핵심 수정 사항: levelCEFR 대신 source 필드로 조회합니다 ▼▼▼
         const vocabs = await prisma.vocab.findMany({
-            where: { id: { in: ids } },
-            orderBy: { lemma: 'asc' },
-            include: { dictMeta: { select: { examples: true, ipa: true, ipaKo: true, audioUrl: true, audioLocal: true } } },
+            where: {
+                // 시딩 스크립트가 남긴 source 값을 기준으로 필터링
+                source: 'seed-ielts-api'
+            },
+            orderBy: {
+                lemma: 'asc'
+            },
+            include: {
+                dictMeta: {
+                    select: { examples: true, ipa: true, ipaKo: true, audioUrl: true }
+                }
+            },
         });
-        const hasExampleAudio = (dictMeta) => {
-            const exs = Array.isArray(dictMeta?.examples) ? dictMeta.examples : [];
-            return exs.some(ex => ex?.audio || ex?.audioUrl || ex?.audioLocal);
-        };
-        const filtered = vocabs.filter(v => hasExampleAudio(v.dictMeta));
-        const items = filtered.map(v => {
+        // ▲▲▲ 여기까지 수정 ▲▲▲
+
+        if (vocabs.length === 0) return ok(res, []);
+
+        const items = vocabs.map(v => {
             const gloss = Array.isArray(v.dictMeta?.examples)
                 ? v.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
                 : null;
@@ -289,7 +333,7 @@ app.get('/vocab/list', async (req, res) => {
                 ko_gloss: gloss || null,
                 ipa: v.dictMeta?.ipa || null,
                 ipaKo: v.dictMeta?.ipaKo || null,
-                audio: v.dictMeta?.audioLocal || v.dictMeta?.audioUrl || null,
+                audio: v.dictMeta?.audioUrl || null,
             };
         });
         return ok(res, items);

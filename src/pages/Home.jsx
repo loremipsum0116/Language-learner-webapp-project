@@ -212,7 +212,8 @@ function DictQuickPanel() {
           <input
             ref={inputRef}
             className="form-control"
-            placeholder="예: apple / beautiful"
+            // ▼▼▼ placeholder 수정 ▼▼▼
+            placeholder="영어 또는 한국어 뜻 검색"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="query"

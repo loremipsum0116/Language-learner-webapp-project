@@ -113,11 +113,12 @@ export default function Dict() {
 
             <form className="d-flex gap-2" onSubmit={search} role="search" aria-label="dictionary search">
                 <label htmlFor="dict-q" className="visually-hidden">검색어</label>
-                <input
+                  <input
                     id="dict-q"
                     ref={inputRef}
                     className="form-control"
-                    placeholder="예: stehen / aufstehen / Häuser"
+                    // ▼▼▼ placeholder 수정 ▼▼▼
+                    placeholder="영어 단어 또는 한국어 뜻을 입력하세요"
                     value={q}
                     onChange={(e) => setQ(e.target.value)}
                     aria-label="query"

@@ -157,7 +157,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
 
 export default function VocabList() {
     const { user } = useAuth();
-    const [activeLevel, setActiveLevel] = useState('A1');
+    const [activeLevel, setActiveLevel] = useState('A1'); 
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [srsIds, setSrsIds] = useState(new Set());
