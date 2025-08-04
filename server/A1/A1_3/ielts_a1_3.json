@@ -143,17 +143,6 @@
     "koChirpScript": "'pen'은 '펜'입니다. 문장 'I need a pen to write this.'는 '이것을 쓰려면 펜이 필요해요.'라고 해석해요."
   },
   {
-    "lemma": "book",
-    "pos": "noun",
-    "levelCEFR": "A1",
-    "definition": "A written or printed work consisting of pages.",
-    "example": "I am reading an interesting book.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/book-uk.mp3",
-    "koGloss": "책",
-    "koExample": "나는 재미있는 책을 읽고 있어요.",
-    "koChirpScript": "다시 등장한 'book'! '책'이라는 뜻이죠. 'I am reading an interesting book.'는 '나는 재미있는 책을 읽고 있어요.' 라는 뜻이에요."
-  },
-  {
     "lemma": "phone",
     "pos": "noun",
     "levelCEFR": "A1",

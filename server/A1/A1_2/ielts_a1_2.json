@@ -4,11 +4,11 @@
     "pos": "noun",
     "levelCEFR": "A1",
     "definition": "A structure built or serving as an abode of human beings.",
-    "example": "This is my house and my family's ancestral home.",
+    "example": "This is my house and my family s ancestral home.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/house-1-ca.mp3",
     "koGloss": "집",
     "koExample": "우리는 새집으로 이사했다.",
-    "koChirpScript": "'house'는 '집'이라는 뜻이에요. 예를 들어볼까요? 'This is my house and my family's ancestral home.', 그리고 한국어 예문으로는 '우리는 새집으로 이사했다.'가 있답니다."
+    "koChirpScript": "이번 단어 house 는  집 이라는 뜻이에요. 영어 예문  This is my house and my family s ancestral home. 은  이곳은 저의 집이자 저희 가족의 본가입니다. 라는 뜻이랍니다."
   },
   {
     "lemma": "car",
@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/car-uk.mp3",
     "koGloss": "자동차",
     "koExample": "그는 새 차를 샀다.",
-    "koChirpScript": "이번 단어는 'car'입니다. 무슨 뜻일까요? 바로 '자동차'! 예문으로 'She drove her car to the mall.'가 있고, 한국어 예문은 '그는 새 차를 샀다.' 입니다."
+    "koChirpScript": "이번 단어는  car , 즉  자동차 입니다. 영어 예문  She drove her car to the mall. 은  그녀는 쇼핑몰까지 차를 몰고 갔습니다. 라는 뜻이에요."
   },
   {
     "lemma": "city",
@@ -30,7 +30,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/city-au.mp3",
     "koGloss": "도시",
     "koExample": "나는 작은 도시에서 산다.",
-    "koChirpScript": "'도시'를 영어로 뭐라고 할까요? 바로 'city'입니다. 'São Paulo is the largest city in South America.' 라는 예문처럼 사용돼요. 한국어로는 '나는 작은 도시에서 산다.' 처럼 쓸 수 있죠."
+    "koChirpScript": "이번 단어 city 는  도시 라는 뜻이에요.  São Paulo is the largest city in South America. 는  상파울루는 남아메리카에서 가장 큰 도시입니다. 라는 의미입니다."
   },
   {
     "lemma": "street",
@@ -41,7 +41,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/street-uk.mp3",
     "koGloss": "거리",
     "koExample": "아이들이 거리에서 놀고 있다.",
-    "koChirpScript": "'street'는 '거리'! 아주 간단하죠? 문장에서는 이렇게 쓰여요. 'Walk down the street until you see a hotel on the right.' 한국어 예문은 '아이들이 거리에서 놀고 있다.'!"
+    "koChirpScript": "이번 단어 street,  거리 라는 뜻이에요. 영어 문장  Walk down the street until you see a hotel on the right. 은  오른쪽에 호텔이 보일 때까지 길을 따라 걸어가세요. 라는 뜻입니다."
   },
   {
     "lemma": "job",
@@ -52,18 +52,18 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/job-uk.mp3",
     "koGloss": "직업",
     "koExample": "그는 좋은 직장을 구했다.",
-    "koChirpScript": "단어 'job'은 '직업' 또는 '일'을 의미해요. 문장으로 배워볼까요? 'A job half done is hardly done at all.' 그리고 한국어 예문 '그는 좋은 직장을 구했다.'가 있어요."
+    "koChirpScript": "단어  job 은  직업  또는  일 을 의미해요. 속담 중에  A job half done is hardly done at all. 이라는 말이 있는데,  반쯤 마친 일은 거의 하지 않은 것이나 마찬가지다. 라는 뜻이에요."
   },
   {
     "lemma": "work",
     "pos": "noun",
     "levelCEFR": "A1",
     "definition": "(heading) Employment.",
-    "example": "We don't have much time. Let's get to work piling up those sandbags.",
+    "example": "We don t have much time. Let s get to work piling up those sandbags.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/work-uk.mp3",
     "koGloss": "일하다",
     "koExample": "나는 아침 9시부터 오후 5시까지 일한다.",
-    "koChirpScript": "이번 단어는 'work', 바로 '일하다' 입니다. 예문은 'We don't have much time. Let's get to work piling up those sandbags.' 이고, 한국어로는 '나는 아침 9시부터 오후 5시까지 일한다.'처럼 활용할 수 있어요."
+    "koChirpScript": "이번 단어  work 는  일하다 라는 뜻입니다.  We don t have much time. Let s get to work piling up those sandbags. 는  시간이 별로 없어. 어서 모래주머니 쌓는 일을 시작하자. 는 의미예요."
   },
   {
     "lemma": "eat",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eat-uk.mp3",
     "koGloss": "먹다",
     "koExample": "나는 매일 아침을 먹는다.",
-    "koChirpScript": "'eat'는 '먹다'라는 뜻이에요. 'What’s eating you?'는 '무슨 걱정 있어?'라는 재미있는 관용구이기도 해요! 한국어 예문으로는 '나는 매일 아침을 먹는다.'가 있습니다."
+    "koChirpScript": "배고프네요. eat 는  먹다 라는 뜻이지만,  What’s eating you? 라고 하면  무엇이 너를 괴롭히니?  또는  무슨 걱정 있어? 라는 뜻의 특별한 관용 표현이 돼요.  먹다 라는 기본 뜻으로는  나는 매일 아침을 먹는다. 처럼 사용할 수 있습니다."
   },
   {
     "lemma": "drink",
@@ -85,18 +85,18 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/drink-us.mp3",
     "koGloss": "마시다",
     "koExample": "목이 마르다. 물을 좀 마셔야겠다.",
-    "koChirpScript": "'drink'는 '마시다'라는 뜻의 기본 단어예요. 예문 'He drank the water I gave him.'가 있고, 한국어로는 '목이 마르다. 물을 좀 마셔야겠다.'처럼 쓸 수 있어요."
+    "koChirpScript": "마시다 라는 뜻이에요. 예문  He drank the water I gave him. 은  그는 내가 준 물을 마셨다. 라고 번역할 수 있어요."
   },
   {
     "lemma": "read",
     "pos": "noun",
     "levelCEFR": "A1",
-    "definition": "A reading or an act of reading, especially an actor's part of a play.",
+    "definition": "A reading or an act of reading, especially an actor s part of a play.",
     "example": "His thrillers are always a gripping read.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/read-1-uk.mp3",
     "koGloss": "읽다",
     "koExample": "나는 책 읽는 것을 좋아한다.",
-    "koChirpScript": "이번 단어는 'read', '읽다'입니다. 'His thrillers are always a gripping read.' 이 예문에서는 '읽을거리'라는 명사로 쓰였네요! 한국어 예문으로는 '나는 책 읽는 것을 좋아한다.'가 있어요."
+    "koChirpScript": "이번 단어  read 는 보통  읽다 라는 동사지만, 명사로도 쓰여요.  His thrillers are always a gripping read. 라는 예문은  그의 스릴러 소설은 항상 아주 재미있는 읽을거리다. 라는 뜻입니다."
   },
   {
     "lemma": "write",
@@ -107,7 +107,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/write-uk.mp3",
     "koGloss": "쓰다",
     "koExample": "그는 편지를 쓰고 있다.",
-    "koChirpScript": "'write'는 '쓰다'라는 뜻의 동사지만, 명사로도 쓰여요. 'How many writes per second can this hard disk handle?'는 컴퓨터 용어네요! 한국어 예문 '그는 편지를 쓰고 있다.'처럼 동사로 기억해두면 좋아요."
+    "koChirpScript": "쓰다 라는 동사지만, 명사로도 쓰여요. 컴퓨터 용어인  How many writes per second can this hard disk handle? 는  이 하드 디스크는 초당 몇 번의 쓰기를 처리할 수 있나요? 라는 뜻이에요."
   },
   {
     "lemma": "speak",
@@ -118,7 +118,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/speak-uk.mp3",
     "koGloss": "말하다",
     "koExample": "그녀는 세 가지 언어를 말할 수 있다.",
-    "koChirpScript": "'speak'은 '말하다'는 뜻! 아주 유용하죠? 'Corporate speak; IT speak.'라는 예문은 '특정 집단의 말투'라는 의미로 쓰였어요. 동사 예문으로는 '그녀는 세 가지 언어를 말할 수 있다.'가 있답니다."
+    "koChirpScript": "말하다 라는 동사지만, 명사로 쓰여 특정 집단의  용어 나  말투 를 의미하기도 해요.  Corporate speak; IT speak. 는  기업 용어; IT 업계 용어. 라는 뜻입니다."
   },
   {
     "lemma": "sleep",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sleep-us.mp3",
     "koGloss": "자다",
     "koExample": "나는 밤에 일찍 잔다.",
-    "koChirpScript": "편안한 단어 'sleep', '자다'입니다. 예문 'You should sleep 8 hours a day.'처럼 쓸 수 있고, 한국어로는 '나는 밤에 일찍 잔다.'처럼 말할 수 있어요."
+    "koChirpScript": "자다 라는 뜻입니다. 예문  You should sleep 8 hours a day. 는  당신은 하루에 8시간을 자야 합니다. 라는 뜻이에요."
   },
   {
     "lemma": "listen",
@@ -140,6 +140,6 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/listen-au.mp3",
     "koGloss": "듣다",
     "koExample": "그는 라디오를 듣고 있다.",
-    "koChirpScript": "'listen'은 무언가를 귀 기울여 '듣다'는 뜻이죠. 'Give the motor a listen and tell me if it sounds off.' 라는 예문이 있고, 한국어로는 '그는 라디오를 듣고 있다.'처럼 쓸 수 있어요."
+    "koChirpScript": "귀 기울여  듣다 는 뜻이죠. 명사로도 쓰이는데,  Give the motor a listen and tell me if it sounds off. 는  모터 소리를 한번 들어보고 소리가 이상한지 말해줘. 라는 의미입니다."
   }
 ]

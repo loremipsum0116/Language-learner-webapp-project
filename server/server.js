@@ -302,15 +302,16 @@ app.get('/dict/search', async (req, res) => {
 });
 app.get('/vocab/list', async (req, res) => {
     try {
-        const { level } = req.query; // activeLevel을 쿼리 파라미터로 받습니다.
-        const sourceMap = {
-            'A1': 'seed-ielts-api',
-            'B2': 'seed-wiktionary',
-        };
-        const source = sourceMap[level] || 'seed-ielts-api'; // 기본값 설정
+        const { level } = req.query; // 'A1', 'A2' 등의 CEFR 레벨을 받습니다.
+
+        // ★ 1. level 파라미터가 없는 경우에 대한 안전장치 추가
+        if (!level) {
+            return fail(res, 400, 'A level query parameter is required.');
+        }
 
         const vocabs = await prisma.vocab.findMany({
-            where: { source: source },
+            // ★ 2. 'source' 대신 'levelCEFR' 필드를 사용하도록 수정
+            where: { levelCEFR: level },
             orderBy: { lemma: 'asc' },
             include: {
                 dictMeta: {
