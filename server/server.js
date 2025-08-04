@@ -238,56 +238,67 @@ app.patch('/me', requireAuth, async (req, res) => {
 // server.js 파일의 app.get('/dict/search', ...) 부분을 아래 코드로 교체합니다.
 
 app.get('/dict/search', async (req, res) => {
-    const q = (req.query.q || '').trim();
-    if (!q) return ok(res, { entries: [] });
+    try {
+        const q = (req.query.q || '').trim();
+        if (!q) return ok(res, { entries: [] });
 
-    const isKoreanQuery = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q);
-    let hits = [];
+        const isKoreanQuery = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q);
+        let hits = [];
 
-    if (isKoreanQuery) {
-        const allEntries = await prisma.dictEntry.findMany({
-            include: { Vocab: true }
-        });
+        if (isKoreanQuery) {
+            const allEntries = await prisma.dictEntry.findMany({
+                include: { Vocab: true }
+            });
 
-        // 한국어 검색 로직을 한국어 뜻이 포함된 'gloss' 예문 필드에 대해서만 수행합니다.
-        for (const entry of allEntries) {
-            const glossExample = Array.isArray(entry.examples) ? entry.examples.find(ex => ex.kind === 'gloss') : null;
-            if (glossExample && glossExample.ko && glossExample.ko.includes(q)) {
-                hits.push({
-                    ...entry.Vocab,
-                    dictMeta: entry
-                });
-                if (hits.length >= 5) break;
+            for (const entry of allEntries) {
+                const glossExample = Array.isArray(entry.examples) ? entry.examples.find(ex => ex.kind === 'gloss') : null;
+                if (glossExample && glossExample.ko && glossExample.ko.includes(q)) {
+                    if (entry.Vocab) {
+                        hits.push({ ...entry.Vocab, dictMeta: entry });
+                    }
+                    if (hits.length >= 5) break;
+                }
+            }
+        } else {
+            // ★★★★★ 수정된 부분 ★★★★★
+            const queryDB = () => prisma.vocab.findMany({
+                where: {
+                    lemma: {
+                        contains: q,
+                        // 'mode: "insensitive"' 옵션을 완전히 삭제
+                    }
+                },
+                take: 5,
+                include: { dictMeta: true }
+            });
+            // ★★★★★ 수정 끝 ★★★★★
+            
+            hits = await queryDB();
+            
+            const lacksKo = (v) => !v.dictMeta?.examples?.some(ex => ex && ex.kind === 'gloss' && ex.ko);
+            if (hits.length === 0 || hits.every(lacksKo)) {
+                await enrichFromWiktionary(q);
+                hits = await queryDB();
             }
         }
-    } else {
-        const queryDB = () => prisma.vocab.findMany({
-            where: { lemma: { contains: q, mode: 'insensitive' } }, // 대소문자 구분 없이 검색
-            take: 5,
-            include: { dictMeta: true }
-        });
-        
-        hits = await queryDB();
-        
-        const lacksKo = (v) => !v.dictMeta?.examples?.some(ex => ex && ex.kind === 'gloss' && ex.ko);
-        if (hits.length === 0 || hits.every(lacksKo)) {
-            await enrichFromWiktionary(q);
-            hits = await queryDB();
-        }
+
+        const entries = hits.map(v => ({
+            id: v.id,
+            lemma: v.lemma,
+            pos: v.pos,
+            ipa: v.dictMeta?.ipa || null,
+            audio: v.dictMeta?.audioUrl || null,
+            license: v.dictMeta?.license || null,
+            attribution: v.dictMeta?.attribution || null,
+            examples: Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : []
+        }));
+
+        return ok(res, { entries });
+
+    } catch (error) {
+        console.error(`[ERROR] /dict/search?q=${req.query.q} failed:`, error);
+        return fail(res, 500, 'Internal Server Error');
     }
-
-    const entries = hits.map(v => ({
-        id: v.id,
-        lemma: v.lemma,
-        pos: v.pos,
-        ipa: v.dictMeta?.ipa || null,
-        audio: v.dictMeta?.audioUrl || null,
-        license: v.dictMeta?.license || null,
-        attribution: v.dictMeta?.attribution || null,
-        examples: Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : []
-    }));
-
-    return ok(res, { entries });
 });
 app.get('/vocab/list', async (req, res) => {
     try {

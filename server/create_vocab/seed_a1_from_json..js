@@ -1,30 +1,22 @@
-// server/create_vocab/seed_ielts_json2.js
+// server/create_vocab/seed_a1_from_json.js
 require('dotenv').config();
-const fs = require('fs');
-const path = require('path');
+const fs = require('fs'); // ★ 수정: require() 사용
+const path = require('path'); // ★ 수정: require() 사용
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const file = path.join(__dirname, '..', 'A1', 'ielts_a1_2.json');
+const relativePath = process.argv[2];
+if (!relativePath) {
+    console.error('Usage: node server/create_vocab/seed_a1_from_json.js <path_to_json_file>');
+    process.exit(1);
+}
+const file = path.resolve(__dirname, '..', relativePath);
+if (!fs.existsSync(file)) {
+    console.error('File not found:', file);
+    process.exit(1);
+}
 
 const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase() : s);
-
-// ★ 하드코딩된 gloss/예문 ★
-const koreanData = {
-    "house": { gloss: "집", examples: [ { ko: "우리는 새집으로 이사했다." } ] },
-    "car": { gloss: "자동차", examples: [ { ko: "그는 새 차를 샀다." } ] },
-    "city": { gloss: "도시", examples: [ { ko: "나는 작은 도시에서 산다." } ] },
-    "street": { gloss: "거리", examples: [ { ko: "아이들이 거리에서 놀고 있다." } ] },
-    "job": { gloss: "직업", examples: [ { ko: "그는 좋은 직장을 구했다." } ] },
-    "work": { gloss: "일하다", examples: [ { ko: "나는 아침 9시부터 오후 5시까지 일한다." } ] },
-    "eat": { gloss: "먹다", examples: [ { ko: "나는 매일 아침을 먹는다." } ] },
-    "drink": { gloss: "마시다", examples: [ { ko: "목이 마르다. 물을 좀 마셔야겠다." } ] },
-    "read": { gloss: "읽다", examples: [ { ko: "나는 책 읽는 것을 좋아한다." } ] },
-    "write": { gloss: "쓰다", examples: [ { ko: "그는 편지를 쓰고 있다." } ] },
-    "speak": { gloss: "말하다", examples: [ { ko: "그녀는 세 가지 언어를 말할 수 있다." } ] },
-    "sleep": { gloss: "자다", examples: [ { ko: "나는 밤에 일찍 잔다." } ] },
-    "listen": { gloss: "듣다", examples: [ { ko: "그는 라디오를 듣고 있다." } ] }
-};
 
 (async () => {
     try {
@@ -34,10 +26,10 @@ const koreanData = {
         let upserted = 0;
 
         for (const r of vocabList) {
-            const lemmaKey = (r.lemma || '').trim().toLowerCase();
-            if (!lemmaKey) continue;
+            const lemma = (r.lemma || '').trim();
+            if (!lemma) continue;
 
-            const titleLemma = toTitleCase(lemmaKey);
+            const titleLemma = toTitleCase(lemma);
 
             const existingVocab = await prisma.vocab.findUnique({
                 where: { lemma: titleLemma },
@@ -45,26 +37,23 @@ const koreanData = {
             });
 
             const existingExamples = existingVocab?.dictMeta?.examples || [];
-            const hardcoded = koreanData[lemmaKey];
-
             const newExamples = [];
-            if (hardcoded?.gloss) {
+
+            if (r.koGloss) {
                 newExamples.push({
-                    ko: hardcoded.gloss,
+                    ko: r.koGloss,
                     de: r.definition,
                     kind: 'gloss',
                     source: 'seed-ielts-api'
                 });
             }
-            if (hardcoded?.examples) {
-                for (const ex of hardcoded.examples) {
-                    newExamples.push({
-                        ko: ex.ko,
-                        de: r.example,
-                        audioUrl: r.audioUrl,
-                        source: 'seed-ielts-api'
-                    });
-                }
+            if (r.koExample) {
+                newExamples.push({
+                    ko: r.koExample,
+                    de: r.example,
+                    audioUrl: r.audioUrl,
+                    source: 'seed-ielts-api'
+                });
             }
 
             const finalExamples = [...existingExamples, ...newExamples];
@@ -105,7 +94,7 @@ const koreanData = {
             upserted++;
         }
 
-        console.log(`Done. upserted=${upserted}`);
+        console.log(`Successfully seeded ${upserted} words from ${path.basename(file)}.`);
     } catch (e) {
         console.error('Error during seeding:', e);
         process.exit(1);
