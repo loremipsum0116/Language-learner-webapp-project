@@ -339,7 +339,7 @@ export default function LearnVocab() {
                     >
                         {!flipped ? (
                             <>
-                                <h2 className="display-5 mb-3" lang="de">{current.question}</h2>
+                                <h2 className="display-5 mb-3" lang="en">{current.question}</h2>
                                 <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻/예문이 표시됩니다.</div>
                             </>
@@ -354,7 +354,7 @@ export default function LearnVocab() {
                                             .map((ex, i) => (
                                                 <li key={i} className="mb-2 d-flex justify-content-between align-items-start">
                                                     <div>
-                                                        <span lang="de">{ex.de}</span>
+                                                        <span lang="en">{ex.de}</span>
                                                         {ex.ko ? <div className="text-muted small">— {ex.ko}</div> : null}
                                                     </div>
                                                     {ex.audioUrl ? (
@@ -399,7 +399,7 @@ export default function LearnVocab() {
 
             <div className="card">
                 <div className="card-body text-center p-4">
-                    <h2 className="display-5 mb-1" lang="de">{current.question}</h2>
+                    <h2 className="display-5 mb-1" lang="en">{current.question}</h2>
                     <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
                     <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
 

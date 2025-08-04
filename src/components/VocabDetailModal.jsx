@@ -13,7 +13,7 @@ export default function VocabDetailModal({ vocab, onClose }) {
       <div className="modal-dialog modal-dialog-centered" onClick={onClose}>
         <div className="modal-content" onClick={e => e.stopPropagation()}>
           <div className="modal-header">
-            <h5 className="modal-title" lang="de">{vocab?.lemma}</h5>
+            <h5 className="modal-title" lang="en">{vocab?.lemma}</h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={onClose}/>
           </div>
           <div className="modal-body">
@@ -25,7 +25,7 @@ export default function VocabDetailModal({ vocab, onClose }) {
               <ul className="mt-2 mb-0">
                 {examples.map((ex, i) => (
                   <li key={i}>
-                    <span lang="de">{ex.de}</span>{ex.ko ? <span> — {ex.ko}</span> : null}
+                    <span lang="en">{ex.de}</span>{ex.ko ? <span> — {ex.ko}</span> : null}
                   </li>
                 ))}
               </ul>

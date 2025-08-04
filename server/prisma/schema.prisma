@@ -45,7 +45,6 @@ model Vocab {
   id        Int     @id @default(autoincrement())
   lemma     String  @unique
   pos       String
-  gender    String?
   plural    String?
   levelCEFR String
   freq      Int?
@@ -83,6 +82,7 @@ model GrammarItem {
 
 model GrammarExercise {
   id        Int    @id @default(autoincrement())
+  topicId   String @unique // ★ 수정: topicId 추가 및 unique 설정
   topic     String
   levelCEFR String
   items     Json

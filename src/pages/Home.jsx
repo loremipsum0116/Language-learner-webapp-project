@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-
+// import { fetchJSON, withCreds, API_BASE } from "../api/client"; // fetchJSON, withCreds 임포트 경로 수정
+// import RefDrawer from "../components/RefDrawer"; // RefDrawer를 별도 컴포넌트로 분리했다고 가정
 
 
 /**
@@ -228,26 +229,13 @@ function DictQuickPanel() {
   const [err, setErr] = useState(null);
   const inputRef = useRef(null);
 
-  const insertChar = (c) => {
-    const el = inputRef.current;
-    if (!el) return;
-    const { selectionStart, selectionEnd, value } = el;
-    const nv = value.slice(0, selectionStart) + c + value.slice(selectionEnd);
-    setQ(nv);
-    // 커서 이동
-    requestAnimationFrame(() => {
-      el.focus();
-      el.setSelectionRange(selectionStart + c.length, selectionStart + c.length);
-    });
-  };
-
   const onSearch = async (e) => {
     e?.preventDefault();
     if (!q.trim()) return;
     setLoading(true);
     setErr(null);
     try {
-      const data = await fetchJSON(`${API_BASE}/dict/search?q=${encodeURIComponent(q.trim())}`, withCreds());
+      const data = await fetchJSON(`/dict/search?q=${encodeURIComponent(q.trim())}`, withCreds());
       setEntries(data?.entries || data?.data?.entries || []);
       setLat(data._latencyMs);
     } catch (e) {
@@ -266,26 +254,20 @@ function DictQuickPanel() {
           <input
             ref={inputRef}
             className="form-control"
-            placeholder="예: stehen / aufstehen / Häuser"
+            // ★★★★★ 수정된 부분 ★★★★★
+            placeholder="예: apple / beautiful"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="query"
           />
           <button className="btn btn-outline-secondary" type="submit" disabled={loading}>
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                검색
-              </>
-            ) : (
-              "검색"
-            )}
+            {loading ? "검색 중..." : "검색"}
           </button>
           <Link className="btn btn-link" to="/dict" aria-label="open dictionary page">
             상세 보기 →
           </Link>
         </form>
-        <GermanKeypad onInsert={insertChar} />
+        {/* ★★★★★ 수정된 부분: GermanKeypad 삭제 ★★★★★ */}
         {err && err.status === 401 && (
           <div className="alert alert-warning mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
         )}
@@ -299,7 +281,8 @@ function DictQuickPanel() {
             <div key={idx} className="border rounded p-2 mb-2">
               <div className="d-flex justify-content-between">
                 <strong>{e.lemma}</strong>
-                <span className="text-muted">{e.pos}{e.gender ? ` • ${e.gender}` : ""}</span>
+                {/* ★★★★★ 수정된 부분: gender 표시 로직 삭제 ★★★★★ */}
+                <span className="text-muted">{e.pos}</span>
               </div>
               {e.ipa && <div className="text-muted">/{e.ipa}/</div>}
               <AudioPlayer src={e.audio} license={e.license} attribution={e.attribution} />
@@ -307,7 +290,7 @@ function DictQuickPanel() {
                 <ul className="mb-0">
                   {e.examples.slice(0, 2).map((ex, i) => (
                     <li key={i}>
-                      <span lang="de">{ex.de}</span>
+                      <span lang="en">{ex.de}</span>
                       {ex.ko ? <span> — {ex.ko}</span> : null}
                       {ex.cefr ? <small className="text-muted"> ({ex.cefr})</small> : null}
                     </li>
@@ -321,6 +304,7 @@ function DictQuickPanel() {
     </div>
   );
 }
+
 
 /**
  * 튜터 퀵챗 (POST /tutor/chat)
@@ -395,8 +379,8 @@ function TutorQuickChat({ persona }) {
         {resp && (
           <div className="mt-3">
             <div className="mb-2">
-              <strong lang="de">DE</strong>
-              <div className="border rounded p-2" lang="de">
+              <strong lang="en">DE</strong>
+              <div className="border rounded p-2" lang="en">
                 {resp.de_answer}
               </div>
             </div>
@@ -527,33 +511,13 @@ export default function Home() {
 
   return (
     <main className="container py-4">
-      {/* 헤더/내비 */}
-
-      <div className="container-fluid">
-        {/* <div className="ms-auto d-flex gap-2">
-            {user ? (
-              <>
-                <Link className="btn btn-outline-secondary btn-sm" to="/dashboard">대시보드</Link>
-                <Link className="btn btn-outline-danger btn-sm" to="/logout">로그아웃</Link>
-              </>
-            ) : (
-              <>
-                <Link className="btn btn-outline-primary btn-sm" to="/login">로그인</Link>
-                <Link className="btn btn-primary btn-sm" to="/register">회원가입</Link>
-              </>
-            )}
-
-          </div> */}
-      </div>
-
-
-      {/* 히어로 */}
       <section className="mb-4 hero-section">
         <div className="p-4 p-md-5 bg-light rounded-3">
-          <h1 className="display-6 mb-2">CEFR A1–C1 독일어 학습</h1>
+          {/* ★★★★★ 수정된 부분 ★★★★★ */}
+          <h1 className="display-6 mb-2">효율적인 영어 학습 플랫폼</h1>
           <p className="mb-3">
-            SRS 어휘, 문법 클로즈, 클릭 글로스 리딩. <strong>AI 튜터(랭체인)</strong>과{" "}
-            <strong>사전 API(오디오·예문)</strong>을 결합한 적응형 학습.
+            SRS 어휘, 문법 연습, 지문 독해. <strong>AI 영어 튜터</strong>와{" "}
+            <strong>사전 API(오디오·예문)</strong>를 결합한 적응형 학습을 경험하세요.
           </p>
           <div className="d-flex gap-2">
             <Link className="btn btn-primary" to="/learn/vocab">
@@ -574,7 +538,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
       {/* 알림: 인증 만료 처리 가이드 */}
       {authErr && authErr.status === 401 && (
         <div className="alert alert-warning" role="alert">

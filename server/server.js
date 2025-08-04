@@ -10,9 +10,13 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const { prisma } = require('./db/prisma');   // Prisma 싱글턴
 const { ok, fail } = require('./lib/resp');  // 통일 응답 헬퍼
+const {
+    parseWikitext,
+    fetchWiktionaryWikitext,
+    fetchCommonsFileUrl,
+} = require('./integrations/wiktionary');
 
 const app = express();
-
 // ===== Config =====
 const PORT = 4000;
 const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me';
@@ -38,7 +42,7 @@ function setAuthCookie(res, token) {
     res.cookie(COOKIE_NAME, token, {
         httpOnly: true,
         sameSite: 'lax',
-        secure: false, // dev
+        secure: process.env.NODE_ENV === 'production',
         maxAge: SLIDING_MINUTES * 60 * 1000,
     });
 }
@@ -51,7 +55,6 @@ async function requireAuth(req, res, next) {
     try {
         const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
-        // sliding refresh
         setAuthCookie(res, signToken({ id: decoded.id, email: decoded.email, role: decoded.role || 'USER' }));
         next();
     } catch {
@@ -65,18 +68,13 @@ function requireAdmin(req, res, next) {
 }
 
 function buildPron(vocab) {
-    if (!vocab || !vocab.dictMeta) {
-        return { ipa: null, ipaKo: null };
-    }
-    return {
-        ipa: vocab.dictMeta.ipa || null,
-        ipaKo: vocab.dictMeta.ipaKo || null,
-    };
+    if (!vocab || !vocab.dictMeta) return { ipa: null, ipaKo: null };
+    return { ipa: vocab.dictMeta.ipa || null, ipaKo: vocab.dictMeta.ipaKo || null };
 }
 
 // Leitner 변형 스케줄러
 function scheduleNext(stage = 0, result) {
-    const intervals = [1, 3, 7, 16, 35]; // days
+    const intervals = [1, 3, 7, 16, 35];
     let newStage = stage;
     if (result === 'pass') newStage = Math.min(newStage + 1, intervals.length - 1);
     else if (result === 'fail') newStage = Math.max(newStage - 1, 0);
@@ -85,38 +83,47 @@ function scheduleNext(stage = 0, result) {
     return { newStage, nextReviewAt };
 }
 
+// const titlecaseFirst = (s = '') => (s ? s[0].toUpperCase() + s.slice(1) : s);
+async function ensureDir(p) { await fs.mkdir(p, { recursive: true }); }
+async function downloadToFile(url, filepath) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`download ${res.status}`);
+    const buf = Buffer.from(await res.arrayBuffer());
+    await ensureDir(path.dirname(filepath));
+    await fs.writeFile(filepath, buf);
+}
 // ===== Wiktionary 통합 (정리판) =====
 const WIKI_API = 'https://de.wiktionary.org/w/api.php';
 
 function titlecaseFirst(s = '') { return s ? s[0].toUpperCase() + s.slice(1) : s; }
 
 // ▼▼▼ [수정] Wikitext 분석 로직 개선 (음성 파일 탐지 강화) ▼▼▼
-function parseWikitext(wikitext = '') {
-    const out = { ipa: null, audioTitles: [], examples: [] };
-    const ipaMatch = wikitext.match(/\{\{(?:Lautschrift|IPA)\|([^}]+)\}\}/i);
-    if (ipaMatch) out.ipa = ipaMatch[1].trim().replace(/\|/g, ' ').split(/\s+/)[0];
+// function parseWikitext(wikitext = '') {
+//     const out = { ipa: null, audioTitles: [], examples: [] };
+//     const ipaMatch = wikitext.match(/\{\{(?:Lautschrift|IPA)\|([^}]+)\}\}/i);
+//     if (ipaMatch) out.ipa = ipaMatch[1].trim().replace(/\|/g, ' ').split(/\s+/)[0];
 
-    // 정규식 1: [[Datei:Filename.ogg]] 형식
-    const audioRegex1 = /\[\[(?:Datei|File):([^[\]|]+?\.(?:ogg|wav|mp3))/gi;
-    // 정규식 2: {{Audio|datei=Filename.ogg}} 형식
-    const audioRegex2 = /\{\{Audio\|(?:de\|)?datei=([^|}]+)/gi;
-    let m;
-    while ((m = audioRegex1.exec(wikitext)) !== null) out.audioTitles.push(m[1]);
-    while ((m = audioRegex2.exec(wikitext)) !== null) out.audioTitles.push(m[1]);
-    // 중복 제거
-    out.audioTitles = [...new Set(out.audioTitles)];
+//     // 정규식 1: [[Datei:Filename.ogg]] 형식
+//     const audioRegex1 = /\[\[(?:Datei|File):([^[\]|]+?\.(?:ogg|wav|mp3))/gi;
+//     // 정규식 2: {{Audio|datei=Filename.ogg}} 형식
+//     const audioRegex2 = /\{\{Audio\|(?:de\|)?datei=([^|}]+)/gi;
+//     let m;
+//     while ((m = audioRegex1.exec(wikitext)) !== null) out.audioTitles.push(m[1]);
+//     while ((m = audioRegex2.exec(wikitext)) !== null) out.audioTitles.push(m[1]);
+//     // 중복 제거
+//     out.audioTitles = [...new Set(out.audioTitles)];
 
-    const lines = wikitext.split('\n').slice(0, 500);
-    for (const line of lines) {
-        const s = line.trim().replace(/''/g, '');
-        const ex = s.replace(/^#:\s*Beispiel:\s*/i, '').replace(/^#:\s*/, '').replace(/^#\s*/, '');
-        if (ex && /^[A-ZÄÖÜß]/.test(ex) && ex.split(' ').length >= 3) {
-            out.examples.push({ de: ex, ko: null, source: 'wiktionary' });
-            if (out.examples.length >= 3) break;
-        }
-    }
-    return out;
-}
+//     const lines = wikitext.split('\n').slice(0, 500);
+//     for (const line of lines) {
+//         const s = line.trim().replace(/''/g, '');
+//         const ex = s.replace(/^#:\s*Beispiel:\s*/i, '').replace(/^#:\s*/, '').replace(/^#\s*/, '');
+//         if (ex && /^[A-ZÄÖÜß]/.test(ex) && ex.split(' ').length >= 3) {
+//             out.examples.push({ de: ex, ko: null, source: 'wiktionary' });
+//             if (out.examples.length >= 3) break;
+//         }
+//     }
+//     return out;
+// }
 
 function extractKoTranslations(wikitext = '') {
     const out = new Set();
@@ -179,15 +186,15 @@ async function getAllCandidateWikitexts(term) {
     return texts;
 }
 
-async function fetchCommonsFileUrl(title) {
-    const url = `${WIKI_API}?action=query&titles=Datei:${encodeURIComponent(title)}&prop=imageinfo&iiprop=url&format=json`;
-    const res = await fetch(url, { headers: { 'User-Agent': 'de-learner/0.1' } });
-    if (!res.ok) return null;
-    const json = await res.json();
-    const pages = json?.query?.pages || {};
-    const first = Object.values(pages)[0];
-    return first?.imageinfo?.[0]?.url || null;
-}
+// async function fetchCommonsFileUrl(title) {
+//     const url = `${WIKI_API}?action=query&titles=Datei:${encodeURIComponent(title)}&prop=imageinfo&iiprop=url&format=json`;
+//     const res = await fetch(url, { headers: { 'User-Agent': 'de-learner/0.1' } });
+//     if (!res.ok) return null;
+//     const json = await res.json();
+//     const pages = json?.query?.pages || {};
+//     const first = Object.values(pages)[0];
+//     return first?.imageinfo?.[0]?.url || null;
+// }
 
 async function ensureDir(p) { await fs.mkdir(p, { recursive: true }); }
 async function downloadToFile(url, filepath) {
@@ -198,107 +205,80 @@ async function downloadToFile(url, filepath) {
     await fs.writeFile(filepath, buf);
 }
 
+
 async function enrichFromWiktionary(queryLemma) {
     try {
-        const url = `https://de.wiktionary.org/wiki/${encodeURIComponent(queryLemma)}`;
-        let html;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                const capitalizedUrl = `https://de.wiktionary.org/wiki/${encodeURIComponent(titlecaseFirst(queryLemma))}`;
-                const capResponse = await fetch(capitalizedUrl);
-                if (!capResponse.ok) return { vocab: null, entry: null };
-                html = await capResponse.text();
-            } else {
-                html = await response.text();
-            }
-        } catch (e) {
-            console.error(`[Enrich] Wiktionary fetch failed for ${queryLemma}:`, e);
-            return { vocab: null, entry: null };
-        }
-
-        const $ = cheerio.load(html);
-
-        const findSection = (title) => {
-            const header = $(`#${title}`).parent();
-            return header.length ? header.nextUntil('h2, h3') : null;
-        };
-
-        const ausspracheSection = findSection('Aussprache');
-        const ipa = ausspracheSection ? ausspracheSection.find('.ipa').first().text().trim().replace(/[\[\]]/g, '') : null;
-
-        // ▼▼▼ [수정] audio 태그에서 직접 src를 찾거나, source 태그에서 찾는 로직으로 강화 ▼▼▼
-        let audioUrl = null;
-        const findAudio = (section) => {
-            if (!section) return null;
-            const sourceTag = section.find('audio > source').first();
-            if (sourceTag.length) return sourceTag.attr('src');
-            const audioTag = section.find('audio').first();
-            if (audioTag.length) return audioTag.attr('src');
+        const wikitext = await fetchWiktionaryWikitext(queryLemma);
+        if (!wikitext) {
+            console.log(`[Enrich] No wikitext found for "${queryLemma}"`);
             return null;
-        };
-
-        const horbeispieleSection = findSection('Hörbeispiele');
-        audioUrl = findAudio(horbeispieleSection);
-        if (!audioUrl) {
-            audioUrl = findAudio(ausspracheSection);
-        }
-        if (!audioUrl) {
-            audioUrl = findAudio($('body')); // 최후의 수단
         }
 
-        if (audioUrl && audioUrl.startsWith('//')) {
-            audioUrl = 'https:' + audioUrl;
-        }
+        const parsed = parseWikitext(wikitext);
+        const { ipa, audioTitles, examples } = parsed;
 
-        const bedeutungenSection = findSection('Bedeutungen');
-        const ko = bedeutungenSection ? bedeutungenSection.find('dd > .Übersetzung > a[title="Koreanisch"]').first().text().trim() : null;
+        let audioUrl = null;
+        let audioLocal = null;
 
-        const examples = [];
-        if (bedeutungenSection) {
-            const beispieleHeader = bedeutungenSection.find('dd:contains("Beispiele:")');
-            beispieleHeader.first().next('dl').find('dd').each((i, el) => {
-                if (examples.length < 2) {
-                    examples.push({ de: $(el).text().trim().split(/\[\d+\]/)[0], ko: null, source: 'wiktionary' });
+        if (audioTitles.length > 0) {
+            audioUrl = await fetchCommonsFileUrl(audioTitles[0]);
+            if (audioUrl) {
+                const filename = path.basename(audioTitles[0]);
+                const localPath = path.join(AUDIO_DIR, filename);
+                try {
+                    await downloadToFile(audioUrl, localPath);
+                    audioLocal = `/static/audio/${filename}`;
+                    console.log(`[Enrich] Audio downloaded for "${queryLemma}" to ${audioLocal}`);
+                } catch (e) {
+                    console.error(`[Enrich] Failed to download audio ${audioUrl}`, e);
                 }
-            });
+            }
         }
 
-        const finalExamples = [
-            ...(ko ? [{ de: '', ko, source: 'wiktionary-ko', kind: 'gloss' }] : []),
-            ...examples
-        ];
+        if (!ipa && !audioUrl && examples.length === 0) {
+            console.log(`[Enrich] Not enough useful info found for "${queryLemma}"`);
+            return null; // 유용한 정보가 충분하지 않으면 중단
+        }
 
-        let vocab = await prisma.vocab.findFirst({
-            where: { lemma: { equals: queryLemma, mode: 'insensitive' } }
+        const vocab = await prisma.vocab.upsert({
+            where: { lemma: titlecaseFirst(queryLemma) },
+            update: {},
+            create: {
+                lemma: titlecaseFirst(queryLemma),
+                pos: 'UNK',
+                levelCEFR: 'UNSET',
+                source: 'wiktionary-en'
+            }
         });
-        if (!vocab) {
-            vocab = await prisma.vocab.create({
-                data: { lemma: titlecaseFirst(queryLemma), pos: 'UNK', levelCEFR: 'A1' }
-            });
-        }
 
-        let entry = await prisma.dictEntry.findUnique({ where: { vocabId: vocab.id } });
-        const dataToUpdate = {
-            ipa: entry?.ipa || ipa || null,
-            audioUrl: entry?.audioUrl || audioUrl || null,
-            examples: finalExamples.length ? finalExamples : (entry?.examples || []),
-            license: 'CC BY-SA',
-            attribution: 'Wiktionary/Wikimedia',
-        };
+        const updatedEntry = await prisma.dictEntry.upsert({
+            where: { vocabId: vocab.id },
+            create: {
+                vocabId: vocab.id,
+                ipa,
+                audioUrl,
+                audioLocal,
+                examples,
+                license: 'CC BY-SA 3.0',
+                attribution: 'Wiktionary'
+            },
+            update: {
+                ipa: ipa || undefined,
+                audioUrl: audioUrl || undefined,
+                audioLocal: audioLocal || undefined,
+                examples,
+            }
+        });
 
-        if (!entry) {
-            entry = await prisma.dictEntry.create({ data: { vocabId: vocab.id, ...dataToUpdate } });
-        } else {
-            entry = await prisma.dictEntry.update({ where: { vocabId: vocab.id }, data: dataToUpdate });
-        }
+        console.log(`[Enrich] Enriched "${queryLemma}" successfully.`);
+        return { vocab, entry: updatedEntry };
 
-        return { vocab, entry };
     } catch (error) {
         console.error(`[Enrich] CRITICAL ERROR during enrichFromWiktionary for "${queryLemma}":`, error);
-        return { vocab: null, entry: null };
+        return null;
     }
 }
+
 
 // ===== Auth =====
 app.post('/auth/register', async (req, res) => {
@@ -1146,7 +1126,7 @@ app.get('/dict/search', async (req, res) => {
             id: v.id,
             lemma: v.lemma,
             pos: v.pos,
-            gender: v.gender,
+            // ★★★★★ 수정된 부분: gender 필드 삭제 ★★★★★
             ipa: v.dictMeta?.ipa || null,
             audio: v.dictMeta?.audioLocal || v.dictMeta?.audioUrl || null,
             license: v.dictMeta?.license || null,

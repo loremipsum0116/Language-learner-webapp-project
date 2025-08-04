@@ -21,7 +21,7 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <div className="d-flex align-items-center">
-                            <h5 className="modal-title mb-0" lang="de">{vocab?.lemma}</h5>
+                            <h5 className="modal-title mb-0" lang="en">{vocab?.lemma}</h5>
                             <button
                                 className="btn btn-sm btn-outline-secondary ms-2"
                                 onClick={(e) => { e.stopPropagation(); onPlayVocabAudio(vocab); }}
@@ -44,7 +44,7 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                                 {examples.map((ex, i) => (
                                     <li key={i} className="d-flex justify-content-between align-items-center mb-1 p-2 rounded hover-bg-light">
                                         <div>
-                                            <span lang="de">{ex.de}</span>
+                                            <span lang="en">{ex.de}</span>
                                             {ex.ko ? <span className="text-muted d-block small"> — {ex.ko}</span> : null}
                                         </div>
                                         {ex.audioUrl && (
@@ -487,7 +487,7 @@ export default function MyWordbook() {
                                             onChange={() => toggleSelect(v.vocabId)}
                                         />
                                         <div>
-                                            <div className="fw-semibold" lang="de">{v.vocab.lemma}</div>
+                                            <div className="fw-semibold" lang="en">{v.vocab.lemma}</div>
                                             <Pron ipa={v.vocab.dictMeta?.ipa} ipaKo={v.vocab.dictMeta?.ipaKo} />
                                             <div className="text-muted small">{gloss || '뜻 정보 없음'}</div>
                                         </div>

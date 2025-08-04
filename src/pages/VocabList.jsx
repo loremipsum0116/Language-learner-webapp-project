@@ -23,7 +23,7 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                 <div className="modal-content">
                     <div className="modal-header">
                         <div className="d-flex align-items-center">
-                            <h5 className="modal-title mb-0" lang="de">{vocab?.lemma}</h5>
+                            <h5 className="modal-title mb-0" lang="en">{vocab?.lemma}</h5>
                             {/* ★★★★★ 수정된 부분 ★★★★★ */}
                             {/* audioUrl 존재 여부와 상관없이 버튼을 항상 렌더링합니다. */}
                             <button
@@ -48,7 +48,7 @@ function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
                                 {examples.map((ex, i) => (
                                     <li key={i} className="d-flex justify-content-between align-items-center mb-1 p-2 rounded hover-bg-light">
                                         <div>
-                                            <span lang="de">{ex.de}</span>
+                                            <span lang="en">{ex.de}</span>
                                             {ex.ko ? <span className="text-muted d-block small"> — {ex.ko}</span> : null}
                                         </div>
                                         {ex.audioUrl && (
@@ -106,7 +106,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     onClick={() => onOpenDetail(vocab.id)}
                     style={{ cursor: 'pointer' }}
                 >
-                    <h5 className="card-title mb-1" lang="de">{vocab.lemma}</h5>
+                    <h5 className="card-title mb-1" lang="en">{vocab.lemma}</h5>
                     <Pron ipa={vocab.ipa || vocab.dictMeta?.ipa} ipaKo={vocab.ipaKo || vocab.dictMeta?.ipaKo} />
                     <div className="card-subtitle text-muted">{koGloss}</div>
                 </div>

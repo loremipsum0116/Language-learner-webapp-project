@@ -1,17 +1,16 @@
 // server/tools/seed.js
 require('dotenv').config({ path: '../.env' });
 const { PrismaClient } = require('@prisma/client');
-const vocabData = require('../data/A1_vocab.js'); // ★ CSV 대신 JS 파일을 직접 임포트
+const vocabData = require('../data/A1_vocab.js'); // JS 파일을 직접 임포트
 
 const prisma = new PrismaClient();
 
-// 소문자 -> 대문자 보정 (ex: stadt -> Stadt)
+// 소문자 -> 대문자 보정 (ex: city -> City)
 const titlecaseFirst = (s = '') => (s ? s[0].toUpperCase() + s.slice(1) : s);
 
 async function main() {
     console.log('🌱 A1 단어 데이터베이스 시딩을 시작합니다 (JS 모듈 방식)...');
 
-    // ★ CSV 스트림 대신, JS 배열을 직접 순회합니다.
     for (const row of vocabData) {
         const lemma = titlecaseFirst(row.lemma);
         const ko = row.ko;
@@ -27,7 +26,7 @@ async function main() {
                 where: { lemma: lemma },
                 update: {
                     pos: row.pos || 'UNK',
-                    gender: row.gender || null,
+                    // ★★★★★ 수정된 부분: gender 필드 관련 코드 삭제 ★★★★★
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
                     source: 'seed-A1-js',
@@ -35,14 +34,13 @@ async function main() {
                 create: {
                     lemma: lemma,
                     pos: row.pos || 'UNK',
-                    gender: row.gender || null,
+                    // ★★★★★ 수정된 부분: gender 필드 관련 코드 삭제 ★★★★★
                     plural: row.plural || null,
                     levelCEFR: row.levelCEFR || 'A1',
                     source: 'seed-A1-js',
                 },
             });
 
-            // ★ 더 이상 JSON.parse가 필요 없습니다. row.examples는 이미 배열입니다.
             const examplesJson = Array.isArray(row.examples) ? row.examples : [];
             
             const hasKoGloss = examplesJson.some(ex => ex.kind === 'gloss');

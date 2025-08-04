@@ -1,3 +1,4 @@
+// server/tools/seed_vocab_from_csv.js
 require('dotenv').config();
 const fs = require('fs');
 
@@ -17,22 +18,18 @@ if (!file) {
 (async () => {
     const csv = fs.readFileSync(file, 'utf8');
 
-    // 헤더를 읽고, 컬럼수 불일치 허용, 빈줄 스킵
     const rows = parse(csv, {
         bom: true,
-        columns: true,                 // 첫 줄을 헤더로 사용
+        columns: true,
         skip_empty_lines: true,
         relax_column_count: true,
         trim: true
-    })
-        // 섹션 제목/공란 행 건너뛰기
-        .filter(r => {
-            const allEmpty = Object.values(r).every(v => (v ?? '').trim() === '');
-            if (allEmpty) return false;
-            // pos/levelCEFR 등 핵심 필드가 전부 비어 있으면 제목줄로 간주
-            const isSection = !r.pos && !r.levelCEFR && !r.examples && !r.ipa && !r.ko;
-            return !isSection;
-        });
+    }).filter(r => {
+        const allEmpty = Object.values(r).every(v => (v ?? '').trim() === '');
+        if (allEmpty) return false;
+        const isSection = !r.pos && !r.levelCEFR && !r.examples && !r.ipa && !r.ko;
+        return !isSection;
+    });
 
     let upserted = 0;
 
@@ -44,7 +41,7 @@ if (!file) {
             where: { lemma },
             update: {
                 pos: r.pos || '',
-                gender: r.gender || null,
+                // ★★★★★ 수정된 부분: gender 필드 관련 코드 삭제 ★★★★★
                 plural: r.plural || null,
                 levelCEFR: r.levelCEFR || 'A1',
                 source: 'seed-csv'
@@ -52,20 +49,18 @@ if (!file) {
             create: {
                 lemma,
                 pos: r.pos || '',
-                gender: r.gender || null,
+                // ★★★★★ 수정된 부분: gender 필드 관련 코드 삭제 ★★★★★
                 plural: r.plural || null,
                 levelCEFR: r.levelCEFR || 'A1',
                 source: 'seed-csv'
             }
         });
 
-        // examples 문자열 → JSON 파싱
         let examples = [];
         if (r.examples) {
             try { examples = JSON.parse(r.examples); }
-            catch { /* 무시: 형식 이상이면 빈 배열 */ }
+            catch { /* 무시 */ }
         }
-        // ipa_ko → prisma 의 ipaKo
         const ipaKo = (r.ipa_ko ?? '').trim() || null;
 
         await prisma.dictEntry.upsert({

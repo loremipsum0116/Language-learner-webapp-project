@@ -2,25 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { fetchJSON, withCreds } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 
-/* 독일어 가상 키패드 */
-function GermanKeypad({ onInsert }) {
-    const keys = ["ä", "ö", "ü", "ß", "Ä", "Ö", "Ü"];
-    return (
-        <div className="d-flex gap-2 my-2" role="group" aria-label="German virtual keypad">
-            {keys.map((k) => (
-                <button
-                    key={k}
-                    type="button"
-                    className="btn btn-outline-secondary btn-sm"
-                    onClick={() => onInsert(k)}
-                    aria-label={`insert ${k}`}
-                >
-                    {k}
-                </button>
-            ))}
-        </div>
-    );
-}
 
 /* 오디오 플레이어 (속도 조절) */
 function AudioPlayer({ src, license, attribution }) {
@@ -170,7 +151,7 @@ export default function Dict() {
                 </button>
             </form>
 
-            <GermanKeypad onInsert={insert} />
+
 
             {lat !== null && <div className="form-text mt-1">API {lat}ms</div>}
             {err && (
@@ -191,7 +172,6 @@ export default function Dict() {
                             <div className="d-flex gap-2 align-items-center">
                                 <span className="text-muted">
                                     {e.pos}
-                                    {e.gender ? ` • ${e.gender}` : ""}
                                 </span>
                                 {/* /vocab/search 결과에는 id가 있으므로 버튼 노출. /dict/search 폴백 결과에는 보통 id가 없어 숨김 */}
                                 {user && e.id && (
@@ -226,7 +206,7 @@ export default function Dict() {
                             <ul className="mb-0">
                                 {e.examples.map((ex, idx) => (
                                     <li key={idx}>
-                                        <span lang="de">{ex.de}</span>
+                                        <span lang="en">{ex.de}</span>
                                         {ex.ko ? <span> — {ex.ko}</span> : null}
                                         {ex.cefr ? <small className="text-muted"> ({ex.cefr})</small> : null}
                                     </li>

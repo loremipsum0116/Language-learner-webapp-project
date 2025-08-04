@@ -266,7 +266,7 @@ export default function OdatNote() {
                                 onChange={() => toggle(item.cardId)}
                             />
                               <div>
-                                <h5 className="mb-1" lang="de">
+                                <h5 className="mb-1" lang="en">
                                     {item.lemma}
                                 </h5>
                                 <Pron ipa={item.ipa} ipaKo={item.ipaKo} />
@@ -317,7 +317,7 @@ export default function OdatNote() {
                                         />
                                     </div>
                                     <div className="modal-body text-center p-4">
-                                        <h2 className="display-5 mb-1" lang="de">
+                                        <h2 className="display-5 mb-1" lang="en">
                                             {currentQuiz.question}
                                         </h2>
                                         <div className="mb-3">

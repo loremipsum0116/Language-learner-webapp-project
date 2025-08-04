@@ -12,7 +12,7 @@ function ExplanationContent({ item }) {
         case 'list':
             return <ul className="list-unstyled ps-3">{item.items.map((li, i) => <li key={i}>- {li}</li>)}</ul>;
         case 'example':
-            return <div className="p-3 my-2 rounded bg-light">{item.items.map((ex, i) => <div key={i}><span lang="de">{ex.de}</span><small className="text-muted d-block"> — {ex.ko}</small></div>)}</div>;
+            return <div className="p-3 my-2 rounded bg-light">{item.items.map((ex, i) => <div key={i}><span lang="en">{ex.de}</span><small className="text-muted d-block"> — {ex.ko}</small></div>)}</div>;
         default:
             return <p className="mb-2">{item.content}</p>;
     }
