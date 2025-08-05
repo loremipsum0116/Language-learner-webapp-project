@@ -6,12 +6,20 @@ import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 
-function safeFileName(str) {
-    if (!str) return '';
-    return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
-}
+// ★ 시작: CEFR 레벨과 품사에 따라 다른 색상의 뱃지를 반환하는 헬퍼 함수들
+const getCefrBadgeColor = (level) => {
+    switch (level) {
+        case 'A1': return 'bg-danger';
+        case 'A2': return 'bg-warning text-dark';
+        case 'B1': return 'bg-success';
+        case 'B2': return 'bg-info text-dark';
+        case 'C1': return 'bg-primary';
+        default: return 'bg-secondary';
+    }
+};
 
 const getPosBadgeColor = (pos) => {
+    if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
         case 'noun':
             return 'bg-primary';
@@ -21,12 +29,11 @@ const getPosBadgeColor = (pos) => {
             return 'bg-warning text-dark';
         case 'adverb':
             return 'bg-info text-dark';
-        case 'preposition':
-            return 'bg-danger';
         default:
             return 'bg-secondary';
     }
 };
+// ★ 종료: 헬퍼 함수
 
 /**
  * 단어 카드 컴포넌트 (VocabCard)
@@ -57,6 +64,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     <div className="d-flex align-items-center mb-1">
                         <h5 className="card-title mb-0 me-2" lang="en">{vocab.lemma}</h5>
                         <div className="d-flex gap-1">
+                            {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
                             {posList.map(p => (
                                 p && p.toLowerCase() !== 'unk' && (
                                     <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
@@ -127,6 +135,20 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
     );
 }
 
+// API 요청 디바운스를 위한 커스텀 훅
+function useDebounce(value, delay) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+    return debouncedValue;
+}
+
 export default function VocabList() {
     const { user } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
@@ -143,16 +165,9 @@ export default function VocabList() {
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [enrichingId, setEnrichingId] = useState(null);
 
-    const isAdmin = user?.role === 'admin';
+    const debouncedSearchTerm = useDebounce(searchTerm, 400);
 
-    const filteredWords = useMemo(() => {
-        const needle = searchTerm.trim().toLowerCase();
-        if (!needle) return words;
-        return words.filter(word =>
-            word.lemma.toLowerCase().includes(needle) ||
-            (word.ko_gloss || '').toLowerCase().includes(needle)
-        );
-    }, [words, searchTerm]);
+    const isAdmin = user?.role === 'admin';
 
     const handleToggleSelect = (vocabId) => {
         setSelectedIds(prev => {
@@ -167,15 +182,15 @@ export default function VocabList() {
     };
 
     const isAllSelected = useMemo(() => {
-        if (filteredWords.length === 0) return false;
-        return filteredWords.every(word => selectedIds.has(word.id));
-    }, [filteredWords, selectedIds]);
+        if (words.length === 0) return false;
+        return words.every(word => selectedIds.has(word.id));
+    }, [words, selectedIds]);
 
     const handleToggleSelectAll = () => {
         if (isAllSelected) {
             setSelectedIds(new Set());
         } else {
-            setSelectedIds(new Set(filteredWords.map(word => word.id)));
+            setSelectedIds(new Set(words.map(word => word.id)));
         }
     };
 
@@ -211,21 +226,14 @@ export default function VocabList() {
 
     const playUrl = (url, type, id) => {
         if (!url) return;
-
         if (playingAudio && playingAudio.id === id) {
             stopAudio();
             return;
         }
-
         stopAudio();
-
         const fullUrl = url.startsWith('/') ? `${API_BASE}${url}` : url;
         const newAudio = new Audio(fullUrl);
-
-        newAudio.onended = () => {
-            setPlayingAudio(null);
-        };
-
+        newAudio.onended = () => setPlayingAudio(null);
         newAudio.play().then(() => {
             audioRef.current = newAudio;
             setPlayingAudio({ type, id });
@@ -259,8 +267,8 @@ export default function VocabList() {
         }
     };
 
-    const playExampleAudio = (url, vocabId, index) => {
-        playUrl(url, 'example', `${vocabId}-${index}`);
+    const playExampleAudio = (url, type, id) => {
+        playUrl(url, type, id);
     };
 
     const handleDeleteVocab = async (vocabId, lemma) => {
@@ -284,7 +292,13 @@ export default function VocabList() {
         (async () => {
             try {
                 setLoading(true); setErr(null);
-                const { data } = await fetchJSON(`/vocab/list?level=${encodeURIComponent(activeLevel)}`, withCreds({ signal: ac.signal }), 15000);
+                let url = '/vocab/list?';
+                if (debouncedSearchTerm) {
+                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
+                } else {
+                    url += `level=${encodeURIComponent(activeLevel)}`;
+                }
+                const { data } = await fetchJSON(url, { signal: ac.signal });
                 setWords(Array.isArray(data) ? data : []);
             } catch (e) {
                 if (!isAbortError(e)) setErr(e);
@@ -293,7 +307,7 @@ export default function VocabList() {
             }
         })();
         return () => ac.abort();
-    }, [activeLevel]);
+    }, [activeLevel, debouncedSearchTerm]);
 
     useEffect(() => {
         if (!user) { setMyWordbookIds(new Set()); setSrsIds(new Set()); return; }
@@ -302,16 +316,10 @@ export default function VocabList() {
             try {
                 const [wb, srs] = await Promise.all([
                     fetchJSON('/my-wordbook', withCreds({ signal: ac.signal })),
-                    // ★ 시작: 존재하지 않는 API 주소('/srs/cards')를 올바른 주소('/srs/all-cards')로 수정합니다.
                     fetchJSON('/srs/all-cards', withCreds({ signal: ac.signal }))
-                    // ★ 종료: API 주소 수정
                 ]);
-                
-                // ★ 수정: /srs/all-cards 응답 데이터 구조에 맞게 srsIds를 설정합니다.
-                // 이 API는 { vocabId: number, ... } 형태의 객체 배열을 반환합니다.
-                const wbIds = new Set((wb.data || []).map(v => v.vocabId)); 
+                const wbIds = new Set((wb.data || []).map(v => v.vocabId));
                 const srsSet = new Set((srs.data || []).map(card => card.vocabId));
-                
                 setMyWordbookIds(wbIds);
                 setSrsIds(srsSet);
             } catch (e) {
@@ -324,7 +332,7 @@ export default function VocabList() {
     const handleOpenDetail = async (vocabId) => {
         try {
             setDetailLoading(true); setDetail(null);
-            const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds(), 15000);
+            const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds());
             setDetail(data);
         } catch (e) {
             if (e.status === 401) alert('로그인이 필요합니다.');
@@ -365,7 +373,7 @@ export default function VocabList() {
                 <h2 className="m-0">레벨별 단어</h2>
                 <div className="btn-group">
                     {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
-                        <button key={l} className={`btn btn-sm ${activeLevel === l ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => setActiveLevel(l)}>{l}</button>
+                        <button key={l} className={`btn btn-sm ${activeLevel === l ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => { setSearchTerm(''); setActiveLevel(l); }}>{l}</button>
                     ))}
                 </div>
             </div>
@@ -378,10 +386,10 @@ export default function VocabList() {
                         id="selectAllCheck"
                         checked={isAllSelected}
                         onChange={handleToggleSelectAll}
-                        disabled={filteredWords.length === 0}
+                        disabled={words.length === 0}
                     />
                     <label className="form-check-label" htmlFor="selectAllCheck">
-                        {isAllSelected ? '전체 해제' : '전체 선택'} ({selectedIds.size} / {filteredWords.length})
+                        {isAllSelected ? '전체 해제' : '전체 선택'} ({selectedIds.size} / {words.length})
                     </label>
                 </div>
                 <div className="d-flex gap-2">
@@ -400,7 +408,7 @@ export default function VocabList() {
                 <input
                     type="search"
                     className="form-control"
-                    placeholder="단어 검색 (독일어 또는 한국어 뜻)"
+                    placeholder="전체 레벨에서 단어 검색..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -408,13 +416,13 @@ export default function VocabList() {
 
             {loading && <div>목록 로딩 중…</div>}
             {err && <div className="alert alert-warning">해당 레벨 목록을 불러오지 못했습니다.</div>}
-            {!loading && !err && filteredWords.length === 0 && (
+            {!loading && !err && words.length === 0 && (
                 <div className="text-muted">
                     {searchTerm ? '검색 결과가 없습니다.' : '이 레벨에 표시할 단어가 없습니다.'}
                 </div>
             )}
             <div className="row">
-                {filteredWords.map(vocab => (
+                {words.map(vocab => (
                     <VocabCard
                         key={vocab.id}
                         vocab={vocab}
@@ -445,7 +453,7 @@ export default function VocabList() {
                                 <VocabDetailModal
                                     vocab={detail}
                                     onClose={() => { setDetail(null); stopAudio(); }}
-                                    onPlayUrl={playExampleAudio}
+                                    onPlayUrl={(url, type, id) => playExampleAudio(url, type, id)}
                                     onPlayVocabAudio={playVocabAudio}
                                     playingAudio={playingAudio}
                                 />

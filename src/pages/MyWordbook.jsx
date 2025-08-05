@@ -5,7 +5,18 @@ import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 
-// ★ 시작: 품사별 색상을 위한 헬퍼 함수 추가
+// ★ 시작: CEFR 레벨과 품사별 색상을 위한 헬퍼 함수 추가
+const getCefrBadgeColor = (level) => {
+    switch (level) {
+        case 'A1': return 'bg-danger';
+        case 'A2': return 'bg-warning text-dark';
+        case 'B1': return 'bg-success';
+        case 'B2': return 'bg-info text-dark';
+        case 'C1': return 'bg-primary';
+        default: return 'bg-secondary';
+    }
+};
+
 const getPosBadgeColor = (pos) => {
     if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
@@ -193,10 +204,6 @@ export default function MyWordbook() {
             setEnrichingId(null);
         }
     };
-    
-    const playExampleAudio = (url, type, id) => {
-        playUrl(url, type, id);
-    };
 
     useEffect(() => {
         return () => { if (audioRef.current) stopAudio(); };
@@ -249,7 +256,7 @@ export default function MyWordbook() {
         e?.stopPropagation?.();
         try {
             setDetailLoading(true);
-            const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds(), 15000);
+            const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds());
             setDetail(data);
         } catch (err) {
             console.error(err);
@@ -422,12 +429,10 @@ export default function MyWordbook() {
 
                     <div className="list-group">
                         {filteredWords.map((v) => {
-                            // ★ 시작: API 응답 구조 변경에 따라 데이터 접근 방식을 수정하고, 품사 정보를 처리합니다.
                             const { vocab } = v;
                             const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
                             const posList = vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [];
-                            // ★ 종료: 데이터 접근 방식 수정
 
                             return (
                                 <div
@@ -442,10 +447,11 @@ export default function MyWordbook() {
                                             onChange={() => toggleSelect(v.vocabId)}
                                         />
                                         <div>
-                                            {/* ★ 시작: 단어, 품사, 발음, 뜻을 표시합니다. */}
-                                            <div className="d-flex align-items-center">
+                                            {/* ★ 시작: 단어, CEFR, 품사, 발음, 뜻을 모두 표시합니다. */}
+                                            <div className="d-flex align-items-center flex-wrap">
                                                 <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
                                                 <div className="d-flex gap-1">
+                                                    {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
                                                     {posList.map(p => (
                                                         p && p.toLowerCase() !== 'unk' && (
                                                             <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
@@ -496,7 +502,9 @@ export default function MyWordbook() {
                                 <VocabDetailModal
                                     vocab={detail}
                                     onClose={() => { setDetail(null); stopAudio(); }}
-                                    onPlayUrl={(url, id, index) => playExampleAudio(url, 'example', `${id}-${index}`)}
+                                    // ★ 시작: onPlayUrl prop을 playUrl 함수로 직접 전달합니다.
+                                    onPlayUrl={playUrl}
+                                    // ★ 종료: prop 전달 방식 수정
                                     onPlayVocabAudio={playVocabAudio}
                                     playingAudio={playingAudio}
                                 />

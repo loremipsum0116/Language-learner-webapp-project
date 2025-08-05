@@ -304,13 +304,26 @@ app.get('/dict/search', async (req, res) => {
 });
 app.get('/vocab/list', async (req, res) => {
     try {
-        const { level } = req.query;
-        if (!level) {
-            return fail(res, 400, 'A level query parameter is required.');
+        // ★ 시작: 검색어(q) 파라미터를 받도록 수정
+        const { level, q } = req.query;
+        const where = {};
+
+        if (q && q.trim()) {
+            // 검색어가 있으면, lemma 필드에서 해당 검색어를 포함하는 모든 단어를 검색 (레벨 무관)
+            where.lemma = {
+                contains: q.trim(),
+            };
+        } else if (level) {
+            // 검색어가 없고 레벨이 지정된 경우, 해당 레벨의 단어만 필터링
+            where.levelCEFR = level;
+        } else {
+            // 기본적으로 A1 레벨을 보여주거나, 파라미터가 없는 경우 에러 처리 가능
+            where.levelCEFR = 'A1';
         }
+        // ★ 종료: 검색 로직 수정
 
         const vocabs = await prisma.vocab.findMany({
-            where: { levelCEFR: level },
+            where, // 동적으로 생성된 where 조건 적용
             orderBy: { lemma: 'asc' },
             include: {
                 dictMeta: {
@@ -321,11 +334,9 @@ app.get('/vocab/list', async (req, res) => {
 
         if (vocabs.length === 0) return ok(res, []);
 
-        // ★ 시작: 변경된 데이터 구조에 맞춰 ko_gloss를 정확히 추출합니다.
         const items = vocabs.map(v => {
             const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
             let primaryGloss = null;
-            // 가장 첫 번째 품사의 첫 번째 정의에서 한국어 뜻을 가져옵니다.
             if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
                 primaryGloss = meanings[0].definitions[0].ko_def || null;
             }
@@ -335,14 +346,13 @@ app.get('/vocab/list', async (req, res) => {
                 lemma: v.lemma,
                 pos: v.pos,
                 levelCEFR: v.levelCEFR,
-                ko_gloss: primaryGloss, // 올바르게 추출된 뜻
+                ko_gloss: primaryGloss,
                 ipa: v.dictMeta?.ipa || null,
                 ipaKo: v.dictMeta?.ipaKo || null,
                 audio: v.dictMeta?.audioUrl || null,
             };
         });
-        // ★ 종료: API 응답 데이터 구조 수정
-
+        
         return ok(res, items);
     } catch (e) {
         console.error('GET /vocab/list failed:', e);
@@ -597,6 +607,7 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
         }
         const ids = vocabIds.map(Number).filter(Number.isFinite);
         if (ids.length === 0) return ok(res, []);
+
         const [vocabs, cards] = await Promise.all([
             prisma.vocab.findMany({
                 where: { id: { in: ids } },
@@ -607,42 +618,50 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
                 select: { id: true, itemId: true },
             }),
         ]);
+
         const cmap = new Map(cards.map(c => [c.itemId, c.id]));
         const distractorPool = await prisma.vocab.findMany({
             where: { id: { notIn: ids }, dictMeta: { isNot: null } },
             include: { dictMeta: true },
             take: 1000,
         });
-        const poolGlosses = new Set(
-            distractorPool
-                .map(d => d.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko)
-                .filter(Boolean)
-        );
-        const selectedGlosses = new Map(
-            vocabs.map(v => {
-                const g = v.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko || null;
-                return [v.id, g];
-            })
-        );
+
+        // ★ 시작: 오답 선택지 생성 로직 개선
+        const poolGlosses = new Set();
+        distractorPool.forEach(d => {
+            const meanings = Array.isArray(d.dictMeta?.examples) ? d.dictMeta.examples : [];
+            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+                const gloss = meanings[0].definitions[0].ko_def;
+                if (gloss) poolGlosses.add(gloss);
+            }
+        });
+        // ★ 종료: 오답 선택지 생성 로직 개선
+
         const pickN = (arr, n) => {
-            const a = arr.slice();
+            const a = [...arr]; // Create a mutable copy
             for (let i = a.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [a[i], a[j]] = [a[j], a[i]];
             }
             return a.slice(0, n);
         };
+
         const items = [];
         for (const v of vocabs) {
-            const correct = selectedGlosses.get(v.id);
-            if (!correct) continue;
-            const localWrongSet = new Set(poolGlosses);
-            for (const [otherId, g] of selectedGlosses.entries()) {
-                if (otherId !== v.id && g && g !== correct) localWrongSet.add(g);
+            // ★ 시작: 변경된 데이터 구조에서 정답(한국어 뜻)을 정확히 추출합니다.
+            const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+            let correct = null;
+            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+                correct = meanings[0].definitions[0].ko_def || null;
             }
+            if (!correct) continue;
+            // ★ 종료: 정답 추출 로직 수정
+
+            const localWrongSet = new Set(poolGlosses);
             localWrongSet.delete(correct);
             const wrongs = pickN(Array.from(localWrongSet), 3);
             if (wrongs.length < 3) continue;
+
             items.push({
                 cardId: cmap.get(v.id) || null,
                 vocabId: v.id,
@@ -658,8 +677,7 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
         }
         return ok(res, items);
     } catch (e) {
-        console.error('POST /quiz/by-vocab 오류:', e && e.stack ? e.stack : e);
-        console.error('요청 바디:', req.body);
+        console.error('POST /quiz/by-vocab 오류:', e);
         return fail(res, 500, 'Internal Server Error');
     }
 });
