@@ -6,7 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const path = require('node:path');
+const path = require('path');
 const fs = require('node:fs/promises');
 const { prisma } = require('./db/prisma');
 const { ok, fail } = require('./lib/resp');
@@ -16,6 +16,7 @@ const {
     fetchCommonsFileUrl,
     findEnglishTranslation, 
 } = require('./integrations/wiktionary');
+
 
 const app = express();
 
@@ -34,6 +35,7 @@ app.use(express.json());
 app.use(cors({ origin: CORS_ORIGIN, credentials: true }));
 app.use('/static', express.static(path.join(__dirname, 'static')));
 app.get('/__ping', (req, res) => res.type('text').send('pong'));
+app.use('/audio', express.static(path.join(__dirname, 'A1', 'audio')));
 
 // ===== Helpers (하나의 섹션으로 통합 및 정리) =====
 

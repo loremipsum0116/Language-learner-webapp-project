@@ -8,7 +8,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/book-uk.mp3",
     "koGloss": "책",
     "koExample": "그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.",
-    "koChirpScript": "'book'! '책'이라는 뜻이에요. 예를 들어볼까요? 'He was frustrated because he couldn't find anything about dinosaurs in the book.', 이건 한국어로 '그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.'라고 해요."
+    "koChirpScript": "'책'이라는 뜻이에요. 예를 들어볼까요? 'He was frustrated because he couldn't find anything about dinosaurs in the book.', 이건 한국어로 '그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.'라고 해요."
   },
   {
     "lemma": "friend",
@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/friend-uk.mp3",
     "koGloss": "친구",
     "koExample": "존과 나는 대학 시절 룸메이트였을 때부터 친구였다.",
-    "koChirpScript": "이번 단어는 'friend'입니다. 무슨 뜻일까요? 바로 '친구'! 예문으로 'John and I have been friends ever since we were roommates at college.'가 있어요. '존과 나는 대학 시절 룸메이트였을 때부터 친구였다.'라는 의미죠."
+    "koChirpScript": "이번 단어는 무슨 뜻일까요? 바로 '친구'! 예문으로 'John and I have been friends ever since we were roommates at college.'가 있어요. '존과 나는 대학 시절 룸메이트였을 때부터 친구였다.'라는 의미죠."
   },
   {
     "lemma": "go",
@@ -41,7 +41,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/school-uk.mp3",
     "koGloss": "학교",
     "koExample": "다이버들은 거대한 고등어 떼를 만났다.",
-    "koChirpScript": "'school'이라는 단어는 '학교'라는 뜻도 있지만, '물고기 떼'라는 재미있는 뜻도 있답니다. 예문을 볼까요? 'The divers encountered a huge school of mackerel.', 한국어로는 '다이버들은 거대한 고등어 떼를 만났다.'라고 해요."
+    "koChirpScript": "이 단어는 '학교'라는 뜻도 있지만, '물고기 떼'라는 재미있는 뜻도 있답니다. 예문을 볼까요? 'The divers encountered a huge school of mackerel.', 한국어로는 '다이버들은 거대한 고등어 떼를 만났다.'라고 해요."
   },
   {
     "lemma": "student",
@@ -52,18 +52,18 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/student-uk.mp3",
     "koGloss": "학생",
     "koExample": "그는 삶의 학생이다.",
-    "koChirpScript": "'student'! '학생'이라는 뜻이에요. 문장 'He is a student of life.'는 '그는 삶의 학생이다.'라고 해석할 수 있어요."
+    "koChirpScript": "'학생'이라는 뜻이에요. 문장 'He is a student of life.'는 '그는 삶의 학생이다.'라고 해석할 수 있어요."
   },
   {
     "lemma": "teacher",
     "pos": "noun",
     "levelCEFR": "A1",
     "definition": "A person who teaches, especially one employed in a school.",
-    "example": "예문 없음.",
+    "example": "Sometimes life is your Teacher",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/teacher-uk.mp3",
     "koGloss": "교사",
     "koExample": null,
-    "koChirpScript": "'teacher'는 '교사'를 의미해요. 정말 중요한 단어죠!"
+    "koChirpScript": "이 단어는'교사'를 의미해요. 정말 중요한 단어죠! Sometimes life is your Teacher. 때때로, 시간은 너의 스승이 되기도 한다. 라는 뜻이에요."
   },
   {
     "lemma": "water",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/water-uk.mp3",
     "koGloss": "물",
     "koExample": "전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.",
-    "koChirpScript": "이번 단어 'water'는 바로 '물'입니다. 예문은 조금 과학적이네요! 'By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen.' 한국어로는 '전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.' 입니다."
+    "koChirpScript": "이번 단어 'water' 바로 '물'입니다. 예문은 조금 과학적이네요! 'By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen.' 한국어로는 '전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.' 입니다."
   },
   {
     "lemma": "time",
@@ -96,7 +96,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/people-uk.mp3",
     "koGloss": "사람들",
     "koExample": "어젯밤 식당에 사람들이 너무 많았다.",
-    "koChirpScript": "단어 'people'은 '사람들'을 의미해요. 문장으로 배워볼까요? 'There were so many people at the restaurant last night.' 한국어로는 '어젯밤 식당에 사람들이 너무 많았다.'라고 할 수 있죠."
+    "koChirpScript": "단어 people! 사람들을 의미해요. 문장으로 배워볼까요? 'There were so many people at the restaurant last night.' 한국어로는 '어젯밤 식당에 사람들이 너무 많았다.'라고 할 수 있죠."
   },
   {
     "lemma": "world",
@@ -107,7 +107,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/world-ca.mp3",
     "koGloss": "세계",
     "koExample": "세상 끝까지 언제나 연인들은 있을 것이다.",
-    "koChirpScript": "'world'는 바로 '세계'! 예문은 'There will always be lovers, till the world’s end.' 이고, 한국어 해석은 '세상 끝까지 언제나 연인들은 있을 것이다.' 입니다."
+    "koChirpScript": "이 단어의 뜻은 바로 '세계'! 예문은 'There will always be lovers, till the world’s end.' 이고, 한국어 해석은 '세상 끝까지 언제나 연인들은 있을 것이다.' 입니다."
   },
   {
     "lemma": "ask",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/become-us.mp3",
     "koGloss": "되다",
     "koExample": "많은 사람들이 굶주려야 할 지경에 이르렀다.",
-    "koChirpScript": "'become'은 '~이 되다'라는 뜻이에요. 예문 'It hath becomen so that many a man had to sterve.'는 조금 옛날 표현인데, '많은 사람들이 굶주려야 할 지경에 이르렀다.'는 의미로 쓰였어요."
+    "koChirpScript": "'무엇이 되다'라는 뜻이에요. 예문 'It hath becomen so that many a man had to sterve.'는 조금 옛날 표현인데, '많은 사람들이 굶주려야 할 지경에 이르렀다.'는 의미로 쓰였어요."
   },
   {
     "lemma": "begin",
@@ -140,7 +140,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/begin-uk.mp3",
     "koGloss": "시작하다",
     "koExample": "모두가 여기에 있으니, 이제 발표를 시작해야 한다.",
-    "koChirpScript": "'begin'은 '시작하다'는 뜻! 아주 유용하죠? 'Now that everyone is here, we should begin the presentation.'처럼 쓸 수 있어요. 한국어로는 '모두가 여기에 있으니, 이제 발표를 시작해야 한다.' 입니다."
+    "koChirpScript": "이 단어의 뜻은'시작하다'라는 뜻! 아주 유용하죠? 'Now that everyone is here, we should begin the presentation.'처럼 쓸 수 있어요. 한국어로는 '모두가 여기에 있으니, 이제 발표를 시작해야 한다.' 입니다."
   },
   {
     "lemma": "call",
@@ -151,7 +151,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/call-au.mp3",
     "koGloss": "부르다, 전화하다",
     "koExample": "오늘 여러 통의 전화를 받았다.",
-    "koChirpScript": "'call'은 '부르다' 혹은 '전화하다'라는 뜻을 가져요. 예문 'I received several calls today.'는 '오늘 여러 통의 전화를 받았다.'라고 해석해요."
+    "koChirpScript": "'부르다' 혹은 '전화하다'라는 뜻을 가져요. 예문 'I received several calls today.'는 '오늘 여러 통의 전화를 받았다.'라고 해석해요."
   },
   {
     "lemma": "can",
@@ -162,7 +162,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/can-1-us-stressed.mp3",
     "koGloss": "~할 수 있다",
     "koExample": "그녀는 영어, 프랑스어, 독일어를 할 수 있다.",
-    "koChirpScript": "자신감을 주는 단어 'can'! '~할 수 있다'는 뜻이죠. 'She can speak English, French, and German.' 이 문장은 '그녀는 영어, 프랑스어, 독일어를 할 수 있다.'는 의미랍니다."
+    "koChirpScript": "자신감을 주는 단어 'can'! '무엇을 할 수 있다'는 뜻이죠. 'She can speak English, French, and German.' 이 문장은 '그녀는 영어, 프랑스어, 독일어를 할 수 있다.'는 의미랍니다."
   },
   {
     "lemma": "come",
@@ -173,7 +173,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/come-1-uk.mp3",
     "koGloss": "오다",
     "koExample": "그녀가 올 때면 산 주위를 돌아서 올 것이다.",
-    "koChirpScript": "'come'은 '오다'라는 뜻의 기본 단어예요. 노래 가사에도 많이 나오죠! 'She’ll be coming ’round the mountain when she comes.'는 '그녀가 올 때면 산 주위를 돌아서 올 것이다.' 라는 뜻이에요."
+    "koChirpScript": "이번에 볼 단어는 '오다'라는 뜻의 기본 단어예요. 노래 가사에도 많이 나오죠! 'She’ll be coming ’round the mountain when she comes.'는 '그녀가 올 때면 산 주위를 돌아서 올 것이다.' 라는 뜻이에요."
   },
   {
     "lemma": "do",
@@ -206,7 +206,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/find-uk.mp3",
     "koGloss": "찾다",
     "koExample": "나는 내 차 키를 찾았다. 그것들은 소파 밑에 있었다.",
-    "koChirpScript": "'find'는 무언가를 '찾다'라는 뜻이에요. 예를 들면, 'I found my car keys. They were under the couch.'는 '나는 내 차 키를 찾았다. 그것들은 소파 밑에 있었다.'는 말이죠."
+    "koChirpScript": "무언가를 '찾다'라는 뜻인데요. 예를 들면, 'I found my car keys. They were under the couch.'는 '나는 내 차 키를 찾았다. 그것들은 소파 밑에 있었다.'는 말이죠."
   },
   {
     "lemma": "get",
@@ -217,7 +217,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/get-us.mp3",
     "koGloss": "얻다, 받다",
     "koExample": "나는 내일 할인점에서 컴퓨터를 한 대 살 거야.",
-    "koChirpScript": "'get'은 정말 뜻이 많은 단어인데, 기본적으로 '얻다', '받다'로 생각하면 편해요. 'I'm going to get a computer tomorrow from the discount store.'는 '나는 내일 할인점에서 컴퓨터를 한 대 살 거야.'라는 뜻이죠."
+    "koChirpScript": "이건 정말 뜻이 많은 단어인데, 기본적으로 '얻다', '받다'로 생각하면 편해요. 'I'm going to get a computer tomorrow from the discount store.'는 '나는 내일 할인점에서 컴퓨터를 한 대 살 거야.'라는 뜻이죠."
   },
   {
     "lemma": "give",
@@ -228,7 +228,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/give-1-uk.mp3",
     "koGloss": "주다",
     "koExample": "그의 독단적인 종교적 신념에는 융통성이 없다.",
-    "koChirpScript": "'give'는 '주다'라는 뜻이에요. 'There is no give in his dogmatic religious beliefs.' 이 예문에서는 '융통성이 없다'는 의미로 확장되어 '그의 독단적인 종교적 신념에는 융통성이 없다.'라고 해석된답니다."
+    "koChirpScript": "기본적으로 주다 라는 뜻이에요. 'There is no give in his dogmatic religious beliefs.' 이 예문에서는 '융통성이 없다'는 의미로 확장되어 '그의 독단적인 종교적 신념에는 융통성이 없다.'라고 해석된답니다."
   },
   {
     "lemma": "have",
@@ -250,7 +250,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hear-uk.mp3",
     "koGloss": "듣다",
     "koExample": "나는 귀가 먹었었는데, 이제 들을 수 있다.",
-    "koChirpScript": "'hear'는 소리를 '듣다'는 뜻이에요. 'I was deaf, and now I can hear.'는 '나는 귀가 먹었었는데, 이제 들을 수 있다.'라고 말하는 문장이에요."
+    "koChirpScript": "친숙한 이 단어! 소리를 '듣다'란 뜻이에요. 'I was deaf, and now I can hear.'는 '나는 귀가 먹었었는데, 이제 들을 수 있다.'라고 말하는 문장이에요."
   },
   {
     "lemma": "help",
@@ -272,7 +272,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/keep-au.mp3",
     "koGloss": "유지하다, 지키다",
     "koExample": "그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.",
-    "koChirpScript": "'keep'은 어떤 상태를 '유지하다' 또는 무언가를 '지키다'라는 뜻을 가져요. 예문 'He works as a cobbler's apprentice for his keep.'에서는 '생계를 유지하다'는 의미로 사용되어 '그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.'라고 해석해요."
+    "koChirpScript": "이건 어떤 상태를 '유지하다' 또는 무언가를 '지키다'라는 뜻을 가져요. 예문 'He works as a cobbler's apprentice for his keep.'에서는 '생계를 유지하다'는 의미로 사용되어 '그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.'라고 해석해요."
   },
   {
     "lemma": "know",
@@ -283,7 +283,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/know-uk.mp3",
     "koGloss": "알다",
     "koExample": "그는 무언가 끔찍한 일이 일어날 것을 알았다.",
-    "koChirpScript": "'know'는 '~을 알다'라는 뜻이죠. 'He knew something terrible was going to happen.' 이 문장은 '그는 무언가 끔찍한 일이 일어날 것을 알았다.'는 의미입니다."
+    "koChirpScript": "'무엇 무엇을 알다'라는 뜻이죠. 'He knew something terrible was going to happen.' 이 문장은 '그는 무언가 끔찍한 일이 일어날 것을 알았다.'는 의미입니다."
   },
   {
     "lemma": "leave",
@@ -305,7 +305,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/let-us.mp3",
     "koGloss": "허락하다, ~하게 하다",
     "koExample": "그가 몇 시간 동안 문을 두드린 후에야, 나는 그를 들어오게 하기로 결정했다.",
-    "koChirpScript": "'let'은 무언가를 '허락하다', 또는 '~하게 하다'는 뜻으로 정말 많이 써요. 예문 'After he knocked for hours, I decided to let him come in.'은 '그가 몇 시간 동안 문을 두드린 후에야, 나는 그를 들어오게 하기로 결정했다.'는 뜻이랍니다."
+    "koChirpScript": "무언가를 '허락하다', 또는 '무엇하게 하다'는 뜻으로 정말 많이 써요. 예문 'After he knocked for hours, I decided to let him come in.'은 '그가 몇 시간 동안 문을 두드린 후에야, 나는 그를 들어오게 하기로 결정했다.'는 뜻이랍니다."
   },
   {
     "lemma": "like",
@@ -316,7 +316,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/like-us.mp3",
     "koGloss": "좋아하다, ~와 같은",
     "koExample": "네가 좋아하는 것과 싫어하는 것을 말해줘.",
-    "koChirpScript": "'like'는 '~을 좋아하다'는 뜻도 있고, '~와 같은'이라는 뜻도 있어요. 예문 'Tell me your likes and dislikes.'에서는 명사로 쓰여서 '네가 좋아하는 것과 싫어하는 것을 말해줘.'라는 뜻이에요."
+    "koChirpScript": "'무엇을 좋아하다'는 뜻도 있고, '~와 같은'이라는 뜻도 있어요. 예문 'Tell me your likes and dislikes.'에서는 명사로 쓰여서 '네가 좋아하는 것과 싫어하는 것을 말해줘.'라는 뜻이에요."
   },
   {
     "lemma": "live",
@@ -327,7 +327,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/live-1-us.mp3",
     "koGloss": "살다",
     "koExample": "그는 몇 달 이상 살지 못할 것으로 예상된다.",
-    "koChirpScript": "'live'는 '살다'는 뜻이죠. 'He's not expected to live for more than a few months.'는 '그는 몇 달 이상 살지 못할 것으로 예상된다.'는 의미입니다."
+    "koChirpScript": "이건 '살다'라는 뜻이죠. 'He's not expected to live for more than a few months.'는 '그는 몇 달 이상 살지 못할 것으로 예상된다.'는 의미입니다."
   },
   {
     "lemma": "make",
@@ -349,7 +349,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/may-us.mp3",
     "koGloss": "~일지도 모른다, ~해도 좋다",
     "koExample": "밖에 나가서 담배를 피워도 좋다.",
-    "koChirpScript": "'may'는 추측을 나타내는 '~일지도 모른다'와 허락을 나타내는 '~해도 좋다'는 뜻이 있어요. 'You may smoke outside.'는 '밖에 나가서 담배를 피워도 좋다.'는 허락의 의미예요."
+    "koChirpScript": "이번 단어 may, 추측을 나타내는 '~일지도 모른다'와 허락을 나타내는 '~해도 좋다'는 뜻이 있어요. 'You may smoke outside.'는 '밖에 나가서 담배를 피워도 좋다.'는 허락의 의미예요."
   },
   {
     "lemma": "mean",
@@ -360,7 +360,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/mean-us.mp3",
     "koGloss": "의미하다",
     "koExample": "그녀는 어젯밤 그에게 말한 것을 정말로 의미한 것일까?",
-    "koChirpScript": "'mean'은 '의미하다'라는 뜻이에요. 'Does she really mean what she said to him last night?' 이 문장은 '그녀는 어젯밤 그에게 말한 것을 정말로 의미한 것일까?'라고 묻는 질문이죠."
+    "koChirpScript": "기본적으로 '의미하다'라는 뜻이에요. 'Does she really mean what she said to him last night?' 이 문장은 '그녀는 어젯밤 그에게 말한 것을 정말로 의미한 것일까?'라고 묻는 질문이죠."
   },
   {
     "lemma": "move",
@@ -382,7 +382,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/need-us.mp3",
     "koGloss": "필요하다",
     "koExample": "나는 항상 음식, 옷, 주거지 외에는 욕구가 거의 없으려 노력했다.",
-    "koChirpScript": "'need'는 무언가가 '필요하다'고 말할 때 써요. 'I've always tried to have few needs beyond food, clothing and shelter.' 이 문장은 '나는 항상 음식, 옷, 주거지 외에는 욕구가 거의 없으려 노력했다.'라는 의미랍니다."
+    "koChirpScript": "이번 단어는 무언가가 '필요하다'고 말할 때 써요. 'I've always tried to have few needs beyond food, clothing and shelter.' 이 문장은 '나는 항상 음식, 옷, 주거지 외에는 욕구가 거의 없으려 노력했다.'라는 의미랍니다."
   },
   {
     "lemma": "play",
@@ -393,7 +393,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/play-us.mp3",
     "koGloss": "놀다, 연주하다",
     "koExample": "아이들은 놀이를 통해 배운다.",
-    "koChirpScript": "'play'는 '놀다' 또는 악기를 '연주하다'는 뜻이죠. 'Children learn through play.'는 '아이들은 놀이를 통해 배운다.'는 깊은 뜻이 있는 문장이네요!"
+    "koChirpScript": "이번 단어는 '놀다' 또는 악기를 '연주하다'는 뜻이죠. 'Children learn through play.'는 '아이들은 놀이를 통해 배운다.'는 깊은 뜻이 있는 문장이네요!"
   },
   {
     "lemma": "put",
@@ -415,6 +415,6 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/run-au.mp3",
     "koGloss": "달리다",
     "koExample": "나는 방금 아침 달리기를 마치고 돌아왔다.",
-    "koChirpScript": "'run'은 '달리다'라는 뜻! 건강에 좋죠? 'I just got back from my morning run.'은 '나는 방금 아침 달리기를 마치고 돌아왔다.'는 뜻이에요."
+    "koChirpScript": "이번 단어는 '달리다'라는 뜻! 건강에 좋죠? 'I just got back from my morning run.'은 '나는 방금 아침 달리기를 마치고 돌아왔다.'는 뜻이에요."
   }
 ]
