@@ -466,7 +466,7 @@ export default function Home() {
           <h1 className="display-6 mb-2">효율적인 영어 학습 플랫폼</h1>
           <p className="mb-3">
             SRS 어휘, 문법 연습, 지문 독해. <strong>AI 영어 튜터</strong>와{" "}
-            <strong>사전 API(오디오·예문)</strong>를 결합한 적응형 학습을 경험하세요.
+            <strong>사전 API(오디오· )</strong>를 결합한 적응형 학습을 경험하세요.
           </p>
           <div className="d-flex gap-2">
             <Link className="btn btn-primary" to="/learn/vocab">

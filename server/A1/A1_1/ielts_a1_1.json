@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/friend-uk.mp3",
     "koGloss": "친구",
     "koExample": "존과 나는 대학 시절 룸메이트였을 때부터 친구였다.",
-    "koChirpScript": "이번 단어 friend입니다. 무슨 뜻일까요? 바로 친구! 예문으로 John and I have been friends ever since we were roommates at college. 존과 나는 대학 시절 룸메이트였을 때부터 친구였다.라는 의미죠."
+    "koChirpScript": "이번 단어 friend입니다. 무슨 뜻일까요? 바로 친구! John and I have been friends ever since we were roommates at college. 존과 나는 대학 시절 룸메이트였을 때부터 친구였다.라는 의미죠."
   },
   {
     "lemma": "go",
@@ -41,7 +41,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/school-uk.mp3",
     "koGloss": "학교",
     "koExample": "다이버들은 거대한 고등어 떼를 만났다.",
-    "koChirpScript": "school 학교라는 뜻도 있지만, 물고기 떼라는 재미있는 뜻도 있답니다. 예문을 볼까요? The divers encountered a huge school of mackerel. 다이버들은 거대한 고등어 떼를 만났다.라고 해요."
+    "koChirpScript": "school 학교라는 뜻도 있지만, 물고기 떼라는 재미있는 뜻도 있답니다.  을 볼까요? The divers encountered a huge school of mackerel. 다이버들은 거대한 고등어 떼를 만났다.라고 해요."
   },
   {
     "lemma": "student",
@@ -59,7 +59,7 @@
     "pos": "noun",
     "levelCEFR": "A1",
     "definition": "A person who teaches, especially one employed in a school.",
-    "example": "예문 없음.",
+    "example": "  없음.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/teacher-uk.mp3",
     "koGloss": "교사",
     "koExample": null,
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/water-uk.mp3",
     "koGloss": "물",
     "koExample": "전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.",
-    "koChirpScript": "이번 단어 water 바로 물입니다. 예문은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
+    "koChirpScript": "이번 단어 water 바로 물입니다.  은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
   },
   {
     "lemma": "time",
@@ -85,7 +85,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/time-au.mp3",
     "koGloss": "시간",
     "koExample": "시간은 누구를 위해서도 멈추지 않는다.",
-    "koChirpScript": "시간 영어로 뭐라고 할까요? 바로 time입니다. Time stops for nobody. 이런 멋진 예문처럼 사용돼요. 이 문장은 시간은 누구를 위해서도 멈추지 않는다.라는 뜻이랍니다."
+    "koChirpScript": "시간 영어로 뭐라고 할까요? 바로 time입니다. Time stops for nobody. 이런 멋진  처럼 사용돼요. 이 문장은 시간은 누구를 위해서도 멈추지 않는다.라는 뜻이랍니다."
   },
   {
     "lemma": "people",
@@ -107,7 +107,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/world-ca.mp3",
     "koGloss": "세계",
     "koExample": "세상 끝까지 언제나 연인들은 있을 것이다.",
-    "koChirpScript": "world 의 뜻은 세계! 예문은 There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
+    "koChirpScript": "world 의 뜻은 세계!  은 There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
   },
   {
     "lemma": "ask",
@@ -151,7 +151,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/call-au.mp3",
     "koGloss": "부르다, 전화하다",
     "koExample": "오늘 여러 통의 전화를 받았다.",
-    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요. 예문 I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
+    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요.   I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
   },
   {
     "lemma": "can",
@@ -184,7 +184,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/do-1-au.mp3",
     "koGloss": "하다",
     "koExample": "내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.",
-    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이 예문에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
+    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이  에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
   },
   {
     "lemma": "feel",
@@ -228,7 +228,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/give-1-uk.mp3",
     "koGloss": "주다",
     "koExample": "그의 독단적인 종교적 신념에는 융통성이 없다.",
-    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이 예문에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
+    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이  에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
   },
   {
     "lemma": "have",
@@ -272,7 +272,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/keep-au.mp3",
     "koGloss": "유지하다, 지키다",
     "koExample": "그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.",
-    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요. 예문 He works as a cobblers apprentice for his keep.에서는 생계를 유지하다는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
+    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요.   He works as a cobblers apprentice for his keep.에서는 생계를 유지하다는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
   },
   {
     "lemma": "know",
@@ -290,7 +290,7 @@
     "pos": "verb",
     "levelCEFR": "A1",
     "definition": "To have a consequence or remnant.",
-    "example": "예문 없음.",
+    "example": "  없음.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/leave-au.mp3",
     "koGloss": "떠나다",
     "koExample": null,
@@ -371,7 +371,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/move-us.mp3",
     "koGloss": "움직이다",
     "koExample": "키를 살짝만 움직여도 배는 항로를 벗어날 것이다.",
-    "koChirpScript": "이번 단어는 move, 움직이다입니다. 예문 A slight move of the tiller, and the boat will go off course. 키를 살짝만 움직여도 배는 항로를 벗어날 것이다.라는 뜻이에요."
+    "koChirpScript": "이번 단어는 move, 움직이다입니다.   A slight move of the tiller, and the boat will go off course. 키를 살짝만 움직여도 배는 항로를 벗어날 것이다.라는 뜻이에요."
   },
   {
     "lemma": "need",
@@ -404,7 +404,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/put-1-us.mp3",
     "koGloss": "두다, 놓다",
     "koExample": "그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 '08 풋옵션(80달러)을 샀다.",
-    "koChirpScript": "기본 동사 put은 두다 또는 놓다라는 뜻이에요. 예문 He bought a January 08 put for Procter and Gamble at 80 to hedge his bet. 금융 용어 풋옵션으로 쓰여서 조금 어렵지만, 그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 08 풋옵션(80달러)을 샀다는 뜻이랍니다."
+    "koChirpScript": "기본 동사 put은 두다 또는 놓다라는 뜻이에요.   He bought a January 08 put for Procter and Gamble at 80 to hedge his bet. 금융 용어 풋옵션으로 쓰여서 조금 어렵지만, 그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 08 풋옵션(80달러)을 샀다는 뜻이랍니다."
   },
   {
     "lemma": "run",

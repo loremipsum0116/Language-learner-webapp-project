@@ -52,7 +52,7 @@ async function ensureExamples(lemma, examples) {
         examples
       }
     });
-    console.log(`[seed] dictMeta 생성 + 예문 주입: ${vocab.lemma}`);
+    console.log(`[seed] dictMeta 생성 +   주입: ${vocab.lemma}`);
   } else {
     // examples 없으면 주입, 있으면 덮어쓰지 않고 병합(간단)
     const prev = Array.isArray(exist.examples) ? exist.examples : [];
@@ -61,7 +61,7 @@ async function ensureExamples(lemma, examples) {
       where: { vocabId: vocab.id },
       data: { examples: merged }
     });
-    console.log(`[fix] dictMeta 예문 보정: ${vocab.lemma} (prev:${prev.length}, now:${merged.length})`);
+    console.log(`[fix] dictMeta   보정: ${vocab.lemma} (prev:${prev.length}, now:${merged.length})`);
   }
 }
 

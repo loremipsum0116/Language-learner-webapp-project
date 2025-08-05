@@ -69,8 +69,8 @@ export default function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVoca
                                                     e.stopPropagation();
                                                     onPlayUrl(localAudioPath, vocab.lemma, i);
                                                 }}
-                                                aria-label="예문 오디오 재생"
-                                                title="예문 듣기"
+                                                aria-label="  오디오 재생"
+                                                title="  듣기"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
                                                     <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z"/>

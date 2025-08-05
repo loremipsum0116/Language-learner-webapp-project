@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+os.environ["GRPC_DNS_RESOLVER"] = "native" 
 import re
 from io import BytesIO
 
@@ -25,9 +26,9 @@ def split_script_by_language(script_text):
 
     for char in script_text:
         if '\uac00' <= char <= '\ud7af':  # 한글
-            lang = 'ko-KR'
-        elif 'a' <= char.lower() <= 'z':
             lang = 'en-US'
+        elif 'a' <= char.lower() <= 'z':
+            lang = 'en-GB'
         elif char.isspace():
             lang = current_lang  # 공백은 이전 언어 유지
         else:
@@ -47,13 +48,13 @@ def split_script_by_language(script_text):
 
 # 언어별 음성 설정
 VOICE_PARAMS = {
-    "ko-KR": texttospeech.VoiceSelectionParams(
-        language_code="ko-KR",
-        name="ko-KR-Chirp3-HD-Aoede"
-    ),
     "en-US": texttospeech.VoiceSelectionParams(
         language_code="en-US",
         name="en-US-Chirp3-HD-Aoede"
+    ),
+    "en-GB": texttospeech.VoiceSelectionParams(
+        language_code="en-GB",
+        name="en-GB-Chirp3-HD-Aoede"
     )
 }
 

@@ -361,7 +361,7 @@ export default function LearnVocab() {
                             <>
                                 <h2 className="display-5 mb-3" lang="en">{current.question}</h2>
                                 <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
-                                <div className="text-muted mt-2">카드를 클릭하면 뜻/예문이 표시됩니다.</div>
+                                <div className="text-muted mt-2">카드를 클릭하면 뜻/ 이 표시됩니다.</div>
                             </>
                         ) : (
                             <>

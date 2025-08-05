@@ -36,7 +36,7 @@ export const grammarTopics = [
             [ // 페이지 3
                 {
                     type: 'paragraph',
-                    content: "하지만 'sein(be)'과 'haben(have)' 동사는 자기 마음대로 변신하는 특별한 친구들이니, 아래 예문처럼 통째로 외워두는 게 좋아요!"
+                    content: "하지만 'sein(be)'과 'haben(have)' 동사는 자기 마음대로 변신하는 특별한 친구들이니, 아래  처럼 통째로 외워두는 게 좋아요!"
                 },
                 {
                     type: 'example',

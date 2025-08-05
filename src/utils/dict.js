@@ -18,7 +18,7 @@ export function asExamplesArray(examples) {
     return [];
 }
 
-/** lemma 기준의 한국어 뜻 선택(예문 번역이 아닌 '단어의 뜻' 우선) */
+/** lemma 기준의 한국어 뜻 선택(  번역이 아닌 '단어의 뜻' 우선) */
 export function pickLemmaGloss(dictMeta, lemma, fallback = null) {
     if (!dictMeta) return fallback;
     const exs = asExamplesArray(dictMeta.examples);

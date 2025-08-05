@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/mother-uk.mp3",
     "koGloss": "어머니",
     "koExample": "저의 어머니는 의사입니다.",
-    "koChirpScript": "이번 단어는 mother입니다. 무슨 뜻일까요? 바로 어머니! 예문으로 My mother is a doctor. 저의 어머니는 의사입니다.라는 의미죠."
+    "koChirpScript": "이번 단어는 mother입니다. 무슨 뜻일까요? 바로 어머니!  으로 My mother is a doctor. 저의 어머니는 의사입니다.라는 의미죠."
   },
   {
     "lemma": "father",
@@ -63,7 +63,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hand-uk.mp3",
     "koGloss": "손",
     "koExample": "식사하기 전에 손을 씻으세요.",
-    "koChirpScript": "이번 단어는 hand, 바로 손 입니다. 예문은 Please wash your hands before eating. 식사하기 전에 손을 씻으세요. 처럼 활용할 수 있어요."
+    "koChirpScript": "이번 단어는 hand, 바로 손 입니다.  은 Please wash your hands before eating. 식사하기 전에 손을 씻으세요. 처럼 활용할 수 있어요."
   },
   {
     "lemma": "eye",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eye-uk.mp3",
     "koGloss": "눈",
     "koExample": "그녀는 아름다운 파란 눈을 가졌습니다.",
-    "koChirpScript": "eye! 눈이라는 뜻이에요. 시력을 나타내죠! 예문 She has beautiful blue eyes. 그녀는 아름다운 파란 눈을 가졌습니다.라는 뜻이에요."
+    "koChirpScript": "eye! 눈이라는 뜻이에요. 시력을 나타내죠!   She has beautiful blue eyes. 그녀는 아름다운 파란 눈을 가졌습니다.라는 뜻이에요."
   },
   {
     "lemma": "food",
@@ -85,7 +85,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/food-uk.mp3",
     "koGloss": "음식",
     "koExample": "배고파요, 음식이 좀 필요해요.",
-    "koChirpScript": "맛있는 단어 food는 음식입니다. 예문으로 I am hungry, I need some food. 배고파요, 음식이 좀 필요해요. 라는 뜻입니다."
+    "koChirpScript": "맛있는 단어 food는 음식입니다.  으로 I am hungry, I need some food. 배고파요, 음식이 좀 필요해요. 라는 뜻입니다."
   },
   {
     "lemma": "bread",
@@ -151,7 +151,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/night-uk.mp3",
     "koGloss": "밤",
     "koExample": "밤에는 별들이 밝게 빛난다.",
-    "koChirpScript": "이번 단어 night는 밤입니다. 예문은 The stars shine bright at night. 이고, 밤에는 별들이 밝게 빛난다.는 아름다운 뜻이에요."
+    "koChirpScript": "이번 단어 night는 밤입니다.  은 The stars shine bright at night. 이고, 밤에는 별들이 밝게 빛난다.는 아름다운 뜻이에요."
   },
   {
     "lemma": "day",
@@ -184,7 +184,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/look-uk.mp3",
     "koGloss": "바라보다",
     "koExample": "아름다운 일몰을 보세요.",
-    "koChirpScript": "look은 특정 방향을 의식적으로 바라보다는 느낌이에요. 예문 Look at the beautiful sunset. 아름다운 일몰을 보세요.라고 말할 때 쓴답니다."
+    "koChirpScript": "look은 특정 방향을 의식적으로 바라보다는 느낌이에요.   Look at the beautiful sunset. 아름다운 일몰을 보세요.라고 말할 때 쓴답니다."
   },
   {
     "lemma": "say",
@@ -239,7 +239,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/think-uk.mp3",
     "koGloss": "생각하다",
     "koExample": "내일 비가 올 거라고 생각해요.",
-    "koChirpScript": "머리를 쓰는 동사 think는 생각하다 입니다. 예문 I think it will rain tomorrow.는 내일 비가 올 거라고 생각해요.라는 추측을 나타내죠."
+    "koChirpScript": "머리를 쓰는 동사 think는 생각하다 입니다.   I think it will rain tomorrow.는 내일 비가 올 거라고 생각해요.라는 추측을 나타내죠."
   },
   {
     "lemma": "try",
@@ -272,7 +272,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/open-uk.mp3",
     "koGloss": "열다",
     "koExample": "창문 좀 열어주시겠어요?",
-    "koChirpScript": "이번 단어 open은 열다입니다. 예문은 Can you open the window? 이고, 창문 좀 열어주시겠어요?라고 부탁하는 말이에요."
+    "koChirpScript": "이번 단어 open은 열다입니다.  은 Can you open the window? 이고, 창문 좀 열어주시겠어요?라고 부탁하는 말이에요."
   },
   {
     "lemma": "close",
@@ -316,7 +316,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/new-uk.mp3",
     "koGloss": "새로운",
     "koExample": "나는 어제 새로운 셔츠를 샀다.",
-    "koChirpScript": "new는 새로운이라는 뜻! 반대말은 뭘까요? 예문 I bought a new shirt yesterday. 나는 어제 새로운 셔츠를 샀다.는 뜻이에요."
+    "koChirpScript": "new는 새로운이라는 뜻! 반대말은 뭘까요?   I bought a new shirt yesterday. 나는 어제 새로운 셔츠를 샀다.는 뜻이에요."
   },
   {
     "lemma": "old",
@@ -360,7 +360,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/red-uk.mp3",
     "koGloss": "빨간색",
     "koExample": "사과는 종종 빨간색이다.",
-    "koChirpScript": "색깔 단어 red는 빨간색입니다. 예문 An apple is often red. 사과는 종종 빨간색이다.라는 뜻이에요."
+    "koChirpScript": "색깔 단어 red는 빨간색입니다.   An apple is often red. 사과는 종종 빨간색이다.라는 뜻이에요."
   },
   {
     "lemma": "white",

@@ -56,7 +56,7 @@ function safeFileName(str) {
 //                                                 className="btn btn-sm btn-outline-secondary ms-2"
 //                                                 onClick={(e) => { e.stopPropagation(); onPlayUrl(localAudioPath, vocab.lemma, i); }}
 //                                                 aria-label="Play example sentence"
-//                                                 title="예문 듣기"
+//                                                 title="  듣기"
 //                                             >
 //                                                 <i className="bi bi-play-circle"></i>
 //                                             </button>

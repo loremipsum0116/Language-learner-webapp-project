@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dog-uk.mp3",
     "koGloss": "개",
     "koExample": "개가 짖고 있어요.",
-    "koChirpScript": "이번 단어는 dog입니다. 무슨 뜻일까요? 바로 개! 예문으로 The dog is barking.가 있어요. 개가 짖고 있어요.라는 의미죠."
+    "koChirpScript": "이번 단어는 dog입니다. 무슨 뜻일까요? 바로 개!  으로 The dog is barking.가 있어요. 개가 짖고 있어요.라는 의미죠."
   },
   {
     "lemma": "apple",
@@ -30,7 +30,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/apple-uk.mp3",
     "koGloss": "사과",
     "koExample": "그녀는 매일 사과 한 개를 먹어요.",
-    "koChirpScript": "사과를 영어로 뭐라고 할까요? 바로 apple입니다. She eats an apple every day. 라는 예문처럼 사용돼요. 이 문장은 그녀는 매일 사과 한 개를 먹어요.라는 뜻이랍니다."
+    "koChirpScript": "사과를 영어로 뭐라고 할까요? 바로 apple입니다. She eats an apple every day. 라는  처럼 사용돼요. 이 문장은 그녀는 매일 사과 한 개를 먹어요.라는 뜻이랍니다."
   },
   {
     "lemma": "banana",
@@ -63,7 +63,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/table-uk.mp3",
     "koGloss": "테이블, 식탁",
     "koExample": "책이 테이블 위에 있어요.",
-    "koChirpScript": "이번 단어는 table, 바로 테이블 또는 식탁 입니다. 예문은 The book is on the table. 이고, 한국어로는 책이 테이블 위에 있어요.처럼 활용할 수 있어요."
+    "koChirpScript": "이번 단어는 table, 바로 테이블 또는 식탁 입니다.  은 The book is on the table. 이고, 한국어로는 책이 테이블 위에 있어요.처럼 활용할 수 있어요."
   },
   {
     "lemma": "walk",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/walk-uk.mp3",
     "koGloss": "걷다",
     "koExample": "나는 매일 아침 학교에 걸어갑니다.",
-    "koChirpScript": "walk는 걷다라는 뜻이에요. 건강에 아주 좋죠! 예문 I walk to school every morning.는 나는 매일 아침 학교에 걸어갑니다.라는 뜻이에요."
+    "koChirpScript": "walk는 걷다라는 뜻이에요. 건강에 아주 좋죠!   I walk to school every morning.는 나는 매일 아침 학교에 걸어갑니다.라는 뜻이에요."
   },
   {
     "lemma": "run",
@@ -85,7 +85,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/run-uk.mp3",
     "koGloss": "달리다",
     "koExample": "그는 매우 빨리 달릴 수 있어요.",
-    "koChirpScript": "이번 단어는 run, 달리다입니다. 예문으로 He can run very fast.가 있고, 한국어 해석은 그는 매우 빨리 달릴 수 있어요. 입니다."
+    "koChirpScript": "이번 단어는 run, 달리다입니다.  으로 He can run very fast.가 있고, 한국어 해석은 그는 매우 빨리 달릴 수 있어요. 입니다."
   },
   {
     "lemma": "blue",
@@ -96,7 +96,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/blue-uk.mp3",
     "koGloss": "파란색",
     "koExample": "하늘은 파랗습니다.",
-    "koChirpScript": "색깔을 배워볼까요? blue는 파란색입니다. The sky is blue. 라는 예문처럼 하늘은 파랗습니다.라고 말할 수 있어요."
+    "koChirpScript": "색깔을 배워볼까요? blue는 파란색입니다. The sky is blue. 라는  처럼 하늘은 파랗습니다.라고 말할 수 있어요."
   },
   {
     "lemma": "happy",
@@ -118,7 +118,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/big-uk.mp3",
     "koGloss": "큰",
     "koExample": "코끼리는 큰 동물입니다.",
-    "koChirpScript": "big은 큰이라는 뜻이에요. 반대말은 뭘까요? An elephant is a big animal. 이라는 예문이 있어요. 한국어로는 코끼리는 큰 동물입니다."
+    "koChirpScript": "big은 큰이라는 뜻이에요. 반대말은 뭘까요? An elephant is a big animal. 이라는  이 있어요. 한국어로는 코끼리는 큰 동물입니다."
   },
   {
     "lemma": "small",
@@ -162,7 +162,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/music-uk.mp3",
     "koGloss": "음악",
     "koExample": "그녀는 음악 듣는 것을 좋아해요.",
-    "koChirpScript": "이번 단어는 music입니다. 바로 음악! 예문은 She loves listening to music. 이고, 그녀는 음악 듣는 것을 좋아해요.라는 뜻이에요."
+    "koChirpScript": "이번 단어는 music입니다. 바로 음악!  은 She loves listening to music. 이고, 그녀는 음악 듣는 것을 좋아해요.라는 뜻이에요."
   },
   {
     "lemma": "dance",
@@ -184,7 +184,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sing-uk.mp3",
     "koGloss": "노래하다",
     "koExample": "그는 샤워하면서 노래하는 것을 좋아해요.",
-    "koChirpScript": "sing은 노래하다는 뜻이에요. 예문 He likes to sing in the shower.처럼 그는 샤워하면서 노래하는 것을 좋아해요.라고 쓸 수 있어요."
+    "koChirpScript": "sing은 노래하다는 뜻이에요.   He likes to sing in the shower.처럼 그는 샤워하면서 노래하는 것을 좋아해요.라고 쓸 수 있어요."
   },
   {
     "lemma": "read",
@@ -206,6 +206,6 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/write-uk.mp3",
     "koGloss": "쓰다",
     "koExample": "여기에 당신의 이름을 써주세요.",
-    "koChirpScript": "마지막 단어 write는 쓰다입니다. 예문 Please write your name here.는 여기에 당신의 이름을 써주세요.라는 뜻이에요."
+    "koChirpScript": "마지막 단어 write는 쓰다입니다.   Please write your name here.는 여기에 당신의 이름을 써주세요.라는 뜻이에요."
   }
 ]

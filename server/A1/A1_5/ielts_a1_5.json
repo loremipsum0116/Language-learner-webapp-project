@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sister-uk.mp3",
     "koGloss": "누나, 언니, 여동생",
     "koExample": "나의 언니와 나는 매우 다르게 생겼다.",
-    "koChirpScript": "이번 단어는 sister입니다. 무슨 뜻일까요? 바로 누나, 언니, 여동생! 예문으로 My sister and I look very different. 나의 언니와 나는 매우 다르게 생겼다.라는 의미죠."
+    "koChirpScript": "이번 단어는 sister입니다. 무슨 뜻일까요? 바로 누나, 언니, 여동생!  으로 My sister and I look very different. 나의 언니와 나는 매우 다르게 생겼다.라는 의미죠."
   },
   {
     "lemma": "child",
@@ -63,7 +63,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/room-uk.mp3",
     "koGloss": "방",
     "koExample": "내 방은 매우 깨끗하다.",
-    "koChirpScript": "이번 단어는 room, 바로 방 입니다. 예문은 My room is very clean. 한국어로는 내 방은 매우 깨끗하다.처럼 활용할 수 있어요."
+    "koChirpScript": "이번 단어는 room, 바로 방 입니다.  은 My room is very clean. 한국어로는 내 방은 매우 깨끗하다.처럼 활용할 수 있어요."
   },
   {
     "lemma": "bed",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bed-uk.mp3",
     "koGloss": "침대",
     "koExample": "나는 매일 밤 10시에 잠자리에 든다.",
-    "koChirpScript": "bed는 침대라는 뜻이에요. 편안한 잠자리가 중요하죠! 예문 I go to bed at 10 PM every night.  나는 매일 밤 10시에 잠자리에 든다.라는 뜻이에요."
+    "koChirpScript": "bed는 침대라는 뜻이에요. 편안한 잠자리가 중요하죠!   I go to bed at 10 PM every night.  나는 매일 밤 10시에 잠자리에 든다.라는 뜻이에요."
   },
   {
     "lemma": "window",
@@ -140,7 +140,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sun-uk.mp3",
     "koGloss": "태양, 해",
     "koExample": "해가 밝게 빛나고 있다.",
-    "koChirpScript": "반짝반짝 sun은 태양 또는 해를 말해요. 예문은 The sun is shining brightly. 이고, 해가 밝게 빛나고 있다.는 뜻이에요."
+    "koChirpScript": "반짝반짝 sun은 태양 또는 해를 말해요.  은 The sun is shining brightly. 이고, 해가 밝게 빛나고 있다.는 뜻이에요."
   },
   {
     "lemma": "rain",
@@ -305,7 +305,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/high-uk.mp3",
     "koGloss": "높은",
     "koExample": "저 산은 매우 높다.",
-    "koChirpScript": "high는 높은이라는 뜻의 형용사입니다. 예문 That mountain is very high. 저 산은 매우 높다는 뜻이죠."
+    "koChirpScript": "high는 높은이라는 뜻의 형용사입니다.   That mountain is very high. 저 산은 매우 높다는 뜻이죠."
   },
   {
     "lemma": "low",
@@ -327,7 +327,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/right-uk.mp3",
     "koGloss": "오른쪽의, 옳은",
     "koExample": "그것이 정답입니다.",
-    "koChirpScript": "right는 오른쪽이라는 뜻도 있고, 옳은이라는 뜻도 있어요. 예문 That is the right answer. 그것이 정답입니다.라는 뜻이에요."
+    "koChirpScript": "right는 오른쪽이라는 뜻도 있고, 옳은이라는 뜻도 있어요.   That is the right answer. 그것이 정답입니다.라는 뜻이에요."
   },
   {
     "lemma": "wrong",
@@ -360,7 +360,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/green-uk.mp3",
     "koGloss": "녹색",
     "koExample": "잔디는 녹색이다.",
-    "koChirpScript": "이번엔 green, 바로 녹색입니다. 예문 The grass is green. 잔디는 녹색이다. 라는 뜻이에요."
+    "koChirpScript": "이번엔 green, 바로 녹색입니다.   The grass is green. 잔디는 녹색이다. 라는 뜻이에요."
   },
   {
     "lemma": "different",
@@ -382,7 +382,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/important-uk.mp3",
     "koGloss": "중요한",
     "koExample": "건강한 음식을 먹는 것은 중요하다.",
-    "koChirpScript": "이번 단어 important는 중요한이라는 뜻입니다. 예문으로 It is important to eat healthy food.가 있고, 건강한 음식을 먹는 것은 중요하다.는 의미죠."
+    "koChirpScript": "이번 단어 important는 중요한이라는 뜻입니다.  으로 It is important to eat healthy food.가 있고, 건강한 음식을 먹는 것은 중요하다.는 의미죠."
   },
   {
     "lemma": "young",
