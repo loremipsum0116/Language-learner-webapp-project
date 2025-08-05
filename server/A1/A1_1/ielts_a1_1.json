@@ -6,7 +6,7 @@
     "definition": "A collection of sheets of paper bound together to hinge at one edge, containing printed or written material, pictures, etc.",
     "example": "He was frustrated because he couldn't find anything about dinosaurs in the book.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/book-uk.mp3",
-    "koGloss": "책",
+    "koGloss": "책, 서적, 도서; 예약하다",
     "koExample": "그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.",
     "koChirpScript": "book! 책이라는 뜻이에요. 예를 들어볼까요? He was frustrated because he couldnt find anything about dinosaurs in the book. 이건 한국어로 그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.라고 해요."
   },
@@ -17,7 +17,7 @@
     "definition": "A person other than a family member, spouse or lover whose company one enjoys and towards whom one feels affection.",
     "example": "John and I have been friends ever since we were roommates at college.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/friend-uk.mp3",
-    "koGloss": "친구",
+    "koGloss": "친구, 벗, 동료",
     "koExample": "존과 나는 대학 시절 룸메이트였을 때부터 친구였다.",
     "koChirpScript": "이번 단어 friend입니다. 무슨 뜻일까요? 바로 친구! John and I have been friends ever since we were roommates at college. 존과 나는 대학 시절 룸메이트였을 때부터 친구였다.라는 의미죠."
   },
@@ -28,7 +28,7 @@
     "definition": "The act of going.",
     "example": "It’s your go.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/go-1-au.mp3",
-    "koGloss": "가다",
+    "koGloss": "(명사) 차례, 순서, 시도; (동사) 가다",
     "koExample": "네 차례야.",
     "koChirpScript": "go 가다! 아주 간단하죠? 문장에서는 이렇게 쓰여요. Its your go. 한국어로는 네 차례야!"
   },
@@ -39,7 +39,7 @@
     "definition": "(collective) A group of fish or a group of marine mammals such as porpoises, dolphins, or whales.",
     "example": "The divers encountered a huge school of mackerel.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/school-uk.mp3",
-    "koGloss": "학교",
+    "koGloss": "학교; (물고기 등의) 떼, 무리",
     "koExample": "다이버들은 거대한 고등어 떼를 만났다.",
     "koChirpScript": "school 학교라는 뜻도 있지만, 물고기 떼라는 재미있는 뜻도 있답니다. The divers encountered a huge school of mackerel. 다이버들은 거대한 고등어 떼를 만났다.라고 해요."
   },
@@ -50,7 +50,7 @@
     "definition": "A person who studies or learns about a particular subject.",
     "example": "He is a student of life.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/student-uk.mp3",
-    "koGloss": "학생",
+    "koGloss": "학생, 연구가, 학도",
     "koExample": "그는 삶의 학생이다.",
     "koChirpScript": "student! 학생이라는 뜻이에요. 문장 He is a student of life. 그는 삶의 학생이다. 라고 해석할 수 있어요."
   },
@@ -59,9 +59,9 @@
     "pos": "noun",
     "levelCEFR": "A1",
     "definition": "A person who teaches, especially one employed in a school.",
-    "example": "  없음.",
+    "example": "  없음.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/teacher-uk.mp3",
-    "koGloss": "교사",
+    "koGloss": "교사, 선생님, 스승",
     "koExample": null,
     "koChirpScript": "teacher 교사를 의미해요. 정말 중요한 단어죠!"
   },
@@ -72,9 +72,9 @@
     "definition": "A substance (of molecular formula H₂O) found at room temperature and pressure as a clear liquid; it is present naturally as rain, and found in rivers, lakes and seas; its solid form is ice and its gaseous form is steam.",
     "example": "By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/water-uk.mp3",
-    "koGloss": "물",
+    "koGloss": "물, 수역; 물을 주다",
     "koExample": "전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.",
-    "koChirpScript": "이번 단어 water 바로 물입니다.  예문은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
+    "koChirpScript": "이번 단어 water 바로 물입니다.  예문은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
   },
   {
     "lemma": "time",
@@ -83,7 +83,7 @@
     "definition": "The inevitable progression into the future with the passing of present and past events.",
     "example": "Time stops for nobody.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/time-au.mp3",
-    "koGloss": "시간",
+    "koGloss": "시간, 때, 시기; 번, 회",
     "koExample": "시간은 누구를 위해서도 멈추지 않는다.",
     "koChirpScript": "시간, 영어로 뭐라고 할까요? 바로 time입니다. Time stops for nobody. 아주 멋진 예문이네요. 이 문장은 시간은 누구를 위해서도 멈추지 않는다.라는 뜻이랍니다."
   },
@@ -94,7 +94,7 @@
     "definition": "Used as plural of person; a body of human beings considered generally or collectively; a group of two or more persons.",
     "example": "There were so many people at the restaurant last night.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/people-uk.mp3",
-    "koGloss": "사람들",
+    "koGloss": "사람들, 국민, 민족",
     "koExample": "어젯밤 식당에 사람들이 너무 많았다.",
     "koChirpScript": "people 사람들을 의미해요. 문장으로 배워볼까요? There were so many people at the restaurant last night. 한국어로는 어젯밤 식당에 사람들이 너무 많았다.라고 할 수 있죠."
   },
@@ -105,9 +105,9 @@
     "definition": "(with \"the\") Human collective existence; existence in general.",
     "example": "There will always be lovers, till the world’s end.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/world-ca.mp3",
-    "koGloss": "세계",
+    "koGloss": "세계, 세상, 천하; 분야",
     "koExample": "세상 끝까지 언제나 연인들은 있을 것이다.",
-    "koChirpScript": "world 의 뜻은 세계!  There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
+    "koChirpScript": "world 의 뜻은 세계!  There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
   },
   {
     "lemma": "ask",
@@ -116,7 +116,7 @@
     "definition": "An act or instance of asking.",
     "example": "I know this is a big ask, but …",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/ask-uk.mp3",
-    "koGloss": "묻다, 요청하다",
+    "koGloss": "(명사) 질문, 부탁, 요청; (동사) 묻다, 요청하다",
     "koExample": "이것이 큰 부탁인 것을 알지만...",
     "koChirpScript": "이번엔 ask입니다. 묻다 또는 요청하다라는 뜻이죠. I know this is a big ask, but …  이것이 큰 부탁인 것을 알지만... 이라고 말하는 거예요."
   },
@@ -127,7 +127,7 @@
     "definition": "To arrive, come (to a place).",
     "example": "It hath becomen so that many a man had to sterve.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/become-us.mp3",
-    "koGloss": "되다",
+    "koGloss": "~이 되다, ~해지다; 어울리다",
     "koExample": "많은 사람들이 굶주려야 할 지경에 이르렀다.",
     "koChirpScript": "become 무엇이 되다라는 뜻이에요. It has become so that many a man had to sterve. 많은 사람들이 굶주려야 할 지경에 이르렀다.는 의미의 예문입니다."
   },
@@ -138,7 +138,7 @@
     "definition": "Beginning; start.",
     "example": "Now that everyone is here, we should begin the presentation.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/begin-uk.mp3",
-    "koGloss": "시작하다",
+    "koGloss": "시작하다, 개시하다",
     "koExample": "모두가 여기에 있으니, 이제 발표를 시작해야 한다.",
     "koChirpScript": "begin 시작하다는 뜻! 아주 유용하죠? Now that everyone is here, we should begin the presentation. 이렇게 쓸 수 있어요. 한국어로는 모두가 여기에 있으니, 이제 발표를 시작해야 한다. 입니다."
   },
@@ -149,9 +149,9 @@
     "definition": "A telephone conversation.",
     "example": "I received several calls today.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/call-au.mp3",
-    "koGloss": "부르다, 전화하다",
+    "koGloss": "(명사) 전화, 통화, 호출; (동사) 부르다, 전화하다",
     "koExample": "오늘 여러 통의 전화를 받았다.",
-    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요.  I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
+    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요.  I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
   },
   {
     "lemma": "can",
@@ -160,7 +160,7 @@
     "definition": "(auxiliary verb, defective) To know how to; to be able to.",
     "example": "She can speak English, French, and German.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/can-1-us-stressed.mp3",
-    "koGloss": "무엇할 수 있다",
+    "koGloss": "~할 수 있다 (능력); ~해도 좋다 (허가)",
     "koExample": "그녀는 영어, 프랑스어, 독일어를 할 수 있다.",
     "koChirpScript": "자신감을 주는 단어 can! 무엇할 수 있다는 뜻이죠. She can speak English, French, and German. 이 문장은 그녀는 영어, 프랑스어, 독일어를 할 수 있다.는 의미랍니다."
   },
@@ -171,7 +171,7 @@
     "definition": "Coming, arrival; approach.",
     "example": "She’ll be coming ’round the mountain when she comes.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/come-1-uk.mp3",
-    "koGloss": "오다",
+    "koGloss": "오다, 가다, 오게 되다",
     "koExample": "그녀가 올 때면 산 주위를 돌아서 올 것이다.",
     "koChirpScript": "come 오다라는 뜻의 기본 단어예요. 노래 가사에도 많이 나오죠! Shell be coming round the mountain when she comes. 그녀가 올 때면 산 주위를 돌아서 올 것이다. 라는 뜻이에요."
   },
@@ -182,9 +182,9 @@
     "definition": "A party, celebration, social function.",
     "example": "We’re having a bit of a do on Saturday to celebrate my birthday.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/do-1-au.mp3",
-    "koGloss": "하다",
+    "koGloss": "(동사) 하다; (명사) 파티, 행사",
     "koExample": "내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.",
-    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이  예문에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
+    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이  예문에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
   },
   {
     "lemma": "feel",
@@ -193,7 +193,7 @@
     "definition": "A quality of an object experienced by touch.",
     "example": "Bark has a rough feel.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/feel-us.mp3",
-    "koGloss": "느끼다",
+    "koGloss": "(동사) 느끼다; (명사) 느낌, 감촉",
     "koExample": "나무껍질은 거친 느낌을 준다.",
     "koChirpScript": "이번 단어는 feel, 느끼다입니다. Bark has a rough feel. 처럼 사용하면 나무껍질은 거친 느낌을 준다.는 뜻이 돼요."
   },
@@ -204,7 +204,7 @@
     "definition": "Anything that is found (usually valuable), as objects on an archeological site or a person with talent.",
     "example": "I found my car keys. They were under the couch.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/find-uk.mp3",
-    "koGloss": "찾다",
+    "koGloss": "찾다, 발견하다; ~라고 생각하다, 알다",
     "koExample": "나는 내 차 키를 찾았다. 그것들은 소파 밑에 있었다.",
     "koChirpScript": "find 무언가를 찾다라는 뜻이에요. 예를 들면, I found my car keys. They were under the couch. 나는 내 차 키를 찾았다. 그것들은 소파 밑에 있었다.는 말이죠."
   },
@@ -215,7 +215,7 @@
     "definition": "Offspring.",
     "example": "I'm going to get a computer tomorrow from the discount store.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/get-us.mp3",
-    "koGloss": "얻다, 받다",
+    "koGloss": "얻다, 받다, 사다; ~해지다; 도착하다",
     "koExample": "나는 내일 할인점에서 컴퓨터를 한 대 살 거야.",
     "koChirpScript": "get은 정말 뜻이 많은 단어인데, 기본적으로 얻다, 받다로 생각하면 편해요. Im going to get a computer tomorrow from the discount store. 나는 내일 할인점에서 컴퓨터를 한 대 살 거야.라는 뜻이죠."
   },
@@ -226,9 +226,9 @@
     "definition": "The amount of bending that something undergoes when a force is applied to it; a tendency to yield under pressure; resilence.",
     "example": "There is no give in his dogmatic religious beliefs.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/give-1-uk.mp3",
-    "koGloss": "주다",
+    "koGloss": "(동사) 주다; (명사) 신축성, 융통성",
     "koExample": "그의 독단적인 종교적 신념에는 융통성이 없다.",
-    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이  예문에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
+    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이  예문에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
   },
   {
     "lemma": "have",
@@ -237,7 +237,7 @@
     "definition": "A wealthy or privileged person.",
     "example": "I have a house and a car.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/have-au.mp3",
-    "koGloss": "가지다",
+    "koGloss": "가지다, 소유하다; (시간을) 보내다; 먹다, 마시다",
     "koExample": "나는 집과 차가 있다.",
     "koChirpScript": "정말 많이 쓰는 단어 have! 무언가를 가지다라는 뜻이죠. I have a house and a car.처럼요. 나는 집과 차가 있다.는 의미에요."
   },
@@ -248,7 +248,7 @@
     "definition": "(stative) To perceive sounds through the ear.",
     "example": "I was deaf, and now I can hear.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hear-uk.mp3",
-    "koGloss": "듣다",
+    "koGloss": "(소리가) 들리다, (소식을) 듣다",
     "koExample": "나는 귀가 먹었었는데, 이제 들을 수 있다.",
     "koChirpScript": "hear. 소리를 듣는다는 뜻이에요. I was deaf, and now I can hear. 나는 귀가 먹었었는데, 이제 들을 수 있다.라고 말하는 문장이에요."
   },
@@ -259,7 +259,7 @@
     "definition": "Action given to provide assistance; aid.",
     "example": "I need some help with my homework.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/help-us.mp3",
-    "koGloss": "돕다",
+    "koGloss": "(명사) 도움, 지원; (동사) 돕다",
     "koExample": "숙제 좀 도와줘.",
     "koChirpScript": "이번엔 help, 돕다입니다. 도움이 필요할 때 쓰는 말이죠! I need some help with my homework. 숙제 좀 도와줘. 라는 뜻이에요."
   },
@@ -270,9 +270,9 @@
     "definition": "The main tower of a castle or fortress, located within the castle walls.",
     "example": "He works as a cobbler's apprentice for his keep.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/keep-au.mp3",
-    "koGloss": "유지하다, 지키다",
+    "koGloss": "(동사) 유지하다, 지키다, 계속하다; (명사) 생계, 생활비",
     "koExample": "그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.",
-    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요.   He works as a cobblers apprentice for his keep. 생계를 유지하다. 라는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
+    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요.   He works as a cobblers apprentice for his keep. 생계를 유지하다. 라는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
   },
   {
     "lemma": "know",
@@ -281,7 +281,7 @@
     "definition": "Knowledge; the state of knowing.",
     "example": "He knew something terrible was going to happen.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/know-uk.mp3",
-    "koGloss": "알다",
+    "koGloss": "알다, 인지하다, 알고 지내다",
     "koExample": "그는 무언가 끔찍한 일이 일어날 것을 알았다.",
     "koChirpScript": "know 무엇을 알다라는 뜻이죠. He knew something terrible was going to happen. 이 문장은 그는 무언가 끔찍한 일이 일어날 것을 알았다.는 의미입니다."
   },
@@ -290,9 +290,9 @@
     "pos": "verb",
     "levelCEFR": "A1",
     "definition": "To have a consequence or remnant.",
-    "example": "  없음.",
+    "example": "  없음.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/leave-au.mp3",
-    "koGloss": "떠나다",
+    "koGloss": "떠나다; 남기다, 두고 가다",
     "koExample": null,
     "koChirpScript": "이번 단어는 leave, 떠나다입니다. 어딘가를 떠나거나 무언가를 남겨두고 갈 때 쓰는 단어예요."
   },
@@ -303,7 +303,7 @@
     "definition": "The allowing of possession of a property etc. in exchange for rent.",
     "example": "After he knocked for hours, I decided to let him come in.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/let-us.mp3",
-    "koGloss": "허락하다, 무엇하게 하다",
+    "koGloss": "~하게 하다, 허락하다; (방을) 세놓다",
     "koExample": "그가 몇 시간 동안 문을 두드린 후에야, 나는 그를 들어오게 하기로 결정했다.",
     "koChirpScript": "let은 무언가를 허락하다, 또는 무엇하게 하다는 뜻으로 정말 많이 써요. After he knocked for hours, I decided to let him come in. 그가 몇 시간 동안 문을 두드린 후에야, 나는 그를 들어오게 하기로 결정했다.는 뜻이랍니다."
   },
@@ -314,7 +314,7 @@
     "definition": "(usually in the plural) Something that a person likes (prefers).",
     "example": "Tell me your likes and dislikes.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/like-us.mp3",
-    "koGloss": "좋아하다, 무엇와 같은",
+    "koGloss": "(동사) 좋아하다; (전치사) ~처럼, ~같은; (명사) 좋아하는 것",
     "koExample": "네가 좋아하는 것과 싫어하는 것을 말해줘.",
     "koChirpScript": "like 무엇을 좋아하다는 뜻도 있고, 무엇와 같은이라는 뜻도 있어요. Tell me your likes and dislikes. 에서는 명사로 쓰여서 네가 좋아하는 것과 싫어하는 것을 말해줘.라는 뜻이에요."
   },
@@ -325,7 +325,7 @@
     "definition": "To be alive; to have life.",
     "example": "He's not expected to live for more than a few months.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/live-1-us.mp3",
-    "koGloss": "살다",
+    "koGloss": "살다, 거주하다, 생존하다",
     "koExample": "그는 몇 달 이상 살지 못할 것으로 예상된다.",
     "koChirpScript": "live 살다는 뜻이죠. Hes not expected to live for more than a few months. 그는 몇 달 이상 살지 못할 것으로 예상된다.는 의미입니다."
   },
@@ -336,7 +336,7 @@
     "definition": "Brand or kind; model.",
     "example": "What make of car do you drive?",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/make-uk.mp3",
-    "koGloss": "만들다",
+    "koGloss": "(동사) 만들다; ~하게 하다; (명사) 상표, 종류, 형식",
     "koExample": "어떤 브랜드의 차를 운전하니?",
     "koChirpScript": "동사 make는 만들다지만, 명사로 쓰이면 브랜드나 종류를 뜻하기도 해요. What make of car do you drive? 어떤 브랜드의 차를 운전하니?라고 묻는 거랍니다."
   },
@@ -347,7 +347,7 @@
     "definition": "To be strong; to have power (over).",
     "example": "You may smoke outside.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/may-us.mp3",
-    "koGloss": "무엇일지도 모른다, 무엇해도 좋다",
+    "koGloss": "~일지도 모른다 (추측); ~해도 좋다 (허가)",
     "koExample": "밖에 나가서 담배를 피워도 좋다.",
     "koChirpScript": "may 추측을 나타내는 무엇일지도 모른다와 허락을 나타내는 무엇해도 좋다는 뜻이 있어요. You may smoke outside. 밖에 나가서 담배를 피워도 좋다.는 허락의 의미예요."
   },
@@ -358,7 +358,7 @@
     "definition": "To lament.",
     "example": "Does she really mean what she said to him last night?",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/mean-us.mp3",
-    "koGloss": "의미하다",
+    "koGloss": "의미하다, 뜻하다; 의도하다",
     "koExample": "그녀는 어젯밤 그에게 말한 것을 정말로 의미한 것일까?",
     "koChirpScript": "mean 의미하다라는 뜻이에요. Does she really mean what she said to him last night? 이 문장은 그녀는 어젯밤 그에게 말한 것을 정말로 의미한 것일까?라고 묻는 질문이죠."
   },
@@ -369,9 +369,9 @@
     "definition": "The act of moving; a movement.",
     "example": "A slight move of the tiller, and the boat will go off course.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/move-us.mp3",
-    "koGloss": "움직이다",
+    "koGloss": "(동사) 움직이다, 이사하다, 감동시키다; (명사) 움직임, 조치, 이사",
     "koExample": "키를 살짝만 움직여도 배는 항로를 벗어날 것이다.",
-    "koChirpScript": "이번 단어는 move, 움직이다입니다.   A slight move of the tiller, and the boat will go off course. 키를 살짝만 움직여도 배는 항로를 벗어날 것이다.라는 뜻이에요."
+    "koChirpScript": "이번 단어는 move, 움직이다입니다.   A slight move of the tiller, and the boat will go off course. 키를 살짝만 움직여도 배는 항로를 벗어날 것이다.라는 뜻이에요."
   },
   {
     "lemma": "need",
@@ -380,7 +380,7 @@
     "definition": "A requirement for something; something needed.",
     "example": "I've always tried to have few needs beyond food, clothing and shelter.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/need-us.mp3",
-    "koGloss": "필요하다",
+    "koGloss": "(동사) 필요하다; ~할 필요가 있다; (명사) 필요, 요구, 곤경",
     "koExample": "나는 항상 음식, 옷, 주거지 외에는 욕구가 거의 없으려 노력했다.",
     "koChirpScript": "need 무언가가 필요하다고 말할 때 써요. Ive always tried to have few needs beyond food, clothing and shelter. 이 문장은 나는 항상 음식, 옷, 주거지 외에는 욕구가 거의 없으려 노력했다.라는 의미랍니다."
   },
@@ -391,7 +391,7 @@
     "definition": "Activity for amusement only, especially among the young.",
     "example": "Children learn through play.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/play-us.mp3",
-    "koGloss": "놀다, 연주하다",
+    "koGloss": "(동사) 놀다, 연주하다, 경기하다; (명사) 놀이, 연극, 경기",
     "koExample": "아이들은 놀이를 통해 배운다.",
     "koChirpScript": "play 놀다 또는 악기를 연주하다는 뜻이죠. Children learn through play. 아이들은 놀이를 통해 배운다는 깊은 뜻이 있는 문장이네요!"
   },
@@ -402,9 +402,9 @@
     "definition": "A right to sell something at a predetermined price.",
     "example": "He bought a January '08 put for Procter and Gamble at 80 to hedge his bet.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/put-1-us.mp3",
-    "koGloss": "두다, 놓다",
+    "koGloss": "두다, 놓다; (어떤 상태에) 처하게 하다; 말하다",
     "koExample": "그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 '08 풋옵션(80달러)을 샀다.",
-    "koChirpScript": "기본 동사 put은 두다 또는 놓다라는 뜻이에요.   He bought a January 08 put for Procter and Gamble at 80 to hedge his bet. 금융 용어 풋옵션으로 쓰여서 조금 어렵지만, 그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 08 풋옵션(80달러)을 샀다는 뜻이랍니다."
+    "koChirpScript": "기본 동사 put은 두다 또는 놓다라는 뜻이에요.   He bought a January 08 put for Procter and Gamble at 80 to hedge his bet. 금융 용어 풋옵션으로 쓰여서 조금 어렵지만, 그는 자신의 내기에서 위험을 회피하기 위해 프록터 앤드 갬블에 대한 1월 08 풋옵션(80달러)을 샀다는 뜻이랍니다."
   },
   {
     "lemma": "run",
@@ -413,7 +413,7 @@
     "definition": "To run.",
     "example": "I just got back from my morning run.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/run-au.mp3",
-    "koGloss": "달리다",
+    "koGloss": "달리다; 운영하다, 경영하다; (물이) 흐르다",
     "koExample": "나는 방금 아침 달리기를 마치고 돌아왔다.",
     "koChirpScript": "run은 달리다라는 뜻! 건강에 좋죠? I just got back from my morning run. 나는 방금 아침 달리기를 마치고 돌아왔다는 뜻이에요."
   }

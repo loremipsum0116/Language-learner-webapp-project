@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
@@ -39,6 +39,12 @@ export default function LearnVocab() {
     const mode = q.get('mode');
     const autoParam = q.get('auto');
     const [flipped, setFlipped] = useState(false);
+
+    // ★★★★★ 수정된 부분: audioEl 상태를 useRef로 변경 ★★★★★
+    const audioRef = useRef(null);
+    const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+    // ★★★★★ 수정 끝 ★★★★★
+
     const [audioEl, setAudioEl] = useState(null);
     const [currentDetail, setCurrentDetail] = useState(null);
     const [queue, setQueue] = useState([]);
@@ -90,7 +96,7 @@ export default function LearnVocab() {
                     isDefaultSrsMode = true;
                     ({ data } = await fetchJSON('/srs/queue?limit=100', withCreds({ signal: ac.signal }), 15000));
                 }
-                
+
                 let fetchedQueue = Array.isArray(data) ? data : [];
 
                 if (mode === 'flash') {
@@ -120,50 +126,48 @@ export default function LearnVocab() {
     }, [idsParam, mode, navigate]);
 
     // playUrl 함수: 루프 기능 추가
+    // ★★★★★ playUrl 함수 수정 ★★★★★
     const playUrl = (url) => {
         if (!url) return;
-        if (audioEl) { 
-            try { audioEl.pause(); } catch { /* no-op */ }
-            setAudioEl(null); // 기존 오디오 엘리먼트 초기화
-        }
-        
+
+        stopAudio();
+
         const full = url.startsWith('/') ? `${API_BASE}${url}` : url;
-        const a = new Audio(full);
+        const newAudio = new Audio(full);
+        newAudio.loop = true;
 
-        // 로컬 파일 반복 재생 설정
-        a.loop = true;
-
-        setIsExamplePlaying(true);
-        a.onended = () => {
-            setIsExamplePlaying(false);
+        setIsAudioPlaying(true);
+        newAudio.onended = () => {
+            setIsAudioPlaying(false);
         };
-        a.onerror = (e) => {
+        newAudio.onerror = (e) => {
             console.error('오디오 재생 중 에러 발생:', e);
-            console.error('시도된 오디오 URL:', full);
-            setIsExamplePlaying(false);
+            setIsAudioPlaying(false);
         };
 
-        a.play().catch(e => {
+        newAudio.play().then(() => {
+            audioRef.current = newAudio;
+        }).catch(e => {
             console.error('오디오 재생 실패 (Promise error):', e);
-            console.error('시도된 오디오 URL:', full);
-            setIsExamplePlaying(false);
+            setIsAudioPlaying(false);
         });
-        setAudioEl(a);
     };
 
     const stopAudio = () => {
-        if (audioEl) { 
-            try { audioEl.pause(); } catch { /* no-op */ }
-            setAudioEl(null);
+        if (audioRef.current) {
+            try { audioRef.current.pause(); } catch { /* no-op */ }
+            audioRef.current = null;
         }
-        setIsExamplePlaying(false);
+        setIsAudioPlaying(false);
     };
 
     const current = queue[idx];
 
     // 새로운 카드로 넘어갈 때 카드 뒤집기 상태 초기화
-    useEffect(() => { 
-        setFlipped(false); 
+    useEffect(() => {
+        setFlipped(false);
+        // ★★★★★ 카드 변경 시 기존 오디오 정지 ★★★★★
+        stopAudio();
     }, [idx]);
 
     // current 단어 상세 정보 로드 및 오디오 재생 관리
@@ -181,7 +185,7 @@ export default function LearnVocab() {
                     const { data } = await fetchJSON(`/vocab/${current.vocabId}`, withCreds({ signal: ac.signal }), 15000);
                     setCurrentDetail(data || null);
                     setCurrentPron({ ipa: data?.dictMeta?.ipa || null, ipaKo: data?.dictMeta?.ipaKo || null });
-                    
+
                     // flash 모드이고 auto 재생 상태일 때만 오디오 재생 시도
                     if (mode === 'flash' && auto) {
                         const safeName = safeFileName(current.question);
@@ -206,9 +210,10 @@ export default function LearnVocab() {
         })();
         return () => {
             ac.abort();
-            stopAudio(); // 컴포넌트 언마운트 또는 current/mode/auto 변경 시 오디오 정지
+            // ★★★★★ 컴포넌트 언마운트 또는 dependency 변경 시 오디오 정지 ★★★★★
+            stopAudio();
         };
-    }, [current, mode, auto]); // current, mode, auto 상태를 dependency에 추가하여 변경 시마다 실행
+    }, [current, mode, auto, idx]);; // current, mode, auto 상태를 dependency에 추가하여 변경 시마다 실행
 
 
     const submit = async () => {
@@ -304,7 +309,7 @@ export default function LearnVocab() {
             </main>
         );
     }
-    
+
     if (!current) {
         const fromFlashcardSrs = location.state?.fromFlashcardSrs;
 
@@ -317,7 +322,7 @@ export default function LearnVocab() {
                         <button className="btn btn-outline-secondary" onClick={handleRestart} disabled={reloading}>
                             다시 학습하기
                         </button>
-                        
+
                         {fromFlashcardSrs ? (
                             <Link to="/odat-note" className="btn btn-primary">
                                 틀린 문제 다시 풀기

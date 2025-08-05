@@ -14,7 +14,7 @@ const {
     parseWikitext,
     fetchWiktionaryWikitext,
     fetchCommonsFileUrl,
-    findEnglishTranslation, 
+    findEnglishTranslation,
 } = require('./integrations/wiktionary');
 
 
@@ -274,9 +274,9 @@ app.get('/dict/search', async (req, res) => {
                 include: { dictMeta: true }
             });
             // ★★★★★ 수정 끝 ★★★★★
-            
+
             hits = await queryDB();
-            
+
             const lacksKo = (v) => !v.dictMeta?.examples?.some(ex => ex && ex.kind === 'gloss' && ex.ko);
             if (hits.length === 0 || hits.every(lacksKo)) {
                 await enrichFromWiktionary(q);
@@ -304,15 +304,12 @@ app.get('/dict/search', async (req, res) => {
 });
 app.get('/vocab/list', async (req, res) => {
     try {
-        const { level } = req.query; // 'A1', 'A2' 등의 CEFR 레벨을 받습니다.
-
-        // ★ 1. level 파라미터가 없는 경우에 대한 안전장치 추가
+        const { level } = req.query;
         if (!level) {
             return fail(res, 400, 'A level query parameter is required.');
         }
 
         const vocabs = await prisma.vocab.findMany({
-            // ★ 2. 'source' 대신 'levelCEFR' 필드를 사용하도록 수정
             where: { levelCEFR: level },
             orderBy: { lemma: 'asc' },
             include: {
@@ -324,26 +321,35 @@ app.get('/vocab/list', async (req, res) => {
 
         if (vocabs.length === 0) return ok(res, []);
 
+        // ★ 시작: 변경된 데이터 구조에 맞춰 ko_gloss를 정확히 추출합니다.
         const items = vocabs.map(v => {
-            const gloss = Array.isArray(v.dictMeta?.examples)
-                ? v.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
-                : null;
+            const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+            let primaryGloss = null;
+            // 가장 첫 번째 품사의 첫 번째 정의에서 한국어 뜻을 가져옵니다.
+            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+                primaryGloss = meanings[0].definitions[0].ko_def || null;
+            }
+
             return {
                 id: v.id,
                 lemma: v.lemma,
+                pos: v.pos,
                 levelCEFR: v.levelCEFR,
-                ko_gloss: gloss || null,
+                ko_gloss: primaryGloss, // 올바르게 추출된 뜻
                 ipa: v.dictMeta?.ipa || null,
                 ipaKo: v.dictMeta?.ipaKo || null,
                 audio: v.dictMeta?.audioUrl || null,
             };
         });
+        // ★ 종료: API 응답 데이터 구조 수정
+
         return ok(res, items);
     } catch (e) {
         console.error('GET /vocab/list failed:', e);
         return fail(res, 500, 'list query failed');
     }
 });
+
 
 app.get('/vocab/:id', requireAuth, async (req, res) => {
     const vocabId = Number(req.params.id);
@@ -353,8 +359,20 @@ app.get('/vocab/:id', requireAuth, async (req, res) => {
             where: { id: vocabId },
             include: { dictMeta: true },
         });
+
         if (!vocab) return fail(res, 404, '단어를 찾을 수 없습니다.');
-        return ok(res, vocab);
+
+        // ★ 시작: 상세 정보 API에도 definition 필드를 추가하여 일관성 유지
+        const examples = Array.isArray(vocab.dictMeta?.examples) ? vocab.dictMeta.examples : [];
+        const glossEntry = examples.find(ex => ex && ex.kind === 'gloss');
+
+        const responseData = {
+            ...vocab,
+            definition: glossEntry?.de || null, // 영문 정의 추가
+        };
+        // ★ 종료: 상세 정보 API 응답 데이터 수정
+
+        return ok(res, responseData);
     } catch (e) {
         console.error(e);
         return fail(res, 500, '상세 정보를 불러오는 데 실패했습니다.');
@@ -880,11 +898,41 @@ app.get('/my-wordbook', requireAuth, async (req, res) => {
     }
     const rows = await prisma.userVocab.findMany({
         where,
-        include: { vocab: { include: { dictMeta: { select: { ipa: true, ipaKo: true, examples: true, audioUrl: true, audioLocal: true } } } } },
+        include: {
+            vocab: {
+                include: {
+                    dictMeta: {
+                        select: { ipa: true, ipaKo: true, examples: true, audioUrl: true }
+                    }
+                }
+            }
+        },
         orderBy: { createdAt: 'desc' },
     });
-    return ok(res, rows);
+
+    const processedRows = rows.map(row => {
+        if (!row.vocab) return row;
+
+        const meanings = Array.isArray(row.vocab.dictMeta?.examples) ? row.vocab.dictMeta.examples : [];
+        let primaryGloss = null;
+        if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+            primaryGloss = meanings[0].definitions[0].ko_def || null;
+        }
+
+        return {
+            ...row,
+            vocab: {
+                ...row.vocab,
+                ko_gloss: primaryGloss, // 단어 카드 표시를 위한 한국어 뜻 추가
+            }
+        };
+    });
+    // ★ 종료: 데이터 가공 로직
+
+    return ok(res, processedRows); // 가공된 데이터 반환
 });
+
+
 
 app.post('/my-wordbook/add', requireAuth, async (req, res) => {
     const { vocabId } = req.body;

@@ -1,75 +1,29 @@
 // src/pages/MyWordbook.jsx
-import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
+import VocabDetailModal from '../components/VocabDetailModal.jsx';
 
-/**
- * 상세 보기 모달 (오디오 기능 포함)
- */
-function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio }) {
-    const koGloss =
-        vocab?.dictMeta?.examples?.find?.(ex => ex && ex.kind === 'gloss')?.ko || null;
-    const examples =
-        Array.isArray(vocab?.dictMeta?.examples)
-            ? vocab.dictMeta.examples.filter(ex => ex && ex.kind !== 'gloss')
-            : [];
-
-    return (
-        <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={onClose}>
-            <div className="modal-dialog modal-dialog-centered" onClick={e => e.stopPropagation()}>
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <div className="d-flex align-items-center">
-                            <h5 className="modal-title mb-0" lang="en">{vocab?.lemma}</h5>
-                            <button
-                                className="btn btn-sm btn-outline-secondary ms-2"
-                                onClick={(e) => { e.stopPropagation(); onPlayVocabAudio(vocab); }}
-                                aria-label="Play word audio"
-                                title="단어 듣기"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-circle" viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
-                                </svg>
-                            </button>
-                        </div>
-                        <button type="button" className="btn-close" aria-label="Close" onClick={onClose} />
-                    </div>
-                    <div className="modal-body">
-                        <Pron ipa={vocab?.dictMeta?.ipa} ipaKo={vocab?.dictMeta?.ipaKo} />
-                        {koGloss && <div className="mt-2"><strong>뜻</strong>: {koGloss}</div>}
-                        {examples.length > 0 && (
-                            <ul className="mt-2 list-unstyled">
-                                {examples.map((ex, i) => (
-                                    <li key={i} className="d-flex justify-content-between align-items-center mb-1 p-2 rounded hover-bg-light">
-                                        <div>
-                                            <span lang="en">{ex.de}</span>
-                                            {ex.ko ? <span className="text-muted d-block small"> — {ex.ko}</span> : null}
-                                        </div>
-                                        {ex.audioUrl && (
-                                            <button
-                                                className="btn btn-sm btn-outline-secondary ms-2"
-                                                onClick={(e) => { e.stopPropagation(); onPlayUrl(ex.audioUrl); }}
-                                                aria-label="Play example sentence"
-                                                title="  듣기"
-                                            >
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-circle" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                    <path d="M6.271 5.055a.5.5 0 0 1 .52.038l3.5 2.5a.5.5 0 0 1 0 .814l-3.5 2.5A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z" />
-                                                </svg>
-                                            </button>
-                                        )}
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-}
+// ★ 시작: 품사별 색상을 위한 헬퍼 함수 추가
+const getPosBadgeColor = (pos) => {
+    if (!pos) return 'bg-secondary';
+    switch (pos.toLowerCase().trim()) {
+        case 'noun':
+            return 'bg-primary';
+        case 'verb':
+            return 'bg-success';
+        case 'adjective':
+            return 'bg-warning text-dark';
+        case 'adverb':
+            return 'bg-info text-dark';
+        case 'preposition':
+            return 'bg-danger';
+        default:
+            return 'bg-secondary';
+    }
+};
+// ★ 종료: 헬퍼 함수
 
 /** 새 폴더 생성 폼 */
 function NewCategoryForm({ onCreated }) {
@@ -112,7 +66,6 @@ function NewCategoryForm({ onCreated }) {
 export default function MyWordbook() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-
     const [categories, setCategories] = useState([]);
     const [uncategorized, setUncategorized] = useState(0);
     const [words, setWords] = useState([]);
@@ -122,13 +75,13 @@ export default function MyWordbook() {
     const [detail, setDetail] = useState(null);
     const [detailLoading, setDetailLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
-    const [audio, setAudio] = useState(null);
-
+    const audioRef = useRef(null);
+    const [playingAudio, setPlayingAudio] = useState(null);
+    const [enrichingId, setEnrichingId] = useState(null);
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
         if (ids.length === 0) { alert('학습할 단어를 선택하세요.'); return; }
-        // 자동 넘김 시작(auto=1), 플래시 모드
         navigate(`/learn/vocab?ids=${ids.join(',')}&mode=flash&auto=1`);
     };
 
@@ -168,87 +121,87 @@ export default function MyWordbook() {
             setFilter(init);
             await loadWordbook(init);
         })();
-        // ★★★★★ ESLint 경고 수정 ★★★★★
     }, [loadCategories, loadWordbook, readFilterFromURL]);
 
     const filteredWords = useMemo(() => {
-        // ★★★★★ 새로운 해결 방식: 명시적인 데이터 검증 및 로깅 ★★★★★
         if (!Array.isArray(words)) return [];
-
-        const validWords = [];
-        const invalidWords = [];
-
-        words.forEach(word => {
-            if (word && word.vocab && word.vocab.lemma) {
-                validWords.push(word);
-            } else {
-                invalidWords.push(word);
-            }
-        });
-
-        if (invalidWords.length > 0) {
-            console.warn("MyWordbook: 유효하지 않은 단어 데이터를 발견하여 목록에서 제외합니다:", invalidWords);
-        }
-
+        const validWords = words.filter(word => word && word.vocab && word.vocab.lemma);
         const needle = searchTerm.trim().toLowerCase();
-        if (!needle) {
-            return validWords;
-        }
-
+        if (!needle) return validWords;
         return validWords.filter(word => {
-            const gloss = Array.isArray(word.vocab.dictMeta?.examples)
-                ? word.vocab.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko
-                : null;
             return (
                 word.vocab.lemma.toLowerCase().includes(needle) ||
-                (gloss && gloss.toLowerCase().includes(needle))
+                (word.vocab.ko_gloss && word.vocab.ko_gloss.toLowerCase().includes(needle))
             );
         });
     }, [words, searchTerm]);
 
-    const playUrl = (url) => {
-        if (audio) audio.pause();
-        if (url && typeof url === 'string' && (url.startsWith('http') || url.startsWith('/'))) {
-            const fullUrl = url.startsWith('/') ? `${API_BASE}${url}` : url;
-            const newAudio = new Audio(fullUrl);
-            newAudio.play().catch(e => console.error("오디오 재생 실패:", e, fullUrl));
-            setAudio(newAudio);
-        } else {
-            console.warn("제공된 오디오 URL이 유효하지 않습니다:", url);
+    const stopAudio = () => {
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            audioRef.current = null;
         }
+        setPlayingAudio(null);
+    };
+
+    const playUrl = (url, type, id) => {
+        if (!url) return;
+        if (playingAudio && playingAudio.id === id) {
+            stopAudio();
+            return;
+        }
+        stopAudio();
+        const fullUrl = url.startsWith('/') ? `${API_BASE}${url}` : url;
+        const newAudio = new Audio(fullUrl);
+        newAudio.onended = () => setPlayingAudio(null);
+        newAudio.play().then(() => {
+            audioRef.current = newAudio;
+            setPlayingAudio({ type, id });
+        }).catch(e => {
+            console.error("오디오 재생 실패:", e, fullUrl);
+            setPlayingAudio(null);
+        });
     };
 
     const playVocabAudio = async (vocabData) => {
         const vocab = vocabData.vocab || vocabData;
-        const targetUrl = vocab.audioUrl || vocab.dictMeta?.audioUrl;
+        const targetUrl = vocab.audioUrl || vocab.dictMeta?.audioUrl || vocab.audio;
         if (targetUrl) {
-            playUrl(targetUrl);
+            playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
         try {
+            setEnrichingId(vocab.id);
             const { data: updatedVocab } = await fetchJSON(`/vocab/${vocab.id}/enrich`, withCreds({ method: 'POST' }));
             setWords(prevWords => prevWords.map(w => {
                 if (w.vocabId === updatedVocab.id) {
-                    return { ...w, vocab: updatedVocab };
+                    return { ...w, vocab: { ...w.vocab, ...updatedVocab } };
                 }
                 return w;
             }));
-            const enrichedUrl = updatedVocab.audioUrl || updatedVocab.dictMeta?.audioUrl;
+             const enrichedUrl = updatedVocab.audio || updatedVocab.dictMeta?.audioUrl;
             if (enrichedUrl) {
-                playUrl(enrichedUrl);
+                playUrl(enrichedUrl, 'vocab', vocab.id);
             } else {
                 alert(`'${vocab.lemma}'에 대한 음성 파일을 찾을 수 없습니다.`);
             }
         } catch (e) {
             console.error("Enrichment failed:", e);
             alert("음성 정보를 가져오는 데 실패했습니다.");
+        } finally {
+            setEnrichingId(null);
         }
+    };
+    
+    const playExampleAudio = (url, type, id) => {
+        playUrl(url, type, id);
     };
 
     useEffect(() => {
-        return () => { if (audio) audio.pause(); };
-    }, [audio]);
-
+        return () => { if (audioRef.current) stopAudio(); };
+    }, []);
+    
     const onClickFolder = async (f) => {
         setFilter(f);
         setSelectedIds(new Set());
@@ -364,7 +317,7 @@ export default function MyWordbook() {
                     <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
                         선택 자동학습
                     </button>
-                    <Link to="/vocab" className="btn-outline-primary ">단어 추가하기</Link>
+                    <Link to="/vocab" className="btn btn-outline-primary">단어 추가하기</Link>
                 </div>
             </div>
 
@@ -397,7 +350,7 @@ export default function MyWordbook() {
                     </div>
                     <NewCategoryForm onCreated={loadCategories} />
                 </aside>
-
+                
                 <section className="col-12 col-md-9">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <div className="small text-muted">
@@ -469,10 +422,12 @@ export default function MyWordbook() {
 
                     <div className="list-group">
                         {filteredWords.map((v) => {
-                            const gloss = Array.isArray(v.vocab.dictMeta?.examples)
-                                ? v.vocab.dictMeta.examples.find((ex) => ex && ex.kind === 'gloss')?.ko
-                                : null;
+                            // ★ 시작: API 응답 구조 변경에 따라 데이터 접근 방식을 수정하고, 품사 정보를 처리합니다.
+                            const { vocab } = v;
+                            const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
+                            const posList = vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [];
+                            // ★ 종료: 데이터 접근 방식 수정
 
                             return (
                                 <div
@@ -487,9 +442,22 @@ export default function MyWordbook() {
                                             onChange={() => toggleSelect(v.vocabId)}
                                         />
                                         <div>
-                                            <div className="fw-semibold" lang="en">{v.vocab.lemma}</div>
-                                            <Pron ipa={v.vocab.dictMeta?.ipa} ipaKo={v.vocab.dictMeta?.ipaKo} />
+                                            {/* ★ 시작: 단어, 품사, 발음, 뜻을 표시합니다. */}
+                                            <div className="d-flex align-items-center">
+                                                <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
+                                                <div className="d-flex gap-1">
+                                                    {posList.map(p => (
+                                                        p && p.toLowerCase() !== 'unk' && (
+                                                            <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                                                {p}
+                                                            </span>
+                                                        )
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />
                                             <div className="text-muted small">{gloss || '뜻 정보 없음'}</div>
+                                            {/* ★ 종료: UI 개선 */}
                                         </div>
                                     </div>
 
@@ -517,12 +485,25 @@ export default function MyWordbook() {
             </div>
 
             {(detailLoading || detail) && (
-                <VocabDetailModal
-                    vocab={detail}
-                    onClose={() => setDetail(null)}
-                    onPlayUrl={playUrl}
-                    onPlayVocabAudio={playVocabAudio}
-                />
+                <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            {detailLoading ? (
+                                <div className="modal-body text-center p-5">
+                                    <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>
+                                </div>
+                            ) : (
+                                <VocabDetailModal
+                                    vocab={detail}
+                                    onClose={() => { setDetail(null); stopAudio(); }}
+                                    onPlayUrl={(url, id, index) => playExampleAudio(url, 'example', `${id}-${index}`)}
+                                    onPlayVocabAudio={playVocabAudio}
+                                    playingAudio={playingAudio}
+                                />
+                            )}
+                        </div>
+                    </div>
+                </div>
             )}
         </main>
     );
