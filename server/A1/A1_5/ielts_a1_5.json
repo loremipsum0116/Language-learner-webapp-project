@@ -8,7 +8,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/brother-uk.mp3",
     "koGloss": "형, 오빠, 남동생",
     "koExample": "나의 형은 나보다 나이가 많다.",
-    "koChirpScript": "brother! 형, 오빠, 남동생이라는 뜻이에요. 예를 들어볼까요? My brother is older than me., 이건 한국어로 나의 형은 나보다 나이가 많다.라고 해요."
+    "koChirpScript": "brother! 형, 오빠, 남동생이라는 뜻이에요. 예를 들어볼까요? My brother is older than me. 이건 한국어로 나의 형은 나보다 나이가 많다.라고 해요."
   },
   {
     "lemma": "sister",
@@ -19,7 +19,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sister-uk.mp3",
     "koGloss": "누나, 언니, 여동생",
     "koExample": "나의 언니와 나는 매우 다르게 생겼다.",
-    "koChirpScript": "이번 단어는 sister입니다. 무슨 뜻일까요? 바로 누나, 언니, 여동생!  으로 My sister and I look very different. 나의 언니와 나는 매우 다르게 생겼다.라는 의미죠."
+    "koChirpScript": "이번 단어는 sister. 무슨 뜻일까요? 바로 누나, 언니, 여동생! My sister and I look very different. 나의 언니와 나는 매우 다르게 생겼다.라는 의미죠."
   },
   {
     "lemma": "child",
@@ -41,7 +41,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/baby-uk.mp3",
     "koGloss": "아기",
     "koExample": "아기가 아기 침대에서 자고 있다.",
-    "koChirpScript": "baby는 아기! 아주 귀여운 단어죠? 문장에서는 이렇게 쓰여요. The baby is sleeping in the crib. 한국어로는 아기가 아기 침대에서 자고 있다.!"
+    "koChirpScript": "baby. 아기! 아주 귀여운 단어죠? 문장에서는 이렇게 쓰여요. The baby is sleeping in the crib. 한국어로는 아기가 아기 침대에서 자고 있다.!"
   },
   {
     "lemma": "parent",
@@ -52,7 +52,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/parent-uk.mp3",
     "koGloss": "부모",
     "koExample": "항상 부모님 말씀을 잘 들어야 한다.",
-    "koChirpScript": "parent는 부모를 의미해요. 문장으로 배워볼까요? You should always listen to your parents. 한국어로는 항상 부모님 말씀을 잘 들어야 한다.라고 할 수 있죠."
+    "koChirpScript": "parent. 부모를 의미해요. 문장으로 배워볼까요? You should always listen to your parents. 한국어로는 항상 부모님 말씀을 잘 들어야 한다.라고 할 수 있죠."
   },
   {
     "lemma": "room",
@@ -63,7 +63,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/room-uk.mp3",
     "koGloss": "방",
     "koExample": "내 방은 매우 깨끗하다.",
-    "koChirpScript": "이번 단어는 room, 바로 방 입니다.  은 My room is very clean. 한국어로는 내 방은 매우 깨끗하다.처럼 활용할 수 있어요."
+    "koChirpScript": "이번 단어는 room. 뜻은 방 입니다.  My room is very clean. 한국어로는 내 방은 매우 깨끗하다.처럼 활용할 수 있어요."
   },
   {
     "lemma": "bed",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bed-uk.mp3",
     "koGloss": "침대",
     "koExample": "나는 매일 밤 10시에 잠자리에 든다.",
-    "koChirpScript": "bed는 침대라는 뜻이에요. 편안한 잠자리가 중요하죠!   I go to bed at 10 PM every night.  나는 매일 밤 10시에 잠자리에 든다.라는 뜻이에요."
+    "koChirpScript": "bed. 침대라는 뜻이에요. 나쁜. 이라는 뜻의 bad와 헷갈리면 안돼요! 그 때는 스펠링으로 비에이디를 씁니다.   I go to bed at 10 PM every night.  나는 매일 밤 10시에 잠자리에 든다.라는 뜻이에요."
   },
   {
     "lemma": "window",
@@ -85,7 +85,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/window-uk.mp3",
     "koGloss": "창문",
     "koExample": "신선한 공기를 위해 창문을 열어주세요.",
-    "koChirpScript": "이번 단어 window는 창문이라는 뜻이죠. Please open the window to get some fresh air. 신선한 공기를 위해 창문을 열어주세요.라고 말하는 거랍니다."
+    "koChirpScript": "window. 창문이라는 뜻이죠. Please open the window to get some fresh air. 신선한 공기를 위해 창문을 열어주세요.라고 말하는 거랍니다."
   },
   {
     "lemma": "door",
@@ -107,7 +107,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/question-uk.mp3",
     "koGloss": "질문",
     "koExample": "질문 하나 해도 될까요?",
-    "koChirpScript": "궁금한 게 있을 때 쓰는 단어 question은 질문입니다. May I ask you a question? 누군가 이렇게 물으면 질문 하나 해도 될까요?라는 뜻이죠."
+    "koChirpScript": "궁금한 게 있을 때 쓰는 단어 question! 뜻은 질문입니다. May I ask you a question? 누군가 이렇게 물으면 질문 하나 해도 될까요?라는 뜻이죠."
   },
   {
     "lemma": "answer",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/weather-uk.mp3",
     "koGloss": "날씨",
     "koExample": "오늘 날씨가 좋다.",
-    "koChirpScript": "weather는 날씨를 의미해요. The weather is nice today. 오늘 날씨가 좋다.는 뜻이랍니다."
+    "koChirpScript": "weather. 날씨를 의미해요. The weather is nice today. 오늘 날씨가 좋다.는 뜻이랍니다."
   },
   {
     "lemma": "sun",
@@ -140,7 +140,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sun-uk.mp3",
     "koGloss": "태양, 해",
     "koExample": "해가 밝게 빛나고 있다.",
-    "koChirpScript": "반짝반짝 sun은 태양 또는 해를 말해요.  은 The sun is shining brightly. 이고, 해가 밝게 빛나고 있다.는 뜻이에요."
+    "koChirpScript": "반짝반짝 sun. 태양 또는 해를 말해요.  The sun is shining brightly. 해가 밝게 빛나고 있다.는 뜻이에요."
   },
   {
     "lemma": "rain",
@@ -162,7 +162,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/week-uk.mp3",
     "koGloss": "주, 주일",
     "koExample": "일주일은 7일입니다.",
-    "koChirpScript": "week는 주 또는 주일을 뜻해요. There are seven days in a week. 일주일은 7일입니다.라는 기본적인 사실을 말해주네요."
+    "koChirpScript": "week. 주 또는 주일을 뜻해요. There are seven days in a week. 일주일은 7일입니다.라는 기본적인 사실을 말해주네요."
   },
   {
     "lemma": "month",
@@ -173,7 +173,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/month-uk.mp3",
     "koGloss": "달, 개월",
     "koExample": "내 생일은 다음 달입니다.",
-    "koChirpScript": "month는 달 또는 개월을 의미합니다. My birthday is next month 내 생일은 다음 달입니다.라는 뜻이에요."
+    "koChirpScript": "month. 달 또는 개월을 의미합니다. My birthday is next month 내 생일은 다음 달입니다.라는 뜻이에요."
   },
   {
     "lemma": "year",
@@ -184,7 +184,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/year-uk.mp3",
     "koGloss": "년, 해",
     "koExample": "나는 내년에 유럽으로 여행 갈 것이다.",
-    "koChirpScript": "시간 단위 중 가장 큰 year. 년 또는 해를 뜻합니다. I will travel to Europe next year 나는 내년에 유럽으로 여행 갈 것이다.라는 계획을 말하네요."
+    "koChirpScript": "시간 단위 중 가장 큰 year. 이것은 년 또는 해를 뜻합니다. I will travel to Europe next year 나는 내년에 유럽으로 여행 갈 것이다.라는 계획을 말하네요."
   },
   {
     "lemma": "pay",
@@ -195,7 +195,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/pay-uk.mp3",
     "koGloss": "지불하다",
     "koExample": "당신은 티켓 값을 지불해야 합니다.",
-    "koChirpScript": "pay는 돈을 지불하다는 뜻이에요. You need to pay for your ticket. 당신은 티켓 값을 지불해야 합니다.라는 뜻입니다."
+    "koChirpScript": "pay. 돈을 지불하다는 뜻이에요. You need to pay for your ticket. 당신은 티켓 값을 지불해야 합니다.라는 뜻입니다."
   },
   {
     "lemma": "meet",
@@ -206,7 +206,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/meet-uk.mp3",
     "koGloss": "만나다",
     "koExample": "만나서 반갑습니다.",
-    "koChirpScript": "처음 만났을 때 쓰는 인사! meet는 만나다는 뜻입니다. It's nice to meet you. 만나서 반갑습니다.라는 아주 중요한 표현이죠."
+    "koChirpScript": "처음 만났을 때 쓰는 인사! meet. 만나다.라는 뜻입니다. It's nice to meet you. 만나서 반갑습니다. 아주 중요한 표현이죠."
   },
   {
     "lemma": "learn",
@@ -217,7 +217,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/learn-uk.mp3",
     "koGloss": "배우다",
     "koExample": "나는 기타 치는 법을 배우고 싶다.",
-    "koChirpScript": "우리가 지금 하고 있는 것! learn은 배우다라는 뜻입니다. I want to learn how to play the guitar. 나는 기타 치는 법을 배우고 싶다는 소망을 나타내요."
+    "koChirpScript": "우리가 지금 하고 있는 것! learn. 배우다라는 뜻입니다. I want to learn how to play the guitar. 나는 기타 치는 법을 배우고 싶다.라는 소망을 나타내요."
   },
   {
     "lemma": "change",
@@ -228,7 +228,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/change-uk.mp3",
     "koGloss": "바꾸다, 변하다",
     "koExample": "나는 옷을 갈아입어야 한다.",
-    "koChirpScript": "change는 바꾸다 혹은 변하다라는 뜻이에요. I need to change my clothes. 나는 옷을 갈아입어야 한다는 뜻입니다."
+    "koChirpScript": "change. 바꾸다 혹은 변하다라는 뜻이에요. I need to change my clothes. 나는 옷을 갈아입어야 한다는 뜻입니다."
   },
   {
     "lemma": "understand",
@@ -239,7 +239,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/understand-uk.mp3",
     "koGloss": "이해하다",
     "koExample": "나는 이 단어를 이해하지 못하겠습니다.",
-    "koChirpScript": "외국어를 배울 때 꼭 필요한 단어, understand는 이해하다입니다. I don't understand this word. 나는 이 단어를 이해하지 못하겠습니다.라는 뜻이죠."
+    "koChirpScript": "외국어를 배울 때 꼭 필요한 단어, understand. 이해하다입니다. I don't understand this word. 나는 이 단어를 이해하지 못하겠습니다.라는 뜻이죠."
   },
   {
     "lemma": "watch",
@@ -250,7 +250,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/watch-uk.mp3",
     "koGloss": "지켜보다, 시청하다",
     "koExample": "오늘 밤 영화를 보자.",
-    "koChirpScript": "watch는 무언가를 시간을 갖고 지켜보다 또는 TV나 영화를 시청하다는 뜻이에요. Lets watch a movie tonight. 오늘 밤 영화를 보자.고 제안하는 거에요."
+    "koChirpScript": "watch. 무언가를 시간을 갖고 지켜보다 또는 TV나 영화를 시청하다는 뜻이에요. Lets watch a movie tonight. 오늘 밤 영화를 보자.고 제안하는 거에요."
   },
   {
     "lemma": "follow",
@@ -261,7 +261,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/follow-uk.mp3",
     "koGloss": "따라가다",
     "koExample": "지시사항을 따라주세요.",
-    "koChirpScript": "follow는 따라가다는 뜻입니다. Please follow the instructions.는 지시사항을 따라주세요.라는 뜻으로 안내문에서 자주 볼 수 있어요."
+    "koChirpScript": "follow. 따라가다.라는 뜻입니다. Please follow the instructions. 지시사항을 따라주세요.라는 뜻으로 안내문에서 자주 볼 수 있어요."
   },
   {
     "lemma": "stop",
@@ -272,7 +272,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/stop-uk.mp3",
     "koGloss": "멈추다",
     "koExample": "버스는 여기에 설 것입니다.",
-    "koChirpScript": "stop은 멈추다! 아주 간단하죠? The bus will stop here.는 버스는 여기에 설 것입니다. 안내 문구에요."
+    "koChirpScript": "stop. 멈추다! 아주 간단하죠? The bus will stop here. 버스는 여기에 설 것입니다. 안내 문구에요."
   },
   {
     "lemma": "talk",
@@ -283,7 +283,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/talk-uk.mp3",
     "koGloss": "이야기하다",
     "koExample": "잠깐 이야기 좀 할 수 있을까요?",
-    "koChirpScript": "talk는 대화를 나누며 이야기하다는 뜻이에요. Can I talk to you for a minute? 잠깐 이야기 좀 할 수 있을까요?라고 묻는 거랍니다."
+    "koChirpScript": "talk. 대화를 나누며 이야기하다는 뜻이에요. Can I talk to you for a minute? 잠깐 이야기 좀 할 수 있을까요?라고 묻는 거랍니다."
   },
   {
     "lemma": "turn",
@@ -294,7 +294,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/turn-uk.mp3",
     "koGloss": "돌다, 돌리다",
     "koExample": "다음 모퉁이에서 우회전하세요.",
-    "koChirpScript": "이번 단어 turn은 돌다 혹은 돌리다는 뜻이에요. 길을 알려줄 때 유용하죠. Turn right at the next corner.는 다음 모퉁이에서 우회전하세요.라는 뜻입니다."
+    "koChirpScript": "이번 단어 turn. 돌다 혹은 돌리다는 뜻이에요. 길을 알려줄 때 유용하죠. Turn right at the next corner. 다음 모퉁이에서 우회전하세요.라는 뜻입니다."
   },
   {
     "lemma": "high",
@@ -305,7 +305,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/high-uk.mp3",
     "koGloss": "높은",
     "koExample": "저 산은 매우 높다.",
-    "koChirpScript": "high는 높은이라는 뜻의 형용사입니다.   That mountain is very high. 저 산은 매우 높다는 뜻이죠."
+    "koChirpScript": "high. 높은.이라는 뜻의 형용사입니다.   That mountain is very high. 저 산은 매우 높다는 뜻이죠."
   },
   {
     "lemma": "low",
@@ -316,7 +316,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/low-uk.mp3",
     "koGloss": "낮은",
     "koExample": "이 상품의 가격은 매우 낮다.",
-    "koChirpScript": "high의 반대말 low는 낮은이라는 뜻이에요. The price of this item is very low. 이 상품의 가격은 매우 낮다는 뜻입니다."
+    "koChirpScript": "low. 낮은.이라는 뜻이에요. The price of this item is very low. 이 상품의 가격은 매우 낮다는 뜻입니다."
   },
   {
     "lemma": "right",
@@ -327,7 +327,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/right-uk.mp3",
     "koGloss": "오른쪽의, 옳은",
     "koExample": "그것이 정답입니다.",
-    "koChirpScript": "right는 오른쪽이라는 뜻도 있고, 옳은이라는 뜻도 있어요.   That is the right answer. 그것이 정답입니다.라는 뜻이에요."
+    "koChirpScript": "right. 오른쪽이라는 뜻도 있고, 옳은.이라는 뜻도 있어요.   That is the right answer. 그것이 정답입니다.라는 뜻이에요."
   },
   {
     "lemma": "wrong",
@@ -338,7 +338,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wrong-uk.mp3",
     "koGloss": "틀린",
     "koExample": "전화를 잘못 거신 것 같아요.",
-    "koChirpScript": "right의 반대, wrong은 틀린이라는 뜻입니다. I think you have the wrong number. 전화를 잘못 거신 것 같아요.라고 정중하게 말하는 표현이에요."
+    "koChirpScript": "wrong. 틀린.이라는 뜻입니다. I think you have the wrong number. 전화를 잘못 거신 것 같아요.라고 정중하게 말하는 표현이에요."
   },
   {
     "lemma": "black",
@@ -349,7 +349,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/black-uk.mp3",
     "koGloss": "검은색",
     "koExample": "그녀는 긴 검은 머리를 가지고 있다.",
-    "koChirpScript": "색깔 단어 black은 검은색입니다. She has long black hair 그녀는 긴 검은 머리를 가지고 있다는 뜻이에요."
+    "koChirpScript": "색깔 단어 black. 검은색입니다. She has long black hair 그녀는 긴 검은 머리를 가지고 있다는 뜻이에요."
   },
   {
     "lemma": "green",
@@ -371,7 +371,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/different-uk.mp3",
     "koGloss": "다른",
     "koExample": "우리는 이 주제에 대해 매우 다른 의견을 가지고 있다.",
-    "koChirpScript": "different는 다른이라는 뜻의 중요한 형용사예요. We have very different opinions on this topic 우리는 이 주제에 대해 매우 다른 의견을 가지고 있다는 뜻입니다."
+    "koChirpScript": "different. 다른.이라는 뜻의 중요한 형용사예요. We have very different opinions on this topic 우리는 이 주제에 대해 매우 다른 의견을 가지고 있다는 뜻입니다."
   },
   {
     "lemma": "important",
@@ -382,7 +382,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/important-uk.mp3",
     "koGloss": "중요한",
     "koExample": "건강한 음식을 먹는 것은 중요하다.",
-    "koChirpScript": "이번 단어 important는 중요한이라는 뜻입니다.  으로 It is important to eat healthy food.가 있고, 건강한 음식을 먹는 것은 중요하다.는 의미죠."
+    "koChirpScript": "이번 단어 important 중요한이라는 뜻입니다. It is important to eat healthy food. 건강한 음식을 먹는 것은 중요하다.는 의미죠."
   },
   {
     "lemma": "young",
@@ -393,6 +393,6 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/young-uk.mp3",
     "koGloss": "어린, 젊은",
     "koExample": "그 어린 고양이는 매우 장난기가 많다.",
-    "koChirpScript": "old의 반대말 young은 어린 또는 젊은이라는 뜻이에요. The young cat is very playful 그 어린 고양이는 매우 장난기가 많다는 뜻이랍니다."
+    "koChirpScript": "old의 반대말 young. 어린. 또는 젊은.이라는 뜻이에요. The young cat is very playful 그 어린 고양이는 매우 장난기가 많다는 뜻이랍니다."
   }
 ]

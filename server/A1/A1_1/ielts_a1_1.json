@@ -8,7 +8,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/book-uk.mp3",
     "koGloss": "책",
     "koExample": "그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.",
-    "koChirpScript": "book! 책이라는 뜻이에요. 예를 들어볼까요? He was frustrated because he couldnt find anything about dinosaurs in the book., 이건 한국어로 그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.라고 해요."
+    "koChirpScript": "book! 책이라는 뜻이에요. 예를 들어볼까요? He was frustrated because he couldnt find anything about dinosaurs in the book. 이건 한국어로 그는 책에서 공룡에 대한 어떤 것도 찾을 수 없어서 좌절했다.라고 해요."
   },
   {
     "lemma": "friend",
@@ -30,7 +30,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/go-1-au.mp3",
     "koGloss": "가다",
     "koExample": "네 차례야.",
-    "koChirpScript": "go 가다! 아주 간단하죠? 문장에서는 이렇게 쓰여요. Its your go. 한국어로는 네 차례야.!"
+    "koChirpScript": "go 가다! 아주 간단하죠? 문장에서는 이렇게 쓰여요. Its your go. 한국어로는 네 차례야!"
   },
   {
     "lemma": "school",
@@ -41,7 +41,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/school-uk.mp3",
     "koGloss": "학교",
     "koExample": "다이버들은 거대한 고등어 떼를 만났다.",
-    "koChirpScript": "school 학교라는 뜻도 있지만, 물고기 떼라는 재미있는 뜻도 있답니다.  을 볼까요? The divers encountered a huge school of mackerel. 다이버들은 거대한 고등어 떼를 만났다.라고 해요."
+    "koChirpScript": "school 학교라는 뜻도 있지만, 물고기 떼라는 재미있는 뜻도 있답니다. The divers encountered a huge school of mackerel. 다이버들은 거대한 고등어 떼를 만났다.라고 해요."
   },
   {
     "lemma": "student",
@@ -52,7 +52,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/student-uk.mp3",
     "koGloss": "학생",
     "koExample": "그는 삶의 학생이다.",
-    "koChirpScript": "student! 학생이라는 뜻이에요. 문장 He is a student of life.는 그는 삶의 학생이다.라고 해석할 수 있어요."
+    "koChirpScript": "student! 학생이라는 뜻이에요. 문장 He is a student of life. 그는 삶의 학생이다. 라고 해석할 수 있어요."
   },
   {
     "lemma": "teacher",
@@ -74,7 +74,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/water-uk.mp3",
     "koGloss": "물",
     "koExample": "전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다.",
-    "koChirpScript": "이번 단어 water 바로 물입니다.  은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
+    "koChirpScript": "이번 단어 water 바로 물입니다.  예문은 조금 과학적이네요! By the action of electricity, the water was resolved into its two parts, oxygen and hydrogen. 전기의 작용으로 물은 산소와 수소 두 부분으로 분해되었다. 입니다."
   },
   {
     "lemma": "time",
@@ -85,7 +85,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/time-au.mp3",
     "koGloss": "시간",
     "koExample": "시간은 누구를 위해서도 멈추지 않는다.",
-    "koChirpScript": "시간 영어로 뭐라고 할까요? 바로 time입니다. Time stops for nobody. 이런 멋진  처럼 사용돼요. 이 문장은 시간은 누구를 위해서도 멈추지 않는다.라는 뜻이랍니다."
+    "koChirpScript": "시간, 영어로 뭐라고 할까요? 바로 time입니다. Time stops for nobody. 아주 멋진 예문이네요. 이 문장은 시간은 누구를 위해서도 멈추지 않는다.라는 뜻이랍니다."
   },
   {
     "lemma": "people",
@@ -107,7 +107,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/world-ca.mp3",
     "koGloss": "세계",
     "koExample": "세상 끝까지 언제나 연인들은 있을 것이다.",
-    "koChirpScript": "world 의 뜻은 세계!  은 There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
+    "koChirpScript": "world 의 뜻은 세계!  There will always be lovers, till the worlds end. 한국어 해석은 세상 끝까지 언제나 연인들은 있을 것이다. 입니다."
   },
   {
     "lemma": "ask",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/become-us.mp3",
     "koGloss": "되다",
     "koExample": "많은 사람들이 굶주려야 할 지경에 이르렀다.",
-    "koChirpScript": "become 무엇이 되다라는 뜻이에요. It hath becomen so that many a man had to sterve. 조금 옛날 표현인데, 많은 사람들이 굶주려야 할 지경에 이르렀다.는 의미로 쓰였어요."
+    "koChirpScript": "become 무엇이 되다라는 뜻이에요. It has become so that many a man had to sterve. 많은 사람들이 굶주려야 할 지경에 이르렀다.는 의미의 예문입니다."
   },
   {
     "lemma": "begin",
@@ -151,7 +151,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/call-au.mp3",
     "koGloss": "부르다, 전화하다",
     "koExample": "오늘 여러 통의 전화를 받았다.",
-    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요.   I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
+    "koChirpScript": "call 부르다 혹은 전화하다라는 뜻을 가져요.  I received several calls today. 오늘 여러 통의 전화를 받았다.라고 해석해요."
   },
   {
     "lemma": "can",
@@ -184,7 +184,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/do-1-au.mp3",
     "koGloss": "하다",
     "koExample": "내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.",
-    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이  에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
+    "koChirpScript": "가장 기본적인 동사 do! 하다는 뜻이에요. Were having a bit of a do on Saturday to celebrate my birthday. 이  예문에서는 파티를 하다는 의미로 쓰여서 내 생일을 축하하기 위해 토요일에 작은 파티를 할 거야.라고 해석돼요."
   },
   {
     "lemma": "feel",
@@ -217,7 +217,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/get-us.mp3",
     "koGloss": "얻다, 받다",
     "koExample": "나는 내일 할인점에서 컴퓨터를 한 대 살 거야.",
-    "koChirpScript": "get은 정말 뜻이 많은 단어인데, 기본적으로 얻다, 받다로 생각하면 편해요. Im going to get a computer tomorrow from the discount store.는 나는 내일 할인점에서 컴퓨터를 한 대 살 거야.라는 뜻이죠."
+    "koChirpScript": "get은 정말 뜻이 많은 단어인데, 기본적으로 얻다, 받다로 생각하면 편해요. Im going to get a computer tomorrow from the discount store. 나는 내일 할인점에서 컴퓨터를 한 대 살 거야.라는 뜻이죠."
   },
   {
     "lemma": "give",
@@ -228,7 +228,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/give-1-uk.mp3",
     "koGloss": "주다",
     "koExample": "그의 독단적인 종교적 신념에는 융통성이 없다.",
-    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이  에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
+    "koChirpScript": "give는 주다라는 뜻이에요. There is no give in his dogmatic religious beliefs. 이  예문에서는 융통성이 없다는 의미로 확장되어 그의 독단적인 종교적 신념에는 융통성이 없다.라고 해석된답니다."
   },
   {
     "lemma": "have",
@@ -250,7 +250,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hear-uk.mp3",
     "koGloss": "듣다",
     "koExample": "나는 귀가 먹었었는데, 이제 들을 수 있다.",
-    "koChirpScript": "hear 소리를 듣다는 뜻이에요. I was deaf, and now I can hear.는 나는 귀가 먹었었는데, 이제 들을 수 있다.라고 말하는 문장이에요."
+    "koChirpScript": "hear. 소리를 듣는다는 뜻이에요. I was deaf, and now I can hear. 나는 귀가 먹었었는데, 이제 들을 수 있다.라고 말하는 문장이에요."
   },
   {
     "lemma": "help",
@@ -272,7 +272,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/keep-au.mp3",
     "koGloss": "유지하다, 지키다",
     "koExample": "그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.",
-    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요.   He works as a cobblers apprentice for his keep.에서는 생계를 유지하다는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
+    "koChirpScript": "keep은 어떤 상태를 유지하다 또는 무언가를 지키다라는 뜻을 가져요.   He works as a cobblers apprentice for his keep. 생계를 유지하다. 라는 의미로 사용되어 그는 숙식을 제공받는 조건으로 구두장이의 제자로 일한다.라고 해석해요."
   },
   {
     "lemma": "know",
@@ -316,7 +316,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/like-us.mp3",
     "koGloss": "좋아하다, 무엇와 같은",
     "koExample": "네가 좋아하는 것과 싫어하는 것을 말해줘.",
-    "koChirpScript": "like 무엇을 좋아하다는 뜻도 있고, 무엇와 같은이라는 뜻도 있어요. Tell me your likes and dislikes.에서는 명사로 쓰여서 네가 좋아하는 것과 싫어하는 것을 말해줘.라는 뜻이에요."
+    "koChirpScript": "like 무엇을 좋아하다는 뜻도 있고, 무엇와 같은이라는 뜻도 있어요. Tell me your likes and dislikes. 에서는 명사로 쓰여서 네가 좋아하는 것과 싫어하는 것을 말해줘.라는 뜻이에요."
   },
   {
     "lemma": "live",
