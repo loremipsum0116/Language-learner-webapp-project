@@ -673,8 +673,39 @@ app.get('/odat-note/list', requireAuth, async (req, res) => {
         const vmap = new Map(vocabs.map(v => [v.id, v]));
         const rows = cards.map(c => {
             const v = vmap.get(c.itemId);
-            const gloss = Array.isArray(v?.dictMeta?.examples) ? v.dictMeta.examples.find(ex => ex && ex.kind === 'gloss')?.ko : null;
-            return { cardId: c.id, vocabId: c.itemId, lemma: v?.lemma || '', ko_gloss: gloss || null, incorrectCount: c.incorrectCount, updatedAt: c.updatedAt, ipa: v?.dictMeta?.ipa || null, ipaKo: v?.dictMeta?.ipaKo || null };
+
+            /* ── 1. ko_gloss / koGloss 컬럼 ── */
+            let gloss =
+                v?.ko_gloss      // snake_case
+                ?? v?.koGloss       // camelCase
+                ?? null;
+
+            /* ── 2. dictMeta.examples 의 gloss 항목 ── */
+            if (!gloss && Array.isArray(v?.dictMeta?.examples)) {
+                const g = v.dictMeta.examples.find(ex => ex?.kind === 'gloss' && ex.ko);
+                if (g) gloss = g.ko;
+            }
+
+            /* ── 3. 가장 첫 definitions[0].ko_def (VocabList 와 동일) ── */
+            if (!gloss && Array.isArray(v?.dictMeta?.examples)) {
+                const first = v.dictMeta.examples[0];
+                if (first?.definitions?.length) {
+                    gloss = first.definitions[0].ko_def || null;
+                }
+            }
+
+            return {
+                cardId: c.id,
+                vocabId: c.itemId,
+                lemma: v?.lemma || '',
+                levelCEFR: v?.levelCEFR || '',
+                pos: v?.pos || '',
+                ko_gloss: gloss,                // ← 이제 반드시 값이 생깁니다
+                incorrectCount: c.incorrectCount,
+                updatedAt: c.updatedAt,
+                ipa: v?.dictMeta?.ipa || null,
+                ipaKo: v?.dictMeta?.ipaKo || null
+            };
         }).filter(r => r.lemma);
         return ok(res, rows);
     } catch (e) {

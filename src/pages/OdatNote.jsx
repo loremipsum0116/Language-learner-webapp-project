@@ -4,8 +4,18 @@ import { Link } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
 import Pron from '../components/Pron';
 
+const getCefrBadgeColor = (level = '') => {
+    switch (level.toUpperCase()) {
+        case 'A1': return 'bg-danger';
+        case 'A2': return 'bg-warning text-dark';
+        case 'B1': return 'bg-success';
+        case 'B2': return 'bg-info text-dark';
+        case 'C1': return 'bg-primary';
+        default: return 'bg-secondary';
+    }
+};
 const getPosBadgeColor = (pos = '') => {
-    switch (pos.toLowerCase()) {
+    switch (pos.trim().toLowerCase()) {
         case 'noun': return 'bg-primary';
         case 'verb': return 'bg-success';
         case 'adjective': return 'bg-warning text-dark';
@@ -45,7 +55,18 @@ export default function OdatNote() {
                 Array.isArray(data)
                     ? data.map(it => ({
                         ...it,
-                        ko_gloss: it.ko_gloss ?? it.koGloss ?? null,
+                        /* ---- 평탄화 ---- */
+                        lemma: it.lemma ?? it.vocab?.lemma ?? '',
+                        pos: it.pos ?? it.vocab?.pos ?? '',
+                        levelCEFR: it.levelCEFR ?? it.vocab?.levelCEFR ?? '',
+                        ipa: it.ipa ?? it.vocab?.ipa ?? '',
+                        ipaKo: it.ipaKo ?? it.vocab?.ipaKo ?? '',
+                        ko_gloss:
+                            it.ko_gloss
+                            ?? it.koGloss
+                            ?? it.vocab?.ko_gloss
+                            ?? it.vocab?.koGloss
+                            ?? '',
                     }))
                     : [],
             );
@@ -274,7 +295,7 @@ export default function OdatNote() {
                             .map(p => p.trim())
                             .filter(Boolean))
                     );
-                    const gloss = item.ko_gloss || item.koGloss || item.gloss || '';
+                    const gloss = item.ko_gloss || item.gloss || '';
 
                     return (
                         <div
@@ -293,19 +314,26 @@ export default function OdatNote() {
                                 />
                                 <div>
                                     <h5 className="mb-1" lang="en">{item.lemma}</h5>
-                                    {/* 품사 뱃지 */}
-                                    {posList.length > 0 && (
-                                        <div className="d-flex gap-1 flex-wrap mb-1">
-                                            {posList.map(p => (
-                                                p.toLowerCase() !== 'unk' && (
-                                                    <span key={p}
-                                                        className={`badge ${getPosBadgeColor(p)} fst-italic`}>
-                                                        {p}
-                                                    </span>
-                                                )
-                                            ))}
-                                        </div>
-                                    )}
+                                    <div className="d-flex gap-1 flex-wrap mb-1">
+                                        {item.levelCEFR && (
+                                            <span className={`badge ${getCefrBadgeColor(item.levelCEFR)}`}>
+                                                {item.levelCEFR}
+                                            </span>
+                                        )}
+                                        {/* 품사 뱃지 */}
+                                        {posList.length > 0 && (
+                                            <div className="d-flex gap-1 flex-wrap mb-1">
+                                                {posList.map(p => (
+                                                    p.toLowerCase() !== 'unk' && (
+                                                        <span key={p}
+                                                            className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                                            {p}
+                                                        </span>
+                                                    )
+                                                ))}
+                                            </div>
+                                        )}
+                                    </div>
                                     <Pron ipa={item.ipa} ipaKo={item.ipaKo} />
                                     <div className="text-muted">
                                         {gloss || '뜻 정보 없음'}
@@ -326,103 +354,105 @@ export default function OdatNote() {
                 })}
             </div>
 
-            {quizOpen && (
-                <div
-                    className="modal show"
-                    // ★★★★★ 1. 배경을 불투명한 흰색으로 변경 ★★★★★
-                    style={{ display: 'block', backgroundColor: 'white' }}
-                >
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            {!currentQuiz ? (
-                                <div className="modal-body text-center p-4">
-                                    <h5 className="mb-3">퀴즈 완료</h5>
-                                    <div className="d-flex justify-content-center gap-2">
-                                        <button className="btn btn-primary" onClick={closeQuiz}>
-                                            닫기
-                                        </button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="modal-header">
-                                        <h5 className="modal-title">선택 퀴즈</h5>
-                                        <div className="ms-auto text-muted small">
-                                            {quizIndex + 1} / {quizQueue.length}
-                                        </div>
-                                        <button
-                                            type="button"
-                                            className="btn-close"
-                                            onClick={closeQuiz}
-                                        />
-                                    </div>
+            {
+                quizOpen && (
+                    <div
+                        className="modal show"
+                        // ★★★★★ 1. 배경을 불투명한 흰색으로 변경 ★★★★★
+                        style={{ display: 'block', backgroundColor: 'white' }}
+                    >
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                {!currentQuiz ? (
                                     <div className="modal-body text-center p-4">
-                                        <h2 className="display-5 mb-1" lang="en">
-                                            {currentQuiz.question}
-                                        </h2>
-                                        <div className="mb-3">
-                                            <Pron
-                                                ipa={currentQuiz.pron?.ipa}
-                                                ipaKo={currentQuiz.pron?.ipaKo}
+                                        <h5 className="mb-3">퀴즈 완료</h5>
+                                        <div className="d-flex justify-content-center gap-2">
+                                            <button className="btn btn-primary" onClick={closeQuiz}>
+                                                닫기
+                                            </button>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">선택 퀴즈</h5>
+                                            <div className="ms-auto text-muted small">
+                                                {quizIndex + 1} / {quizQueue.length}
+                                            </div>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                onClick={closeQuiz}
                                             />
                                         </div>
-
-                                        {!feedback && (
-                                            <div className="d-grid gap-2 col-10 mx-auto">
-                                                {currentQuiz.options.map((opt) => (
-                                                    <button
-                                                        key={opt}
-                                                        className={`btn btn-lg ${userAnswer === opt
-                                                            ? 'btn-primary'
-                                                            : 'btn-outline-primary'
-                                                            }`}
-                                                        onClick={() => setUserAnswer(opt)}
-                                                    >
-                                                        {opt}
-                                                    </button>
-                                                ))}
+                                        <div className="modal-body text-center p-4">
+                                            <h2 className="display-5 mb-1" lang="en">
+                                                {currentQuiz.question}
+                                            </h2>
+                                            <div className="mb-3">
+                                                <Pron
+                                                    ipa={currentQuiz.pron?.ipa}
+                                                    ipaKo={currentQuiz.pron?.ipaKo}
+                                                />
                                             </div>
-                                        )}
 
-                                        {feedback && (
-                                            <div
-                                                className={`mt-3 p-3 rounded ${feedback.status === 'pass'
-                                                    ? 'bg-success-subtle'
-                                                    : 'bg-danger-subtle'
-                                                    }`}
-                                            >
-                                                <h5>
-                                                    {feedback.status === 'pass'
-                                                        ? '정답입니다!'
-                                                        : '오답입니다'}
-                                                </h5>
-                                                <p className="lead">정답: {feedback.answer}</p>
-                                            </div>
-                                        )}
-                                    </div>
-                                    <div className="modal-footer">
-                                        {!feedback ? (
-                                            <button
-                                                className="btn btn-success w-100"
-                                                disabled={!userAnswer}
-                                                onClick={() =>
-                                                    submitQuizAnswer(userAnswer === currentQuiz.answer)
-                                                }
-                                            >
-                                                제출하기
-                                            </button>
-                                        ) : (
-                                            <button className="btn btn-primary w-100" onClick={nextQuiz}>
-                                                다음 →
-                                            </button>
-                                        )}
-                                    </div>
-                                </>
-                            )}
+                                            {!feedback && (
+                                                <div className="d-grid gap-2 col-10 mx-auto">
+                                                    {currentQuiz.options.map((opt) => (
+                                                        <button
+                                                            key={opt}
+                                                            className={`btn btn-lg ${userAnswer === opt
+                                                                ? 'btn-primary'
+                                                                : 'btn-outline-primary'
+                                                                }`}
+                                                            onClick={() => setUserAnswer(opt)}
+                                                        >
+                                                            {opt}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            {feedback && (
+                                                <div
+                                                    className={`mt-3 p-3 rounded ${feedback.status === 'pass'
+                                                        ? 'bg-success-subtle'
+                                                        : 'bg-danger-subtle'
+                                                        }`}
+                                                >
+                                                    <h5>
+                                                        {feedback.status === 'pass'
+                                                            ? '정답입니다!'
+                                                            : '오답입니다'}
+                                                    </h5>
+                                                    <p className="lead">정답: {feedback.answer}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="modal-footer">
+                                            {!feedback ? (
+                                                <button
+                                                    className="btn btn-success w-100"
+                                                    disabled={!userAnswer}
+                                                    onClick={() =>
+                                                        submitQuizAnswer(userAnswer === currentQuiz.answer)
+                                                    }
+                                                >
+                                                    제출하기
+                                                </button>
+                                            ) : (
+                                                <button className="btn btn-primary w-100" onClick={nextQuiz}>
+                                                    다음 →
+                                                </button>
+                                            )}
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )
+            }
         </main>
     );
 }
