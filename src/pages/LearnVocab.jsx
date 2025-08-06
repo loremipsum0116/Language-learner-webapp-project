@@ -25,12 +25,10 @@ const getPosBadgeColor = (pos) => {
     }
 };
 const isAbortError = (e) => e?.name === 'AbortError' || e?.message?.toLowerCase?.().includes('abort');
-
 function safeFileName(str) {
     if (!str) return '';
     return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
 }
-
 function shuffleArray(array) {
     let currentIndex = array.length, randomIndex;
     while (currentIndex !== 0) {
@@ -40,7 +38,6 @@ function shuffleArray(array) {
     }
     return array;
 }
-
 function useQuery() {
     const { search } = useLocation();
     return useMemo(() => new URLSearchParams(search), [search]);
@@ -49,27 +46,23 @@ function useQuery() {
 export default function LearnVocab() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { refreshSrsIds, removeSrsId } = useAuth();
+    const { refreshSrsIds } = useAuth();
     const q = useQuery();
     const idsParam = q.get('ids');
     const mode = q.get('mode');
-    const autoParam = q.get('auto');
+
+    const [queue, setQueue] = useState([]);
+    const [idx, setIdx] = useState(0);
+    const [loading, setLoading] = useState(true);
+    const [err, setErr] = useState(null);
+    const [feedback, setFeedback] = useState(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [flipped, setFlipped] = useState(false);
     const audioRef = useRef(null);
     const [currentDetail, setCurrentDetail] = useState(null);
-    const [queue, setQueue] = useState([]);
-    const [sessionCards, setSessionCards] = useState([]);  // ← 이번 세션 전체 백업
-    const [idx, setIdx] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [err, setErr] = useState(null);
     const [userAnswer, setUserAnswer] = useState(null);
-    const [feedback, setFeedback] = useState(null);
-    const [auto, setAuto] = useState(autoParam === '1');
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    // 오답 vocabId 모음
-    const [wrongIds, setWrongIds] = useState([]);
-    // ★ 1. 퀴즈 데이터를 불러오는 로직을 별도 함수로 분리 (재사용 목적)
+
     const fetchQueue = useCallback(async (signal) => {
         try {
             setLoading(true); setErr(null);
@@ -95,7 +88,6 @@ export default function LearnVocab() {
                 fetchedQueue = shuffleArray(fetchedQueue);
             }
             setQueue(fetchedQueue);
-            setSessionCards(fetchedQueue);
 
             if (isDefaultSrsMode && fetchedQueue.length === 0) {
                 if (window.confirm("현재 학습할 SRS 문제가 없습니다. 단어를 추가하시겠습니까?")) {
@@ -114,15 +106,16 @@ export default function LearnVocab() {
     useEffect(() => {
         const ac = new AbortController();
         fetchQueue(ac.signal);
-        return () => ac.abort();
-    }, [fetchQueue]);
+        return () => {
+            ac.abort();
+            refreshSrsIds();
+        };
+    }, [fetchQueue, refreshSrsIds]);
 
     const current = queue[idx];
 
-    // ★ 2. 퀴즈 완료 시(current가 없을 때) SRS 상태를 전역으로 새로고침
     useEffect(() => {
         if (!loading && !current) {
-            console.log("Quiz finished, refreshing SRS IDs globally...");
             refreshSrsIds();
         }
     }, [loading, current, refreshSrsIds]);
@@ -152,36 +145,31 @@ export default function LearnVocab() {
         try {
             if (current.cardId) {
                 await fetchJSON('/srs/answer', withCreds({ method: 'POST', body: JSON.stringify({ cardId: current.cardId, result: isCorrect ? 'pass' : 'fail', source: mode === 'odat' ? 'odatNote' : 'srs' }) }));
+                if (isCorrect) {
+                    setQueue(prevQueue => {
+                        const newQueue = [...prevQueue];
+                        const currentItem = newQueue[idx];
+                        if (currentItem) { newQueue[idx] = { ...currentItem, cardId: null }; }
+                        return newQueue;
+                    });
+                }
             }
         } catch (e) {
             if (!isAbortError(e)) { console.error('답변 제출 실패:', e); alert('답변을 기록하는 중 오류가 발생했습니다.'); }
         } finally {
-            if (current?.vocabId) removeSrsId(current.vocabId);
             setFeedback({ status: isCorrect ? 'pass' : 'fail', answer: current.answer });
-
-            /* ▼▼ 오답 처리: 버튼 상태 & 재학습 대비 ▼▼ */
-            if (!isCorrect) {
-                if (current.vocabId) setWrongIds(prev => [...prev, current.vocabId]);
-                refreshSrsIds();        // vocab / 단어장 페이지 버튼 즉시 갱신
-            }
             setIsSubmitting(false);
         }
     };
 
     const next = () => { setIdx(i => i + 1); setUserAnswer(null); setFeedback(null); };
 
-    // ★ 3. '다시 학습하기'가 화면 인덱스만 초기화하는 대신, 데이터를 새로고침하도록 수정
+    // ★ '다시 학습하기'는 이제 상태만 초기화합니다.
     const handleRestart = () => {
-        if (sessionCards.length === 0) {
-            alert('이번 세션에 풀었던 카드가 없습니다.');
-            return;
-        }
-        // ▶ cardId를 null 로 지워 서버 호출 대상에서 제외
-        const cleanQueue = sessionCards.map(c => ({ ...c, cardId: null }));
-        setQueue(shuffleArray(cleanQueue)); // 백업으로 새 큐
         setIdx(0);
-        setFeedback(null);
         setUserAnswer(null);
+        setFeedback(null);
+        setFlipped(false);
     };
 
     const handleAddQueueToSrsAndLearn = async () => {
@@ -200,7 +188,6 @@ export default function LearnVocab() {
     if (loading) return <main className="container py-4"><h4>퀴즈 로딩 중…</h4></main>;
     if (err) return <main className="container py-4"><div className="alert alert-danger">퀴즈를 불러오지 못했습니다. {err.status ? `(HTTP ${err.status})` : ''}</div></main>;
 
-    // ★ 4. 학습 완료 화면에서 모드에 따라 다른 버튼을 표시하도록 수정
     if (!current) {
         const isFromFlashcardOrSelection = mode === 'flash' || !!idsParam;
         return (
