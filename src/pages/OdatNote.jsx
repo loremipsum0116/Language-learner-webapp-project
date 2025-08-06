@@ -185,33 +185,41 @@ export default function OdatNote() {
         if (!currentQuiz) return;
         const result = isCorrect ? 'pass' : 'fail';
         setFeedback({ status: result, answer: currentQuiz.answer });
+        try {
+            /* ✅ pass / fail 모두 서버에 기록 */
+            await fetchJSON(
+                '/srs/answer',
+                withCreds({
+                    method: 'POST',
+                    body: JSON.stringify({
+                        cardId: currentQuiz.cardId,
+                        result,
+                        source: 'odatNote',
+                    }),
+                })
+            );
 
-        if (isCorrect) {
-            try {
-                await fetchJSON(
-                    '/srs/answer',
-                    withCreds({
-                        method: 'POST',
-                        body: JSON.stringify({
-                            cardId: currentQuiz.cardId,
-                            result: 'pass',
-                            source: 'odatNote',
-                        }),
-                    })
-                );
-                setItems((prev) =>
-                    prev.filter((x) => x.cardId !== currentQuiz.cardId)
-                );
-                setSelected((prev) => {
-                    const n = new Set(prev);
-                    n.delete(currentQuiz.cardId);
-                    return n;
+            if (isCorrect) {
+                /* 맞히면 카드 제거 */
+                setItems(prev => prev.filter(x => x.cardId !== currentQuiz.cardId));
+                setSelected(prev => {
+                    const n = new Set(prev); n.delete(currentQuiz.cardId); return n;
                 });
-            } catch (e) {
-                if (!isAbort(e)) console.error('정답 처리 실패:', e);
+            } else {
+                /* 틀리면 incorrectCount++ 로컬 반영 */
+                setItems(prev =>
+                    prev.map(x =>
+                        x.cardId === currentQuiz.cardId
+                            ? { ...x, incorrectCount: (x.incorrectCount ?? 0) + 1 }
+                            : x
+                    )
+                );
             }
+        } catch (e) {
+            if (!isAbort(e)) console.error('정답 처리 실패:', e);
         }
     };
+
 
     const nextQuiz = () => {
         setFeedback(null);
@@ -350,7 +358,7 @@ export default function OdatNote() {
                                 </button>
                             </div>
                         </div>
-                    );   /* ← return 닫기 */
+                    );  /* ← return 닫기 */
                 })}
             </div>
 
@@ -402,8 +410,8 @@ export default function OdatNote() {
                                                         <button
                                                             key={opt}
                                                             className={`btn btn-lg ${userAnswer === opt
-                                                                ? 'btn-primary'
-                                                                : 'btn-outline-primary'
+                                                                    ? 'btn-primary'
+                                                                    : 'btn-outline-primary'
                                                                 }`}
                                                             onClick={() => setUserAnswer(opt)}
                                                         >
@@ -416,8 +424,8 @@ export default function OdatNote() {
                                             {feedback && (
                                                 <div
                                                     className={`mt-3 p-3 rounded ${feedback.status === 'pass'
-                                                        ? 'bg-success-subtle'
-                                                        : 'bg-danger-subtle'
+                                                            ? 'bg-success-subtle'
+                                                            : 'bg-danger-subtle'
                                                         }`}
                                                 >
                                                     <h5>
