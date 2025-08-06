@@ -112,6 +112,8 @@ model SRSCard {
   User User @relation(fields: [userId], references: [id])
 
   @@index([userId, itemType, nextReviewAt])
+  
+  @@unique([userId, itemId, itemType])
 }
 
 model TutorLog {

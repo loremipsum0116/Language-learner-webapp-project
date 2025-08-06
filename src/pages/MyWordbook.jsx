@@ -5,7 +5,6 @@ import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 
-// ★ 시작: CEFR 레벨과 품사별 색상을 위한 헬퍼 함수 추가
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -20,27 +19,18 @@ const getCefrBadgeColor = (level) => {
 const getPosBadgeColor = (pos) => {
     if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
-        case 'noun':
-            return 'bg-primary';
-        case 'verb':
-            return 'bg-success';
-        case 'adjective':
-            return 'bg-warning text-dark';
-        case 'adverb':
-            return 'bg-info text-dark';
-        case 'preposition':
-            return 'bg-danger';
-        default:
-            return 'bg-secondary';
+        case 'noun': return 'bg-primary';
+        case 'verb': return 'bg-success';
+        case 'adjective': return 'bg-warning text-dark';
+        case 'adverb': return 'bg-info text-dark';
+        case 'preposition': return 'bg-danger';
+        default: return 'bg-secondary';
     }
 };
-// ★ 종료: 헬퍼 함수
 
-/** 새 폴더 생성 폼 */
 function NewCategoryForm({ onCreated }) {
     const [name, setName] = useState('');
     const [busy, setBusy] = useState(false);
-
     const submit = async (e) => {
         e.preventDefault();
         const n = name.trim();
@@ -57,7 +47,6 @@ function NewCategoryForm({ onCreated }) {
             setBusy(false);
         }
     };
-
     return (
         <form className="mt-3 d-flex gap-2" onSubmit={submit}>
             <input
@@ -73,7 +62,6 @@ function NewCategoryForm({ onCreated }) {
     );
 }
 
-/** 메인 페이지 */
 export default function MyWordbook() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -89,6 +77,7 @@ export default function MyWordbook() {
     const audioRef = useRef(null);
     const [playingAudio, setPlayingAudio] = useState(null);
     const [enrichingId, setEnrichingId] = useState(null);
+    const [srsIds, setSrsIds] = useState(new Set());
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
@@ -106,45 +95,57 @@ export default function MyWordbook() {
 
     const [filter, setFilter] = useState(readFilterFromURL);
 
-    const loadCategories = useCallback(async () => {
-        const { data } = await fetchJSON('/categories', withCreds());
+    const loadCategories = useCallback(async (signal) => {
+        const { data } = await fetchJSON('/categories', withCreds({ signal }));
         setCategories(data?.categories || []);
         setUncategorized(data?.uncategorized || 0);
     }, []);
 
-    const loadWordbook = useCallback(async (f) => {
+    const loadWordbook = useCallback(async (f, signal) => {
         setLoading(true);
         try {
             let url = '/my-wordbook';
             if (f === 'none') url += '?categoryId=none';
             else if (typeof f === 'number') url += `?categoryId=${f}`;
-            const { data } = await fetchJSON(url, withCreds());
+            const { data } = await fetchJSON(url, withCreds({ signal }));
             setWords(Array.isArray(data) ? data : []);
         } finally {
             setLoading(false);
         }
     }, []);
 
+    const loadSrsIds = useCallback(async (signal) => {
+        try {
+            const { data } = await fetchJSON('/srs/all-cards', withCreds({ signal }));
+            setSrsIds(new Set((data || []).map(card => card.vocabId)));
+        } catch (e) {
+            console.error("SRS 목록 로딩 실패:", e);
+        }
+    }, []);
+
     useEffect(() => {
-        (async () => {
-            await loadCategories();
-            const init = readFilterFromURL();
-            setFilter(init);
-            await loadWordbook(init);
-        })();
-    }, [loadCategories, loadWordbook, readFilterFromURL]);
+        const ac = new AbortController();
+        const init = readFilterFromURL();
+        setFilter(init);
+
+        Promise.all([
+            loadCategories(ac.signal),
+            loadWordbook(init, ac.signal),
+            loadSrsIds(ac.signal)
+        ]);
+
+        return () => ac.abort();
+    }, [loadCategories, loadWordbook, loadSrsIds, readFilterFromURL]);
 
     const filteredWords = useMemo(() => {
         if (!Array.isArray(words)) return [];
         const validWords = words.filter(word => word && word.vocab && word.vocab.lemma);
         const needle = searchTerm.trim().toLowerCase();
         if (!needle) return validWords;
-        return validWords.filter(word => {
-            return (
-                word.vocab.lemma.toLowerCase().includes(needle) ||
-                (word.vocab.ko_gloss && word.vocab.ko_gloss.toLowerCase().includes(needle))
-            );
-        });
+        return validWords.filter(word =>
+            word.vocab.lemma.toLowerCase().includes(needle) ||
+            (word.vocab.ko_gloss && word.vocab.ko_gloss.toLowerCase().includes(needle))
+        );
     }, [words, searchTerm]);
 
     const stopAudio = () => {
@@ -158,7 +159,7 @@ export default function MyWordbook() {
 
     const playUrl = (url, type, id) => {
         if (!url) return;
-        if (playingAudio && playingAudio.id === id) {
+        if (playingAudio?.id === id) {
             stopAudio();
             return;
         }
@@ -191,7 +192,7 @@ export default function MyWordbook() {
                 }
                 return w;
             }));
-             const enrichedUrl = updatedVocab.audio || updatedVocab.dictMeta?.audioUrl;
+            const enrichedUrl = updatedVocab.audio || updatedVocab.dictMeta?.audioUrl;
             if (enrichedUrl) {
                 playUrl(enrichedUrl, 'vocab', vocab.id);
             } else {
@@ -206,23 +207,21 @@ export default function MyWordbook() {
     };
 
     useEffect(() => {
-        return () => { if (audioRef.current) stopAudio(); };
+        return () => stopAudio();
     }, []);
-    
+
     const onClickFolder = async (f) => {
         setFilter(f);
         setSelectedIds(new Set());
-        if (f === 'all') setSearchParams({});
-        else if (f === 'none') setSearchParams({ cat: 'none' });
-        else setSearchParams({ cat: String(f) });
+        const params = f === 'all' ? {} : { cat: String(f) };
+        setSearchParams(params);
         await loadWordbook(f);
     };
 
     const toggleSelect = (id) => {
         setSelectedIds(prev => {
             const n = new Set(prev);
-            if (n.has(id)) n.delete(id);
-            else n.add(id);
+            if (n.has(id)) n.delete(id); else n.add(id);
             return n;
         });
     };
@@ -241,8 +240,7 @@ export default function MyWordbook() {
                     categoryId: moveTarget === 'none' ? null : Number(moveTarget),
                 }),
             }));
-            await loadCategories();
-            await loadWordbook(filter);
+            await Promise.all([loadCategories(), loadWordbook(filter)]);
             unselectAll();
             alert('이동 완료');
         } catch (e) {
@@ -266,9 +264,8 @@ export default function MyWordbook() {
         }
     };
 
-    const handleAddSelectedToSRS = async () => {
-        const ids = Array.from(selectedIds);
-        if (ids.length === 0) {
+    const addVocabToSRS = async (ids) => {
+        if (!Array.isArray(ids) || ids.length === 0) {
             alert('SRS에 추가할 단어를 선택하세요.'); return;
         }
         try {
@@ -279,6 +276,7 @@ export default function MyWordbook() {
             const count = data?.count ?? 0;
             if (count > 0) {
                 alert(`${count}개의 단어를 SRS에 새로 추가했습니다.`);
+                setSrsIds(prev => new Set([...prev, ...ids]));
             } else {
                 alert('선택된 단어들은 이미 SRS에 모두 존재합니다.');
             }
@@ -291,9 +289,7 @@ export default function MyWordbook() {
 
     const handleDeleteSelected = async () => {
         const ids = Array.from(selectedIds);
-        if (ids.length === 0) {
-            alert('삭제할 단어를 선택하세요.'); return;
-        }
+        if (ids.length === 0) { alert('삭제할 단어를 선택하세요.'); return; }
         if (window.confirm(`${ids.length}개의 단어를 내 단어장에서 삭제하시겠습니까?`)) {
             try {
                 await fetchJSON('/my-wordbook/remove-many', withCreds({
@@ -301,8 +297,7 @@ export default function MyWordbook() {
                     body: JSON.stringify({ vocabIds: ids }),
                 }));
                 alert(`${ids.length}개의 단어를 삭제했습니다.`);
-                await loadWordbook(filter);
-                await loadCategories();
+                await Promise.all([loadWordbook(filter), loadCategories()]);
                 unselectAll();
             } catch (e) {
                 console.error('단어 삭제 실패:', e);
@@ -311,14 +306,11 @@ export default function MyWordbook() {
         }
     };
 
-    const isActive = (f) =>
-        (f === 'all' && filter === 'all') ||
-        (f === 'none' && filter === 'none') ||
-        (typeof f === 'number' && filter === f);
+    const isActive = (f) => f === filter;
 
     return (
         <main className="container py-4">
-             <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">
                     <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
@@ -331,25 +323,13 @@ export default function MyWordbook() {
             <div className="row">
                 <aside className="col-12 col-md-3 mb-3">
                     <div className="list-group">
-                        <button
-                            className={`list-group-item list-group-item-action ${isActive('all') ? 'active' : ''}`}
-                            onClick={() => onClickFolder('all')}
-                        >
-                            전체
-                        </button>
-                        <button
-                            className={`list-group-item list-group-item-action d-flex justify-content-between ${isActive('none') ? 'active' : ''}`}
-                            onClick={() => onClickFolder('none')}
-                        >
+                        <button className={`list-group-item list-group-item-action ${isActive('all') ? 'active' : ''}`} onClick={() => onClickFolder('all')}>전체</button>
+                        <button className={`list-group-item list-group-item-action d-flex justify-content-between ${isActive('none') ? 'active' : ''}`} onClick={() => onClickFolder('none')}>
                             <span>미분류</span>
                             <span className="badge text-bg-secondary">{uncategorized}</span>
                         </button>
                         {categories.map((c) => (
-                            <button
-                                key={c.id}
-                                className={`list-group-item list-group-item-action d-flex justify-content-between ${isActive(c.id) ? 'active' : ''}`}
-                                onClick={() => onClickFolder(c.id)}
-                            >
+                            <button key={c.id} className={`list-group-item list-group-item-action d-flex justify-content-between ${isActive(c.id) ? 'active' : ''}`} onClick={() => onClickFolder(c.id)}>
                                 <span>{c.name}</span>
                                 <span className="badge text-bg-secondary">{c.count ?? 0}</span>
                             </button>
@@ -357,7 +337,7 @@ export default function MyWordbook() {
                     </div>
                     <NewCategoryForm onCreated={loadCategories} />
                 </aside>
-                
+
                 <section className="col-12 col-md-9">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <div className="small text-muted">
@@ -365,66 +345,20 @@ export default function MyWordbook() {
                             {selectedIds.size > 0 ? ` / 선택됨 ${selectedIds.size}` : ''}
                         </div>
                         <div className="d-flex gap-2 align-items-center">
-                            <button
-                                className="btn btn-sm btn-outline-secondary"
-                                onClick={selectAll}
-                                disabled={loading || filteredWords.length === 0}
-                            >
-                                전체 선택
-                            </button>
-                            <button
-                                className="btn btn-sm btn-outline-secondary"
-                                onClick={unselectAll}
-                                disabled={selectedIds.size === 0}
-                            >
-                                선택 해제
-                            </button>
-
-                            <select
-                                className="form-select form-select-sm"
-                                style={{ width: 150 }}
-                                value={String(moveTarget)}
-                                onChange={(e) =>
-                                    setMoveTarget(e.target.value === 'none' ? 'none' : Number(e.target.value))
-                                }
-                            >
+                            <button className="btn btn-sm btn-outline-secondary" onClick={selectAll} disabled={loading || filteredWords.length === 0}>전체 선택</button>
+                            <button className="btn btn-sm btn-outline-secondary" onClick={unselectAll} disabled={selectedIds.size === 0}>선택 해제</button>
+                            <select className="form-select form-select-sm" style={{ width: 150 }} value={String(moveTarget)} onChange={(e) => setMoveTarget(e.target.value === 'none' ? 'none' : Number(e.target.value))}>
                                 <option value="none">미분류로 이동</option>
-                                {categories.map((c) => (
-                                    <option key={c.id} value={c.id}>{c.name}</option>
-                                ))}
+                                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                             </select>
-                            <button
-                                className="btn btn-sm btn-primary"
-                                onClick={onMoveClick}
-                                disabled={selectedIds.size === 0}
-                            >
-                                이동
-                            </button>
-                            <button
-                                className="btn btn-sm btn-success"
-                                onClick={handleAddSelectedToSRS}
-                                disabled={selectedIds.size === 0}
-                            >
-                                SRS에 추가
-                            </button>
-                            <button
-                                className="btn btn-sm btn-danger"
-                                onClick={handleDeleteSelected}
-                                disabled={selectedIds.size === 0}
-                            >
-                                삭제
-                            </button>
+                            <button className="btn btn-sm btn-primary" onClick={onMoveClick} disabled={selectedIds.size === 0}>이동</button>
+                            <button className="btn btn-sm btn-success" onClick={() => addVocabToSRS(Array.from(selectedIds))} disabled={selectedIds.size === 0}>SRS에 추가</button>
+                            <button className="btn btn-sm btn-danger" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>삭제</button>
                         </div>
                     </div>
 
                     <div className="mb-3">
-                        <input
-                            type="search"
-                            className="form-control"
-                            placeholder="내 단어장에서 검색 (단어 또는 뜻)"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                        />
+                        <input type="search" className="form-control" placeholder="내 단어장에서 검색 (단어 또는 뜻)" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
 
                     <div className="list-group">
@@ -433,47 +367,28 @@ export default function MyWordbook() {
                             const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
                             const posList = vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [];
-
                             return (
-                                <div
-                                    key={v.id}
-                                    className="list-group-item d-flex justify-content-between align-items-center"
-                                >
+                                <div key={v.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center gap-2" style={{ flexGrow: 1 }}>
-                                        <input
-                                            type="checkbox"
-                                            className="form-check-input"
-                                            checked={checked}
-                                            onChange={() => toggleSelect(v.vocabId)}
-                                        />
+                                        <input type="checkbox" className="form-check-input" checked={checked} onChange={() => toggleSelect(v.vocabId)} />
                                         <div>
-                                            {/* ★ 시작: 단어, CEFR, 품사, 발음, 뜻을 모두 표시합니다. */}
                                             <div className="d-flex align-items-center flex-wrap">
                                                 <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
                                                 <div className="d-flex gap-1">
                                                     {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
-                                                    {posList.map(p => (
-                                                        p && p.toLowerCase() !== 'unk' && (
-                                                            <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
-                                                                {p}
-                                                            </span>
-                                                        )
+                                                    {posList.map(p => p && p.toLowerCase() !== 'unk' && (
+                                                        <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                                                     ))}
                                                 </div>
                                             </div>
                                             <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />
                                             <div className="text-muted small">{gloss || '뜻 정보 없음'}</div>
-                                            {/* ★ 종료: UI 개선 */}
                                         </div>
                                     </div>
-
                                     <div className="d-flex gap-2">
-                                        <button
-                                            type="button"
-                                            className="btn btn-sm btn-outline-secondary"
-                                            onClick={(e) => openDetail(v.vocabId, e)}
-                                        >
-                                            상세
+                                        <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>
+                                        <button className={`btn btn-sm ${srsIds.has(v.vocabId) ? 'btn-secondary' : 'btn-outline-success'}`} onClick={() => addVocabToSRS([v.vocabId])} disabled={srsIds.has(v.vocabId)} title={srsIds.has(v.vocabId) ? '이미 SRS 목록에 있습니다' : 'SRS에 추가'}>
+                                            {srsIds.has(v.vocabId) ? '✓ SRS' : '+ SRS'}
                                         </button>
                                     </div>
                                 </div>
@@ -481,9 +396,7 @@ export default function MyWordbook() {
                         })}
                         {!loading && filteredWords.length === 0 && (
                             <div className="alert alert-light mb-0">
-                                {searchTerm
-                                    ? '해당 단어가 없습니다.'
-                                    : '이 폴더에 단어가 없습니다.'}
+                                {searchTerm ? '해당 단어가 없습니다.' : '이 폴더에 단어가 없습니다.'}
                             </div>
                         )}
                     </div>
@@ -495,16 +408,12 @@ export default function MyWordbook() {
                     <div className="modal-dialog modal-dialog-centered">
                         <div className="modal-content">
                             {detailLoading ? (
-                                <div className="modal-body text-center p-5">
-                                    <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>
-                                </div>
+                                <div className="modal-body text-center p-5"><div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div></div>
                             ) : (
                                 <VocabDetailModal
                                     vocab={detail}
                                     onClose={() => { setDetail(null); stopAudio(); }}
-                                    // ★ 시작: onPlayUrl prop을 playUrl 함수로 직접 전달합니다.
                                     onPlayUrl={playUrl}
-                                    // ★ 종료: prop 전달 방식 수정
                                     onPlayVocabAudio={playVocabAudio}
                                     playingAudio={playingAudio}
                                 />
