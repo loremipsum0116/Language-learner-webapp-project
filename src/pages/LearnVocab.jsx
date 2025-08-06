@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 
+// ★ 시작: 헬퍼 함수들을 파일 최상단에 정의합니다. ★
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -48,6 +49,7 @@ function useQuery() {
     const { search } = useLocation();
     return useMemo(() => new URLSearchParams(search), [search]);
 }
+// ★ 종료: 헬퍼 함수 정의 ★
 
 export default function LearnVocab() {
     const navigate = useNavigate();
@@ -56,11 +58,10 @@ export default function LearnVocab() {
     const idsParam = q.get('ids');
     const mode = q.get('mode');
     const autoParam = q.get('auto');
-    const [flipped, setFlipped] = useState(false);
 
+    const [flipped, setFlipped] = useState(false);
     const audioRef = useRef(null);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
-
     const [currentDetail, setCurrentDetail] = useState(null);
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
@@ -70,7 +71,6 @@ export default function LearnVocab() {
     const [userAnswer, setUserAnswer] = useState(null);
     const [feedback, setFeedback] = useState(null);
     const [auto, setAuto] = useState(autoParam === '1');
-    const [currentPron, setCurrentPron] = useState(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
@@ -101,7 +101,15 @@ export default function LearnVocab() {
 
                 let data;
                 let isDefaultSrsMode = false;
-                if (mode === 'odat') {
+
+                if (mode === 'odat' && location.state?.cardIds) {
+                    const cardIds = location.state.cardIds;
+                    ({ data } = await fetchJSON('/odat-note/quiz', withCreds({
+                        method: 'POST',
+                        body: JSON.stringify({ cardIds }),
+                        signal: ac.signal
+                    }), 20000));
+                } else if (mode === 'odat') {
                     ({ data } = await fetchJSON('/odat-note/queue?limit=100', withCreds({ signal: ac.signal }), 20000));
                 } else if (idsParam) {
                     const vocabIds = idsParam.split(',').map(n => Number(n)).filter(Number.isFinite);
@@ -113,11 +121,10 @@ export default function LearnVocab() {
 
                 let fetchedQueue = Array.isArray(data) ? data : [];
 
-                // 백엔드에서 필요한 데이터를 모두 받아오도록 수정했으므로, flash 모드에서도 모든 데이터를 사용할 수 있습니다.
-                // const isFlashMode = mode === 'flash';
-
-                // API 응답에 CEFR, POS가 포함되도록 수정되었으므로, 프론트엔드에서 추가 API 호출은 불필요합니다.
-                setQueue(shuffleArray(fetchedQueue));
+                if (mode === 'flash') {
+                    fetchedQueue = shuffleArray(fetchedQueue);
+                }
+                setQueue(fetchedQueue);
 
                 if (isDefaultSrsMode && fetchedQueue.length === 0) {
                     if (window.confirm("현재 학습할 SRS 문제가 없습니다. 단어를 추가하시겠습니까?")) {
@@ -138,7 +145,7 @@ export default function LearnVocab() {
             }
         })();
         return () => ac.abort();
-    }, [idsParam, mode, navigate]);
+    }, [idsParam, mode, navigate, location.state]);
 
     const playUrl = (url) => {
         if (!url) return;
@@ -176,7 +183,6 @@ export default function LearnVocab() {
     }, [idx]);
 
     useEffect(() => {
-        setCurrentPron(null);
         if (!current) {
             stopAudio();
             return;
@@ -186,9 +192,10 @@ export default function LearnVocab() {
         (async () => {
             try {
                 if (current.vocabId) {
+                    // 플래시카드 뒷면 예문 표시를 위해 상세 정보는 계속 가져옵니다.
                     const { data } = await fetchJSON(`/vocab/${current.vocabId}`, withCreds({ signal: ac.signal }), 15000);
                     setCurrentDetail(data || null);
-                    setCurrentPron({ ipa: data?.dictMeta?.ipa || null, ipaKo: data?.dictMeta?.ipaKo || null });
+
                     if (mode === 'flash' && auto) {
                         const safeName = safeFileName(current.question);
                         const audioPath = `/audio/${safeName}.mp3`;
@@ -212,10 +219,7 @@ export default function LearnVocab() {
         try {
             let cardId = current.cardId;
             if (!cardId && current.vocabId) {
-                const { data: newCard } = await fetchJSON(
-                    `/vocab/${current.vocabId}/bookmark`,
-                    withCreds({ method: 'POST' })
-                );
+                const { data: newCard } = await fetchJSON(`/vocab/${current.vocabId}/bookmark`, withCreds({ method: 'POST' }));
                 cardId = newCard?.id;
             }
             if (cardId) {
@@ -223,8 +227,6 @@ export default function LearnVocab() {
                     method: 'POST',
                     body: JSON.stringify({ cardId, result: isCorrect ? 'pass' : 'fail' }),
                 }));
-            } else {
-                console.error('결과를 기록할 cardId를 확보하지 못했습니다.', current);
             }
         } catch (e) {
             if (!isAbortError(e)) {
@@ -262,7 +264,6 @@ export default function LearnVocab() {
         setFlipped(false);
     };
 
-    // ★★★ 수정된 부분: 함수 이름을 handleAddQueueToSrsAndLearn로 변경 ★★★
     const handleAddQueueToSrsAndLearn = async () => {
         setReloading(true);
         try {
@@ -323,72 +324,64 @@ export default function LearnVocab() {
         );
     }
 
+    const uniquePosList = [...new Set((current?.pos || '').split(',').map(p => p.trim()).filter(Boolean))];
+
     if (mode === 'flash') {
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
                 <div className="d-flex justify-content-between align-items-center mb-2">
-                    <strong>플래시카드 (선택 {queue.length}개)</strong>
+                    <strong>플래시카드 ({queue.length}개)</strong>
                     <div className="d-flex align-items-center gap-2">
-                        <button
-                            className={`btn btn-sm ${auto ? 'btn-outline-warning' : 'btn-outline-primary'}`}
-                            onClick={() => setAuto(a => !a)}
-                            title={auto ? '자동 넘김 멈춤' : '자동 넘김 시작'}
-                        >
+                        <button className={`btn btn-sm ${auto ? 'btn-outline-warning' : 'btn-outline-primary'}`} onClick={() => setAuto(a => !a)} title={auto ? '자동 넘김 멈춤' : '자동 넘김 시작'}>
                             {auto ? '⏸ 멈춤' : '▶ 재생'}
                         </button>
                         <span className="text-muted">{idx + 1} / {queue.length}</span>
                     </div>
                 </div>
                 <div className="card">
-                    <div
-                        className="card-body text-center p-5 d-flex flex-column justify-content-center"
-                        role="button"
-                        onClick={() => setFlipped(f => !f)}
-                        title="카드를 클릭하면 앞/뒤가 전환됩니다"
-                        style={{ minHeight: '40rem' }}
-                    >
+                    <div className="card-body text-center p-5 d-flex flex-column justify-content-center" role="button" onClick={() => setFlipped(f => !f)} style={{ minHeight: '40rem' }}>
                         {!flipped ? (
                             <>
                                 <h2 className="display-5 mb-1" lang="en">{current.question}</h2>
                                 <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
                                     {current.levelCEFR && <span className={`badge ${getCefrBadgeColor(current.levelCEFR)}`}>{current.levelCEFR}</span>}
-                                    {(current.pos || '').split(',').map(p => p.trim()).filter(p => p && p.toLowerCase() !== 'unk').map(p => (
+                                    {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
                                         <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                                     ))}
                                 </div>
-                                <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
+                                <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻이 표시됩니다.</div>
                             </>
                         ) : (
                             <>
-                                <div className="lead mb-2"><strong>뜻:</strong> {current.answer}</div>
-                                {Array.isArray(currentDetail?.dictMeta?.examples) && (
-                                    <ul className="list-unstyled text-start mx-auto mt-2" style={{ maxWidth: 560 }}>
-                                        {currentDetail.dictMeta.examples
-                                            .filter(ex => ex && ex.kind !== 'gloss')
-                                            .slice(0, 5)
-                                            .map((ex, i) => (
-                                                <li key={i} className="mb-2 d-flex justify-content-between align-items-start">
-                                                    <div>
-                                                        <span lang="en">{ex.de}</span>
-                                                        {ex.ko ? <div className="text-muted small">— {ex.ko}</div> : null}
-                                                    </div>
-                                                </li>
-                                            ))}
-                                    </ul>
+                                <div className="lead mb-3"><strong>뜻:</strong> {current.answer}</div>
+                                {currentDetail?.dictMeta?.examples && currentDetail.dictMeta.examples.length > 0 ? (
+                                    <div className="text-start mx-auto mt-2" style={{ maxWidth: 560 }}>
+                                        <h6 className="text-muted">예문</h6>
+                                        {currentDetail.dictMeta.examples.map((meaningBlock, index) => (
+                                            meaningBlock.definitions && meaningBlock.definitions.map((def, defIndex) => (
+                                                def.examples && def.examples.length > 0 && (
+                                                    <ul key={`${index}-${defIndex}`} className="list-unstyled ps-3">
+                                                        {def.examples.map((ex, exIndex) => (
+                                                            <li key={exIndex} className="mb-2">
+                                                                <span lang="en">{ex.de}</span>
+                                                                {ex.ko ? <div className="text-muted small">— {ex.ko}</div> : null}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )
+                                            ))
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p className="text-muted small mt-4">(추가 예문 정보 없음)</p>
                                 )}
                             </>
                         )}
                     </div>
                     <div className="card-footer d-flex gap-2">
-                        <button
-                            className="btn btn-outline-secondary w-25"
-                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.max(0, i - 1)); }}
-                        >← 이전</button>
-                        <button
-                            className="btn btn-primary w-75"
-                            onClick={() => { stopAudio(); setFlipped(false); setIdx(i => i + 1); }}
-                        >다음 →</button>
+                        <button className="btn btn-outline-secondary w-25" onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.max(0, i - 1)); }}>← 이전</button>
+                        <button className="btn btn-primary w-75" onClick={() => { stopAudio(); setFlipped(false); setIdx(i => i + 1); }}>다음 →</button>
                     </div>
                 </div>
             </main>
@@ -399,34 +392,26 @@ export default function LearnVocab() {
         <main className="container py-4" style={{ maxWidth: 720 }}>
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <strong>{mode === 'odat' ? '오답노트 퀴즈' : 'SRS 퀴즈'}</strong>
-                <div className="d-flex align-items-center gap-2">
-                    <Link to="/learn/srs-manager" className="btn btn-sm btn-outline-secondary">퀴즈 편집</Link>
-                    <Link to="/odat-note" className="btn btn-sm btn-outline-danger">오답노트</Link>
-                    <span className="text-muted">{idx + 1} / {queue.length}</span>
-                </div>
+                <span className="text-muted">{idx + 1} / {queue.length}</span>
             </div>
             <div className="card">
                 <div className="card-body text-center p-4">
                     <h2 className="display-5 mb-1" lang="en">{current.question}</h2>
-                    <Pron ipa={currentPron?.ipa} ipaKo={currentPron?.ipaKo} />
+                    <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
+                        {current.levelCEFR && <span className={`badge ${getCefrBadgeColor(current.levelCEFR)}`}>{current.levelCEFR}</span>}
+                        {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
+                            <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
+                        ))}
+                    </div>
                     <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
                     {!feedback && (
                         <div className="d-grid gap-2 col-8 mx-auto mt-3">
                             {current.options.map(opt => (
-                                <button
-                                    key={opt}
-                                    className={`btn btn-lg ${userAnswer === opt ? 'btn-primary' : 'btn-outline-primary'}`}
-                                    onClick={() => setUserAnswer(opt)}
-                                    disabled={isSubmitting || feedback}
-                                >
+                                <button key={opt} className={`btn btn-lg ${userAnswer === opt ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => setUserAnswer(opt)} disabled={isSubmitting || feedback}>
                                     {opt}
                                 </button>
                             ))}
-                            <button
-                                className="btn btn-success btn-lg mt-2"
-                                disabled={!userAnswer || isSubmitting || feedback}
-                                onClick={submit}
-                            >
+                            <button className="btn btn-success btn-lg mt-2" disabled={!userAnswer || isSubmitting || feedback} onClick={submit}>
                                 {isSubmitting ? '처리 중…' : '제출하기'}
                             </button>
                         </div>

@@ -42,7 +42,8 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
     const koGloss = vocab.ko_gloss || '뜻 정보 없음';
     const isEnriching = enrichingId === vocab.id;
     const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
-    const posList = vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [];
+    const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+
 
     return (
         <div className="col-md-6 col-lg-4 mb-3">
@@ -65,7 +66,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                         <h5 className="card-title mb-0 me-2" lang="en">{vocab.lemma}</h5>
                         <div className="d-flex gap-1">
                             {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
-                            {posList.map(p => (
+                            {uniquePosList.map(p => (
                                 p && p.toLowerCase() !== 'unk' && (
                                     <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
                                         {p}
@@ -78,7 +79,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     <div className="card-subtitle text-muted">{koGloss}</div>
                 </div>
                 <div className="card-footer d-flex gap-2 justify-content-between align-items-center">
-                   <div className="d-flex align-items-center">
+                    <div className="d-flex align-items-center">
                         <div className="btn-group">
                             <button
                                 className={`btn btn-sm ${inWordbook ? 'btn-secondary' : 'btn-outline-primary'}`}
@@ -108,11 +109,11 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                             ) : isPlaying ? (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
-                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z"/>
+                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
                                 </svg>
                             ) : (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
-                                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z"/>
+                                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
                                 </svg>
                             )}
                         </button>

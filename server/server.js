@@ -49,7 +49,85 @@ function setAuthCookie(res, token) {
         maxAge: SLIDING_MINUTES * 60 * 1000,
     });
 }
+async function generateMcqQuizItems(prisma, userId, vocabIds) {
+    if (!vocabIds || vocabIds.length === 0) return [];
 
+    const ids = vocabIds.map(Number).filter(Number.isFinite);
+    if (ids.length === 0) return [];
+
+    const [vocabs, cards] = await Promise.all([
+        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
+        prisma.sRSCard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
+    ]);
+
+    const cmap = new Map(cards.map(c => [c.itemId, c.id]));
+    const distractorPool = await prisma.vocab.findMany({
+        where: { id: { notIn: ids }, dictMeta: { isNot: null } },
+        include: { dictMeta: true },
+        take: 500,
+    });
+
+    const poolGlosses = new Set();
+    distractorPool.forEach(d => {
+        if (d.dictMeta && Array.isArray(d.dictMeta.examples)) {
+            const meanings = d.dictMeta.examples;
+            let gloss = null;
+            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+                gloss = meanings[0].definitions[0].ko_def;
+            }
+            if (!gloss) {
+                const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
+                if (glossExample) gloss = glossExample.ko;
+            }
+            if (gloss) poolGlosses.add(gloss);
+        }
+    });
+
+    const pickN = (arr, n) => {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a.slice(0, n);
+    };
+
+    const items = [];
+    for (const v of vocabs) {
+        const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+        let correct = null;
+        if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+            correct = meanings[0].definitions[0].ko_def || null;
+        }
+        if (!correct) {
+            const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
+            if (glossExample) correct = glossExample.ko || null;
+        }
+        if (!correct) continue;
+
+        const localWrongSet = new Set(poolGlosses);
+        localWrongSet.delete(correct);
+        const wrongs = pickN(Array.from(localWrongSet), 3);
+        const options = [correct, ...wrongs];
+        while (options.length < 4) {
+            options.push(correct);
+        }
+
+        items.push({
+            cardId: cmap.get(v.id) || null,
+            vocabId: v.id,
+            question: v.lemma,
+            answer: correct,
+            quizType: 'mcq',
+            options: shuffleArray(options),
+            pron: { ipa: v.dictMeta?.ipa || null, ipaKo: v.dictMeta?.ipaKo || null },
+            levelCEFR: v.levelCEFR,
+            pos: v.pos,
+        });
+    }
+    return items;
+}
+// ★★★ 종료 ★★★
 function clearAuthCookie(res) {
     res.clearCookie(COOKIE_NAME, { httpOnly: true, sameSite: 'lax', secure: false });
 }
@@ -391,96 +469,13 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
             where: { userId: req.user.id, itemType: 'vocab', nextReviewAt: { lte: now } },
             orderBy: { nextReviewAt: 'asc' },
             take: limit,
-            select: { id: true, itemId: true },
+            select: { itemId: true },
         });
 
         if (cards.length === 0) return ok(res, []);
-
-        const ids = cards.map(c => c.itemId);
-        const vocabs = await prisma.vocab.findMany({
-            where: { id: { in: ids } },
-            include: { dictMeta: true },
-        });
-
-        const vmap = new Map(vocabs.map(v => [v.id, v]));
-
-        // ★★★ 시작: /quiz/by-vocab과 동일한 안정적인 오답 풀 생성 로직 적용 ★★★
-        const distractorPool = await prisma.vocab.findMany({
-            where: { id: { notIn: ids }, dictMeta: { isNot: null } },
-            include: { dictMeta: true },
-            take: 1000,
-        });
-
-        const poolGlosses = new Set();
-        distractorPool.forEach(d => {
-            if (d.dictMeta && Array.isArray(d.dictMeta.examples)) {
-                const meanings = d.dictMeta.examples;
-                let gloss = null;
-                if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-                    gloss = meanings[0].definitions[0].ko_def;
-                }
-                if (!gloss) {
-                    const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-                    if (glossExample) gloss = glossExample.ko;
-                }
-                if (gloss) poolGlosses.add(gloss);
-            }
-        });
-
-        const pickN = (arr, n) => {
-            const a = [...arr];
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a.slice(0, n);
-        };
-        // ★★★ 종료 ★★★
-
-        const queue = [];
-        for (const c of cards) {
-            const v = vmap.get(c.itemId);
-            if (!v) continue;
-
-            // ★★★ 시작: /quiz/by-vocab과 동일한 안정적인 정답 추출 로직 적용 ★★★
-            const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
-            let correct = null;
-            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-                correct = meanings[0].definitions[0].ko_def || null;
-            }
-            if (!correct) {
-                const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-                if (glossExample) correct = glossExample.ko || null;
-            }
-            if (!correct) {
-                console.warn(`[SRS Queue] No correct answer for "${v.lemma}". Skipping.`);
-                continue;
-            }
-            // ★★★ 종료 ★★★
-
-            const localWrongSet = new Set(poolGlosses);
-            localWrongSet.delete(correct);
-            const wrongs = pickN(Array.from(localWrongSet), 3);
-
-            // ★★★ 시작: 오답이 부족해도 퀴즈를 생성하도록 보장 ★★★
-            const options = [correct, ...wrongs];
-            while (options.length < 4) {
-                options.push(correct); // 부족한 만큼 정답으로 채움
-            }
-            // ★★★ 종료 ★★★
-
-            queue.push({
-                cardId: c.id,
-                vocabId: v.id,
-                question: v.lemma,
-                answer: correct,
-                quizType: 'mcq',
-                options: shuffleArray(options), // 옵션 순서 섞기
-                pron: buildPron(v),
-                levelCEFR: v.levelCEFR, // 프론트엔드 표시용 데이터 추가
-                pos: v.pos,             // 프론트엔드 표시용 데이터 추가
-            });
-        }
+        
+        const vocabIds = cards.map(c => c.itemId);
+        const queue = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
         return ok(res, queue);
     } catch (e) {
         console.error('SRS Queue 생성 오류:', e);
@@ -506,84 +501,7 @@ app.post('/srs/remove-many', requireAuth, async (req, res) => {
 app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
     try {
         const { vocabIds } = req.body || {};
-        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-            return fail(res, 400, 'vocabIds must be a non-empty array');
-        }
-        const ids = vocabIds.map(Number).filter(Number.isFinite);
-        if (ids.length === 0) return ok(res, []);
-
-        const [vocabs, cards] = await Promise.all([
-            prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
-            prisma.sRSCard.findMany({ where: { userId: req.user.id, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
-        ]);
-
-        const cmap = new Map(cards.map(c => [c.itemId, c.id]));
-
-        const distractorPool = await prisma.vocab.findMany({
-            where: { id: { notIn: ids }, dictMeta: { isNot: null } },
-            include: { dictMeta: true },
-            take: 500,
-        });
-
-        const poolGlosses = new Set();
-        distractorPool.forEach(d => {
-            if (d.dictMeta && Array.isArray(d.dictMeta.examples)) {
-                const meanings = d.dictMeta.examples;
-                let gloss = null;
-                if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-                    gloss = meanings[0].definitions[0].ko_def;
-                }
-                if (!gloss) {
-                    const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-                    if (glossExample) gloss = glossExample.ko;
-                }
-                if (gloss) poolGlosses.add(gloss);
-            }
-        });
-
-        const pickN = (arr, n) => {
-            const a = [...arr];
-            for (let i = a.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [a[i], a[j]] = [a[j], a[i]];
-            }
-            return a.slice(0, n);
-        };
-
-        const items = [];
-        for (const v of vocabs) {
-            const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
-            let correct = null;
-            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-                correct = meanings[0].definitions[0].ko_def || null;
-            }
-            if (!correct) {
-                const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-                if (glossExample) correct = glossExample.ko || null;
-            }
-            if (!correct) continue;
-
-            const localWrongSet = new Set(poolGlosses);
-            localWrongSet.delete(correct);
-            const wrongs = pickN(Array.from(localWrongSet), 3);
-
-            const options = [correct, ...wrongs];
-            while (options.length < 4) {
-                options.push(correct);
-            }
-
-            items.push({
-                cardId: cmap.get(v.id) || null,
-                vocabId: v.id,
-                question: v.lemma,
-                answer: correct,
-                quizType: 'mcq',
-                options: shuffleArray(options),
-                pron: { ipa: v.dictMeta?.ipa || null, ipaKo: v.dictMeta?.ipaKo || null },
-                levelCEFR: v.levelCEFR,
-                pos: v.pos,
-            });
-        }
+        const items = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
         return ok(res, items);
     } catch (e) {
         console.error('POST /quiz/by-vocab 오류:', e);
@@ -720,34 +638,19 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
     try {
         const { cardIds } = req.body || {};
         if (!Array.isArray(cardIds) || cardIds.length === 0) {
-            return fail(res, 400, 'cardIds must be a non-empty array');
+            return ok(res, []);
         }
-        const ids = cardIds.map(Number).filter(Number.isFinite);
-        if (ids.length === 0) return ok(res, []);
-        const cards = await prisma.sRSCard.findMany({ where: { userId: req.user.id, itemType: 'vocab', incorrectCount: { gt: 0 }, id: { in: ids } }, select: { id: true, itemId: true }, orderBy: { updatedAt: 'asc' } });
-        if (cards.length === 0) return ok(res, []);
+        
+        const cards = await prisma.sRSCard.findMany({
+            where: {
+                userId: req.user.id,
+                id: { in: cardIds.map(Number) }
+            },
+            select: { itemId: true }
+        });
+
         const vocabIds = cards.map(c => c.itemId);
-        const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } }, include: { dictMeta: true } });
-        const vmap = new Map(vocabs.map(v => [v.id, v]));
-        const distractorPool = await prisma.vocab.findMany({ where: { id: { notIn: vocabIds }, dictMeta: { isNot: null } }, include: { dictMeta: true }, take: 300 });
-        const poolGlosses = distractorPool.map(d => d.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko).filter(Boolean);
-        const quizQueue = [];
-        for (const card of cards) {
-            const v = vmap.get(card.itemId);
-            if (!v) continue;
-            const correct = v.dictMeta?.examples?.find(ex => ex && ex.kind === 'gloss')?.ko;
-            if (!correct) continue;
-            const wrong = [];
-            const tried = new Set();
-            while (wrong.length < 3 && tried.size < poolGlosses.length) {
-                const idx = Math.floor(Math.random() * poolGlosses.length);
-                tried.add(idx);
-                const cand = poolGlosses[idx];
-                if (cand && cand !== correct && !wrong.includes(cand)) wrong.push(cand);
-            }
-            if (wrong.length < 3) continue;
-            quizQueue.push({ cardId: card.id, vocabId: v.id, question: v.lemma, answer: correct, options: [correct, ...wrong].sort(() => Math.random() - 0.5), quizType: 'mcq', pron: buildPron(v) });
-        }
+        const quizQueue = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
         return ok(res, quizQueue);
     } catch (e) {
         console.error('POST /odat-note/quiz failed:', e);

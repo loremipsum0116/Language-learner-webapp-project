@@ -32,11 +32,9 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
             const titleLemma = toTitleCase(lemma);
             const currentPos = (r.pos || 'unknown').trim();
 
-            // 1. Vocab 항목을 먼저 확인하거나 생성합니다.
             const vocab = await prisma.vocab.upsert({
                 where: { lemma: titleLemma },
                 update: {
-                    // 이미 다른 품사가 있다면 쉼표로 구분하여 추가합니다.
                     pos: {
                         set: await (async () => {
                             const existing = await prisma.vocab.findUnique({ where: { lemma: titleLemma } });
@@ -56,7 +54,6 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
                 }
             });
 
-            // 2. DictEntry를 지능적으로 업데이트하거나 생성합니다.
             const existingEntry = await prisma.dictEntry.findUnique({
                 where: { vocabId: vocab.id },
             });
@@ -71,18 +68,15 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
             };
 
             if (existingEntry) {
-                // 기존 항목이 있으면, examples JSON 배열을 업데이트합니다.
                 let existingExamples = Array.isArray(existingEntry.examples) ? existingEntry.examples : [];
                 const posIndex = existingExamples.findIndex(e => e.pos === currentPos);
 
                 if (posIndex > -1) {
-                    // 같은 품사가 이미 있으면, 정의(definition)만 추가 (중복 방지)
                     const defExists = existingExamples[posIndex].definitions.some(d => d.def === r.definition);
                     if (!defExists) {
                         existingExamples[posIndex].definitions.push(newMeaningBlock.definitions[0]);
                     }
                 } else {
-                    // 새로운 품사 정보이면 배열에 추가
                     existingExamples.push(newMeaningBlock);
                 }
 
@@ -91,25 +85,26 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
                     data: {
                         examples: existingExamples,
                         audioUrl: r.audioUrl || existingEntry.audioUrl,
+                        // ★★★ pronunciation 필드를 ipa 필드에 업데이트 ★★★
+                        ipa: r.pronunciation || existingEntry.ipa,
                     }
                 });
 
             } else {
-                // 기존 항목이 없으면 새로 생성합니다.
                 await prisma.dictEntry.create({
                     data: {
                         vocabId: vocab.id,
                         examples: [newMeaningBlock],
                         audioUrl: r.audioUrl,
+                        // ★★★ pronunciation 필드를 ipa 필드에 생성 ★★★
+                        ipa: r.pronunciation,
                         license: 'Proprietary',
                         attribution: 'ielts-api-v2'
                     }
                 });
             }
-
             upserted++;
         }
-
         console.log(`Successfully processed ${upserted} entries from ${path.basename(file)}.`);
     } catch (e) {
         console.error('Error during seeding:', e);

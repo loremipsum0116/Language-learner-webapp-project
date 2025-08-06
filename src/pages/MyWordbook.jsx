@@ -366,7 +366,7 @@ export default function MyWordbook() {
                             const { vocab } = v;
                             const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
-                            const posList = vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [];
+                             const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
                             return (
                                 <div key={v.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center gap-2" style={{ flexGrow: 1 }}>
@@ -376,9 +376,12 @@ export default function MyWordbook() {
                                                 <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
                                                 <div className="d-flex gap-1">
                                                     {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
-                                                    {posList.map(p => p && p.toLowerCase() !== 'unk' && (
-                                                        <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
-                                                    ))}
+                                                   {uniquePosList.map(p => (
+                                                        p && p.toLowerCase() !== 'unk' && (
+                                                            <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                                                {p}
+                                                            </span>
+                                                        )))}
                                                 </div>
                                             </div>
                                             <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />
