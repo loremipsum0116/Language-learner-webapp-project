@@ -5,6 +5,9 @@ import Pron from '../components/Pron';
 import { useAuth } from '../context/AuthContext';
 
 
+
+
+
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -53,8 +56,8 @@ export default function LearnVocab() {
     const mode = q.get('mode');
 
     const autoParam = q.get('auto');          // ?auto=1이면 자동학습 모드
-    const [auto, setAuto] = useState(autoParam === '1');   // 기본 false
-
+    const [auto, setAuto] = useState(q.get('auto') === '1');
+    const [isDone, setIsDone] = useState(false);
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -92,6 +95,7 @@ export default function LearnVocab() {
                 fetchedQueue = shuffleArray(fetchedQueue);
             }
             setQueue(fetchedQueue);
+            setIsDone(false);
 
             if (isDefaultSrsMode && fetchedQueue.length === 0) {
                 if (window.confirm("현재 학습할 SRS 문제가 없습니다. 단어를 추가하시겠습니까?")) {
@@ -114,9 +118,17 @@ export default function LearnVocab() {
             ac.abort();
             refreshSrsIds();
         };
-    }, [fetchQueue, refreshSrsIds]);
+    }, [fetchQueue]);
 
     const current = queue[idx];
+
+    useEffect(() => {
+        if (!loading && queue.length > 0 && idx >= queue.length) {
+            setIsDone(true);     // 완료 표시
+            setAuto(false);      // 타이머·오디오 모두 중지
+            stopAudio();
+        }
+    }, [idx, queue.length, loading]);
 
     useEffect(() => {
         if (!loading && !current) {
@@ -143,24 +155,34 @@ export default function LearnVocab() {
         const audio = new Audio(full);
         audio.loop = auto;                // 자동학습 중엔 반복
         audio.onended = () => { if (!auto) stopAudio(); };
-        audio.play().catch(console.error);
+        audio.play().catch(() => {
+            // 첫 play()가 막히면 음소거 플레이→해제(Chrome 정책 우회)
+            audio.muted = true;
+            audio.play().then(() => { audio.muted = false; }).catch(console.error);
+        });
         audioRef.current = audio;
     };
 
+    // ① 5초 뒤 카드 뒤집기
     useEffect(() => {
-        if (!auto) return;            // 수동 모드면 타이머 X
-        // ① 5 초 뒤 카드 뒤집기
-        const flipTimer = setTimeout(() => setFlipped(true), 5000);
-        // ② 30 초 뒤 다음 카드로
-        const nextTimer = setTimeout(() => {
+        if (!auto || isDone) return;
+
+        // 5초마다 앞/뒤 뒤집기
+        const interval = setInterval(() => {
+            setFlipped(prev => !prev);
+        }, 5000);
+        return () => clearInterval(interval);   // 카드가 바뀌거나 auto 해제되면 정리
+    }, [idx, auto, isDone]);
+    // ② 30초 뒤 다음 카드
+    useEffect(() => {
+        if (!auto || isDone) return;
+
+        const t = setTimeout(() => {
             setFlipped(false);
             setIdx(i => i + 1);
         }, 30000);
-        return () => {
-            clearTimeout(flipTimer);
-            clearTimeout(nextTimer);
-        };
-    }, [idx, auto]);
+        return () => clearTimeout(t);
+    }, [idx, auto, isDone]);
 
     useEffect(() => {
         if (!current) { stopAudio(); return; }
@@ -216,6 +238,7 @@ export default function LearnVocab() {
 
     // ★ '다시 학습하기'는 이제 상태만 초기화합니다.
     const handleRestart = () => {
+        setIsDone(false);
         setIdx(0);
         setUserAnswer(null);
         setFeedback(null);
