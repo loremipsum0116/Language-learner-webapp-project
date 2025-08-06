@@ -1,8 +1,9 @@
 // src/pages/OdatNote.jsx
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
 import Pron from '../components/Pron';
+import { useAuth } from '../context/AuthContext';
 
 const getCefrBadgeColor = (level = '') => {
     switch (level.toUpperCase()) {
@@ -27,6 +28,8 @@ const isAbort = (e) =>
     e?.name === 'AbortError' || e?.message?.toLowerCase?.().includes('abort');
 
 export default function OdatNote() {
+    const { user, loading: authLoading } = useAuth();
+    const nav = useNavigate();
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
     const [items, setItems] = useState([]);
@@ -77,6 +80,12 @@ export default function OdatNote() {
             if (!ac.signal.aborted) setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (!authLoading && !user) {
+            nav('/', { replace: true });
+        }
+    }, [authLoading, user, nav]);
 
     useEffect(() => {
         load();
@@ -410,8 +419,8 @@ export default function OdatNote() {
                                                         <button
                                                             key={opt}
                                                             className={`btn btn-lg ${userAnswer === opt
-                                                                    ? 'btn-primary'
-                                                                    : 'btn-outline-primary'
+                                                                ? 'btn-primary'
+                                                                : 'btn-outline-primary'
                                                                 }`}
                                                             onClick={() => setUserAnswer(opt)}
                                                         >
@@ -424,8 +433,8 @@ export default function OdatNote() {
                                             {feedback && (
                                                 <div
                                                     className={`mt-3 p-3 rounded ${feedback.status === 'pass'
-                                                            ? 'bg-success-subtle'
-                                                            : 'bg-danger-subtle'
+                                                        ? 'bg-success-subtle'
+                                                        : 'bg-danger-subtle'
                                                         }`}
                                                 >
                                                     <h5>
