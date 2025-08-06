@@ -171,6 +171,7 @@ export default function LearnVocab() {
         audioRef.current = audio;
     };
 
+    useEffect(() => () => { stopAudio(); }, []);
     // ① 5초 뒤 카드 뒤집기
     useEffect(() => {
         if (!auto || isDone) return;
@@ -186,6 +187,7 @@ export default function LearnVocab() {
         if (!auto || isDone) return;
 
         const t = setTimeout(() => {
+            stopAudio();                     // ★ ADD
             setFlipped(false);
             setIdx(i => i + 1);
         }, 30000);
@@ -300,7 +302,8 @@ export default function LearnVocab() {
                     <span className="text-muted">{idx + 1} / {queue.length}</span>
                 </div>
                 <div className="card">
-                    <div className="card-body text-center p-5 d-flex flex-column justify-content-center" role="button" onClick={() => setFlipped(f => !f)} style={{ minHeight: '40rem' }}>
+                    <div className="card-body position-relative text-center p-5 d-flex flex-column justify-content-center" role="button" onClick={() => setFlipped(f => !f)} style={{ minHeight: '40rem' }}>
+
                         {!flipped ? (
                             <>
                                 <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
@@ -338,10 +341,12 @@ export default function LearnVocab() {
                     </div>
                     <div>
                         <button
-                            className={`btn btn-sm ${auto ? 'btn-warning' : 'btn-outline-secondary'}`}
-                            onClick={() => {
-                                setAuto(a => !a);
-                                if (audioRef.current) audioRef.current.loop = !auto; // loop 동기화
+                            className={`btn btn-sm ${auto ? 'btn-warning' : 'btn-outline-secondary'} position-absolute top-0 end-0 m-3`}
+                            onClick={(e) => {
+                                e.stopPropagation();        // 카드 클릭 뒤집힘 방지
+                                stopAudio();                // 🔴 음성 즉시 정지
+                                setAuto(a => !a);           // 상태 토글
+                                // loop 플래그는 auto ↔ loop effect에서 자동 동기화됨
                             }}
                         >
                             {auto ? '⏸ 자동멈춤' : '▶ 자동학습'}
