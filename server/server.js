@@ -49,6 +49,8 @@ function setAuthCookie(res, token) {
         maxAge: SLIDING_MINUTES * 60 * 1000,
     });
 }
+
+
 async function generateMcqQuizItems(prisma, userId, vocabIds) {
     if (!vocabIds || vocabIds.length === 0) return [];
 

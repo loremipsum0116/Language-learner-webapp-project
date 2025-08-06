@@ -16,15 +16,20 @@
   "dependencies": {
     "@google-cloud/text-to-speech": "^6.2.0",
     "@prisma/client": "^6.13.0",
+    "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
+    "bullmq": "^5.56.9",
     "cheerio": "^1.1.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "csv-parse": "^6.1.0",
     "csv-parser": "^3.2.0",
+    "dayjs": "^1.11.13",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "lodash": "^4.17.21",
+    "redis": "^5.8.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.10",

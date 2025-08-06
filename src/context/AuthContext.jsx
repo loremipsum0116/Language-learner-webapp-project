@@ -74,6 +74,12 @@ export function AuthProvider({ children }) {
             await refreshSrsIds();
             setLoading(false);
         })();
+        const handler = (e) => {
+            if (!e?.detail?.vocabId) return;
+            removeSrsId(e.detail.vocabId);
+        };
+        window.addEventListener('srs:remove', handler);
+        return () => window.removeEventListener('srs:remove', handler);
     }, [user?.id]); // user.id가 변경될 때 (로그인/로그아웃) 다시 실행
 
     return (

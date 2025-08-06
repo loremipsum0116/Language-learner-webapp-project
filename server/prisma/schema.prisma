@@ -32,11 +32,15 @@ model Category {
   name      String
   createdAt DateTime @default(now())
 
-  // ★ User와 1:N
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind        String    @default("wordbook")
+  nextAlarmAt DateTime?
+  alarmActive Boolean   @default(true)
+  remindEvery Int?
 
-  // ★ 폴더에 속한 단어들
-  items UserVocab[]
+  items    UserVocab[]
+  srsCards SRSCard[]
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, name])
 }
@@ -68,9 +72,9 @@ model DictEntry {
   sourceUrl   String?
   retrievedAt DateTime?
   examples    Json
-  ipaKo       String?   
+  ipaKo       String?
 
- Vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  Vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 }
 
 model GrammarItem {
@@ -96,25 +100,34 @@ model Reading {
   glosses   Json
 }
 
+model SessionBatch {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  createdAt DateTime @default(now())
+  order     Int
+  cards     Json
+}
+
 model SRSCard {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   userId         Int
   itemType       String
   itemId         Int
-  stage          Int      @default(0)
-  nextReviewAt   DateTime @default(now())
+  stage          Int       @default(0)
+  nextReviewAt   DateTime  @default(now())
   lastResult     String?
-  createdAt      DateTime @default(now())
-  active         Boolean  @default(true)
-  updatedAt      DateTime @updatedAt
-  correctCount   Int      @default(0)
-  incorrectCount Int      @default(0)
+  createdAt      DateTime  @default(now())
+  active         Boolean   @default(true)
+  updatedAt      DateTime  @updatedAt
+  correctCount   Int       @default(0)
+  incorrectCount Int       @default(0)
+  categoryId     Int?
+  category       Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
   User User @relation(fields: [userId], references: [id])
 
-  @@index([userId, itemType, nextReviewAt])
-  
   @@unique([userId, itemId, itemType])
+  @@index([userId, itemType, nextReviewAt])
 }
 
 model TutorLog {
