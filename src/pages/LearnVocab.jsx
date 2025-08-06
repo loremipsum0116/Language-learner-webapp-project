@@ -47,6 +47,14 @@ function useQuery() {
     return useMemo(() => new URLSearchParams(search), [search]);
 }
 
+function findAudioUrl(card, detail) {                          // ⬅️ ADD
+    return (
+        card?.exampleAudio ||               // 1) 예문 mp3
+        card?.audio ||              // 2) vocab mp3(DB)
+        detail?.audio ||              // 3) 상세 조회 mp3
+        `/audio/${safeFileName(card.question)}.mp3` // 4) server/A1/audio/{lemma}.mp3
+    );
+}
 export default function LearnVocab() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -184,17 +192,14 @@ export default function LearnVocab() {
         return () => clearTimeout(t);
     }, [idx, auto, isDone]);
 
-    useEffect(() => {
+    useEffect(() => {                                           // ★ REPLACE
         if (!current) { stopAudio(); return; }
-        // 예문 mp3가 있으면 그것부터, 없으면 vocab mp3
-        const url =
-            current.exampleAudio     // ex) /audio/examples/...
-            || current.audio         // vocab 자체 mp3
-            || currentDetail?.audio;
+        const url = findAudioUrl(current, currentDetail);
         if (url) playUrl(url);
-        // currentDetail 로드 로직 그대로 유지 (IPA·예문 표시용)
-    }, [current]);
-
+    }, [current, currentDetail]);      // ← detail 의존성 추
+    useEffect(() => {                                           // ★ ADD
+        if (audioRef.current) audioRef.current.loop = auto;
+    }, [auto]);
     useEffect(() => { setFlipped(false); stopAudio(); }, [idx]);
     useEffect(() => {
         if (!current) { stopAudio(); return; }
