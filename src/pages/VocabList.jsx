@@ -151,11 +151,11 @@ function useDebounce(value, delay) {
 }
 
 export default function VocabList() {
-    const { user } = useAuth();
+    const { user, srsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
-    const [srsIds, setSrsIds] = useState(new Set());
+
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
     const [detail, setDetail] = useState(null);
@@ -310,25 +310,8 @@ export default function VocabList() {
         return () => ac.abort();
     }, [activeLevel, debouncedSearchTerm]);
 
-    useEffect(() => {
-        if (!user) { setMyWordbookIds(new Set()); setSrsIds(new Set()); return; }
-        const ac = new AbortController();
-        (async () => {
-            try {
-                const [wb, srs] = await Promise.all([
-                    fetchJSON('/my-wordbook', withCreds({ signal: ac.signal })),
-                    fetchJSON('/srs/all-cards', withCreds({ signal: ac.signal }))
-                ]);
-                const wbIds = new Set((wb.data || []).map(v => v.vocabId));
-                const srsSet = new Set((srs.data || []).map(card => card.vocabId));
-                setMyWordbookIds(wbIds);
-                setSrsIds(srsSet);
-            } catch (e) {
-                if (!isAbortError(e)) console.error(e);
-            }
-        })();
-        return () => ac.abort();
-    }, [user]);
+    const { refreshSrsIds } = useAuth(); // 함수도 가져옵니다.
+    
 
     const handleOpenDetail = async (vocabId) => {
         try {
@@ -360,8 +343,8 @@ export default function VocabList() {
         if (!user) return alert('로그인이 필요합니다.');
         try {
             await fetchJSON('/srs/create-many', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds: ids }) }));
-            setSrsIds(prev => new Set([...prev, ...ids]));
             alert(`${ids.length}개를 SRS에 추가했습니다.`);
+            await refreshSrsIds(); // ★ 상태를 직접 조작하는 대신 새로고침 함수를 호출합니다.
         } catch (e) {
             console.error(e);
             alert('SRS 추가 실패');

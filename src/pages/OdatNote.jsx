@@ -4,6 +4,15 @@ import { Link } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
 import Pron from '../components/Pron';
 
+const getPosBadgeColor = (pos = '') => {
+    switch (pos.toLowerCase()) {
+        case 'noun': return 'bg-primary';
+        case 'verb': return 'bg-success';
+        case 'adjective': return 'bg-warning text-dark';
+        case 'adverb': return 'bg-info text-dark';
+        default: return 'bg-secondary';
+    }
+};
 const isAbort = (e) =>
     e?.name === 'AbortError' || e?.message?.toLowerCase?.().includes('abort');
 
@@ -32,7 +41,14 @@ export default function OdatNote() {
                 withCreds({ signal: ac.signal }),
                 15000
             );
-            setItems(Array.isArray(data) ? data : []);
+            setItems(
+                Array.isArray(data)
+                    ? data.map(it => ({
+                        ...it,
+                        ko_gloss: it.ko_gloss ?? it.koGloss ?? null,
+                    }))
+                    : [],
+            );
             setSelected(new Set());
         } catch (e) {
             if (!isAbort(e)) setErr(e);
@@ -48,11 +64,11 @@ export default function OdatNote() {
     const filtered = useMemo(() => {
         const needle = q.trim().toLowerCase();
         if (!needle) return items;
-        return items.filter(
-            (x) =>
-                x.lemma.toLowerCase().includes(needle) ||
-                (x.ko_gloss || '').toLowerCase().includes(needle)
-        );
+
+        return items.filter((x) => {
+            const gloss = (x.ko_gloss || x.koGloss || '').toLowerCase();
+            return x.lemma.toLowerCase().includes(needle) || gloss.includes(needle);
+        });
     }, [items, q]);
 
     const allSelected =
@@ -250,40 +266,64 @@ export default function OdatNote() {
             )}
 
             <div className="list-group">
-                {filtered.map((item) => (
-                    <div
-                        key={item.cardId}
-                        className="list-group-item d-flex justify-content-between align-items-center"
-                    >
+                {filtered.map((item) => {
+                    // ✨ map 안에서 바로 파생 데이터 계산
+                    const posList = Array.from(
+                        new Set((item.pos || '')
+                            .split(',')
+                            .map(p => p.trim())
+                            .filter(Boolean))
+                    );
+                    const gloss = item.ko_gloss || item.koGloss || item.gloss || '';
+
+                    return (
                         <div
-                            className="d-flex align-items-start gap-2"
-                            style={{ flexGrow: 1 }}
+                            key={item.cardId}
+                            className="list-group-item d-flex justify-content-between align-items-center"
                         >
-                            <input
-                                type="checkbox"
-                                className="form-check-input mt-1"
-                                checked={selected.has(item.cardId)}
-                                onChange={() => toggle(item.cardId)}
-                            />
-                              <div>
-                                <h5 className="mb-1" lang="en">
-                                    {item.lemma}
-                                </h5>
-                                <Pron ipa={item.ipa} ipaKo={item.ipaKo} />
-                                <div className="text-muted">{item.ko_gloss || '뜻 정보 없음'}</div>
-                                <small className="text-muted">틀린 횟수: {item.incorrectCount}</small>
+                            <div
+                                className="d-flex align-items-start gap-2"
+                                style={{ flexGrow: 1 }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input mt-1"
+                                    checked={selected.has(item.cardId)}
+                                    onChange={() => toggle(item.cardId)}
+                                />
+                                <div>
+                                    <h5 className="mb-1" lang="en">{item.lemma}</h5>
+                                    {/* 품사 뱃지 */}
+                                    {posList.length > 0 && (
+                                        <div className="d-flex gap-1 flex-wrap mb-1">
+                                            {posList.map(p => (
+                                                p.toLowerCase() !== 'unk' && (
+                                                    <span key={p}
+                                                        className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                                        {p}
+                                                    </span>
+                                                )
+                                            ))}
+                                        </div>
+                                    )}
+                                    <Pron ipa={item.ipa} ipaKo={item.ipaKo} />
+                                    <div className="text-muted">
+                                        {gloss || '뜻 정보 없음'}
+                                    </div>
+                                    <small className="text-muted">틀린 횟수: {item.incorrectCount}</small>
+                                </div>
+                            </div>
+                            <div className="d-flex gap-2">
+                                <button
+                                    className="btn btn-sm btn-outline-success"
+                                    onClick={() => resolveOne(item.cardId)}
+                                >
+                                    정답 처리
+                                </button>
                             </div>
                         </div>
-                        <div className="d-flex gap-2">
-                            <button
-                                className="btn btn-sm btn-outline-success"
-                                onClick={() => resolveOne(item.cardId)}
-                            >
-                                정답 처리
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    );   /* ← return 닫기 */
+                })}
             </div>
 
             {quizOpen && (

@@ -440,7 +440,13 @@ app.post('/srs/replace-deck', requireAuth, async (req, res) => {
 });
 app.get('/srs/all-cards', requireAuth, async (req, res) => {
     try {
-        const cards = await prisma.sRSCard.findMany({ where: { userId: req.user.id, itemType: 'vocab' }, orderBy: { createdAt: 'desc' } });
+        const now = new Date();
+        const cards = await prisma.sRSCard.findMany({
+            where: {
+                userId: req.user.id, itemType: 'vocab', active: true,
+                nextReviewAt: { lte: now }
+            }
+        });
         if (cards.length === 0) return ok(res, []);
         const vocabIds = cards.map(card => card.itemId);
         const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } }, include: { dictMeta: true } });
@@ -466,14 +472,17 @@ app.get('/srs/queue', requireAuth, async (req, res) => {
         const limit = Math.min(Number(req.query.limit || 20), 100);
         const now = new Date();
         const cards = await prisma.sRSCard.findMany({
-            where: { userId: req.user.id, itemType: 'vocab', nextReviewAt: { lte: now } },
+            where: {
+                userId: req.user.id, itemType: 'vocab', active: true,
+                nextReviewAt: { lte: now }
+            },
             orderBy: { nextReviewAt: 'asc' },
             take: limit,
             select: { itemId: true },
         });
 
         if (cards.length === 0) return ok(res, []);
-        
+
         const vocabIds = cards.map(c => c.itemId);
         const queue = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
         return ok(res, queue);
@@ -510,18 +519,57 @@ app.post('/quiz/by-vocab', requireAuth, async (req, res) => {
 });
 
 // --- OdatNote & other routes --- (생략, 변경 없음)
+// server/server.js
+
+// server/server.js
+
 app.post('/srs/answer', requireAuth, async (req, res) => {
     const { cardId, result, source } = req.body || {};
     if (!cardId || !['pass', 'fail'].includes(result)) return fail(res, 400, 'invalid payload');
-    const card = await prisma.sRSCard.findFirst({ where: { id: Number(cardId), userId: req.user.id } });
-    if (!card) return fail(res, 404, 'card not found');
-    const { newStage, nextReviewAt } = scheduleNext(card.stage, result);
-    const data = { stage: newStage, nextReviewAt, lastResult: result, ...(result === 'pass' ? { correctCount: { increment: 1 } } : { incorrectCount: { increment: 1 } }) };
-    if (result === 'pass' && source === 'odatNote') {
-        data.incorrectCount = { set: 0 };
+
+    try {
+        const card = await prisma.sRSCard.findFirst({
+            where: { id: Number(cardId), userId: req.user.id },
+        });
+
+        if (!card) {
+            return fail(res, 404, 'card not found');
+        }
+
+        if (result === 'pass') {
+            // ★★★ 시작: 올바른 작업 순서로 수정 ★★★
+            // 1. 먼저 필요한 업데이트를 수행합니다. (현재는 오답노트 카운트 초기화)
+            if (source === 'odatNote') {
+                // 이 로직은 이제 삭제와 별개로 안전하게 실행됩니다.
+                await prisma.sRSCard.update({
+                    where: { id: card.id },
+                    data: { incorrectCount: 0 }
+                });
+            }
+
+            // 2. 모든 작업이 끝난 후, 마지막에 카드를 삭제합니다.
+            await prisma.sRSCard.delete({ where: { id: card.id } });
+
+            return ok(res, { message: 'Card completed and removed.' });
+            // ★★★ 종료 ★★★
+
+        } else { // 오답일 경우
+            const { newStage, nextReviewAt } = scheduleNext(card.stage, result);
+            const updated =  // 틀렸으면 오답노트용으로 남기되 SRS에서 빠지도록 active=false
+                await prisma.sRSCard.update({
+                    where: { id: card.id },
+                    data: { active: false, incorrectCount: { increment: 1 } }
+                });
+            return ok(res, updated);
+        }
+    } catch (e) {
+        // 'card not found' 오류는 Prisma의 delete/update 작업이 실패했을 때 발생할 수 있습니다.
+        if (e.code === 'P2025') {
+            return fail(res, 404, 'card not found');
+        }
+        console.error('[/srs/answer] Error:', e);
+        return fail(res, 500, 'Internal Server Error');
     }
-    const updated = await prisma.sRSCard.update({ where: { id: card.id }, data });
-    return ok(res, updated);
 });
 // server/server.js
 
@@ -640,7 +688,7 @@ app.post('/odat-note/quiz', requireAuth, async (req, res) => {
         if (!Array.isArray(cardIds) || cardIds.length === 0) {
             return ok(res, []);
         }
-        
+
         const cards = await prisma.sRSCard.findMany({
             where: {
                 userId: req.user.id,

@@ -1,10 +1,11 @@
-// src/pages/MyWordbook.jsx
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
+import { useAuth } from '../context/AuthContext'; // ★ AuthContext에서 useAuth 임포트
 
+// 헬퍼 함수
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -28,9 +29,11 @@ const getPosBadgeColor = (pos) => {
     }
 };
 
+// 새 폴더 생성 폼 컴포넌트
 function NewCategoryForm({ onCreated }) {
     const [name, setName] = useState('');
     const [busy, setBusy] = useState(false);
+
     const submit = async (e) => {
         e.preventDefault();
         const n = name.trim();
@@ -47,6 +50,7 @@ function NewCategoryForm({ onCreated }) {
             setBusy(false);
         }
     };
+
     return (
         <form className="mt-3 d-flex gap-2" onSubmit={submit}>
             <input
@@ -62,9 +66,14 @@ function NewCategoryForm({ onCreated }) {
     );
 }
 
+// 메인 페이지 컴포넌트
 export default function MyWordbook() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
+    
+    // ★ 1. AuthContext에서 사용자 정보, srsIds, srsIds 새로고침 함수를 가져옵니다.
+    const { user, srsIds, refreshSrsIds } = useAuth();
+
     const [categories, setCategories] = useState([]);
     const [uncategorized, setUncategorized] = useState(0);
     const [words, setWords] = useState([]);
@@ -77,7 +86,6 @@ export default function MyWordbook() {
     const audioRef = useRef(null);
     const [playingAudio, setPlayingAudio] = useState(null);
     const [enrichingId, setEnrichingId] = useState(null);
-    const [srsIds, setSrsIds] = useState(new Set());
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
@@ -114,15 +122,7 @@ export default function MyWordbook() {
         }
     }, []);
 
-    const loadSrsIds = useCallback(async (signal) => {
-        try {
-            const { data } = await fetchJSON('/srs/all-cards', withCreds({ signal }));
-            setSrsIds(new Set((data || []).map(card => card.vocabId)));
-        } catch (e) {
-            console.error("SRS 목록 로딩 실패:", e);
-        }
-    }, []);
-
+    // ★ 2. useEffect에서 로컬 srsIds 로딩 로직을 제거합니다. (AuthContext가 처리)
     useEffect(() => {
         const ac = new AbortController();
         const init = readFilterFromURL();
@@ -131,11 +131,10 @@ export default function MyWordbook() {
         Promise.all([
             loadCategories(ac.signal),
             loadWordbook(init, ac.signal),
-            loadSrsIds(ac.signal)
         ]);
-
+        
         return () => ac.abort();
-    }, [loadCategories, loadWordbook, loadSrsIds, readFilterFromURL]);
+    }, [loadCategories, loadWordbook, readFilterFromURL]);
 
     const filteredWords = useMemo(() => {
         if (!Array.isArray(words)) return [];
@@ -264,8 +263,9 @@ export default function MyWordbook() {
         }
     };
 
+    // ★ 3. addVocabToSRS 함수가 Context의 refreshSrsIds를 호출하도록 수정합니다.
     const addVocabToSRS = async (ids) => {
-        if (!Array.isArray(ids) || ids.length === 0) {
+        if (!user || !Array.isArray(ids) || ids.length === 0) {
             alert('SRS에 추가할 단어를 선택하세요.'); return;
         }
         try {
@@ -276,7 +276,7 @@ export default function MyWordbook() {
             const count = data?.count ?? 0;
             if (count > 0) {
                 alert(`${count}개의 단어를 SRS에 새로 추가했습니다.`);
-                setSrsIds(prev => new Set([...prev, ...ids]));
+                await refreshSrsIds(); // ★ 상태를 직접 조작하는 대신 새로고침 함수를 호출합니다.
             } else {
                 alert('선택된 단어들은 이미 SRS에 모두 존재합니다.');
             }
@@ -286,7 +286,7 @@ export default function MyWordbook() {
             alert('SRS에 단어를 추가하는 데 실패했습니다.');
         }
     };
-
+    
     const handleDeleteSelected = async () => {
         const ids = Array.from(selectedIds);
         if (ids.length === 0) { alert('삭제할 단어를 선택하세요.'); return; }
@@ -337,7 +337,7 @@ export default function MyWordbook() {
                     </div>
                     <NewCategoryForm onCreated={loadCategories} />
                 </aside>
-
+                
                 <section className="col-12 col-md-9">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <div className="small text-muted">
@@ -366,7 +366,8 @@ export default function MyWordbook() {
                             const { vocab } = v;
                             const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
-                             const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+                            const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+
                             return (
                                 <div key={v.id} className="list-group-item d-flex justify-content-between align-items-center">
                                     <div className="d-flex align-items-center gap-2" style={{ flexGrow: 1 }}>
@@ -376,12 +377,9 @@ export default function MyWordbook() {
                                                 <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
                                                 <div className="d-flex gap-1">
                                                     {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
-                                                   {uniquePosList.map(p => (
-                                                        p && p.toLowerCase() !== 'unk' && (
-                                                            <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
-                                                                {p}
-                                                            </span>
-                                                        )))}
+                                                    {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
+                                                        <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
+                                                    ))}
                                                 </div>
                                             </div>
                                             <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />
@@ -390,6 +388,7 @@ export default function MyWordbook() {
                                     </div>
                                     <div className="d-flex gap-2">
                                         <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>
+                                        {/* ★ 4. 버튼의 상태와 동작이 전역 srsIds를 사용하도록 수정되었습니다. */}
                                         <button className={`btn btn-sm ${srsIds.has(v.vocabId) ? 'btn-secondary' : 'btn-outline-success'}`} onClick={() => addVocabToSRS([v.vocabId])} disabled={srsIds.has(v.vocabId)} title={srsIds.has(v.vocabId) ? '이미 SRS 목록에 있습니다' : 'SRS에 추가'}>
                                             {srsIds.has(v.vocabId) ? '✓ SRS' : '+ SRS'}
                                         </button>

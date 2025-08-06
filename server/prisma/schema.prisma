@@ -105,6 +105,7 @@ model SRSCard {
   nextReviewAt   DateTime @default(now())
   lastResult     String?
   createdAt      DateTime @default(now())
+  active         Boolean  @default(true)
   updatedAt      DateTime @updatedAt
   correctCount   Int      @default(0)
   incorrectCount Int      @default(0)
