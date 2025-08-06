@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 
-// ★ 시작: 헬퍼 함수들을 파일 최상단에 정의합니다. ★
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -49,7 +48,6 @@ function useQuery() {
     const { search } = useLocation();
     return useMemo(() => new URLSearchParams(search), [search]);
 }
-// ★ 종료: 헬퍼 함수 정의 ★
 
 export default function LearnVocab() {
     const navigate = useNavigate();
@@ -58,7 +56,7 @@ export default function LearnVocab() {
     const idsParam = q.get('ids');
     const mode = q.get('mode');
     const autoParam = q.get('auto');
-
+    
     const [flipped, setFlipped] = useState(false);
     const audioRef = useRef(null);
     const [isAudioPlaying, setIsAudioPlaying] = useState(false);
@@ -120,7 +118,7 @@ export default function LearnVocab() {
                 }
 
                 let fetchedQueue = Array.isArray(data) ? data : [];
-
+                
                 if (mode === 'flash') {
                     fetchedQueue = shuffleArray(fetchedQueue);
                 }
@@ -192,10 +190,8 @@ export default function LearnVocab() {
         (async () => {
             try {
                 if (current.vocabId) {
-                    // 플래시카드 뒷면 예문 표시를 위해 상세 정보는 계속 가져옵니다.
                     const { data } = await fetchJSON(`/vocab/${current.vocabId}`, withCreds({ signal: ac.signal }), 15000);
                     setCurrentDetail(data || null);
-
                     if (mode === 'flash' && auto) {
                         const safeName = safeFileName(current.question);
                         const audioPath = `/audio/${safeName}.mp3`;
@@ -263,7 +259,7 @@ export default function LearnVocab() {
         setFeedback(null);
         setFlipped(false);
     };
-
+    
     const handleAddQueueToSrsAndLearn = async () => {
         setReloading(true);
         try {
@@ -285,7 +281,7 @@ export default function LearnVocab() {
             setReloading(false);
         }
     };
-
+    
     if (loading) return <main className="container py-4"><h4>퀴즈 로딩 중…</h4></main>;
     if (err) {
         return (
@@ -323,7 +319,7 @@ export default function LearnVocab() {
             </main>
         );
     }
-
+    
     const uniquePosList = [...new Set((current?.pos || '').split(',').map(p => p.trim()).filter(Boolean))];
 
     if (mode === 'flash') {
@@ -342,14 +338,16 @@ export default function LearnVocab() {
                     <div className="card-body text-center p-5 d-flex flex-column justify-content-center" role="button" onClick={() => setFlipped(f => !f)} style={{ minHeight: '40rem' }}>
                         {!flipped ? (
                             <>
-                                <h2 className="display-5 mb-1" lang="en">{current.question}</h2>
+                                {/* ★★★ 시작: 뱃지를 단어 위로 이동하고 여백(margin) 조정 ★★★ */}
                                 <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
                                     {current.levelCEFR && <span className={`badge ${getCefrBadgeColor(current.levelCEFR)}`}>{current.levelCEFR}</span>}
                                     {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
                                         <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                                     ))}
                                 </div>
+                                <h2 className="display-5" lang="en">{current.question}</h2>
                                 <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
+                                {/* ★★★ 종료 ★★★ */}
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻이 표시됩니다.</div>
                             </>
                         ) : (
@@ -396,14 +394,17 @@ export default function LearnVocab() {
             </div>
             <div className="card">
                 <div className="card-body text-center p-4">
-                    <h2 className="display-5 mb-1" lang="en">{current.question}</h2>
+                    {/* ★★★ 시작: 뱃지를 단어 위로 이동하고 여백(margin) 조정 ★★★ */}
                     <div className="d-flex justify-content-center align-items-center gap-2 mb-2">
                         {current.levelCEFR && <span className={`badge ${getCefrBadgeColor(current.levelCEFR)}`}>{current.levelCEFR}</span>}
                         {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
                             <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                         ))}
                     </div>
+                    <h2 className="display-5" lang="en">{current.question}</h2>
                     <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
+                    {/* ★★★ 종료 ★★★ */}
+
                     {!feedback && (
                         <div className="d-grid gap-2 col-8 mx-auto mt-3">
                             {current.options.map(opt => (
