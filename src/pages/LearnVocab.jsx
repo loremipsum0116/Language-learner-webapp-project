@@ -4,6 +4,7 @@ import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import { useAuth } from '../context/AuthContext';
 
+
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -50,6 +51,9 @@ export default function LearnVocab() {
     const q = useQuery();
     const idsParam = q.get('ids');
     const mode = q.get('mode');
+
+    const autoParam = q.get('auto');          // ?auto=1이면 자동학습 모드
+    const [auto, setAuto] = useState(autoParam === '1');   // 기본 false
 
     const [queue, setQueue] = useState([]);
     const [idx, setIdx] = useState(0);
@@ -120,8 +124,54 @@ export default function LearnVocab() {
         }
     }, [loading, current, refreshSrsIds]);
 
-    const stopAudio = () => { if (audioRef.current) { try { audioRef.current.pause(); } catch { /* no-op */ } audioRef.current = null; } };
-    const playUrl = (url) => { /* ... */ };
+    const stopAudio = () => {
+        if (audioRef.current) {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            audioRef.current = null;
+        }
+    };
+
+    const playUrl = (url, type = 'vocab') => {
+        if (!url) return;
+        if (audioRef.current?.src?.endsWith(url)) {  // 같은 소스면 토글
+            stopAudio();
+            return;
+        }
+        stopAudio();
+        const full = url.startsWith('/') ? `${API_BASE}${url}` : url;
+        const audio = new Audio(full);
+        audio.loop = auto;                // 자동학습 중엔 반복
+        audio.onended = () => { if (!auto) stopAudio(); };
+        audio.play().catch(console.error);
+        audioRef.current = audio;
+    };
+
+    useEffect(() => {
+        if (!auto) return;            // 수동 모드면 타이머 X
+        // ① 5 초 뒤 카드 뒤집기
+        const flipTimer = setTimeout(() => setFlipped(true), 5000);
+        // ② 30 초 뒤 다음 카드로
+        const nextTimer = setTimeout(() => {
+            setFlipped(false);
+            setIdx(i => i + 1);
+        }, 30000);
+        return () => {
+            clearTimeout(flipTimer);
+            clearTimeout(nextTimer);
+        };
+    }, [idx, auto]);
+
+    useEffect(() => {
+        if (!current) { stopAudio(); return; }
+        // 예문 mp3가 있으면 그것부터, 없으면 vocab mp3
+        const url =
+            current.exampleAudio     // ex) /audio/examples/...
+            || current.audio         // vocab 자체 mp3
+            || currentDetail?.audio;
+        if (url) playUrl(url);
+        // currentDetail 로드 로직 그대로 유지 (IPA·예문 표시용)
+    }, [current]);
 
     useEffect(() => { setFlipped(false); stopAudio(); }, [idx]);
     useEffect(() => {
@@ -257,6 +307,17 @@ export default function LearnVocab() {
                                 ) : (<p className="text-muted small mt-4">(추가 예문 정보 없음)</p>)}
                             </>
                         )}
+                    </div>
+                    <div>
+                        <button
+                            className={`btn btn-sm ${auto ? 'btn-warning' : 'btn-outline-secondary'}`}
+                            onClick={() => {
+                                setAuto(a => !a);
+                                if (audioRef.current) audioRef.current.loop = !auto; // loop 동기화
+                            }}
+                        >
+                            {auto ? '⏸ 자동멈춤' : '▶ 자동학습'}
+                        </button>
                     </div>
                     <div className="card-footer d-flex gap-2">
                         <button className="btn btn-outline-secondary w-25" onClick={() => { stopAudio(); setFlipped(false); setIdx(i => Math.max(0, i - 1)); }}>← 이전</button>
