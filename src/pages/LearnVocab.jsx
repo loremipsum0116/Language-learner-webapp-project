@@ -281,28 +281,35 @@ export default function LearnVocab() {
     };
 
     const currentCardForTimer = (mode === 'batch') ? allBatches[batchIndex]?.[idx] : queue[idx];
+    // ▼▼▼ [수정된 부분] 5초마다 카드를 반복해서 뒤집도록 변경 ▼▼▼
     useEffect(() => {
         if (mode !== 'flash' || !auto || !currentCardForTimer) return;
 
         const audioUrl = `/A1/audio/${safeFileName(currentCardForTimer.question)}.mp3`;
         playUrl(audioUrl);
 
-        const flipTimer = setTimeout(() => setFlipped(true), 5000);
+        // 5초마다 카드를 뒤집는 인터벌 설정
+        const flipInterval = setInterval(() => {
+            setFlipped(f => !f);
+        }, 5000);
+
+        // 30초 후에 다음 카드로 넘어가는 로직은 그대로 유지
         const nextTimer = setTimeout(() => {
-            setFlipped(false);
+            setFlipped(false); // 다음 카드로 넘어갈 때 항상 앞면부터 보이도록 설정
             if (idx < queue.length - 1) {
                 setIdx(i => i + 1);
             } else {
-                setAuto(false);
+                setAuto(false); // 마지막 카드면 자동재생 종료
             }
-        }, 10000);
+        }, 30000);
 
         return () => {
-            clearTimeout(flipTimer);
+            clearInterval(flipInterval); // 컴포넌트 언마운트 또는 의존성 변경 시 인터벌 정리
             clearTimeout(nextTimer);
             stopAudio();
         };
     }, [mode, auto, idx, currentCardForTimer, queue.length]);
+    // ▲▲▲ [수정된 부분] ▲▲▲
 
     useEffect(() => {
         if (queue && !queue[idx]) {
