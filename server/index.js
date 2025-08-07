@@ -15,6 +15,7 @@ const readingRoutes = require('./routes/reading'); // readingRoutes도 포함
 const categoryRoutes = require('./routes/categories');
 const myWordbookRoutes = require('./routes/my-wordbook');
 const odatNoteRoutes = require('./routes/odat-note');
+const dictRouter = require('./routes/dict');
 
 // --- 미들웨어 임포트 ---
 const authMiddleware = require('./middleware/auth');
@@ -46,6 +47,7 @@ app.use('/reading', readingRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);
+app.use('/dict', dictRouter);
 app.use(userRoutes);
 
 const PORT = process.env.PORT || 4000;

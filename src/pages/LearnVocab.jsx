@@ -265,10 +265,15 @@ export default function LearnVocab() {
                             ) : (
                                 <>
                                     <h3 className="display-5 text-primary">{currentFlashCard.answer}</h3>
-                                    {currentDetail?.examples?.[0]?.definitions?.[0]?.examples?.[0] && (
-                                        <div className="mt-3 text-muted">
-                                            <p className="mb-0">{currentDetail.examples[0].definitions[0].examples[0].de}</p>
-                                            <small>— {currentDetail.examples[0].definitions[0].examples[0].ko}</small>
+                                    {Array.isArray(currentFlashCard.examples) && currentFlashCard.examples.length > 0 && (
+                                        <div className="mt-4 p-3 bg-light rounded w-100 text-start">
+                                            <h6 className="fw-bold">예문</h6>
+                                            {currentFlashCard.examples.map((ex, index) => (
+                                                <div key={index} className="mt-2">
+                                                    <p className="mb-0" lang="en">{ex.de}</p>
+                                                    <small className="text-muted">— {ex.ko}</small>
+                                                </div>
+                                            ))}
                                         </div>
                                     )}
                                 </>
