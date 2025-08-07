@@ -13,7 +13,7 @@ export default function LearnStart() {
     setError(null);
     try {
       // 1. 백엔드에 새로운 학습 세션 배치를 생성하도록 요청합니다.
-      await fetchJSON('/flash/start', withCreds({ method: 'POST' }));
+      await fetchJSON('/learn/flash/start', withCreds({ method: 'POST' }));
       
       // 2. 성공하면 실제 학습 화면으로 이동합니다.
       nav('/learn/vocab?mode=batch'); // 새로운 'batch' 모드로 이동

@@ -1,3 +1,4 @@
+//server/bootstrapAlarmInit.js
 const { prisma } = require('./lib/prismaClient');
 const { scheduleFolder } = require('./queues/alarmQueue');
 

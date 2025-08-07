@@ -1,3 +1,4 @@
+//server/queues/alarmQueue.js
 const { Queue, Worker } = require('bullmq');
 const { prisma } = require('../lib/prismaClient');
 const { nextAlarmSlot } = require('../lib/alarmSlot');

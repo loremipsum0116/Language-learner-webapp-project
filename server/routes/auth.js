@@ -1,61 +1,75 @@
 // server/routes/auth.js
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt'); // bcryptjs 대신 bcrypt 사용
 const { prisma } = require('../lib/prismaClient');
+const { ok, fail } = require('../lib/resp'); // 응답 헬퍼 사용
 
 const router = express.Router();
+const JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me';
+const COOKIE_NAME = 'token';
+const SLIDING_MINUTES = 15;
 
-/* 🔐 회원가입 */
-// '/auth/register' -> '/register'
+function signToken(payload) {
+    return jwt.sign(payload, JWT_SECRET, { expiresIn: `${SLIDING_MINUTES}m` });
+}
+
+function setAuthCookie(res, token) {
+    res.cookie(COOKIE_NAME, token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: SLIDING_MINUTES * 60 * 1000,
+    });
+}
+
 router.post('/register', async (req, res) => {
     const { email, password } = req.body;
-    if (!email || !password) {
-        return res.status(400).json({ error: 'Email and password are required.' });
+    if (!email || !password) return fail(res, 400, 'Email and password are required');
+
+    try {
+        const existingUser = await prisma.user.findUnique({ where: { email } });
+        if (existingUser) return fail(res, 409, 'User with this email already exists');
+
+        const passwordHash = await bcrypt.hash(password, 10);
+        const userRole = email === 'super@naver.com' ? 'admin' : 'USER'; // 특정 이메일에 admin 권한 부여
+        const user = await prisma.user.create({ data: { email, passwordHash, role: userRole } });
+
+        const tokenPayload = { id: user.id, email: user.email, role: user.role };
+        setAuthCookie(res, signToken(tokenPayload));
+
+        const { passwordHash: _, ...userSafe } = user;
+        return ok(res, userSafe);
+    } catch (e) {
+        console.error('POST /auth/register failed:', e);
+        return fail(res, 500, 'Internal Server Error');
     }
-    const existing = await prisma.user.findUnique({ where: { email } });
-    if (existing) return res.status(409).json({ error: 'Email already exists' });
-
-    const passwordHash = await bcrypt.hash(password, 10);
-    const user = await prisma.user.create({
-        data: { email, passwordHash, role: 'USER' }
-    });
-
-    return res.status(201).json({ id: user.id });
 });
 
-/* 🔐 로그인 */
-// '/auth/login' -> '/login'
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user) return res.status(401).json({ error: 'invalid credentials' });
+    if (!email || !password) return fail(res, 400, 'email and password required');
 
-    const ok = await bcrypt.compare(password, user.passwordHash);
-    if (!ok) return res.status(401).json({ error: 'invalid credentials' });
+    try {
+        const user = await prisma.user.findUnique({ where: { email: email.toLowerCase().trim() } });
+        if (!user) return fail(res, 401, 'invalid credentials');
 
-    const token = jwt.sign(
-        { id: user.id, email: user.email, role: user.role },
-        process.env.JWT_SECRET,
-        { expiresIn: '2h' }
-    );
+        const okPw = await bcrypt.compare(password, user.passwordHash);
+        if (!okPw) return fail(res, 401, 'invalid credentials');
 
-    res.cookie('token', token, {
-        httpOnly: true,
-        maxAge: 2 * 60 * 60 * 1000, // 2시간
-        // 개발 환경(http)과 프로덕션(https) 모두를 고려한 설정
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax'
-    });
-
-    res.json({ ok: true });
+        const tokenPayload = { id: user.id, email: user.email, role: user.role };
+        setAuthCookie(res, signToken(tokenPayload));
+        
+        return ok(res, tokenPayload); // 안전한 사용자 정보만 반환
+    } catch (e) {
+        console.error('POST /auth/login failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
 });
 
-/* 🔓 로그아웃 */
-// '/auth/logout' -> '/logout'
 router.post('/logout', (req, res) => {
-    res.clearCookie('token');
-    res.json({ ok: true });
+    res.clearCookie(COOKIE_NAME); // 설정된 쿠키 제거
+    return ok(res, { ok: true });
 });
 
 module.exports = router;

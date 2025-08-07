@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node index.js",
     "dev": "nodemon --watch . server.js",
     "seed": "node prisma/seed.js",
     "fixup": "node tools/fixup.js",

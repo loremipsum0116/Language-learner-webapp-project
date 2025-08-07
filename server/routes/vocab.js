@@ -1,9 +1,9 @@
 // server/routes/vocab.js
-
 const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 
+// GET /vocab/list
 router.get('/list', async (req, res) => {
     try {
         const { level, q } = req.query;
@@ -19,7 +19,6 @@ router.get('/list', async (req, res) => {
             include: { dictMeta: { select: { examples: true, ipa: true, ipaKo: true, audioUrl: true } } }
         });
         
-        // 프론트엔드가 { data: [...] } 형태로 응답을 기대하므로, 데이터를 가공합니다.
         const items = vocabs.map(v => {
             const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
             let primaryGloss = null;
@@ -30,14 +29,35 @@ router.get('/list', async (req, res) => {
         });
 
         return res.json({ data: items });
-
     } catch (e) {
         console.error('GET /vocab/list failed:', e);
         return res.status(500).json({ error: 'list query failed' });
     }
 });
 
+// ✅ [수정] 단어 상세 정보 조회를 위한 GET /vocab/:id 라우트를 추가합니다.
+router.get('/:id', async (req, res) => {
+    const vocabId = Number(req.params.id);
+    if (!vocabId || !Number.isFinite(vocabId)) {
+        return res.status(400).json({ error: 'Invalid vocab ID' });
+    }
+    try {
+        const vocab = await prisma.vocab.findUnique({
+            where: { id: vocabId },
+            include: { dictMeta: true }
+        });
+        if (!vocab) {
+            return res.status(404).json({ error: '단어를 찾을 수 없습니다.' });
+        }
+        return res.json({ data: vocab });
+    } catch (e) {
+        console.error(`GET /vocab/${vocabId} failed:`, e);
+        return res.status(500).json({ error: '상세 정보를 불러오는 데 실패했습니다.' });
+    }
+});
 
+
+// POST /vocab/:id/bookmark
 router.post('/:id/bookmark', async (req, res) => {
     const vocabId = parseInt(req.params.id);
     const userId = req.user.id;
@@ -46,7 +66,6 @@ router.post('/:id/bookmark', async (req, res) => {
         return res.status(400).json({ error: 'Invalid vocab ID' });
     }
 
-    // itemType을 조건에 추가하여 더 정확하게 중복을 확인합니다.
     const existing = await prisma.sRSCard.findFirst({
         where: { userId, itemId: vocabId, itemType: 'vocab' }
     });
@@ -61,14 +80,11 @@ router.post('/:id/bookmark', async (req, res) => {
             itemId: vocabId,
             itemType: 'vocab',
             stage: 0,
-            lastResult: null,
-            correctCount: 0,
-            incorrectCount: 0,
             nextReviewAt: new Date()
         }
     });
 
-    return res.status(200).json({ ok: true, id: newCard.id });
+    return res.status(201).json({ ok: true, id: newCard.id });
 });
 
 module.exports = router;

@@ -1,80 +1,73 @@
-const { prisma } = require('../lib/prismaClient');
+// server/services/quizService.js
+const _ = require('lodash'); // lodash 같은 유틸리티 라이브러리 활용
 
-// 헬퍼 함수: JSON 문자열을 안전하게 객체로 파싱
-function safeParse(jsonString) {
-    if (typeof jsonString === 'object') return jsonString;
-    if (typeof jsonString !== 'string') return null;
-    try {
-        return JSON.parse(jsonString);
-    } catch {
-        return null;
-    }
+/**
+ * 배열을 무작위로 섞는 함수
+ * @param {Array} array
+ */
+function shuffleArray(array) {
+    return _.shuffle(array);
 }
 
-async function generateMcqQuizItems(userId, vocabIds) {
-    const ids = (Array.isArray(vocabIds) ? vocabIds : [])
-        .map(Number)
-        .filter(Number.isFinite);
+/**
+ * 안정적으로 MCQ 퀴즈 데이터를 생성하는 함수
+ */
+async function generateMcqQuizItems(prisma, userId, vocabIds) {
+    if (!vocabIds || vocabIds.length === 0) return [];
 
-    if (ids.length === 0) {
-        console.warn('[QuizGen] No valid vocabIds provided.');
-        return [];
-    }
+    const ids = vocabIds.map(Number).filter(Number.isFinite);
+    if (ids.length === 0) return [];
 
-    // 1. 핵심 단어 정보 조회
-    const vocabs = await prisma.vocab.findMany({
-        where: { id: { in: ids } },
-        select: { id: true, lemma: true, pos: true, dictMeta: true },
+    const [vocabs, cards, distractorPool] = await Promise.all([
+        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
+        prisma.sRSCard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
+        prisma.vocab.findMany({ where: { id: { notIn: ids }, dictMeta: { isNot: null } }, include: { dictMeta: true }, take: 500 }),
+    ]);
+
+    const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
+    const distractorGlosses = new Set();
+    distractorPool.forEach(v => {
+        // 여러 스키마 구조에 대응하여 안정적으로 뜻을 추출
+        const examples = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+        const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
+        let gloss = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+        if (gloss) distractorGlosses.add(gloss.split(';')[0].split(',')[0].trim());
     });
 
-    // 2. 오답 보기를 위한 단어 풀 조회
-    const distractorPool = await prisma.vocab.findMany({
-        where: { id: { notIn: ids }, levelCEFR: { in: ['A1', 'A2', 'B1'] } },
-        take: ids.length * 4,
-        select: { id: true, dictMeta: true },
-    });
-
-    // 3. 퀴즈 아이템 생성
     const quizItems = [];
-    for (const v of vocabs) {
-        const meta = safeParse(v.dictMeta?.examples); // ✅ dictMeta.examples 필드 파싱
-        
-        const correctGloss = meta?.koGloss || '(정의 없음)';
-        const examples = meta?.examples || [];
-        const pron = meta?.ipa ? { ipa: meta.ipa, ipaKo: meta.ipaKo } : null;
+    for (const vocab of vocabs) {
+        if (!vocab.dictMeta) continue;
 
-        // 오답 보기 생성
-        const distractors = distractorPool
-            .filter(p => p.id !== v.id)
-            .map(p => safeParse(p.dictMeta?.examples)?.koGloss)
-            .filter(Boolean) // null이나 undefined 제외
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 3);
-        
-        const options = [...new Set([correctGloss, ...distractors])].sort(() => 0.5 - Math.random());
-        while (options.length < 4) options.push('(보기 부족)');
+        const examples = Array.isArray(vocab.dictMeta.examples) ? vocab.dictMeta.examples : [];
+        const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
+        const correct = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
 
-        // SRSCard ID 조회 또는 생성 (upsert 사용으로 간결화)
-        const card = await prisma.sRSCard.upsert({
-            where: { userId_itemId_itemType: { userId, itemId: v.id, itemType: 'vocab' } },
-            update: {},
-            create: { userId, itemId: v.id, itemType: 'vocab', stage: 0, nextReviewAt: new Date() },
-            select: { id: true }
-        });
+        if (!correct) continue;
+
+        const localDistractors = new Set(distractorGlosses);
+        localDistractors.delete(correct);
+        const wrongOptions = _.sampleSize(Array.from(localDistractors), 3); // lodash 사용으로 간결화
+        const options = [correct, ...wrongOptions];
+
+        // 선택지가 4개 미만일 경우 대체 텍스트 추가
+        while (options.length < 4) {
+            options.push("관련 없는 뜻");
+        }
 
         quizItems.push({
-            question: v.lemma,
-            answer: correctGloss,
-            options: options,
-            pron: pron,
-            pos: v.pos,
-            examples: examples,
-            cardId: card.id,
-            vocabId: v.id
+            cardId: cardIdMap.get(vocab.id) || null,
+            vocabId: vocab.id,
+            question: vocab.lemma,
+            answer: correct, // 정답(한글 뜻)
+            quizType: 'mcq',
+            options: shuffleArray(options),
+            pron: { ipa: vocab.dictMeta.ipa, ipaKo: vocab.dictMeta.ipaKo },
+            levelCEFR: vocab.levelCEFR,
+            pos: vocab.pos, // 품사 정보 추가
+            vocab: vocab, // ★★★ 단어의 모든 상세 정보(예문 포함)를 통째로 전달
         });
     }
-
     return quizItems;
 }
 
-module.exports = { generateMcqQuizItems };
+module.exports = { generateMcqQuizItems, shuffleArray };

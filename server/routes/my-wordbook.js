@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 
+
+
 // GET /my-wordbook
 router.get('/', async (req, res) => {
     try {
@@ -41,15 +43,15 @@ router.get('/', async (req, res) => {
 
 // POST /my-wordbook/add-many (✅ 이 부분이 오류를 해결합니다)
 router.post('/add-many', async (req, res) => {
+    const { vocabIds } = req.body;
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
+
+    const userId = req.user.id;
+    const idsToProcess = vocabIds.map(Number).filter(id => !isNaN(id));
+
     try {
-        const { vocabIds } = req.body;
-        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-            return res.status(400).json({ error: 'vocabIds must be a non-empty array' });
-        }
-
-        const userId = req.user.id;
-        const idsToProcess = vocabIds.map(Number);
-
         const existing = await prisma.userVocab.findMany({
             where: { userId, vocabId: { in: idsToProcess } },
             select: { vocabId: true }
@@ -61,13 +63,14 @@ router.post('/add-many', async (req, res) => {
             .map(vocabId => ({ userId, vocabId }));
 
         if (newData.length > 0) {
-            await prisma.userVocab.createMany({ data: newData });
+            const result = await prisma.userVocab.createMany({ data: newData });
+            return ok(res, { count: result.count });
         }
 
-        return res.status(201).json({ data: { count: newData.length } });
+        return ok(res, { count: 0 }); // 추가된 단어가 없을 경우
     } catch (e) {
         console.error('POST /my-wordbook/add-many failed:', e);
-        return res.status(500).json({ error: 'Failed to add words' });
+        return fail(res, 500, 'Failed to add words');
     }
 });
 // POST /my-wordbook/add (✅ 이 라우트가 오류를 해결합니다)

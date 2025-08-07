@@ -1,7 +1,7 @@
 // server/routes/dict.js
 const express = require('express');
-const { prisma } = require('../lib/prismaClient');
 const router = express.Router();
+const { prisma } = require('../lib/prismaClient');
 
 
 
