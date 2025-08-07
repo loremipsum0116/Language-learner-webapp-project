@@ -9,7 +9,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/house-1-ca.mp3",
     "koGloss": "집, 주택, 가옥; 수용하다",
     "koExample": "이곳은 저의 집이자 저희 가족의 본가입니다.",
-    "koChirpScript": "이번 단어 house 는 집 이라는 뜻이에요. This is my house and my family's ancestral home. 이곳은 저의 집이자 저희 가족의 본가입니다. 라는 뜻이랍니다."
+    "koChirpScript": "house. 집 이라는 뜻이에요. This is my house and my family's ancestral home. 이곳은 저의 집이자 저희 가족의 본가입니다. 라는 뜻이랍니다."
   },
   {
     "lemma": "car",
@@ -21,7 +21,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/car-uk.mp3",
     "koGloss": "자동차, 차, 승용차",
     "koExample": "그녀는 쇼핑몰까지 차를 몰고 갔습니다.",
-    "koChirpScript": "car, 자동차 라는 뜻이죠. She drove her car to the mall. 그녀는 쇼핑몰까지 차를 몰고 갔습니다. 라는 뜻이에요."
+    "koChirpScript": "car. 자동차 라는 뜻이죠. She drove her car to the mall. 그녀는 쇼핑몰까지 차를 몰고 갔습니다. 라는 뜻이에요."
   },
   {
     "lemma": "city",
@@ -33,7 +33,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/city-au.mp3",
     "koGloss": "도시, 시, 대도시",
     "koExample": "상파울루는 남아메리카에서 가장 큰 도시입니다.",
-    "koChirpScript": "city는 도시 라는 뜻이에요. São Paulo is the largest city in South America. 상파울루는 남아메리카에서 가장 큰 도시입니다. 라는 의미입니다."
+    "koChirpScript": "city. 도시 라는 뜻이에요. São Paulo is the largest city in South America. 상파울루는 남아메리카에서 가장 큰 도시입니다. 라는 의미입니다."
   },
   {
     "lemma": "street",
@@ -45,7 +45,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/street-uk.mp3",
     "koGloss": "거리, 길, 도로",
     "koExample": "오른쪽에 호텔이 보일 때까지 길을 따라 걸어가세요.",
-    "koChirpScript": "street, 거리 라는 뜻이에요. Walk down the street until you see a hotel on the right. 오른쪽에 호텔이 보일 때까지 길을 따라 걸어가세요. 라는 뜻입니다."
+    "koChirpScript": "street. 거리 라는 뜻이에요. Walk down the street until you see a hotel on the right. 오른쪽에 호텔이 보일 때까지 길을 따라 걸어가세요. 라는 뜻입니다."
   },
   {
     "lemma": "job",
@@ -57,7 +57,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/job-uk.mp3",
     "koGloss": "직업, 일, 직무, 일자리",
     "koExample": "반쯤 마친 일은 거의 하지 않은 것이나 마찬가지다.",
-    "koChirpScript": "job 은 직업 또는 일 을 의미해요. 속담 중에 A job half done is hardly done at all. 이라는 말이 있는데, 반쯤 마친 일은 거의 하지 않은 것이나 마찬가지다. 라는 뜻이에요."
+    "koChirpScript": "job. 직업 또는 일 을 의미해요. 속담 중에 A job half done is hardly done at all. 이라는 말이 있는데, 반쯤 마친 일은 거의 하지 않은 것이나 마찬가지다. 라는 뜻이에요."
   },
   {
     "lemma": "work",
@@ -69,7 +69,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/work-uk.mp3",
     "koGloss": "(명사) 일, 직장, 작업, 작품; (동사) 일하다, 작동하다",
     "koExample": "시간이 별로 없어. 어서 모래주머니 쌓는 일을 시작하자.",
-    "koChirpScript": "work는 일하다 라는 뜻입니다. We don't have much time. Let's get to work piling up those sandbags. 시간이 별로 없어. 어서 모래주머니 쌓는 일을 시작하자. 는 의미예요."
+    "koChirpScript": "work 일하다 라는 뜻입니다. We don't have much time. Let's get to work piling up those sandbags. 시간이 별로 없어. 어서 모래주머니 쌓는 일을 시작하자. 는 의미예요."
   },
   {
     "lemma": "eat",
@@ -81,7 +81,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eat-uk.mp3",
     "koGloss": "먹다, 식사하다; (마음을) 괴롭히다",
     "koExample": "무슨 걱정 있어?",
-    "koChirpScript": "eat, 먹다 라는 뜻이지만, \"What's eating you?\"라고 하면 무엇이 너를 괴롭히니? 또는 무슨 걱정 있어? 라는 뜻의 관용 표현이에요. 기본 뜻으로는 '나는 매일 아침을 먹는다'처럼 사용할 수 있습니다."
+    "koChirpScript": "eat. 먹다 라는 뜻이지만, \"What's eating you?\"라고 하면 무엇이 너를 괴롭히니? 또는 무슨 걱정 있어? 라는 뜻의 관용 표현이에요. 기본 뜻으로는 '나는 매일 아침을 먹는다'처럼 사용할 수 있습니다."
   },
   {
     "lemma": "drink",
@@ -93,7 +93,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/drink-us.mp3",
     "koGloss": "(음료를) 마시다; (술을) 마시다",
     "koExample": "그는 내가 준 물을 마셨다.",
-    "koChirpScript": "마시다 라는 뜻이에요. He drank the water I gave him. 그는 내가 준 물을 마셨다. 라고 번역할 수 있어요."
+    "koChirpScript": "마시다. 라는 뜻이에요. He drank the water I gave him. 그는 내가 준 물을 마셨다. 라고 번역할 수 있어요."
   },
   {
     "lemma": "read",
@@ -105,7 +105,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/read-1-uk.mp3",
     "koGloss": "(동사) 읽다, 독서하다; (명사) 읽을거리, 독서",
     "koExample": "그의 스릴러 소설은 항상 아주 재미있는 읽을거리다.",
-    "koChirpScript": "이번 단어 read 는 보통 읽다 라는 동사지만, 명사로도 쓰여요. His thrillers are always a gripping read. 그의 스릴러 소설은 항상 아주 재미있는 읽을거리다. 라는 뜻입니다."
+    "koChirpScript": "read.보통 읽다 라는 동사지만, 명사로도 쓰여요. His thrillers are always a gripping read. 그의 스릴러 소설은 항상 아주 재미있는 읽을거리다. 라는 뜻입니다."
   },
   {
     "lemma": "write",
@@ -117,7 +117,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/write-uk.mp3",
     "koGloss": "(동사) 쓰다, 편지를 쓰다, 저술하다; (명사) 쓰기, 필체",
     "koExample": "이 하드 디스크는 초당 몇 번의 쓰기를 처리할 수 있나요?",
-    "koChirpScript": "write는 기본적으로 쓰다 라는 동사지만, 명사로도 쓰여요. 컴퓨터 용어인 'How many writes per second can this hard disk handle?'는 '이 하드 디스크는 초당 몇 번의 쓰기를 처리할 수 있나요?' 라는 뜻이에요."
+    "koChirpScript": "write. 기본적으로 쓰다 라는 동사지만, 명사로도 쓰여요. 컴퓨터 용어인 'How many writes per second can this hard disk handle?'는 '이 하드 디스크는 초당 몇 번의 쓰기를 처리할 수 있나요?' 라는 뜻이에요."
   },
   {
     "lemma": "speak",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/speak-uk.mp3",
     "koGloss": "(동사) 말하다, 이야기하다, 연설하다; (명사) 용어, 말투",
     "koExample": "기업 용어; IT 업계 용어.",
-    "koChirpScript": "말하다 라는 동사지만, 명사로 쓰여 특정 집단의 '용어'나 '말투'를 의미하기도 해요. Corporate speak, IT speak. 기업 용어, IT 업계 용어. 라는 뜻입니다."
+    "koChirpScript": "Speak. 말하다 라는 동사지만, 명사로 쓰여 특정 집단의 '용어'나 '말투'를 의미하기도 해요. Corporate speak, IT speak. 기업 용어, IT 업계 용어. 라는 뜻입니다."
   },
   {
     "lemma": "sleep",
@@ -141,7 +141,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sleep-us.mp3",
     "koGloss": "자다, 잠을 자다; 숙박하다",
     "koExample": "당신은 하루에 8시간을 자야 합니다.",
-    "koChirpScript": "자다 라는 뜻입니다. You should sleep 8 hours a day. 당신은 하루에 8시간을 자야 합니다. 라는 뜻이에요."
+    "koChirpScript": "sleep. 자다 라는 뜻입니다. You should sleep 8 hours a day. 당신은 하루에 8시간을 자야 합니다. 라는 뜻이에요."
   },
   {
     "lemma": "listen",
@@ -153,6 +153,6 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/listen-au.mp3",
     "koGloss": "(동사) 듣다, 귀를 기울이다, 경청하다; (명사) 듣기, 경청",
     "koExample": "모터 소리를 한번 들어보고 소리가 이상한지 말해줘.",
-    "koChirpScript": "귀 기울여 듣다 는 뜻이죠. 명사로도 쓰이는데, 'Give the motor a listen and tell me if it sounds off.'는 '모터 소리를 한번 들어보고 소리가 이상한지 말해줘.' 라는 의미입니다."
+    "koChirpScript": "Listen. 귀 기울여 듣다 는 뜻이죠. 명사로도 쓰이는데, 'Give the motor a listen and tell me if it sounds off.'는 '모터 소리를 한번 들어보고 소리가 이상한지 말해줘.' 라는 의미입니다."
   }
 ]

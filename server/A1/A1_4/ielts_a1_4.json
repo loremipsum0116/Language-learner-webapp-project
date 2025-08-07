@@ -21,7 +21,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/mother-uk.mp3",
     "koGloss": "어머니, 엄마",
     "koExample": "저의 어머니는 의사입니다.",
-    "koChirpScript": "이번 단어는 mother입니다. 무슨 뜻일까요? 바로 어머니!  으로 My mother is a doctor. 저의 어머니는 의사입니다.라는 의미죠."
+    "koChirpScript": "mother. 무슨 뜻일까요? 바로 어머니!  으로 My mother is a doctor. 저의 어머니는 의사입니다.라는 의미죠."
   },
   {
     "lemma": "father",
@@ -33,7 +33,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/father-uk.mp3",
     "koGloss": "아버지, 아빠",
     "koExample": "그의 아버지는 수학을 가르칩니다.",
-    "koChirpScript": "아버지를 영어로 뭐라고 할까요? 바로 father입니다. His father teaches math.  이 문장은 그의 아버지는 수학을 가르칩니다.라는 뜻이랍니다."
+    "koChirpScript": "father. 아버지라는 뜻이에요. His father teaches math.  이 문장은 그의 아버지는 수학을 가르칩니다.라는 뜻이랍니다."
   },
   {
     "lemma": "man",
@@ -45,7 +45,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/man-uk.mp3",
     "koGloss": "남자, 남성; 사람, 인류",
     "koExample": "그 남자는 신문을 읽고 있습니다.",
-    "koChirpScript": "man은 남자! 아주 간단하죠? 문장에서는 이렇게 쓰여요. The man is reading a newspaper. 그 남자는 신문을 읽고 있습니다!"
+    "koChirpScript": "man. 뜻은 바로 남자! 아주 간단하죠? 문장에서는 이렇게 쓰여요. The man is reading a newspaper. 그 남자는 신문을 읽고 있습니다!"
   },
   {
     "lemma": "woman",
@@ -57,7 +57,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/woman-uk.mp3",
     "koGloss": "여자, 여성",
     "koExample": "저 여자는 나의 이모입니다.",
-    "koChirpScript": "단어 woman은 여자를 의미해요. 문장으로 배워볼까요? That woman is my aunt. 저 여자는 나의 이모입니다. 라고 할 수 있죠."
+    "koChirpScript": "woman 여자를 의미해요. 문장으로 배워볼까요? That woman is my aunt. 저 여자는 나의 이모입니다. 라고 할 수 있죠."
   },
   {
     "lemma": "hand",
@@ -69,7 +69,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hand-uk.mp3",
     "koGloss": "손; 도움; (시계) 바늘; 건네주다",
     "koExample": "식사하기 전에 손을 씻으세요.",
-    "koChirpScript": "이번 단어는 hand, 바로 손 입니다. Please wash your hands before eating. 식사하기 전에 손을 씻으세요. 처럼 활용할 수 있어요."
+    "koChirpScript": "hand. 바로 손 입니다. Please wash your hands before eating. 식사하기 전에 손을 씻으세요. 처럼 활용할 수 있어요."
   },
   {
     "lemma": "eye",
@@ -81,7 +81,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eye-uk.mp3",
     "koGloss": "눈, 시선, 안목",
     "koExample": "그녀는 아름다운 파란 눈을 가졌습니다.",
-    "koChirpScript": "eye! 눈이라는 뜻이에요. 시력을 나타내죠! She has beautiful blue eyes. 그녀는 아름다운 파란 눈을 가졌습니다.라는 뜻이에요."
+    "koChirpScript": "eye. 눈이라는 뜻이에요. 시력을 나타내죠! She has beautiful blue eyes. 그녀는 아름다운 파란 눈을 가졌습니다.라는 뜻이에요."
   },
   {
     "lemma": "food",
@@ -93,7 +93,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/food-uk.mp3",
     "koGloss": "음식, 식량, 먹을 것",
     "koExample": "배고파요, 음식이 좀 필요해요.",
-    "koChirpScript": "맛있는 단어 food는 음식입니다. I am hungry, I need some food. 배고파요, 음식이 좀 필요해요. 라는 뜻입니다."
+    "koChirpScript": "food. 음식입니다. I am hungry, I need some food. 배고파요, 음식이 좀 필요해요. 라는 뜻입니다."
   },
   {
     "lemma": "bread",
@@ -105,7 +105,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bread-uk.mp3",
     "koGloss": "빵; 생계",
     "koExample": "나는 아침으로 빵과 버터를 먹는다.",
-    "koChirpScript": "빵을 영어로 뭐라고 할까요? 바로 bread입니다. I eat bread and butter for breakfast.  나는 아침으로 빵과 버터를 먹는다. 라고 말할 수 있어요."
+    "koChirpScript": "빵을 영어로 뭐라고 할까요? 바로 bread.입니다. I eat bread and butter for breakfast.  나는 아침으로 빵과 버터를 먹는다. 라고 말할 수 있어요."
   },
   {
     "lemma": "milk",
@@ -117,7 +117,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/milk-uk.mp3",
     "koGloss": "우유; (소의) 젖을 짜다",
     "koExample": "아기가 우유를 마시고 있다.",
-    "koChirpScript": "이번 단어 milk는 우유라는 뜻이죠. The baby is drinking milk. 아기가 우유를 마시고 있다.라고 말하는 거랍니다."
+    "koChirpScript": "이번 단어 milk. 우유라는 뜻이죠. The baby is drinking milk. 아기가 우유를 마시고 있다.라고 말하는 거랍니다."
   },
   {
     "lemma": "money",
@@ -129,7 +129,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/money-uk.mp3",
     "koGloss": "돈, 금전, 화폐",
     "koExample": "돈을 얼마나 가지고 있나요?",
-    "koChirpScript": "money는 돈! 아주 중요하죠? How much money do you have? 돈을 얼마나 가지고 있나요?라고 물어볼 수 있어요."
+    "koChirpScript": "money. 돈! 아주 중요하죠? How much money do you have? 돈을 얼마나 가지고 있나요?라고 물어볼 수 있어요."
   },
   {
     "lemma": "name",
@@ -141,7 +141,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/name-uk.mp3",
     "koGloss": "이름, 성함(존칭), 명칭; 이름을 짓다",
     "koExample": "당신의 이름은 무엇입니까?",
-    "koChirpScript": "기본 중의 기본! name은 이름입니다. What is your name? 이렇게 물으면 당신의 이름은 무엇입니까?라는 뜻이죠."
+    "koChirpScript": "name. 이름입니다. What is your name? 이렇게 물으면 당신의 이름은 무엇입니까?라는 뜻이죠."
   },
   {
     "lemma": "morning",
@@ -153,7 +153,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/morning-uk.mp3",
     "koGloss": "아침, 오전",
     "koExample": "나는 아침에 일찍 일어난다.",
-    "koChirpScript": "morning은 아침을 의미해요. I wake up early in the morning. 나는 아침에 일찍 일어난다는 뜻이랍니다."
+    "koChirpScript": "morning. 아침을 의미해요. I wake up early in the morning. 나는 아침에 일찍 일어난다는 뜻이랍니다."
   },
   {
     "lemma": "night",
@@ -165,7 +165,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/night-uk.mp3",
     "koGloss": "밤, 야간",
     "koExample": "밤에는 별들이 밝게 빛난다.",
-    "koChirpScript": "이번 단어 night는 밤입니다. The stars shine bright at night. 밤에는 별들이 밝게 빛난다.는 아름다운 뜻이에요."
+    "koChirpScript": "night. 밤이라는 뜻이에요. The stars shine bright at night. 밤에는 별들이 밝게 빛난다.는 아름다운 뜻이에요."
   },
   {
     "lemma": "day",
@@ -177,7 +177,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/day-uk.mp3",
     "koGloss": "날, 하루, 낮",
     "koExample": "좋은 하루 보내세요!",
-    "koChirpScript": "day는 낮 혹은 하루를 의미해요. Have a nice day! 좋은 하루 보내세요!라는 기분 좋은 인사죠."
+    "koChirpScript": "day. 낮 혹은 하루를 의미해요. Have a nice day! 좋은 하루 보내세요!라는 기분 좋은 인사죠."
   },
   {
     "lemma": "see",
@@ -189,7 +189,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/see-uk.mp3",
     "koGloss": "보다, 알다, 만나다",
     "koExample": "나무에 있는 새를 볼 수 있어요.",
-    "koChirpScript": "see는 눈으로 무언가를 보다라는 뜻이에요. I can see a bird in the tree. 나무에 있는 새를 볼 수 있어요.라는 뜻입니다."
+    "koChirpScript": "see. 눈으로 무언가를 보다라는 뜻이에요. I can see a bird in the tree. 나무에 있는 새를 볼 수 있어요.라는 뜻입니다."
   },
   {
     "lemma": "look",
@@ -201,7 +201,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/look-uk.mp3",
     "koGloss": "바라보다, ~처럼 보이다; (명사) 표정, 외모",
     "koExample": "아름다운 일몰을 보세요.",
-    "koChirpScript": "look 특정 방향을 의식적으로 바라보다는 느낌이에요. Look at the beautiful sunset. 아름다운 일몰을 보세요.라고 말할 때 쓴답니다."
+    "koChirpScript": "look. 특정 방향을 의식적으로 바라보다는 느낌이에요. Look at the beautiful sunset. 아름다운 일몰을 보세요.라고 말할 때 쓴답니다."
   },
   {
     "lemma": "say",
@@ -213,7 +213,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/say-uk.mp3",
     "koGloss": "말하다, 이야기하다, 진술하다",
     "koExample": "당신의 이름을 천천히 말해주세요.",
-    "koChirpScript": "say. 내용을 전달하며 말하다.라는 뜻이에요. Please say your name slowly. 당신의 이름을 천천히 말해주세요.라고 부탁하는 문장입니다."
+    "koChirpScript": "say 내용을 전달하며 말하다라는 뜻이에요. Please say your name slowly. 당신의 이름을 천천히 말해주세요.라고 부탁하는 문장입니다."
   },
   {
     "lemma": "tell",
@@ -225,7 +225,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/tell-uk.mp3",
     "koGloss": "말하다, 알려주다, 구별하다",
     "koExample": "나에게 이야기를 하나 해줄 수 있나요?",
-    "koChirpScript": "이번 단어 tell, 이거는요. 누군가에게 정보를 이야기해주다 또는 알려주다는 뜻이에요. Can you tell me a story? 나에게 이야기를 하나 해줄 수 있나요?라고 묻는 거랍니다."
+    "koChirpScript": "tell. 이거는요. 누군가에게 정보를 이야기해주다 또는 알려주다는 뜻이에요. Can you tell me a story? 나에게 이야기를 하나 해줄 수 있나요?라고 묻는 거랍니다."
   },
   {
     "lemma": "want",
@@ -249,7 +249,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/use-1-uk.mp3",
     "koGloss": "사용하다, 이용하다; (명사) 사용, 용도",
     "koExample": "당신의 펜을 사용해도 될까요?",
-    "koChirpScript": "use는 사용하다! 아주 유용하죠? Can I use your pen? 당신의 펜을 사용해도 될까요?라고 물어볼 수 있어요."
+    "koChirpScript": "use. 사용하다! 아주 유용하죠? Can I use your pen? 당신의 펜을 사용해도 될까요?라고 물어볼 수 있어요."
   },
   {
     "lemma": "think",
@@ -261,7 +261,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/think-uk.mp3",
     "koGloss": "생각하다, ~라고 여기다",
     "koExample": "내일 비가 올 거라고 생각해요.",
-    "koChirpScript": "머리를 쓰는 동사 think. 생각하다 입니다. I think it will rain tomorrow. 내일 비가 올 거라고 생각해요.라는 추측을 나타내죠."
+    "koChirpScript": "think 생각하다 입니다. I think it will rain tomorrow. 내일 비가 올 거라고 생각해요.라는 추측을 나타내죠."
   },
   {
     "lemma": "try",
@@ -285,7 +285,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sit-uk.mp3",
     "koGloss": "앉다, 착석하다",
     "koExample": "자, 앉으세요.",
-    "koChirpScript": "sit 앉다! 아주 간단하죠? Please, sit down. 자, 앉으세요.라는 뜻입니다."
+    "koChirpScript": "sit. 앉다! 아주 간단하죠? Please, sit down. 자, 앉으세요.라는 뜻입니다."
   },
   {
     "lemma": "open",
@@ -297,7 +297,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/open-uk.mp3",
     "koGloss": "(동사) 열다, 개방하다; (형용사) 열려 있는, 영업 중인",
     "koExample": "창문 좀 열어주시겠어요?",
-    "koChirpScript": "이번 단어 open 열다입니다.  Can you open the window? 창문 좀 열어주시겠어요?라고 부탁하는 말이에요."
+    "koChirpScript": "open. 열다라는 뜻입니다.  Can you open the window? 창문 좀 열어주시겠어요?라고 부탁하는 말이에요."
   },
   {
     "lemma": "close",
@@ -309,7 +309,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/close-1-uk.mp3",
     "koGloss": "(동사) 닫다, (눈을) 감다; (형용사) 가까운, 친한",
     "koExample": "나갈 때 문을 닫아 주세요.",
-    "koChirpScript": "close는 닫다라는 뜻입니다. open의 반댓말이죠. Please close the door when you leave. 나갈 때 문을 닫아 주세요.라는 뜻이죠."
+    "koChirpScript": "close. 닫다라는 뜻입니다. open의 반댓말이죠. Please close the door when you leave. 나갈 때 문을 닫아 주세요.라는 뜻이죠."
   },
   {
     "lemma": "good",
@@ -321,7 +321,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/good-uk.mp3",
     "koGloss": "좋은, 훌륭한, 착한",
     "koExample": "이것은 아주 좋은 책입니다.",
-    "koChirpScript": "칭찬할 때 쓰는 단어 good! 좋은.이라는 뜻이에요. This is a very good book. 이것은 아주 좋은 책입니다.라고 말할 수 있어요."
+    "koChirpScript": "good. 좋은 이라는 뜻이에요. This is a very good book. 이것은 아주 좋은 책입니다.라고 말할 수 있어요."
   },
   {
     "lemma": "bad",
@@ -333,7 +333,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bad-uk.mp3",
     "koGloss": "나쁜, 좋지 않은; (음식이) 상한",
     "koExample": "썩은 달걀에서는 나쁜 냄새가 난다.",
-    "koChirpScript": "good의 반댓말, bad. 나쁜.이라는 뜻이에요. Rotten eggs have a bad smell. 썩은 달걀에서는 나쁜 냄새가 난다.는 뜻입니다."
+    "koChirpScript": "bad. 나쁜 이라는 뜻이에요. Rotten eggs have a bad smell. 썩은 달걀에서는 나쁜 냄새가 난다.는 뜻입니다."
   },
   {
     "lemma": "new",
@@ -345,7 +345,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/new-uk.mp3",
     "koGloss": "새로운, 새",
     "koExample": "나는 어제 새로운 셔츠를 샀다.",
-    "koChirpScript": "new. 새로운이라는 뜻! 누구나 새 걸 좋아하죠.  I bought a new shirt yesterday. 나는 어제 새로운 셔츠를 샀다.는 뜻이에요."
+    "koChirpScript": "new. 새로운 이라는 뜻! 누구나 새 걸 좋아하죠.  I bought a new shirt yesterday. 나는 어제 새로운 셔츠를 샀다.는 뜻이에요."
   },
   {
     "lemma": "old",
@@ -369,7 +369,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hot-uk.mp3",
     "koGloss": "더운(날씨), 뜨거운(물체); 인기 있는",
     "koExample": "오늘 날씨가 매우 덥습니다.",
-    "koChirpScript": "날씨를 표현해볼까요? hot. 더운.이라는 뜻이에요. The weather is very hot today. 오늘 날씨가 매우 덥습니다.라는 뜻이죠."
+    "koChirpScript": "hot. 요즘 여름 날씨 어떻죠? 그래요. 더운이라는 뜻이에요. The weather is very hot today. 오늘 날씨가 매우 덥습니다.라는 뜻이죠."
   },
   {
     "lemma": "cold",
@@ -381,7 +381,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cold-uk.mp3",
     "koGloss": "추운(날씨), 차가운(물체); (명사) 감기",
     "koExample": "밖은 추우니 재킷을 입으세요.",
-    "koChirpScript": "hot의 반대말 cold. 추운. 이라는 뜻을 가져요. It is cold outside, so wear a jacket. 밖은 추우니 재킷을 입으세요.라는 뜻이에요."
+    "koChirpScript": "cold. 추운이라는 뜻을 가져요. It is cold outside, so wear a jacket. 밖은 추우니 재킷을 입으세요.라는 뜻이에요."
   },
   {
     "lemma": "red",

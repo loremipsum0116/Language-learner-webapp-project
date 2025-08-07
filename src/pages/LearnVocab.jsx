@@ -86,10 +86,11 @@ export default function LearnVocab() {
         if (audioRef.current) { try { audioRef.current.pause(); } catch { /* noop */ } }
         audioRef.current = null;
     };
-    const playUrl = (url) => {
+    const playUrl = (url, loop = false) => {
         stopAudio();
         const src = url.startsWith('/') ? `${API_BASE}${url}` : url;
         const audio = new Audio(src);
+        audio.loop = loop;
         audio.play().then(() => { audioRef.current = audio; }).catch(() => { });
     };
 
@@ -157,11 +158,12 @@ export default function LearnVocab() {
                     if (first.ipa) setPron({ ipa: first.ipa, ipaKo: first.ipaKo });
                 }
                 if (mode === 'flash' && auto) {
-                    playUrl(`/audio/${safeFileName(cardForDetail.question)}.mp3`);
+                    playUrl(`/audio/${safeFileName(cardForDetail.question)}.mp3`, true);
                 }
+
             } catch (_) { /* ignore */ }
         })();
-        return () => ac.abort();
+        return () => ac.abort(); stopAudio(); 
     }, [cardForDetail, mode, auto]);
 
 

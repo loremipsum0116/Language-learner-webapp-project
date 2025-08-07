@@ -50,11 +50,11 @@ def split_script_by_language(script_text):
 VOICE_PARAMS = {
     "en-US": texttospeech.VoiceSelectionParams(
         language_code="en-US",
-        name="en-US-Chirp3-HD-Aoede"
+        name="en-US-Chirp3-HD-Erinome"
     ),
     "en-GB": texttospeech.VoiceSelectionParams(
         language_code="en-GB",
-        name="en-GB-Chirp3-HD-Aoede"
+        name="en-GB-Chirp3-HD-Erinome"
     )
 }
 
