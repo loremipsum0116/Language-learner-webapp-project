@@ -61,6 +61,11 @@ export async function fetchJSON(url, opts = {}, timeoutMs = 8000) {
       throw err;
     }
 
+    // 204/205 같은 바디 없는 성공 응답 처리
+    if (res.status === 204 || res.status === 205) {
+      return { ok: true, _latencyMs: latency };
+    }
+
     const data = await res.json();
     data._latencyMs = latency;
     return data;

@@ -32,7 +32,7 @@ export default function Dashboard() {
         srsQueue: 0,
         odatNote: 0,
         totalWords: 0,
-        streak: 7, // API가 없으므로 임시 값
+        // streak: 7, // API가 없으므로 임시 값
     });
     const [loading, setLoading] = useState(true);
 
@@ -109,12 +109,14 @@ export default function Dashboard() {
                 <div className="col-md-6 col-lg-3">
                     <StatCard
                         title="연속 학습일"
-                        value={stats.streak}
+                        value={user?.streak || 0}
                         loading={loading}
                         icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-fire" viewBox="0 0 16 16"><path d="M8 16c3.314 0 6-2 6-5.5 0-1.5-.5-4-2.5-6 .25 1.5-1.25 2-1.25 2C11 4 9 .5 6 0c.357 2 .5 4-2 6-1.25 1-2 2.729-2 4.5C2 14 4.686 16 8 16Zm0-1c-1.657 0-3-1-3-2.75 0-.75.25-2 1.25-3C6.125 10 7 8.5 7 8.5c0-1 .5-3-1.5-5 .5 1.5-1 2.5-1 2.5C5 7.5 4 9 4 10.5c0 1.5 1.5 2.5 3 2.5.5 0 1-.5 1-1 .5 1 1.5 1.5 2.5 1.5C12 14 11 13 11 11.5c0-1.5-1-2.5-1-2.5s.5 1.5-1.5 2.5c.5-1 1.5-2.5 1.5-3.5 0-1-1-2.5-2.5-2.5s-2.5 1.5-2.5 2.5c0 .5.5 1.5 1.5 2.5C7 11.5 7 12.5 7 13c0 1 1 1.5 2 1.5 1 0 1.5-.5 1.5-1.5 0-.5-.5-1-1.5-1s-1.5.5-1.5 1.5c0 .5.5 1 1.5 1z" /></svg>}
                     />
                 </div>
             </section>
+
+            
 
             {/* 빠른 시작 메뉴 */}
             <section>

@@ -35,6 +35,27 @@ async function finishSession(req, res) {
         await scheduleFolder(folder.id, folder.nextAlarmAt.getTime() - Date.now());
     }
 
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (user) {
+        const today = dayjs().startOf('day');
+        const lastDay = user.lastStudiedAt ? dayjs(user.lastStudiedAt).startOf('day') : null;
+        let newStreak = user.streak;
+
+        if (!lastDay || !lastDay.isSame(today)) { // 오늘 처음 학습하는 경우
+            if (lastDay && today.diff(lastDay, 'day') === 1) {
+                // 어제도 학습했으면 연속일 증가
+                newStreak += 1;
+            } else {
+                // 연속이 끊겼으면 1로 초기화
+                newStreak = 1;
+            }
+            await prisma.user.update({
+                where: { id: userId },
+                data: { streak: newStreak, lastStudiedAt: new Date() }
+            });
+        }
+    }
+
     res.json({ highMistake: hiErrIds.length });
 }
 

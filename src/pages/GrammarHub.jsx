@@ -13,7 +13,7 @@ export default function GrammarHub() {
         <main className="container py-4">
             <div className="mb-4">
                 <h2 className="mb-1">문법 학습</h2>
-                <p className="text-muted">독일어 문법의 기초를 다져보세요. 학습하고 싶은 주제를 선택하세요.</p>
+                <p className="text-muted">영어 문법의 기초를 다져보세요. 학습하고 싶은 주제를 선택하세요.</p>
             </div>
 
             {Object.entries(topicsByLevel).map(([level, topics]) => (

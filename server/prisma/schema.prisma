@@ -17,6 +17,8 @@ model User {
   role         String   @default("USER")
   profile      Json?
   createdAt    DateTime @default(now())
+  lastStudiedAt DateTime?
+  streak        Int       @default(0)
 
   SRSCard  SRSCard[]
   TutorLog TutorLog[]

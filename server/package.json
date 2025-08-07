@@ -7,7 +7,10 @@
     "dev": "nodemon --watch . server.js",
     "seed": "node prisma/seed.js",
     "fixup": "node tools/fixup.js",
-    "cleanup": "node tools/cleanup_wiki_entries.js"
+    "cleanup": "node tools/cleanup_wiki_entries.js",
+    "test": "dotenv -e .env.test -- jest",
+    "db:test:migrate": "dotenv -e .env.test -- npx prisma migrate deploy",
+    "eject": "react-scripts eject"
   },
   "keywords": [],
   "author": "",
@@ -29,10 +32,15 @@
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "react-toastify": "^11.0.5",
     "redis": "^5.8.0"
   },
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "dotenv-cli": "^10.0.0",
+    "jest": "^30.0.5",
     "nodemon": "^3.1.10",
-    "prisma": "^6.13.0"
+    "prisma": "^6.13.0",
+    "ts-node": "^10.9.2"
   }
 }

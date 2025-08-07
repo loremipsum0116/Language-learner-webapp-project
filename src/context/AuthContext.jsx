@@ -1,102 +1,94 @@
 // src/context/AuthContext.jsx
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { fetchJSON, withCreds } from "../api/client";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { fetchJSON, withCreds, isAbortError } from "../api/client";
 
-const AuthCtx = createContext(null);
+const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
-    // ★ 1. SRS ID 목록을 전역 상태로 관리합니다.
     const [srsIds, setSrsIds] = useState(new Set());
 
-    async function refreshUser() {
+    const refreshUser = useCallback(async (signal) => {
         try {
-            const me = await fetchJSON("/me", withCreds());
-            setUser(me?.data || me);
-        } catch {
+            const { data } = await fetchJSON("/me", withCreds({ signal }));
+            setUser(data);
+        } catch (e) {
             setUser(null);
+            if (!isAbortError(e) && e.status !== 401) {
+                console.error("Failed to fetch user:", e);
+            }
         }
-    }
-    const addSrsId = (vocabId) =>
-        setSrsIds(prev => new Set(prev).add(vocabId));
+    }, []);
 
-    const removeSrsId = (id) => setSrsIds(prev => { const n = new Set(prev); n.delete(id); return n; });
-    // ★ 2. SRS ID 목록을 새로고침하는 함수를 정의합니다.
-    async function refreshSrsIds() {
-        // 로그인 상태가 아니면 실행하지 않습니다.
+    const refreshSrsIds = useCallback(async (signal) => {
         if (!user) {
             setSrsIds(new Set());
             return;
         }
         try {
-            const { data } = await fetchJSON('/srs/all-cards', withCreds());
+            const { data } = await fetchJSON('/srs/all-cards', withCreds({ signal }));
             setSrsIds(new Set((data || []).map(card => card.vocabId)));
         } catch (e) {
-            console.error("Failed to refresh SRS IDs:", e);
-            // 에러 발생 시 기존 목록을 유지하거나 비울 수 있습니다.
-            setSrsIds(new Set());
+            if (!isAbortError(e)) {
+                console.error("Failed to refresh SRS IDs:", e);
+            }
         }
-    }
+    }, [user]);
 
-    async function updateProfile(patch) {
-        const me = await fetchJSON("/me", withCreds({ method: "PATCH", body: JSON.stringify(patch) }));
-        setUser(me?.data || me);
-        return me?.data || me;
-    }
+    useEffect(() => {
+        const ac = new AbortController();
+        (async () => {
+            setLoading(true);
+            await refreshUser(ac.signal);
+            setLoading(false);
+        })();
+        return () => ac.abort();
+    }, [refreshUser]);
 
-    async function login(email, password) {
+    useEffect(() => {
+        const ac = new AbortController();
+        if (user) {
+            refreshSrsIds(ac.signal);
+        }
+        return () => ac.abort();
+    }, [user, refreshSrsIds]);
+
+    const login = async (email, password) => {
         await fetchJSON("/auth/login", withCreds({ method: "POST", body: JSON.stringify({ email, password }) }));
-        // 로그인 성공 후 사용자 정보와 SRS 목록을 모두 새로고침합니다.
         await refreshUser();
-        await refreshSrsIds();
-    }
+    };
 
-    async function register(email, password) {
-        await fetchJSON("/auth/register", withCreds({ method: "POST", body: JSON.stringify({ email, password }) }));
-        await refreshUser();
-    }
+    // ✅ 1. register 함수 정의
+    const register = async (email, password) => {
+        // 회원가입 API 호출
+        await fetchJSON("/auth/register", withCreds({ 
+            method: "POST", 
+            body: JSON.stringify({ email, password }) 
+        }));
+        // 가입 성공 후 바로 로그인 처리
+        await login(email, password);
+    };
 
-    async function logout() {
+    const logout = async () => {
         try {
             await fetchJSON("/auth/logout", withCreds({ method: "POST" }));
         } finally {
             setUser(null);
-            setSrsIds(new Set()); // 로그아웃 시 SRS 목록도 비웁니다.
+            setSrsIds(new Set());
         }
-    }
-
-    useEffect(() => {
-        (async () => {
-            setLoading(true);
-            await refreshUser();
-            // ★ 3. 초기 로드 시 SRS 목록도 함께 불러옵니다.
-            await refreshSrsIds();
-            setLoading(false);
-        })();
-        const handler = (e) => {
-            if (!e?.detail?.vocabId) return;
-            removeSrsId(e.detail.vocabId);
-        };
-        window.addEventListener('srs:remove', handler);
-        return () => window.removeEventListener('srs:remove', handler);
-    }, [user?.id]); // user.id가 변경될 때 (로그인/로그아웃) 다시 실행
+    };
+    
+    // ✅ 2. value 객체에 register 함수 추가
+    const value = { user, loading, login, logout, register, srsIds, refreshSrsIds };
 
     return (
-        <AuthCtx.Provider
-            // ★ 4. srsIds와 refreshSrsIds를 Context 값으로 제공합니다.
-            value={{
-                user, loading,                    // 기본
-                srsIds, refreshSrsIds,            // SRS 상태
-                addSrsId, removeSrsId,            // ← 새로 노출
-                login, register, logout, updateProfile
-            }}
-        >
+        <AuthContext.Provider value={value}>
             {children}
-        </AuthCtx.Provider>
+        </AuthContext.Provider>
     );
 }
 
 export function useAuth() {
-    return useContext(AuthCtx);
+    return useContext(AuthContext);
 }

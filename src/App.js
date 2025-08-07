@@ -1,5 +1,7 @@
 // src/App.js
 import React from "react";
+import { ToastContainer } from 'react-toastify'; // 1. 임포트
+import 'react-toastify/dist/ReactToastify.css'; // 2. CSS 임포트
 import { Routes, Route } from "react-router-dom";
 import Header from "./pages/Header";
 import Home from "./pages/Home";

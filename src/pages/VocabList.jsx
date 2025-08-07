@@ -151,7 +151,7 @@ function useDebounce(value, delay) {
 }
 
 export default function VocabList() {
-    const { user, srsIds } = useAuth();
+    const { user, srsIds, loading: authLoading } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
@@ -285,6 +285,40 @@ export default function VocabList() {
     };
 
     useEffect(() => {
+        // ✅ 1. AuthContext의 로딩이 끝나지 않았으면 API 호출을 하지 않고 기다립니다.
+        if (authLoading) {
+            return;
+        }
+
+        const ac = new AbortController();
+        (async () => {
+            try {
+                setLoading(true); // 이 컴포넌트 자체의 로딩 상태
+                setErr(null);
+
+                let url = '/vocab/list?';
+                if (debouncedSearchTerm) {
+                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
+                } else {
+                    url += `level=${encodeURIComponent(activeLevel)}`;
+                }
+
+                const { data } = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                setWords(Array.isArray(data) ? data : []);
+
+            } catch (e) {
+                if (!isAbortError(e)) setErr(e);
+            } finally {
+                if (!ac.signal.aborted) setLoading(false);
+            }
+        })();
+
+        return () => ac.abort();
+
+        // ✅ 2. authLoading을 의존성 배열에 추가합니다.
+    }, [activeLevel, debouncedSearchTerm, authLoading]);
+
+    useEffect(() => {
         return () => { if (audioRef.current) stopAudio(); };
     }, []);
 
@@ -292,7 +326,8 @@ export default function VocabList() {
         const ac = new AbortController();
         (async () => {
             try {
-                setLoading(true); setErr(null);
+                setLoading(true); 
+                setErr(null);
                 let url = '/vocab/list?';
                 if (debouncedSearchTerm) {
                     url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
@@ -308,10 +343,10 @@ export default function VocabList() {
             }
         })();
         return () => ac.abort();
-    }, [activeLevel, debouncedSearchTerm]);
+    }, [activeLevel, debouncedSearchTerm, authLoading]);
 
     const { refreshSrsIds } = useAuth(); // 함수도 가져옵니다.
-    
+
 
     const handleOpenDetail = async (vocabId) => {
         try {

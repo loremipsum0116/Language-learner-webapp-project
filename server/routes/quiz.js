@@ -6,7 +6,8 @@
  * 3) SessionBatch.cards[].incorrect ← 0‣1 플래그 반영
  */
 
-const express = require('express');
+ const express  = require('express');
+ const { generateMcqQuizItems } = require('../services/quizService'); // ← 추가
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 
@@ -20,20 +21,52 @@ function intervalByStage(stage) {
     }
 }
 
-/* ────────── POST /quiz/answer ────────── */
-router.post('/quiz/answer', async (req, res) => {
+/* ────────── POST /answer ────────── */
+
+
+router.post('/by-vocab', async (req, res) => {
     try {
-        const { cardId, correct } = req.body;          // correct: boolean
+        const { vocabIds } = req.body || {};
+        if (!Array.isArray(vocabIds)) {
+            return res.status(400).json({ error: 'vocabIds must be an array' });
+        }
+        const items = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
+        return res.json({ data: items });
+    } catch (e) {
+        console.error('POST /quiz/by-vocab 오류:', e);
+        return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+router.get('/by-vocab', async (req, res, next) => {
+  try {
+    const ids = (req.query.ids || '')
+      .split(',')
+      .map(Number)
+      .filter(Boolean);
+
+    if (!ids.length)
+      return res.status(400).json({ error: 'ids query required' });
+
+    const items = await generateMcqQuizItems(ids);
+    return res.json({ data: items });
+  } catch (e) {
+    next(e);          // 전역 에러 미들웨어로 전달
+  }
+});
+
+router.post('/answer', async (req, res) => {
+    try {
+        const { cardId, correct } = req.body;
         if (!cardId || typeof correct !== 'boolean')
             return res.status(400).json({ error: 'cardId / correct 필수' });
 
-        /* 1) 카드 존재 & 소유자 확인 */
         const card = await prisma.sRSCard.findUnique({ where: { id: cardId } });
         if (!card) return res.status(404).json({ error: 'card not found' });
         if (card.userId !== req.user.id)
             return res.status(403).json({ error: 'not your card' });
 
-        /* 2) PASS / FAIL 처리 */
+        // 1) SRSCard 상태 업데이트 (기존 로직)
         let newStage = card.stage;
         if (correct) newStage = Math.min(card.stage + 1, 3);
         else newStage = 0;
@@ -49,21 +82,32 @@ router.post('/quiz/answer', async (req, res) => {
             }
         });
 
-        /* 3) SessionBatch 내 incorrect 플래그 업데이트 (있을 때만) */
-        await prisma.sessionBatch.updateMany({
+        // 2) SessionBatch 내 incorrect 플래그 업데이트 (✅ 수정된 로직)
+        const batch = await prisma.sessionBatch.findFirst({
             where: {
                 userId: req.user.id,
-                cards: { some: { srsCardId: cardId } }
-            },
-            data: {
                 cards: {
-                    updateMany: {
-                        where: { srsCardId: cardId },
-                        data: { incorrect: correct ? 0 : 1 }
-                    }
+                    // JSON 배열 내에 특정 객체가 포함되어 있는지 검사합니다.
+                    array_contains: [{ srsCardId: cardId }]
                 }
             }
         });
+
+        if (batch) {
+            // JavaScript에서 cards 배열을 수정한 뒤,
+            const updatedCards = batch.cards.map(cardInBatch => {
+                if (cardInBatch.srsCardId === cardId) {
+                    return { ...cardInBatch, incorrect: correct ? 0 : 1 };
+                }
+                return cardInBatch;
+            });
+
+            // 수정된 배열 전체를 다시 저장합니다.
+            await prisma.sessionBatch.update({
+                where: { id: batch.id },
+                data: { cards: updatedCards }
+            });
+        }
 
         return res.json({ ok: true, nextStage: newStage });
     } catch (err) {
