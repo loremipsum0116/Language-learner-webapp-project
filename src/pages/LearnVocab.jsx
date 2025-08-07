@@ -392,26 +392,18 @@ export default function LearnVocab() {
     const current = queue[idx];
 
     if (!current) {
-        const isFlashLike = mode === 'flash' || !!idsParam;
-        const isOdat = mode === 'odat';
-        const isPureSrs = !isFlashLike && !isOdat;
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
                 <div className="p-4 bg-light rounded text-center">
                     <h4 className="mb-2">🎉 학습 완료!</h4>
                     <p className="text-muted">다음 작업을 선택하세요.</p>
                     <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
-                        <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
-                        {isFlashLike && (
-                            <button
-                                className="btn btn-primary"
-                                onClick={handleAddLearnedToSrs} // 새 함수를 연결합니다.
-                                disabled={reloading}>
-                                {reloading ? '추가 중…' : '학습한 단어 SRS에 추가'}
-                            </button>
-                        )}
-                        {isPureSrs && (<><Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link><Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link></>)}
-                        {isOdat && (<Link className="btn btn-primary" to="/learn/vocab">SRS 퀴즈로 가기</Link>)}
+                        {/* 선택지 1: 홈으로 */}
+                        <Link className="btn btn-secondary" to="/">홈으로</Link>
+                        {/* 선택지 2: 다시 학습하기 */}
+                        <button className="btn btn-outline-primary" onClick={handleRestart}>다시 학습하기</button>
+                        {/* 선택지 3: SRS 학습 가기 */}
+                        <Link className="btn btn-primary" to="/srs/dashboard">SRS 학습 가기</Link>
                     </div>
                 </div>
             </main>

@@ -20,7 +20,9 @@ import LearnStart from "./pages/LearnStart";
 import SrsManager from "./pages/SrsManager";
 import Dashboard from "./pages/Dashboard";
 import GrammarHub from './pages/GrammarHub';   // ★ 1. GrammarHub 컴포넌트 임포트
-import GrammarQuiz from './pages/GrammarQuiz'; // ★ 2. GrammarQuiz 컴포넌트 임포트
+import GrammarQuiz from './pages/GrammarQuiz';
+import SrsDashboard from "./pages/SrsDashboard";
+import SrsQuiz from "./pages/SrsQuiz"; // // ★ 2. GrammarQuiz 컴포넌트 임포트
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -48,6 +50,8 @@ export default function App() {
           <Route path="/learn/srs-manager" element={<SrsManager />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-wordbook" element={<MyWordbook />} />
+          <Route path="/srs/dashboard" element={<SrsDashboard />} />
+          <Route path="/srs/quiz" element={<SrsQuiz />} />
 
           {/* ★★★★★ 3. Placeholder를 실제 컴포넌트로 교체 및 새 경로 추가 ★★★★★ */}
           <Route path="/learn/grammar" element={<GrammarHub />} />

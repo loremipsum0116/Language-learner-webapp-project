@@ -2,85 +2,86 @@
 const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
+const { generateMcqQuizItems } = require('../services/quizService');
 
-async function generateMcqQuizItems(prisma, userId, vocabIds) {
-    if (!vocabIds || vocabIds.length === 0) return [];
+// async function generateMcqQuizItems(prisma, userId, vocabIds) {
+//     if (!vocabIds || vocabIds.length === 0) return [];
 
-    const ids = vocabIds.map(Number).filter(Number.isFinite);
-    if (ids.length === 0) return [];
+//     const ids = vocabIds.map(Number).filter(Number.isFinite);
+//     if (ids.length === 0) return [];
 
-    const [vocabs, cards] = await Promise.all([
-        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
-        prisma.sRSCard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
-    ]);
+//     const [vocabs, cards] = await Promise.all([
+//         prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
+//         prisma.sRSCard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
+//     ]);
 
-    const cmap = new Map(cards.map(c => [c.itemId, c.id]));
-    const distractorPool = await prisma.vocab.findMany({
-        where: { id: { notIn: ids }, dictMeta: { isNot: null } },
-        include: { dictMeta: true },
-        take: 500,
-    });
+//     const cmap = new Map(cards.map(c => [c.itemId, c.id]));
+//     const distractorPool = await prisma.vocab.findMany({
+//         where: { id: { notIn: ids }, dictMeta: { isNot: null } },
+//         include: { dictMeta: true },
+//         take: 500,
+//     });
 
-    const poolGlosses = new Set();
-    distractorPool.forEach(d => {
-        if (d.dictMeta && Array.isArray(d.dictMeta.examples)) {
-            const meanings = d.dictMeta.examples;
-            let gloss = null;
-            if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-                gloss = meanings[0].definitions[0].ko_def;
-            }
-            if (!gloss) {
-                const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-                if (glossExample) gloss = glossExample.ko;
-            }
-            if (gloss) poolGlosses.add(gloss);
-        }
-    });
+//     const poolGlosses = new Set();
+//     distractorPool.forEach(d => {
+//         if (d.dictMeta && Array.isArray(d.dictMeta.examples)) {
+//             const meanings = d.dictMeta.examples;
+//             let gloss = null;
+//             if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+//                 gloss = meanings[0].definitions[0].ko_def;
+//             }
+//             if (!gloss) {
+//                 const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
+//                 if (glossExample) gloss = glossExample.ko;
+//             }
+//             if (gloss) poolGlosses.add(gloss);
+//         }
+//     });
 
-    const pickN = (arr, n) => {
-        const a = [...arr];
-        for (let i = a.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [a[i], a[j]] = [a[j], a[i]];
-        }
-        return a.slice(0, n);
-    };
+//     const pickN = (arr, n) => {
+//         const a = [...arr];
+//         for (let i = a.length - 1; i > 0; i--) {
+//             const j = Math.floor(Math.random() * (i + 1));
+//             [a[i], a[j]] = [a[j], a[i]];
+//         }
+//         return a.slice(0, n);
+//     };
 
-    const items = [];
-    for (const v of vocabs) {
-        const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
-        let correct = null;
-        if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
-            correct = meanings[0].definitions[0].ko_def || null;
-        }
-        if (!correct) {
-            const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
-            if (glossExample) correct = glossExample.ko || null;
-        }
-        if (!correct) continue;
+//     const items = [];
+//     for (const v of vocabs) {
+//         const meanings = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+//         let correct = null;
+//         if (meanings.length > 0 && meanings[0].definitions && meanings[0].definitions.length > 0) {
+//             correct = meanings[0].definitions[0].ko_def || null;
+//         }
+//         if (!correct) {
+//             const glossExample = meanings.find(ex => ex && ex.kind === 'gloss');
+//             if (glossExample) correct = glossExample.ko || null;
+//         }
+//         if (!correct) continue;
 
-        const localWrongSet = new Set(poolGlosses);
-        localWrongSet.delete(correct);
-        const wrongs = pickN(Array.from(localWrongSet), 3);
-        const options = [correct, ...wrongs];
-        while (options.length < 4) {
-            options.push(correct);
-        }
+//         const localWrongSet = new Set(poolGlosses);
+//         localWrongSet.delete(correct);
+//         const wrongs = pickN(Array.from(localWrongSet), 3);
+//         const options = [correct, ...wrongs];
+//         while (options.length < 4) {
+//             options.push(correct);
+//         }
 
-        items.push({
-            cardId: cmap.get(v.id) || null,
-            vocabId: v.id,
-            question: v.lemma,
-            answer: correct,
-            quizType: 'mcq',
-            options: shuffleArray(options),
-            pron: { ipa: v.dictMeta?.ipa || null, ipaKo: v.dictMeta?.ipaKo || null },
-            levelCEFR: v.levelCEFR,
-            pos: v.pos,
-        });
-    }
-    return items;
-}
+//         items.push({
+//             cardId: cmap.get(v.id) || null,
+//             vocabId: v.id,
+//             question: v.lemma,
+//             answer: correct,
+//             quizType: 'mcq',
+//             options: shuffleArray(options),
+//             pron: { ipa: v.dictMeta?.ipa || null, ipaKo: v.dictMeta?.ipaKo || null },
+//             levelCEFR: v.levelCEFR,
+//             pos: v.pos,
+//         });
+//     }
+//     return items;
+// }
 
 router.post('/resolve-many', async (req, res) => {
     try {

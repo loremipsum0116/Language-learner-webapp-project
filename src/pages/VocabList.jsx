@@ -90,12 +90,11 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                                 {inWordbook ? '단어장에 있음' : '내 단어장'}
                             </button>
                             <button
-                                className={`btn btn-sm ${inSRS ? 'btn-secondary' : 'btn-outline-success'}`}
+                                className="btn btn-sm btn-outline-success"
                                 onClick={(e) => { e.stopPropagation(); onAddSRS([vocab.id]); }}
-                                disabled={inSRS}
-                                title="SRS 학습 큐에 추가"
+                                title="오늘 학습할 SRS 폴더에 추가"
                             >
-                                {inSRS ? 'SRS에 있음' : 'SRS 추가'}
+                                + SRS
                             </button>
                         </div>
                         <button
@@ -326,7 +325,7 @@ export default function VocabList() {
         const ac = new AbortController();
         (async () => {
             try {
-                setLoading(true); 
+                setLoading(true);
                 setErr(null);
                 let url = '/vocab/list?';
                 if (debouncedSearchTerm) {
@@ -377,12 +376,18 @@ export default function VocabList() {
     const handleAddSRS = async (ids) => {
         if (!user) return alert('로그인이 필요합니다.');
         try {
-            await fetchJSON('/srs/create-many', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds: ids }) }));
-            alert(`${ids.length}개를 SRS에 추가했습니다.`);
-            await refreshSrsIds(); // ★ 상태를 직접 조작하는 대신 새로고침 함수를 호출합니다.
+            await fetchJSON('/srs/create-many', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ vocabIds: ids })
+            }));
+            alert(`${ids.length}개의 단어를 '오늘 복습' 폴더에 추가했습니다.`);
+            await refreshSrsIds();
         } catch (e) {
-            console.error(e);
-            alert('SRS 추가 실패');
+            if (e.status === 409) {
+                alert('이미 추가된 단어입니다.');
+            } else {
+                alert('SRS 추가에 실패했습니다: ' + e.message);
+            }
         }
     };
 

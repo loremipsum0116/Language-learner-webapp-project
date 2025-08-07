@@ -31,16 +31,18 @@ model User {
 model Category {
   id        Int      @id @default(autoincrement())
   userId    Int
-  name      String
+  name      String   // 폴더 이름 (예: "2025-08-08 복습")
   createdAt DateTime @default(now())
 
-  kind        String    @default("wordbook")
+  // "wordbook" 또는 "srs" (SRS 복습 폴더용)
+  kind        String    @default("wordbook") 
+  // 알림 관련 필드
   nextAlarmAt DateTime?
-  alarmActive Boolean   @default(true)
+  alarmActive Boolean   @default(true) 
   remindEvery Int?
 
   items    UserVocab[]
-  srsCards SRSCard[]
+  srsCards SRSCard[]   // 카테고리에 직접 SRS 카드 연결
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -113,16 +115,18 @@ model SessionBatch {
 model SRSCard {
   id             Int       @id @default(autoincrement())
   userId         Int
-  itemType       String
+  itemType       String    // "vocab"
   itemId         Int
   stage          Int       @default(0)
   nextReviewAt   DateTime  @default(now())
-  lastResult     String?
+  lastResult     String?   // "pass" 또는 "fail"
   createdAt      DateTime  @default(now())
   active         Boolean   @default(true)
-  updatedAt      DateTime  @updatedAt
+  updatedAt      DateTime  @updatedAt // 마지막 학습일 추적
   correctCount   Int       @default(0)
-  incorrectCount Int       @default(0)
+  incorrectCount Int       @default(0) // 오답 횟수 누적
+
+  // SRS 카드를 폴더(Category)에 할당
   categoryId     Int?
   category       Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
 
@@ -131,6 +135,7 @@ model SRSCard {
   @@unique([userId, itemId, itemType])
   @@index([userId, itemType, nextReviewAt])
 }
+
 
 model TutorLog {
   id        Int      @id @default(autoincrement())

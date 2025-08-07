@@ -70,7 +70,7 @@ function NewCategoryForm({ onCreated }) {
 export default function MyWordbook() {
     const navigate = useNavigate();
     const [searchParams, setSearchParams] = useSearchParams();
-    
+
     // ★ 1. AuthContext에서 사용자 정보, srsIds, srsIds 새로고침 함수를 가져옵니다.
     const { user, srsIds, refreshSrsIds } = useAuth();
 
@@ -132,7 +132,7 @@ export default function MyWordbook() {
             loadCategories(ac.signal),
             loadWordbook(init, ac.signal),
         ]);
-        
+
         return () => ac.abort();
     }, [loadCategories, loadWordbook, readFilterFromURL]);
 
@@ -286,7 +286,7 @@ export default function MyWordbook() {
             alert('SRS에 단어를 추가하는 데 실패했습니다.');
         }
     };
-    
+
     const handleDeleteSelected = async () => {
         const ids = Array.from(selectedIds);
         if (ids.length === 0) { alert('삭제할 단어를 선택하세요.'); return; }
@@ -337,7 +337,7 @@ export default function MyWordbook() {
                     </div>
                     <NewCategoryForm onCreated={loadCategories} />
                 </aside>
-                
+
                 <section className="col-12 col-md-9">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                         <div className="small text-muted">
@@ -389,8 +389,12 @@ export default function MyWordbook() {
                                     <div className="d-flex gap-2">
                                         <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>
                                         {/* ★ 4. 버튼의 상태와 동작이 전역 srsIds를 사용하도록 수정되었습니다. */}
-                                        <button className={`btn btn-sm ${srsIds.has(v.vocabId) ? 'btn-secondary' : 'btn-outline-success'}`} onClick={() => addVocabToSRS([v.vocabId])} disabled={srsIds.has(v.vocabId)} title={srsIds.has(v.vocabId) ? '이미 SRS 목록에 있습니다' : 'SRS에 추가'}>
-                                            {srsIds.has(v.vocabId) ? '✓ SRS' : '+ SRS'}
+                                        <button
+                                            className="btn btn-sm btn-outline-success"
+                                            onClick={() => addVocabToSRS([v.vocabId])}
+                                            title="오늘 학습할 SRS 폴더에 추가"
+                                        >
+                                            + SRS
                                         </button>
                                     </div>
                                 </div>
