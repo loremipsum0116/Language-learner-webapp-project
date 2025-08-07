@@ -4,27 +4,28 @@
   - You are about to drop the `category` table. If the table is not empty, all the data it contains will be lost.
   - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
   - You are about to drop the `vocab` table. If the table is not empty, all the data it contains will be lost.
-
 */
--- DropIndex
+
+-- 🔓 먼저 외래 키 제약 조건 제거
+ALTER TABLE `DictEntry` DROP FOREIGN KEY `DictEntry_vocabId_fkey`;
+ALTER TABLE `SRSCard` DROP FOREIGN KEY `SRSCard_userId_fkey`;
+ALTER TABLE `SRSCard` DROP FOREIGN KEY `SRSCard_categoryId_fkey`;
+ALTER TABLE `TutorLog` DROP FOREIGN KEY `TutorLog_userId_fkey`;
+ALTER TABLE `UserVocab` DROP FOREIGN KEY `UserVocab_categoryId_fkey`;
+ALTER TABLE `UserVocab` DROP FOREIGN KEY `UserVocab_vocabId_fkey`;
+ALTER TABLE `UserVocab` DROP FOREIGN KEY `UserVocab_userId_fkey`;
+
+-- ❌ 중복된 DROP FOREIGN KEY 제거: TutorLog 관련 줄은 1줄만 남기고 삭제
+
+-- 🔨 인덱스 제거
 DROP INDEX `SRSCard_categoryId_fkey` ON `SRSCard`;
-
--- DropIndex
 DROP INDEX `TutorLog_userId_fkey` ON `TutorLog`;
-
--- DropIndex
 DROP INDEX `UserVocab_categoryId_fkey` ON `UserVocab`;
-
--- DropIndex
 DROP INDEX `UserVocab_vocabId_fkey` ON `UserVocab`;
 
--- DropTable
+-- 📦 테이블 삭제
 DROP TABLE `category`;
-
--- DropTable
 DROP TABLE `user`;
-
--- DropTable
 DROP TABLE `vocab`;
 
 -- CreateTable
@@ -72,6 +73,7 @@ CREATE TABLE `Vocab` (
     INDEX `Vocab_source_idx`(`source`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 
 -- AddForeignKey
 ALTER TABLE `Category` ADD CONSTRAINT `Category_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
