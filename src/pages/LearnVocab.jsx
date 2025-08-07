@@ -1,3 +1,4 @@
+
 /*
   LearnVocab.jsx (통합 버전)
   ──────────────────────
@@ -363,6 +364,7 @@ export default function LearnVocab() {
                             </>
                         ) : (
                             <>
+                                {/* 수정된 부분: 카드 뒷면에서 품사 뱃지 제거 */}
                                 <div className="mb-3 lead"><strong>뜻:</strong> {current.answer}</div>
                                 {examples.length > 0 && (
                                     <div className="mt-4 text-start w-100">
