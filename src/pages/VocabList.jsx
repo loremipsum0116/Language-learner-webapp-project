@@ -1,6 +1,6 @@
 // src/pages/VocabList.jsx
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
@@ -157,6 +157,10 @@ export default function VocabList() {
     const [playingAudio, setPlayingAudio] = useState(null);
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [enrichingId, setEnrichingId] = useState(null);
+
+    const [searchParams] = useSearchParams();
+    const addToFolderParam = searchParams.get('addToFolder'); // 하위폴더 ID가 들어오면 바로 그 폴더로
+    const [pickerIds, setPickerIds] = useState([]); // 선택된 vocabIds 보관
 
     const debouncedSearchTerm = useDebounce(searchTerm, 400);
     const isAdmin = user?.role === 'admin';
@@ -365,9 +369,27 @@ export default function VocabList() {
         }
     };
 
-    const handleAddSRS = (ids) => {
+    const handleAddSRS = async (ids) => {
         if (!user) return alert('로그인이 필요합니다.');
-        setPendingVocabIds(ids);
+        if (!Array.isArray(ids) || ids.length === 0) {
+            return alert('먼저 단어를 선택하세요.');
+        }
+        // 1) 폴더 상세에서 온 경우: ?addToFolder=<하위폴더ID> 있으면 바로 그 폴더로
+        const targetFolderId = Number(addToFolderParam ?? 0);
+        if (Number.isFinite(targetFolderId) && targetFolderId > 0) {
+            try {
+                const res = await SrsApi.addItems(targetFolderId, { vocabIds: ids });
+                const added = res?.added?.length ?? 0;
+                const dup = res?.duplicateIds?.length ?? 0;
+                alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+                await refreshSrsIds?.();
+            } catch (e) {
+                alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
+            }
+            return;
+        }
+        // 2) 일반 흐름: 폴더 피커 오픈
+        setPickerIds(ids);
         setPickerOpen(true);
     };
 
@@ -386,6 +408,7 @@ export default function VocabList() {
                     ))}
                 </div>
             </div>
+
 
             <div className="d-flex justify-content-between align-items-center mb-3 p-2 rounded bg-light">
                 <div className="form-check">
@@ -465,33 +488,55 @@ export default function VocabList() {
                                     onPlayUrl={(url, type, id) => playExampleAudio(url, type, id)}
                                     onPlayVocabAudio={playVocabAudio}
                                     playingAudio={playingAudio}
+                                    onAddSRS={(ids) => handleAddSRS(ids)}
                                 />
                             )}
                         </div>
                     </div>
                 </div>
             )}
-            {/* ★ SRS 폴더 선택 모달 */}
-            <SrsFolderPickerModal
-                show={pickerOpen}
-                onClose={() => { setPickerOpen(false); setPendingVocabIds([]); }}
-                onPick={async (folderId) => {
-                    try {
-                        const res = await SrsApi.addItems(folderId, { vocabIds: pendingVocabIds });
-                        if (res?.duplicateIds?.length) {
-                            alert('이미 해당 폴더에 있는 단어가 포함되어 있습니다.');
-                        } else {
-                            alert('SRS 폴더에 추가했습니다.');
+            {pickerOpen && (
+                <SrsFolderPickerModal
+                    show={pickerOpen}
+                    onClose={() => { setPickerOpen(false); setPickerIds([]); }}
+                    onPick={async (folderId) => {
+                        try {
+                            const res = await SrsApi.addItems(folderId, { vocabIds: pickerIds });
+                            const added = res?.added?.length ?? 0;
+                            const dup = res?.duplicateIds?.length ?? 0;
+                            alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+                            await refreshSrsIds?.();
+                        } catch (e) {
+                            alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
+                        } finally {
+                            setPickerOpen(false);
+                            setPickerIds([]);
                         }
-                        await refreshSrsIds();
-                    } catch (e) {
-                        alert('SRS 추가 실패: ' + (e.message || '서버 오류'));
-                    } finally {
-                        setPickerOpen(false);
-                        setPendingVocabIds([]);
-                    }
-                }}
-            />
+                    }}
+                />
+            )}
+
+            {pickerOpen && (
+                <SrsFolderPickerModal
+                    show={pickerOpen}
+                    onClose={() => { setPickerOpen(false); setPickerIds([]); }}
+                    // ✅ 모달에서 최종 선택된 하위폴더로 추가
+                    onPick={async (folderId) => {
+                        try {
+                            const res = await SrsApi.addItems(folderId, { vocabIds: pickerIds });
+                            const added = res?.added?.length ?? 0;
+                            const dup = res?.duplicateIds?.length ?? 0;
+                            alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+                            await refreshSrsIds();
+                        } catch (e) {
+                            alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
+                        } finally {
+                            setPickerOpen(false);
+                            setPickerIds([]);
+                        }
+                    }}
+                />
+            )}
         </main>
     );
 }

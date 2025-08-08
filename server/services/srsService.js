@@ -225,7 +225,7 @@ async function markAnswer(userId, { cardId, correct }) {
         await prisma.sRSCard.update({
             where: { id: cardId },
             data: {
-                incorrectCount: { increment: 1 },
+                wrongTotal: { increment: 1 },
                 nextReviewAt: dayjs().startOf('day').add(1, 'day').hour(9).toDate(), // 내일 09:00
                 lastResult: 'fail',
             },
