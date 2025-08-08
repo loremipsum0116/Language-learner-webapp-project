@@ -1,7 +1,7 @@
-// server/lib/resp.js
 function ok(res, data, meta) {
-  return res.json({ data, ...(meta ? { meta } : {}) });
+  return res.json(meta ? { data, meta } : { data });
 }
+
 function fail(res, status, message) {
   return res.status(status).json({ error: message || 'error' });
 }

@@ -30,6 +30,7 @@ router.get('/', async (req, res) => {
                 gloss = examples[0].definitions[0].ko_def || null;
             }
             return { ...item, vocab: { ...item.vocab, ko_gloss: gloss } };
+
         });
 
         return res.json({ data: processedItems });

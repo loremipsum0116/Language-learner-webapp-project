@@ -11,18 +11,20 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  email        String   @unique
-  passwordHash String
-  role         String   @default("USER")
-  profile      Json?
-  createdAt    DateTime @default(now())
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  passwordHash  String
+  role          String    @default("USER")
+  profile       Json?
+  createdAt     DateTime  @default(now())
   lastStudiedAt DateTime?
   streak        Int       @default(0)
 
-  SRSCard  SRSCard[]
-  TutorLog TutorLog[]
-  myVocab  UserVocab[]
+  SRSCard    SRSCard[]
+  srsFolders SrsFolder[]
+  dailyStats DailyStudyStat[]
+  TutorLog   TutorLog[]
+  myVocab    UserVocab[]
 
   // ★ 추가: Category 역방향 필드(백릴레이션)
   categories Category[]
@@ -31,20 +33,20 @@ model User {
 model Category {
   id        Int      @id @default(autoincrement())
   userId    Int
-  name      String   // 폴더 이름 (예: "2025-08-08 복습")
+  name      String // 폴더 이름 (예: "2025-08-08 복습")
   createdAt DateTime @default(now())
 
   // "wordbook" 또는 "srs" (SRS 복습 폴더용)
-  kind        String    @default("wordbook") 
+  kind        String    @default("wordbook")
   // 알림 관련 필드
   nextAlarmAt DateTime?
-  alarmActive Boolean   @default(true) 
+  alarmActive Boolean   @default(true)
   remindEvery Int?
 
-  items    UserVocab[]
-  srsCards SRSCard[]   // 카테고리에 직접 SRS 카드 연결
+  items UserVocab[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  SRSCard SRSCard[]
 
   @@unique([userId, name])
 }
@@ -58,8 +60,9 @@ model Vocab {
   freq      Int?
   source    String? // 'seed-A1', 'wiktionary' 등
 
-  dictMeta     DictEntry?
-  savedByUsers UserVocab[]
+  dictMeta      DictEntry?
+  savedByUsers  UserVocab[]
+  SrsFolderItem SrsFolderItem[]
 
   @@index([lemma])
   @@index([source])
@@ -112,30 +115,62 @@ model SessionBatch {
   cards     Json
 }
 
-model SRSCard {
-  id             Int       @id @default(autoincrement())
-  userId         Int
-  itemType       String    // "vocab"
-  itemId         Int
-  stage          Int       @default(0)
-  nextReviewAt   DateTime  @default(now())
-  lastResult     String?   // "pass" 또는 "fail"
-  createdAt      DateTime  @default(now())
-  active         Boolean   @default(true)
-  updatedAt      DateTime  @updatedAt // 마지막 학습일 추적
-  correctCount   Int       @default(0)
-  incorrectCount Int       @default(0) // 오답 횟수 누적
+// ──────────────────────────────────────────────────────────────
+// [ADD] 하루 단위 SRS 폴더
+// ──────────────────────────────────────────────────────────────
+model SrsFolder {
+  id              Int       @id @default(autoincrement())
+  userId          Int
+  parentId        Int?      // ← 없다면 추가
+  name            String
+  date            DateTime
+  kind            String     @default("review")
+  scheduledOffset Int?
+  autoCreated     Boolean    @default(false)
+  originSessionId Int?
+  alarmActive     Boolean    @default(true)
+  nextAlarmAt     DateTime?
+  completedAt     DateTime?
+  createdAt       DateTime   @default(now())
 
-  // SRS 카드를 폴더(Category)에 할당
-  categoryId     Int?
-  category       Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  items  SrsFolderItem[]
+  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent SrsFolder?      @relation("FolderChildren", fields: [parentId], references: [id])
+  child  SrsFolder[]     @relation("FolderChildren")
 
-  User User @relation(fields: [userId], references: [id])
+  @@index([userId, date])
 
-  @@unique([userId, itemId, itemType])
-  @@index([userId, itemType, nextReviewAt])
+  // ✅ 하위 폴더 이름 유일성(같은 부모 아래 이름 중복 금지)
+  @@unique([userId, parentId, name])
+
+  // ✅ 루트 날짜 유일성 (scheduledOffset 포함해 커스텀/리뷰 등 공존 가능)
+  @@unique([userId, date, kind, scheduledOffset])
 }
 
+
+model SRSCard {
+  id           Int             @id @default(autoincrement())
+  userId       Int
+  itemType     String
+  itemId       Int
+  stage        Int             @default(0)
+  nextReviewAt DateTime?
+  categoryId   Int?
+  folderItems  SrsFolderItem[]
+  category     Category?       @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  /// 누적 정답/오답(분석/출석용)
+  correctTotal Int @default(0)
+  wrongTotal   Int @default(0)
+
+  /// 코호트 시작일(리어이트너/망각곡선 기준일). NULL이면 백필 스크립트에서 채움
+  cohortDate DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, itemType, itemId])
+  @@index([userId, nextReviewAt])
+}
 
 model TutorLog {
   id        Int      @id @default(autoincrement())
@@ -166,4 +201,44 @@ model UserVocab {
 
   @@unique([userId, vocabId])
   @@index([userId, categoryId])
+}
+
+// ──────────────────────────────────────────────────────────────
+// [ADD] 일별 통계 (출석/페널티 판정에 사용)
+// ──────────────────────────────────────────────────────────────
+model DailyStudyStat {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  /// KST 00:00을 UTC로 환산해 저장(아래 유틸 참고)
+  date         DateTime
+  srsSolved    Int      @default(0) // 당일 SRS 정답 수
+  autoLearned  Int      @default(0) // 당일 자동학습 카드 수
+  wrongDueNext Int      @default(0) // '다음날 필수' 밀린 개수
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+}
+
+// ──────────────────────────────────────────────────────────────
+// [ADD] 폴더-카드 연결 및 학습 상태
+// ──────────────────────────────────────────────────────────────
+model SrsFolderItem {
+  id             Int       @id @default(autoincrement())
+  folderId       Int
+  cardId         Int
+  learned        Boolean   @default(false)
+  wrongCount     Int       @default(0)
+  lastReviewedAt DateTime?
+  vocabId        Int? // (선택) vocabIds로 직접 추가하는 요청 지원 시 사용
+
+  folder SrsFolder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  card   SRSCard   @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  vocab  Vocab?    @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, cardId])
+  @@unique([folderId, vocabId])
+  @@index([cardId])
+  @@index([folderId, learned])
 }

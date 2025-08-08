@@ -1,34 +1,22 @@
-//server/middleware/auth.js
-
+// server/middlewares/auth.js
 const jwt = require('jsonwebtoken');
-const { prisma } = require('../lib/prismaClient');
 
-module.exports = async function auth(req, res, next) {
-    try {
-        console.log('🔵 AUTH middleware 진입');
-        console.log('🔵 headers.cookie:', req.headers.cookie);
-        console.log('🔵 req.cookies:', req.cookies);
+// JWT는 httpOnly 쿠키 'token'에 있다고 가정(또는 Authorization 헤더 허용)
+module.exports = function auth(req, res, next) {
+  try {
+    const bearer = req.headers.authorization;
+    const token =
+      (req.cookies && req.cookies.token) ||
+      (bearer && bearer.startsWith('Bearer ') ? bearer.slice(7) : null);
 
-        const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
-        if (!token) {
-            console.log('🔴 토큰 없음');
-            return res.status(401).json({ error: 'no token' });
-        }
-
-        const payload = jwt.verify(token, process.env.JWT_SECRET);
-        console.log('🟢 JWT payload:', payload);
-
-        const user = await prisma.user.findUnique({ where: { id: payload.id } });
-        if (!user) {
-            console.log('🔴 유저 없음');
-            return res.status(401).json({ error: 'invalid user' });
-        }
-
-        req.user = { id: user.id, role: user.role };
-        console.log('✅ 인증 완료 → next()');
-        next();
-    } catch (e) {
-        console.error('[AUTH ERROR]', e.message);
-        return res.status(401).json({ error: 'unauthorized' });
+    if (!token) {
+      return res.status(401).json({ ok: false, error: 'Unauthorized' });
     }
+
+    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { id: payload.id, role: payload.role || 'USER' };
+    return next();
+  } catch (err) {
+    return res.status(401).json({ ok: false, error: 'Invalid token' });
+  }
 };

@@ -1,7 +1,10 @@
 // src/components/VocabDetailModal.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import Pron from './Pron';
 import { API_BASE } from '../api/client';
+import SrsFolderPickerModal from './SrsFolderPickerModal';
+import { SrsApi } from '../api/srs';
+import { toast } from 'react-toastify';
 
 function safeFileName(str) {
     if (!str) return '';
@@ -36,7 +39,9 @@ export default function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVoca
     const meanings = Array.isArray(dictMeta.examples) ? dictMeta.examples : [];
     const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
     const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
-
+    const [showPicker, setShowPicker] = useState(false);
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [targetVocabId, setTargetVocabId] = useState(null);
     return (
         <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={onClose}>
             <div className="modal-dialog modal-dialog-centered modal-lg" onClick={e => e.stopPropagation()}>
@@ -136,10 +141,57 @@ export default function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVoca
                         </details>
                     </div>
                     <div className="modal-footer">
+                        <button
+                            className="btn btn-primary"
+                            onClick={(e) => { e.stopPropagation(); setShowPicker(true); }}
+                            title="이 단어를 SRS 폴더에 추가"
+                        >
+                            SRS에 추가
+                        </button>
+                        <SrsFolderPickerModal
+                            show={pickerOpen}
+                            onClose={() => setPickerOpen(false)}
+                            onPick={async (folderId) => {
+                                try {
+                                    const res = await SrsApi.addItems(folderId, { vocabIds: [targetVocabId] });
+                                    // 서버가 409/duplicateIds를 돌려주는 계약 (아래 백엔드 패치 참조)
+                                    if (res?.duplicateIds?.length) toast.info('이미 해당 폴더에 추가된 단어입니다.');
+                                    else toast.success('SRS 폴더에 추가되었습니다.');
+                                } catch (e) {
+                                    toast.error('추가 실패: ' + e.message);
+                                } finally {
+                                    setPickerOpen(false); setTargetVocabId(null);
+                                }
+                            }}
+                        />
                         <button className="btn btn-secondary" onClick={onClose}>닫기</button>
                     </div>
                 </div>
             </div>
+            <SrsFolderPickerModal
+                show={showPicker}
+                onClose={() => setShowPicker(false)}
+                onPick={async (folderId) => {
+                    try {
+                        // 서버 라우트: POST /srs/folders/:id/items
+                        // payload는 { vocabIds: number[] } 또는 { cardIds: number[] } 허용
+                        await SrsApi.addItems(folderId, { vocabIds: [vocab.id] });
+                        toast.success('폴더에 추가했습니다.');
+                        setShowPicker(false);
+                    } catch (e) {
+                        // 서버가 409(중복)면 안내
+                        let msg = '';
+                        try { msg = await e?.response?.text?.(); } catch { }
+                        if (typeof msg === 'string' && msg.includes('이미 해당 폴더에 추가된')) {
+                            alert('이미 해당 폴더에 추가된 단어입니다.');
+                        } else {
+                            toast.error('추가에 실패했습니다.');
+                        }
+                    }
+                }}
+            />
+
         </div>
+
     );
 }

@@ -1,7 +1,7 @@
 // src/App.js
 import React from "react";
-import { ToastContainer } from 'react-toastify'; // 1. 임포트
-import 'react-toastify/dist/ReactToastify.css'; // 2. CSS 임포트
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from "react-router-dom";
 import Header from "./pages/Header";
 import Home from "./pages/Home";
@@ -19,10 +19,11 @@ import OdatNote from "./pages/OdatNote";
 import LearnStart from "./pages/LearnStart";
 import SrsManager from "./pages/SrsManager";
 import Dashboard from "./pages/Dashboard";
-import GrammarHub from './pages/GrammarHub';   // ★ 1. GrammarHub 컴포넌트 임포트
+import GrammarHub from './pages/GrammarHub';
 import GrammarQuiz from './pages/GrammarQuiz';
 import SrsDashboard from "./pages/SrsDashboard";
-import SrsQuiz from "./pages/SrsQuiz"; // // ★ 2. GrammarQuiz 컴포넌트 임포트
+import SrsQuiz from "./pages/SrsQuiz";
+import SrsFolderDetail from './pages/SrsFolderDetail';
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -35,6 +36,7 @@ export default function App() {
   return (
     <>
       <Header />
+      <ToastContainer /> {/* ToastContainer 추가 */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -50,10 +52,12 @@ export default function App() {
           <Route path="/learn/srs-manager" element={<SrsManager />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-wordbook" element={<MyWordbook />} />
-          <Route path="/srs/dashboard" element={<SrsDashboard />} />
+          <Route path="/srs/folder/:id" element={<SrsFolderDetail />} />
+          {/* SRS 관련 라우트 추가 */}
+          <Route path="/srs" element={<SrsDashboard />} />
           <Route path="/srs/quiz" element={<SrsQuiz />} />
-
-          {/* ★★★★★ 3. Placeholder를 실제 컴포넌트로 교체 및 새 경로 추가 ★★★★★ */}
+          
+          {/* Grammar 관련 라우트 */}
           <Route path="/learn/grammar" element={<GrammarHub />} />
           <Route path="/learn/grammar/:topicId" element={<GrammarQuiz />} />
 

@@ -44,7 +44,7 @@ export default function Header() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/learn" className="btn btn-sm btn-primary">
+                  <Link to="/srs" className="btn btn-sm btn-primary">
                     SRS 학습
                   </Link>
                 </li>

@@ -5,7 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
-
+import SrsFolderPickerModal from '../components/SrsFolderPickerModal';
+import { SrsApi } from '../api/srs';
 // Helper functions (no changes)
 const getCefrBadgeColor = (level) => {
     switch (level) {
@@ -145,7 +146,8 @@ export default function VocabList() {
     const [activeLevel, setActiveLevel] = useState('A1');
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
-
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [pendingVocabIds, setPendingVocabIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
     const [detail, setDetail] = useState(null);
@@ -185,7 +187,7 @@ export default function VocabList() {
         })();
         return () => ac.abort();
     }, [activeLevel, debouncedSearchTerm, authLoading]);
-    
+
     useEffect(() => {
         if (!user) return;
         const ac = new AbortController();
@@ -207,7 +209,7 @@ export default function VocabList() {
             alert('로그인이 필요합니다.');
             return;
         }
-        
+
         console.log(`[단어장 추가 시도] Vocab ID: ${vocabId}`);
 
         try {
@@ -363,22 +365,10 @@ export default function VocabList() {
         }
     };
 
-    const handleAddSRS = async (ids) => {
+    const handleAddSRS = (ids) => {
         if (!user) return alert('로그인이 필요합니다.');
-        try {
-            await fetchJSON('/srs/create-many', withCreds({
-                method: 'POST',
-                body: JSON.stringify({ vocabIds: ids })
-            }));
-            alert(`${ids.length}개의 단어를 '오늘 복습' 폴더에 추가했습니다.`);
-            await refreshSrsIds();
-        } catch (e) {
-            if (e.status === 409) {
-                alert('이미 추가된 단어입니다.');
-            } else {
-                alert('SRS 추가에 실패했습니다: ' + e.message);
-            }
-        }
+        setPendingVocabIds(ids);
+        setPickerOpen(true);
     };
 
     useEffect(() => {
@@ -481,6 +471,27 @@ export default function VocabList() {
                     </div>
                 </div>
             )}
+            {/* ★ SRS 폴더 선택 모달 */}
+            <SrsFolderPickerModal
+                show={pickerOpen}
+                onClose={() => { setPickerOpen(false); setPendingVocabIds([]); }}
+                onPick={async (folderId) => {
+                    try {
+                        const res = await SrsApi.addItems(folderId, { vocabIds: pendingVocabIds });
+                        if (res?.duplicateIds?.length) {
+                            alert('이미 해당 폴더에 있는 단어가 포함되어 있습니다.');
+                        } else {
+                            alert('SRS 폴더에 추가했습니다.');
+                        }
+                        await refreshSrsIds();
+                    } catch (e) {
+                        alert('SRS 추가 실패: ' + (e.message || '서버 오류'));
+                    } finally {
+                        setPickerOpen(false);
+                        setPendingVocabIds([]);
+                    }
+                }}
+            />
         </main>
     );
 }
