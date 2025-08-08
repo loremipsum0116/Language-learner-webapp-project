@@ -3,14 +3,11 @@ import React from 'react';
 import Pron from './Pron';
 import { API_BASE } from '../api/client';
 
-// ★ 시작: 단어 lemma를 안전한 파일명으로 변환하는 헬퍼 함수
 function safeFileName(str) {
     if (!str) return '';
     return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
 }
-// ★ 종료: 헬퍼 함수
 
-// CEFR 레벨에 따라 다른 Bootstrap 배경색 클래스를 반환하는 헬퍼 함수
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -22,27 +19,19 @@ const getCefrBadgeColor = (level) => {
     }
 };
 
-// 품사(POS)에 따라 다른 Bootstrap 배경색 클래스를 반환하는 헬퍼 함수
 const getPosBadgeColor = (pos) => {
     if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
-        case 'noun':
-            return 'bg-primary';
-        case 'verb':
-            return 'bg-success';
-        case 'adjective':
-            return 'bg-warning text-dark';
-        case 'adverb':
-            return 'bg-info text-dark';
-        case 'preposition':
-            return 'bg-danger';
-        default:
-            return 'bg-secondary';
+        case 'noun': return 'bg-primary';
+        case 'verb': return 'bg-success';
+        case 'adjective': return 'bg-warning text-dark';
+        case 'adverb': return 'bg-info text-dark';
+        case 'preposition': return 'bg-danger';
+        default: return 'bg-secondary';
     }
 };
 
 export default function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVocabAudio, playingAudio }) {
-    // API 응답에서 필요한 데이터를 안전하게 추출합니다.
     const dictMeta = vocab?.dictMeta || {};
     const meanings = Array.isArray(dictMeta.examples) ? dictMeta.examples : [];
     const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
@@ -104,9 +93,8 @@ export default function VocabDetailModal({ vocab, onClose, onPlayUrl, onPlayVoca
                                                         const audioId = `${vocab.id}-${index}-${defIndex}-${exIndex}`;
                                                         const isExamplePlaying = playingAudio?.type === 'example' && playingAudio?.id === audioId;
 
-                                                        // ★ 시작: 예문 오디오 URL을 항상 로컬 경로로 생성합니다.
-                                                        const localAudioPath = `/audio/${safeFileName(vocab.lemma)}.mp3`;
-                                                        // ★ 종료: 로컬 경로 생성
+                                                        // ★ FIX 3: 예문 오디오 경로에 levelCEFR을 포함시킵니다.
+                                                        const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
 
                                                         return (
                                                             <li key={exIndex} className="d-flex justify-content-between align-items-center mb-2 p-2 rounded bg-light">

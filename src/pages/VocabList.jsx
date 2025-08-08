@@ -6,7 +6,7 @@ import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 
-// ★ 시작: CEFR 레벨과 품사에 따라 다른 색상의 뱃지를 반환하는 헬퍼 함수들
+// Helper functions (no changes)
 const getCefrBadgeColor = (level) => {
     switch (level) {
         case 'A1': return 'bg-danger';
@@ -21,29 +21,20 @@ const getCefrBadgeColor = (level) => {
 const getPosBadgeColor = (pos) => {
     if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
-        case 'noun':
-            return 'bg-primary';
-        case 'verb':
-            return 'bg-success';
-        case 'adjective':
-            return 'bg-warning text-dark';
-        case 'adverb':
-            return 'bg-info text-dark';
-        default:
-            return 'bg-secondary';
+        case 'noun': return 'bg-primary';
+        case 'verb': return 'bg-success';
+        case 'adjective': return 'bg-warning text-dark';
+        case 'adverb': return 'bg-info text-dark';
+        default: return 'bg-secondary';
     }
 };
-// ★ 종료: 헬퍼 함수
 
-/**
- * 단어 카드 컴포넌트 (VocabCard)
- */
+// VocabCard component (no changes)
 function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, onDeleteVocab, isAdmin, isSelected, onToggleSelect, playingAudio }) {
     const koGloss = vocab.ko_gloss || '뜻 정보 없음';
     const isEnriching = enrichingId === vocab.id;
     const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
     const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
-
 
     return (
         <div className="col-md-6 col-lg-4 mb-3">
@@ -135,7 +126,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
     );
 }
 
-// API 요청 디바운스를 위한 커스텀 훅
+// useDebounce hook (no changes)
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(() => {
@@ -150,7 +141,7 @@ function useDebounce(value, delay) {
 }
 
 export default function VocabList() {
-    const { user, srsIds, loading: authLoading } = useAuth();
+    const { user, srsIds, loading: authLoading, refreshSrsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
@@ -166,17 +157,92 @@ export default function VocabList() {
     const [enrichingId, setEnrichingId] = useState(null);
 
     const debouncedSearchTerm = useDebounce(searchTerm, 400);
-
     const isAdmin = user?.role === 'admin';
 
+    useEffect(() => {
+        if (authLoading) return;
+        const ac = new AbortController();
+        (async () => {
+            try {
+                setLoading(true);
+                setErr(null);
+                let url = '/vocab/list?';
+                if (debouncedSearchTerm) {
+                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
+                } else {
+                    url += `level=${encodeURIComponent(activeLevel)}`;
+                }
+                const { data } = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                setWords(Array.isArray(data) ? data : []);
+            } catch (e) {
+                if (!isAbortError(e)) {
+                    console.error("Failed to fetch vocab list:", e);
+                    setErr(e);
+                }
+            } finally {
+                if (!ac.signal.aborted) setLoading(false);
+            }
+        })();
+        return () => ac.abort();
+    }, [activeLevel, debouncedSearchTerm, authLoading]);
+    
+    useEffect(() => {
+        if (!user) return;
+        const ac = new AbortController();
+        fetchJSON('/my-wordbook', withCreds({ signal: ac.signal }))
+            .then(({ data }) => {
+                if (Array.isArray(data)) {
+                    setMyWordbookIds(new Set(data.map(item => item.vocabId)));
+                }
+            })
+            .catch(e => {
+                if (!isAbortError(e)) console.error("Failed to fetch my wordbook IDs", e);
+            });
+        return () => ac.abort();
+    }, [user]);
+
+    // ★★★★★ 문제의 함수 수정 ★★★★★
+    const handleAddWordbook = async (vocabId) => {
+        if (!user) {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+        
+        console.log(`[단어장 추가 시도] Vocab ID: ${vocabId}`);
+
+        try {
+            const response = await fetchJSON('/my-wordbook/add', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ vocabId })
+            }));
+
+            console.log('[API 응답 수신]', response);
+
+            if (response?.meta?.created) {
+                alert(`단어가 내 단어장에 새로 추가되었습니다.`);
+                setMyWordbookIds(prev => new Set(prev).add(vocabId));
+            } else if (response?.meta?.already) {
+                alert('이미 내 단어장에 있는 단어입니다.');
+                if (!myWordbookIds.has(vocabId)) {
+                    setMyWordbookIds(prev => new Set(prev).add(vocabId));
+                }
+            } else {
+                alert('요청은 성공했지만 서버 응답 형식이 예상과 다릅니다.');
+                console.warn('예상치 못한 성공 응답:', response);
+            }
+
+        } catch (e) {
+            // 사용자가 보게 될 가능성이 높은 에러 블록
+            console.error('handleAddWordbook 함수에서 에러 발생:', e);
+            alert(`[오류] 단어장 추가에 실패했습니다. 브라우저 개발자 콘솔(F12)에서 자세한 오류를 확인해주세요. 메시지: ${e.message}`);
+        }
+    };
+
+    // Other functions (no changes)
     const handleToggleSelect = (vocabId) => {
         setSelectedIds(prev => {
             const next = new Set(prev);
-            if (next.has(vocabId)) {
-                next.delete(vocabId);
-            } else {
-                next.add(vocabId);
-            }
+            if (next.has(vocabId)) next.delete(vocabId); else next.add(vocabId);
             return next;
         });
     };
@@ -283,70 +349,6 @@ export default function VocabList() {
         }
     };
 
-    useEffect(() => {
-        // ✅ 1. AuthContext의 로딩이 끝나지 않았으면 API 호출을 하지 않고 기다립니다.
-        if (authLoading) {
-            return;
-        }
-
-        const ac = new AbortController();
-        (async () => {
-            try {
-                setLoading(true); // 이 컴포넌트 자체의 로딩 상태
-                setErr(null);
-
-                let url = '/vocab/list?';
-                if (debouncedSearchTerm) {
-                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
-                } else {
-                    url += `level=${encodeURIComponent(activeLevel)}`;
-                }
-
-                const { data } = await fetchJSON(url, withCreds({ signal: ac.signal }));
-                setWords(Array.isArray(data) ? data : []);
-
-            } catch (e) {
-                if (!isAbortError(e)) setErr(e);
-            } finally {
-                if (!ac.signal.aborted) setLoading(false);
-            }
-        })();
-
-        return () => ac.abort();
-
-        // ✅ 2. authLoading을 의존성 배열에 추가합니다.
-    }, [activeLevel, debouncedSearchTerm, authLoading]);
-
-    useEffect(() => {
-        return () => { if (audioRef.current) stopAudio(); };
-    }, []);
-
-    useEffect(() => {
-        const ac = new AbortController();
-        (async () => {
-            try {
-                setLoading(true);
-                setErr(null);
-                let url = '/vocab/list?';
-                if (debouncedSearchTerm) {
-                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
-                } else {
-                    url += `level=${encodeURIComponent(activeLevel)}`;
-                }
-                const { data } = await fetchJSON(url, { signal: ac.signal });
-                setWords(Array.isArray(data) ? data : []);
-            } catch (e) {
-                if (!isAbortError(e)) setErr(e);
-            } finally {
-                if (!ac.signal.aborted) setLoading(false);
-            }
-        })();
-        return () => ac.abort();
-    }, [activeLevel, debouncedSearchTerm, authLoading]);
-
-    const { refreshSrsIds } = useAuth(); // 함수도 가져옵니다.
-
-
     const handleOpenDetail = async (vocabId) => {
         try {
             setDetailLoading(true); setDetail(null);
@@ -358,18 +360,6 @@ export default function VocabList() {
             console.error(e);
         } finally {
             setDetailLoading(false);
-        }
-    };
-
-    const handleAddWordbook = async (vocabId) => {
-        if (!user) return alert('로그인이 필요합니다.');
-        try {
-            await fetchJSON('/my-wordbook/add', withCreds({ method: 'POST', body: JSON.stringify({ vocabId }) }));
-            setMyWordbookIds(prev => new Set(prev).add(vocabId));
-            alert('내 단어장에 추가했습니다.');
-        } catch (e) {
-            console.error(e);
-            alert('추가 실패');
         }
     };
 
@@ -391,6 +381,11 @@ export default function VocabList() {
         }
     };
 
+    useEffect(() => {
+        return () => { if (audioRef.current) stopAudio(); };
+    }, []);
+
+    // JSX rendering (no changes)
     return (
         <main className="container py-4">
             <div className="d-flex justify-content-between align-items-center mb-3">

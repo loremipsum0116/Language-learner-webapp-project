@@ -2,10 +2,9 @@
 const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
+const { ok, fail } = require('../lib/resp'); // fail 헬퍼 임포트
 
-
-
-// GET /my-wordbook
+// GET /my-wordbook (기존 코드 유지)
 router.get('/', async (req, res) => {
     try {
         const { categoryId } = req.query;
@@ -23,7 +22,6 @@ router.get('/', async (req, res) => {
             orderBy: { createdAt: 'desc' }
         });
 
-        // ko_gloss를 추가하는 데이터 가공 로직
         const processedItems = items.map(item => {
             if (!item.vocab) return item;
             const examples = item.vocab.dictMeta?.examples || [];
@@ -41,39 +39,7 @@ router.get('/', async (req, res) => {
     }
 });
 
-// POST /my-wordbook/add-many (✅ 이 부분이 오류를 해결합니다)
-router.post('/add-many', async (req, res) => {
-    const { vocabIds } = req.body;
-    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-        return fail(res, 400, 'vocabIds must be a non-empty array');
-    }
-
-    const userId = req.user.id;
-    const idsToProcess = vocabIds.map(Number).filter(id => !isNaN(id));
-
-    try {
-        const existing = await prisma.userVocab.findMany({
-            where: { userId, vocabId: { in: idsToProcess } },
-            select: { vocabId: true }
-        });
-        const existingIds = new Set(existing.map(e => e.vocabId));
-
-        const newData = idsToProcess
-            .filter(id => !existingIds.has(id))
-            .map(vocabId => ({ userId, vocabId }));
-
-        if (newData.length > 0) {
-            const result = await prisma.userVocab.createMany({ data: newData });
-            return ok(res, { count: result.count });
-        }
-
-        return ok(res, { count: 0 }); // 추가된 단어가 없을 경우
-    } catch (e) {
-        console.error('POST /my-wordbook/add-many failed:', e);
-        return fail(res, 500, 'Failed to add words');
-    }
-});
-// POST /my-wordbook/add (✅ 이 라우트가 오류를 해결합니다)
+// POST /my-wordbook/add (기존 코드 유지)
 router.post('/add', async (req, res) => {
     try {
         const { vocabId } = req.body;
@@ -105,6 +71,69 @@ router.post('/add', async (req, res) => {
     }
 });
 
-// ... (향후 /my-wordbook/remove-many, /my-wordbook/assign 등 다른 라우트도 여기에 추가)
+// POST /my-wordbook/add-many (기존 코드 유지)
+router.post('/add-many', async (req, res) => {
+    const { vocabIds } = req.body;
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
+
+    const userId = req.user.id;
+    const idsToProcess = vocabIds.map(Number).filter(id => !isNaN(id));
+
+    try {
+        const existing = await prisma.userVocab.findMany({
+            where: { userId, vocabId: { in: idsToProcess } },
+            select: { vocabId: true }
+        });
+        const existingIds = new Set(existing.map(e => e.vocabId));
+
+        const newData = idsToProcess
+            .filter(id => !existingIds.has(id))
+            .map(vocabId => ({ userId, vocabId }));
+
+        if (newData.length > 0) {
+            const result = await prisma.userVocab.createMany({ data: newData });
+            return ok(res, { count: result.count });
+        }
+
+        return ok(res, { count: 0 });
+    } catch (e) {
+        console.error('POST /my-wordbook/add-many failed:', e);
+        return fail(res, 500, 'Failed to add words');
+    }
+});
+
+
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+// ★★★★★      이 부분이 문제를 해결합니다     ★★★★★
+// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+
+// POST /my-wordbook/remove-many (✅ 누락된 삭제 라우트 추가)
+router.post('/remove-many', async (req, res) => {
+    const { vocabIds } = req.body;
+    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+        return fail(res, 400, 'vocabIds must be a non-empty array');
+    }
+
+    const userId = req.user.id;
+    const idsToDelete = vocabIds.map(Number).filter(id => !isNaN(id));
+
+    try {
+        const result = await prisma.userVocab.deleteMany({
+            where: {
+                userId: userId,
+                vocabId: { in: idsToDelete }
+            }
+        });
+
+        // 삭제된 개수를 반환합니다.
+        return ok(res, { count: result.count });
+
+    } catch (e) {
+        console.error('POST /my-wordbook/remove-many failed:', e);
+        return fail(res, 500, 'Failed to remove words from wordbook');
+    }
+});
 
 module.exports = router;
