@@ -394,7 +394,12 @@ export default function VocabList() {
                 alert(`추가됨 ${addedCount}개${dupCount > 0 ? `, 중복 ${dupCount}개` : ''}`);
                 await refreshSrsIds?.();
             } catch (e) {
-                alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
+                const msg = e?.message || '';
+                if (msg.includes('이미 해당 폴더에 추가된 단어')) {
+                    alert(msg);
+                } else {
+                    alert('폴더에 추가 실패: ' + msg);
+                }
             }
             return; // 함수 실행 종료
         }

@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 require('dotenv').config();
 
+
 // --- 라우터 임포트 ---
 const authRoutes = require('./routes/auth');
 const learnRoutes = require('./routes/learn');
@@ -19,11 +20,11 @@ const odatNoteRoutes = require('./routes/odat-note');
 const srsRouter = require('./routes/srs');
 const auth = require('./middleware/auth');
 
-
 // --- 미들웨어 임포트 ---
 const authMiddleware = require('./middleware/auth');
 
 const app = express();
+
 
 // --- 글로벌 미들웨어 (순서 중요) ---
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000', credentials: true })); // env 변수 사용
@@ -49,6 +50,7 @@ app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);
 app.use(userRoutes);
 app.use('/srs', auth, srsRouter);
+require('./cron');
 
 // --- 에러 핸들러 ---
 app.use((err, req, res, next) => {

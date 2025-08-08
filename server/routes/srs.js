@@ -280,28 +280,147 @@ router.get('/folders/:id/children', async (req, res, next) => {
     } catch (e) { next(e); }
 });
 
-router.delete('/folders/:folderId/items/:itemId', async (req, res, next) => {
+
+router.post('/folders/:rootId/children', auth, async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const folderId = Number(req.params.folderId);
-        const itemId = Number(req.params.itemId);
+        const rootId = Number(req.params.rootId);
+        const { name } = req.body;
 
-        // 폴더 소유권 확인
-        const folder = await prisma.srsFolder.findFirst({
-            where: { id: folderId, userId },
+        if (!name || typeof name !== 'string') {
+            return res.status(400).json({ error: 'name(문자열)이 필요합니다.' });
+        }
+
+        // 1) 루트 폴더 검증 (본인 소유/parentId NULL)
+        const root = await prisma.srsFolder.findFirst({
+            where: { id: rootId, userId, parentId: null },
+            select: { id: true, date: true, kind: true },
+        });
+        if (!root) return res.status(404).json({ error: '루트 폴더가 없습니다.' });
+
+        // 2) 해당 루트 밑에서 scheduledOffset 최대값 조회
+        const max = await prisma.srsFolder.aggregate({
+            _max: { scheduledOffset: true },
+            where: {
+                userId,
+                parentId: root.id,
+                date: root.date,
+                kind: root.kind, // 보통 'review'
+            },
+        });
+        const nextOffset = (max._max.scheduledOffset ?? 0) + 1;
+
+        // 3) 동일 parentId에서 이름 중복 방지(스키마 @@unique[userId,parentId,name])
+        const exists = await prisma.srsFolder.findFirst({
+            where: { userId, parentId: root.id, name },
             select: { id: true },
         });
-        if (!folder) return fail(res, 404, '폴더를 찾을 수 없습니다.');
+        if (exists) {
+            return res.status(409).json({ error: '같은 부모 아래 동일한 이름의 폴더가 이미 존재합니다.' });
+        }
 
-        await prisma.srsFolderItem.delete({
-            where: { id: itemId },
+        // 4) 하위 폴더 생성 (루트의 date/kind 상속)
+        const child = await prisma.srsFolder.create({
+            data: {
+                userId,
+                parentId: root.id,
+                name,
+                date: root.date,
+                kind: root.kind,
+                scheduledOffset: nextOffset,
+                autoCreated: false,
+                alarmActive: true,
+            },
         });
 
-        return ok(res, { deleted: true });
+        return res.json({ ok: true, data: child });
     } catch (e) {
         next(e);
     }
 });
+// POST /srs/folders/:folderId/items
+router.post('/folders/:folderId/items', auth, async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.folderId);
+        const body = req.body || {};
+        const cardIds = Array.isArray(body.cardIds) ? body.cardIds.map(Number) : [];
+        const vocabIds = Array.isArray(body.vocabIds) ? body.vocabIds.map(Number) : [];
+
+        if (!folderId) return res.status(400).json({ error: 'folderId invalid' });
+        if (cardIds.length === 0 && vocabIds.length === 0) {
+            return res.status(400).json({ error: 'cardIds or vocabIds required' });
+        }
+
+        // 폴더 소유 확인
+        const folder = await prisma.srsFolder.findFirst({
+            where: { id: folderId, userId },
+            select: { id: true, date: true, kind: true, parentId: true },
+        });
+        if (!folder) return res.status(404).json({ error: 'folder not found' });
+
+        const result = await prisma.$transaction(async (tx) => {
+            const added = [];
+
+            // 1) vocabIds → 카드가 없으면 생성 후 아이템 upsert
+            for (const vid of vocabIds) {
+                const card = await tx.sRSCard.upsert({
+                    where: {
+                        userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
+                    },
+                    update: {},
+                    create: { userId, itemType: 'vocab', itemId: vid },
+                    select: { id: true, itemType: true, itemId: true },
+                });
+
+                await tx.srsFolderItem.upsert({
+                    where: { folderId_cardId: { folderId, cardId: card.id } },
+                    update: {},
+                    create: {
+                        folderId,
+                        cardId: card.id,
+                        vocabId: card.itemType === 'vocab' ? card.itemId : null,
+                        learned: false,
+                        wrongCount: 0,
+                    },
+                });
+                added.push({ cardId: card.id });
+            }
+
+            // 2) cardIds → 존재/소유 검증 후 아이템 upsert
+            if (cardIds.length) {
+                const cards = await tx.sRSCard.findMany({
+                    where: { id: { in: cardIds }, userId },
+                    select: { id: true, itemType: true, itemId: true },
+                });
+                if (cards.length === 0) throw Object.assign(new Error('cards not found'), { status: 404 });
+
+                for (const c of cards) {
+                    await tx.srsFolderItem.upsert({
+                        where: { folderId_cardId: { folderId, cardId: c.id } },
+                        update: {},
+                        create: {
+                            folderId,
+                            cardId: c.id,
+                            vocabId: c.itemType === 'vocab' ? c.itemId : null,
+                            learned: false,
+                            wrongCount: 0,
+                        },
+                    });
+                    added.push({ cardId: c.id });
+                }
+            }
+
+            return { addedCount: added.length, items: added };
+        });
+
+        res.json({ ok: true, data: result });
+    } catch (e) {
+        if (e.status) return res.status(e.status).json({ error: e.message });
+        next(e);
+    }
+});
+
 
 // server/routes/srs.js 에 추가될 코드
 
@@ -434,18 +553,46 @@ router.get('/folders/picker', async (req, res, next) => {
 
 
 // GET /srs/folders/:id/children-lite  → 픽커에서 펼칠 때 쓰는 가벼운 하위 목록
-router.get('/folders/:id/children-lite', async (req, res, next) => {
+// GET /srs/folders/:rootId/children-lite
+router.get('/folders/:rootId/children-lite', auth, async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const parentId = Number(req.params.id);
-        const children = await prisma.srsFolder.findMany({
-            where: { userId, parentId },
-            orderBy: { id: 'asc' },
-            select: { id: true, name: true },
+        const rootId = Number(req.params.rootId);
+
+        const root = await prisma.srsFolder.findFirst({
+            where: { id: rootId, userId, parentId: null },
+            select: { id: true, date: true, kind: true }
         });
-        return ok(res, children);
+        if (!root) return res.status(404).json({ error: '루트 폴더 없음' });
+
+        const children = await prisma.srsFolder.findMany({
+            where: { userId, parentId: root.id, date: root.date, kind: root.kind },
+            select: { id: true, name: true, scheduledOffset: true, nextAlarmAt: true },
+            orderBy: [{ scheduledOffset: 'asc' }, { id: 'asc' }],
+        });
+
+        const ids = children.map(c => c.id);
+        const counts = ids.length
+            ? await prisma.srsFolderItem.groupBy({
+                by: ['folderId'],
+                where: { folderId: { in: ids }, learned: false },
+                _count: { _all: true }
+            })
+            : [];
+
+        const countMap = new Map(counts.map(c => [c.folderId, c._count._all]));
+        const data = children.map(c => ({
+            id: c.id,
+            name: c.name,
+            scheduledOffset: c.scheduledOffset,
+            nextAlarmAt: c.nextAlarmAt,
+            dueCount: countMap.get(c.id) ?? 0,
+        }));
+
+        res.json({ ok: true, data });
     } catch (e) { next(e); }
 });
+
 
 // ────────────────────────────────────────────────────────────
 // 큐 API (폴더 기반 + 레거시 겸용)

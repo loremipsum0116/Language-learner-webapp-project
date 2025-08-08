@@ -375,6 +375,10 @@ export default function LearnVocab() {
                         <div className="d-flex justify-content-center gap-3 mt-4">
                             <button className="btn btn-outline-secondary" onClick={() => window.location.reload()}>다시 학습하기</button>
                             <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
+                            <Link className="btn btn-outline-secondary" to="/">홈으로</Link>
+
+                        
+
                         </div>
                     </div>
                 </main>

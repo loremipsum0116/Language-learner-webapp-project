@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 const { prisma } = require('../lib/prismaClient');
-const { nextAlarmSlot } = require('../lib/alarmSlot');
+const { nextAlarmSlot } = require('../utils/alarmTime'); 
 const { scheduleFolder } = require('../queues/alarmQueue');
 
 async function finishSession(req, res) {

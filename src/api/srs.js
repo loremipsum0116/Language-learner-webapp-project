@@ -37,6 +37,16 @@ export const SrsApi = {
         });
         return res.data ?? res;
     },
+
+    async createChild(rootId, name) {
+        const res = await fetchJSON(`/srs/folders/${rootId}/children`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ name }),
+        });
+        return res.data ?? res;
+    },
 };
 
 export const QuizApi = {
@@ -49,4 +59,9 @@ export const QuizApi = {
         });
         return res.data ?? res;
     },
+
+
+
 };
+
+

@@ -1,7 +1,7 @@
 //server/queues/alarmQueue.js
 const { Queue, Worker } = require('bullmq');
 const { prisma } = require('../lib/prismaClient');
-const { nextAlarmSlot } = require('../lib/alarmSlot');
+const { nextAlarmSlot } = require('../utils/alarmTime'); 
 
 /* Redis 연결 설정 */
 const connection = { host: '127.0.0.1', port: 6379 };

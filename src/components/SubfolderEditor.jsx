@@ -1,113 +1,201 @@
 // src/components/SubfolderEditor.jsx
+import React, { useState } from 'react';
+import { SrsApi } from '../api/srs';
+import SrsFolderPickerModal from './SrsFolderPickerModal';
 
-import React, { useState, useMemo } from 'react';
-import { fetchJSON, withCreds } from '../api/client';
-import { toast } from 'react-toastify';
-
+/**
+ * Props:
+ *  - folder: {
+ *      id, name, total, completed, incorrect,
+ *      items: [{
+ *        id, learned, wrongCount, cardId,
+ *        vocab: { lemma, levelCEFR, pos }
+ *      }]
+ *    }
+ *  - onUpdate?: () => void  // 상위 목록 재로딩 트리거
+ */
 export default function SubfolderEditor({ folder, onUpdate }) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedIds, setSelectedIds] = useState(new Set());
+    const items = Array.isArray(folder?.items) ? folder.items : [];
+    const [busyId, setBusyId] = useState(null);
 
-    const filteredItems = useMemo(() => {
-        const needle = searchTerm.trim().toLowerCase();
-        if (!needle) return folder.items || [];
-        return (folder.items || []).filter(item =>
-            item.vocab?.lemma.toLowerCase().includes(needle)
-        );
-    }, [folder.items, searchTerm]);
+    // 이동(편집) 모달
+    const [showPicker, setShowPicker] = useState(false);
+    const [movingItem, setMovingItem] = useState(null);
 
-    const handleToggleAll = (e) => {
-        if (e.target.checked) {
-            setSelectedIds(new Set(filteredItems.map(item => item.id)));
-        } else {
-            setSelectedIds(new Set());
-        }
+    const openMove = (item) => {
+        setMovingItem(item);
+        setShowPicker(true);
     };
 
-    const handleToggleOne = (itemId) => {
-        setSelectedIds(prev => {
-            const next = new Set(prev);
-            if (next.has(itemId)) next.delete(itemId);
-            else next.add(itemId);
-            return next;
-        });
-    };
-
-    /**
-     * [FIX] 선택한 단어를 영구적으로 삭제하는 핸들러
-     */
-    const handleDeleteSelected = async () => {
-        const ids = Array.from(selectedIds);
-        if (ids.length === 0) return;
-
-        // ✅ 사용자에게 되돌릴 수 없는 작업임을 명확히 알리고 확인받습니다.
-        if (!window.confirm(`선택한 ${ids.length}개의 단어를 SRS 시스템에서 영구적으로 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+    const handlePick = async (pickedFolder) => {
+        setShowPicker(false);
+        if (!pickedFolder) {
+            setMovingItem(null);
             return;
         }
-
+        if (pickedFolder.id === folder.id) {
+            alert('같은 폴더로는 이동할 수 없습니다.');
+            setMovingItem(null);
+            return;
+        }
         try {
-            const res = await fetchJSON(`/srs/folders/${folder.id}/items/bulk-delete`, withCreds({
-                method: 'POST',
-                body: JSON.stringify({
-                    itemIds: ids,
-                    permanent: true, // ✅ 항상 영구 삭제 옵션으로 API 호출
-                }),
-            }));
-            toast.success(`${res.count}개의 단어를 영구 삭제했습니다.`);
-            setSelectedIds(new Set());
-            onUpdate(); // 부모 컴포넌트(SrsFolderDetail)의 목록을 새로고침
+            setBusyId(movingItem.id);
+            await SrsApi.moveItems(folder.id, pickedFolder.id, { cardIds: [movingItem.cardId] });
+            onUpdate && onUpdate();
         } catch (e) {
-            toast.error('삭제 실패: ' + e.message);
+            alert(e?.message || '이동 중 오류가 발생했습니다.');
+        } finally {
+            setMovingItem(null);
+            setBusyId(null);
         }
     };
 
-    const isAllSelected = filteredItems.length > 0 && selectedIds.size === filteredItems.length;
+    const toggleLearned = async (item) => {
+        try {
+            setBusyId(item.id);
+            await SrsApi.markLearned(folder.id, { cardIds: [item.cardId], learned: !item.learned });
+            onUpdate && onUpdate();
+        } catch (e) {
+            alert(e?.message || '학습 상태 변경 실패');
+        } finally {
+            setBusyId(null);
+        }
+    };
+
+    const resetWrong = async (item) => {
+        if (!window.confirm('이 항목의 오답 누적을 0으로 초기화할까요?')) return;
+        try {
+            setBusyId(item.id);
+            await SrsApi.resetWrongCount(folder.id, { cardIds: [item.cardId] });
+            onUpdate && onUpdate();
+        } catch (e) {
+            alert(e?.message || '오답 초기화 실패');
+        } finally {
+            setBusyId(null);
+        }
+    };
+
+    const removeItem = async (item) => {
+        if (!window.confirm('이 폴더에서 이 항목을 삭제할까요? (SRS 카드 자체는 유지됩니다)')) return;
+        try {
+            setBusyId(item.id);
+            await SrsApi.removeItems(folder.id, { cardIds: [item.cardId] });
+            onUpdate && onUpdate();
+        } catch (e) {
+            alert(e?.message || '삭제 실패');
+        } finally {
+            setBusyId(null);
+        }
+    };
+
+    if (items.length === 0) {
+        return <div className="text-muted">이 폴더에 카드가 없습니다.</div>;
+    }
 
     return (
-        <details className="mt-2">
-            <summary className="small text-primary" style={{ cursor: 'pointer' }}>
-                카드 목록 관리 ({folder.total}개)
-            </summary>
-            <div className="p-2 border-top border-bottom">
-                <input
-                    type="search"
-                    className="form-control form-control-sm mb-2"
-                    placeholder="단어 검색..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <div className="d-flex justify-content-between align-items-center">
-                    <div className="form-check">
-                        <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id={`select-all-${folder.id}`}
-                            checked={isAllSelected}
-                            onChange={handleToggleAll}
-                        />
-                        <label className="form-check-label small" htmlFor={`select-all-${folder.id}`}>
-                            전체 선택 ({selectedIds.size})
-                        </label>
-                    </div>
-                    <button className="btn btn-danger btn-sm" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>
-                        선택 영구 삭제
-                    </button>
-                </div>
-            </div>
-            <ul className="list-group list-group-flush small mt-1" style={{ maxHeight: '200px', overflowY: 'auto' }}>
-                {filteredItems.map(item => (
-                    <li key={item.id} className="list-group-item px-1 py-1 d-flex align-items-center">
-                        <input
-                            type="checkbox"
-                            className="form-check-input me-2"
-                            checked={selectedIds.has(item.id)}
-                            onChange={() => handleToggleOne(item.id)}
-                        />
-                        {item.learned && <span className="me-2" title="학습 완료">✅</span>}
-                        {item.vocab?.lemma ?? `(ID: ${item.card?.itemId})`}
-                    </li>
-                ))}
+        <>
+            <ul className="list-group">
+                {items.map((item) => {
+                    const lemma = item?.vocab?.lemma || '(단어 없음)';
+                    const wrong = Number(item?.wrongCount || 0);
+                    const learned = !!item?.learned;
+                    const loading = busyId === item.id;
+
+                    return (
+                        <li
+                            key={item.id}
+                            className="list-group-item d-flex justify-content-between align-items-center"
+                        >
+                            {/* 왼쪽: 단어/메타 */}
+                            <div className="me-3">
+                                <div className="fw-semibold" lang="en">
+                                    {lemma}{' '}
+                                    {learned ? (
+                                        <span className="text-success" aria-label="학습 완료" title="학습 완료">✔️</span>
+                                    ) : (
+                                        <span className="text-muted" aria-label="미학습" title="미학습">—</span>
+                                    )}
+                                </div>
+                                <div className="small text-muted">
+                                    {item?.vocab?.levelCEFR && (
+                                        <span className="badge bg-secondary me-1">{item.vocab.levelCEFR}</span>
+                                    )}
+                                    {/* 품사 배지(복수 가능) */}
+                                    {item?.vocab?.pos &&
+                                        String(item.vocab.pos)
+                                            .split(',')
+                                            .map((p) => p.trim())
+                                            .filter(Boolean)
+                                            .map((p) => (
+                                                <span
+                                                    key={p}
+                                                    className="badge bg-light text-dark border me-1 fst-italic"
+                                                    title="품사"
+                                                >
+                                                    {p}
+                                                </span>
+                                            ))}
+                                    {wrong > 0 && (
+                                        <span className="badge bg-danger ms-1">오답 {wrong}</span>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* 오른쪽: 액션 버튼들 */}
+                            <div className="btn-group ms-auto" role="group" aria-label="actions">
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-outline-primary"
+                                    disabled={loading}
+                                    onClick={() => openMove(item)}
+                                    title="폴더 이동(편집)"
+                                >
+                                    {loading && movingItem?.id === item.id ? '이동중…' : '편집'}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-outline-success"
+                                    disabled={loading}
+                                    onClick={() => toggleLearned(item)}
+                                    title="학습표시 토글"
+                                >
+                                    {learned ? '학습 해제' : '학습 표시'}
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-outline-secondary"
+                                    disabled={loading || wrong === 0}
+                                    onClick={() => resetWrong(item)}
+                                    title="오답 누적 초기화"
+                                >
+                                    오답0
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-sm btn-outline-danger"
+                                    disabled={loading}
+                                    onClick={() => removeItem(item)}
+                                    title="폴더에서 삭제"
+                                >
+                                    삭제
+                                </button>
+                            </div>
+                        </li>
+                    );
+                })}
             </ul>
-        </details>
+
+            {/* 폴더 선택 모달 (편집=이동) */}
+            {showPicker && (
+                <SrsFolderPickerModal
+                    show={showPicker}
+                    onClose={() => {
+                        setShowPicker(false);
+                        setMovingItem(null);
+                    }}
+                    onPick={handlePick}
+                />
+            )}
+        </>
     );
 }
