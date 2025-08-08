@@ -17,7 +17,6 @@ import VocabList from "./pages/VocabList";
 import MyWordbook from "./pages/MyWordbook";
 import OdatNote from "./pages/OdatNote";
 import LearnStart from "./pages/LearnStart";
-import SrsManager from "./pages/SrsManager";
 import Dashboard from "./pages/Dashboard";
 import GrammarHub from './pages/GrammarHub';
 import GrammarQuiz from './pages/GrammarQuiz';
@@ -49,7 +48,6 @@ export default function App() {
         <Route element={<ProtectedRoute />}>
           <Route path="/learn" element={<LearnStart />} />
           <Route path="/learn/vocab" element={<LearnVocab />} />
-          <Route path="/learn/srs-manager" element={<SrsManager />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-wordbook" element={<MyWordbook />} />
           <Route path="/srs/folder/:id" element={<SrsFolderDetail />} />

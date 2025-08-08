@@ -2,9 +2,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
+import SubfolderEditor from '../components/SubfolderEditor';
 
 export default function SrsFolderDetail() {
-    const { id } = useParams();          // 루트 폴더 ID
+    const { id } = useParams(); // 루트 폴더 ID
     const navigate = useNavigate();
 
     const [root, setRoot] = useState(null);
@@ -27,11 +28,12 @@ export default function SrsFolderDetail() {
         }
     }
 
-    useEffect(() => { reload(); /* id 변경 시 재조회 */ }, [id]);
+    useEffect(() => { reload(); }, [id]);
 
     async function createSub() {
         if (!name.trim()) return alert('하위 폴더 이름을 입력하세요.');
         try {
+            setCreating(true);
             await fetchJSON(`/srs/folders/${id}/subfolders`, withCreds({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -40,7 +42,6 @@ export default function SrsFolderDetail() {
             setName('');
             await reload();
         } catch (e) {
-            // ✅ 서버가 409로 보내면 그냥 "중복" 안내만 하고 목록을 새로고침
             if (e.status === 409) {
                 alert('같은 이름의 하위 폴더가 이미 있습니다.');
                 await reload();
@@ -48,9 +49,10 @@ export default function SrsFolderDetail() {
                 alert('하위 폴더 생성 실패');
                 console.error(e);
             }
+        } finally {
+            setCreating(false);
         }
     }
-
 
     async function deleteFolder(folderId) {
         if (!window.confirm('이 폴더를 삭제하시겠습니까? 폴더 내 카드가 모두 삭제됩니다.')) return;
@@ -101,6 +103,7 @@ export default function SrsFolderDetail() {
                         <div className="col-12 col-md-6 col-lg-4" key={c.id}>
                             <div className="card h-100">
                                 <div className="card-body">
+                                    {/* ✅ 폴더 제목, 삭제 버튼, 통계 정보 UI 복원 */}
                                     <div className="d-flex justify-content-between align-items-center">
                                         <h5 className="mb-0">{c.name}</h5>
                                         <button
@@ -115,8 +118,15 @@ export default function SrsFolderDetail() {
                                         완료: {c.completed} / 총: {c.total}
                                         {c.incorrect > 0 && <span className="ms-2 text-danger">오답: {c.incorrect}</span>}
                                     </div>
+                                    
+                                    {/* ✅ SubfolderEditor 컴포넌트로 단어 관리 기능 통합 */}
+                                    {c.total > 0 && (
+                                        <SubfolderEditor folder={c} onUpdate={reload} />
+                                    )}
+                                    
+                                    {/* ✅ 퀴즈 시작, 카드 추가 버튼 UI 복원 */}
                                     <div className="d-flex gap-2 mt-3">
-                                        <Link className="btn btn-sm btn-primary" to={`/srs/quiz?folder=${c.id}`}>퀴즈 시작</Link>
+                                        <Link className="btn btn-sm btn-primary" to={`/learn/vocab?mode=srs_folder&folderId=${c.id}`}>퀴즈 시작</Link>
                                         <Link className="btn btn-sm btn-outline-secondary" to={`/vocab?addToFolder=${c.id}`}>카드 추가</Link>
                                     </div>
                                 </div>

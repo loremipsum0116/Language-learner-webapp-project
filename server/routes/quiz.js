@@ -33,15 +33,19 @@ router.post('/by-vocab', async (req, res) => {
 
 router.use(auth);
 // POST /quiz/answer
-router.post('/quiz/answer', auth, async (req, res, next) => {
+// server/routes/quiz.js around line 203
+
+// ...
+router.post('/answer', auth, async (req, res, next) => { // Note the corrected path from Fix 2.1
     try {
         const userId = req.user.id;
-        const { cardId, correct } = req.body || {};
+        const { folderId, cardId, correct } = req.body || {}; // folderId is now available
 
         if (!cardId || typeof correct !== 'boolean') {
             return res.status(400).json({ ok: false, error: 'cardId, correct가 필요합니다.' });
         }
-        const r = await Srs.markAnswer(req.user.id, { cardId: Number(cardId), correct });
+        // ✅ Pass folderId to the service
+        const r = await Srs.markAnswer(req.user.id, { folderId: Number(folderId), cardId: Number(cardId), correct });
         res.json({ ok: true, data: r });
     } catch (e) { next(e); }
 });

@@ -89,7 +89,16 @@ export default function MyWordbook() {
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
-        if (ids.length === 0) { alert('학습할 단어를 선택하세요.'); return; }
+        // ✅ FIX: 100개 초과 선택 시 경고 메시지 표시
+        if (ids.length > 100) {
+            alert('한 번에 100개 이상의 단어를 자동학습할 수 없습니다.');
+            return;
+        }
+
+        if (ids.length === 0) {
+            alert('학습할 단어를 선택하세요.');
+            return;
+        }
         navigate(`/learn/vocab?ids=${ids.join(',')}&mode=flash&auto=1`);
     };
 

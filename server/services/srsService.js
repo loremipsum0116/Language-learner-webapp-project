@@ -1,6 +1,7 @@
 const { prisma } = require('../lib/prismaClient');
 const createError = require('http-errors');
 const { startOfKstDay, kstAddDays, kstAt } = require('../lib/kst');
+const dayjs = require('dayjs');
 
 // 간단한 간격표(예시): stage 0→1일, 1→3일, 2→7일, 3→14일, 4→30일
 const OFFSETS = [1, 3, 7, 14, 30];
@@ -203,37 +204,64 @@ async function bumpDailyStat(userId, { srsSolvedInc = 0, autoLearnedInc = 0, wro
     });
 }
 
-async function markAnswer(userId, { cardId, correct }) {
-    // 본인 소유 카드 확인
+function nextReviewAtFor(card, correct) {
+    if (correct) {
+        const newStage = card.stage + 1;
+        // OFFSETS 배열 범위를 초과하지 않도록 조정
+        const offsetDays = OFFSETS[Math.min(newStage, OFFSETS.length - 1)];
+        const nextAt = dayjs().add(offsetDays, 'day').toDate();
+        return { newStage, nextAt };
+    } else {
+        // 오답 시, stage를 0으로 리셋하고 다음 날 오전 9시에 복습하도록 설정
+        const newStage = 0;
+        const nextAt = dayjs().add(1, 'day').startOf('day').hour(9).toDate();
+        return { newStage, nextAt };
+    }
+}
+
+async function markAnswer(userId, { folderId, cardId, correct }) { // Add folderId
     const card = await prisma.sRSCard.findFirst({ where: { id: cardId, userId } });
-    if (!card) throw new Error('카드를 찾을 수 없습니다.');
+    if (!card) throw new Error('카드를 찾을 수 없습니다.'); // [380]
 
-    const { nextAt, newStage } = nextReviewAtFor(card, !!correct);
-
+    // --- SRSCard Update (Existing Logic) ---
+    const { newStage, nextAt } = nextReviewAtFor(card, correct);
     if (correct) {
         await prisma.sRSCard.update({
             where: { id: cardId },
             data: {
-                correctCount: { increment: 1 },
+                correctTotal: { increment: 1 }, // ✅ FIX: 스키마에 맞게 correctCount -> correctTotal 수정
                 stage: newStage,
                 nextReviewAt: nextAt,
-                lastResult: 'pass',
             },
         });
-        return { status: 'pass' };
     } else {
         await prisma.sRSCard.update({
             where: { id: cardId },
             data: {
                 wrongTotal: { increment: 1 },
-                nextReviewAt: dayjs().startOf('day').add(1, 'day').hour(9).toDate(), // 내일 09:00
-                lastResult: 'fail',
+                stage: newStage,
+                nextReviewAt: nextAt,
             },
         });
-        return { status: 'fail' };
     }
-}
 
+    // --- SrsFolderItem Update (New Logic) ---
+    if (folderId) {
+        await prisma.srsFolderItem.updateMany({
+            where: { folderId: folderId, cardId: cardId },
+            data: {
+                lastReviewedAt: new Date(),
+                learned: correct, // 정답 시 learned=true, 오답 시 false
+                wrongCount: { increment: correct ? 0 : 1 },
+            }
+        });
+    }
+
+    // --- 일일 학습 통계 업데이트 ---
+    await bumpDailyStat(userId, { srsSolvedInc: 1 });
+
+    return { status: correct ? 'pass' : 'fail' };
+}
 module.exports = {
     ensureTodayFolder,
     listFoldersForDate,

@@ -369,26 +369,37 @@ export default function VocabList() {
         }
     };
 
+    // src/pages/VocabList.jsx
+
     const handleAddSRS = async (ids) => {
-        if (!user) return alert('로그인이 필요합니다.');
+        // 1. 사용자 입력값 검증을 먼저 수행합니다.
+        if (!user) {
+            return alert('로그인이 필요합니다.');
+        }
         if (!Array.isArray(ids) || ids.length === 0) {
             return alert('먼저 단어를 선택하세요.');
         }
-        // 1) 폴더 상세에서 온 경우: ?addToFolder=<하위폴더ID> 있으면 바로 그 폴더로
+
+        // 2. URL 파라미터로 폴더 ID가 지정된 경우 (직접 추가)
         const targetFolderId = Number(addToFolderParam ?? 0);
         if (Number.isFinite(targetFolderId) && targetFolderId > 0) {
             try {
+                // ✅ API를 먼저 호출하여 `res` 변수를 정의합니다.
                 const res = await SrsApi.addItems(targetFolderId, { vocabIds: ids });
-                const added = res?.added?.length ?? 0;
-                const dup = res?.duplicateIds?.length ?? 0;
-                alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+
+                // ✅ `res`가 정의된 후에 변수를 선언하고 값을 할당합니다.
+                const addedCount = res?.added ?? 0;
+                const dupCount = res?.duplicateIds?.length ?? 0;
+
+                alert(`추가됨 ${addedCount}개${dupCount > 0 ? `, 중복 ${dupCount}개` : ''}`);
                 await refreshSrsIds?.();
             } catch (e) {
                 alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
             }
-            return;
+            return; // 함수 실행 종료
         }
-        // 2) 일반 흐름: 폴더 피커 오픈
+
+        // 3. 일반적인 경우 (폴더 선택기 열기)
         setPickerIds(ids);
         setPickerOpen(true);
     };
@@ -502,9 +513,9 @@ export default function VocabList() {
                     onPick={async (folderId) => {
                         try {
                             const res = await SrsApi.addItems(folderId, { vocabIds: pickerIds });
-                            const added = res?.added?.length ?? 0;
-                            const dup = res?.duplicateIds?.length ?? 0;
-                            alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+                            const addedCount = res?.added ?? 0; // .length 제거
+                            const dupCount = res?.duplicateIds?.length ?? 0;
+                            alert(`추가됨 ${addedCount}개${dupCount > 0 ? `, 중복 ${dupCount}개` : ''}`);
                             await refreshSrsIds?.();
                         } catch (e) {
                             alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));

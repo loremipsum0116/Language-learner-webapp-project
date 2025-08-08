@@ -11,17 +11,14 @@ export const SrsApi = {
         const res = await fetchJSON(`/srs/folders/${rootId}/children-lite`, { credentials: 'include' });
         return res.data ?? res;
     },
-
-    async addItems(folderId, payload) {
-        const res = await fetchJSON(`/srs/folders/${folderId}/items`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify(payload),
-        });
+    // ✅ 누락된 getQueue 함수 추가
+    async getQueue(folderId) {
+        const res = await fetchJSON(`/srs/queue?folderId=${folderId}`, { credentials: 'include' });
         return res.data ?? res;
     },
-    listSubfolders(rootId) { return fetchJSON(`/srs/folders/${rootId}/children`, { credentials: 'include' }).then(r => r.data?.children ?? []); },
+    listSubfolders(rootId) {
+        return fetchJSON(`/srs/folders/${rootId}/children`, { credentials: 'include' }).then(r => r.data?.children ?? []);
+    },
     createSubfolder(parentId, name) {
         return fetchJSON(`/srs/folders/${parentId}/subfolders`, {
             method: 'POST',
@@ -30,13 +27,15 @@ export const SrsApi = {
             body: JSON.stringify({ name })
         }).then(r => r.data ?? r);
     },
-    addItems(folderId, payload) {
-        return fetchJSON(`/srs/folders/${folderId}/items`, {
+    // ✅ async/await 버전만 남기고 중복 제거
+    async addItems(folderId, payload) {
+        const res = await fetchJSON(`/srs/folders/${folderId}/items`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',
             body: JSON.stringify(payload),
-        }).then(r => r.data ?? r);
+        });
+        return res.data ?? res;
     },
 };
 

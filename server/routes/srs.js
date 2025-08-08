@@ -169,59 +169,59 @@ router.post('/legacy/clear', async (req, res, next) => {
 // POST /srs/folders/:id/items   body: { vocabIds?: number[], cardIds?: number[] }
 // server/routes/srs.js  (해당 라우트 교체/수정)
 router.post('/folders/:id/items', async (req, res, next) => {
-  try {
-    const userId   = req.user.id;
-    const folderId = Number(req.params.id);
-    const { vocabIds = [] } = req.body || {};
-    if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-      return fail(res, 400, 'vocabIds required');
-    }
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.id);
+        const { vocabIds = [] } = req.body || {};
+        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+            return fail(res, 400, 'vocabIds required');
+        }
 
-    const folder = await prisma.srsFolder.findFirst({
-      where: { id: folderId, userId },
-      select: { id: true, parentId: true }
-    });
-    if (!folder) return fail(res, 404, 'folder not found');
+        const folder = await prisma.srsFolder.findFirst({
+            where: { id: folderId, userId },
+            select: { id: true, parentId: true }
+        });
+        if (!folder) return fail(res, 404, 'folder not found');
 
-    // 🚫 루트에 직접 추가 금지
-    if (folder.parentId === null) {
-      return fail(res, 400, 'root folder cannot contain items; pick a subfolder');
-    }
+        // 🚫 루트에 직접 추가 금지
+        if (folder.parentId === null) {
+            return fail(res, 400, 'root folder cannot contain items; pick a subfolder');
+        }
 
-    // vocabIds -> SRSCard (없으면 생성)
-    const existingCards = await prisma.sRSCard.findMany({
-      where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
-      select: { id: true, itemId: true }
-    });
-    const map = new Map(existingCards.map(c => [c.itemId, c.id]));
-    const toCreate = vocabIds
-      .filter(id => !map.has(id))
-      .map(vocabId => ({ userId, itemType: 'vocab', itemId: vocabId, stage: 0, nextReviewAt: new Date() }));
-    if (toCreate.length) await prisma.sRSCard.createMany({ data: toCreate });
+        // vocabIds -> SRSCard (없으면 생성)
+        const existingCards = await prisma.sRSCard.findMany({
+            where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
+            select: { id: true, itemId: true }
+        });
+        const map = new Map(existingCards.map(c => [c.itemId, c.id]));
+        const toCreate = vocabIds
+            .filter(id => !map.has(id))
+            .map(vocabId => ({ userId, itemType: 'vocab', itemId: vocabId, stage: 0, nextReviewAt: new Date() }));
+        if (toCreate.length) await prisma.sRSCard.createMany({ data: toCreate });
 
-    // 새로 만든 카드까지 다시 조회해 카드ID 매핑 완성
-    const allCards = await prisma.sRSCard.findMany({
-      where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
-      select: { id: true, itemId: true }
-    });
-    allCards.forEach(c => map.set(c.itemId, c.id));
+        // 새로 만든 카드까지 다시 조회해 카드ID 매핑 완성
+        const allCards = await prisma.sRSCard.findMany({
+            where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
+            select: { id: true, itemId: true }
+        });
+        allCards.forEach(c => map.set(c.itemId, c.id));
 
-    const cardIds = vocabIds.map(v => map.get(v)).filter(Boolean);
+        const cardIds = vocabIds.map(v => map.get(v)).filter(Boolean);
 
-    // 폴더 내 중복 제거
-    const existingItems = await prisma.srsFolderItem.findMany({
-      where: { folderId, cardId: { in: cardIds } },
-      select: { cardId: true }
-    });
-    const dupCardIdSet = new Set(existingItems.map(i => i.cardId));
-    const toInsert = cardIds
-      .filter(cid => !dupCardIdSet.has(cid))
-      .map(cid => ({ folderId, cardId: cid }));
-    if (toInsert.length) await prisma.srsFolderItem.createMany({ data: toInsert });
+        // 폴더 내 중복 제거
+        const existingItems = await prisma.srsFolderItem.findMany({
+            where: { folderId, cardId: { in: cardIds } },
+            select: { cardId: true }
+        });
+        const dupCardIdSet = new Set(existingItems.map(i => i.cardId));
+        const toInsert = cardIds
+            .filter(cid => !dupCardIdSet.has(cid))
+            .map(cid => ({ folderId, cardId: cid }));
+        if (toInsert.length) await prisma.srsFolderItem.createMany({ data: toInsert });
 
-    const duplicateIds = vocabIds.filter(vId => dupCardIdSet.has(map.get(vId)));
-    return ok(res, { added: toInsert.length, duplicateIds });
-  } catch (e) { next(e); }
+        const duplicateIds = vocabIds.filter(vId => dupCardIdSet.has(map.get(vId)));
+        return ok(res, { added: toInsert.length, duplicateIds });
+    } catch (e) { next(e); }
 });
 
 
@@ -239,24 +239,121 @@ router.get('/folders/:id/children', async (req, res, next) => {
         });
         if (!root) return fail(res, 404, 'root not found');
 
+        // 1. 하위 폴더와 그 안의 아이템, 카드 정보까지 모두 조회합니다.
         const children = await prisma.srsFolder.findMany({
             where: { userId, parentId: id },
-            include: { items: { select: { learned: true, wrongCount: true } } },
+
+            include: {
+                items: {
+                    include: {
+                        // ✅ card와 그 안의 vocabId(itemId)까지 포함합니다.
+                        card: { select: { itemId: true } }
+                    }
+                }
+            },
             orderBy: { id: 'asc' },
         });
 
+
+        // 2. 모든 하위 폴더에서 필요한 vocabId를 중복 없이 추출합니다.
+        const vocabIds = [...new Set(
+            children.flatMap(c => c.items.map(i => i.card.itemId))
+        )];
+        // 3. 추출한 ID로 Vocab 테이블에서 단어 정보를 한 번에 조회합니다.
+        const vocabs = vocabIds.length > 0
+            ? await prisma.vocab.findMany({ where: { id: { in: vocabIds } } })
+            : [];
+        const vocabMap = new Map(vocabs.map(v => [v.id, v]));
+
+        // 4. 최종적으로 각 하위 폴더 정보에 상세한 카드(단어) 목록을 추가합니다.
         const mapped = children.map((c) => ({
             id: c.id,
             name: c.name,
             total: c.items.length,
             completed: c.items.filter((i) => i.learned).length,
             incorrect: c.items.filter((i) => (i.wrongCount ?? 0) > 0).length,
+            // ✅ 각 아이템에 `vocab` 상세 정보를 매핑하여 추가합니다.
+            items: c.items.map(item => ({ ...item, vocab: vocabMap.get(item.card.itemId) || null })),
         }));
 
         return ok(res, { root, children: mapped });
     } catch (e) { next(e); }
 });
 
+router.delete('/folders/:folderId/items/:itemId', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.folderId);
+        const itemId = Number(req.params.itemId);
+
+        // 폴더 소유권 확인
+        const folder = await prisma.srsFolder.findFirst({
+            where: { id: folderId, userId },
+            select: { id: true },
+        });
+        if (!folder) return fail(res, 404, '폴더를 찾을 수 없습니다.');
+
+        await prisma.srsFolderItem.delete({
+            where: { id: itemId },
+        });
+
+        return ok(res, { deleted: true });
+    } catch (e) {
+        next(e);
+    }
+});
+
+// server/routes/srs.js 에 추가될 코드
+
+// POST /srs/folders/:folderId/items/bulk-delete
+// server/routes/srs.js
+
+// POST /srs/folders/:folderId/items/bulk-delete
+router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.folderId);
+        // ✅ 요청 본문에서 itemIds와 permanent 옵션을 함께 받습니다.
+        const { itemIds, permanent } = req.body;
+
+        // ... (기존 유효성 검사 및 폴더 소유권 확인) ...
+
+        // ✅ SrsFolderItem ID로 실제 SRSCard ID를 조회합니다.
+        const itemsToDelete = await prisma.srsFolderItem.findMany({
+            where: { id: { in: itemIds }, folderId: folderId },
+            select: { id: true, cardId: true },
+        });
+
+        if (itemsToDelete.length === 0) {
+            return ok(res, { count: 0 });
+        }
+
+        const folderItemIds = itemsToDelete.map(item => item.id);
+        const cardIdsToDelete = itemsToDelete.map(item => item.cardId);
+
+        // --- 트랜잭션으로 안전하게 처리 ---
+        await prisma.$transaction(async (tx) => {
+            // 1. 폴더와 아이템의 연결을 먼저 끊습니다. (공통)
+            const result = await tx.srsFolderItem.deleteMany({
+                where: { id: { in: folderItemIds } },
+            });
+
+            // 2. permanent 옵션이 true일 경우, SRSCard를 영구 삭제합니다.
+            if (permanent) {
+                await tx.sRSCard.deleteMany({
+                    where: {
+                        id: { in: cardIdsToDelete },
+                        userId: userId, // 본인 카드만 삭제하도록 이중 확인
+                    },
+                });
+            }
+        });
+
+        return ok(res, { count: itemsToDelete.length, permanent });
+    } catch (e) {
+        next(e);
+    }
+});
 // DELETE /srs/folders/:id  (루트/하위 모두 허용)  — 하위와 아이템까지 함께 삭제
 router.delete('/folders/:id', async (req, res, next) => {
     try {
@@ -312,42 +409,42 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
 // GET /srs/folders/picker  → 루트 폴더(날짜 폴더)만 가볍게
 // server/routes/srs.js  (기존 picker 라우트 확장)
 router.get('/folders/picker', async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const flatten = String(req.query.flatten || '').toLowerCase();
+    try {
+        const userId = req.user.id;
+        const flatten = String(req.query.flatten || '').toLowerCase();
 
-    if (flatten === 'sub') {
-      const subs = await prisma.srsFolder.findMany({
-        where: { userId, parentId: { not: null } },
-        orderBy: [{ date: 'desc' }, { id: 'desc' }],
-        select: { id: true, name: true, parentId: true, date: true }
-      });
-      return ok(res, subs);
-    }
+        if (flatten === 'sub') {
+            const subs = await prisma.srsFolder.findMany({
+                where: { userId, parentId: { not: null } },
+                orderBy: [{ date: 'desc' }, { id: 'desc' }],
+                select: { id: true, name: true, parentId: true, date: true }
+            });
+            return ok(res, subs);
+        }
 
-    // (기존 동작: 루트 등 목록)
-    const data = await prisma.srsFolder.findMany({
-      where: { userId },
-      orderBy: [{ date: 'desc' }, { id: 'desc' }],
-      select: { id: true, name: true, date: true, parentId: true, alarmActive: true }
-    });
-    return ok(res, data);
-  } catch (e) { next(e); }
+        // (기존 동작: 루트 등 목록)
+        const data = await prisma.srsFolder.findMany({
+            where: { userId },
+            orderBy: [{ date: 'desc' }, { id: 'desc' }],
+            select: { id: true, name: true, date: true, parentId: true, alarmActive: true }
+        });
+        return ok(res, data);
+    } catch (e) { next(e); }
 });
 
 
 // GET /srs/folders/:id/children-lite  → 픽커에서 펼칠 때 쓰는 가벼운 하위 목록
 router.get('/folders/:id/children-lite', async (req, res, next) => {
-  try {
-    const userId = req.user.id;
-    const parentId = Number(req.params.id);
-    const children = await prisma.srsFolder.findMany({
-      where: { userId, parentId },
-      orderBy: { id: 'asc' },
-      select: { id: true, name: true },
-    });
-    return ok(res, children);
-  } catch (e) { next(e); }
+    try {
+        const userId = req.user.id;
+        const parentId = Number(req.params.id);
+        const children = await prisma.srsFolder.findMany({
+            where: { userId, parentId },
+            orderBy: { id: 'asc' },
+            select: { id: true, name: true },
+        });
+        return ok(res, children);
+    } catch (e) { next(e); }
 });
 
 // ────────────────────────────────────────────────────────────
@@ -361,29 +458,21 @@ router.get('/queue', async (req, res) => {
         const folderId = req.query.folderId ? Number(req.query.folderId) : null;
 
         if (folderId) {
-            // 폴더 기반 큐
+            // Only quiz unlearned items
             const items = await prisma.srsFolderItem.findMany({
-                where: { folderId, folder: { userId } },
+                where: { folderId, folder: { userId }, learned: false },
                 include: { card: true },
                 orderBy: { id: 'asc' },
             });
             if (!items.length) return ok(res, []);
 
             const vocabIds = items.map((it) => it.card?.itemId).filter(Boolean);
-            const vocabs = await prisma.vocab.findMany({
-                where: { id: { in: vocabIds } },
-                include: { dictMeta: true },
-            });
-            const vmap = new Map(vocabs.map((v) => [v.id, v]));
+            // Generate a multiple-choice quiz from the folder's vocab IDs [211]
+            const queue = await generateMcqQuizItems(prisma, userId, vocabIds);
+            // Inject folderId into each quiz item for the frontend's answer submission
+            const queueWithFolderId = queue.map(q => ({ ...q, folderId }));
+            return ok(res, queueWithFolderId);
 
-            const queue = items.map((it) => ({
-                cardId: it.cardId,
-                learned: it.learned,
-                wrongCount: it.wrongCount,
-                vocab: vmap.get(it.card?.itemId) || null,
-            }));
-
-            return ok(res, queue);
         }
 
         // 레거시 큐 — 날짜/폴더 미지정 시 기존 방식
