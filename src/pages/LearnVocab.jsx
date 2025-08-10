@@ -12,6 +12,7 @@ import React, { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import _ from 'lodash';
+import AddLearnedToFolderModal from '../components/AddLearnedToFolderModal';
 
 import { fetchJSON, withCreds, API_BASE, isAbortError } from '../api/client';
 import { useAuth } from '../context/AuthContext';
@@ -72,6 +73,8 @@ export default function LearnVocab() {
     const [isSubmitting, setSubmitting] = useState(false);
     const [reloading, setReloading] = useState(false);
     const [reloadKey, forceReload] = useReducer((k) => k + 1, 0);
+    const [showFolderPicker, setShowFolderPicker] = useState(false);
+    const [learnedVocabIds, setLearnedVocabIds] = useState([]);
 
     // 플래시 공통
     const [flipped, setFlipped] = useState(false);
@@ -315,21 +318,6 @@ export default function LearnVocab() {
         forceReload();
     };
 
-    const handleReplaceSrsAndLearn = async () => {
-        const idsToLearn = queue.map(item => item.vocabId).filter(Boolean);
-        if (idsToLearn.length === 0) { toast.info('학습할 단어가 없습니다.'); return; }
-        if (!window.confirm(`현재 학습한 ${idsToLearn.length}개의 단어로 기존 SRS 덱을 교체하고 바로 학습하시겠습니까? (기존 SRS 카드는 모두 삭제됩니다)`)) return;
-        try {
-            setReloading(true);
-            await fetchJSON('/srs/replace-deck', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds: idsToLearn }) }));
-            await refreshSrsIds();
-            navigate('/learn/vocab');
-        } catch (e) {
-            toast.error('SRS 덱 교체 실패: ' + e.message);
-        } finally {
-            setReloading(false);
-        }
-    };
 
     // ───────────────────── 렌더링 ─────────────────────
     if (loading) return <main className="container py-4"><h4>학습 데이터 로딩 중…</h4></main>;
@@ -377,7 +365,7 @@ export default function LearnVocab() {
                             <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
                             <Link className="btn btn-outline-secondary" to="/">홈으로</Link>
 
-                        
+
 
                         </div>
                     </div>
@@ -436,31 +424,58 @@ export default function LearnVocab() {
 
     // 완료 화면 분기
     if (!current) {
+        // 학습 완료 후 "폴더에 저장" 버튼을 눌렀을 때 실행될 함수
+        const handleSaveToFolder = () => {
+            const idsToSave = queue.map(item => item.vocabId).filter(Boolean);
+            if (idsToSave.length === 0) {
+                toast.info('저장할 단어가 없습니다.');
+                return;
+            }
+            setLearnedVocabIds(idsToSave);
+            setShowFolderPicker(true);
+        };
+
         return (
-            <main className="container py-4" style={{ maxWidth: 720 }}>
-                <audio ref={audioRef} style={{ display: 'none' }} />
-                <div className="p-4 bg-light rounded text-center">
-                    <h4 className="mb-2">🎉 학습 완료!</h4>
-                    <p className="text-muted">다음 작업을 선택하세요.</p>
-                    <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
-                        <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
-                        {(mode === 'flash' || !!idsParam) && (
-                            <button className="btn btn-primary" onClick={handleReplaceSrsAndLearn} disabled={reloading}>
-                                {reloading ? '준비 중…' : '지금 단어들로 SRS 학습하기'}
-                            </button>
-                        )}
-                        {(!mode || mode === 'srs') && (
-                            <>
-                                <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
-                                <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
-                            </>
-                        )}
-                        {mode === 'odat' && (<Link className="btn btn-primary" to="/learn/vocab">SRS 퀴즈로 가기</Link>)}
+            <>
+                <main className="container py-4" style={{ maxWidth: 720 }}>
+                    <audio ref={audioRef} style={{ display: 'none' }} />
+                    <div className="p-4 bg-light rounded text-center">
+                        <h4 className="mb-2">🎉 학습 완료!</h4>
+                        <p className="text-muted">다음 작업을 선택하세요.</p>
+                        <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                            <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
+
+                            {/* --- 이 부분이 핵심 변경 사항입니다 --- */}
+                            {(mode === 'flash' || !!idsParam) && (
+                                <button className="btn btn-primary" onClick={handleSaveToFolder}>
+                                    학습 단어 폴더에 저장
+                                </button>
+                            )}
+                            {/* --- 여기까지 --- */}
+
+                            {(!mode || mode === 'srs') && (
+                                <>
+                                    <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
+                                    <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
+                                </>
+                            )}
+                            {mode === 'odat' && (<Link className="btn btn-primary" to="/learn/vocab">SRS 퀴즈로 가기</Link>)}
+                        </div>
                     </div>
-                </div>
-            </main>
+                </main>
+
+                {/* --- 모달 렌더링 로직 추가 --- */}
+                {showFolderPicker && (
+                    <AddLearnedToFolderModal
+                        show={showFolderPicker}
+                        onClose={() => setShowFolderPicker(false)}
+                        vocabIds={learnedVocabIds}
+                    />
+                )}
+            </>
         );
     }
+
 
     // 플래시 모드
     if (mode === 'flash') {

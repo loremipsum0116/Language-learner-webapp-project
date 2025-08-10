@@ -1,3 +1,4 @@
+//src/pages/MyWorldbook.jsx
 import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds, API_BASE } from '../api/client';
@@ -131,6 +132,11 @@ export default function MyWordbook() {
         }
     }, []);
 
+    useEffect(() => {
+        // 이 컴포넌트가 화면에서 사라질 때 stopAudio 함수를 호출합니다.
+        return () => stopAudio();
+    }, [])
+
     // ★ 2. useEffect에서 로컬 srsIds 로딩 로직을 제거합니다. (AuthContext가 처리)
     useEffect(() => {
         const ac = new AbortController();
@@ -157,31 +163,37 @@ export default function MyWordbook() {
     }, [words, searchTerm]);
 
     const stopAudio = () => {
-        if (audioRef.current) {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-            audioRef.current = null;
-        }
+        const el = audioRef.current;
+        if (!el) return;
+        try {
+            el.pause();
+            el.removeAttribute('src');
+            el.load();
+        } catch { }
         setPlayingAudio(null);
     };
 
     const playUrl = (url, type, id) => {
-        if (!url) return;
+        const el = audioRef.current;
+        if (!el || !url) return;
+
         if (playingAudio?.id === id) {
             stopAudio();
             return;
         }
+
         stopAudio();
-        const fullUrl = url.startsWith('/') ? `${API_BASE}${url}` : url;
-        const newAudio = new Audio(fullUrl);
-        newAudio.onended = () => setPlayingAudio(null);
-        newAudio.play().then(() => {
-            audioRef.current = newAudio;
+
+        el.src = url.startsWith('/') ? `${API_BASE}${url}` : url;
+        el.play().then(() => {
             setPlayingAudio({ type, id });
         }).catch(e => {
-            console.error("오디오 재생 실패:", e, fullUrl);
+            console.error("오디오 재생 실패:", e);
             setPlayingAudio(null);
         });
+
+        // 오디오가 끝나면 재생 상태 초기화
+        el.onended = () => setPlayingAudio(null);
     };
 
     const playVocabAudio = async (vocabData) => {
@@ -319,6 +331,7 @@ export default function MyWordbook() {
 
     return (
         <main className="container py-4">
+            <audio ref={audioRef} style={{ display: 'none' }} />
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">

@@ -195,15 +195,14 @@ export default function OdatNote() {
         const result = isCorrect ? 'pass' : 'fail';
         setFeedback({ status: result, answer: currentQuiz.answer });
         try {
-            /* ✅ pass / fail 모두 서버에 기록 */
+            // ▼▼▼ API 엔드포인트와 전송 데이터를 수정합니다 ▼▼▼
             await fetchJSON(
-                '/srs/answer',
+                '/quiz/answer', // [수정] /srs/answer -> /quiz/answer
                 withCreds({
                     method: 'POST',
                     body: JSON.stringify({
                         cardId: currentQuiz.cardId,
-                        result,
-                        source: 'odatNote',
+                        correct: isCorrect, // [수정] 'result', 'source' 대신 'correct' 사용
                     }),
                 })
             );

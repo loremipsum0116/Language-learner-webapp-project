@@ -3,8 +3,38 @@ const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 const { startOfKstDay, addKstDays } = require('../services/srsJobs');
+const { ok, fail } = require('../lib/resp'); // ok, fail 헬퍼 임포트
+const { generateMcqQuizItems } = require('../services/quizService'); // 퀴즈 생성 서비스 임포트
+// ... (기존 require문들)
 
 // app.use('/quiz', auth, quizRoutes) 에서 auth 적용됨
+
+
+// ▼▼▼ 여기에 이 코드 블록을 추가하세요 ▼▼▼
+/*
+ * @route   POST /quiz/by-vocab
+ * @desc    주어진 vocabId 목록으로 즉석 퀴즈를 생성합니다. (내 단어장 -> 자동학습)
+ * @access  Private
+ */
+router.post('/by-vocab', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { vocabIds } = req.body;
+
+        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+            return fail(res, 400, 'vocabIds must be a non-empty array');
+        }
+
+        const quizItems = await generateMcqQuizItems(prisma, userId, vocabIds);
+        return ok(res, quizItems); // data: [...] 형태로 응답
+
+    } catch (e) {
+        console.error('POST /quiz/by-vocab failed:', e);
+        // next(e)를 사용하거나 fail 헬퍼로 직접 응답할 수 있습니다.
+        return fail(res, 500, 'Failed to create quiz by vocab IDs');
+    }
+});
+// ▲▲▲ 여기까지 추가 ▲▲▲
 
 router.post('/answer', async (req, res, next) => {
     try {
@@ -12,13 +42,13 @@ router.post('/answer', async (req, res, next) => {
         let { folderId, cardId, correct } = req.body;
 
         // 형 변환/검증
-        folderId = Number(folderId);
+        folderId = folderId ? Number(folderId) : null; // folderId가 없으면 null로 설정
         cardId = Number(cardId);
         const isCorrect =
             correct === true || correct === 'true' || correct === 1 || correct === '1';
 
-        if (!folderId || !cardId) {
-            return res.status(400).json({ error: 'folderId, cardId 필요' });
+        if (!cardId) {
+            return res.status(400).json({ error: 'cardId 필요' });
         }
 
         // 폴더 소유 검증(루트/자식 모두 허용)
@@ -42,13 +72,25 @@ router.post('/answer', async (req, res, next) => {
             });
             if (!card) throw Object.assign(new Error('SRS 카드 없음'), { status: 404 });
 
-            // 폴더 아이템 존재/소유 검증 (복합 유니크로 바로 업데이트)
-            const existing = await tx.srsFolderItem.findUnique({
-                where: { folderId_cardId: { folderId, cardId } },
-                select: { id: true, learned: true, wrongCount: true },
-            });
-            if (!existing) {
-                throw Object.assign(new Error('폴더 아이템 없음'), { status: 404 });
+            if (folderId) {
+                const folder = await tx.srsFolder.findFirst({
+                    where: { id: folderId, userId },
+                    select: { id: true, userId: true, date: true },
+                });
+                if (!folder) throw Object.assign(new Error('폴더 없음'), { status: 404 });
+
+                const existing = await tx.srsFolderItem.findUnique({
+                    where: { folderId_cardId: { folderId, cardId } },
+                    select: { id: true },
+                });
+                if (!existing) throw Object.assign(new Error('폴더 아이템 없음'), { status: 404 });
+
+                await tx.srsFolderItem.update({
+                    where: { folderId_cardId: { folderId, cardId } },
+                    data: isCorrect
+                        ? { learned: true, lastReviewedAt: now }
+                        : { learned: false, wrongCount: { increment: 1 }, lastReviewedAt: now },
+                });
             }
 
             // 폴더 아이템 업데이트
