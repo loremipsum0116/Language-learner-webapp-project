@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `user` ADD COLUMN `lastStudiedAt` DATETIME(3) NULL,
-    ADD COLUMN `streak` INTEGER NOT NULL DEFAULT 0;

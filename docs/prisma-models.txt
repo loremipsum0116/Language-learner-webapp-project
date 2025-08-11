@@ -1,0 +1,14 @@
+model User {
+model Category {
+model Vocab {
+model DictEntry {
+model GrammarItem {
+model GrammarExercise {
+model Reading {
+model SessionBatch {
+model SrsFolder {
+model SRSCard {
+model TutorLog {
+model UserVocab {
+model DailyStudyStat {
+model SrsFolderItem {

@@ -19,12 +19,16 @@ model User {
   createdAt     DateTime  @default(now())
   lastStudiedAt DateTime?
   streak        Int       @default(0)
+  streakUpdatedAt DateTime? // 연속 학습 일수 마지막 업데이트 시각
+  dailyQuizCount Int      @default(0) // 당일 퀴즈 풀이 개수
+  lastQuizDate   DateTime? // 마지막 퀴즈 풀이 날짜
 
   SRSCard    SRSCard[]
   srsFolders SrsFolder[]
   dailyStats DailyStudyStat[]
   TutorLog   TutorLog[]
   myVocab    UserVocab[]
+  wrongAnswers WrongAnswer[] // 오답노트
 
   // ★ 추가: Category 역방향 필드(백릴레이션)
   categories Category[]
@@ -63,6 +67,7 @@ model Vocab {
   dictMeta      DictEntry?
   savedByUsers  UserVocab[]
   SrsFolderItem SrsFolderItem[]
+  wrongAnswers  WrongAnswer[] // 오답노트 역방향 관계
 
   @@index([lemma])
   @@index([source])
@@ -121,31 +126,46 @@ model SessionBatch {
 model SrsFolder {
   id              Int       @id @default(autoincrement())
   userId          Int
-  parentId        Int?      // ← 없다면 추가
+  parentId        Int?      // 평면 구조: 항상 NULL 유지 (이후 제거 예정)
   name            String
-  date            DateTime
-  kind            String     @default("review")
-  scheduledOffset Int?
-  autoCreated     Boolean    @default(false)
-  originSessionId Int?
+
+  // 스케줄 핵심
+  createdDate     DateTime   @db.Date        // 폴더 생성 “날짜” (KST 기준 저장 권장)
+  stage           Int        @default(0)     // 망각곡선 단계(0,1,2…)
+  nextReviewDate  DateTime?  @db.Date        // 다음 복습 “날짜”
+  lastReviewedAt  DateTime?                    // 마지막 복습 완료 시각
+  nextReviewAt    DateTime?
+  
+  // 알림
   alarmActive     Boolean    @default(true)
-  nextAlarmAt     DateTime?
-  completedAt     DateTime?
+  nextAlarmAt     DateTime?                    // 다음 알림 발사 시각(KST)
+  completedAt     DateTime?                    // 그날 복습 완료 시각(선택)
+  cycleAnchorAt   DateTime       @default(now())    // ★ 망각곡선 앵커(생성 기준)
+
+  // 기타(기존 유지)
+  kind            String     @default("manual")    // "manual"(수동생성), "review"(복습) 
+  scheduledOffset Int?
+  autoCreated     Boolean    @default(false)      // 더이상 자동생성 안함
+  originSessionId Int?
+  isCompleted     Boolean    @default(false)      // 폴더 전체 학습 완료 여부
+  completedWordsCount Int    @default(0)          // 완료한 단어 개수
+  completionCount Int        @default(0)          // 완료 회차 (몇 번째 120일 사이클인지)
+  isMastered      Boolean    @default(false)      // 120일 사이클 완료로 마스터된 상태
+  date            DateTime   @default(now())  // 과거 루트 날짜 용도였던 컬럼: 필요 시 유지/미사용
   createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  reminderMask    Int            @default(0)        // 0,6,12,18시 슬롯 비트(1|2|4|8)
 
   items  SrsFolderItem[]
-  user   User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-  parent SrsFolder?      @relation("FolderChildren", fields: [parentId], references: [id])
-  child  SrsFolder[]     @relation("FolderChildren")
+  user   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([userId, date])
-
-  // ✅ 하위 폴더 이름 유일성(같은 부모 아래 이름 중복 금지)
-  @@unique([userId, parentId, name])
-
-  // ✅ 루트 날짜 유일성 (scheduledOffset 포함해 커스텀/리뷰 등 공존 가능)
-  @@unique([userId, date, kind, scheduledOffset])
+  @@index([userId, alarmActive, nextReviewAt])
+  @@index([nextAlarmAt])
+  @@index([parentId])
+  // 같은 사용자 내 이름 중복 금지(옵션): 필요 시 활성화
+  // @@unique([userId, name])
 }
+
 
 
 model SRSCard {
@@ -242,3 +262,29 @@ model SrsFolderItem {
   @@index([cardId])
   @@index([folderId, learned])
 }
+
+// ──────────────────────────────────────────────────────────────
+// [ADD] 오답노트 시스템
+// ──────────────────────────────────────────────────────────────
+model WrongAnswer {
+  id            Int       @id @default(autoincrement())
+  userId        Int
+  vocabId       Int
+  wrongAt       DateTime  @default(now()) // 틀린 시각
+  reviewWindowStart DateTime // 복습 윈도우 시작 (틀린 다음날 같은 시각)
+  reviewWindowEnd   DateTime // 복습 윈도우 종료 (틀린 다음다음날 같은 시각)
+  reviewedAt    DateTime? // 복습 완료 시각 (성공적으로 맞춘 시각)
+  isCompleted   Boolean   @default(false) // 오답노트에서 해결 완료 여부
+  attempts      Int       @default(0) // 재시도 횟수
+  
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocab Vocab @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, vocabId, wrongAt])
+  @@index([userId, isCompleted])
+  @@index([reviewWindowStart, reviewWindowEnd])
+}
+
+// ──────────────────────────────────────────────────────────────
+// [ADD] SRS 폴더에 오답노트 연결 추가
+// ──────────────────────────────────────────────────────────────

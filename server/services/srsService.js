@@ -2,47 +2,195 @@
 const { prisma } = require('../lib/prismaClient');
 const createError = require('http-errors');
 const { startOfKstDay, kstAddDays, kstAt } = require('../lib/kst');
+const { computeNextReviewDate } = require('./srsSchedule');
 const dayjs = require('dayjs');
 
-// 간단한 간격표(예시): stage 0→1일, 1→3일, 2→7일, 3→14일, 4→30일
-const OFFSETS = [1, 3, 7, 14, 30];
-
-async function ensureTodayFolder(userId, originSessionId = null) {
-    const todayKst = startOfKstDay();
-    let folder = await prisma.srsFolder.findFirst({
-        where: { userId, date: todayKst, kind: 'review', scheduledOffset: 0 },
+/**
+ * 수동으로 새 학습 폴더를 생성합니다.
+ */
+async function createManualFolder(userId, folderName, vocabIds = []) {
+    const now = dayjs();
+    
+    const folder = await prisma.srsFolder.create({
+        data: {
+            userId,
+            name: folderName,
+            createdDate: now.startOf('day').toDate(),
+            cycleAnchorAt: now.toDate(), // 망각곡선 기준점을 생성 시각으로 설정
+            kind: 'manual',
+            autoCreated: false,
+            alarmActive: true,
+            stage: 0, // 초기 단계
+        },
     });
-    if (!folder) {
-        folder = await prisma.srsFolder.create({
-            data: {
-                userId,
-                name: '오늘',
-                date: todayKst,
-                kind: 'review',
-                scheduledOffset: 0,
-                autoCreated: true,
-                originSessionId: originSessionId ?? undefined,
-                alarmActive: true,
-            },
+    
+    // 단어들을 폴더에 추가
+    if (vocabIds.length > 0) {
+        const folderItems = vocabIds.map(vocabId => ({
+            folderId: folder.id,
+            vocabId: vocabId,
+            learned: false
+        }));
+        
+        await prisma.srsFolderItem.createMany({
+            data: folderItems
         });
     }
+    
     return folder;
 }
 
+/**
+ * 폴더 완료 처리 및 다음 복습 폴더 생성
+ */
+async function completeFolderAndScheduleNext(folderId, userId) {
+    const folder = await prisma.srsFolder.findFirst({
+        where: { id: folderId, userId },
+        include: {
+            items: true
+        }
+    });
+    
+    if (!folder) {
+        throw new Error('Folder not found');
+    }
+    
+    const totalItems = folder.items.length;
+    const learnedItems = folder.items.filter(item => item.learned).length;
+    
+    // 모든 단어를 다 학습했는지 확인
+    if (learnedItems < totalItems) {
+        throw new Error('All items must be completed before finishing the folder');
+    }
+    
+    // 현재 폴더를 완료 상태로 변경
+    await prisma.srsFolder.update({
+        where: { id: folderId },
+        data: {
+            isCompleted: true,
+            completedAt: new Date(),
+            completedWordsCount: learnedItems
+        }
+    });
+    
+    // 다음 복습 단계 계산
+    const nextStage = folder.stage + 1;
+    const { isFinalStage } = require('./srsSchedule');
+    
+    // 120일 사이클 완료 체크 (Stage 5 완료)
+    if (isFinalStage(folder.stage)) {
+        // 120일 사이클 완료 - 마스터 상태로 변경
+        const completionCount = (folder.completionCount || 0) + 1;
+        
+        await prisma.srsFolder.update({
+            where: { id: folderId },
+            data: {
+                isMastered: true,
+                completionCount: completionCount,
+                alarmActive: false, // 알림 비활성화
+                // 새로운 사이클 시작을 위한 설정
+                stage: 0,
+                cycleAnchorAt: new Date(), // 새로운 사이클 앵커
+                nextReviewDate: dayjs().add(1, 'day').startOf('day').toDate(), // 1일 후 시작
+                name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${completionCount}회차 완료!`
+            }
+        });
+        
+        return {
+            completedFolder: { 
+                ...folder, 
+                isMastered: true, 
+                completionCount: completionCount,
+                name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${completionCount}회차 완료!`
+            },
+            nextFolder: null, // 더 이상 자동 생성하지 않음
+            nextReviewDate: null,
+            message: `🎉 ${completionCount}회차 복습 완료! 마스터 달성!`
+        };
+    }
+    
+    // 일반적인 다음 단계 진행
+    const nextReviewDate = computeNextReviewDate(folder.cycleAnchorAt, nextStage);
+    
+    // 다음 복습 폴더 생성
+    const nextFolder = await prisma.srsFolder.create({
+        data: {
+            userId,
+            name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${nextStage}단계`,
+            createdDate: dayjs(nextReviewDate).startOf('day').toDate(),
+            nextReviewDate: nextReviewDate,
+            cycleAnchorAt: folder.cycleAnchorAt, // 기준점은 원본 폴더와 동일
+            kind: 'review',
+            stage: nextStage,
+            autoCreated: true,
+            alarmActive: true,
+            completionCount: folder.completionCount || 0
+        }
+    });
+    
+    // 학습한 단어들을 다음 복습 폴더로 복사
+    const nextFolderItems = folder.items
+        .filter(item => item.learned)
+        .map(item => ({
+            folderId: nextFolder.id,
+            vocabId: item.vocabId,
+            learned: false // 복습에서는 다시 미학습 상태로
+        }));
+    
+    await prisma.srsFolderItem.createMany({
+        data: nextFolderItems
+    });
+    
+    return {
+        completedFolder: folder,
+        nextFolder: nextFolder,
+        nextReviewDate: nextReviewDate,
+        message: `다음 복습 단계(${nextStage}) 생성 완료`
+    };
+}
+
 async function listFoldersForDate(userId, dateKst00) {
-    // 오늘/과거 포함 목록(간단 버전)
+    const today = dayjs().startOf('day');
+    
     const folders = await prisma.srsFolder.findMany({
-        where: { userId, date: { lte: dateKst00 } },
-        orderBy: [{ date: 'desc' }, { id: 'desc' }],
+        where: { 
+            userId,
+            OR: [
+                { nextReviewDate: { lte: dateKst00 } }, // 복습 예정일이 오늘 이전
+                { kind: 'manual', isCompleted: false }, // 미완료 수동 폴더
+                { createdDate: { lte: dateKst00 } } // 생성일이 오늘 이전
+            ]
+        },
+        orderBy: [
+            { nextReviewDate: 'asc' },
+            { createdDate: 'desc' }, 
+            { id: 'desc' }
+        ],
         include: {
             _count: { select: { items: true } },
             items: { select: { learned: true } },
         },
     });
+    
     return folders.map(f => {
         const learned = f.items.filter(i => i.learned).length;
         const remaining = f._count.items - learned;
-        return { id: f.id, name: f.name, date: f.date, kind: f.kind, offset: f.scheduledOffset, alarmActive: f.alarmActive, counts: { total: f._count.items, learned, remaining } };
+        const isDue = f.nextReviewDate ? dayjs(f.nextReviewDate).isSameOrBefore(today) : true;
+        
+        return { 
+            id: f.id, 
+            name: f.name, 
+            date: f.createdDate,
+            nextReviewDate: f.nextReviewDate,
+            kind: f.kind, 
+            stage: f.stage,
+            isCompleted: f.isCompleted,
+            isMastered: f.isMastered,
+            completionCount: f.completionCount,
+            isDue,
+            alarmActive: f.alarmActive, 
+            counts: { total: f._count.items, learned, remaining } 
+        };
     });
 }
 
@@ -220,7 +368,7 @@ function nextReviewAtFor(card, correct) {
     }
 }
 
-async function markAnswer(userId, { folderId, cardId, correct }) { // Add folderId
+async function markAnswer(userId, { folderId, cardId, correct, vocabId }) { // Add folderId and vocabId
     const card = await prisma.sRSCard.findFirst({ where: { id: cardId, userId } });
     if (!card) throw new Error('카드를 찾을 수 없습니다.'); // [380]
 
@@ -258,13 +406,65 @@ async function markAnswer(userId, { folderId, cardId, correct }) { // Add folder
         });
     }
 
+    // --- 연속 학습 일수 업데이트 ---
+    const { updateUserStreak } = require('./streakService');
+    const streakInfo = await updateUserStreak(userId);
+
+    // --- 오답노트 처리 ---
+    if (!correct && vocabId) {
+        const { addWrongAnswer } = require('./wrongAnswerService');
+        await addWrongAnswer(userId, vocabId);
+    }
+
     // --- 일일 학습 통계 업데이트 ---
     await bumpDailyStat(userId, { srsSolvedInc: 1 });
 
-    return { status: correct ? 'pass' : 'fail' };
+    return { 
+        status: correct ? 'pass' : 'fail',
+        streakInfo: streakInfo
+    };
 }
+/**
+ * 마스터된 폴더를 다시 활성화합니다 (새로운 120일 사이클 시작)
+ */
+async function restartMasteredFolder(folderId, userId) {
+    const folder = await prisma.srsFolder.findFirst({
+        where: { id: folderId, userId, isMastered: true },
+        include: { items: true }
+    });
+    
+    if (!folder) {
+        throw new Error('Mastered folder not found');
+    }
+    
+    // 폴더를 다시 활성화
+    await prisma.srsFolder.update({
+        where: { id: folderId },
+        data: {
+            alarmActive: true,
+            stage: 0, // Stage 0부터 다시 시작
+            cycleAnchorAt: new Date(), // 새로운 사이클 앵커
+            nextReviewDate: dayjs().add(1, 'day').startOf('day').toDate(), // 내일부터
+            name: folder.name.replace(/ - 복습 \d+회차 완료!/, ' - 재학습'), // 이름 변경
+            isCompleted: false // 다시 미완료 상태로
+        }
+    });
+    
+    // 모든 아이템을 미학습 상태로 리셋
+    await prisma.srsFolderItem.updateMany({
+        where: { folderId: folderId },
+        data: { learned: false }
+    });
+    
+    return {
+        message: '마스터된 폴더가 재활성화되었습니다. 새로운 120일 사이클이 시작됩니다.'
+    };
+}
+
 module.exports = {
-    ensureTodayFolder,
+    createManualFolder,
+    completeFolderAndScheduleNext,
+    restartMasteredFolder,
     listFoldersForDate,
     getFolder,
     createCustomFolder,

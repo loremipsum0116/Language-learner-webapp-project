@@ -1,0 +1,47 @@
+﻿DIR	src\api
+DIR	src\components
+DIR	src\context
+DIR	src\data
+DIR	src\pages
+DIR	src\utils
+     2,987	src\App.css
+     2,942	src\App.js
+       246	src\App.test.js
+       366	src\index.css
+       471	src\index.js
+     2,632	src\logo.svg
+       362	src\reportWebVitals.js
+       241	src\setupTests.js
+     2,614	src\api\client.js
+     2,373	src\api\srs.js
+     7,175	src\components\AddLearnedToFolderModal.jsx
+       571	src\components\AdminRoute.jsx
+     9,176	src\components\MiniQuiz.jsx
+       378	src\components\Pron.jsx
+     1,161	src\components\ProtectedRoute.jsx
+     6,741	src\components\SrsFolderPickerModal.jsx
+     8,677	src\components\SubfolderEditor.jsx
+     8,296	src\components\VocabDetailModal.jsx
+     2,955	src\context\AuthContext.jsx
+     8,294	src\data\mockGrammar.js
+    10,640	src\pages\Admin.jsx
+    12,758	src\pages\Dashboard.jsx
+     8,444	src\pages\Dict.jsx
+     1,897	src\pages\GrammarHub.jsx
+     9,233	src\pages\GrammarQuiz.jsx
+     2,900	src\pages\Header.jsx
+    19,048	src\pages\Home.jsx
+     2,015	src\pages\LearnStart.jsx
+    30,217	src\pages\LearnVocab.jsx
+     5,312	src\pages\Login.jsx
+       622	src\pages\Logout.jsx
+     3,270	src\pages\MiniQuiz.jsx
+    21,175	src\pages\MyWordbook.jsx
+    20,971	src\pages\OdatNote.jsx
+     6,858	src\pages\Register.jsx
+    11,114	src\pages\SrsDashboard.jsx
+     6,382	src\pages\SrsFolderDetail.jsx
+     1,780	src\pages\SrsFolderPickerModal.jsx
+     4,766	src\pages\SrsQuiz.jsx
+    25,824	src\pages\VocabList.jsx
+     1,598	src\utils\dict.js

@@ -1,16 +1,17 @@
 /* src/App.css */
-/* 1. CSS 변수를 사용한 새로운 디자인 시스템 정의 */
+/* English Learning Platform Design System */
 :root {
   --font-sans: 'Inter', sans-serif;
-  --color-primary: #FF7A00;
-  /* Vibrant Orange */
-  --color-primary-dark: #E66E00;
-  --color-charcoal: #2D3748;
-  /* Charcoal Navy */
-  --color-slate: #718096;
-  /* Slate Gray */
-  --color-light-gray: #F7FAFC;
-  --color-border: #E2E8F0;
+  --color-primary: #2563eb;
+  /* Modern Blue - represents learning and knowledge */
+  --color-primary-dark: #1d4ed8;
+  --color-charcoal: #1f2937;
+  /* Dark Gray for text */
+  --color-slate: #6b7280;
+  /* Medium Gray for secondary text */
+  --color-light-gray: #f8fafc;
+  /* Light background for English learning theme */
+  --color-border: #e5e7eb;
   --border-radius-sm: 0.375rem;
   /* 6px */
   --border-radius-md: 0.5rem;
@@ -41,7 +42,7 @@ body {
 .btn-primary:focus {
   background-color: var(--color-primary-dark);
   border-color: var(--color-primary-dark);
-  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
 .btn-outline-primary {
@@ -101,29 +102,45 @@ body {
 .form-control:focus,
 .form-select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.25);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
 }
 
-/* 히어로 섹션 (Home) */
+/* Hero Section for English Learning */
 .hero-section {
-  background: white;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   border: 1px solid var(--color-border);
   padding: 2.5rem;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-sm);
 }
 
-/* 리스트 그룹 (단어장) */
+/* Vocabulary and Word Lists */
 .list-group-item.active {
   background-color: var(--color-primary);
   border-color: var(--color-primary);
 }
 
-/* src/App.css */
+/* English Learning Theme Enhancements */
+.english-learning-accent {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+}
 
-/* 퀴즈 모달이 열렸을 때 body의 배경을 제어하기 위한 스타일 */
+/* Quiz Modal Background Control */
 body.quiz-modal-open {
   background-image: none;
   background-color: var(--color-light-gray);
-  /* 기본 배경색으로 대체 */
+}
+
+/* Additional English Learning Theme Elements */
+.vocabulary-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease;
+}
+
+.vocabulary-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
 }

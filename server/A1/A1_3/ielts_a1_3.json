@@ -7,7 +7,7 @@
     "definition": "A small domesticated carnivorous mammal.",
     "example": "My cat likes to sleep on the sofa.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cat-uk.mp3",
-    "koGloss": "고양이",
+    "koGloss": "n.고양이",
     "koExample": "우리 고양이는 소파에서 자는 것을 좋아해요.",
     "koChirpScript": "cat. 고양이.라는 뜻이에요. 예를 들어볼까요? My cat likes to sleep on the sofa., 이건 한국어로 우리 고양이는 소파에서 자는 것을 좋아해요.라고 해요."
   },
@@ -19,7 +19,7 @@
     "definition": "A domesticated carnivorous mammal that typically has a long snout.",
     "example": "The dog is barking.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dog-uk.mp3",
-    "koGloss": "개, 강아지, 반려견",
+    "koGloss": "n.개, 강아지, 반려견",
     "koExample": "개가 짖고 있어요.",
     "koChirpScript": "dog. 무슨 뜻일까요? 우리의 친구. 개 입니다. The dog is barking. 개가 짖고 있어요.라는 의미죠."
   },
@@ -31,7 +31,7 @@
     "definition": "A round fruit with red or green skin.",
     "example": "She eats an apple every day.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/apple-uk.mp3",
-    "koGloss": "사과",
+    "koGloss": "n.사과",
     "koExample": "그녀는 매일 사과 한 개를 먹어요.",
     "koChirpScript": "사과를 영어로 뭐라고 할까요? 바로 apple. She eats an apple every day. 이 문장은 그녀는 매일 사과 한 개를 먹어요.라는 뜻이랍니다."
   },
@@ -43,7 +43,7 @@
     "definition": "A long curved fruit with a yellow skin.",
     "example": "Monkeys love bananas.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/banana-uk.mp3",
-    "koGloss": "바나나",
+    "koGloss": "n.바나나",
     "koExample": "원숭이는 바나나를 아주 좋아해요.",
     "koChirpScript": "banana. 바나나! 아주 간단하죠? 문장에서는 이렇게 쓰여요. Monkeys love bananas. 원숭이는 바나나를 아주 좋아해요.!"
   },
@@ -55,7 +55,7 @@
     "definition": "A separate seat for one person, typically with a back and four legs.",
     "example": "Please take a chair.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/chair-uk.mp3",
-    "koGloss": "의자, 좌석",
+    "koGloss": "n.의자, 좌석",
     "koExample": "의자에 앉으세요.",
     "koChirpScript": "chair. 의자를 의미해요. 문장으로 배워볼까요? Please take a chair. 한국어로는 의자에 앉으세요.라고 할 수 있죠."
   },
@@ -67,7 +67,7 @@
     "definition": "A piece of furniture with a flat top.",
     "example": "The book is on the table.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/table-uk.mp3",
-    "koGloss": "테이블, 식탁, 탁자, 표",
+    "koGloss": "n.테이블, 식탁, 탁자, 표",
     "koExample": "책이 테이블 위에 있어요.",
     "koChirpScript": "table. 바로 테이블 또는 식탁 입니다.  The book is on the table. 한국어로는 책이 테이블 위에 있어요.처럼 활용할 수 있어요."
   },
@@ -79,7 +79,7 @@
     "definition": "To move at a regular pace by lifting and setting down each foot in turn.",
     "example": "I walk to school every morning.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/walk-uk.mp3",
-    "koGloss": "걷다, 산책하다",
+    "koGloss": "v.걷다, 산책하다",
     "koExample": "나는 매일 아침 학교에 걸어갑니다.",
     "koChirpScript": "walk 걷다라는 뜻이에요. 건강에 아주 좋죠!   I walk to school every morning. 나는 매일 아침 학교에 걸어갑니다.라는 뜻이에요."
   },
@@ -91,7 +91,7 @@
     "definition": "To move at a speed faster than a walk.",
     "example": "He can run very fast.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/run-uk.mp3",
-    "koGloss": "달리다, 뛰다; 운영하다",
+    "koGloss": "v.달리다, 뛰다; n.운영하다",
     "koExample": "그는 매우 빨리 달릴 수 있어요.",
     "koChirpScript": "run. 달리다입니다. He can run very fast. 한국어 해석은 그는 매우 빨리 달릴 수 있어요. 입니다."
   },
@@ -103,7 +103,7 @@
     "definition": "Of the color of the clear sky.",
     "example": "The sky is blue.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/blue-uk.mp3",
-    "koGloss": "파란, 푸른; 우울한",
+    "koGloss": "adj.파란, 푸른; n.우울한",
     "koExample": "하늘은 파랗습니다.",
     "koChirpScript": "blue. 파란색입니다. The sky is blue. 하늘은 파랗습니다.라고 말할 수 있어요."
   },
@@ -115,7 +115,7 @@
     "definition": "Feeling or showing pleasure or contentment.",
     "example": "I am so happy today.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/happy-uk.mp3",
-    "koGloss": "행복한, 기쁜, 즐거운",
+    "koGloss": "adj.행복한, 기쁜, 즐거운",
     "koExample": "나는 오늘 정말 행복해요.",
     "koChirpScript": "happy. 행복한이라는 뜻이죠. I am so happy today. 나는 오늘 정말 행복해요.라는 뜻이랍니다."
   },
@@ -127,7 +127,7 @@
     "definition": "Of considerable size or extent.",
     "example": "An elephant is a big animal.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/big-uk.mp3",
-    "koGloss": "큰, 거대한; 중요한",
+    "koGloss": "adj.큰, 거대한; adj.중요한",
     "koExample": "코끼리는 큰 동물입니다.",
     "koChirpScript": "big. 큰이라는 뜻이에요.  An elephant is a big animal. 한국어로는 코끼리는 큰 동물입니다."
   },
@@ -139,7 +139,7 @@
     "definition": "Of a size that is less than normal or usual.",
     "example": "A mouse is a small animal.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/small-uk.mp3",
-    "koGloss": "작은, 소규모의",
+    "koGloss": "adj.작은, 소규모의",
     "koExample": "쥐는 작은 동물입니다.",
     "koChirpScript": "small 작은 이라는 뜻이에요. A mouse is a small animal. 쥐는 작은 동물입니다.라는 뜻입니다."
   },
@@ -151,7 +151,7 @@
     "definition": "An instrument for writing or drawing with ink.",
     "example": "I need a pen to write this.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/pen-uk.mp3",
-    "koGloss": "펜; (가축의) 우리",
+    "koGloss": "n.펜; v.(가축의) 우리",
     "koExample": "이것을 쓰려면 펜이 필요해요.",
     "koChirpScript": "pen. 말 그대로 펜입니다. 문장 I need a pen to write this. 이것을 쓰려면 펜이 필요해요.라고 해석해요."
   },
@@ -163,7 +163,7 @@
     "definition": "A device that uses either a cable or radio signals to make and receive calls.",
     "example": "My phone is ringing.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/phone-uk.mp3",
-    "koGloss": "전화기, 전화, 휴대폰",
+    "koGloss": "n.전화기, 전화, 휴대폰",
     "koExample": "내 전화기가 울리고 있어요.",
     "koChirpScript": "phone. 전화기를 의미해요. My phone is ringing. 내 전화기가 울리고 있어요.라는 뜻이랍니다."
   },
@@ -175,7 +175,7 @@
     "definition": "Vocal or instrumental sounds combined in such a way as to produce beauty of form.",
     "example": "She loves listening to music.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/music-uk.mp3",
-    "koGloss": "음악, 노래, 곡",
+    "koGloss": "n.음악, 노래, 곡",
     "koExample": "그녀는 음악 듣는 것을 좋아해요.",
     "koChirpScript": "music. 음악 없이 살 수 있나요? She loves listening to music. 그녀는 음악 듣는 것을 좋아해요.라는 뜻이에요."
   },
@@ -187,7 +187,7 @@
     "definition": "To move rhythmically to music.",
     "example": "Let's dance to this song.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dance-uk.mp3",
-    "koGloss": "(동사) 춤추다; (명사) 춤, 무용",
+    "koGloss": "v.춤추다; n.춤, 무용",
     "koExample": "이 노래에 맞춰 춤을 춥시다.",
     "koChirpScript": "dance. 춤추다! 신나는 단어죠? Let's dance to this song. 이 노래에 맞춰 춤을 춥시다.라고 말하는 거예요."
   },
@@ -199,7 +199,7 @@
     "definition": "To make musical sounds with the voice.",
     "example": "He likes to sing in the shower.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sing-uk.mp3",
-    "koGloss": "노래하다, 노래 부르다",
+    "koGloss": "v.노래하다, 노래 부르다",
     "koExample": "그는 샤워하면서 노래하는 것을 좋아해요.",
     "koChirpScript": "sing. 노래하다는 뜻이에요. He likes to sing in the shower. 그는 샤워하면서 노래하는 것을 좋아해요.라고 쓸 수 있어요."
   },
@@ -211,7 +211,7 @@
     "definition": "To look at and comprehend the meaning of written or printed matter.",
     "example": "I love to read books in my free time.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/read-uk.mp3",
-    "koGloss": "읽다, 독서하다",
+    "koGloss": "v.읽다, 독서하다",
     "koExample": "저는 자유 시간에 책 읽는 것을 아주 좋아해요.",
     "koChirpScript": "read. 읽다라는 뜻입니다. I love to read books in my free time. 저는 자유 시간에 책 읽는 것을 아주 좋아해요.라는 뜻이랍니다."
   },
@@ -223,7 +223,7 @@
     "definition": "To mark letters or words on a surface.",
     "example": "Please write your name here.",
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/write-uk.mp3",
-    "koGloss": "쓰다, 적다, 작성하다",
+    "koGloss": "v.쓰다, 적다, 작성하다",
     "koExample": "여기에 당신의 이름을 써주세요.",
     "koChirpScript": "write. 쓰다입니다.   Please write your name here. 여기에 당신의 이름을 써주세요.라는 뜻이에요."
   }

@@ -1,0 +1,241 @@
+// server/services/wrongAnswerService.js
+const { prisma } = require('../lib/prismaClient');
+const dayjs = require('dayjs');
+
+/**
+ * 오답을 오답노트에 추가합니다.
+ * @param {number} userId 
+ * @param {number} vocabId 
+ * @returns {Object} 생성된 오답노트 항목
+ */
+async function addWrongAnswer(userId, vocabId) {
+  const wrongAt = dayjs();
+  
+  // 복습 윈도우: 틀린 시각 다음날 같은 시각부터 그 다음날 같은 시각까지
+  const reviewWindowStart = wrongAt.add(1, 'day');
+  const reviewWindowEnd = wrongAt.add(2, 'day');
+  
+  // 이미 같은 단어로 미완료된 오답노트가 있는지 확인
+  const existingWrongAnswer = await prisma.wrongAnswer.findFirst({
+    where: {
+      userId,
+      vocabId,
+      isCompleted: false
+    }
+  });
+  
+  if (existingWrongAnswer) {
+    // 기존 항목의 attempts 증가
+    return await prisma.wrongAnswer.update({
+      where: { id: existingWrongAnswer.id },
+      data: {
+        attempts: existingWrongAnswer.attempts + 1,
+        wrongAt: wrongAt.toDate(), // 최신 오답 시각으로 업데이트
+        reviewWindowStart: reviewWindowStart.toDate(),
+        reviewWindowEnd: reviewWindowEnd.toDate()
+      },
+      include: {
+        vocab: {
+          include: {
+            dictMeta: true
+          }
+        }
+      }
+    });
+  }
+  
+  // 새로운 오답노트 항목 생성
+  return await prisma.wrongAnswer.create({
+    data: {
+      userId,
+      vocabId,
+      wrongAt: wrongAt.toDate(),
+      reviewWindowStart: reviewWindowStart.toDate(),
+      reviewWindowEnd: reviewWindowEnd.toDate(),
+      attempts: 1
+    },
+    include: {
+      vocab: {
+        include: {
+          dictMeta: true
+        }
+      }
+    }
+  });
+}
+
+/**
+ * 오답노트 복습 성공 처리
+ * @param {number} userId 
+ * @param {number} vocabId 
+ * @returns {boolean} 성공 여부
+ */
+async function completeWrongAnswer(userId, vocabId) {
+  const now = dayjs();
+  
+  // 현재 활성화된 복습 윈도우 내의 오답노트 찾기
+  const wrongAnswer = await prisma.wrongAnswer.findFirst({
+    where: {
+      userId,
+      vocabId,
+      isCompleted: false,
+      reviewWindowStart: { lte: now.toDate() },
+      reviewWindowEnd: { gte: now.toDate() }
+    }
+  });
+  
+  if (!wrongAnswer) {
+    // 복습 윈도우가 아니거나 해당 오답노트가 없음
+    return false;
+  }
+  
+  // 오답노트 완료 처리
+  await prisma.wrongAnswer.update({
+    where: { id: wrongAnswer.id },
+    data: {
+      isCompleted: true,
+      reviewedAt: now.toDate()
+    }
+  });
+  
+  return true;
+}
+
+/**
+ * 사용자의 오답노트 목록 조회
+ * @param {number} userId 
+ * @param {boolean} includeCompleted 완료된 항목도 포함할지 여부
+ * @returns {Array} 오답노트 목록
+ */
+async function getWrongAnswers(userId, includeCompleted = false) {
+  const now = dayjs();
+  
+  const wrongAnswers = await prisma.wrongAnswer.findMany({
+    where: {
+      userId,
+      isCompleted: includeCompleted ? undefined : false
+    },
+    include: {
+      vocab: {
+        include: {
+          dictMeta: true
+        }
+      }
+    },
+    orderBy: [
+      { isCompleted: 'asc' },
+      { wrongAt: 'desc' }
+    ]
+  });
+  
+  // 각 항목에 복습 상태 정보 추가
+  return wrongAnswers.map(wa => {
+    const reviewWindowStart = dayjs(wa.reviewWindowStart);
+    const reviewWindowEnd = dayjs(wa.reviewWindowEnd);
+    
+    let reviewStatus = 'pending'; // 아직 복습 시간 전
+    if (now.isAfter(reviewWindowEnd)) {
+      reviewStatus = 'overdue'; // 복습 시간 지남
+    } else if (now.isBetween(reviewWindowStart, reviewWindowEnd, null, '[]')) {
+      reviewStatus = 'available'; // 복습 가능 시간
+    }
+    
+    return {
+      ...wa,
+      reviewStatus,
+      canReview: reviewStatus === 'available' || reviewStatus === 'overdue',
+      timeUntilReview: reviewStatus === 'pending' ? reviewWindowStart.diff(now, 'hour') : 0
+    };
+  });
+}
+
+/**
+ * 현재 복습 가능한 오답노트 개수 조회
+ * @param {number} userId 
+ * @returns {number} 복습 가능한 개수
+ */
+async function getAvailableWrongAnswersCount(userId) {
+  const now = dayjs();
+  
+  const count = await prisma.wrongAnswer.count({
+    where: {
+      userId,
+      isCompleted: false,
+      reviewWindowStart: { lte: now.toDate() }
+    }
+  });
+  
+  return count;
+}
+
+/**
+ * 복습 가능한 오답노트로 퀴즈 데이터 생성
+ * @param {number} userId 
+ * @param {number} limit 최대 문제 수
+ * @returns {Array} 퀴즈 데이터
+ */
+async function generateWrongAnswerQuiz(userId, limit = 10) {
+  const now = dayjs();
+  
+  const wrongAnswers = await prisma.wrongAnswer.findMany({
+    where: {
+      userId,
+      isCompleted: false,
+      reviewWindowStart: { lte: now.toDate() }
+    },
+    include: {
+      vocab: {
+        include: {
+          dictMeta: true
+        }
+      }
+    },
+    take: limit,
+    orderBy: { wrongAt: 'asc' } // 오래된 것부터
+  });
+  
+  // 퀴즈 형태로 변환
+  return wrongAnswers.map(wa => ({
+    wrongAnswerId: wa.id,
+    vocabId: wa.vocab.id,
+    lemma: wa.vocab.lemma,
+    pos: wa.vocab.pos,
+    definition: wa.vocab.dictMeta?.examples?.[0]?.definition || '',
+    example: wa.vocab.dictMeta?.examples?.[0]?.example || '',
+    koGloss: wa.vocab.dictMeta?.examples?.[0]?.koGloss || '',
+    attempts: wa.attempts,
+    wrongAt: wa.wrongAt,
+    reviewWindowEnd: wa.reviewWindowEnd
+  }));
+}
+
+/**
+ * 만료된 복습 윈도우 정리 (일일 정리 작업)
+ */
+async function cleanupExpiredReviewWindows() {
+  const threeDaysAgo = dayjs().subtract(3, 'day');
+  
+  // 3일 이상 지난 미완료 오답노트들을 완료 처리 또는 삭제
+  const expiredWrongAnswers = await prisma.wrongAnswer.updateMany({
+    where: {
+      reviewWindowEnd: { lt: threeDaysAgo.toDate() },
+      isCompleted: false
+    },
+    data: {
+      isCompleted: true,
+      reviewedAt: new Date() // 자동 완료 처리
+    }
+  });
+  
+  console.log(`Cleaned up ${expiredWrongAnswers.count} expired wrong answers`);
+  return expiredWrongAnswers.count;
+}
+
+module.exports = {
+  addWrongAnswer,
+  completeWrongAnswer,
+  getWrongAnswers,
+  getAvailableWrongAnswersCount,
+  generateWrongAnswerQuiz,
+  cleanupExpiredReviewWindows
+};

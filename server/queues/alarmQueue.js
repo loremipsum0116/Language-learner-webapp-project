@@ -1,7 +1,7 @@
 //server/queues/alarmQueue.js
 const { Queue, Worker } = require('bullmq');
 const { prisma } = require('../lib/prismaClient');
-const { nextAlarmSlot } = require('../utils/alarmTime'); 
+const { nextAlarmSlot } = require('../utils/alarmTime');
 
 /* Redis 연결 설정 */
 const connection = { host: '127.0.0.1', port: 6379 };
@@ -17,17 +17,14 @@ async function scheduleFolder(folderId, delayMs) {
 new Worker(
     'alarm',
     async (job) => {
-        const folder = await prisma.category.findUnique({ where: { id: job.data.folderId } });
+        const folder = await prisma.srsFolder.findUnique({ where: { id: job.data.folderId } });
         if (!folder || !folder.alarmActive) return;
 
         // TODO: Web-Push / Email 발송 로직
         console.log(`[ALARM] remind user#${folder.userId} about "${folder.name}"`);
 
         const next = nextAlarmSlot();
-        await prisma.category.update({
-            where: { id: folder.id },
-            data: { nextAlarmAt: next }
-        });
+        await prisma.srsFolder.update({ where: { id: folder.id }, data: { nextAlarmAt: next.toDate() } });
         await scheduleFolder(folder.id, next.getTime() - Date.now());
     },
     { connection }

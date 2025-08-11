@@ -15,7 +15,8 @@ export default function ProtectedRoute() {
           <span className="visually-hidden">Loading...</span>
         </div>
       </main>
-    );
+   
+  );
   }
 
   // 2. 로딩이 끝났는데 user가 없으면(로그인되지 않았으면) 로그인 페이지로 보냅니다.

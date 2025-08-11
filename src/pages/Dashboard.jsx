@@ -39,7 +39,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(true);
 
     // 🔔 오늘(KST) 루트 폴더의 미학습 합계 + 가장 이른 알림시각
-    const [alarm, setAlarm] = useState({ totalDue: 0, nextAlarmAtKst: null, rootId: null, children: [] });
+    const [alarm, setAlarm] = useState({ totalDue: 0, nextAlarmAtKst: null });
 
     useEffect(() => {
         const ac = new AbortController();
@@ -88,7 +88,7 @@ export default function Dashboard() {
 
                     setAlarm({ totalDue, nextAlarmAtKst: earliest, rootId, children });
                 } else {
-                    setAlarm({ totalDue: 0, nextAlarmAtKst: null, rootId: null, children: [] });
+                    setAlarm({ totalDue: 0, nextAlarmAtKst: null });
                 }
             } catch (e) {
                 if (!isAbortError(e)) console.error('대시보드 데이터 로딩 실패:', e);

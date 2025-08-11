@@ -15,7 +15,6 @@ import Admin from "./pages/Admin";
 import AdminRoute from "./components/AdminRoute";
 import VocabList from "./pages/VocabList";
 import MyWordbook from "./pages/MyWordbook";
-import OdatNote from "./pages/OdatNote";
 import LearnStart from "./pages/LearnStart";
 import Dashboard from "./pages/Dashboard";
 import GrammarHub from './pages/GrammarHub';
@@ -23,6 +22,8 @@ import GrammarQuiz from './pages/GrammarQuiz';
 import SrsDashboard from "./pages/SrsDashboard";
 import SrsQuiz from "./pages/SrsQuiz";
 import SrsFolderDetail from './pages/SrsFolderDetail';
+import WrongAnswers from "./pages/WrongAnswers";
+import WrongAnswerQuiz from "./pages/WrongAnswerQuiz";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -41,7 +42,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/odat-note" element={<OdatNote />} />
+        <Route path="/odat-note" element={<WrongAnswers />} />
         <Route path="/vocab" element={<VocabList />} />
 
         {/* 보호 라우트: 로그인 필요 */}
@@ -54,6 +55,8 @@ export default function App() {
           {/* SRS 관련 라우트 추가 */}
           <Route path="/srs" element={<SrsDashboard />} />
           <Route path="/srs/quiz" element={<SrsQuiz />} />
+          <Route path="/srs/wrong-answers" element={<WrongAnswers />} />
+          <Route path="/srs/wrong-answers/quiz" element={<WrongAnswerQuiz />} />
           
           {/* Grammar 관련 라우트 */}
           <Route path="/learn/grammar" element={<GrammarHub />} />

@@ -72,6 +72,7 @@ router.post('/answer', async (req, res, next) => {
             });
             if (!card) throw Object.assign(new Error('SRS 카드 없음'), { status: 404 });
 
+            // 폴더 소유 및 아이템 검증
             if (folderId) {
                 const folder = await tx.srsFolder.findFirst({
                     where: { id: folderId, userId },
@@ -85,6 +86,7 @@ router.post('/answer', async (req, res, next) => {
                 });
                 if (!existing) throw Object.assign(new Error('폴더 아이템 없음'), { status: 404 });
 
+                // 폴더 아이템 업데이트 (한 번만 실행)
                 await tx.srsFolderItem.update({
                     where: { folderId_cardId: { folderId, cardId } },
                     data: isCorrect
@@ -92,14 +94,6 @@ router.post('/answer', async (req, res, next) => {
                         : { learned: false, wrongCount: { increment: 1 }, lastReviewedAt: now },
                 });
             }
-
-            // 폴더 아이템 업데이트
-            await tx.srsFolderItem.update({
-                where: { folderId_cardId: { folderId, cardId } },
-                data: isCorrect
-                    ? { learned: true, lastReviewedAt: now }
-                    : { learned: false, wrongCount: { increment: 1 }, lastReviewedAt: now },
-            });
 
             // 카드 업데이트 (stage/통계/다음 복습일)
             await tx.sRSCard.update({

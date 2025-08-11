@@ -38,22 +38,224 @@ function nextSixHourSlot(now = dayjs()) {
 // req.user가 필요한 모든 라우트에 인증
 router.use(auth);
 
+// 새로운 서비스 임포트
+const { createManualFolder, completeFolderAndScheduleNext, restartMasteredFolder } = require('../services/srsService');
+const { getUserStreakInfo } = require('../services/streakService');
+const { 
+    getWrongAnswers, 
+    getAvailableWrongAnswersCount, 
+    generateWrongAnswerQuiz,
+    completeWrongAnswer 
+} = require('../services/wrongAnswerService');
+
+// srs.js 상단 router 선언 직후에 추가
+const FLAT_MODE = true;
+if (FLAT_MODE) {
+    // 하위폴더 읽기: 항상 빈 목록
+    router.get('/folders/:id/children', (req, res) => ok(res, []));
+    router.get('/folders/:rootId/children-lite', (req, res) => ok(res, []));
+
+    // 하위폴더 생성/배치 생성: 사용 중지
+    router.post('/folders/:parentId/subfolders', (req, res) => fail(res, 410, 'Subfolders are disabled in flat mode'));
+    router.post('/folders/:rootId/children', (req, res) => fail(res, 410, 'Subfolders are disabled in flat mode'));
+}
+
+
+// Forgetting curve intervals in days.
+const FORGETTING_CURVE_INTERVALS = [3, 7, 14, 30, 60, 120];
+
+// ==== Flat-friendly dashboard (prepended to override older handler) ====
+
+/**
+ * Calculates the next review date based on the current stage.
+ * @param {number} currentStage - The current stage of the folder.
+ * @returns {{ newStage: number, nextReviewAt: Date }}
+ */
+const { STAGE_DELAYS, computeNextReviewDate, isFinalStage } = require('../services/srsSchedule');
+
 // ────────────────────────────────────────────────────────────
 // 폴더 API
 // ────────────────────────────────────────────────────────────
 
-// GET /srs/folders?date=YYYY-MM-DD  → 해당 날짜(KST)의 루트 폴더 목록
-router.get('/folders', async (req, res, next) => {
+// (NEW) POST /srs/folders — Create a new manual learning folder
+router.post('/folders', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const dateKst = req.query.date ? parseKstDateYYYYMMDD(req.query.date) : startOfKstDay();
+        const { name, vocabIds = [] } = req.body;
+        if (!name || typeof name !== 'string' || name.trim().length === 0) {
+            return fail(res, 400, 'A valid name is required.');
+        }
 
-        const folders = await prisma.srsFolder.findMany({
-            where: { userId, parentId: null, date: dateKst },
-            orderBy: [{ date: 'desc' }, { id: 'desc' }],
-            select: { id: true, name: true, date: true, alarmActive: true },
+        const folder = await createManualFolder(userId, name.trim(), vocabIds);
+
+        return ok(res, {
+            id: folder.id,
+            name: folder.name,
+            stage: folder.stage,
+            kind: folder.kind,
+            createdDate: folder.createdDate,
+            alarmActive: folder.alarmActive
         });
-        return ok(res, folders);
+    } catch (e) {
+        if (e.code === 'P2002') return fail(res, 409, 'A folder with this name already exists.');
+        next(e);
+    }
+});
+
+// (MODIFIED) GET /srs/dashboard — Fetch all folders, sorted by due date
+router.get('/dashboard', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folders = await prisma.srsFolder.findMany({
+            where: { userId },
+            select: {
+                id: true, name: true,
+                createdDate: true,        // ★ 추가
+                nextReviewDate: true,     // ★ 추가
+                stage: true, alarmActive: true,
+                _count: { select: { items: true } },
+            },
+            orderBy: [{ nextReviewDate: 'asc' }, { id: 'asc' }],
+        });
+
+        const data = folders.map(f => ({
+            id: f.id,
+            name: f.name,
+            createdDate: f.createdDate,      // ★ 추가
+            nextReviewDate: f.nextReviewDate,
+            stage: f.stage,
+            alarmActive: f.alarmActive,
+            total: f._count.items,
+        }));
+
+        return ok(res, data);
+    } catch (e) {
+        next(e);
+    }
+});
+
+
+// (NEW) POST /srs/folders/:id/complete — Mark a review session as complete
+router.post('/folders/:id/complete', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const id = Number(req.params.id);
+
+        const folder = await prisma.srsFolder.findFirst({ where: { id, userId } });
+        if (!folder) return fail(res, 404, 'Folder not found.');
+
+        const DELAYS = [3, 7, 14, 30, 60, 120]; // 상한 120일
+        const nextStage = Math.min(folder.stage + 1, DELAYS.length - 1);
+        const baseDate = folder.createdDate ?? startOfKstDay();
+        const nextDate = dayjs(baseDate).add(DELAYS[nextStage], 'day').toDate();
+        const isFinal = nextStage === (DELAYS.length - 1);
+        const doneAll = nextStage === STAGE_DELAYS.length - 1;
+        const updatedFolder = await prisma.srsFolder.update({
+            where: { id },
+            data: {
+                stage: nextStage,
+                nextReviewDate: nextDate,
+                lastReviewedAt: new Date(),
+                alarmActive: isFinal ? false : folder.alarmActive,
+                lastReviewedAt: new Date(),
+                alarmActive: doneAll ? false : folder.alarmActive,  // ★ 120일 완주 시 자동 OFF
+                reminderMask: 0,                                    // 다음 사이클용 초기화
+            },
+        });
+
+        // Reset learned state for all items in the folder for the next session
+        await prisma.srsFolderItem.updateMany({
+            where: { folderId: id },
+            data: { learned: false, wrongCount: 0 },
+        });
+
+        return ok(res, updatedFolder);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// server/routes/srs.js  (기존 router에 추가)
+// (MODIFIED) POST /srs/folders/:id/alarm — Toggle alarm AND reset progress if re-enabled
+router.post('/folders/:id/alarm', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const id = Number(req.params.id);
+        const { active } = req.body; // Only need 'active' status
+
+        const folder = await prisma.srsFolder.findFirst({ where: { id, userId } });
+        if (!folder) return fail(res, 404, 'Folder not found.');
+
+        let dataToUpdate = { alarmActive: !!active };
+
+        // If turning the alarm ON, reset the folder's progress
+        if (active) {
+            dataToUpdate = {
+                ...dataToUpdate,
+                stage: 0,
+                createdDate: today,
+                nextReviewDate: today,     // 당일 due
+                cycleAnchorAt: new Date(),         // 앵커를 '재시작 시점'으로
+                reminderMask: 0,
+            };
+            // Reset items within the folder as well
+            await prisma.srsFolderItem.updateMany({
+                where: { folderId: id },
+                data: { learned: false, wrongCount: 0 },
+            });
+        }
+
+        const updatedFolder = await prisma.srsFolder.update({
+            where: { id },
+            data: dataToUpdate,
+        });
+
+        return ok(res, updatedFolder);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// server/routes/srs.js
+router.get('/reminders/today', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const today = startOfKstDay();                        // 당일 00:00 KST
+        const nowKst = dayjs().tz('Asia/Seoul');
+        const tickIndex = [0, 6, 12, 18].findIndex(h => nowKst.hour() >= h && nowKst.hour() < (h === 18 ? 24 : [0, 6, 12, 18][[0, 6, 12, 18].indexOf(h) + 1]));
+        const bit = 1 << ([0, 6, 12, 18].indexOf([0, 6, 12, 18][tickIndex] ?? 0)); // 1,2,4,8
+
+        const due = await prisma.srsFolder.findMany({
+            where: { userId, alarmActive: true, nextReviewAt: today },
+            select: { id: true, name: true, stage: true, reminderMask: true },
+            orderBy: [{ id: 'asc' }],
+        });
+
+        const list = due.map(f => ({
+            id: f.id,
+            name: f.name,
+            stage: f.stage,
+            shouldNotifyNow: (f.reminderMask & bit) === 0,  // 아직 안 본 슬롯이면 true
+            tick: [0, 6, 12, 18][tickIndex] ?? 0,
+            reminderMask: f.reminderMask
+        }));
+
+        return ok(res, list);
+    } catch (e) { next(e); }
+});
+// server/routes/srs.js
+router.post('/reminders/ack', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { folderId, tick } = req.body;              // tick: 0|6|12|18
+        const bit = 1 << [0, 6, 12, 18].indexOf(Number(tick));
+
+        const f = await prisma.srsFolder.findFirst({ where: { id: Number(folderId), userId, alarmActive: true } });
+        if (!f) return fail(res, 404, 'folder not found');
+
+        const newMask = (f.reminderMask | bit) >>> 0;
+        await prisma.srsFolder.update({ where: { id: f.id }, data: { reminderMask: newMask } });
+        return ok(res, { folderId: f.id, reminderMask: newMask });
     } catch (e) { next(e); }
 });
 
@@ -168,61 +370,110 @@ router.post('/legacy/clear', async (req, res, next) => {
 // 하위폴더에 단어(vocabIds) 추가 → SRSCard를 (없으면) 만들고 FolderItem 연결
 // POST /srs/folders/:id/items   body: { vocabIds?: number[], cardIds?: number[] }
 // server/routes/srs.js  (해당 라우트 교체/수정)
-router.post('/folders/:id/items', async (req, res, next) => {
+// GET /srs/folders/:id/items - Get items for a specific folder quiz
+// GET /srs/folders/:id/items  — 단일계층용 폴더 상세 + 오늘 학습 큐
+router.get('/folders/:id/items', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const folderId = Number(req.params.id);
-        const { vocabIds = [] } = req.body || {};
-        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
-            return fail(res, 400, 'vocabIds required');
-        }
+        const id = Number(req.params.id);
+        if (!Number.isFinite(id)) return fail(res, 400, 'invalid id');
 
+        // 1) 폴더 메타
         const folder = await prisma.srsFolder.findFirst({
-            where: { id: folderId, userId },
-            select: { id: true, parentId: true }
+            where: { id, userId },
+            select: {
+                id: true, name: true,
+                createdDate: true,        // ★
+                nextReviewDate: true,     // ★
+                stage: true, alarmActive: true,
+            },
         });
-        if (!folder) return fail(res, 404, 'folder not found');
+        if (!folder) return fail(res, 404, 'Folder not found');
 
-        // 🚫 루트에 직접 추가 금지
-        if (folder.parentId === null) {
-            return fail(res, 400, 'root folder cannot contain items; pick a subfolder');
+        // 2) 폴더 아이템(카드/로컬 learned 상태 포함)
+        const items = await prisma.srsFolderItem.findMany({
+            where: { folderId: id },
+            select: {
+                id: true, cardId: true, learned: true, wrongCount: true, lastReviewedAt: true,
+                vocabId: true,                               // 있으면 바로 사용
+                card: { select: { itemId: true } },         // 없으면 카드의 itemId 사용
+            },
+            orderBy: { id: 'asc' },
+        });
+
+        // 3) Vocab id 수집 → 일괄 조회
+        const vocabIdSet = new Set();
+        for (const it of items) {
+            if (it.vocabId) vocabIdSet.add(it.vocabId);
+            else if (it.card?.itemId) vocabIdSet.add(it.card.itemId);
+        }
+        const vocabIds = Array.from(vocabIdSet);
+        let vocabMap = new Map();
+        if (vocabIds.length > 0) {
+            try {
+                const vocabs = await prisma.vocab.findMany({
+                    where: { id: { in: vocabIds } },
+                    include: { dictMeta: true }
+                });
+                vocabMap = new Map(vocabs.map(v => [v.id, v]));
+            } catch (vocabError) {
+                console.error('Vocab query failed:', vocabError);
+                // fallback to basic vocab without dictMeta
+                const vocabs = await prisma.vocab.findMany({
+                    where: { id: { in: vocabIds } }
+                });
+                vocabMap = new Map(vocabs.map(v => [v.id, v]));
+            }
         }
 
-        // vocabIds -> SRSCard (없으면 생성)
-        const existingCards = await prisma.sRSCard.findMany({
-            where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
-            select: { id: true, itemId: true }
+        // 4) 화면용 큐(learned=false 기준) 구성
+        const quizItems = items.map(it => {
+            const vid = it.vocabId ?? it.card?.itemId ?? null;
+            const v = (vid && vocabMap.get(vid)) || null;
+            
+            // 디버깅용 로그
+            console.log(`[DEBUG] Item ${it.id}: vocabId=${vid}, vocab found=${!!v}`);
+            if (v) {
+                console.log(`[DEBUG] Vocab data:`, {
+                    lemma: v.lemma,
+                    dictMeta: v.dictMeta,
+                    dictMetaType: typeof v.dictMeta,
+                    dictMetaKeys: v.dictMeta ? Object.keys(v.dictMeta) : null
+                });
+                if (v.dictMeta?.examples) {
+                    console.log(`[DEBUG] Examples:`, v.dictMeta.examples);
+                    console.log(`[DEBUG] Examples type:`, typeof v.dictMeta.examples);
+                }
+            }
+            
+            return {
+                folderItemId: it.id,
+                cardId: it.cardId,
+                learned: it.learned,
+                wrongCount: it.wrongCount,
+                lastReviewedAt: it.lastReviewedAt,
+                vocab: v ? {
+                    id: v.id,
+                    lemma: v.lemma,
+                    pos: v.pos,
+                    level: v.levelCEFR,
+                    dictMeta: v.dictMeta || null,
+                } : null,
+            };
         });
-        const map = new Map(existingCards.map(c => [c.itemId, c.id]));
-        const toCreate = vocabIds
-            .filter(id => !map.has(id))
-            .map(vocabId => ({ userId, itemType: 'vocab', itemId: vocabId, stage: 0, nextReviewAt: new Date() }));
-        if (toCreate.length) await prisma.sRSCard.createMany({ data: toCreate });
 
-        // 새로 만든 카드까지 다시 조회해 카드ID 매핑 완성
-        const allCards = await prisma.sRSCard.findMany({
-            where: { userId, itemType: 'vocab', itemId: { in: vocabIds } },
-            select: { id: true, itemId: true }
+        return ok(res, { folder, quizItems });
+    } catch (e) {
+        console.error('GET /srs/folders/:id/items failed:', e);
+        console.error('Error details:', {
+            message: e.message,
+            stack: e.stack,
+            code: e.code
         });
-        allCards.forEach(c => map.set(c.itemId, c.id));
-
-        const cardIds = vocabIds.map(v => map.get(v)).filter(Boolean);
-
-        // 폴더 내 중복 제거
-        const existingItems = await prisma.srsFolderItem.findMany({
-            where: { folderId, cardId: { in: cardIds } },
-            select: { cardId: true }
-        });
-        const dupCardIdSet = new Set(existingItems.map(i => i.cardId));
-        const toInsert = cardIds
-            .filter(cid => !dupCardIdSet.has(cid))
-            .map(cid => ({ folderId, cardId: cid }));
-        if (toInsert.length) await prisma.srsFolderItem.createMany({ data: toInsert });
-
-        const duplicateIds = vocabIds.filter(vId => dupCardIdSet.has(map.get(vId)));
-        return ok(res, { added: toInsert.length, duplicateIds });
-    } catch (e) { next(e); }
+        return fail(res, 500, `Internal Server Error: ${e.message}`);
+    }
 });
+
 
 
 
@@ -474,30 +725,28 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
     }
 });
 // DELETE /srs/folders/:id  (루트/하위 모두 허용)  — 하위와 아이템까지 함께 삭제
+// DELETE /srs/folders/:id  — 단일계층 삭제
 router.delete('/folders/:id', async (req, res, next) => {
     try {
         const userId = req.user.id;
         const id = Number(req.params.id);
+        if (!Number.isFinite(id)) return fail(res, 400, 'invalid id');
+
+        const exists = await prisma.srsFolder.findFirst({ where: { id, userId }, select: { id: true } });
+        if (!exists) return fail(res, 404, 'Folder not found');
 
         await prisma.$transaction(async (tx) => {
-            const target = await tx.srsFolder.findFirst({ where: { id, userId }, select: { id: true } });
-            if (!target) return fail(res, 404, 'folder not found');
-
-            // 하위 폴더 삭제(아이템 포함)
-            const children = await tx.srsFolder.findMany({ where: { parentId: id }, select: { id: true } });
-            const childIds = children.map((c) => c.id);
-            if (childIds.length) {
-                await tx.srsFolderItem.deleteMany({ where: { folderId: { in: childIds } } });
-                await tx.srsFolder.deleteMany({ where: { id: { in: childIds } } });
-            }
-            // 자기 아이템 삭제 후 자신 삭제
             await tx.srsFolderItem.deleteMany({ where: { folderId: id } });
             await tx.srsFolder.delete({ where: { id } });
         });
 
-        return ok(res, { deleted: true });
-    } catch (e) { next(e); }
+        return ok(res, { deleted: true, id });
+    } catch (e) {
+        console.error('DELETE /srs/folders/:id failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
 });
+
 
 // POST /srs/folders/bulk-delete  { ids: number[] }
 router.post('/folders/bulk-delete', async (req, res, next) => {
@@ -608,16 +857,34 @@ router.get('/queue', async (req, res) => {
             // Only quiz unlearned items
             const items = await prisma.srsFolderItem.findMany({
                 where: { folderId, folder: { userId }, learned: false },
-                include: { card: true },
+                select: { 
+                    id: true, 
+                    cardId: true,
+                    vocabId: true,
+                    card: { select: { itemId: true } }
+                },
                 orderBy: { id: 'asc' },
             });
             if (!items.length) return ok(res, []);
 
-            const vocabIds = items.map((it) => it.card?.itemId).filter(Boolean);
+            // vocabId -> cardId 매핑 생성
+            const vocabToCardMap = new Map();
+            items.forEach(it => {
+                const vocabId = it.vocabId ?? it.card?.itemId;
+                if (vocabId) {
+                    vocabToCardMap.set(vocabId, it.cardId);
+                }
+            });
+            
+            const vocabIds = items.map((it) => it.vocabId ?? it.card?.itemId).filter(Boolean);
             // Generate a multiple-choice quiz from the folder's vocab IDs [211]
             const queue = await generateMcqQuizItems(prisma, userId, vocabIds);
-            // Inject folderId into each quiz item for the frontend's answer submission
-            const queueWithFolderId = queue.map(q => ({ ...q, folderId }));
+            // Inject folderId and cardId into each quiz item for the frontend's answer submission
+            const queueWithFolderId = queue.map(q => ({ 
+                ...q, 
+                folderId,
+                cardId: vocabToCardMap.get(q.vocabId) || null
+            }));
             return ok(res, queueWithFolderId);
 
         }
@@ -764,6 +1031,134 @@ router.post('/replace-deck', async (req, res) => {
     } catch (e) {
         console.error('POST /srs/replace-deck failed:', e);
         return fail(res, 500, 'Internal Server Error');
+    }
+});
+
+// ────────────────────────────────────────────────────────────
+// 폴더 완료 및 streak/오답노트 API
+// ────────────────────────────────────────────────────────────
+
+// POST /srs/folders/:id/complete — 폴더 완료 처리 및 다음 복습 생성
+router.post('/folders/:id/complete', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.id);
+        
+        const result = await completeFolderAndScheduleNext(folderId, userId);
+        
+        const responseData = {
+            message: result.message,
+            completedFolder: result.completedFolder.name,
+            isMastered: result.completedFolder.isMastered,
+            completionCount: result.completedFolder.completionCount
+        };
+        
+        if (result.nextFolder) {
+            responseData.nextFolder = result.nextFolder.name;
+            responseData.nextReviewDate = result.nextReviewDate;
+            responseData.nextStage = result.nextFolder.stage;
+        }
+        
+        return ok(res, responseData);
+    } catch (e) {
+        if (e.message === 'Folder not found') {
+            return fail(res, 404, 'Folder not found');
+        }
+        if (e.message === 'All items must be completed before finishing the folder') {
+            return fail(res, 400, 'All items must be completed before finishing the folder');
+        }
+        next(e);
+    }
+});
+
+// POST /srs/folders/:id/restart — 마스터된 폴더 재시작
+router.post('/folders/:id/restart', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.id);
+        
+        const result = await restartMasteredFolder(folderId, userId);
+        
+        return ok(res, result);
+    } catch (e) {
+        if (e.message === 'Mastered folder not found') {
+            return fail(res, 404, 'Mastered folder not found');
+        }
+        next(e);
+    }
+});
+
+// GET /srs/streak — 사용자 streak 정보 조회
+router.get('/streak', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const streakInfo = await getUserStreakInfo(userId);
+        
+        return ok(res, streakInfo);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// ────────────────────────────────────────────────────────────
+// 오답노트 API
+// ────────────────────────────────────────────────────────────
+
+// GET /srs/wrong-answers — 오답노트 목록 조회
+router.get('/wrong-answers', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const includeCompleted = req.query.includeCompleted === 'true';
+        
+        const wrongAnswers = await getWrongAnswers(userId, includeCompleted);
+        
+        return ok(res, wrongAnswers);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// GET /srs/wrong-answers/count — 현재 복습 가능한 오답노트 개수
+router.get('/wrong-answers/count', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const count = await getAvailableWrongAnswersCount(userId);
+        
+        return ok(res, { count });
+    } catch (e) {
+        next(e);
+    }
+});
+
+// GET /srs/wrong-answers/quiz — 오답노트 퀴즈 생성
+router.get('/wrong-answers/quiz', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const limit = Number(req.query.limit) || 10;
+        
+        const quiz = await generateWrongAnswerQuiz(userId, limit);
+        
+        return ok(res, quiz);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// POST /srs/wrong-answers/:vocabId/complete — 오답노트 복습 완료
+router.post('/wrong-answers/:vocabId/complete', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const vocabId = Number(req.params.vocabId);
+        
+        const success = await completeWrongAnswer(userId, vocabId);
+        
+        if (!success) {
+            return fail(res, 400, 'Cannot complete - not in review window or item not found');
+        }
+        
+        return ok(res, { message: 'Wrong answer completed successfully' });
+    } catch (e) {
+        next(e);
     }
 });
 

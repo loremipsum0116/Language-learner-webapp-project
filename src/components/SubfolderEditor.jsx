@@ -33,14 +33,15 @@ export default function SubfolderEditor({ folder, onUpdate }) {
             setMovingItem(null);
             return;
         }
-        if (pickedFolder.id === folder.id) {
+        const targetId = pickedFolder?.id ?? pickedFolder;
+        if (targetId === folder.id) {
             alert('같은 폴더로는 이동할 수 없습니다.');
             setMovingItem(null);
             return;
         }
         try {
             setBusyId(movingItem.id);
-            await SrsApi.moveItems(folder.id, pickedFolder.id, { cardIds: [movingItem.cardId] });
+            await SrsApi.moveItems(folder.id, targetId, { cardIds: [movingItem.cardId] });
             onUpdate && onUpdate();
         } catch (e) {
             alert(e?.message || '이동 중 오류가 발생했습니다.');

@@ -4,9 +4,8 @@ const { scheduleFolder } = require('./queues/alarmQueue');
 
 (async () => {
     try {
-        const folders = await prisma.category.findMany({
-            where: { alarmActive: true, nextAlarmAt: { not: null } }
-        });
+        const folders = await prisma.srsFolder.findMany({ where: { alarmActive: true, nextAlarmAt: { not: null } } });
+
         folders.forEach(f =>
             scheduleFolder(f.id, f.nextAlarmAt.getTime() - Date.now())
         );

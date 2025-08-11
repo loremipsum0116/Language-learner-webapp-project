@@ -5,13 +5,13 @@ import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
 
 /**
- * 독일어 특수문자 가상 키패드 (ä/ö/ü/ß)
+ * English special characters virtual keypad (common symbols)
  * props.onInsert(char) 로 입력 타겟에 삽입
  */
-function GermanKeypad({ onInsert }) {
-  const keys = ["ä", "ö", "ü", "ß", "Ä", "Ö", "Ü"];
+function EnglishKeypad({ onInsert }) {
+  const keys = ["'", '"', "!", "?", ";", ":", "&", "-"];
   return (
-    <div className="d-flex gap-2 my-2" role="group" aria-label="German virtual keypad">
+    <div className="d-flex gap-2 my-2" role="group" aria-label="English punctuation keypad">
       {keys.map((k) => (
         <button
           key={k}
@@ -71,7 +71,7 @@ function AudioPlayer({ src, license, attribution }) {
 function PersonaForm({ value, onChange }) {
   const [level, setLevel] = useState(value?.level || "A2");
   const [tone, setTone] = useState(value?.tone || "formal");
-  const [address, setAddress] = useState(value?.address || "Sie");
+  const [address, setAddress] = useState(value?.address || "formal");
 
   useEffect(() => {
     onChange?.({ level, tone, address });
@@ -100,8 +100,8 @@ function PersonaForm({ value, onChange }) {
       <div className="col-md-4">
         <label className="form-label">호칭</label>
         <select className="form-select" value={address} onChange={(e) => setAddress(e.target.value)}>
-          <option value="Sie">Sie</option>
-          <option value="du">du</option>
+          <option value="formal">formal</option>
+          <option value="casual">casual</option>
         </select>
       </div>
     </form>
@@ -285,7 +285,7 @@ function TutorQuickChat({ persona }) {
           method: "POST",
           body: JSON.stringify({
             mode: "chat",
-            persona: persona || { level: "A2", tone: "formal", address: "Sie" },
+            persona: persona || { level: "A2", tone: "formal", address: "formal" },
             contextTags: [],
             prompt: prompt.trim(),
           }),
@@ -303,11 +303,11 @@ function TutorQuickChat({ persona }) {
   return (
     <div className="card h-100">
       <div className="card-body">
-        <h5 className="card-title">AI 독일어 튜터 (미리보기)</h5>
+        <h5 className="card-title">AI English Tutor (Preview)</h5>
         <form className="d-flex gap-2" onSubmit={send}>
           <input
             className="form-control"
-            placeholder="예: Ich gehe morgen ins Kino. 문법 검토해줘."
+            placeholder="예: I am going to the movies tomorrow. Please review grammar."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             aria-label="tutor prompt"
@@ -411,7 +411,7 @@ function ReadingTeaser() {
 export default function Home() {
   const { user, updateProfile } = useAuth();
   const [authErr, setAuthErr] = useState(null);
-  const [persona, setPersona] = useState({ level: "A2", tone: "formal", address: "Sie" });
+  const [persona, setPersona] = useState({ level: "A2", tone: "formal", address: "formal" });
   useEffect(() => {
     if (user?.profile) {
       setPersona((prev) => ({
@@ -463,10 +463,10 @@ export default function Home() {
     <main className="container py-4">
       <section className="mb-4 hero-section">
         <div className="p-4 p-md-5 bg-light rounded-3">
-          <h1 className="display-6 mb-2">효율적인 영어 학습 플랫폼</h1>
+          <h1 className="display-6 mb-2">Efficient English Learning Platform</h1>
           <p className="mb-3">
-            SRS 어휘, 문법 연습, 지문 독해. <strong>AI 영어 튜터</strong>와{" "}
-            <strong>사전 API(오디오· )</strong>를 결합한 적응형 학습을 경험하세요.
+            SRS vocabulary, grammar practice, reading comprehension. Experience adaptive learning combined with{" "}
+            <strong>AI English Tutor</strong> and <strong>Dictionary API (with audio)</strong>.
           </p>
           <div className="d-flex gap-2">
             <Link className="btn btn-primary" to="/learn/vocab">

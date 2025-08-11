@@ -35,5 +35,26 @@ async function midnightRoll() {
     }
   }
 }
+// 자정 직후(00:05 KST 권장): 어제 due였지만 복습 완료 안 한 폴더는 벨 OFF.
+async function midnightAutoOff() {
+  const today = startOfKstDay();
+  const yesterday = new Date(today.getTime() - 24 * 60 * 60 * 1000);
+  const endOfYesterday = new Date(today.getTime() - 1);
+  const targets = await prisma.srsFolder.findMany({
+    where: {
+      alarmActive: true,
+      nextReviewAt: yesterday,
+    },
+    select: { id: true, lastReviewedAt: true },
+  });
+  const ids = targets
+    .filter(f => !f.lastReviewedAt || f.lastReviewedAt < yesterday || f.lastReviewedAt > endOfYesterday)
+    .map(f => f.id);
+  if (ids.length) {
+    await prisma.srsFolder.updateMany({ where: { id: { in: ids } }, data: { alarmActive: false } });
+  }
+  // 오늘 due 폴더는 알림 슬롯 초기화
+  await prisma.srsFolder.updateMany({ where: { nextReviewAt: today }, data: { reminderMask: 0 } });
+}
 
-module.exports = { sixHourlyNotify, midnightRoll };
+module.exports = { sixHourlyNotify, midnightRoll, midnightAutoOff };
