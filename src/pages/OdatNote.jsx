@@ -113,24 +113,24 @@ export default function OdatNote() {
     };
 
     const resolveOne = async (cardId) => {
-        try {
-            await fetchJSON(
-                '/srs/answer',
-                withCreds({
-                    method: 'POST',
-                    body: JSON.stringify({ cardId, result: 'pass', source: 'odatNote' }),
-                })
-            );
-            setItems((prev) => prev.filter((x) => x.cardId !== cardId));
-            setSelected((prev) => {
-                const n = new Set(prev);
-                n.delete(cardId);
-                return n;
-            });
-        } catch (e) {
-            if (!isAbort(e)) alert('정답 처리 실패');
-        }
-    };
+    try {
+        await fetchJSON(
+            '/quiz/answer',
+            withCreds({
+                method: 'POST',
+                body: JSON.stringify({ cardId, correct: true }),
+            })
+        );
+        setItems((prev) => prev.filter((x) => x.cardId !== cardId));
+        setSelected((prev) => {
+            const n = new Set(prev);
+            n.delete(cardId);
+            return n;
+        });
+    } catch (e) {
+        if (!isAbort(e)) alert('정답 처리 실패');
+    }
+};
 
     const resolveSelected = async () => {
         const ids = Array.from(selected);

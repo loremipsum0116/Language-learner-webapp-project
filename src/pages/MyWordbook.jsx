@@ -250,24 +250,33 @@ export default function MyWordbook() {
     const unselectAll = () => setSelectedIds(new Set());
 
     const onMoveClick = async () => {
-        const ids = Array.from(selectedIds);
-        if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
-        try {
-            await fetchJSON('/my-wordbook/assign', withCreds({
-                method: 'PATCH',
+    const ids = Array.from(selectedIds);
+    if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
+    try {
+        if (moveTarget === 'none') {
+            // 미분류로 이동: 기존 카테고리 연결 제거
+            await fetchJSON('/my-wordbook/remove-many', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ vocabIds: ids }),
+            }));
+        } else {
+            // 특정 카테고리로 이동: 일괄 추가 (서버는 categoryId를 사용)
+            await fetchJSON('/my-wordbook/add-many', withCreds({
+                method: 'POST',
                 body: JSON.stringify({
                     vocabIds: ids,
-                    categoryId: moveTarget === 'none' ? null : Number(moveTarget),
+                    categoryId: Number(moveTarget),
                 }),
             }));
-            await Promise.all([loadCategories(), loadWordbook(filter)]);
-            unselectAll();
-            alert('이동 완료');
-        } catch (e) {
-            console.error(e);
-            alert('이동 실패');
         }
-    };
+        await Promise.all([loadCategories(), loadWordbook(filter)]);
+        unselectAll();
+        alert('이동 완료');
+    } catch (e) {
+        console.error(e);
+        alert('이동 실패');
+    }
+};
 
     const openDetail = async (vocabId, e) => {
         e?.preventDefault?.();
