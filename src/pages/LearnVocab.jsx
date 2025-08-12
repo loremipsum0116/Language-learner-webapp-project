@@ -294,7 +294,8 @@ export default function LearnVocab() {
             }));
             setFeedback({ status: data?.status ?? (isCorrect ? 'pass' : 'fail'), answer: current.answer });
         } catch (e) {
-            toast.error('답변 제출 실패: ' + e.message);
+            console.error('답변 제출 실패:', e);
+            toast.error(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
         } finally {
             setSubmitting(false);
         }
@@ -333,7 +334,7 @@ export default function LearnVocab() {
                     <h5 className="alert-heading">📝 중간 복습 퀴즈</h5>
                     <p className="mb-0">방금 학습한 10개 단어 중 3개를 복습합니다. (점수 미반영)</p>
                 </div>
-                <MiniQuiz batch={reviewQuiz.batch} onDone={handleReviewQuizDone} isReviewQuiz={true} />
+                <MiniQuiz batch={reviewQuiz.batch} onDone={handleReviewQuizDone} folderId={folderIdParam} isReviewQuiz={true} />
             </main>
         );
     }

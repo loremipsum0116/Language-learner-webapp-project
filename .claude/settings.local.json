@@ -6,7 +6,9 @@
       "Bash(del cleanup_koGloss.js test_json.js update_koGloss.js)",
       "Bash(rm:*)",
       "Bash(npx prisma migrate:*)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(npm run dev:*)",
+      "Bash(curl:*)"
     ],
     "deny": []
   }

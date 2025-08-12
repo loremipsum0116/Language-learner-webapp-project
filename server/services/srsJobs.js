@@ -43,4 +43,17 @@ async function midnightRoll(logger = console) {
   logger.info(`[srsJobs] midnightRoll disabled ${res.count} stale alarms`);
 }
 
-module.exports = { sixHourlyNotify, midnightRoll };
+// Export additional utility functions needed by other modules
+function startOfKstDay(d = dayjs()) {
+  // d가 Date 객체인 경우 dayjs로 변환
+  const dayjsObj = dayjs.isDayjs(d) ? d : dayjs(d);
+  return dayjsObj.tz(KST).startOf('day');
+}
+
+function addKstDays(kstDate, days) {
+  // kstDate가 Date 객체인 경우 dayjs로 변환
+  const dayjsObj = dayjs.isDayjs(kstDate) ? kstDate : dayjs(kstDate);
+  return dayjsObj.add(days, 'day');
+}
+
+module.exports = { sixHourlyNotify, midnightRoll, startOfKstDay, addKstDays };

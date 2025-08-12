@@ -52,12 +52,12 @@ export const SrsApi = {
             body: JSON.stringify({ vocabIds }),
         }).then(r => r.data ?? r);
     },
-    removeItems(folderId, { cardIds }) {
+    removeItems(folderId, { itemIds }) {
         return fetchJSON(`/srs/folders/${folderId}/items/bulk-delete`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ itemIds: cardIds }),
+            body: JSON.stringify({ itemIds }),
         }).then(r => r.data ?? r);
     },
     moveItems(fromFolderId, toFolderId, { cardIds }) {

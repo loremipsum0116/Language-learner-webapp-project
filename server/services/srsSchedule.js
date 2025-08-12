@@ -13,7 +13,9 @@ function isFinalStage(stage) {
   return clampStage(stage) === STAGE_DELAYS.length - 1;
 }
 function delayDaysFor(stage) {
-  return STAGE_DELAYS[clampStage(stage)];
+  // stage 1 → index 0 (3일), stage 2 → index 1 (7일), ...
+  const index = Math.max(0, clampStage(stage) - 1);
+  return STAGE_DELAYS[index];
 }
 function dateOnlyUTC(yyyy_mm_dd) {
   // Return Date at 00:00:00Z for given YYYY-MM-DD
@@ -27,11 +29,12 @@ function addDaysUTC(date, days) {
 }
 /**
  * Compute next review date from baseDate and given stage.
- * stage=0 ⇒ +3d, stage=1 ⇒ +7d, ... capped at 120.
+ * stage=1 ⇒ +3d, stage=2 ⇒ +7d, ... capped at 120.
  * Returns Date at 00:00:00Z (treat as date-only).
  */
 function computeNextReviewDate(baseDate, stage) {
   const delay = delayDaysFor(stage);
+  console.log(`[SRS SCHEDULE] Stage ${stage} -> +${delay} days`);
   return addDaysUTC(baseDate, delay);
 }
 

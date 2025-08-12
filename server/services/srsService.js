@@ -1,22 +1,28 @@
 //server/services/srsService.js
 const { prisma } = require('../lib/prismaClient');
 const createError = require('http-errors');
-const { startOfKstDay, kstAddDays, kstAt } = require('../lib/kst');
 const { computeNextReviewDate } = require('./srsSchedule');
+const { startOfKstDay, addKstDays } = require('./srsJobs');
 const dayjs = require('dayjs');
 
 /**
  * 수동으로 새 학습 폴더를 생성합니다.
  */
 async function createManualFolder(userId, folderName, vocabIds = []) {
-    const now = dayjs();
+    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, UTC 기준 자정으로 변환
+    const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
+    const todayUtcDate = new Date(todayKst + 'T00:00:00.000Z'); // UTC 기준 자정으로 저장
+    
+    console.log('[CREATE FOLDER] KST date string:', todayKst);
+    console.log('[CREATE FOLDER] UTC Date for storage:', todayUtcDate);
     
     const folder = await prisma.srsFolder.create({
         data: {
             userId,
             name: folderName,
-            createdDate: now.startOf('day').toDate(),
-            cycleAnchorAt: now.toDate(), // 망각곡선 기준점을 생성 시각으로 설정
+            createdDate: todayUtcDate,
+            nextReviewDate: todayUtcDate, // Stage 0은 즉시 복습 가능
+            cycleAnchorAt: dayjs().toDate(), // 망각곡선 기준점을 생성 시각으로 설정
             kind: 'manual',
             autoCreated: false,
             alarmActive: true,

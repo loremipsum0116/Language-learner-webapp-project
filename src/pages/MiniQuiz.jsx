@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { fetchJSON, withCreds } from '../api/client';
 import Pron from './Pron';
 
-export default function MiniQuiz({ batch, onDone }) {
+export default function MiniQuiz({ batch, onDone, folderId }) {
   const [idx, setIdx] = useState(0);
   const [userAnswer, setUserAnswer] = useState(null);
   const [feedback, setFeedback] = useState(null);
@@ -21,11 +21,15 @@ export default function MiniQuiz({ batch, onDone }) {
       // 정답/오답 결과를 서버에 전송합니다.
       await fetchJSON('/quiz/answer', withCreds({
         method: 'POST',
-        body: JSON.stringify({ cardId: current.cardId, correct }),
+        body: JSON.stringify({ 
+          folderId: current.folderId || folderId,
+          cardId: current.cardId, 
+          correct 
+        }),
       }));
     } catch (e) {
       console.error("퀴즈 답변 제출 실패:", e);
-      alert('답변을 기록하는 중 오류가 발생했습니다.');
+      alert(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
     } finally {
       setFeedback({ status: correct ? 'pass' : 'fail', answer: current.answer });
       setIsSubmitting(false);

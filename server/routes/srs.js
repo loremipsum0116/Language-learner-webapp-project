@@ -127,6 +127,8 @@ router.get('/dashboard', async (req, res, next) => {
             alarmActive: f.alarmActive,
             total: f._count.items,
         }));
+        
+        console.log('[SRS DASHBOARD] Response data:', JSON.stringify(data, null, 2));
 
         return ok(res, data);
     } catch (e) {
@@ -190,6 +192,7 @@ router.post('/folders/:id/alarm', async (req, res, next) => {
 
         // If turning the alarm ON, reset the folder's progress
         if (active) {
+            const today = startOfKstDay().toDate();
             dataToUpdate = {
                 ...dataToUpdate,
                 stage: 0,
@@ -396,7 +399,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
             select: {
                 id: true, cardId: true, learned: true, wrongCount: true, lastReviewedAt: true,
                 vocabId: true,                               // 있으면 바로 사용
-                card: { select: { itemId: true } },         // 없으면 카드의 itemId 사용
+                card: { select: { itemId: true, nextReviewAt: true, stage: true } },         // 카드의 복습 정보 포함
             },
             orderBy: { id: 'asc' },
         });
@@ -413,14 +416,32 @@ router.get('/folders/:id/items', async (req, res, next) => {
             try {
                 const vocabs = await prisma.vocab.findMany({
                     where: { id: { in: vocabIds } },
-                    include: { dictMeta: true }
+                    select: {
+                        id: true,
+                        lemma: true,
+                        pos: true,
+                        levelCEFR: true,
+                        dictMeta: {
+                            select: {
+                                ipa: true,
+                                ipaKo: true,
+                                examples: true
+                            }
+                        }
+                    }
                 });
                 vocabMap = new Map(vocabs.map(v => [v.id, v]));
             } catch (vocabError) {
                 console.error('Vocab query failed:', vocabError);
                 // fallback to basic vocab without dictMeta
                 const vocabs = await prisma.vocab.findMany({
-                    where: { id: { in: vocabIds } }
+                    where: { id: { in: vocabIds } },
+                    select: {
+                        id: true,
+                        lemma: true,
+                        pos: true,
+                        levelCEFR: true
+                    }
                 });
                 vocabMap = new Map(vocabs.map(v => [v.id, v]));
             }
@@ -431,19 +452,10 @@ router.get('/folders/:id/items', async (req, res, next) => {
             const vid = it.vocabId ?? it.card?.itemId ?? null;
             const v = (vid && vocabMap.get(vid)) || null;
             
-            // 디버깅용 로그
+            // 디버깅용 로그 (상세)
             console.log(`[DEBUG] Item ${it.id}: vocabId=${vid}, vocab found=${!!v}`);
             if (v) {
-                console.log(`[DEBUG] Vocab data:`, {
-                    lemma: v.lemma,
-                    dictMeta: v.dictMeta,
-                    dictMetaType: typeof v.dictMeta,
-                    dictMetaKeys: v.dictMeta ? Object.keys(v.dictMeta) : null
-                });
-                if (v.dictMeta?.examples) {
-                    console.log(`[DEBUG] Examples:`, v.dictMeta.examples);
-                    console.log(`[DEBUG] Examples type:`, typeof v.dictMeta.examples);
-                }
+                console.log(`[DEBUG] Full vocab data:`, JSON.stringify(v, null, 2));
             }
             
             return {
@@ -452,6 +464,11 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 learned: it.learned,
                 wrongCount: it.wrongCount,
                 lastReviewedAt: it.lastReviewedAt,
+                // 개별 카드의 SRS 정보 추가
+                nextReviewAt: it.card?.nextReviewAt,
+                stage: it.card?.stage,
+                // 오답 단어 여부 판단
+                isWrongAnswer: it.wrongCount > 0,
                 vocab: v ? {
                     id: v.id,
                     lemma: v.lemma,
@@ -462,6 +479,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
             };
         });
 
+        console.log('[DEBUG API RESPONSE] Sample quizItem:', JSON.stringify(quizItems[0], null, 2));
         return ok(res, { folder, quizItems });
     } catch (e) {
         console.error('GET /srs/folders/:id/items failed:', e);
@@ -470,6 +488,14 @@ router.get('/folders/:id/items', async (req, res, next) => {
             stack: e.stack,
             code: e.code
         });
+        
+        // Prisma 관련 에러에 대한 더 나은 에러 메시지
+        if (e.code === 'P2025') {
+            return fail(res, 404, 'Folder not found');
+        } else if (e.code?.startsWith('P')) {
+            return fail(res, 500, 'Database error occurred');
+        }
+        
         return fail(res, 500, `Internal Server Error: ${e.message}`);
     }
 });
@@ -620,7 +646,13 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
                         userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
                     },
                     update: {},
-                    create: { userId, itemType: 'vocab', itemId: vid },
+                    create: { 
+                        userId, 
+                        itemType: 'vocab', 
+                        itemId: vid,
+                        stage: 0,
+                        nextReviewAt: new Date() // 즉시 복습 가능
+                    },
                     select: { id: true, itemType: true, itemId: true },
                 });
 
@@ -685,6 +717,8 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
         const folderId = Number(req.params.folderId);
         // ✅ 요청 본문에서 itemIds와 permanent 옵션을 함께 받습니다.
         const { itemIds, permanent } = req.body;
+        
+        console.log('[BULK DELETE] Request:', { userId, folderId, itemIds, permanent });
 
         // ... (기존 유효성 검사 및 폴더 소유권 확인) ...
 
@@ -694,7 +728,10 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
             select: { id: true, cardId: true },
         });
 
+        console.log('[BULK DELETE] Items found to delete:', itemsToDelete);
+
         if (itemsToDelete.length === 0) {
+            console.log('[BULK DELETE] No items found to delete');
             return ok(res, { count: 0 });
         }
 
@@ -707,15 +744,18 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
             const result = await tx.srsFolderItem.deleteMany({
                 where: { id: { in: folderItemIds } },
             });
+            
+            console.log('[BULK DELETE] SrsFolderItem deleteMany result:', result);
 
             // 2. permanent 옵션이 true일 경우, SRSCard를 영구 삭제합니다.
             if (permanent) {
-                await tx.sRSCard.deleteMany({
+                const cardDeleteResult = await tx.sRSCard.deleteMany({
                     where: {
                         id: { in: cardIdsToDelete },
                         userId: userId, // 본인 카드만 삭제하도록 이중 확인
                     },
                 });
+                console.log('[BULK DELETE] SRSCard deleteMany result:', cardDeleteResult);
             }
         });
 

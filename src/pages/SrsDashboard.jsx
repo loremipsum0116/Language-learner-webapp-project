@@ -3,17 +3,23 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import { fetchJSON, withCreds } from "../api/client";
 import { SrsApi } from "../api/srs";
 
+dayjs.extend(utc);
+dayjs.extend(timezone);
 dayjs.locale("ko");
 
 function fmt(d) {
     if (!d) return "-";
-    return dayjs(d).format("YYYY.MM.DD (ddd)");
+    // 날짜 전용 필드는 UTC로 해석하여 날짜만 표시
+    return dayjs.utc(d).format("YYYY.MM.DD (ddd)");
 }
 function isDue(nextReviewDate) {
-    return dayjs(nextReviewDate).isSame(dayjs(), "day") || dayjs(nextReviewDate).isBefore(dayjs(), "day");
+    const kstNow = dayjs().tz('Asia/Seoul');
+    return dayjs(nextReviewDate).tz('Asia/Seoul').isSame(kstNow, "day") || dayjs(nextReviewDate).tz('Asia/Seoul').isBefore(kstNow, "day");
 }
 
 export default function SrsDashboard() {
