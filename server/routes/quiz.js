@@ -43,7 +43,7 @@ router.post('/answer', async (req, res, next) => {
             body: req.body,
             userId: req.user?.id
         });
-        
+
         const userId = req.user.id;
         let { folderId, cardId, correct } = req.body;
 
@@ -104,33 +104,38 @@ router.post('/answer', async (req, res, next) => {
             // 카드 정보에서 현재 stage 가져오기
             const currentStage = card.stage || 0;
             let newStage, nextReviewAt;
-            
+
             if (isCorrect) {
                 // 정답 처리
                 newStage = currentStage + 1;
-                console.log(`[QUIZ CORRECT] Stage progression: ${currentStage} -> ${newStage}`);
+                console.log(`[QUIZ CORRECT] Current stage: ${currentStage}, New stage: ${newStage}`);
+
                 const { computeNextReviewDate } = require('../services/srsSchedule');
-                
-                // 1. 오답이었던 단어가 정답으로 해결된 경우 - 동일 폴더 단어들과 복습일 동기화
+
+                // 1. 오답이었던 단어가 정답으로 해결된 경우 - 복습일이 된 경우에만 동기화
                 if (currentStage === 0 && folderId) {
                     console.log(`[SYNC REVIEW] Wrong word corrected, checking if sync is due...`);
-                    
+
                     // 현재 카드의 nextReviewAt을 확인하여 복습일이 되었는지 체크
                     const currentCard = await tx.sRSCard.findUnique({
                         where: { id: cardId },
                         select: { nextReviewAt: true }
                     });
-                    
-                    const todayKstStart = startOfKstDay(now).startOf('day');
-                    const cardReviewDate = currentCard.nextReviewAt ? startOfKstDay(currentCard.nextReviewAt).startOf('day') : null;
-                    
+
+                    const todayKstStart = startOfKstDay(now);
+                    const cardReviewDate = currentCard.nextReviewAt ?
+                        startOfKstDay(currentCard.nextReviewAt) : null;
+
                     // 복습일이 오늘이거나 이미 지났을 때만 동기화
-                    const isDueForSync = cardReviewDate && (cardReviewDate.isSame(todayKstStart) || cardReviewDate.isBefore(todayKstStart));
+                    const isDueForSync = cardReviewDate &&
+                        (cardReviewDate.isSame(todayKstStart, 'day') ||
+                            cardReviewDate.isBefore(todayKstStart, 'day'));
+
                     console.log(`[SYNC REVIEW] Card review date: ${cardReviewDate?.format('YYYY-MM-DD')}, Today: ${todayKstStart.format('YYYY-MM-DD')}, isDue: ${isDueForSync}`);
-                    
+
                     if (isDueForSync) {
                         console.log(`[SYNC REVIEW] Wrong word is due for review, syncing with folder ${folderId}`);
-                        
+
                         // 같은 폴더의 다른 stage 1+ 카드들 중 가장 빠른 nextReviewAt 찾기
                         const folderCards = await tx.sRSCard.findMany({
                             where: {
@@ -144,7 +149,7 @@ router.post('/answer', async (req, res, next) => {
                             orderBy: { nextReviewAt: 'asc' },
                             take: 1
                         });
-                        
+
                         if (folderCards.length > 0 && folderCards[0].nextReviewAt) {
                             // 동일 폴더 다른 단어들과 같은 날짜로 동기화
                             nextReviewAt = folderCards[0].nextReviewAt;
@@ -161,8 +166,9 @@ router.post('/answer', async (req, res, next) => {
                         nextReviewAt = computeNextReviewDate(startOfKstDay(now).toDate(), newStage);
                     }
                 } else {
-                    // 일반적인 정답 처리
+                    // 2. 일반 정답 처리 (stage 1+ → stage 2+)
                     nextReviewAt = computeNextReviewDate(startOfKstDay(now).toDate(), newStage);
+                    console.log(`[QUIZ CORRECT] Computing next review for stage ${newStage}`);
                 }
             } else {
                 // 오답: stage 0으로 리셋, 다음날 복습
@@ -186,7 +192,7 @@ router.post('/answer', async (req, res, next) => {
 
             // 오답노트 처리
             const vocabId = card.itemId; // SRSCard의 itemId가 vocabId
-            
+
             if (!isCorrect) {
                 // 오답 시 WrongAnswer 모델에 추가
                 console.log(`[QUIZ ANSWER] Adding wrong answer: userId=${userId}, vocabId=${vocabId}`);
@@ -233,9 +239,9 @@ router.post('/answer', async (req, res, next) => {
             code: e.code,
             status: e.status
         });
-        
+
         if (e?.status) return res.status(e.status).json({ error: e.message });
-        
+
         // 기본 500 에러 처리
         return res.status(500).json({ error: `Internal Server Error: ${e.message}` });
     }

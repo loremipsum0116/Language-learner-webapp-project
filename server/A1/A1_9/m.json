@@ -1,0 +1,1042 @@
+[
+  {
+    "lemma": "second",
+    "koChirpScript": "second"
+  },
+  {
+    "lemma": "person",
+    "koChirpScript": "person"
+  },
+  {
+    "lemma": "laugh",
+    "koChirpScript": "laugh"
+  },
+  {
+    "lemma": "cry",
+    "koChirpScript": "cry"
+  },
+  {
+    "lemma": "smile",
+    "koChirpScript": "smile"
+  },
+  {
+    "lemma": "shout",
+    "koChirpScript": "shout"
+  },
+  {
+    "lemma": "kind",
+    "koChirpScript": "kind"
+  },
+  {
+    "lemma": "friendly",
+    "koChirpScript": "friendly"
+  },
+  {
+    "lemma": "warm",
+    "koChirpScript": "warm"
+  },
+  {
+    "lemma": "cool",
+    "koChirpScript": "cool"
+  },
+  {
+    "lemma": "color",
+    "koChirpScript": "color"
+  },
+  {
+    "lemma": "left",
+    "koChirpScript": "left"
+  },
+  {
+    "lemma": "front",
+    "koChirpScript": "front"
+  },
+  {
+    "lemma": "back",
+    "koChirpScript": "back"
+  },
+  {
+    "lemma": "train",
+    "koChirpScript": "train"
+  },
+  {
+    "lemma": "plane",
+    "koChirpScript": "plane"
+  },
+  {
+    "lemma": "boat",
+    "koChirpScript": "boat"
+  },
+  {
+    "lemma": "bicycle",
+    "koChirpScript": "bicycle"
+  },
+  {
+    "lemma": "foot",
+    "koChirpScript": "foot"
+  },
+  {
+    "lemma": "sport",
+    "koChirpScript": "sport"
+  },
+  {
+    "lemma": "movie",
+    "koChirpScript": "movie"
+  },
+  {
+    "lemma": "television",
+    "koChirpScript": "television"
+  },
+  {
+    "lemma": "radio",
+    "koChirpScript": "radio"
+  },
+  {
+    "lemma": "kick",
+    "koChirpScript": "kick"
+  },
+  {
+    "lemma": "push",
+    "koChirpScript": "push"
+  },
+  {
+    "lemma": "pull",
+    "koChirpScript": "pull"
+  },
+  {
+    "lemma": "send",
+    "koChirpScript": "send"
+  },
+  {
+    "lemma": "wet",
+    "koChirpScript": "wet"
+  },
+  {
+    "lemma": "dry",
+    "koChirpScript": "dry"
+  },
+  {
+    "lemma": "heavy",
+    "koChirpScript": "heavy"
+  },
+  {
+    "lemma": "internet",
+    "koChirpScript": "internet"
+  },
+  {
+    "lemma": "website",
+    "koChirpScript": "website"
+  },
+  {
+    "lemma": "email",
+    "koChirpScript": "email"
+  },
+  {
+    "lemma": "message",
+    "koChirpScript": "message"
+  },
+  {
+    "lemma": "photo",
+    "koChirpScript": "photo"
+  },
+  {
+    "lemma": "video",
+    "koChirpScript": "video"
+  },
+  {
+    "lemma": "song",
+    "koChirpScript": "song"
+  },
+  {
+    "lemma": "sound",
+    "koChirpScript": "sound"
+  },
+  {
+    "lemma": "noise",
+    "koChirpScript": "noise"
+  },
+  {
+    "lemma": "spend",
+    "koChirpScript": "spend"
+  },
+  {
+    "lemma": "save",
+    "koChirpScript": "save"
+  },
+  {
+    "lemma": "stay",
+    "koChirpScript": "stay"
+  },
+  {
+    "lemma": "fat",
+    "koChirpScript": "fat"
+  },
+  {
+    "lemma": "thin",
+    "koChirpScript": "thin"
+  },
+  {
+    "lemma": "loud",
+    "koChirpScript": "loud"
+  },
+  {
+    "lemma": "dirty",
+    "koChirpScript": "dirty"
+  },
+  {
+    "lemma": "up",
+    "koChirpScript": "up"
+  },
+  {
+    "lemma": "down",
+    "koChirpScript": "down"
+  },
+  {
+    "lemma": "around",
+    "koChirpScript": "around"
+  },
+  {
+    "lemma": "with",
+    "koChirpScript": "with"
+  },
+  {
+    "lemma": "floor",
+    "koChirpScript": "floor"
+  },
+  {
+    "lemma": "wall",
+    "koChirpScript": "wall"
+  },
+  {
+    "lemma": "clock",
+    "koChirpScript": "clock"
+  },
+  {
+    "lemma": "coin",
+    "koChirpScript": "coin"
+  },
+  {
+    "lemma": "note",
+    "koChirpScript": "note"
+  },
+  {
+    "lemma": "garden",
+    "koChirpScript": "garden"
+  },
+  {
+    "lemma": "class",
+    "koChirpScript": "class"
+  },
+  {
+    "lemma": "lesson",
+    "koChirpScript": "lesson"
+  },
+  {
+    "lemma": "police",
+    "koChirpScript": "police"
+  },
+  {
+    "lemma": "doctor",
+    "koChirpScript": "doctor"
+  },
+  {
+    "lemma": "nurse",
+    "koChirpScript": "nurse"
+  },
+  {
+    "lemma": "fly",
+    "koChirpScript": "fly"
+  },
+  {
+    "lemma": "break",
+    "koChirpScript": "break"
+  },
+  {
+    "lemma": "build",
+    "koChirpScript": "build"
+  },
+  {
+    "lemma": "draw",
+    "koChirpScript": "draw"
+  },
+  {
+    "lemma": "pretty",
+    "koChirpScript": "pretty"
+  },
+  {
+    "lemma": "sick",
+    "koChirpScript": "sick"
+  },
+  {
+    "lemma": "well",
+    "koChirpScript": "well"
+  },
+  {
+    "lemma": "behind",
+    "koChirpScript": "behind"
+  },
+  {
+    "lemma": "usually",
+    "koChirpScript": "usually"
+  },
+  {
+    "lemma": "body",
+    "koChirpScript": "body"
+  },
+  {
+    "lemma": "hair",
+    "koChirpScript": "hair"
+  },
+  {
+    "lemma": "nose",
+    "koChirpScript": "nose"
+  },
+  {
+    "lemma": "mouth",
+    "koChirpScript": "mouth"
+  },
+  {
+    "lemma": "ear",
+    "koChirpScript": "ear"
+  },
+  {
+    "lemma": "finger",
+    "koChirpScript": "finger"
+  },
+  {
+    "lemma": "cloud",
+    "koChirpScript": "cloud"
+  },
+  {
+    "lemma": "sky",
+    "koChirpScript": "sky"
+  },
+  {
+    "lemma": "wind",
+    "koChirpScript": "wind"
+  },
+  {
+    "lemma": "snow",
+    "koChirpScript": "snow"
+  },
+  {
+    "lemma": "summer",
+    "koChirpScript": "summer"
+  },
+  {
+    "lemma": "winter",
+    "koChirpScript": "winter"
+  },
+  {
+    "lemma": "spring",
+    "koChirpScript": "spring"
+  },
+  {
+    "lemma": "autumn",
+    "koChirpScript": "autumn"
+  },
+  {
+    "lemma": "holiday",
+    "koChirpScript": "holiday"
+  },
+  {
+    "lemma": "birthday",
+    "koChirpScript": "birthday"
+  },
+  {
+    "lemma": "choose",
+    "koChirpScript": "choose"
+  },
+  {
+    "lemma": "cut",
+    "koChirpScript": "cut"
+  },
+  {
+    "lemma": "lose",
+    "koChirpScript": "lose"
+  },
+  {
+    "lemma": "win",
+    "koChirpScript": "win"
+  },
+  {
+    "lemma": "bathroom",
+    "koChirpScript": "bathroom"
+  },
+  {
+    "lemma": "bedroom",
+    "koChirpScript": "bedroom"
+  },
+  {
+    "lemma": "living room",
+    "koChirpScript": "living room"
+  },
+  {
+    "lemma": "address",
+    "koChirpScript": "address"
+  },
+  {
+    "lemma": "age",
+    "koChirpScript": "age"
+  },
+  {
+    "lemma": "price",
+    "koChirpScript": "price"
+  },
+  {
+    "lemma": "size",
+    "koChirpScript": "size"
+  },
+  {
+    "lemma": "computer",
+    "koChirpScript": "computer"
+  },
+  {
+    "lemma": "thing",
+    "koChirpScript": "thing"
+  },
+  {
+    "lemma": "story",
+    "koChirpScript": "story"
+  },
+  {
+    "lemma": "teach",
+    "koChirpScript": "teach"
+  },
+  {
+    "lemma": "take",
+    "koChirpScript": "take"
+  },
+  {
+    "lemma": "favorite",
+    "koChirpScript": "favorite"
+  },
+  {
+    "lemma": "full",
+    "koChirpScript": "full"
+  },
+  {
+    "lemma": "empty",
+    "koChirpScript": "empty"
+  },
+  {
+    "lemma": "tall",
+    "koChirpScript": "tall"
+  },
+  {
+    "lemma": "but",
+    "koChirpScript": "but"
+  },
+  {
+    "lemma": "because",
+    "koChirpScript": "because"
+  },
+  {
+    "lemma": "very",
+    "koChirpScript": "very"
+  },
+  {
+    "lemma": "also",
+    "koChirpScript": "also"
+  },
+  {
+    "lemma": "dessert",
+    "koChirpScript": "dessert"
+  },
+  {
+    "lemma": "snack",
+    "koChirpScript": "snack"
+  },
+  {
+    "lemma": "date",
+    "koChirpScript": "date"
+  },
+  {
+    "lemma": "fun",
+    "koChirpScript": "fun"
+  },
+  {
+    "lemma": "problem",
+    "koChirpScript": "problem"
+  },
+  {
+    "lemma": "idea",
+    "koChirpScript": "idea"
+  },
+  {
+    "lemma": "wake up",
+    "koChirpScript": "wake up"
+  },
+  {
+    "lemma": "get up",
+    "koChirpScript": "get up"
+  },
+  {
+    "lemma": "go to bed",
+    "koChirpScript": "go to bed"
+  },
+  {
+    "lemma": "take a shower",
+    "koChirpScript": "take a shower"
+  },
+  {
+    "lemma": "nice",
+    "koChirpScript": "nice"
+  },
+  {
+    "lemma": "great",
+    "koChirpScript": "great"
+  },
+  {
+    "lemma": "when",
+    "koChirpScript": "when"
+  },
+  {
+    "lemma": "where",
+    "koChirpScript": "where"
+  },
+  {
+    "lemma": "why",
+    "koChirpScript": "why"
+  },
+  {
+    "lemma": "how",
+    "koChirpScript": "how"
+  },
+  {
+    "lemma": "what",
+    "koChirpScript": "what"
+  },
+  {
+    "lemma": "who",
+    "koChirpScript": "who"
+  },
+  {
+    "lemma": "which",
+    "koChirpScript": "which"
+  },
+  {
+    "lemma": "then",
+    "koChirpScript": "then"
+  },
+  {
+    "lemma": "dress",
+    "koChirpScript": "dress"
+  },
+  {
+    "lemma": "skirt",
+    "koChirpScript": "skirt"
+  },
+  {
+    "lemma": "jacket",
+    "koChirpScript": "jacket"
+  },
+  {
+    "lemma": "coat",
+    "koChirpScript": "coat"
+  },
+  {
+    "lemma": "jeans",
+    "koChirpScript": "jeans"
+  },
+  {
+    "lemma": "sock",
+    "koChirpScript": "sock"
+  },
+  {
+    "lemma": "market",
+    "koChirpScript": "market"
+  },
+  {
+    "lemma": "hospital",
+    "koChirpScript": "hospital"
+  },
+  {
+    "lemma": "bank",
+    "koChirpScript": "bank"
+  },
+  {
+    "lemma": "hotel",
+    "koChirpScript": "hotel"
+  },
+  {
+    "lemma": "restaurant",
+    "koChirpScript": "restaurant"
+  },
+  {
+    "lemma": "menu",
+    "koChirpScript": "menu"
+  },
+  {
+    "lemma": "bill",
+    "koChirpScript": "bill"
+  },
+  {
+    "lemma": "put on",
+    "koChirpScript": "put on"
+  },
+  {
+    "lemma": "take off",
+    "koChirpScript": "take off"
+  },
+  {
+    "lemma": "look for",
+    "koChirpScript": "look for"
+  },
+  {
+    "lemma": "bring",
+    "koChirpScript": "bring"
+  },
+  {
+    "lemma": "carry",
+    "koChirpScript": "carry"
+  },
+  {
+    "lemma": "wonderful",
+    "koChirpScript": "wonderful"
+  },
+  {
+    "lemma": "correct",
+    "koChirpScript": "correct"
+  },
+  {
+    "lemma": "T-shirt",
+    "koChirpScript": "T-shirt"
+  },
+  {
+    "lemma": "supermarket",
+    "koChirpScript": "supermarket"
+  },
+  {
+    "lemma": "cafe",
+    "koChirpScript": "cafe"
+  },
+  {
+    "lemma": "glass",
+    "koChirpScript": "glass"
+  },
+  {
+    "lemma": "text",
+    "koChirpScript": "text"
+  },
+  {
+    "lemma": "terrible",
+    "koChirpScript": "terrible"
+  },
+  {
+    "lemma": "delicious",
+    "koChirpScript": "delicious"
+  },
+  {
+    "lemma": "incorrect",
+    "koChirpScript": "incorrect"
+  },
+  {
+    "lemma": "straight",
+    "koChirpScript": "straight"
+  },
+  {
+    "lemma": "single",
+    "koChirpScript": "single"
+  },
+  {
+    "lemma": "married",
+    "koChirpScript": "married"
+  },
+  {
+    "lemma": "without",
+    "koChirpScript": "without"
+  },
+  {
+    "lemma": "for",
+    "koChirpScript": "for"
+  },
+  {
+    "lemma": "from",
+    "koChirpScript": "from"
+  },
+  {
+    "lemma": "to",
+    "koChirpScript": "to"
+  },
+  {
+    "lemma": "near",
+    "koChirpScript": "near"
+  },
+  {
+    "lemma": "far",
+    "koChirpScript": "far"
+  },
+  {
+    "lemma": "between",
+    "koChirpScript": "between"
+  },
+  {
+    "lemma": "through",
+    "koChirpScript": "through"
+  },
+  {
+    "lemma": "of",
+    "koChirpScript": "of"
+  },
+  {
+    "lemma": "sweater",
+    "koChirpScript": "sweater"
+  },
+  {
+    "lemma": "clothes",
+    "koChirpScript": "clothes"
+  },
+  {
+    "lemma": "toy",
+    "koChirpScript": "toy"
+  },
+  {
+    "lemma": "grass",
+    "koChirpScript": "grass"
+  },
+  {
+    "lemma": "leaf",
+    "koChirpScript": "leaf"
+  },
+  {
+    "lemma": "another",
+    "koChirpScript": "another"
+  },
+  {
+    "lemma": "other",
+    "koChirpScript": "other"
+  },
+  {
+    "lemma": "every",
+    "koChirpScript": "every"
+  },
+  {
+    "lemma": "all",
+    "koChirpScript": "all"
+  },
+  {
+    "lemma": "some",
+    "koChirpScript": "some"
+  },
+  {
+    "lemma": "any",
+    "koChirpScript": "any"
+  },
+  {
+    "lemma": "I",
+    "koChirpScript": "I"
+  },
+  {
+    "lemma": "he",
+    "koChirpScript": "he"
+  },
+  {
+    "lemma": "she",
+    "koChirpScript": "she"
+  },
+  {
+    "lemma": "we",
+    "koChirpScript": "we"
+  },
+  {
+    "lemma": "they",
+    "koChirpScript": "they"
+  },
+  {
+    "lemma": "my",
+    "koChirpScript": "my"
+  },
+  {
+    "lemma": "your",
+    "koChirpScript": "your"
+  },
+  {
+    "lemma": "his",
+    "koChirpScript": "his"
+  },
+  {
+    "lemma": "our",
+    "koChirpScript": "our"
+  },
+  {
+    "lemma": "her",
+    "koChirpScript": "her"
+  },
+  {
+    "lemma": "its",
+    "koChirpScript": "its"
+  },
+  {
+    "lemma": "their",
+    "koChirpScript": "their"
+  },
+  {
+    "lemma": "this",
+    "koChirpScript": "this"
+  },
+  {
+    "lemma": "that",
+    "koChirpScript": "that"
+  },
+  {
+    "lemma": "these",
+    "koChirpScript": "these"
+  },
+  {
+    "lemma": "those",
+    "koChirpScript": "those"
+  },
+  {
+    "lemma": "me",
+    "koChirpScript": "me"
+  },
+  {
+    "lemma": "him",
+    "koChirpScript": "him"
+  },
+  {
+    "lemma": "us",
+    "koChirpScript": "us"
+  },
+  {
+    "lemma": "them",
+    "koChirpScript": "them"
+  },
+  {
+    "lemma": "one",
+    "koChirpScript": "one"
+  },
+  {
+    "lemma": "two",
+    "koChirpScript": "two"
+  },
+  {
+    "lemma": "three",
+    "koChirpScript": "three"
+  },
+  {
+    "lemma": "four",
+    "koChirpScript": "four"
+  },
+  {
+    "lemma": "five",
+    "koChirpScript": "five"
+  },
+  {
+    "lemma": "six",
+    "koChirpScript": "six"
+  },
+  {
+    "lemma": "seven",
+    "koChirpScript": "seven"
+  },
+  {
+    "lemma": "eight",
+    "koChirpScript": "eight"
+  },
+  {
+    "lemma": "nine",
+    "koChirpScript": "nine"
+  },
+  {
+    "lemma": "ten",
+    "koChirpScript": "ten"
+  },
+  {
+    "lemma": "eleven",
+    "koChirpScript": "eleven"
+  },
+  {
+    "lemma": "twelve",
+    "koChirpScript": "twelve"
+  },
+  {
+    "lemma": "thirteen",
+    "koChirpScript": "thirteen"
+  },
+  {
+    "lemma": "fourteen",
+    "koChirpScript": "fourteen"
+  },
+  {
+    "lemma": "fifteen",
+    "koChirpScript": "fifteen"
+  },
+  {
+    "lemma": "sixteen",
+    "koChirpScript": "sixteen"
+  },
+  {
+    "lemma": "seventeen",
+    "koChirpScript": "seventeen"
+  },
+  {
+    "lemma": "eighteen",
+    "koChirpScript": "eighteen"
+  },
+  {
+    "lemma": "nineteen",
+    "koChirpScript": "nineteen"
+  },
+  {
+    "lemma": "twenty",
+    "koChirpScript": "twenty"
+  },
+  {
+    "lemma": "thirty",
+    "koChirpScript": "thirty"
+  },
+  {
+    "lemma": "forty",
+    "koChirpScript": "forty"
+  },
+  {
+    "lemma": "fifty",
+    "koChirpScript": "fifty"
+  },
+  {
+    "lemma": "hundred",
+    "koChirpScript": "hundred"
+  },
+  {
+    "lemma": "thousand",
+    "koChirpScript": "thousand"
+  },
+  {
+    "lemma": "and",
+    "koChirpScript": "and"
+  },
+  {
+    "lemma": "or",
+    "koChirpScript": "or"
+  },
+  {
+    "lemma": "so",
+    "koChirpScript": "so"
+  },
+  {
+    "lemma": "no",
+    "koChirpScript": "no"
+  },
+  {
+    "lemma": "cinema",
+    "koChirpScript": "cinema"
+  },
+  {
+    "lemma": "theatre",
+    "koChirpScript": "theatre"
+  },
+  {
+    "lemma": "post office",
+    "koChirpScript": "post office"
+  },
+  {
+    "lemma": "apartment",
+    "koChirpScript": "apartment"
+  },
+  {
+    "lemma": "pork",
+    "koChirpScript": "pork"
+  },
+  {
+    "lemma": "beef",
+    "koChirpScript": "beef"
+  },
+  {
+    "lemma": "tip",
+    "koChirpScript": "tip"
+  },
+  {
+    "lemma": "museum",
+    "koChirpScript": "museum"
+  },
+  {
+    "lemma": "farm",
+    "koChirpScript": "farm"
+  },
+  {
+    "lemma": "factory",
+    "koChirpScript": "factory"
+  },
+  {
+    "lemma": "agree",
+    "koChirpScript": "agree"
+  },
+  {
+    "lemma": "explain",
+    "koChirpScript": "explain"
+  },
+  {
+    "lemma": "invite",
+    "koChirpScript": "invite"
+  },
+  {
+    "lemma": "join",
+    "koChirpScript": "join"
+  },
+  {
+    "lemma": "plan",
+    "koChirpScript": "plan"
+  },
+  {
+    "lemma": "remember",
+    "koChirpScript": "remember"
+  },
+  {
+    "lemma": "forget",
+    "koChirpScript": "forget"
+  },
+  {
+    "lemma": "hope",
+    "koChirpScript": "hope"
+  },
+  {
+    "lemma": "wish",
+    "koChirpScript": "wish"
+  },
+  {
+    "lemma": "return",
+    "koChirpScript": "return"
+  },
+  {
+    "lemma": "fantastic",
+    "koChirpScript": "fantastic"
+  },
+  {
+    "lemma": "awful",
+    "koChirpScript": "awful"
+  },
+  {
+    "lemma": "clever",
+    "koChirpScript": "clever"
+  },
+  {
+    "lemma": "lovely",
+    "koChirpScript": "lovely"
+  },
+  {
+    "lemma": "boring",
+    "koChirpScript": "boring"
+  },
+  {
+    "lemma": "first",
+    "koChirpScript": "first"
+  },
+  {
+    "lemma": "last",
+    "koChirpScript": "last"
+  },
+  {
+    "lemma": "next",
+    "koChirpScript": "next"
+  },
+  {
+    "lemma": "before",
+    "koChirpScript": "before"
+  },
+  {
+    "lemma": "after",
+    "koChirpScript": "after"
+  }
+]
