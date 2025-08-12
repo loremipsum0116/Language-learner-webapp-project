@@ -8,6 +8,9 @@ CREATE TABLE `User` (
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `lastStudiedAt` DATETIME(3) NULL,
     `streak` INTEGER NOT NULL DEFAULT 0,
+    `streakUpdatedAt` DATETIME(3) NULL,
+    `dailyQuizCount` INTEGER NOT NULL DEFAULT 0,
+    `lastQuizDate` DATETIME(3) NULL,
 
     UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
@@ -121,10 +124,14 @@ CREATE TABLE `SrsFolder` (
     `nextAlarmAt` DATETIME(3) NULL,
     `completedAt` DATETIME(3) NULL,
     `cycleAnchorAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
-    `kind` VARCHAR(191) NOT NULL DEFAULT 'review',
+    `kind` VARCHAR(191) NOT NULL DEFAULT 'manual',
     `scheduledOffset` INTEGER NULL,
     `autoCreated` BOOLEAN NOT NULL DEFAULT false,
     `originSessionId` INTEGER NULL,
+    `isCompleted` BOOLEAN NOT NULL DEFAULT false,
+    `completedWordsCount` INTEGER NOT NULL DEFAULT 0,
+    `completionCount` INTEGER NOT NULL DEFAULT 0,
+    `isMastered` BOOLEAN NOT NULL DEFAULT false,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
@@ -213,6 +220,24 @@ CREATE TABLE `SrsFolderItem` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `WrongAnswer` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `userId` INTEGER NOT NULL,
+    `vocabId` INTEGER NOT NULL,
+    `wrongAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `reviewWindowStart` DATETIME(3) NOT NULL,
+    `reviewWindowEnd` DATETIME(3) NOT NULL,
+    `reviewedAt` DATETIME(3) NULL,
+    `isCompleted` BOOLEAN NOT NULL DEFAULT false,
+    `attempts` INTEGER NOT NULL DEFAULT 0,
+
+    INDEX `WrongAnswer_userId_isCompleted_idx`(`userId`, `isCompleted`),
+    INDEX `WrongAnswer_reviewWindowStart_reviewWindowEnd_idx`(`reviewWindowStart`, `reviewWindowEnd`),
+    UNIQUE INDEX `WrongAnswer_userId_vocabId_wrongAt_key`(`userId`, `vocabId`, `wrongAt`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `Category` ADD CONSTRAINT `Category_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -251,3 +276,9 @@ ALTER TABLE `SrsFolderItem` ADD CONSTRAINT `SrsFolderItem_cardId_fkey` FOREIGN K
 
 -- AddForeignKey
 ALTER TABLE `SrsFolderItem` ADD CONSTRAINT `SrsFolderItem_vocabId_fkey` FOREIGN KEY (`vocabId`) REFERENCES `Vocab`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `WrongAnswer` ADD CONSTRAINT `WrongAnswer_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `WrongAnswer` ADD CONSTRAINT `WrongAnswer_vocabId_fkey` FOREIGN KEY (`vocabId`) REFERENCES `Vocab`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

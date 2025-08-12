@@ -7,12 +7,14 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { SrsApi } from "../api/srs";
 import Pron from "../components/Pron";
+import ReviewTimer from "../components/ReviewTimer";
+import RainbowStar from "../components/RainbowStar";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale("ko");
 
-const fmt = (d) => (d ? dayjs.utc(d).format("YYYY.MM.DD (ddd)") : "-");
+const fmt = (d) => (d ? dayjs.utc(d).tz('Asia/Seoul').format("YYYY.MM.DD (ddd)") : "-");
 
 const getCefrBadgeColor = (level) => {
     switch (level) {
@@ -37,6 +39,7 @@ const getPosBadgeColor = (pos) => {
 };
 
 const getCardBackgroundColor = (item) => {
+    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색 (최우선)
     if (item.learned) return 'bg-success-subtle'; // 정답 - 초록색
     if (item.wrongCount > 0) return 'bg-danger-subtle'; // 틀림 - 빨간색
     return ''; // 미학습 - 기본색
@@ -269,7 +272,18 @@ export default function SrsFolderDetail() {
                         
                         return (
                             <div key={itemId || cardId} className="col-md-6 col-lg-4 mb-3">
-                                <div className={`card h-100 ${isSelected ? 'border-primary' : ''} ${cardBgClass}`}>
+                                <div className={`card h-100 position-relative ${isSelected ? 'border-primary' : ''} ${cardBgClass} ${item.isMastered ? 'border-purple-300 bg-gradient-to-br from-white to-purple-50' : ''}`}>
+                                    {/* 마스터 별 표시 */}
+                                    {item.isMastered && (
+                                        <RainbowStar 
+                                            size="medium" 
+                                            cycles={item.masterCycles || 1} 
+                                            animated={true}
+                                            className="position-absolute top-0 end-0 m-2"
+                                            style={{ zIndex: 10 }}
+                                        />
+                                    )}
+                                    
                                     <div className="card-header d-flex justify-content-between align-items-center p-2">
                                         <input
                                             className="form-check-input"
@@ -279,11 +293,17 @@ export default function SrsFolderDetail() {
                                             title="단어 선택"
                                         />
                                         <div className="d-flex gap-1 align-items-center small text-muted">
-                                            {item.learned && <span className="text-success">✓ 학습완료</span>}
-                                            {!item.learned && item.wrongCount > 0 && (
+                                            {item.isMastered && (
+                                                <span className="text-purple-600 fw-bold">🌟 마스터 완료</span>
+                                            )}
+                                            {!item.isMastered && item.isOverdue && (
+                                                <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
+                                            )}
+                                            {!item.isMastered && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
+                                            {!item.isMastered && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
                                                 <span className="text-danger">✗ 오답 {item.wrongCount}회</span>
                                             )}
-                                            {!item.learned && (!item.wrongCount || item.wrongCount === 0) && (
+                                            {!item.isMastered && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
                                                 <span className="text-muted">미학습</span>
                                             )}
                                         </div>
@@ -309,11 +329,38 @@ export default function SrsFolderDetail() {
                                         <div className="mt-3 pt-2 border-top">
                                             <div className="d-flex justify-content-between align-items-center small">
                                                 <div>
-                                                    <span className="badge bg-info">Stage {item.stage ?? 0}</span>
-                                                    {item.nextReviewAt && (
-                                                        <span className="ms-2 text-muted">
-                                                            다음 복습: {fmt(item.nextReviewAt)}
-                                                        </span>
+                                                    {item.isMastered ? (
+                                                        <div>
+                                                            <span className="badge bg-purple-600 text-white">마스터 완료</span>
+                                                            {item.masterCycles > 1 && (
+                                                                <span className="badge bg-purple-100 text-purple-800 ms-1">
+                                                                    {item.masterCycles}회 달성
+                                                                </span>
+                                                            )}
+                                                            {item.masteredAt && (
+                                                                <div className="text-purple-600 small mt-1">
+                                                                    🏆 {fmt(item.masteredAt)} 완료
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        <div>
+                                                            <span className="badge bg-info">Stage {item.stage ?? 0}</span>
+                                                            {item.nextReviewAt && (
+                                                                <div className="ms-2 mt-1">
+                                                                    <div className="text-muted small">
+                                                                        다음 복습: {fmt(item.nextReviewAt)}
+                                                                    </div>
+                                                                    <ReviewTimer 
+                                                                        nextReviewAt={item.nextReviewAt}
+                                                                        isOverdue={item.isOverdue}
+                                                                        overdueDeadline={item.overdueDeadline}
+                                                                        isFromWrongAnswer={item.isFromWrongAnswer}
+                                                                        className="small"
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     )}
                                                 </div>
                                                 {item.wrongCount > 0 && (

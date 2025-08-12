@@ -40,7 +40,14 @@ function nextSixHourSlot(now = dayjs()) {
 router.use(auth);
 
 // 새로운 서비스 임포트
-const { createManualFolder, completeFolderAndScheduleNext, restartMasteredFolder } = require('../services/srsService');
+const { 
+    createManualFolder, 
+    completeFolderAndScheduleNext, 
+    restartMasteredFolder,
+    getAvailableCardsForReview,
+    getWaitingCardsCount,
+    getSrsStatus
+} = require('../services/srsService');
 const { getUserStreakInfo } = require('../services/streakService');
 const { 
     getWrongAnswers, 
@@ -48,6 +55,190 @@ const {
     generateWrongAnswerQuiz,
     completeWrongAnswer 
 } = require('../services/wrongAnswerService');
+
+// === 새로운 SRS 시스템 API 엔드포인트들 ===
+
+// GET /srs/status - 사용자의 현재 SRS 상태 조회
+router.get('/status', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const status = await getSrsStatus(userId);
+        return ok(res, status);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// GET /srs/available - 현재 학습 가능한 카드들 조회
+router.get('/available', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const cards = await getAvailableCardsForReview(userId);
+        return ok(res, cards);
+    } catch (e) {
+        next(e);
+    }
+});
+
+// GET /srs/waiting-count - 대기 중인 카드 수 조회
+router.get('/waiting-count', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const count = await getWaitingCardsCount(userId);
+        return ok(res, { waitingCount: count });
+    } catch (e) {
+        next(e);
+    }
+});
+
+// GET /srs/mastered - 마스터 완료 단어 조회
+router.get('/mastered', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { limit = 50, offset = 0, sortBy = 'masteredAt', sortOrder = 'desc' } = req.query;
+        
+        const masteredCards = await prisma.sRSCard.findMany({
+            where: {
+                userId: userId,
+                isMastered: true
+            },
+            include: {
+                folderItems: {
+                    include: {
+                        vocab: {
+                            include: {
+                                dictMeta: true
+                            }
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                [sortBy]: sortOrder
+            },
+            take: parseInt(limit),
+            skip: parseInt(offset)
+        });
+        
+        // 마스터 단어 통계
+        const totalMastered = await prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isMastered: true
+            }
+        });
+        
+        // 사용자 마스터 단어 대시보드 정보
+        const masteryStats = await prisma.sRSCard.groupBy({
+            by: ['masterCycles'],
+            where: {
+                userId: userId,
+                isMastered: true
+            },
+            _count: {
+                masterCycles: true
+            }
+        });
+        
+        // 데이터 정제 및 가공
+        const processedCards = masteredCards.map(card => {
+            const vocab = card.folderItems[0]?.vocab || null;
+            return {
+                id: card.id,
+                stage: card.stage,
+                isMastered: card.isMastered,
+                masteredAt: card.masteredAt,
+                masterCycles: card.masterCycles,
+                correctTotal: card.correctTotal,
+                wrongTotal: card.wrongTotal,
+                vocab: vocab ? {
+                    id: vocab.id,
+                    lemma: vocab.lemma,
+                    pos: vocab.pos,
+                    levelCEFR: vocab.levelCEFR,
+                    dictMeta: vocab.dictMeta
+                } : null
+            };
+        });
+        
+        return ok(res, {
+            masteredCards: processedCards,
+            totalMastered,
+            masteryStats,
+            pagination: {
+                limit: parseInt(limit),
+                offset: parseInt(offset),
+                hasMore: parseInt(offset) + processedCards.length < totalMastered
+            }
+        });
+        
+    } catch (e) {
+        console.error('[SRS MASTERED] Error:', e);
+        next(e);
+    }
+});
+
+// GET /srs/mastery-stats - 마스터 통계 정보
+router.get('/mastery-stats', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        
+        // 기본 통계
+        const basicStats = await prisma.sRSCard.groupBy({
+            by: ['isMastered'],
+            where: { userId: userId },
+            _count: { isMastered: true }
+        });
+        
+        // 마스터 사이클별 통계
+        const cycleStats = await prisma.sRSCard.groupBy({
+            by: ['masterCycles'],
+            where: {
+                userId: userId,
+                isMastered: true
+            },
+            _count: { masterCycles: true },
+            orderBy: { masterCycles: 'asc' }
+        });
+        
+        // 최근 마스터 완룉
+        const recentMastery = await prisma.sRSCard.findMany({
+            where: {
+                userId: userId,
+                isMastered: true
+            },
+            orderBy: { masteredAt: 'desc' },
+            take: 5,
+            include: {
+                folderItems: {
+                    include: {
+                        vocab: true
+                    }
+                }
+            }
+        });
+        
+        const totalCards = basicStats.reduce((sum, stat) => sum + stat._count.isMastered, 0);
+        const masteredCount = basicStats.find(stat => stat.isMastered)?._count?.isMastered || 0;
+        const masteryRate = totalCards > 0 ? (masteredCount / totalCards * 100).toFixed(1) : 0;
+        
+        return ok(res, {
+            totalCards,
+            masteredCount,
+            masteryRate: parseFloat(masteryRate),
+            cycleStats,
+            recentMastery: recentMastery.map(card => ({
+                lemma: card.folderItems[0]?.vocab?.lemma || 'Unknown',
+                masteredAt: card.masteredAt,
+                masterCycles: card.masterCycles
+            }))
+        });
+        
+    } catch (e) {
+        console.error('[SRS MASTERY STATS] Error:', e);
+        next(e);
+    }
+});
 
 // srs.js 상단 router 선언 직후에 추가
 const FLAT_MODE = true;
@@ -218,45 +409,102 @@ router.post('/folders/:id/alarm', async (req, res, next) => {
     }
 });
 
-// server/routes/srs.js
+// GET /srs/reminders/today - overdue 기반 알림 조회
 router.get('/reminders/today', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const today = startOfKstDay();                        // 당일 00:00 KST
+        const now = new Date();
         const nowKst = dayjs().tz('Asia/Seoul');
         const tickIndex = [0, 6, 12, 18].findIndex(h => nowKst.hour() >= h && nowKst.hour() < (h === 18 ? 24 : [0, 6, 12, 18][[0, 6, 12, 18].indexOf(h) + 1]));
-        const bit = 1 << ([0, 6, 12, 18].indexOf([0, 6, 12, 18][tickIndex] ?? 0)); // 1,2,4,8
+        const currentTick = [0, 6, 12, 18][tickIndex] ?? 0;
 
-        const due = await prisma.srsFolder.findMany({
-            where: { userId, alarmActive: true, nextReviewDate: today },
-            select: { id: true, name: true, stage: true },
-            orderBy: [{ id: 'asc' }],
+        // 사용자의 overdue 상태 및 알림 시각 확인
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { 
+                hasOverdueCards: true, 
+                nextOverdueAlarm: true,
+                lastOverdueCheck: true 
+            }
         });
 
-        const list = due.map(f => ({
-            id: f.id,
-            name: f.name,
-            stage: f.stage,
-            shouldNotifyNow: true,  // 간단히 항상 알림 표시
-            tick: [0, 6, 12, 18][tickIndex] ?? 0,
-        }));
+        if (!user || !user.hasOverdueCards) {
+            return ok(res, {
+                hasOverdueCards: false,
+                shouldNotifyNow: false,
+                overdueCount: 0,
+                tick: currentTick,
+                message: '복습할 overdue 단어가 없습니다.'
+            });
+        }
 
-        return ok(res, list);
-    } catch (e) { next(e); }
+        // overdue 카드 수 조회
+        const overdueCount = await prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isOverdue: true,
+                overdueDeadline: { gt: now }
+            }
+        });
+
+        // 알림 시간인지 확인
+        const shouldNotifyNow = user.nextOverdueAlarm && user.nextOverdueAlarm <= now;
+
+        return ok(res, {
+            hasOverdueCards: true,
+            shouldNotifyNow: shouldNotifyNow,
+            overdueCount: overdueCount,
+            nextOverdueAlarm: user.nextOverdueAlarm,
+            lastOverdueCheck: user.lastOverdueCheck,
+            tick: currentTick,
+            message: `${overdueCount}개의 overdue 단어가 복습을 기다리고 있습니다.`
+        });
+        
+    } catch (e) { 
+        console.error('[SRS REMINDERS] Error:', e);
+        next(e); 
+    }
 });
-// server/routes/srs.js
+// POST /srs/reminders/ack - overdue 알림 확인 처리
 router.post('/reminders/ack', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const { folderId, tick } = req.body;              // tick: 0|6|12|18
-        const bit = 1 << [0, 6, 12, 18].indexOf(Number(tick));
+        const { tick } = req.body;              // tick: 0|6|12|18
+        const now = new Date();
+        const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // 6시간 후
 
-        const f = await prisma.srsFolder.findFirst({ where: { id: Number(folderId), userId, alarmActive: true } });
-        if (!f) return fail(res, 404, 'folder not found');
+        // 사용자의 overdue 상태 확인
+        const user = await prisma.user.findUnique({
+            where: { id: userId },
+            select: { hasOverdueCards: true }
+        });
 
-        // reminderMask 기능을 일시적으로 비활성화
-        return ok(res, { folderId: f.id, acknowledged: true });
-    } catch (e) { next(e); }
+        if (!user || !user.hasOverdueCards) {
+            return ok(res, { 
+                acknowledged: true, 
+                message: 'overdue 카드가 없어 알림을 비활성화합니다.' 
+            });
+        }
+
+        // 알림 확인 및 다음 알림 시각 설정
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                nextOverdueAlarm: nextAlarmTime
+            }
+        });
+
+        return ok(res, { 
+            acknowledged: true,
+            nextAlarmTime: nextAlarmTime,
+            tick: tick,
+            message: '알림을 확인했습니다. 6시간 후에 다시 알려드립니다.' 
+        });
+        
+    } catch (e) { 
+        console.error('[SRS REMINDERS ACK] Error:', e);
+        next(e); 
+    }
 });
 
 // POST /srs/folders/quick-create  → 오늘(KST) 루트 폴더 하나 만들기(이미 있으면 그대로 반환)
@@ -473,6 +721,10 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 // 개별 카드의 SRS 정보 추가
                 nextReviewAt: it.card?.nextReviewAt,
                 stage: it.card?.stage,
+                // overdue 상태 정보 추가
+                isOverdue: it.card?.isOverdue || false,
+                overdueDeadline: it.card?.overdueDeadline,
+                isFromWrongAnswer: it.card?.isFromWrongAnswer || false,
                 // 오답 단어 여부 판단
                 isWrongAnswer: it.wrongCount > 0,
                 vocab: v ? {

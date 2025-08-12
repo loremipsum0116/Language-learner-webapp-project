@@ -1,14 +1,14 @@
-// src/pages/SrsQuiz.jsx (교체)
-import React, { useEffect, useMemo, useState } from "react";
-import { useNavigate, useSearchParams, Link } from "react-router-dom";
-import { SrsApi, QuizApi } from "../api/srs";
-import Pron from "../components/Pron";
-import { toast } from "react-toastify";
+// src/pages/SrsQuiz.jsx (lang='en'으로 수정)
+import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useSearchParams, Link } from 'react-router-dom';
+import { fetchJSON, withCreds, isAbortError } from '../api/client';
+import Pron from '../components/Pron';
+import { toast } from 'react-toastify';
 
 export default function SrsQuiz() {
     const navigate = useNavigate();
     const [params] = useSearchParams();
-    const folderId = Number(params.get("folder"));
+    const folderId = Number(params.get('folder'));
 
     const [loading, setLoading] = useState(true);
     const [queue, setQueue] = useState([]);
@@ -16,70 +16,110 @@ export default function SrsQuiz() {
     const [submitting, setSubmitting] = useState(false);
     const [err, setErr] = useState(null);
 
+    // 폴더 ID가 변경될 때마다 퀴즈 큐를 가져옵니다.
     useEffect(() => {
-        let mounted = true;
-        if (!folderId) {
-            setErr(new Error("폴더가 지정되지 않았습니다."));
+        const ac = new AbortController();
+        if (!folderId || isNaN(folderId)) {
+            setErr(new Error('폴더가 지정되지 않았습니다.'));
             setLoading(false);
             return;
         }
+
         (async () => {
             try {
                 setLoading(true);
-                const data = await SrsApi.getQueue(folderId); // GET /srs/queue?folderId=...
-                if (!mounted) return;
-                setQueue(Array.isArray(data) ? data : []);
-                setIdx(0);
+                setErr(null);
+                const { data } = await fetchJSON(`/srs/folders/${folderId}/queue`, withCreds({ signal: ac.signal }));
+                if (!ac.signal.aborted) {
+                    setQueue(Array.isArray(data) ? data : []);
+                    setIdx(0);
+                }
             } catch (e) {
-                setErr(e);
+                if (!isAbortError(e)) {
+                    setErr(e);
+                    toast.error(`퀴즈를 불러오는 데 실패했습니다: ${e.message}`);
+                }
             } finally {
-                if (mounted) setLoading(false);
+                if (!ac.signal.aborted) setLoading(false);
             }
         })();
-        return () => { mounted = false; };
+
+        return () => ac.abort();
     }, [folderId]);
 
     const current = queue[idx];
+
+    // 진행률 계산
     const progress = useMemo(() => {
+        if (queue.length === 0) return { total: 0, learned: 0, remaining: 0 };
+        const learnedCount = queue.filter(q => q.learned).length;
         const total = queue.length;
-        const learned = queue.filter(q => q.learned).length;
-        return { total, learned, remaining: total - learned };
+        return { total, learned: learnedCount, remaining: total - learnedCount };
     }, [queue]);
 
+    // 정답/오답 제출 함수
     async function submit(correct) {
-        if (!current) return;
+        if (!current || submitting) return;
+
         try {
             setSubmitting(true);
-            await QuizApi.submitAnswer({ folderId, cardId: current.cardId, correct });
-            // 로컬 반영 + 안전한 다음 인덱스 계산(업데이트된 배열 기준)
-            setQueue(prev => {
-                const updated = prev.map((it, i) =>
-                    i === idx
-                        ? { ...it, learned: correct ? true : it.learned, wrongCount: correct ? it.wrongCount : it.wrongCount + 1 }
-                        : it
-                );
-                const next = updated.findIndex((q, i) => i > idx && !q.learned);
-                const fallback = updated.findIndex(q => !q.learned);
-                if (next !== -1) setIdx(next);
-                else if (fallback !== -1) setIdx(fallback);
-                return updated;
+            // 백엔드에 답안 제출
+            await fetchJSON('/quiz/answer', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ folderId, cardId: current.cardId, correct })
+            }));
+
+            // 로컬 상태를 즉시 업데이트하여 UI에 반영
+            const updatedQueue = queue.map((item, index) => {
+                if (index === idx) {
+                    return {
+                        ...item,
+                        learned: correct,
+                        wrongCount: correct ? item.wrongCount : (item.wrongCount || 0) + 1,
+                    };
+                }
+                return item;
             });
+
+            setQueue(updatedQueue);
+
+            // 다음 문제 찾기
+            const nextIndex = updatedQueue.findIndex((q, i) => i > idx && !q.learned);
+            const fallbackIndex = updatedQueue.findIndex(q => !q.learned);
+
+            if (nextIndex !== -1) {
+                setIdx(nextIndex);
+            } else if (fallbackIndex !== -1) {
+                setIdx(fallbackIndex);
+            } else {
+                // 모든 문제를 다 풀었을 경우
+                toast.success('🎉 모든 카드를 학습했습니다!');
+                navigate('/srs'); // 대시보드로 이동
+            }
+
         } catch (e) {
-            toast.error("정답 제출 실패");
+            toast.error('정답 제출에 실패했습니다. 다시 시도해주세요.');
+            console.error(e);
         } finally {
             setSubmitting(false);
         }
     }
 
+    if (loading) {
+        return <main className="container py-5 text-center"><div className="spinner-border" /></main>;
+    }
 
+    if (err) {
+        return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
+    }
 
-    if (loading) return <main className="container py-5 text-center"><div className="spinner-border" /></main>;
-    if (err) return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
-    if (!current) {
+    // 풀 문제가 없는 경우
+    if (!current && progress.remaining === 0) {
         return (
             <main className="container py-5 text-center">
                 <div className="p-5 bg-light rounded">
-                    <h4 className="mb-3">현재 추가된 카드가 없습니다.</h4>
+                    <h4 className="mb-3">✨ 이 폴더의 모든 카드를 학습했습니다!</h4>
+                    <p className="mb-4">새로운 단어를 추가하거나 다른 폴더를 복습해보세요.</p>
                     <div className="d-flex justify-content-center gap-2">
                         <Link className="btn btn-primary" to={`/vocab?addToFolder=${folderId}`}>+ 단어 추가</Link>
                         <Link className="btn btn-outline-secondary" to="/srs">대시보드</Link>
@@ -98,9 +138,9 @@ export default function SrsQuiz() {
 
             <div className="card shadow-sm">
                 <div className="card-body text-center p-5">
-                    <h2 className="display-4 mb-2" lang="en">{current?.vocab?.lemma ?? "—"}</h2>
-                    <Pron ipa={current?.vocab?.dictMeta?.ipa} ipaKo={current?.vocab?.dictMeta?.ipaKo} />
-
+                    {/* ✅ [수정] lang 속성을 'en'으로 고정 */}
+                    <h2 className="display-5 mb-2" lang="en">{current?.question ?? '—'}</h2>
+                    <Pron ipa={current?.pron?.ipa} ipaKo={current?.pron?.ipaKo} />
                     <div className="d-flex gap-2 justify-content-center mt-4">
                         <button className="btn btn-success btn-lg" disabled={submitting} onClick={() => submit(true)}>맞음</button>
                         <button className="btn btn-danger btn-lg" disabled={submitting} onClick={() => submit(false)}>틀림</button>
@@ -109,4 +149,4 @@ export default function SrsQuiz() {
             </div>
         </main>
     );
-}
+};

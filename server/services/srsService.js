@@ -1,8 +1,13 @@
 //server/services/srsService.js
 const { prisma } = require('../lib/prismaClient');
 const createError = require('http-errors');
-const { computeNextReviewDate } = require('./srsSchedule');
-const { startOfKstDay, addKstDays } = require('./srsJobs');
+const { 
+  computeNextReviewDate,
+  computeWaitingUntil,
+  computeWrongAnswerWaitingUntil,
+  computeOverdueDeadline 
+} = require('./srsSchedule');
+const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, hasOverdueCards } = require('./srsJobs');
 const dayjs = require('dayjs');
 
 /**
@@ -359,54 +364,243 @@ async function bumpDailyStat(userId, { srsSolvedInc = 0, autoLearnedInc = 0, wro
     });
 }
 
-function nextReviewAtFor(card, correct) {
-    if (correct) {
-        const newStage = card.stage + 1;
-        // OFFSETS 배열 범위를 초과하지 않도록 조정
-        const offsetDays = OFFSETS[Math.min(newStage, OFFSETS.length - 1)];
-        const nextAt = dayjs().add(offsetDays, 'day').toDate();
-        return { newStage, nextAt };
-    } else {
-        // 오답 시, stage를 0으로 리셋하고 다음 날 오전 9시에 복습하도록 설정
-        const newStage = 0;
-        const nextAt = dayjs().add(1, 'day').startOf('day').hour(9).toDate();
-        return { newStage, nextAt };
+// 이 함수는 새 로직에서 사용하지 않으므로 제거하거나 사용하지 않음
+// nextReviewAtFor 함수는 markAnswer 함수 내에서 새 로직으로 대체됨
+
+/**
+ * 새로운 SRS 시스템의 정답/오답 처리
+ * 새 로직: 대기 시간 동안은 상태 변화 없음, overdue 상태에서만 학습 가능
+ */
+async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
+    const now = new Date();
+    
+    // 카드 정보 조회 (새 필드들 포함)
+    const card = await prisma.sRSCard.findFirst({ 
+        where: { id: cardId, userId },
+        select: {
+            id: true,
+            stage: true,
+            isFromWrongAnswer: true,
+            wrongStreakCount: true,
+            isOverdue: true,
+            waitingUntil: true,
+            overdueDeadline: true,
+            itemType: true,
+            itemId: true
+        }
+    });
+    
+    if (!card) throw new Error('카드를 찾을 수 없습니다.');
+    
+    // vocabId가 전달되지 않은 경우 카드에서 조회
+    if (!vocabId && card.itemType === 'vocab') {
+        vocabId = card.itemId;
     }
-}
 
-async function markAnswer(userId, { folderId, cardId, correct, vocabId }) { // Add folderId and vocabId
-    const card = await prisma.sRSCard.findFirst({ where: { id: cardId, userId } });
-    if (!card) throw new Error('카드를 찾을 수 없습니다.'); // [380]
+    // 학습 가능 여부와 관계없이 폴더에서의 학습 상태는 항상 업데이트
+    let canUpdateCardState = true;
+    let statusMessage = '';
+    
+    // 대기 중인 카드는 카드 상태 변화 없음 (하지만 폴더에서는 학습 완료 표시)
+    if (isCardInWaitingPeriod(card)) {
+        console.log(`[SRS SERVICE] Card ${cardId} is in waiting period - no card state change`);
+        canUpdateCardState = false;
+        statusMessage = '아직 대기 시간입니다. 카드 상태는 변경되지 않지만 학습은 완료로 표시됩니다.';
+    }
 
-    // --- SRSCard Update (Existing Logic) ---
-    const { newStage, nextAt } = nextReviewAtFor(card, correct);
+    // overdue 상태가 아니어도 학습 자체는 가능 (카드 상태만 변경 안됨)
+    if (!isCardOverdue(card) && canUpdateCardState) {
+        console.log(`[SRS SERVICE] Card ${cardId} is not in overdue state - no card state change`);
+        canUpdateCardState = false;
+        statusMessage = '아직 복습 시기가 아닙니다. 카드 상태는 변경되지 않지만 학습은 완료로 표시됩니다.';
+    }
+
+    let newStage = card.stage, waitingUntil, nextReviewAt;
+    
+    // 항상 다음 상태를 계산 (실제 업데이트와 별개)
+    let calculatedStage = newStage;
+    let calculatedWaitingUntil, calculatedNextReviewAt;
+    
+    console.log(`[SRS SERVICE] Calculating next state: current stage=${card.stage}, correct=${correct}`);
+    
     if (correct) {
+        // 정답 시 다음 상태 계산
+        calculatedStage = Math.min(card.stage + 1, 6);
+        
+        if (card.stage === 6 && calculatedStage === 6) {
+            // 마스터 완료 시
+            calculatedStage = 0;
+            calculatedWaitingUntil = null;
+            calculatedNextReviewAt = null;
+            console.log(`[SRS SERVICE] Mastery achieved - resetting to stage 0`);
+        } else {
+            calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage);
+            calculatedNextReviewAt = computeNextReviewDate(now, calculatedStage);
+            console.log(`[SRS SERVICE] Correct answer - stage ${card.stage} → ${calculatedStage}, nextReviewAt: ${calculatedNextReviewAt}`);
+        }
+    } else {
+        // 오답 시 다음 상태 계산
+        calculatedStage = 0;
+        calculatedWaitingUntil = computeWrongAnswerWaitingUntil(now);
+        calculatedNextReviewAt = null;
+        console.log(`[SRS SERVICE] Wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil}`);
+    }
+
+    // 카드 상태 업데이트가 가능한 경우에만 실제 업데이트 실행
+    if (canUpdateCardState && correct) {
+        // 정답 처리
+        newStage = calculatedStage;
+        waitingUntil = calculatedWaitingUntil;
+        nextReviewAt = calculatedNextReviewAt;
+        
+        if (card.isFromWrongAnswer) {
+            // 오답 단어가 정답을 맞춘 경우 → 정답 단어와 동일한 타이머 설정
+            
+            // Stage 6에서 정답 시 120일 마스터 완료 처리
+            if (card.stage === 6 && calculatedStage === 0) {
+                await prisma.sRSCard.update({
+                    where: { id: cardId },
+                    data: {
+                        stage: 0, // stage 0으로 리셋
+                        nextReviewAt: null,
+                        waitingUntil: null,
+                        isOverdue: false,
+                        overdueDeadline: null,
+                        overdueStartAt: null,
+                        isFromWrongAnswer: false,
+                        wrongStreakCount: 0,
+                        isMastered: true, // 마스터 완료 표시
+                        masteredAt: now, // 마스터 완료 시각
+                        masterCycles: { increment: 1 }, // 마스터 사이클 증가
+                        correctTotal: { increment: 1 }
+                    }
+                });
+                
+                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Card ${cardId} completed 120-day cycle`);
+                newStage = 0; // 변수 업데이트
+                
+            } else {
+                await prisma.sRSCard.update({
+                    where: { id: cardId },
+                    data: {
+                        stage: newStage,
+                        nextReviewAt: nextReviewAt,
+                        waitingUntil: waitingUntil,
+                        isOverdue: false,
+                        overdueDeadline: null,
+                        overdueStartAt: null,
+                        isFromWrongAnswer: false, // 정답 처리로 일반 카드로 전환
+                        wrongStreakCount: 0, // 연속 오답 리셋
+                        correctTotal: { increment: 1 }
+                    }
+                });
+            }
+            
+        } else {
+            // 일반 단어가 정답을 맞춘 경우 → stage 증가 후 (n-1)일 대기
+            
+            // Stage 6에서 정답 시 120일 마스터 완료 처리
+            if (card.stage === 6 && calculatedStage === 0) {
+                await prisma.sRSCard.update({
+                    where: { id: cardId },
+                    data: {
+                        stage: 0, // stage 0으로 리셋
+                        nextReviewAt: null,
+                        waitingUntil: null,
+                        isOverdue: false,
+                        overdueDeadline: null,
+                        overdueStartAt: null,
+                        isMastered: true, // 마스터 완료 표시
+                        masteredAt: now, // 마스터 완료 시각
+                        masterCycles: { increment: 1 }, // 마스터 사이클 증가
+                        correctTotal: { increment: 1 }
+                    }
+                });
+                
+                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Card ${cardId} completed 120-day cycle`);
+                newStage = 0; // 변수 업데이트
+                
+            } else {
+                await prisma.sRSCard.update({
+                    where: { id: cardId },
+                    data: {
+                        stage: newStage,
+                        nextReviewAt: nextReviewAt,
+                        waitingUntil: waitingUntil,
+                        isOverdue: false,
+                        overdueDeadline: null,
+                        overdueStartAt: null,
+                        correctTotal: { increment: 1 }
+                    }
+                });
+            }
+        }
+        
+        console.log(`[SRS SERVICE] Correct answer for card ${cardId} - stage ${card.stage} → ${newStage}`);
+        
+    } else if (canUpdateCardState && !correct) {
+        // 오답 처리 → 24시간 대기 후 overdue (카드 상태 업데이트 가능할 때만)
+        newStage = calculatedStage;
+        waitingUntil = calculatedWaitingUntil;
+        nextReviewAt = calculatedNextReviewAt;
+        
         await prisma.sRSCard.update({
             where: { id: cardId },
             data: {
-                correctTotal: { increment: 1 }, // ✅ FIX: 스키마에 맞게 correctCount -> correctTotal 수정
-                stage: newStage,
-                nextReviewAt: nextAt,
-            },
+                stage: 0, // stage 0으로 리셋
+                nextReviewAt: null,
+                waitingUntil: waitingUntil,
+                isOverdue: false,
+                overdueDeadline: null,
+                overdueStartAt: null,
+                isFromWrongAnswer: true,
+                wrongStreakCount: { increment: 1 },
+                wrongTotal: { increment: 1 }
+            }
         });
-    } else {
+        
+        console.log(`[SRS SERVICE] Wrong answer for card ${cardId} - reset to stage 0`);
+    } else if (!canUpdateCardState && !correct) {
+        // 카드 상태는 업데이트할 수 없지만 오답 통계는 업데이트
+        // 계산된 값들을 반환용으로 설정
+        newStage = calculatedStage;
+        waitingUntil = calculatedWaitingUntil;
+        nextReviewAt = calculatedNextReviewAt;
+        
         await prisma.sRSCard.update({
             where: { id: cardId },
             data: {
-                wrongTotal: { increment: 1 },
-                stage: newStage,
-                nextReviewAt: nextAt,
-            },
+                wrongTotal: { increment: 1 }
+            }
         });
+        
+        console.log(`[SRS SERVICE] Card ${cardId} - no state change but recorded wrong answer`);
+    } else if (!canUpdateCardState && correct) {
+        // 카드 상태는 업데이트할 수 없지만 정답 통계는 업데이트
+        // 계산된 값들을 반환용으로 설정
+        newStage = calculatedStage;
+        waitingUntil = calculatedWaitingUntil;
+        nextReviewAt = calculatedNextReviewAt;
+        
+        await prisma.sRSCard.update({
+            where: { id: cardId },
+            data: {
+                correctTotal: { increment: 1 }
+            }
+        });
+        
+        console.log(`[SRS SERVICE] Card ${cardId} - no state change but recorded correct answer`);
+    } else {
+        console.log(`[SRS SERVICE] Card ${cardId} - no state change (canUpdateCardState: ${canUpdateCardState}, correct: ${correct})`);
     }
 
-    // --- SrsFolderItem Update (New Logic) ---
+    // --- SrsFolderItem Update ---
     if (folderId) {
         await prisma.srsFolderItem.updateMany({
             where: { folderId: folderId, cardId: cardId },
             data: {
-                lastReviewedAt: new Date(),
-                learned: correct, // 정답 시 learned=true, 오답 시 false
+                lastReviewedAt: now,
+                learned: correct,
                 wrongCount: { increment: correct ? 0 : 1 },
             }
         });
@@ -418,16 +612,44 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) { // A
 
     // --- 오답노트 처리 ---
     if (!correct && vocabId) {
+        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}`);
         const { addWrongAnswer } = require('./wrongAnswerService');
         await addWrongAnswer(userId, vocabId);
+        console.log(`[SRS SERVICE] Successfully added to wrong answer note`);
+    } else if (!correct) {
+        console.log(`[SRS SERVICE] Wrong answer but no vocabId - skipping wrong answer note`);
     }
 
     // --- 일일 학습 통계 업데이트 ---
     await bumpDailyStat(userId, { srsSolvedInc: 1 });
+    
+    // --- 사용자 overdue 상태 업데이트 ---
+    try {
+        const now = new Date();
+        const userHasOverdue = await hasOverdueCards(userId);
+        
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                hasOverdueCards: userHasOverdue,
+                lastOverdueCheck: now
+            }
+        });
+        
+        console.log(`[SRS SERVICE] Updated user ${userId} overdue status: ${userHasOverdue}`);
+    } catch (error) {
+        console.error(`[SRS SERVICE] Error updating user overdue status:`, error);
+        // 에러가 나도 복습 자체는 성공으로 처리
+    }
 
     return { 
-        status: correct ? 'pass' : 'fail',
-        streakInfo: streakInfo
+        status: correct ? 'correct' : 'wrong',
+        newStage: newStage,
+        waitingUntil: waitingUntil,
+        nextReviewAt: nextReviewAt,
+        streakInfo: streakInfo,
+        canUpdateCardState: canUpdateCardState,
+        message: statusMessage || (correct ? '정답입니다!' : '오답입니다.')
     };
 }
 /**
@@ -467,6 +689,96 @@ async function restartMasteredFolder(folderId, userId) {
     };
 }
 
+/**
+ * 사용자의 현재 학습 가능한 카드들을 조회합니다.
+ * overdue 상태이면서 데드라인이 지나지 않은 카드들만 반환합니다.
+ */
+async function getAvailableCardsForReview(userId) {
+    const now = new Date();
+    
+    const cards = await prisma.sRSCard.findMany({
+        where: {
+            userId: userId,
+            isOverdue: true,
+            overdueDeadline: { gt: now }
+        },
+        include: {
+            folderItems: {
+                include: {
+                    vocab: true
+                }
+            }
+        },
+        orderBy: [
+            { isFromWrongAnswer: 'desc' }, // 오답 단어 우선
+            { overdueStartAt: 'asc' } // 오래된 overdue부터
+        ]
+    });
+
+    return cards;
+}
+
+/**
+ * 사용자의 대기 중인 카드 수를 조회합니다.
+ */
+async function getWaitingCardsCount(userId) {
+    const now = new Date();
+    
+    const count = await prisma.sRSCard.count({
+        where: {
+            userId: userId,
+            waitingUntil: { gt: now },
+            isOverdue: false
+        }
+    });
+
+    return count;
+}
+
+/**
+ * 사용자의 SRS 상태 대시보드 정보를 가져옵니다.
+ */
+async function getSrsStatus(userId) {
+    const now = new Date();
+    
+    const [overdueCount, waitingCount, totalCards, masteredCount] = await Promise.all([
+        prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isOverdue: true,
+                overdueDeadline: { gt: now }
+            }
+        }),
+        prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                waitingUntil: { gt: now },
+                isOverdue: false
+            }
+        }),
+        prisma.sRSCard.count({
+            where: { userId: userId }
+        }),
+        prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isMastered: true
+            }
+        })
+    ]);
+
+    const masteryRate = totalCards > 0 ? (masteredCount / totalCards * 100).toFixed(1) : 0;
+
+    return {
+        overdueCount,
+        waitingCount,
+        totalCards,
+        masteredCount,
+        masteryRate: parseFloat(masteryRate),
+        reviewableCount: overdueCount
+    };
+}
+
 module.exports = {
     createManualFolder,
     completeFolderAndScheduleNext,
@@ -480,4 +792,7 @@ module.exports = {
     markAnswer,
     bumpDailyStat,
     ensureCardsForVocabs,
+    getAvailableCardsForReview,
+    getWaitingCardsCount,
+    getSrsStatus
 };

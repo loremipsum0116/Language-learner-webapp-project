@@ -11,7 +11,7 @@ from pydub import AudioSegment
 
 def sanitize_filename(name):
     """파일 이름으로 사용할 수 없는 문자를 제거하고 소문자로 변환합니다."""
-    name = re.sub(r'[\\/*?:"<>|]', "", name) + "-v"
+    name = re.sub(r'[\\/*?:"<>|]', "", name)
     return name.lower()
 
 
@@ -130,5 +130,5 @@ def synthesize_vocab_audio(json_file_path):
 
 
 if __name__ == "__main__":
-    file_to_process = "ielts_a1_1.json"
+    file_to_process = "ielts_a1_9.json"
     synthesize_vocab_audio(file_to_process)

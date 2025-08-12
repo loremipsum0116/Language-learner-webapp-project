@@ -28,7 +28,7 @@ def split_script_by_language(script_text):
         if '\uac00' <= char <= '\ud7af':  # 한글
             lang = 'en-US'
         elif 'a' <= char.lower() <= 'z':
-            lang = 'en-GB'
+            lang = 'en-US'
         elif char.isspace():
             lang = current_lang  # 공백은 이전 언어 유지
         else:
@@ -52,9 +52,9 @@ VOICE_PARAMS = {
         language_code="en-US",
         name="en-US-Chirp3-HD-Erinome"
     ),
-    "en-GB": texttospeech.VoiceSelectionParams(
-        language_code="en-GB",
-        name="en-GB-Chirp3-HD-Erinome"
+    "en-US": texttospeech.VoiceSelectionParams(
+        language_code="en-US",
+        name="en-US-Chirp3-HD-Erinome"
     )
 }
 
@@ -130,5 +130,5 @@ def synthesize_vocab_audio(json_file_path):
 
 
 if __name__ == "__main__":
-    file_to_process = "ielts_a1_2.json"
+    file_to_process = "ielts_a1_7.json"
     synthesize_vocab_audio(file_to_process)

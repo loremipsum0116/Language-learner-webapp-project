@@ -13,34 +13,76 @@ function kstStartOfDay(d = dayjs()) { return d.tz(KST).startOf('day'); }
 function kstNow() { return dayjs().tz(KST); }
 
 /**
- * 6시간 간격 알림: 오늘(nextReviewDate=KST 오늘) & alarmActive=true & 미완료 폴더에 nextAlarmAt 찍기
- * 대시보드는 nextAlarmAt 갱신으로 "알림 표시"를 트리거
+ * overdue 기반 6시간 간격 알림
+ * overdue 카드가 있는 사용자들에게만 알림 전송
  */
 async function sixHourlyNotify(logger = console) {
-  const today = kstStartOfDay().toDate();
   const now = kstNow().toDate();
-  const due = await prisma.srsFolder.findMany({
-    where: { nextReviewDate: today, alarmActive: true, completedAt: null },
-    select: { id: true },
-  });
-  if (!due.length) return logger.info('[srsJobs] sixHourlyNotify: no due folders');
-  await prisma.srsFolder.updateMany({
-    where: { id: { in: due.map((d) => d.id) } },
-    data: { nextAlarmAt: now },
-  });
-  logger.info(`[srsJobs] sixHourlyNotify updated nextAlarmAt for ${due.length} folders`);
+  
+  try {
+    // 1. 모든 사용자의 overdue 상태 업데이트
+    await updateAllUsersOverdueStatus(logger);
+    
+    // 2. overdue 카드가 있는 사용자들에게 알림 설정
+    await setOverdueAlarms(logger);
+    
+    // 3. 현재 알림 시각이 된 사용자들 조회
+    const usersToNotify = await prisma.user.findMany({
+      where: {
+        hasOverdueCards: true,
+        nextOverdueAlarm: { lte: now }
+      },
+      select: { id: true, nextOverdueAlarm: true }
+    });
+    
+    if (usersToNotify.length === 0) {
+      return logger.info('[srsJobs] sixHourlyNotify: no users with overdue cards to notify');
+    }
+    
+    // 4. 알림을 받을 사용자들의 nextOverdueAlarm 업데이트 (다음 6시간 후)
+    const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000);
+    
+    await prisma.user.updateMany({
+      where: {
+        id: { in: usersToNotify.map(u => u.id) },
+        hasOverdueCards: true
+      },
+      data: {
+        nextOverdueAlarm: nextAlarmTime
+      }
+    });
+    
+    logger.info(`[srsJobs] sixHourlyNotify: set alarms for ${usersToNotify.length} users with overdue cards`);
+    logger.info(`[srsJobs] Next alarm time: ${nextAlarmTime.toISOString()}`);
+    
+  } catch (error) {
+    logger.error('[srsJobs] Error in sixHourlyNotify:', error);
+  }
 }
 
 /**
- * 자정 컷오프: 어제(nextReviewDate=KST 어제)까지 미복습인 폴더는 alarmActive=false 로 전환
+ * 자정 컷오프: overdue 상태 전반적 정리 및 알림 상태 리셋
  */
 async function midnightRoll(logger = console) {
-  const yesterday = kstStartOfDay(dayjs().tz(KST).subtract(1,'day')).toDate();
-  const res = await prisma.srsFolder.updateMany({
-    where: { nextReviewDate: yesterday, completedAt: null, alarmActive: true },
-    data: { alarmActive: false, nextAlarmAt: null },
-  });
-  logger.info(`[srsJobs] midnightRoll disabled ${res.count} stale alarms`);
+  try {
+    // 1. 기존 폴더 시스템 알림 정리 (호환성)
+    const yesterday = kstStartOfDay(dayjs().tz(KST).subtract(1,'day')).toDate();
+    const res = await prisma.srsFolder.updateMany({
+      where: { nextReviewDate: yesterday, completedAt: null, alarmActive: true },
+      data: { alarmActive: false, nextAlarmAt: null },
+    });
+    
+    // 2. 모든 사용자의 overdue 상태 업데이트
+    await updateAllUsersOverdueStatus(logger);
+    
+    // 3. overdue 알림 상태 리셋
+    await setOverdueAlarms(logger);
+    
+    logger.info(`[srsJobs] midnightRoll: disabled ${res.count} stale folder alarms and updated overdue status`);
+    
+  } catch (error) {
+    logger.error('[srsJobs] Error in midnightRoll:', error);
+  }
 }
 
 // Export additional utility functions needed by other modules
@@ -56,4 +98,222 @@ function addKstDays(kstDate, days) {
   return dayjsObj.add(days, 'day');
 }
 
-module.exports = { sixHourlyNotify, midnightRoll, startOfKstDay, addKstDays };
+/**
+ * 새로운 SRS 시스템의 overdue 카드 관리
+ * 1. 대기 시간이 끝난 카드들을 overdue 상태로 변경
+ * 2. overdue 데드라인이 지난 카드들을 stage 0으로 리셋
+ * 3. 사용자별 overdue 상태 업데이트
+ */
+async function manageOverdueCards(logger = console) {
+  const now = new Date();
+  const affectedUsers = new Set();
+  
+  try {
+    // 1. 대기 시간이 끝난 카드들을 overdue 상태로 설정
+    const cardsToMarkOverdue = await prisma.sRSCard.findMany({
+      where: {
+        waitingUntil: { lte: now },
+        isOverdue: false
+      },
+      select: { id: true, userId: true, waitingUntil: true, isFromWrongAnswer: true, stage: true }
+    });
+
+    for (const card of cardsToMarkOverdue) {
+      // overdue 상태로 변경하고 24시간 데드라인 설정
+      const overdueDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      
+      await prisma.sRSCard.update({
+        where: { id: card.id },
+        data: {
+          isOverdue: true,
+          waitingUntil: null, // 대기 종료
+          overdueDeadline: overdueDeadline,
+          overdueStartAt: now // overdue 시작 시각 기록
+        }
+      });
+      
+      affectedUsers.add(card.userId);
+    }
+
+    if (cardsToMarkOverdue.length > 0) {
+      logger.info(`[srsJobs] Marked ${cardsToMarkOverdue.length} cards as overdue (waiting period ended)`);
+    }
+
+    // 2. overdue 데드라인이 지난 카드들을 stage 0으로 리셋
+    const cardsToReset = await prisma.sRSCard.findMany({
+      where: {
+        isOverdue: true,
+        overdueDeadline: { lte: now }
+      },
+      select: { id: true, userId: true, overdueDeadline: true, isFromWrongAnswer: true, wrongStreakCount: true }
+    });
+
+    for (const card of cardsToReset) {
+      // stage 0으로 리셋하고 24시간 대기 설정
+      const waitingUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      
+      await prisma.sRSCard.update({
+        where: { id: card.id },
+        data: {
+          stage: 0,
+          nextReviewAt: null,
+          isOverdue: false,
+          waitingUntil: waitingUntil,
+          overdueDeadline: null,
+          overdueStartAt: null,
+          isFromWrongAnswer: true, // 데드라인 지나면 오답 단어로 취급
+          wrongStreakCount: { increment: 1 }, // 연속 오답 횟수 증가
+          wrongTotal: { increment: 1 } // 오답 처리로 간주
+        }
+      });
+      
+      affectedUsers.add(card.userId);
+    }
+
+    if (cardsToReset.length > 0) {
+      logger.info(`[srsJobs] Reset ${cardsToReset.length} overdue cards to stage 0 (deadline passed)`);
+    }
+    
+    // 3. 영향받은 사용자들의 overdue 상태 업데이트
+    for (const userId of affectedUsers) {
+      const hasOverdue = await hasOverdueCards(userId);
+      await prisma.user.update({
+        where: { id: userId },
+        data: {
+          hasOverdueCards: hasOverdue,
+          lastOverdueCheck: now
+        }
+      });
+    }
+    
+    if (affectedUsers.size > 0) {
+      logger.info(`[srsJobs] Updated overdue status for ${affectedUsers.size} affected users`);
+    }
+
+  } catch (error) {
+    logger.error(`[srsJobs] Error managing overdue cards:`, error);
+  }
+}
+
+/**
+ * 대기 중인 카드들의 복습 상태를 확인합니다.
+ * 대기 중에는 아무런 상태 변화가 없습니다.
+ */
+function isCardInWaitingPeriod(card) {
+  if (!card.waitingUntil) return false;
+  return new Date() < new Date(card.waitingUntil);
+}
+
+/**
+ * 카드가 overdue 상태인지 확인합니다.
+ */
+function isCardOverdue(card) {
+  return card.isOverdue && card.overdueDeadline && new Date() < new Date(card.overdueDeadline);
+}
+
+/**
+ * 사용자에게 overdue 카드가 있는지 확인합니다.
+ */
+async function hasOverdueCards(userId) {
+  const now = new Date();
+  
+  const count = await prisma.sRSCard.count({
+    where: {
+      userId: userId,
+      isOverdue: true,
+      overdueDeadline: { gt: now }
+    }
+  });
+  
+  return count > 0;
+}
+
+/**
+ * 모든 사용자의 overdue 상태를 업데이트합니다.
+ */
+async function updateAllUsersOverdueStatus(logger = console) {
+  try {
+    const now = new Date();
+    
+    // 모든 사용자 ID 조회
+    const users = await prisma.user.findMany({
+      select: { id: true }
+    });
+    
+    for (const user of users) {
+      const hasOverdue = await hasOverdueCards(user.id);
+      
+      await prisma.user.update({
+        where: { id: user.id },
+        data: {
+          hasOverdueCards: hasOverdue,
+          lastOverdueCheck: now
+        }
+      });
+    }
+    
+    logger.info(`[srsJobs] Updated overdue status for ${users.length} users`);
+    
+  } catch (error) {
+    logger.error(`[srsJobs] Error updating overdue status:`, error);
+  }
+}
+
+/**
+ * overdue 카드가 있는 사용자들에게 알림 시각을 설정합니다.
+ */
+async function setOverdueAlarms(logger = console) {
+  try {
+    const now = new Date();
+    const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // 6시간 후
+    
+    // overdue 카드가 있는 사용자들의 알림 시각 설정
+    const result = await prisma.user.updateMany({
+      where: {
+        hasOverdueCards: true,
+        OR: [
+          { nextOverdueAlarm: null },
+          { nextOverdueAlarm: { lte: now } }
+        ]
+      },
+      data: {
+        nextOverdueAlarm: nextAlarmTime
+      }
+    });
+    
+    if (result.count > 0) {
+      logger.info(`[srsJobs] Set overdue alarms for ${result.count} users at ${nextAlarmTime.toISOString()}`);
+    }
+    
+    // overdue 카드가 없는 사용자들의 알림 비활성화
+    const disabledResult = await prisma.user.updateMany({
+      where: {
+        hasOverdueCards: false,
+        nextOverdueAlarm: { not: null }
+      },
+      data: {
+        nextOverdueAlarm: null
+      }
+    });
+    
+    if (disabledResult.count > 0) {
+      logger.info(`[srsJobs] Disabled overdue alarms for ${disabledResult.count} users`);
+    }
+    
+  } catch (error) {
+    logger.error(`[srsJobs] Error setting overdue alarms:`, error);
+  }
+}
+
+module.exports = { 
+  sixHourlyNotify, 
+  midnightRoll, 
+  startOfKstDay, 
+  addKstDays, 
+  manageOverdueCards,
+  isCardInWaitingPeriod,
+  isCardOverdue,
+  hasOverdueCards,
+  updateAllUsersOverdueStatus,
+  setOverdueAlarms
+};

@@ -6,7 +6,7 @@
     "pronunciation": "/flɔː(r)/",
     "definition": "The lower surface of a room, on which one may walk.",
     "example": "The kids are sitting on the floor.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/floor-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/floor-v.mp3",
     "koGloss": "n.바닥; n.(건물의) 층",
     "koExample": "아이들이 바닥에 앉아 있습니다.",
     "koChirpScript": "floor. 방의 바닥 또는 건물의 층을 의미해요. The kids are sitting on the floor. 아이들이 바닥에 앉아 있습니다. 라는 뜻입니다."
@@ -18,7 +18,7 @@
     "pronunciation": "/wɔːl/",
     "definition": "A continuous vertical brick or stone structure that encloses or divides an area of land.",
     "example": "Please hang this picture on the wall.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wall-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/wall-v.mp3",
     "koGloss": "n.벽, 담",
     "koExample": "이 그림을 벽에 걸어 주세요.",
     "koChirpScript": "wall. 벽 또는 담을 뜻하는 단어입니다. Please hang this picture on the wall. 이 그림을 벽에 걸어 주세요. 라는 문장으로 활용할 수 있어요."
@@ -30,7 +30,7 @@
     "pronunciation": "/klɒk/",
     "definition": "A mechanical or electrical device for measuring time, indicating hours, minutes, and sometimes seconds.",
     "example": "The clock on the wall says it's ten o'clock.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/clock-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/clock-v.mp3",
     "koGloss": "n.시계 (벽시계, 탁상시계)",
     "koExample": "벽에 걸린 시계는 열 시를 가리키고 있습니다.",
     "koChirpScript": "clock. 벽에 걸거나 테이블에 두는 시계를 말해요. 손목시계는 watch라고 하죠. The clock on the wall says its ten oclock. 벽에 걸린 시계는 열 시를 가리키고 있습니다. 라는 뜻입니다."
@@ -42,7 +42,7 @@
     "pronunciation": "/kɔɪn/",
     "definition": "A flat, typically round piece of metal with an official stamp, used as money.",
     "example": "I found a coin on the street.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/coin-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/coin-v.mp3",
     "koGloss": "n.동전, 주화; v.(신조어를) 만들다",
     "koExample": "나는 길에서 동전 한 닢을 주웠습니다.",
     "koChirpScript": "coin. 바로 동전입니다. I found a coin on the street. 나는 길에서 동전 한 닢을 주웠습니다. 라는 뜻이에요."
@@ -54,7 +54,7 @@
     "pronunciation": "/nəʊt/",
     "definition": "A piece of paper money; a banknote.",
     "example": "He paid with a ten-dollar note.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/note-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/note-v.mp3",
     "koGloss": "n.지폐; v.메모, 필기; v.주목하다",
     "koExample": "그는 십 달러짜리 지폐로 계산했습니다.",
     "koChirpScript": "note. 여러 뜻이 있지만, 돈을 의미할 때는 지폐를 뜻해요. He paid with a ten-dollar note. 그는 십 달러짜리 지폐로 계산했습니다. 라는 의미입니다."
@@ -66,7 +66,7 @@
     "pronunciation": "/ˈɡɑːdn/",
     "definition": "A piece of ground, often near a house, used for growing flowers, fruit, or vegetables.",
     "example": "My grandmother loves working in her garden.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/garden-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/garden-v.mp3",
     "koGloss": "n.정원, 뜰; v.정원을 가꾸다",
     "koExample": "저의 할머니는 정원에서 일하는 것을 아주 좋아하십니다.",
     "koChirpScript": "garden. 꽃이나 채소를 가꾸는 정원 또는 뜰을 말해요. My grandmother loves working in her garden. 저의 할머니는 정원에서 일하는 것을 아주 좋아하십니다. 라는 문장이네요."
@@ -78,7 +78,7 @@
     "pronunciation": "/klɑːs/",
     "definition": "A group of students who are taught together.",
     "example": "I have an English class at nine AM.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/class-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/class-v.mp3",
     "koGloss": "n.수업, 학급",
     "koExample": "나는 오전 아홉 시에 영어 수업이 있습니다.",
     "koChirpScript": "class. 학교에서 듣는 수업 또는 반 친구들 전체를 의미해요. I have an English class at nine AM. 나는 오전 아홉 시에 영어 수업이 있습니다. 라는 뜻이에요."
@@ -90,7 +90,7 @@
     "pronunciation": "/ˈlesn/",
     "definition": "A period of time during which a person is taught something.",
     "example": "Today's lesson is about colors.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/lesson-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lesson-v.mp3",
     "koGloss": "n.수업, 교습, 교훈",
     "koExample": "오늘 수업은 색깔에 관한 것입니다.",
     "koChirpScript": "lesson. 한 시간의 수업, 교습 또는 교훈이라는 뜻으로 쓰여요. Todays lesson is about colors. 오늘 수업은 색깔에 관한 것입니다. 라고 말할 수 있습니다."
@@ -102,7 +102,7 @@
     "pronunciation": "/pəˈliːs/",
     "definition": "The civil force of a state, responsible for the prevention and detection of crime and the maintenance of public order.",
     "example": "If you are in trouble, call the police.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/police-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/police-v.mp3",
     "koGloss": "n.경찰",
     "koExample": "어려움에 처하면 경찰에 전화하세요.",
     "koChirpScript": "police. 경찰을 의미해요. 항상 복수형으로 취급한답니다. If you are in trouble, call the police. 어려움에 처하면 경찰에 전화하세요. 라는 중요한 정보입니다."
@@ -114,7 +114,7 @@
     "pronunciation": "/ˈdɒktə(r)/",
     "definition": "A qualified practitioner of medicine; a physician.",
     "example": "I need to see a doctor because I feel sick.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/doctor-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/doctor-v.mp3",
     "koGloss": "n.의사",
     "koExample": "몸이 아파서 의사의 진찰을 받아야 합니다.",
     "koChirpScript": "doctor. 의사라는 뜻이에요. 몸이 아플 때, I need to see a doctor because I feel sick. 몸이 아파서 의사의 진찰을 받아야 합니다. 라고 말할 수 있어요."
@@ -126,7 +126,7 @@
     "pronunciation": "/nɜːs/",
     "definition": "A person trained to care for the sick or infirm, especially in a hospital.",
     "example": "The nurse gave me my medicine.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/nurse-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/nurse-v.mp3",
     "koGloss": "n.간호사; v.간호하다",
     "koExample": "간호사가 나에게 약을 주었습니다.",
     "koChirpScript": "nurse. 병원에서 의사를 돕는 간호사입니다. The nurse gave me my medicine. 간호사가 나에게 약을 주었습니다. 라는 뜻입니다."
@@ -138,7 +138,7 @@
     "pronunciation": "/flaɪ/",
     "definition": "(of a bird, bat, or insect) move through the air using wings.",
     "example": "Birds can fly high in the sky.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fly-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fly-v.mp3",
     "koGloss": "v.날다; n.파리",
     "koExample": "새들은 하늘 높이 날 수 있습니다.",
     "koChirpScript": "fly. 날다라는 뜻의 동사예요. 명사로는 곤충 파리를 의미하기도 해요. Birds can fly high in the sky. 새들은 하늘 높이 날 수 있습니다. 라는 뜻이에요."
@@ -150,7 +150,7 @@
     "pronunciation": "/breɪk/",
     "definition": "Separate or cause to separate into pieces as a result of a blow, shock, or strain.",
     "example": "Be careful not to break the glass.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/break-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/break-v.mp3",
     "koGloss": "v.깨뜨리다, 부수다; n.휴식",
     "koExample": "유리잔을 깨지 않도록 조심하세요.",
     "koChirpScript": "break. 무엇을 깨뜨리다라는 뜻과 휴식이라는 뜻이 있어요. Be careful not to break the glass. 유리잔을 깨지 않도록 조심하세요. 라는 주의를 주는 문장입니다."
@@ -162,7 +162,7 @@
     "pronunciation": "/bɪld/",
     "definition": "Construct (something, typically something large) by putting parts or material together over a period of time.",
     "example": "They are going to build a new bridge.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/build-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/build-v.mp3",
     "koGloss": "v.짓다, 건설하다",
     "koExample": "그들은 새로운 다리를 건설할 예정입니다.",
     "koChirpScript": "build. 집이나 건물 같은 것을 짓다, 건설하다라는 뜻입니다. They are going to build a new bridge. 그들은 새로운 다리를 건설할 예정입니다. 라는 계획을 나타내요."
@@ -174,7 +174,7 @@
     "pronunciation": "/drɔː/",
     "definition": "Produce (a picture or diagram) by making lines and marks on paper with a pencil, pen, etc.",
     "example": "My hobby is to draw pictures of animals.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/draw-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/draw-v.mp3",
     "koGloss": "v.그리다; v.끌다, 당기다",
     "koExample": "제 취미는 동물 그림을 그리는 것입니다.",
     "koChirpScript": "draw. 연필이나 펜으로 그림을 그리다라는 뜻이에요. My hobby is to draw pictures of animals. 제 취미는 동물 그림을 그리는 것입니다. 라고 말할 수 있어요."
@@ -186,7 +186,7 @@
     "pronunciation": "/ˈprɪti/",
     "definition": "Attractive in a delicate way without being truly beautiful.",
     "example": "She is wearing a very pretty dress.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/pretty-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/pretty-v.mp3",
     "koGloss": "adj.예쁜; adv.꽤, 상당히",
     "koExample": "그녀는 아주 예쁜 드레스를 입고 있습니다.",
     "koChirpScript": "pretty. 예쁜이라는 뜻의 형용사입니다. 부사로는 꽤, 상당히라는 뜻도 있어요. She is wearing a very pretty dress. 그녀는 아주 예쁜 드레스를 입고 있습니다. 라는 뜻이에요."
@@ -198,7 +198,7 @@
     "pronunciation": "/sɪk/",
     "definition": "Affected by physical or mental illness.",
     "example": "I can't go to school today because I am sick.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sick-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/sick-v.mp3",
     "koGloss": "adj.아픈, 병든",
     "koExample": "저는 아파서 오늘 학교에 갈 수 없습니다.",
     "koChirpScript": "sick. 몸이 아픈, 병든 상태를 나타내요. I cant go to school today because I am sick. 저는 아파서 오늘 학교에 갈 수 없습니다. 라고 말할 때 쓸 수 있어요."
@@ -210,7 +210,7 @@
     "pronunciation": "/wel/",
     "definition": "In a good or satisfactory way.",
     "example": "I hope you get well soon.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/well-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/well-v.mp3",
     "koGloss": "adv.잘; adj.건강한",
     "koExample": "곧 건강해지기를 바랍니다.",
     "koChirpScript": "well. 부사로는 잘, 형용사로는 건강한 이라는 뜻이 있어요. I hope you get well soon. 곧 건강해지기를 바랍니다. 라고 아픈 사람에게 말해줄 수 있어요."
@@ -222,7 +222,7 @@
     "pronunciation": "/bɪˈhaɪnd/",
     "definition": "At or to the far side or back of something.",
     "example": "The child is hiding behind the tree.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/behind-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/behind-v.mp3",
     "koGloss": "prep.무엇의 뒤에",
     "koExample": "아이가 나무 뒤에 숨어 있습니다.",
     "koChirpScript": "behind. 무엇의 뒤에라는 위치를 나타내는 전치사입니다. The child is hiding behind the tree. 아이가 나무 뒤에 숨어 있습니다. 와 같이 위치를 묘사해요."
@@ -234,7 +234,7 @@
     "pronunciation": "/ˈjuːʒuəli/",
     "definition": "Under normal conditions; generally.",
     "example": "I usually get up at seven o'clock.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/usually-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/usually-v.mp3",
     "koGloss": "adv.보통, 대개",
     "koExample": "저는 보통 일곱 시에 일어납니다.",
     "koChirpScript": "usually. 보통, 대개라는 뜻의 빈도부사입니다. often보다 더 자주 하는 일에 쓰죠. I usually get up at seven oclock. 저는 보통 일곱 시에 일어납니다. 라는 뜻입니다."
@@ -246,7 +246,7 @@
     "pronunciation": "/ˈbɒdi/",
     "definition": "The physical structure, including the bones, flesh, and organs, of a person or an animal.",
     "example": "It's important to take care of your body with exercise and good food.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/body-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/body-v.mp3",
     "koGloss": "n.몸, 신체",
     "koExample": "운동과 좋은 음식으로 당신의 몸을 돌보는 것이 중요합니다.",
     "koChirpScript": "body. 사람이나 동물의 몸, 신체를 의미해요. Its important to take care of your body with exercise and good food. 운동과 좋은 음식으로 당신의 몸을 돌보는 것이 중요합니다. 라는 뜻입니다."
@@ -258,7 +258,7 @@
     "pronunciation": "/heə(r)/",
     "definition": "Any of the fine threadlike strands growing from the skin of humans, mammals, and some other animals.",
     "example": "She has long brown hair.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hair-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/hair-v.mp3",
     "koGloss": "n.머리카락, 털",
     "koExample": "그녀는 긴 갈색 머리카락을 가지고 있습니다.",
     "koChirpScript": "hair. 머리카락 또는 동물의 털을 말합니다. She has long brown hair. 그녀는 긴 갈색 머리카락을 가지고 있습니다. 처럼 사람의 모습을 묘사할 때 사용해요."
@@ -270,7 +270,7 @@
     "pronunciation": "/nəʊz/",
     "definition": "The part of the face or head of a person or animal that is used for breathing and smelling.",
     "example": "My nose is cold.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/nose-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/nose-v.mp3",
     "koGloss": "n.코",
     "koExample": "코가 차가워요.",
     "koChirpScript": "nose. 얼굴에 있는 코를 뜻합니다. My nose is cold. 코가 차가워요. 라고 간단하게 말할 수 있어요."
@@ -282,7 +282,7 @@
     "pronunciation": "/maʊθ/",
     "definition": "The opening and cavity in the lower part of the human face, surrounded by the lips, through which food is taken in and from which speech and other sounds are emitted.",
     "example": "Please close your mouth when you eat.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/mouth-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mouth-v.mp3",
     "koGloss": "n.입",
     "koExample": "식사할 때는 입을 닫아 주세요.",
     "koChirpScript": "mouth. 바로 입입니다. Please close your mouth when you eat. 식사할 때는 입을 닫아 주세요. 라는 식사 예절에 관한 문장이네요."
@@ -294,7 +294,7 @@
     "pronunciation": "/ɪə(r)/",
     "definition": "The organ of hearing and balance in humans and other vertebrates.",
     "example": "I listen to music with my ears.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/ear-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/ear-v.mp3",
     "koGloss": "n.귀",
     "koExample": "나는 귀로 음악을 듣습니다.",
     "koChirpScript": "ear. 소리를 듣는 신체 부위인 귀입니다. I listen to music with my ears. 나는 귀로 음악을 듣습니다. 라는 뜻이에요."
@@ -306,7 +306,7 @@
     "pronunciation": "/ˈfɪŋɡə(r)/",
     "definition": "Each of the four slender jointed parts attached to either hand (or five, if the thumb is included).",
     "example": "He pointed his finger at the map.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/finger-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/finger-v.mp3",
     "koGloss": "n.손가락",
     "koExample": "그는 지도를 손가락으로 가리켰습니다.",
     "koChirpScript": "finger. 손가락을 의미해요. He pointed his finger at the map. 그는 지도를 손가락으로 가리켰습니다. 라는 뜻입니다."
@@ -318,7 +318,7 @@
     "pronunciation": "/klaʊd/",
     "definition": "A visible mass of water droplets or ice crystals suspended in the atmosphere.",
     "example": "There isn't a cloud in the sky.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cloud-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/cloud-v.mp3",
     "koGloss": "n.구름",
     "koExample": "하늘에 구름 한 점 없습니다.",
     "koChirpScript": "cloud. 하늘에 떠 있는 구름입니다. There isnt a cloud in the sky. 하늘에 구름 한 점 없습니다. 라고 맑은 날씨를 표현할 수 있어요."
@@ -330,7 +330,7 @@
     "pronunciation": "/skaɪ/",
     "definition": "The region of the atmosphere and outer space seen from the earth.",
     "example": "The sky is so blue today.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sky-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/sky-v.mp3",
     "koGloss": "n.하늘",
     "koExample": "오늘은 하늘이 정말 파랗습니다.",
     "koChirpScript": "sky. 우리가 매일 보는 하늘을 의미해요. The sky is so blue today. 오늘은 하늘이 정말 파랗습니다. 라는 뜻이에요."
@@ -342,7 +342,7 @@
     "pronunciation": "/wɪnd/",
     "definition": "The perceptible natural movement of the air.",
     "example": "The wind is very strong today.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wind-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/wind-v.mp3",
     "koGloss": "n.바람",
     "koExample": "오늘은 바람이 매우 강합니다.",
     "koChirpScript": "wind. 바람이라는 뜻이에요. The wind is very strong today. 오늘은 바람이 매우 강합니다. 처럼 날씨를 이야기할 때 쓸 수 있어요."
@@ -354,7 +354,7 @@
     "pronunciation": "/snəʊ/",
     "definition": "Atmospheric water vapor frozen into ice crystals and falling in light white flakes.",
     "example": "The children are playing in the snow.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/snow-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/snow-v.mp3",
     "koGloss": "n.눈; v.눈이 오다",
     "koExample": "아이들이 눈 속에서 놀고 있습니다.",
     "koChirpScript": "snow. 겨울에 내리는 눈입니다. 동사로는 눈이 오다라는 뜻도 돼요. The children are playing in the snow. 아이들이 눈 속에서 놀고 있습니다. 라는 뜻이에요."
@@ -366,7 +366,7 @@
     "pronunciation": "/ˈsʌmə(r)/",
     "definition": "The warmest season of the year, in the northern hemisphere from June to August.",
     "example": "I love going to the beach in the summer.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/summer-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/summer-v.mp3",
     "koGloss": "n.여름",
     "koExample": "저는 여름에 해변에 가는 것을 아주 좋아합니다.",
     "koChirpScript": "summer. 사계절 중 하나인 여름입니다. I love going to the beach in the summer. 저는 여름에 해변에 가는 것을 아주 좋아합니다. 라는 뜻입니다."
@@ -378,7 +378,7 @@
     "pronunciation": "/ˈwɪntə(r)/",
     "definition": "The coldest season of the year, in the northern hemisphere from December to February.",
     "example": "It often snows in the winter.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/winter-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/winter-v.mp3",
     "koGloss": "n.겨울",
     "koExample": "겨울에는 자주 눈이 옵니다.",
     "koChirpScript": "winter. 춥고 눈이 오는 계절, 겨울입니다. It often snows in the winter. 겨울에는 자주 눈이 옵니다. 라는 뜻이에요."
@@ -390,7 +390,7 @@
     "pronunciation": "/sprɪŋ/",
     "definition": "The season after winter and before summer, in which vegetation begins to appear.",
     "example": "Flowers bloom in the spring.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/spring-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/spring-v.mp3",
     "koGloss": "n.봄; v.용수철, 샘; v.튀어 오르다",
     "koExample": "봄에는 꽃들이 핍니다.",
     "koChirpScript": "spring. 따뜻한 계절, 봄을 뜻해요. Flowers bloom in the spring. 봄에는 꽃들이 핍니다. 라는 아름다운 문장이네요."
@@ -402,7 +402,7 @@
     "pronunciation": "/ˈɔːtəm/",
     "definition": "The season after summer and before winter, in the northern hemisphere from September to November.",
     "example": "The leaves turn red and yellow in autumn.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/autumn-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/autumn-v.mp3",
     "koGloss": "n.가을",
     "koExample": "가을에는 나뭇잎들이 빨갛고 노랗게 변합니다.",
     "koChirpScript": "autumn. 가을이라는 뜻입니다. 미국에서는 보통 fall이라고 말해요. The leaves turn red and yellow in autumn. 가을에는 나뭇잎들이 빨갛고 노랗게 변합니다. 라는 뜻입니다."
@@ -414,7 +414,7 @@
     "pronunciation": "/ˈhɒlədeɪ/",
     "definition": "An extended period of leisure and recreation, especially one spent away from home or in traveling; a vacation.",
     "example": "Where are you going for your holiday?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/holiday-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/holiday-v.mp3",
     "koGloss": "n.휴일, 휴가, 방학",
     "koExample": "휴가 때 어디로 갈 건가요?",
     "koChirpScript": "holiday. 휴일, 휴가 또는 방학을 의미해요. Where are you going for your holiday. 휴가 때 어디로 갈 건가요. 라고 물어볼 수 있어요."
@@ -426,7 +426,7 @@
     "pronunciation": "/ˈbɜːθdeɪ/",
     "definition": "The anniversary of the day on which a person was born.",
     "example": "Happy birthday to you!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/birthday-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/birthday-v.mp3",
     "koGloss": "n.생일",
     "koExample": "생일 축하해요!",
     "koChirpScript": "birthday. 바로 생일입니다. 누구나 일년에 한 번씩 있는 특별한 날이죠. Happy birthday to you. 생일 축하해요. 라고 말해줄 수 있어요."
@@ -438,7 +438,7 @@
     "pronunciation": "/tʃuːz/",
     "definition": "Pick out or select (someone or something) as being the best or most appropriate of two or more alternatives.",
     "example": "You can choose any color you like.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/choose-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/choose-v.mp3",
     "koGloss": "v.고르다, 선택하다",
     "koExample": "당신이 좋아하는 아무 색이나 고를 수 있습니다.",
     "koChirpScript": "choose. 여러 개 중에서 무엇을 고르다, 선택하다라는 뜻이에요. You can choose any color you like. 당신이 좋아하는 아무 색이나 고를 수 있습니다. 라는 뜻입니다."
@@ -450,7 +450,7 @@
     "pronunciation": "/kʌt/",
     "definition": "Make an opening, incision, or wound in (something) with a sharp-edged tool or object.",
     "example": "She cut the paper with scissors.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cut-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/cut-v.mp3",
     "koGloss": "v.자르다, 베다; n.삭감",
     "koExample": "그녀는 가위로 종이를 잘랐습니다.",
     "koChirpScript": "cut. 무엇을 자르다라는 뜻입니다. She cut the paper with scissors. 그녀는 가위로 종이를 잘랐습니다. 라는 문장으로 쓸 수 있어요."
@@ -462,7 +462,7 @@
     "pronunciation": "/luːz/",
     "definition": "Be deprived of or cease to have or retain (something).",
     "example": "Don't lose your keys.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/lose-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lose-v.mp3",
     "koGloss": "v.잃어버리다; v.(시합에) 지다",
     "koExample": "열쇠를 잃어버리지 마세요.",
     "koChirpScript": "lose. 물건을 잃어버리다 또는 시합에서 지다라는 뜻이에요. Dont lose your keys. 열쇠를 잃어버리지 마세요. 라는 당부의 말입니다."
@@ -474,7 +474,7 @@
     "pronunciation": "/wɪn/",
     "definition": "Be successful or victorious in (a contest or conflict).",
     "example": "I hope our team will win the game.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/win-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/win-v.mp3",
     "koGloss": "v.이기다, 우승하다; n.승리",
     "koExample": "우리 팀이 경기에서 이기기를 바랍니다.",
     "koChirpScript": "win. lose의 반대말! 이기다, 우승하다라는 뜻입니다. I hope our team will win the game. 우리 팀이 경기에서 이기기를 바랍니다. 라는 응원의 문장이네요."

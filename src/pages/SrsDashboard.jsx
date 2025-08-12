@@ -7,6 +7,7 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { fetchJSON, withCreds } from "../api/client";
 import { SrsApi } from "../api/srs";
+import ReviewTimer from "../components/ReviewTimer";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -14,8 +15,8 @@ dayjs.locale("ko");
 
 function fmt(d) {
     if (!d) return "-";
-    // 날짜 전용 필드는 UTC로 해석하여 날짜만 표시
-    return dayjs.utc(d).format("YYYY.MM.DD (ddd)");
+    // UTC로 저장된 날짜를 KST로 변환하여 표시
+    return dayjs.utc(d).tz('Asia/Seoul').format("YYYY.MM.DD (ddd)");
 }
 function isDue(nextReviewDate) {
     const kstNow = dayjs().tz('Asia/Seoul');
@@ -198,7 +199,16 @@ export default function SrsDashboard() {
                                                 <strong className="text-primary">학습 중</strong> :
                                                 f.isDue
                                                     ? <strong className="text-success">오늘 복습!</strong>
-                                                    : <>다음 복습: <strong>{fmt(f.nextReviewDate)}</strong></>}
+                                                    : (
+                                                        <>
+                                                            다음 복습: <strong>{fmt(f.nextReviewDate)}</strong>
+                                                            <br />
+                                                            <ReviewTimer 
+                                                                nextReviewAt={f.nextReviewDate}
+                                                                className="small"
+                                                            />
+                                                        </>
+                                                    )}
                                             <span className="mx-2">|</span>
                                             Stage {f.stage}
                                         </>

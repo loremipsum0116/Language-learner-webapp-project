@@ -9,7 +9,12 @@
       "Bash(taskkill:*)",
       "Bash(npm run dev:*)",
       "Bash(curl:*)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "Bash(npm install:*)",
+      "Bash(del update_wrong_answer_cards.js)",
+      "Bash(cmd /c:*)",
+      "Bash(powershell:*)",
+      "Bash(set PORT=3001)"
     ],
     "deny": []
   }

@@ -56,6 +56,48 @@ function computeNextReviewDate(baseDate, stage) {
   return addDaysUTC(baseDate, delay);
 }
 
+/**
+ * 정답 카드의 대기 시간을 계산합니다.
+ * 망각곡선 일수에서 1일을 뺀 만큼 대기합니다.
+ * 예: 3일 복습 -> 2일(48시간) 대기, 7일 복습 -> 6일(144시간) 대기
+ */
+function computeWaitingPeriod(stage) {
+  const totalDelay = delayDaysFor(stage);
+  if (totalDelay <= 1) {
+    // 1일 이하인 경우는 24시간 대기 (stage 0과 동일)
+    return 24;
+  }
+  return (totalDelay - 1) * 24; // 시간 단위로 반환
+}
+
+/**
+ * 대기 시간 종료 시각을 계산합니다.
+ */
+function computeWaitingUntil(baseDate, stage) {
+  const waitingHours = computeWaitingPeriod(stage);
+  const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
+  console.log(`[SRS SCHEDULE] computeWaitingUntil: stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()}`);
+  return result;
+}
+
+/**
+ * 오답 카드의 24시간 대기 종료 시각을 계산합니다.
+ */
+function computeWrongAnswerWaitingUntil(baseDate) {
+  const result = new Date(baseDate.getTime() + 24 * 60 * 60 * 1000);
+  console.log(`[SRS SCHEDULE] computeWrongAnswerWaitingUntil: +24 hours from ${baseDate.toISOString()}`);
+  return result;
+}
+
+/**
+ * overdue 상태의 24시간 데드라인을 계산합니다.
+ */
+function computeOverdueDeadline(overdueStartTime) {
+  const result = new Date(overdueStartTime.getTime() + 24 * 60 * 60 * 1000);
+  console.log(`[SRS SCHEDULE] computeOverdueDeadline: +24 hours from ${overdueStartTime.toISOString()}`);
+  return result;
+}
+
 module.exports = {
   STAGE_DELAYS,
   clampStage,
@@ -64,5 +106,9 @@ module.exports = {
   delayDaysFor,
   dateOnlyUTC,
   addDaysUTC,
-  computeNextReviewDate
+  computeNextReviewDate,
+  computeWaitingPeriod,
+  computeWaitingUntil,
+  computeWrongAnswerWaitingUntil,
+  computeOverdueDeadline
 };

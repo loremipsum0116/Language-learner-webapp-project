@@ -130,5 +130,5 @@ def synthesize_vocab_audio(json_file_path):
 
 
 if __name__ == "__main__":
-    file_to_process = "ielts_a1_1.json"
+    file_to_process = "w.json"
     synthesize_vocab_audio(file_to_process)

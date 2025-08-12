@@ -6,7 +6,7 @@
     "pronunciation": "/dɪˈzɜːt/",
     "definition": "The sweet course eaten at the end of a meal.",
     "example": "What's for dessert?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dessert-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/dessert-v.mp3",
     "koGloss": "n.디저트, 후식",
     "koExample": "디저트는 뭐예요?",
     "koChirpScript": "dessert. 식사 후에 먹는 달콤한 후식, 디저트입니다. Whats for dessert. 디저트는 뭐예요. 라고 물어볼 수 있어요."
@@ -18,7 +18,7 @@
     "pronunciation": "/snæk/",
     "definition": "A small amount of food eaten between meals.",
     "example": "I sometimes have a small snack in the afternoon.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/snack-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/snack-v.mp3",
     "koGloss": "n.간식",
     "koExample": "저는 가끔 오후에 간단한 간식을 먹습니다.",
     "koChirpScript": "snack. 식사 사이에 먹는 간식을 의미해요. I sometimes have a small snack in the afternoon. 저는 가끔 오후에 간단한 간식을 먹습니다. 라는 뜻입니다."
@@ -30,7 +30,7 @@
     "pronunciation": "/deɪt/",
     "definition": "The day of the month or year as specified by a number.",
     "example": "What's the date today?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/date-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/date-v.mp3",
     "koGloss": "n.날짜; v.데이트",
     "koExample": "오늘이 며칠인가요?",
     "koChirpScript": "date. 날짜를 의미합니다. 연인들의 데이트라는 뜻도 있죠. Whats the date today. 오늘이 며칠인가요. 라는 질문입니다."
@@ -42,7 +42,7 @@
     "pronunciation": "/fʌn/",
     "definition": "Enjoyment, amusement, or lighthearted pleasure.",
     "example": "We had a lot of fun at the party.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fun-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fun-v.mp3",
     "koGloss": "n.재미, 즐거움; adj.재미있는",
     "koExample": "우리는 파티에서 아주 재미있었습니다.",
     "koChirpScript": "fun. 재미 또는 즐거움을 뜻해요. 형용사로는 재미있는 이라는 뜻도 돼요. We had a lot of fun at the party. 우리는 파티에서 아주 재미있었습니다. 라는 뜻이에요."
@@ -54,7 +54,7 @@
     "pronunciation": "/ˈprɒbləm/",
     "definition": "A matter or situation regarded as unwelcome or harmful and needing to be dealt with and overcome.",
     "example": "If you have a problem, please ask for help.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/problem-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/problem-v.mp3",
     "koGloss": "n.문제",
     "koExample": "문제가 있다면, 도움을 요청하세요.",
     "koChirpScript": "problem. 바로 문제입니다. If you have a problem, please ask for help. 문제가 있다면, 도움을 요청하세요. 라는 조언의 문장입니다."
@@ -66,7 +66,7 @@
     "pronunciation": "/aɪˈdɪə/",
     "definition": "A thought or suggestion as to a possible course of action.",
     "example": "That's a great idea!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/idea-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/idea-v.mp3",
     "koGloss": "n.생각, 아이디어",
     "koExample": "그거 좋은 생각이네요!",
     "koChirpScript": "idea. 생각 또는 아이디어를 뜻해요. Thats a great idea. 그거 좋은 생각이네요. 라고 동의할 때 쓸 수 있어요."
@@ -78,8 +78,8 @@
     "pronunciation": "/weɪk ʌp/",
     "definition": "Emerge or cause to emerge from a state of sleep; stop sleeping.",
     "example": "I wake up at 7 AM every morning.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wake-up-uk.mp3",
-    "koGloss": "phrasal verbphrasal verbphrasal verb잠에서 깨다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/wake-up-v.mp3",
+    "koGloss": "phrasal verb. 잠에서 깨다",
     "koExample": "저는 매일 아침 일곱 시에 잠에서 깹니다.",
     "koChirpScript": "wake up. 잠에서 깨다라는 뜻의 구동사입니다. I wake up at 7 AM every morning. 저는 매일 아침 일곱 시에 잠에서 깹니다. 라는 뜻이에요."
   },
@@ -90,8 +90,8 @@
     "pronunciation": "/get ʌp/",
     "definition": "Get out of bed after sleeping.",
     "example": "It's time to get up!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/get-up-uk.mp3",
-    "koGloss": "phrasal verbphrasal verbphrasal verb일어나다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/get-up-v.mp3",
+    "koGloss": "phrasal verb. 일어나다",
     "koExample": "일어날 시간이야!",
     "koChirpScript": "get up. 잠자리에서 일어나다라는 뜻이에요. 잠에서 깬 후에 하는 행동이죠. Its time to get up. 일어날 시간이야. 라고 말할 수 있습니다."
   },
@@ -102,8 +102,8 @@
     "pronunciation": "/gəʊ tə bed/",
     "definition": "To lie down in one's bed to sleep.",
     "example": "I usually go to bed around 11 PM.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/go-to-bed-uk.mp3",
-    "koGloss": "verb phraseverb phraseverb phrase잠자리에 들다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/go-to-bed-v.mp3",
+    "koGloss": "verb phrase. 잠자리에 들다",
     "koExample": "저는 보통 밤 열한 시쯤 잠자리에 듭니다.",
     "koChirpScript": "go to bed. 잠자리에 들다라는 표현이에요. I usually go to bed around 11 PM. 저는 보통 밤 열한 시쯤 잠자리에 듭니다. 라는 뜻입니다."
   },
@@ -114,8 +114,8 @@
     "pronunciation": "/teɪk ə ˈʃaʊə(r)/",
     "definition": "To wash oneself in a shower.",
     "example": "I take a shower every morning.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/take-a-shower-uk.mp3",
-    "koGloss": "verb phraseverb phraseverb phrase샤워하다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/take-a-shower-v.mp3",
+    "koGloss": "verb phrase. 샤워하다",
     "koExample": "저는 매일 아침 샤워를 합니다.",
     "koChirpScript": "take a shower. 샤워하다라는 일상 표현이에요. I take a shower every morning. 저는 매일 아침 샤워를 합니다. 라는 뜻이에요."
   },
@@ -126,7 +126,7 @@
     "pronunciation": "/naɪs/",
     "definition": "Pleasant; agreeable; satisfactory.",
     "example": "Have a nice day!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/nice-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/nice-v.mp3",
     "koGloss": "adj.좋은, 멋진, 친절한",
     "koExample": "좋은 하루 보내세요!",
     "koChirpScript": "nice. 좋은, 멋진, 친절한 등 긍정적인 상황에 폭넓게 쓰는 형용사입니다. Have a nice day. 좋은 하루 보내세요. 라는 인사말로 자주 쓰이죠."
@@ -138,7 +138,7 @@
     "pronunciation": "/ɡreɪt/",
     "definition": "Of an extent, amount, or intensity considerably above the normal or average.",
     "example": "We had a great time on our holiday.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/great-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/great-v.mp3",
     "koGloss": "adj.훌륭한, 멋진, 큰",
     "koExample": "우리는 휴가 때 아주 좋은 시간을 보냈습니다.",
     "koChirpScript": "great. 훌륭한, 멋진 이라는 뜻으로 아주 좋다는 것을 강조할 때 써요. We had a great time on our holiday. 우리는 휴가 때 아주 좋은 시간을 보냈습니다. 라는 뜻입니다."
@@ -150,7 +150,7 @@
     "pronunciation": "/wen/",
     "definition": "At what time.",
     "example": "When is your birthday?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/when-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/when-v.mp3",
     "koGloss": "adv.언제",
     "koExample": "당신의 생일은 언제인가요?",
     "koChirpScript": "when. 시간을 물어볼 때 쓰는 의문사, 언제라는 뜻이에요. When is your birthday. 당신의 생일은 언제인가요. 라는 기본적인 질문입니다."
@@ -162,7 +162,7 @@
     "pronunciation": "/weə(r)/",
     "definition": "In or to what place or position.",
     "example": "Where are you from?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/where-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/where-v.mp3",
     "koGloss": "adv.어디에, 어디로",
     "koExample": "어디에서 오셨어요?",
     "koChirpScript": "where. 장소를 물어볼 때 쓰는 의문사, 어디에 라는 뜻이에요. Where are you from. 어디에서 오셨어요. 라고 처음 만났을 때 물어볼 수 있어요."
@@ -174,7 +174,7 @@
     "pronunciation": "/waɪ/",
     "definition": "For what reason or purpose.",
     "example": "Why are you late?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/why-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/why-v.mp3",
     "koGloss": "adv.왜, 어째서",
     "koExample": "왜 늦었나요?",
     "koChirpScript": "why. 이유를 물어볼 때 쓰는 의문사, 왜 라는 뜻입니다. Why are you late. 왜 늦었나요. 라고 물어볼 수 있습니다."
@@ -186,7 +186,7 @@
     "pronunciation": "/haʊ/",
     "definition": "In what way or manner; by what means.",
     "example": "How are you today?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/how-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/how-v.mp3",
     "koGloss": "adv.어떻게, 얼마나",
     "koExample": "오늘 어떻게 지내세요?",
     "koChirpScript": "how. 방법이나 상태를 물어보는 의문사, 어떻게 라는 뜻이에요. How are you today. 오늘 어떻게 지내세요. 라는 매일 쓰는 인사말이죠."
@@ -198,7 +198,7 @@
     "pronunciation": "/wɒt/",
     "definition": "Asking for information specifying something.",
     "example": "What is your name?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/what-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/what-v.mp3",
     "koGloss": "pron.무엇, 무슨",
     "koExample": "당신의 이름은 무엇입니까?",
     "koChirpScript": "what. 정보를 물어볼 때 쓰는 가장 기본적인 의문사, 무엇 이라는 뜻이에요. What is your name. 당신의 이름은 무엇입니까. 라는 문장은 모두가 알죠."
@@ -210,7 +210,7 @@
     "pronunciation": "/huː/",
     "definition": "What or which person or people.",
     "example": "Who is that person?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/who-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/who-v.mp3",
     "koGloss": "pron.누구",
     "koExample": "저 사람은 누구인가요?",
     "koChirpScript": "who. 사람에 대해 물어볼 때 쓰는 의문사, 누구 라는 뜻입니다. Who is that person. 저 사람은 누구인가요. 라고 물어볼 수 있어요."
@@ -222,7 +222,7 @@
     "pronunciation": "/wɪtʃ/",
     "definition": "Asking for information specifying one or more people or things from a definite set.",
     "example": "Which color do you like, red or blue?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/which-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/which-v.mp3",
     "koGloss": "pron.어느 것, 어떤",
     "koExample": "빨간색과 파란색 중 어떤 색을 좋아하세요?",
     "koChirpScript": "which. 정해진 것들 중에서 선택을 물어볼 때 쓰는 의문사, 어느 것 이라는 뜻이에요. Which color do you like, red or blue. 빨간색과 파란색 중 어떤 색을 좋아하세요. 라는 뜻입니다."
@@ -234,8 +234,8 @@
     "pronunciation": "/ðen/",
     "definition": "At that time; at the time in question.",
     "example": "First I'll go shopping, and then I'll come home.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/then-uk.mp3",
-    "koGloss": "adv.그때; adv.그러고 나서, 그리고 나서",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/then-v.mp3",
+    "koGloss": "adv. 그때, 그러고 나서, 그리고 나서",
     "koExample": "먼저 쇼핑을 가고, 그러고 나서 집에 올 거예요.",
     "koChirpScript": "then. 그때 또는 그러고 나서 라는 순서를 나타내는 부사입니다. First Ill go shopping, and then Ill come home. 먼저 쇼핑을 가고, 그러고 나서 집에 올 거예요. 라는 뜻입니다."
   },
@@ -246,7 +246,7 @@
     "pronunciation": "/dres/",
     "definition": "A one-piece garment for a woman or girl that covers the body and extends down over the legs.",
     "example": "She is wearing a beautiful blue dress.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dress-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/dress-v.mp3",
     "koGloss": "n.드레스, 원피스; v.옷을 입다",
     "koExample": "그녀는 아름다운 파란색 드레스를 입고 있습니다.",
     "koChirpScript": "dress. 드레스 또는 원피스를 의미해요. 동사로는 옷을 입다라는 뜻도 있어요. She is wearing a beautiful blue dress. 그녀는 아름다운 파란색 드레스를 입고 있습니다. 라는 뜻이에요."
@@ -258,7 +258,7 @@
     "pronunciation": "/skɜːt/",
     "definition": "A woman's outer garment fastened around the waist and hanging down around the legs.",
     "example": "I bought a new skirt yesterday.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/skirt-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/skirt-v.mp3",
     "koGloss": "n.치마, 스커트",
     "koExample": "나는 어제 새 치마를 샀습니다.",
     "koChirpScript": "skirt. 바로 치마입니다. I bought a new skirt yesterday. 나는 어제 새 치마를 샀습니다. 라는 뜻의 문장이네요."
@@ -270,7 +270,7 @@
     "pronunciation": "/ˈdʒækɪt/",
     "definition": "An outer garment extending either to the waist or the hips, typically having sleeves and a fastening down the front.",
     "example": "It's a bit cold, so I'll wear a jacket.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/jacket-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/jacket-v.mp3",
     "koGloss": "n.재킷, 상의",
     "koExample": "조금 추우니, 재킷을 입을게요.",
     "koChirpScript": "jacket. 보통 위에 걸치는 상의, 재킷을 말해요. Its a bit cold, so Ill wear a jacket. 조금 추우니, 재킷을 입을게요. 라고 말할 수 있습니다."
@@ -282,7 +282,7 @@
     "pronunciation": "/kəʊt/",
     "definition": "An outer garment worn outdoors, having sleeves and typically extending below the hips.",
     "example": "Don't forget your coat, it's winter.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/coat-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/coat-v.mp3",
     "koGloss": "n.코트, 외투",
     "koExample": "코트 잊지 마세요, 겨울이에요.",
     "koChirpScript": "coat. jacket보다 보통 더 길고 두꺼운 외투, 코트를 의미합니다. Dont forget your coat, its winter. 코트 잊지 마세요, 겨울이에요. 라는 뜻이에요."
@@ -294,7 +294,7 @@
     "pronunciation": "/dʒiːnz/",
     "definition": "Hard-wearing casual trousers made of denim or other cotton fabric.",
     "example": "I like to wear comfortable jeans on weekends.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/jeans-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/jeans-v.mp3",
     "koGloss": "n.청바지",
     "koExample": "저는 주말에 편안한 청바지를 입는 것을 좋아합니다.",
     "koChirpScript": "jeans. 바로 청바지입니다. 보통 복수형으로 써요. I like to wear comfortable jeans on weekends. 저는 주말에 편안한 청바지를 입는 것을 좋아합니다. 라는 뜻입니다."
@@ -306,7 +306,7 @@
     "pronunciation": "/sɒk/",
     "definition": "A garment for the foot and lower part of the leg, typically knitted from wool, cotton, or nylon.",
     "example": "I can't find my other sock.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sock-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/sock-v.mp3",
     "koGloss": "n.양말",
     "koExample": "다른 쪽 양말을 못 찾겠어요.",
     "koChirpScript": "sock. 발에 신는 양말입니다. I cant find my other sock. 다른 쪽 양말을 못 찾겠어요. 누구나 한 번쯤 겪는 일이죠."
@@ -318,7 +318,7 @@
     "pronunciation": "/ˈmɑːkɪt/",
     "definition": "A regular gathering of people for the purchase and sale of provisions, livestock, and other commodities.",
     "example": "Let's go to the market to buy fresh vegetables.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/market-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/market-v.mp3",
     "koGloss": "n.시장; v.시장에 내놓다",
     "koExample": "신선한 채소를 사러 시장에 갑시다.",
     "koChirpScript": "market. 물건을 사고파는 시장을 의미해요. Lets go to the market to buy fresh vegetables. 신선한 채소를 사러 시장에 갑시다. 라는 뜻이에요."
@@ -330,7 +330,7 @@
     "pronunciation": "/ˈhɒspɪtl/",
     "definition": "An institution providing medical and surgical treatment and nursing care for sick or injured people.",
     "example": "He is in the hospital after the accident.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hospital-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/hospital-v.mp3",
     "koGloss": "n.병원",
     "koExample": "그는 사고 후에 병원에 있습니다.",
     "koChirpScript": "hospital. 아픈 사람들이 치료받는 병원입니다. He is in the hospital after the accident. 그는 사고 후에 병원에 있습니다. 라는 뜻입니다."
@@ -342,7 +342,7 @@
     "pronunciation": "/bæŋk/",
     "definition": "A financial establishment that invests money deposited by customers, pays it out when required, makes loans at interest, and exchanges currency.",
     "example": "I need to go to the bank to get some money.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bank-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bank-v.mp3",
     "koGloss": "n.은행; v.둑, 제방",
     "koExample": "돈을 좀 찾으러 은행에 가야 합니다.",
     "koChirpScript": "bank. 돈을 다루는 은행을 뜻해요. I need to go to the bank to get some money. 돈을 좀 찾으러 은행에 가야 합니다. 라는 뜻이에요."
@@ -354,7 +354,7 @@
     "pronunciation": "/həʊˈtel/",
     "definition": "An establishment providing accommodation, meals, and other services for travelers and tourists.",
     "example": "We stayed in a nice hotel near the beach.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hotel-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/hotel-v.mp3",
     "koGloss": "n.호텔",
     "koExample": "우리는 해변 근처의 좋은 호텔에 묵었습니다.",
     "koChirpScript": "hotel. 여행객들이 머무는 호텔입니다. We stayed in a nice hotel near the beach. 우리는 해변 근처의 좋은 호텔에 묵었습니다. 라는 뜻이에요."
@@ -366,7 +366,7 @@
     "pronunciation": "/ˈrestrɒnt/",
     "definition": "A place where people pay to sit and eat meals that are cooked and served on the premises.",
     "example": "Let's eat at that new Italian restaurant.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/restaurant-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/restaurant-v.mp3",
     "koGloss": "n.식당, 레스토랑",
     "koExample": "저 새로운 이탈리안 식당에서 먹읍시다.",
     "koChirpScript": "restaurant. 음식을 사 먹는 식당, 레스토랑을 의미해요. Lets eat at that new Italian restaurant. 저 새로운 이탈리안 식당에서 먹읍시다. 라고 제안할 수 있어요."
@@ -378,7 +378,7 @@
     "pronunciation": "/ˈmenjuː/",
     "definition": "A list of dishes available in a restaurant.",
     "example": "Could I see the menu, please?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/menu-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/menu-v.mp3",
     "koGloss": "n.메뉴, 차림표",
     "koExample": "메뉴 좀 볼 수 있을까요?",
     "koChirpScript": "menu. 식당의 메뉴, 차림표입니다. Could I see the menu, please. 메뉴 좀 볼 수 있을까요. 라고 정중하게 요청하는 표현입니다."
@@ -390,7 +390,7 @@
     "pronunciation": "/bɪl/",
     "definition": "A printed or written statement of the money owed for goods or services.",
     "example": "Can we have the bill, please?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bill-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bill-v.mp3",
     "koGloss": "n.계산서, 청구서; v.지폐",
     "koExample": "계산서 좀 주시겠어요?",
     "koChirpScript": "bill. 식당의 계산서 또는 요금 청구서를 말해요. 미국에서는 check라고도 하죠. Can we have the bill, please. 계산서 좀 주시겠어요. 라는 뜻입니다."
@@ -402,8 +402,8 @@
     "pronunciation": "/pʊt ɒn/",
     "definition": "To dress oneself in (an item of clothing).",
     "example": "Put on your coat before you go outside.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/put-on-uk.mp3",
-    "koGloss": "phrasal verbphrasal verbphrasal verb무엇을 입다, 신다, 쓰다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/put-on-v.mp3",
+    "koGloss": "phrasal verb. 무엇을 입다, 신다, 쓰다",
     "koExample": "밖에 나가기 전에 코트를 입으세요.",
     "koChirpScript": "put on. 옷이나 신발, 모자 등을 몸에 착용하다, 입다라는 뜻이에요. Put on your coat before you go outside. 밖에 나가기 전에 코트를 입으세요. 라는 뜻입니다."
   },
@@ -414,8 +414,8 @@
     "pronunciation": "/teɪk ɒf/",
     "definition": "To remove an item of clothing.",
     "example": "Please take off your shoes here.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/take-off-uk.mp3",
-    "koGloss": "phrasal verbphrasal verbphrasal verb무엇을 벗다; phrasal verbphrasal verbphrasal verb이륙하다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/take-off-v.mp3",
+    "koGloss": "phrasal verb. 무엇을 벗다; 이륙하다",
     "koExample": "여기서 신발을 벗어 주세요.",
     "koChirpScript": "take off. put on의 반대말! 옷 등을 벗다라는 뜻이에요. 비행기가 이륙하다라는 뜻도 있어요. Please take off your shoes here. 여기서 신발을 벗어 주세요. 라는 뜻입니다."
   },
@@ -426,8 +426,8 @@
     "pronunciation": "/lʊk fɔː(r)/",
     "definition": "To search or hunt for.",
     "example": "I am looking for my keys.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/look-for-uk.mp3",
-    "koGloss": "phrasal verbphrasal verbphrasal verb무엇을 찾다",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/look-for-v.mp3",
+    "koGloss": "phrasal verb. 무엇을 찾다",
     "koExample": "저는 제 열쇠를 찾고 있습니다.",
     "koChirpScript": "look for. 무엇을 찾다라는 뜻의 구동사입니다. I am looking for my keys. 저는 제 열쇠를 찾고 있습니다. 라는 뜻으로, 현재 잃어버려서 찾는 중이라는 느낌을 줘요."
   },
@@ -438,7 +438,7 @@
     "pronunciation": "/brɪŋ/",
     "definition": "Take or go with (someone or something) to a place.",
     "example": "Please bring me a glass of water.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bring-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bring-v.mp3",
     "koGloss": "v.가져오다, 데려오다",
     "koExample": "물 한 잔 가져다주세요.",
     "koChirpScript": "bring. 이쪽으로 무엇을 가져오다, 데려오다라는 뜻이에요. Please bring me a glass of water. 물 한 잔 가져다주세요. 라고 부탁할 수 있어요."
@@ -450,7 +450,7 @@
     "pronunciation": "/ˈkæri/",
     "definition": "Support and move (someone or something) from one place to another.",
     "example": "Can you help me carry this box?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/carry-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/carry-v.mp3",
     "koGloss": "v.나르다, 운반하다, 휴대하다",
     "koExample": "이 상자 나르는 것 좀 도와줄 수 있나요?",
     "koChirpScript": "carry. 물건을 나르다, 운반하다라는 뜻입니다. Can you help me carry this box. 이 상자 나르는 것 좀 도와줄 수 있나요. 라는 뜻입니다."
@@ -462,7 +462,7 @@
     "pronunciation": "/ˈwʌndəfl/",
     "definition": "Inspiring delight, pleasure, or admiration; extremely good; marvelous.",
     "example": "We had a wonderful time at the party.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wonderful-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/wonderful-v.mp3",
     "koGloss": "adj.아주 멋진, 훌륭한",
     "koExample": "우리는 파티에서 아주 멋진 시간을 보냈습니다.",
     "koChirpScript": "wonderful. 아주 멋진, 훌륭한 이라는 뜻으로 great보다 더 강한 느낌을 줘요. We had a wonderful time at the party. 우리는 파티에서 아주 멋진 시간을 보냈습니다. 라는 뜻입니다."
@@ -474,7 +474,7 @@
     "pronunciation": "/kəˈrekt/",
     "definition": "Free from error; in accordance with fact or truth.",
     "example": "That is the correct answer.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/correct-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/correct-v.mp3",
     "koGloss": "adj.맞는, 정확한; v.바로잡다",
     "koExample": "그것이 정답입니다.",
     "koChirpScript": "correct. 맞는, 정확한 이라는 뜻의 형용사입니다. wrong의 반대말이죠. That is the correct answer. 그것이 정답입니다. 라는 뜻이에요."
@@ -486,7 +486,7 @@
     "pronunciation": "/ˈtiː ʃɜːt/",
     "definition": "A short-sleeved casual top, generally made of cotton, having the shape of a T when spread out flat.",
     "example": "I am wearing a white T-shirt and blue jeans.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/T-shirt-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/T-shirt-v.mp3",
     "koGloss": "n.티셔츠",
     "koExample": "저는 흰색 티셔츠와 청바지를 입고 있습니다.",
     "koChirpScript": "T-shirt. 바로 티셔츠입니다. 알파벳 T 모양이라서 티셔츠라고 불러요. I am wearing a white T-shirt and blue jeans. 저는 흰색 티셔츠와 청바지를 입고 있습니다. 라는 뜻이에요."
@@ -498,7 +498,7 @@
     "pronunciation": "/ˈsuːpəmɑːkɪt/",
     "definition": "A large self-service store selling groceries and household goods.",
     "example": "I need to buy some milk at the supermarket.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/supermarket-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/supermarket-v.mp3",
     "koGloss": "n.슈퍼마켓",
     "koExample": "슈퍼마켓에서 우유를 좀 사야 합니다.",
     "koChirpScript": "supermarket. 여러 가지 식료품과 생필품을 파는 슈퍼마켓입니다. I need to buy some milk at the supermarket. 슈퍼마켓에서 우유를 좀 사야 합니다. 라는 뜻입니다."
@@ -510,7 +510,7 @@
     "pronunciation": "/ˈkæfeɪ/",
     "definition": "A small restaurant selling light meals and drinks.",
     "example": "Let's meet at the cafe for a coffee.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cafe-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/cafe-v.mp3",
     "koGloss": "n.카페",
     "koExample": "카페에서 만나서 커피 한잔 합시다.",
     "koChirpScript": "cafe. 커피나 간단한 식사를 파는 카페를 말해요. Lets meet at the cafe for a coffee. 카페에서 만나서 커피 한잔 합시다. 라고 친구에게 말할 수 있어요."
@@ -522,7 +522,7 @@
     "pronunciation": "/ɡlɑːs/",
     "definition": "A hard, brittle substance, typically transparent or translucent, made by fusing sand with soda, lime, and sometimes other ingredients.",
     "example": "Can I have a glass of water, please?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/glass-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/glass-v.mp3",
     "koGloss": "n.유리, (유리)컵, 안경",
     "koExample": "물 한 잔 주시겠어요?",
     "koChirpScript": "glass. 재료인 유리, 마시는 컵, 그리고 안경을 뜻해요. Can I have a glass of water, please. 물 한 잔 주시겠어요. 라는 뜻입니다."
@@ -534,7 +534,7 @@
     "pronunciation": "/tekst/",
     "definition": "A book or other written or printed work, regarded in terms of its content rather than its physical form.",
     "example": "I'll send you a text message later.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/text-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/text-v.mp3",
     "koGloss": "n.문자 메시지, 본문; v.문자를 보내다",
     "koExample": "나중에 문자 메시지를 보낼게요.",
     "koChirpScript": "text. 글의 본문 또는 휴대폰 문자 메시지를 뜻해요. 동사로는 문자를 보내다라는 뜻이죠. Ill send you a text message later. 나중에 문자 메시지를 보낼게요. 라는 뜻이에요."
@@ -546,7 +546,7 @@
     "pronunciation": "/ˈterəbl/",
     "definition": "Extremely bad or serious.",
     "example": "The weather was terrible yesterday.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/terrible-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/terrible-v.mp3",
     "koGloss": "adj.끔찍한, 형편없는",
     "koExample": "어제 날씨는 끔찍했습니다.",
     "koChirpScript": "terrible. 아주 안 좋은, 끔찍한, 형편없는 상태를 말해요. The weather was terrible yesterday. 어제 날씨는 끔찍했습니다. 라는 뜻입니다."
@@ -558,7 +558,7 @@
     "pronunciation": "/dɪˈlɪʃəs/",
     "definition": "Highly pleasant to the taste.",
     "example": "This cake is delicious.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/delicious-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/delicious-v.mp3",
     "koGloss": "adj.아주 맛있는",
     "koExample": "이 케이크는 아주 맛있습니다.",
     "koChirpScript": "delicious. 아주 맛있는 이라는 뜻의 형용사입니다. This cake is delicious. 이 케이크는 아주 맛있습니다. 라고 음식을 칭찬할 수 있어요."
@@ -570,7 +570,7 @@
     "pronunciation": "/ˌɪnkəˈrekt/",
     "definition": "Not in accordance with fact; wrong.",
     "example": "Your answer is incorrect.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/incorrect-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/incorrect-v.mp3",
     "koGloss": "adj.부정확한, 틀린",
     "koExample": "당신의 답은 틀렸습니다.",
     "koChirpScript": "incorrect. correct의 반대말! 틀린, 부정확한 이라는 뜻이에요. Your answer is incorrect. 당신의 답은 틀렸습니다. 라는 뜻입니다."
@@ -582,7 +582,7 @@
     "pronunciation": "/streɪt/",
     "definition": "Extending or moving uniformly in one direction only; without a curve or bend.",
     "example": "Go straight ahead for two blocks.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/straight-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/straight-v.mp3",
     "koGloss": "adj.똑바로, 곧은; adv.직선으로",
     "koExample": "두 블록 동안 직진하세요.",
     "koChirpScript": "straight. 똑바로 또는 곧은 이라는 뜻이에요. 길을 알려줄 때 유용하죠. Go straight ahead for two blocks. 두 블록 동안 직진하세요. 라는 뜻입니다."
@@ -594,7 +594,7 @@
     "pronunciation": "/ˈsɪŋɡl/",
     "definition": "Only one; not one of several.",
     "example": "Are you single or married?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/single-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/single-v.mp3",
     "koGloss": "adj.단 하나의; n.미혼의, 독신의",
     "koExample": "미혼이신가요, 기혼이신가요?",
     "koChirpScript": "single. 단 하나의 또는 결혼하지 않은, 미혼의 라는 뜻을 가져요. Are you single or married. 미혼이신가요, 기혼이신가요. 라고 물어볼 수 있어요."
@@ -606,7 +606,7 @@
     "pronunciation": "/ˈmærid/",
     "definition": "United in marriage.",
     "example": "He is a married man with two children.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/married-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/married-v.mp3",
     "koGloss": "adj.결혼한, 기혼의",
     "koExample": "그는 두 아이가 있는 기혼 남성입니다.",
     "koChirpScript": "married. single의 반대말! 결혼한, 기혼의 라는 뜻입니다. He is a married man with two children. 그는 두 아이가 있는 기혼 남성입니다. 라는 뜻이에요."
@@ -618,7 +618,7 @@
     "pronunciation": "/wɪˈðaʊt/",
     "definition": "Not having or using something; in the absence of.",
     "example": "I can't see without my glasses.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/without-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/without-v.mp3",
     "koGloss": "prep.무엇 없이",
     "koExample": "저는 안경 없이는 볼 수 없습니다.",
     "koChirpScript": "without. 무엇 없이 라는 뜻을 가진 전치사예요. with의 반대말이죠. I cant see without my glasses. 저는 안경 없이는 볼 수 없습니다. 라는 뜻입니다."
@@ -630,7 +630,7 @@
     "pronunciation": "/fɔː(r)/",
     "definition": "Intended to be given to or used by.",
     "example": "This gift is for you.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/for-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/for-v.mp3",
     "koGloss": "prep.무엇을 위하여, 무엇을 향해",
     "koExample": "이 선물은 당신을 위한 것입니다.",
     "koChirpScript": "for. 무엇을 위하여, 무엇 동안 등 뜻이 아주 많은 전치사입니다. This gift is for you. 이 선물은 당신을 위한 것입니다. 라는 뜻으로 쓰였네요."
@@ -642,7 +642,7 @@
     "pronunciation": "/frəm/",
     "definition": "Indicating the starting point of a journey or action.",
     "example": "I am from South Korea.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/from-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/from-v.mp3",
     "koGloss": "prep.무엇로부터, 무엇에서",
     "koExample": "저는 대한민국 출신입니다.",
     "koChirpScript": "from. 시작점을 나타내는 무엇로부터, 어디에서 라는 뜻의 전치사입니다. I am from South Korea. 저는 대한민국 출신입니다. 라고 자신을 소개할 수 있어요."
@@ -654,7 +654,7 @@
     "pronunciation": "/tuː/",
     "definition": "Expressing motion in the direction of (a particular location).",
     "example": "I am going to the park.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/to-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/to-v.mp3",
     "koGloss": "prep.무엇에, 무엇으로",
     "koExample": "저는 공원에 가는 중입니다.",
     "koChirpScript": "to. 방향을 나타내는 전치사로, 어디에, 어디로 라는 뜻을 가져요. I am going to the park. 저는 공원에 가는 중입니다. 라는 뜻입니다."
@@ -666,7 +666,7 @@
     "pronunciation": "/nɪə(r)/",
     "definition": "At or to a short distance away from (a place).",
     "example": "My house is near the station.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/near-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/near-v.mp3",
     "koGloss": "prep.무엇의 가까이에, 가까운",
     "koExample": "저의 집은 역 근처에 있습니다.",
     "koChirpScript": "near. 무엇의 가까이에 라는 위치를 나타내요. My house is near the station. 저의 집은 역 근처에 있습니다. 라고 집 위치를 설명할 수 있어요."
@@ -678,7 +678,7 @@
     "pronunciation": "/fɑː(r)/",
     "definition": "At, to, or by a great distance.",
     "example": "The airport is far from here.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/far-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/far-v.mp3",
     "koGloss": "adv.멀리, 먼",
     "koExample": "공항은 여기서 멉니다.",
     "koChirpScript": "far. near의 반대말! 멀리 또는 먼 이라는 뜻입니다. The airport is far from here. 공항은 여기서 멉니다. 라는 뜻이에요."
@@ -690,7 +690,7 @@
     "pronunciation": "/bɪˈtwiːn/",
     "definition": "At, into, or across the space separating (two objects or regions).",
     "example": "The shop is between the bank and the library.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/between-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/between-v.mp3",
     "koGloss": "prep.무엇 사이에",
     "koExample": "그 가게는 은행과 도서관 사이에 있습니다.",
     "koChirpScript": "between. 둘 사이에 라는 뜻을 가진 전치사입니다. The shop is between the bank and the library. 그 가게는 은행과 도서관 사이에 있습니다. 라는 뜻이에요."
@@ -702,7 +702,7 @@
     "pronunciation": "/θruː/",
     "definition": "Moving in one side and out of the other side of (an opening, channel, or location).",
     "example": "We drove through a long tunnel.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/through-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/through-v.mp3",
     "koGloss": "prep.무엇을 통하여, 무엇을 지나서",
     "koExample": "우리는 긴 터널을 운전해서 통과했습니다.",
     "koChirpScript": "through. 무엇을 통하여 또는 지나서라는 뜻이에요. We drove through a long tunnel. 우리는 긴 터널을 운전해서 통과했습니다. 라는 뜻입니다."
@@ -714,7 +714,7 @@
     "pronunciation": "/ɒv/",
     "definition": "Expressing the relationship between a part and a whole.",
     "example": "He is a friend of mine.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/of-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/of-v.mp3",
     "koGloss": "prep.무엇의",
     "koExample": "그는 나의 친구 중 한 명입니다.",
     "koChirpScript": "of. 무엇의 라는 소유나 소속을 나타내는 아주 중요한 전치사입니다. He is a friend of mine. 그는 나의 친구 중 한 명입니다. 라는 뜻이에요."
@@ -726,7 +726,7 @@
     "pronunciation": "/ˈswetə(r)/",
     "definition": "A knitted garment worn on the upper part of the body, typically with long sleeves, put on over the head.",
     "example": "I am wearing a warm sweater because it's cold.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sweater-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/sweater-v.mp3",
     "koGloss": "n.스웨터",
     "koExample": "저는 추워서 따뜻한 스웨터를 입고 있습니다.",
     "koChirpScript": "sweater. 바로 스웨터입니다. I am wearing a warm sweater because its cold. 저는 추워서 따뜻한 스웨터를 입고 있습니다. 라는 뜻이에요."
@@ -738,7 +738,7 @@
     "pronunciation": "/kləʊðz/",
     "definition": "Items worn to cover the body.",
     "example": "I need to wash my clothes.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/clothes-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/clothes-v.mp3",
     "koGloss": "n.옷 (집합적)",
     "koExample": "저는 빨래를 해야 합니다.",
     "koChirpScript": "clothes. 우리가 입는 옷을 통틀어 말해요. 항상 복수형으로 쓴답니다. I need to wash my clothes. 저는 빨래를 해야 합니다. 라는 뜻입니다."
@@ -750,7 +750,7 @@
     "pronunciation": "/tɔɪ/",
     "definition": "An object for a child to play with.",
     "example": "The child is playing with a toy car.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/toy-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/toy-v.mp3",
     "koGloss": "n.장난감",
     "koExample": "그 아이는 장난감 자동차를 가지고 놀고 있습니다.",
     "koChirpScript": "toy. 아이들이 가지고 노는 장난감을 의미해요. The child is playing with a toy car. 그 아이는 장난감 자동차를 가지고 놀고 있습니다. 라는 뜻입니다."
@@ -762,7 +762,7 @@
     "pronunciation": "/ɡrɑːs/",
     "definition": "Vegetation consisting of typically short plants with long, narrow leaves, growing wild or cultivated on lawns and pasture.",
     "example": "The grass in the park is very green.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/grass-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/grass-v.mp3",
     "koGloss": "n.잔디, 풀",
     "koExample": "공원의 잔디는 매우 푸릅니다.",
     "koChirpScript": "grass. 잔디 또는 풀을 뜻해요. The grass in the park is very green. 공원의 잔디는 매우 푸릅니다. 라는 뜻이에요."
@@ -774,7 +774,7 @@
     "pronunciation": "/liːf/",
     "definition": "A flattened structure of a higher plant, typically green and bladelike, that is attached to a stem directly or via a stalk.",
     "example": "A green leaf fell from the tree.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/leaf-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/leaf-v.mp3",
     "koGloss": "n.나뭇잎, 잎",
     "koExample": "초록색 나뭇잎 하나가 나무에서 떨어졌습니다.",
     "koChirpScript": "leaf. 나무나 식물의 잎, 나뭇잎을 의미해요. 복수형은 leaves로 모양이 바뀐답니다. A green leaf fell from the tree. 초록색 나뭇잎 하나가 나무에서 떨어졌습니다. 라는 뜻입니다."
@@ -786,7 +786,7 @@
     "pronunciation": "/əˈnʌðə(r)/",
     "definition": "Used to refer to an additional person or thing of the same type as one already mentioned or known about.",
     "example": "Can I have another cup of coffee?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/another-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/another-v.mp3",
     "koGloss": "det.또 다른 하나",
     "koExample": "커피 한 잔 더 주시겠어요?",
     "koChirpScript": "another. 또 다른 하나라는 뜻이에요. an 과 other가 합쳐진 말이죠. Can I have another cup of coffee. 커피 한 잔 더 주시겠어요. 라고 요청할 수 있습니다."
@@ -798,7 +798,7 @@
     "pronunciation": "/ˈʌðə(r)/",
     "definition": "Used to refer to a person or thing that is different or distinct from one already mentioned or known about.",
     "example": "Some people like summer, other people like winter.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/other-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/other-v.mp3",
     "koGloss": "adj.다른, 그 밖의",
     "koExample": "어떤 사람들은 여름을 좋아하고, 다른 사람들은 겨울을 좋아합니다.",
     "koChirpScript": "other. 다른, 그 밖의 라는 뜻이에요. Some people like summer, other people like winter. 어떤 사람들은 여름을 좋아하고, 다른 사람들은 겨울을 좋아합니다. 라는 뜻입니다."
@@ -810,7 +810,7 @@
     "pronunciation": "/ˈevri/",
     "definition": "Used before a singular noun to refer to all the individual members of a set without exception.",
     "example": "I brush my teeth every day.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/every-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/every-v.mp3",
     "koGloss": "det.모든",
     "koExample": "저는 매일 이를 닦습니다.",
     "koChirpScript": "every. 모든 이라는 뜻을 가진 한정사입니다. 뒤에는 항상 단수 명사가 와요. I brush my teeth every day. 저는 매일 이를 닦습니다. 라는 뜻입니다."
@@ -822,7 +822,7 @@
     "pronunciation": "/ɔːl/",
     "definition": "Used to refer to the whole quantity or extent of a particular group or thing.",
     "example": "All students must wear a uniform.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/all-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/all-v.mp3",
     "koGloss": "det.모든, 전부",
     "koExample": "모든 학생들은 교복을 입어야 합니다.",
     "koChirpScript": "all. 모든, 전부를 뜻해요. every와 비슷하지만, 뒤에 복수 명사가 올 수 있어요. All students must wear a uniform. 모든 학생들은 교복을 입어야 합니다. 라는 뜻입니다."
@@ -834,7 +834,7 @@
     "pronunciation": "/sʌm/",
     "definition": "An unspecified amount or number of.",
     "example": "I need some help.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/some-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/some-v.mp3",
     "koGloss": "det.몇몇의, 약간의, 어떤",
     "koExample": "도움이 좀 필요해요.",
     "koChirpScript": "some. 몇몇의, 약간의 라는 뜻으로 긍정문이나 권유하는 문장에 주로 써요. I need some help. 도움이 좀 필요해요. 라는 뜻입니다."
@@ -846,7 +846,7 @@
     "pronunciation": "/ˈeni/",
     "definition": "Used to refer to one or some of a thing or number of things, no matter how much or how many.",
     "example": "I don't have any money.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/any-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/any-v.mp3",
     "koGloss": "det.어떤, 아무 (부정문/의문문에서)",
     "koExample": "저는 돈이 하나도 없습니다.",
     "koChirpScript": "any. 어떤, 아무 라는 뜻으로 부정문이나 의문문에 주로 써요. I dont have any money. 저는 돈이 하나도 없습니다. 라는 슬픈 문장이네요."
@@ -858,7 +858,7 @@
     "pronunciation": "/aɪ/",
     "definition": "Used by a speaker to refer to himself or herself.",
     "example": "I am a student.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/I-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/I-v.mp3",
     "koGloss": "pron.나, 저",
     "koExample": "저는 학생입니다.",
     "koChirpScript": "I. 바로 나, 저를 뜻하는 가장 기본적인 대명사입니다. 항상 대문자로 써요. I am a student. 저는 학생입니다. 라는 뜻입니다."
@@ -870,7 +870,7 @@
     "pronunciation": "/hiː/",
     "definition": "Used to refer to a man, boy, or male animal previously mentioned or easily identified.",
     "example": "He is my brother.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/he-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/he-v.mp3",
     "koGloss": "pron.그는, 그가",
     "koExample": "그는 나의 남동생입니다.",
     "koChirpScript": "he. 남자 한 명을 가리키는 대명사, 그는, 그가 라는 뜻이에요. He is my brother. 그는 나의 남동생입니다. 라고 가족을 소개할 수 있어요."
@@ -882,7 +882,7 @@
     "pronunciation": "/ʃiː/",
     "definition": "Used to refer to a woman, girl, or female animal previously mentioned or easily identified.",
     "example": "She is a doctor.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/she-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/she-v.mp3",
     "koGloss": "pron.그녀는, 그녀가",
     "koExample": "그녀는 의사입니다.",
     "koChirpScript": "she. 여자 한 명을 가리키는 대명사, 그녀는, 그녀가 라는 뜻입니다. She is a doctor. 그녀는 의사입니다. 라는 뜻이에요."
@@ -894,7 +894,7 @@
     "pronunciation": "/wiː/",
     "definition": "Used by a speaker to refer to himself or herself and one or more other people considered together.",
     "example": "We are a family.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/we-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/we-v.mp3",
     "koGloss": "pron.우리는, 우리가",
     "koExample": "우리는 가족입니다.",
     "koChirpScript": "we. 나를 포함한 여러 명을 뜻하는 우리라는 대명사예요. We are a family. 우리는 가족입니다. 라는 뜻입니다."
@@ -906,7 +906,7 @@
     "pronunciation": "/ðeɪ/",
     "definition": "Used to refer to two or more people or things previously mentioned or easily identified.",
     "example": "They are my friends.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/they-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/they-v.mp3",
     "koGloss": "pron.그들은, 그것들은",
     "koExample": "그들은 제 친구들입니다.",
     "koChirpScript": "they. 여러 사람이나 사물을 가리키는 대명사, 그들은, 그것들은 이라는 뜻이에요. They are my friends. 그들은 제 친구들입니다. 라는 뜻입니다."
@@ -918,7 +918,7 @@
     "pronunciation": "/maɪ/",
     "definition": "Belonging to or associated with the speaker.",
     "example": "This is my book.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/my-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/my-v.mp3",
     "koGloss": "det.나의",
     "koExample": "이것은 나의 책입니다.",
     "koChirpScript": "my. 나의 라는 뜻으로 소유를 나타내요. This is my book. 이것은 나의 책입니다. 라고 말할 수 있어요."
@@ -930,7 +930,7 @@
     "pronunciation": "/jɔː(r)/",
     "definition": "Belonging to or associated with the person or people that the speaker is addressing.",
     "example": "Is this your bag?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/your-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/your-v.mp3",
     "koGloss": "det.너의, 당신의",
     "koExample": "이것이 당신의 가방인가요?",
     "koChirpScript": "your. 너의, 당신의 라는 뜻을 가진 소유격입니다. Is this your bag. 이것이 당신의 가방인가요. 라고 물어볼 수 있어요."
@@ -942,7 +942,7 @@
     "pronunciation": "/hɪz/",
     "definition": "Belonging to or associated with a man or boy previously mentioned or easily identified.",
     "example": "His name is John.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/his-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/his-v.mp3",
     "koGloss": "det.그의, 그의 것",
     "koExample": "그의 이름은 존입니다.",
     "koChirpScript": "his. 남자의 소유를 나타내는 그의 또는 그의 것이라는 뜻이에요. His name is John. 그의 이름은 존입니다. 라는 뜻입니다."
@@ -954,7 +954,7 @@
     "pronunciation": "/ˈaʊə(r)/",
     "definition": "Belonging to or associated with the speaker and one or more other people together.",
     "example": "Welcome to our house.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/our-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/our-v.mp3",
     "koGloss": "det.우리의",
     "koExample": "우리 집에 오신 것을 환영합니다.",
     "koChirpScript": "our. 우리의 라는 뜻을 가진 소유격입니다. Welcome to our house. 우리 집에 오신 것을 환영합니다. 라는 환영의 인사입니다."
@@ -966,7 +966,7 @@
     "pronunciation": "/hɜː(r)/",
     "definition": "Belonging to or associated with a female person or animal previously mentioned or easily identified.",
     "example": "This is her bag.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/her-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/her-v.mp3",
     "koGloss": "det.그녀의; pron.그녀를",
     "koExample": "이것은 그녀의 가방입니다.",
     "koChirpScript": "her. 그녀의 라는 소유의 의미와 그녀를 이라는 목적어의 의미 두 가지를 다 가져요. This is her bag. 이것은 그녀의 가방입니다. 라는 뜻입니다."
@@ -978,7 +978,7 @@
     "pronunciation": "/ɪts/",
     "definition": "Belonging to or associated with a thing previously mentioned or easily identified.",
     "example": "The dog is wagging its tail.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/its-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/its-v.mp3",
     "koGloss": "det.그것의",
     "koExample": "그 개는 꼬리를 흔들고 있습니다.",
     "koChirpScript": "its. 사물이나 동물의 소유를 나타내는 그것의 라는 뜻이에요. The dog is wagging its tail. 그 개는 꼬리를 흔들고 있습니다. 라는 뜻입니다."
@@ -990,7 +990,7 @@
     "pronunciation": "/ðeə(r)/",
     "definition": "Belonging to or associated with the people or things previously mentioned or easily identified.",
     "example": "They are cleaning their room.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/their-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/their-v.mp3",
     "koGloss": "det.그들의, 그것들의",
     "koExample": "그들은 자신의 방을 청소하고 있습니다.",
     "koChirpScript": "their. 그들의 또는 그것들의 라는 뜻으로 여러 명의 소유를 나타내요. They are cleaning their room. 그들은 자신의 방을 청소하고 있습니다. 라는 뜻입니다."
@@ -1002,7 +1002,7 @@
     "pronunciation": "/ðɪs/",
     "definition": "Used to identify a specific person or thing close at hand or being indicated or experienced.",
     "example": "This is my house.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/this-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/this-v.mp3",
     "koGloss": "pron.이것, 이 사람",
     "koExample": "이것은 저의 집입니다.",
     "koChirpScript": "this. 가까이 있는 것을 가리키는 이것 또는 이 사람이라는 뜻이에요. This is my house. 이것은 저의 집입니다. 라고 소개할 수 있어요."
@@ -1014,7 +1014,7 @@
     "pronunciation": "/ðæt/",
     "definition": "Used to identify a specific person or thing observed by the speaker.",
     "example": "What is that building over there?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/that-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/that-v.mp3",
     "koGloss": "pron.저것, 저 사람",
     "koExample": "저기 있는 저 건물은 무엇인가요?",
     "koChirpScript": "that. 멀리 있는 것을 가리키는 저것 또는 저 사람이라는 뜻이에요. What is that building over there. 저기 있는 저 건물은 무엇인가요. 라고 물어볼 수 있습니다."
@@ -1026,7 +1026,7 @@
     "pronunciation": "/ðiːz/",
     "definition": "Plural of 'this'.",
     "example": "These are my books.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/these-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/these-v.mp3",
     "koGloss": "pron.이것들, 이 사람들",
     "koExample": "이것들은 제 책들입니다.",
     "koChirpScript": "these. this의 복수형! 가까이 있는 여러 개를 가리키는 이것들, 이 사람들이라는 뜻입니다. These are my books. 이것들은 제 책들입니다. 라는 뜻입니다."
@@ -1038,7 +1038,7 @@
     "pronunciation": "/ðəʊz/",
     "definition": "Plural of 'that'.",
     "example": "Who are those people?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/those-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/those-v.mp3",
     "koGloss": "pron.저것들, 저 사람들",
     "koExample": "저 사람들은 누구인가요?",
     "koChirpScript": "those. that의 복수형! 멀리 있는 여러 개를 가리키는 저것들, 저 사람들이라는 뜻이에요. Who are those people. 저 사람들은 누구인가요. 라는 뜻입니다."
@@ -1050,7 +1050,7 @@
     "pronunciation": "/miː/",
     "definition": "Used by a speaker to refer to himself or herself as the object of a verb or preposition.",
     "example": "Can you help me?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/me-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/me-v.mp3",
     "koGloss": "pron.나를, 나에게",
     "koExample": "저 좀 도와줄 수 있나요?",
     "koChirpScript": "me. I의 목적격 형태로, 나를 또는 나에게 라는 뜻이에요. Can you help me. 저 좀 도와줄 수 있나요. 라고 부탁할 수 있습니다."
@@ -1062,7 +1062,7 @@
     "pronunciation": "/hɪm/",
     "definition": "Used as the object of a verb or preposition to refer to a male person or animal previously mentioned.",
     "example": "I saw him at the park.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/him-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/him-v.mp3",
     "koGloss": "pron.그를, 그에게",
     "koExample": "나는 공원에서 그를 봤습니다.",
     "koChirpScript": "him. he의 목적격 형태로, 그를 또는 그에게 라는 뜻이에요. I saw him at the park. 나는 공원에서 그를 봤습니다. 라는 뜻입니다."
@@ -1074,7 +1074,7 @@
     "pronunciation": "/ʌs/",
     "definition": "Used by a speaker to refer to himself or herself and one or more other people as the object of a verb or preposition.",
     "example": "He gave us a present.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/us-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/us-v.mp3",
     "koGloss": "pron.우리를, 우리에게",
     "koExample": "그는 우리에게 선물을 주었습니다.",
     "koChirpScript": "us. we의 목적격 형태로, 우리를 또는 우리에게 라는 뜻이에요. He gave us a present. 그는 우리에게 선물을 주었습니다. 라는 뜻입니다."
@@ -1086,7 +1086,7 @@
     "pronunciation": "/ðəm/",
     "definition": "Used as the object of a verb or preposition to refer to two or more people or things previously mentioned.",
     "example": "I like them a lot.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/them-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/them-v.mp3",
     "koGloss": "pron.그들을, 그것들을",
     "koExample": "저는 그들을 아주 좋아합니다.",
     "koChirpScript": "them. they의 목적격 형태로, 그들을 또는 그것들을 이라는 뜻이에요. I like them a lot. 저는 그들을 아주 좋아합니다. 라는 뜻입니다."
@@ -1098,8 +1098,8 @@
     "pronunciation": "/wʌn/",
     "definition": "The lowest cardinal number; 1.",
     "example": "I have one brother.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/one-uk.mp3",
-    "koGloss": "numbernumbernumber하나, 일",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/one-v.mp3",
+    "koGloss": "number. 하나, 일",
     "koExample": "저는 남자 형제가 한 명 있습니다.",
     "koChirpScript": "one. 숫자 하나 또는 일을 의미해요. I have one brother. 저는 남자 형제가 한 명 있습니다. 라는 뜻입니다."
   },
@@ -1110,8 +1110,8 @@
     "pronunciation": "/tuː/",
     "definition": "Equivalent to the sum of one and one; 2.",
     "example": "She has two cats.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/two-uk.mp3",
-    "koGloss": "numbernumbernumber둘, 이",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/two-v.mp3",
+    "koGloss": "number. 둘, 이",
     "koExample": "그녀는 고양이 두 마리를 키웁니다.",
     "koChirpScript": "two. 숫자 둘 또는 이를 의미해요. She has two cats. 그녀는 고양이 두 마리를 키웁니다. 라는 뜻입니다."
   },
@@ -1122,8 +1122,8 @@
     "pronunciation": "/θriː/",
     "definition": "Equivalent to the sum of one and two; 3.",
     "example": "There are three books on the table.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/three-uk.mp3",
-    "koGloss": "numbernumbernumber셋, 삼",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/three-v.mp3",
+    "koGloss": "number. 셋, 삼",
     "koExample": "테이블 위에 책이 세 권 있습니다.",
     "koChirpScript": "three. 숫자 셋 또는 삼을 의미해요. There are three books on the table. 테이블 위에 책이 세 권 있습니다. 라는 뜻입니다."
   },
@@ -1134,8 +1134,8 @@
     "pronunciation": "/fɔː(r)/",
     "definition": "Equivalent to the sum of two and two; one more than three; 4.",
     "example": "A car has four wheels.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/four-uk.mp3",
-    "koGloss": "numbernumbernumber넷, 사",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/four-v.mp3",
+    "koGloss": "number. 넷, 사",
     "koExample": "자동차에는 바퀴가 네 개 있습니다.",
     "koChirpScript": "four. 숫자 넷 또는 사를 의미해요. A car has four wheels. 자동차에는 바퀴가 네 개 있습니다. 라는 기본적인 사실을 말하네요."
   },
@@ -1146,8 +1146,8 @@
     "pronunciation": "/faɪv/",
     "definition": "Equivalent to the sum of two and three; one more than four; 5.",
     "example": "I have five fingers on one hand.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/five-uk.mp3",
-    "koGloss": "numbernumbernumber다섯, 오",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/five-v.mp3",
+    "koGloss": "number. 다섯, 오",
     "koExample": "나는 한 손에 다섯 개의 손가락을 가지고 있습니다.",
     "koChirpScript": "five. 숫자 다섯 또는 오를 의미해요. I have five fingers on one hand. 나는 한 손에 다섯 개의 손가락을 가지고 있습니다. 라는 뜻입니다."
   },
@@ -1158,8 +1158,8 @@
     "pronunciation": "/sɪks/",
     "definition": "Equivalent to the sum of three and three; one more than five; 6.",
     "example": "My brother is six years old.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/six-uk.mp3",
-    "koGloss": "numbernumbernumber여섯, 육",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/six-v.mp3",
+    "koGloss": "number. 여섯, 육",
     "koExample": "제 남동생은 여섯 살입니다.",
     "koChirpScript": "six. 숫자 여섯 또는 육을 의미해요. My brother is six years old. 제 남동생은 여섯 살입니다. 라는 뜻입니다."
   },
@@ -1170,8 +1170,8 @@
     "pronunciation": "/ˈsevn/",
     "definition": "Equivalent to the sum of three and four; one more than six; 7.",
     "example": "There are seven days in a week.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/seven-uk.mp3",
-    "koGloss": "numbernumbernumber일곱, 칠",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/seven-v.mp3",
+    "koGloss": "number. 일곱, 칠",
     "koExample": "일주일은 칠 일입니다.",
     "koChirpScript": "seven. 숫자 일곱 또는 칠을 의미해요. There are seven days in a week. 일주일은 칠 일입니다. 라는 뜻입니다."
   },
@@ -1182,8 +1182,8 @@
     "pronunciation": "/eɪt/",
     "definition": "Equivalent to the sum of four and four; one more than seven; 8.",
     "example": "An octopus has eight legs.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eight-uk.mp3",
-    "koGloss": "numbernumbernumber여덟, 팔",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/eight-v.mp3",
+    "koGloss": "number. 여덟, 팔",
     "koExample": "문어는 다리가 여덟 개입니다.",
     "koChirpScript": "eight. 숫자 여덟 또는 팔을 의미해요. An octopus has eight legs. 문어는 다리가 여덟 개입니다. 라는 재미있는 사실이네요."
   },
@@ -1194,8 +1194,8 @@
     "pronunciation": "/naɪn/",
     "definition": "Equivalent to the sum of three and six; one more than eight; 9.",
     "example": "The movie starts at nine o'clock.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/nine-uk.mp3",
-    "koGloss": "numbernumbernumber아홉, 구",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/nine-v.mp3",
+    "koGloss": "number. 아홉, 구",
     "koExample": "영화는 아홉 시 정각에 시작합니다.",
     "koChirpScript": "nine. 숫자 아홉 또는 구를 의미해요. The movie starts at nine oclock. 영화는 아홉 시 정각에 시작합니다. 라는 뜻입니다."
   },
@@ -1206,8 +1206,8 @@
     "pronunciation": "/ten/",
     "definition": "Equivalent to the product of two and five; one more than nine; 10.",
     "example": "I have ten dollars.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/ten-uk.mp3",
-    "koGloss": "numbernumbernumber열, 십",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/ten-v.mp3",
+    "koGloss": "number. 열, 십",
     "koExample": "저는 십 달러를 가지고 있습니다.",
     "koChirpScript": "ten. 숫자 열 또는 십을 의미해요. I have ten dollars. 저는 십 달러를 가지고 있습니다. 라는 뜻입니다."
   },
@@ -1218,8 +1218,8 @@
     "pronunciation": "/ɪˈlevn/",
     "definition": "Equivalent to the sum of one and ten; one more than ten; 11.",
     "example": "My sister is eleven years old.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eleven-uk.mp3",
-    "koGloss": "numbernumbernumber열하나, 십일",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/eleven-v.mp3",
+    "koGloss": "number. 열하나, 십일",
     "koExample": "제 여동생은 열한 살입니다.",
     "koChirpScript": "eleven. 숫자 열하나 또는 십일을 의미해요. My sister is eleven years old. 제 여동생은 열한 살입니다. 라는 뜻입니다."
   },
@@ -1230,8 +1230,8 @@
     "pronunciation": "/twelv/",
     "definition": "Equivalent to the sum of two and ten; one more than eleven; 12.",
     "example": "There are twelve months in a year.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/twelve-uk.mp3",
-    "koGloss": "numbernumbernumber열둘, 십이",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/twelve-v.mp3",
+    "koGloss": "number. 열둘, 십이",
     "koExample": "일 년은 열두 달입니다.",
     "koChirpScript": "twelve. 숫자 열둘 또는 십이를 의미해요. There are twelve months in a year. 일 년은 열두 달입니다. 라는 뜻입니다."
   },
@@ -1242,8 +1242,8 @@
     "pronunciation": "/ˌθɜːˈtiːn/",
     "definition": "Equivalent to the sum of three and ten; 13.",
     "example": "He is thirteen years old.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/thirteen-uk.mp3",
-    "koGloss": "numbernumbernumber열셋, 십삼",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/thirteen-v.mp3",
+    "koGloss": "number. 열셋, 십삼",
     "koExample": "그는 열세 살입니다.",
     "koChirpScript": "thirteen. 숫자 열셋 또는 십삼을 의미해요. He is thirteen years old. 그는 열세 살입니다. 라는 뜻입니다."
   },
@@ -1254,8 +1254,8 @@
     "pronunciation": "/ˌfɔːˈtiːn/",
     "definition": "Equivalent to the sum of four and ten; 14.",
     "example": "The meeting is on February fourteen.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fourteen-uk.mp3",
-    "koGloss": "numbernumbernumber열넷, 십사",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fourteen-v.mp3",
+    "koGloss": "number. 열넷, 십사",
     "koExample": "그 회의는 이월 십사일에 있습니다.",
     "koChirpScript": "fourteen. 숫자 열넷 또는 십사를 의미해요. The meeting is on February fourteen. 그 회의는 이월 십사일에 있습니다. 라는 뜻입니다."
   },
@@ -1266,8 +1266,8 @@
     "pronunciation": "/ˌfɪfˈtiːn/",
     "definition": "Equivalent to the sum of five and ten; 15.",
     "example": "The bus leaves in fifteen minutes.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fifteen-uk.mp3",
-    "koGloss": "numbernumbernumber열다섯, 십오",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fifteen-v.mp3",
+    "koGloss": "number. 열다섯, 십오",
     "koExample": "버스는 십오 분 후에 떠납니다.",
     "koChirpScript": "fifteen. 숫자 열다섯 또는 십오를 의미해요. The bus leaves in fifteen minutes. 버스는 십오 분 후에 떠납니다. 라는 뜻입니다."
   },
@@ -1278,8 +1278,8 @@
     "pronunciation": "/ˌsɪksˈtiːn/",
     "definition": "Equivalent to the sum of six and ten; 16.",
     "example": "She has sixteen books.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/sixteen-uk.mp3",
-    "koGloss": "numbernumbernumber열여섯, 십육",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/sixteen-v.mp3",
+    "koGloss": "number. 열여섯, 십육",
     "koExample": "그녀는 열여섯 권의 책을 가지고 있습니다.",
     "koChirpScript": "sixteen. 숫자 열여섯 또는 십육을 의미해요. She has sixteen books. 그녀는 열여섯 권의 책을 가지고 있습니다. 라는 뜻입니다."
   },
@@ -1290,8 +1290,8 @@
     "pronunciation": "/ˌsevnˈtiːn/",
     "definition": "Equivalent to the sum of seven and ten; 17.",
     "example": "My brother will be seventeen next year.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/seventeen-uk.mp3",
-    "koGloss": "numbernumbernumber열일곱, 십칠",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/seventeen-v.mp3",
+    "koGloss": "number. 열일곱, 십칠",
     "koExample": "제 오빠는 내년에 열일곱 살이 됩니다.",
     "koChirpScript": "seventeen. 숫자 열일곱 또는 십칠을 의미해요. My brother will be seventeen next year. 제 오빠는 내년에 열일곱 살이 됩니다. 라는 뜻입니다."
   },
@@ -1302,8 +1302,8 @@
     "pronunciation": "/ˌeɪˈtiːn/",
     "definition": "Equivalent to the sum of eight and ten; 18.",
     "example": "There are eighteen students in my class.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/eighteen-uk.mp3",
-    "koGloss": "numbernumbernumber열여덟, 십팔",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/eighteen-v.mp3",
+    "koGloss": "number. 열여덟, 십팔",
     "koExample": "우리 반에는 열여덟 명의 학생이 있습니다.",
     "koChirpScript": "eighteen. 숫자 열여덟 또는 십팔을 의미해요. There are eighteen students in my class. 우리 반에는 열여덟 명의 학생이 있습니다. 라는 뜻입니다."
   },
@@ -1314,8 +1314,8 @@
     "pronunciation": "/ˌnaɪnˈtiːn/",
     "definition": "Equivalent to the sum of nine and ten; 19.",
     "example": "The ticket costs nineteen dollars.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/nineteen-uk.mp3",
-    "koGloss": "numbernumbernumber열아홉, 십구",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/nineteen-v.mp3",
+    "koGloss": "number. 열아홉, 십구",
     "koExample": "그 표는 십구 달러입니다.",
     "koChirpScript": "nineteen. 숫자 열아홉 또는 십구를 의미해요. The ticket costs nineteen dollars. 그 표는 십구 달러입니다. 라는 뜻입니다."
   },
@@ -1326,8 +1326,8 @@
     "pronunciation": "/ˈtwenti/",
     "definition": "Equivalent to the product of two and ten; 20.",
     "example": "I'll be there in twenty minutes.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/twenty-uk.mp3",
-    "koGloss": "numbernumbernumber스물, 이십",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/twenty-v.mp3",
+    "koGloss": "number. 스물, 이십",
     "koExample": "이십 분 후에 그곳에 도착할게요.",
     "koChirpScript": "twenty. 숫자 스물 또는 이십을 의미해요. Ill be there in twenty minutes. 이십 분 후에 그곳에 도착할게요. 라는 뜻입니다."
   },
@@ -1338,8 +1338,8 @@
     "pronunciation": "/ˈθɜːti/",
     "definition": "Equivalent to the product of three and ten; 30.",
     "example": "There are thirty days in April.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/thirty-uk.mp3",
-    "koGloss": "numbernumbernumber서른, 삼십",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/thirty-v.mp3",
+    "koGloss": "number. 서른, 삼십",
     "koExample": "사월은 삼십 일까지 있습니다.",
     "koChirpScript": "thirty. 숫자 서른 또는 삼십을 의미해요. There are thirty days in April. 사월은 삼십 일까지 있습니다. 라는 뜻입니다."
   },
@@ -1350,8 +1350,8 @@
     "pronunciation": "/ˈfɔːti/",
     "definition": "Equivalent to the product of four and ten; 40.",
     "example": "My father is forty years old.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/forty-uk.mp3",
-    "koGloss": "numbernumbernumber마흔, 사십",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/forty-v.mp3",
+    "koGloss": "number. 마흔, 사십",
     "koExample": "저의 아버지는 마흔 살입니다.",
     "koChirpScript": "forty. 숫자 마흔 또는 사십을 의미해요. My father is forty years old. 저의 아버지는 마흔 살입니다. 라는 뜻입니다."
   },
@@ -1362,8 +1362,8 @@
     "pronunciation": "/ˈfɪfti/",
     "definition": "Equivalent to the product of five and ten; 50.",
     "example": "The speed limit is fifty kilometers per hour.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fifty-uk.mp3",
-    "koGloss": "numbernumbernumber쉰, 오십",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fifty-v.mp3",
+    "koGloss": "number. 쉰, 오십",
     "koExample": "제한 속도는 시속 오십 킬로미터입니다.",
     "koChirpScript": "fifty. 숫자 쉰 또는 오십을 의미해요. The speed limit is fifty kilometers per hour. 제한 속도는 시속 오십 킬로미터입니다. 라는 뜻입니다."
   },
@@ -1374,8 +1374,8 @@
     "pronunciation": "/ˈhʌndrəd/",
     "definition": "The number equivalent to the product of ten and ten; 100.",
     "example": "This book has one hundred pages.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hundred-uk.mp3",
-    "koGloss": "numbernumbernumber백",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/hundred-v.mp3",
+    "koGloss": "number. 백",
     "koExample": "이 책은 백 페이지입니다.",
     "koChirpScript": "hundred. 숫자 백을 의미해요. This book has one hundred pages. 이 책은 백 페이지입니다. 라는 뜻입니다."
   },
@@ -1386,8 +1386,8 @@
     "pronunciation": "/ˈθaʊznd/",
     "definition": "The number equivalent to the product of a hundred and ten; 1,000.",
     "example": "A thousand people live in this village.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/thousand-uk.mp3",
-    "koGloss": "numbernumbernumber천",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/thousand-v.mp3",
+    "koGloss": "number. 천",
     "koExample": "이 마을에는 천 명의 사람들이 삽니다.",
     "koChirpScript": "thousand. 숫자 천을 의미해요. A thousand people live in this village. 이 마을에는 천 명의 사람들이 삽니다. 라는 뜻입니다."
   },
@@ -1398,7 +1398,7 @@
     "pronunciation": "/ænd/",
     "definition": "Used to connect words of the same part of speech, clauses, or sentences, that are to be taken jointly.",
     "example": "I like apples and bananas.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/and-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/and-v.mp3",
     "koGloss": "conj.그리고, 무엇와/과",
     "koExample": "저는 사과와 바나나를 좋아합니다.",
     "koChirpScript": "and. 그리고 또는 무엇과 라는 뜻으로 단어와 문장을 연결하는 가장 기본적인 접속사입니다. I like apples and bananas. 저는 사과와 바나나를 좋아합니다. 라는 뜻이에요."
@@ -1410,7 +1410,7 @@
     "pronunciation": "/ɔː(r)/",
     "definition": "Used to link alternatives.",
     "example": "Would you like tea or coffee?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/or-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/or-v.mp3",
     "koGloss": "conj.또는, 혹은",
     "koExample": "차와 커피 중 어떤 것을 드시겠어요?",
     "koChirpScript": "or. 또는, 혹은 이라는 뜻으로 여러 선택지를 연결할 때 써요. Would you like tea or coffee. 차와 커피 중 어떤 것을 드시겠어요. 라는 뜻입니다."
@@ -1422,7 +1422,7 @@
     "pronunciation": "/səʊ/",
     "definition": "And for this reason; therefore.",
     "example": "It was raining, so I took an umbrella.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/so-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/so-v.mp3",
     "koGloss": "conj.그래서, 그러므로",
     "koExample": "비가 오고 있어서, 그래서 저는 우산을 챙겼습니다.",
     "koChirpScript": "so. 그래서, 그러므로 라는 뜻으로 결과나 이유를 나타낼 때 써요. It was raining, so I took an umbrella. 비가 오고 있어서, 그래서 저는 우산을 챙겼습니다. 라는 뜻입니다."
@@ -1434,7 +1434,7 @@
     "pronunciation": "/nəʊ/",
     "definition": "Not any.",
     "example": "I have no money.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/no-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/no-v.mp3",
     "koGloss": "det.아니다, 하나도 없는",
     "koExample": "저는 돈이 없습니다.",
     "koChirpScript": "no. 아니다 라는 대답 또는 하나도 없는 이라는 뜻으로 명사 앞에 쓰여요. I have no money. 저는 돈이 없습니다. 라는 뜻으로, I dont have any money와 같은 의미예요."
@@ -1446,7 +1446,7 @@
     "pronunciation": "/ˈsɪnəmə/",
     "definition": "A theater where movies are shown for public entertainment.",
     "example": "Let's go to the cinema on Saturday.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/cinema-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/cinema-v.mp3",
     "koGloss": "n.영화관",
     "koExample": "토요일에 영화관에 갑시다.",
     "koChirpScript": "cinema. 영화를 보는 영화관입니다. 미국에서는 movie theater라고 더 자주 말해요. Lets go to the cinema on Saturday. 토요일에 영화관에 갑시다. 라는 뜻이에요."
@@ -1458,7 +1458,7 @@
     "pronunciation": "/ˈθɪətə(r)/",
     "definition": "A building or outdoor area in which plays and other dramatic performances are given.",
     "example": "We are going to the theatre tonight.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/theatre-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/theatre-v.mp3",
     "koGloss": "n.극장, 연극",
     "koExample": "우리는 오늘 밤 연극을 보러 갈 것입니다.",
     "koChirpScript": "theatre. 연극이나 공연을 하는 극장입니다. 미국에서는 theater 라고 써요. We are going to the theatre tonight. 우리는 오늘 밤 연극을 보러 갈 것입니다. 라는 뜻입니다."
@@ -1470,7 +1470,7 @@
     "pronunciation": "/ˈpəʊst ɒfɪs/",
     "definition": "The public department or corporation responsible for postal services.",
     "example": "I need to go to the post office to send a letter.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/post-office-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/post-office-v.mp3",
     "koGloss": "n.우체국",
     "koExample": "편지를 보내러 우체국에 가야 합니다.",
     "koChirpScript": "post office. 편지나 소포를 보내는 우체국입니다. I need to go to the post office to send a letter. 편지를 보내러 우체국에 가야 합니다. 라는 뜻이에요."
@@ -1482,7 +1482,7 @@
     "pronunciation": "/əˈpɑːtmənt/",
     "definition": "A suite of rooms forming one residence, typically in a building containing a number of these.",
     "example": "She lives in a small apartment in the city.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/apartment-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/apartment-v.mp3",
     "koGloss": "n.아파트",
     "koExample": "그녀는 도시의 작은 아파트에 삽니다.",
     "koChirpScript": "apartment. 우리가 사는 아파트입니다. 영국에서는 보통 flat이라고 해요. She lives in a small apartment in the city. 그녀는 도시의 작은 아파트에 삽니다. 라는 뜻입니다."
@@ -1494,7 +1494,7 @@
     "pronunciation": "/pɔːk/",
     "definition": "The flesh of a pig used as food.",
     "example": "I like grilled pork.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/pork-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/pork-v.mp3",
     "koGloss": "n.돼지고기",
     "koExample": "저는 구운 돼지고기를 좋아합니다.",
     "koChirpScript": "pork. 음식으로서의 돼지고기를 뜻해요. I like grilled pork. 저는 구운 돼지고기를 좋아합니다. 라는 뜻입니다."
@@ -1506,7 +1506,7 @@
     "pronunciation": "/biːf/",
     "definition": "The flesh of a cow, bull, or ox, used as food.",
     "example": "We ate beef steak for dinner.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/beef-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/beef-v.mp3",
     "koGloss": "n.소고기",
     "koExample": "우리는 저녁으로 소고기 스테이크를 먹었습니다.",
     "koChirpScript": "beef. 음식으로서의 소고기를 뜻해요. We ate beef steak for dinner. 우리는 저녁으로 소고기 스테이크를 먹었습니다. 라는 뜻입니다."
@@ -1518,7 +1518,7 @@
     "pronunciation": "/tɪp/",
     "definition": "A sum of money given to someone as a reward for their services.",
     "example": "Did you leave a tip for the waiter?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/tip-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/tip-v.mp3",
     "koGloss": "n.팁, 봉사료; v.조언, 끝",
     "koExample": "웨이터에게 팁을 남겼나요?",
     "koChirpScript": "tip. 식당 등에서 주는 봉사료, 팁입니다. 조언이라는 뜻도 있어요. Did you leave a tip for the waiter. 웨이터에게 팁을 남겼나요. 라는 뜻입니다."
@@ -1530,7 +1530,7 @@
     "pronunciation": "/mjuˈziːəm/",
     "definition": "A building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited.",
     "example": "We visited the history museum.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/museum-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/museum-v.mp3",
     "koGloss": "n.박물관, 미술관",
     "koExample": "우리는 역사 박물관을 방문했습니다.",
     "koChirpScript": "museum. 박물관 또는 미술관을 의미해요. We visited the history museum. 우리는 역사 박물관을 방문했습니다. 라는 뜻입니다."
@@ -1542,7 +1542,7 @@
     "pronunciation": "/fɑːm/",
     "definition": "An area of land and its buildings used for growing crops and rearing animals.",
     "example": "My uncle has a farm with many cows.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/farm-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/farm-v.mp3",
     "koGloss": "n.농장; v.농사를 짓다",
     "koExample": "저의 삼촌은 소가 많은 농장을 가지고 있습니다.",
     "koChirpScript": "farm. 작물이나 동물을 기르는 농장입니다. My uncle has a farm with many cows. 저의 삼촌은 소가 많은 농장을 가지고 있습니다. 라는 뜻이에요."
@@ -1554,7 +1554,7 @@
     "pronunciation": "/ˈfæktəri/",
     "definition": "A building or group of buildings where goods are manufactured or assembled chiefly by machine.",
     "example": "He works in a car factory.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/factory-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/factory-v.mp3",
     "koGloss": "n.공장",
     "koExample": "그는 자동차 공장에서 일합니다.",
     "koChirpScript": "factory. 물건을 만드는 공장을 의미해요. He works in a car factory. 그는 자동차 공장에서 일합니다. 라는 뜻입니다."
@@ -1566,7 +1566,7 @@
     "pronunciation": "/əˈɡriː/",
     "definition": "Have the same opinion about something; concur.",
     "example": "I agree with you.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/agree-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/agree-v.mp3",
     "koGloss": "v.동의하다",
     "koExample": "저는 당신의 의견에 동의합니다.",
     "koChirpScript": "agree. 의견에 동의하다라는 뜻이에요. I agree with you. 저는 당신의 의견에 동의합니다. 라고 말할 수 있습니다."
@@ -1578,7 +1578,7 @@
     "pronunciation": "/ɪkˈspleɪn/",
     "definition": "Make (an idea, situation, or problem) clear to someone by describing it in more detail or revealing relevant facts or ideas.",
     "example": "Can you explain this word to me?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/explain-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/explain-v.mp3",
     "koGloss": "v.설명하다",
     "koExample": "이 단어를 저에게 설명해 주실 수 있나요?",
     "koChirpScript": "explain. 무엇을 설명하다라는 뜻입니다. Can you explain this word to me. 이 단어를 저에게 설명해 주실 수 있나요. 라고 부탁할 수 있어요."
@@ -1590,7 +1590,7 @@
     "pronunciation": "/ɪnˈvaɪt/",
     "definition": "Make a polite, formal, or friendly request to (someone) to go somewhere or to do something.",
     "example": "I want to invite you to my party.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/invite-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/invite-v.mp3",
     "koGloss": "v.초대하다",
     "koExample": "저는 당신을 제 파티에 초대하고 싶습니다.",
     "koChirpScript": "invite. 누군가를 초대하다라는 뜻이에요. I want to invite you to my party. 저는 당신을 제 파티에 초대하고 싶습니다. 라는 뜻입니다."
@@ -1602,7 +1602,7 @@
     "pronunciation": "/dʒɔɪn/",
     "definition": "Link; connect.",
     "example": "Would you like to join us for dinner?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/join-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/join-v.mp3",
     "koGloss": "v.참여하다, 가입하다, 합류하다",
     "koExample": "저희와 함께 저녁 식사하실래요?",
     "koChirpScript": "join. 어떤 모임에 참여하다, 가입하다라는 뜻이에요. Would you like to join us for dinner. 저희와 함께 저녁 식사하실래요. 라고 물어볼 수 있어요."
@@ -1614,7 +1614,7 @@
     "pronunciation": "/plæn/",
     "definition": "A detailed proposal for doing or achieving something.",
     "example": "What is your plan for the weekend?",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/plan-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/plan-v.mp3",
     "koGloss": "n.계획; v.계획을 세우다",
     "koExample": "주말에 무슨 계획이 있나요?",
     "koChirpScript": "plan. 명사로는 계획, 동사로는 계획을 세우다라는 뜻이에요. What is your plan for the weekend. 주말에 무슨 계획이 있나요. 라는 질문입니다."
@@ -1626,7 +1626,7 @@
     "pronunciation": "/rɪˈmembə(r)/",
     "definition": "Have in or be able to bring to one's mind an awareness of (someone or something that one has seen, known, or experienced in the past).",
     "example": "I can't remember his name.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/remember-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/remember-v.mp3",
     "koGloss": "v.기억하다",
     "koExample": "그의 이름이 기억나지 않습니다.",
     "koChirpScript": "remember. 무엇을 기억하다라는 뜻이에요. I cant remember his name. 그의 이름이 기억나지 않습니다. 라는 뜻입니다."
@@ -1638,7 +1638,7 @@
     "pronunciation": "/fəˈɡet/",
     "definition": "Fail to remember.",
     "example": "Don't forget your keys.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/forget-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/forget-v.mp3",
     "koGloss": "v.잊다, 잊어버리다",
     "koExample": "열쇠 잊지 마세요.",
     "koChirpScript": "forget. remember의 반대말! 잊다, 잊어버리다라는 뜻입니다. Dont forget your keys. 열쇠 잊지 마세요. 라는 당부의 말입니다."
@@ -1650,7 +1650,7 @@
     "pronunciation": "/həʊp/",
     "definition": "A feeling of expectation and desire for a certain thing to happen.",
     "example": "I hope you have a great day.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/hope-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/hope-v.mp3",
     "koGloss": "v.바라다, 희망하다; n.희망",
     "koExample": "좋은 하루 보내기를 바랍니다.",
     "koChirpScript": "hope. 무엇을 바라다, 희망하다라는 긍정적인 단어예요. I hope you have a great day. 좋은 하루 보내기를 바랍니다. 라는 인사말로 쓸 수 있어요."
@@ -1662,7 +1662,7 @@
     "pronunciation": "/wɪʃ/",
     "definition": "Feel or express a strong desire or hope for something that is not easily attainable; want something that cannot or probably will not happen.",
     "example": "I wish I could fly.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/wish-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/wish-v.mp3",
     "koGloss": "v.소원, 바람; n.바라다",
     "koExample": "내가 날 수 있으면 좋을 텐데.",
     "koChirpScript": "wish. 이루어지기 힘든 일을 바라다, 소원하다라는 뜻이에요. I wish I could fly. 내가 날 수 있으면 좋을 텐데. 와 같이 상상 속의 일을 말할 때 사용해요."
@@ -1674,7 +1674,7 @@
     "pronunciation": "/rɪˈtɜːn/",
     "definition": "Come or go back to a place or person.",
     "example": "I will return home at 6 PM.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/return-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/return-v.mp3",
     "koGloss": "v.돌아오다, 반납하다; n.귀환, 반납",
     "koExample": "저는 오후 여섯 시에 집에 돌아올 것입니다.",
     "koChirpScript": "return. 돌아오다 또는 책 등을 반납하다라는 뜻이에요. I will return home at 6 PM. 저는 오후 여섯 시에 집에 돌아올 것입니다. 라는 뜻입니다."
@@ -1686,7 +1686,7 @@
     "pronunciation": "/fænˈtæstɪk/",
     "definition": "Extraordinarily good or attractive.",
     "example": "You look fantastic in that dress!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/fantastic-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/fantastic-v.mp3",
     "koGloss": "adj.환상적인, 아주 멋진",
     "koExample": "그 드레스를 입으니 정말 멋져 보여요!",
     "koChirpScript": "fantastic. 환상적인, 아주 멋진 이라는 뜻으로 wonderful보다도 더 큰 칭찬을 나타내요. You look fantastic in that dress. 그 드레스를 입으니 정말 멋져 보여요. 라는 뜻입니다."
@@ -1698,7 +1698,7 @@
     "pronunciation": "/ˈɔːfl/",
     "definition": "Very bad or unpleasant.",
     "example": "The weather is awful today.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/awful-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/awful-v.mp3",
     "koGloss": "adj.끔찍한, 지독한",
     "koExample": "오늘 날씨가 끔찍합니다.",
     "koChirpScript": "awful. terrible과 비슷한 뜻으로, 끔찍한, 지독한 이라는 부정적인 의미예요. The weather is awful today. 오늘 날씨가 끔찍합니다. 라는 뜻입니다."
@@ -1710,7 +1710,7 @@
     "pronunciation": "/ˈklevə(r)/",
     "definition": "Quick to understand, learn, and devise or apply ideas; intelligent.",
     "example": "She is a very clever student.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/clever-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/clever-v.mp3",
     "koGloss": "adj.영리한, 똑똑한",
     "koExample": "그녀는 매우 영리한 학생입니다.",
     "koChirpScript": "clever. 영리한, 똑똑한 이라는 뜻의 칭찬입니다. She is a very clever student. 그녀는 매우 영리한 학생입니다. 라고 말할 수 있어요."
@@ -1722,7 +1722,7 @@
     "pronunciation": "/ˈlʌvli/",
     "definition": "Exquisitely beautiful.",
     "example": "What a lovely day!",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/lovely-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lovely-v.mp3",
     "koGloss": "adj.사랑스러운, 아주 멋진",
     "koExample": "정말 사랑스러운 날씨네요!",
     "koChirpScript": "lovely. 사랑스러운 또는 아주 멋진 이라는 뜻으로, 기분 좋은 감정을 표현할 때 써요. What a lovely day. 정말 사랑스러운 날씨네요. 라는 감탄문입니다."
@@ -1734,7 +1734,7 @@
     "pronunciation": "/ˈbɔːrɪŋ/",
     "definition": "Not interesting; tedious.",
     "example": "This book is very boring.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/boring-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/boring-v.mp3",
     "koGloss": "adj.지루한, 재미없는",
     "koExample": "이 책은 매우 지루합니다.",
     "koChirpScript": "boring. 지루한, 재미없는 이라는 뜻이에요. This book is very boring. 이 책은 매우 지루합니다. 라는 뜻입니다."
@@ -1746,7 +1746,7 @@
     "pronunciation": "/fɜːst/",
     "definition": "Coming before all others in time or order; 1st.",
     "example": "First, wash your hands. Then, you can eat.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/first-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/first-v.mp3",
     "koGloss": "adv.첫 번째의, 먼저",
     "koExample": "먼저, 손을 씻으세요. 그러고 나서 먹어도 됩니다.",
     "koChirpScript": "first. 순서를 나타내는 첫 번째 또는 먼저라는 뜻이에요. First, wash your hands. Then, you can eat. 먼저, 손을 씻으세요. 그러고 나서 먹어도 됩니다. 라는 뜻입니다."
@@ -1758,7 +1758,7 @@
     "pronunciation": "/lɑːst/",
     "definition": "Coming after all others in time or order; final.",
     "example": "This is the last bus.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/last-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/last-v.mp3",
     "koGloss": "adj.마지막의; adv.지난",
     "koExample": "이것이 마지막 버스입니다.",
     "koChirpScript": "last. 순서상 마지막의 또는 시간상 지난 이라는 뜻이에요. This is the last bus. 이것이 마지막 버스입니다. 라는 뜻입니다."
@@ -1770,7 +1770,7 @@
     "pronunciation": "/nekst/",
     "definition": "(of a time) coming immediately after the time of writing or speaking.",
     "example": "See you next week.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/next-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/next-v.mp3",
     "koGloss": "adj.다음의",
     "koExample": "다음 주에 만나요.",
     "koChirpScript": "next. 바로 다음의 라는 뜻입니다. See you next week. 다음 주에 만나요. 라는 인사말로 자주 쓰이죠."
@@ -1782,7 +1782,7 @@
     "pronunciation": "/bɪˈfɔː(r)/",
     "definition": "During the period of time preceding (a particular event or time).",
     "example": "Please wash your hands before eating.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/before-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/before-v.mp3",
     "koGloss": "prep.무엇 전에",
     "koExample": "식사하기 전에 손을 씻으세요.",
     "koChirpScript": "before. 무엇 전에 라는 시간 순서를 나타내는 말이에요. Please wash your hands before eating. 식사하기 전에 손을 씻으세요. 라는 뜻입니다."
@@ -1794,7 +1794,7 @@
     "pronunciation": "/ˈɑːftə(r)/",
     "definition": "In the time following (an event or another period of time).",
     "example": "I will call you after the meeting.",
-    "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/after-uk.mp3",
+    "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/after-v.mp3",
     "koGloss": "prep.무엇 후에",
     "koExample": "회의 후에 전화할게요.",
     "koChirpScript": "after. before의 반대말! 무엇 후에 라는 뜻입니다. I will call you after the meeting. 회의 후에 전화할게요. 라는 뜻입니다."

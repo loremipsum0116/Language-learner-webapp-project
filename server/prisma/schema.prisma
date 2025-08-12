@@ -29,6 +29,11 @@ model User {
   TutorLog   TutorLog[]
   myVocab    UserVocab[]
   wrongAnswers WrongAnswer[] // 오답노트
+  
+  // SRS 알림 상태 추적
+  hasOverdueCards Boolean @default(false) // overdue 카드 존재 여부
+  lastOverdueCheck DateTime? // 마지막 overdue 체크 시각
+  nextOverdueAlarm DateTime? // 다음 overdue 알림 시각
 
   // ★ 추가: Category 역방향 필드(백릴레이션)
   categories Category[]
@@ -186,10 +191,26 @@ model SRSCard {
   /// 코호트 시작일(리어이트너/망각곡선 기준일). NULL이면 백필 스크립트에서 채움
   cohortDate DateTime?
 
+  /// SRS 상태 관리 필드
+  isOverdue Boolean @default(false) // 노란색 overdue 상태 (복습 가능)
+  waitingUntil DateTime? // 대기 종료 시간 (오답: 24시간, 정답: (n-1)일)
+  overdueDeadline DateTime? // overdue 상태에서 24시간 데드라인
+  overdueStartAt DateTime? // overdue 상태 시작 시간 (추적용)
+  
+  /// 오답으로 인해 생성된 카드인지 구분
+  isFromWrongAnswer Boolean @default(false) // 오답으로 인해 생긴 카드인지
+  wrongStreakCount Int @default(0) // 연속 오답 횟수 (누적)
+  
+  /// 120일 마스터 완료 상태
+  isMastered Boolean @default(false) // 120일 사이클 완료 여부
+  masteredAt DateTime? // 마스터 완료 시각
+  masterCycles Int @default(0) // 마스터 완료 횟수 (여러 번 가능)
+
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, itemType, itemId])
   @@index([userId, nextReviewAt])
+  @@index([userId, isMastered]) // 마스터 단어 조회용
 }
 
 model TutorLog {
