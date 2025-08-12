@@ -5,6 +5,8 @@ import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import { useAuth } from '../context/AuthContext'; // ★ AuthContext에서 useAuth 임포트
+import FlatFolderPickerModal from '../components/FlatFolderPickerModal';
+import * as SrsApi from '../api/srs';
 
 // 헬퍼 함수
 const getCefrBadgeColor = (level) => {
@@ -87,6 +89,10 @@ export default function MyWordbook() {
     const audioRef = useRef(null);
     const [playingAudio, setPlayingAudio] = useState(null);
     const [enrichingId, setEnrichingId] = useState(null);
+
+    // SRS 폴더 선택 모달 관련 state
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [pickerIds, setPickerIds] = useState([]);
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
@@ -250,33 +256,33 @@ export default function MyWordbook() {
     const unselectAll = () => setSelectedIds(new Set());
 
     const onMoveClick = async () => {
-    const ids = Array.from(selectedIds);
-    if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
-    try {
-        if (moveTarget === 'none') {
-            // 미분류로 이동: 기존 카테고리 연결 제거
-            await fetchJSON('/my-wordbook/remove-many', withCreds({
-                method: 'POST',
-                body: JSON.stringify({ vocabIds: ids }),
-            }));
-        } else {
-            // 특정 카테고리로 이동: 일괄 추가 (서버는 categoryId를 사용)
-            await fetchJSON('/my-wordbook/add-many', withCreds({
-                method: 'POST',
-                body: JSON.stringify({
-                    vocabIds: ids,
-                    categoryId: Number(moveTarget),
-                }),
-            }));
+        const ids = Array.from(selectedIds);
+        if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
+        try {
+            if (moveTarget === 'none') {
+                // 미분류로 이동: 기존 카테고리 연결 제거
+                await fetchJSON('/my-wordbook/remove-many', withCreds({
+                    method: 'POST',
+                    body: JSON.stringify({ vocabIds: ids }),
+                }));
+            } else {
+                // 특정 카테고리로 이동: 일괄 추가 (서버는 categoryId를 사용)
+                await fetchJSON('/my-wordbook/add-many', withCreds({
+                    method: 'POST',
+                    body: JSON.stringify({
+                        vocabIds: ids,
+                        categoryId: Number(moveTarget),
+                    }),
+                }));
+            }
+            await Promise.all([loadCategories(), loadWordbook(filter)]);
+            unselectAll();
+            alert('이동 완료');
+        } catch (e) {
+            console.error(e);
+            alert('이동 실패');
         }
-        await Promise.all([loadCategories(), loadWordbook(filter)]);
-        unselectAll();
-        alert('이동 완료');
-    } catch (e) {
-        console.error(e);
-        alert('이동 실패');
-    }
-};
+    };
 
     const openDetail = async (vocabId, e) => {
         e?.preventDefault?.();
@@ -293,28 +299,15 @@ export default function MyWordbook() {
         }
     };
 
-    // ★ 3. addVocabToSRS 함수가 Context의 refreshSrsIds를 호출하도록 수정합니다.
+    // ★ 3. vocab 페이지와 동일한 SRS 추가 방식으로 변경
     const addVocabToSRS = async (ids) => {
         if (!user || !Array.isArray(ids) || ids.length === 0) {
             alert('SRS에 추가할 단어를 선택하세요.'); return;
         }
-        try {
-            const { data } = await fetchJSON('/srs/create-many', withCreds({
-                method: 'POST',
-                body: JSON.stringify({ vocabIds: ids }),
-            }));
-            const count = data?.count ?? 0;
-            if (count > 0) {
-                alert(`${count}개의 단어를 SRS에 새로 추가했습니다.`);
-                await refreshSrsIds(); // ★ 상태를 직접 조작하는 대신 새로고침 함수를 호출합니다.
-            } else {
-                alert('선택된 단어들은 이미 SRS에 모두 존재합니다.');
-            }
-            unselectAll();
-        } catch (e) {
-            console.error('SRS 추가 실패:', e);
-            alert('SRS에 단어를 추가하는 데 실패했습니다.');
-        }
+
+        // vocab 페이지와 동일하게 폴더 선택 모달 열기
+        setPickerIds(ids);
+        setPickerOpen(true);
     };
 
     const handleDeleteSelected = async () => {
@@ -411,6 +404,7 @@ export default function MyWordbook() {
                                                     {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
                                                         <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                                                     ))}
+                                                    {/* SRS 오답 횟수는 오답노트에서만 표시 */}
                                                 </div>
                                             </div>
                                             <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />
@@ -458,6 +452,30 @@ export default function MyWordbook() {
                         </div>
                     </div>
                 </div>
+            )}
+
+            {/* SRS 폴더 선택 모달 */}
+            {pickerOpen && (
+                <FlatFolderPickerModal
+                    show={pickerOpen}
+                    onClose={() => { setPickerOpen(false); setPickerIds([]); }}
+                    onPick={async (folder) => {
+                        const folderId = folder?.id ?? folder; // 안전 처리
+                        try {
+                            const res = await SrsApi.SrsApi.addItems(folderId, { vocabIds: pickerIds });
+
+                            const added = res?.added ?? res?.addedCount ?? 0;
+                            const dup = res?.duplicateIds?.length ?? 0;
+                            alert(`추가됨 ${added}개${dup ? `, 중복 ${dup}개` : ''}`);
+                            await refreshSrsIds?.();
+                        } catch (e) {
+                            alert('폴더에 추가 실패: ' + (e?.message || '서버 오류'));
+                        } finally {
+                            setPickerOpen(false);
+                            setPickerIds([]);
+                        }
+                    }}
+                />
             )}
         </main>
     );

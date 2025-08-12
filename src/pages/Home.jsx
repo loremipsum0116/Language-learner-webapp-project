@@ -134,15 +134,25 @@ function SrsWidget() {
   const [count, setCount] = useState(null);
   const [lat, setLat] = useState(null);
   const [err, setErr] = useState(null);
+  const [todayFolderId, setTodayFolderId] = useState(null);
 
   useEffect(() => {
     let mounted = true;
     (async () => {
         try {
-            const data = await fetchJSON('/srs/queue?limit=100', withCreds());
+            // 사용자가 직접 생성한 SRS 폴더만 사용 (자동 생성 제거)
+            // 레거시 SRS 큐만 조회
+            const queueData = await fetchJSON(`/srs/queue?limit=100`, withCreds());
             if (!mounted) return;
-            setCount(Array.isArray(data?.data) ? data.data.length : 0);
-            setLat(data._latencyMs);
+            
+            // 레거시 SRS: 전체 카운트
+            let count = 0;
+            if (Array.isArray(queueData?.data)) {
+                count = queueData.data.length;
+            }
+            
+            setCount(count);
+            setLat(queueData._latencyMs);
         } catch (e) {
             if (mounted) setErr(e);
         }

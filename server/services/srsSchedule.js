@@ -17,10 +17,19 @@ function isMaxStage(stage) {
   return clampStage(stage) === STAGE_DELAYS.length;
 }
 
+function isFinalStage(stage) {
+  return stage >= STAGE_DELAYS.length - 1; // Stage 5 is final (120 days)
+}
+
 function delayDaysFor(stage) {
-  // CRITICAL FIX: stage는 1부터 시작, 배열 인덱스는 0부터
-  // stage 1 → index 0 (3일), stage 2 → index 1 (7일), ...
-  const index = Math.max(0, clampStage(stage) - 1);
+  // CRITICAL FIX: stage 시스템 정리
+  // stage 0: 즉시 복습 (새 단어/오답)
+  // stage 1: 3일 후, stage 2: 7일 후, ..., stage 6: 120일 후
+  if (stage <= 0) {
+    return 0; // 즉시 복습
+  }
+  
+  const index = Math.min(stage - 1, STAGE_DELAYS.length - 1);
   console.log(`[SRS SCHEDULE] delayDaysFor stage ${stage} -> index ${index} -> ${STAGE_DELAYS[index]} days`);
   return STAGE_DELAYS[index];
 }
@@ -51,6 +60,7 @@ module.exports = {
   STAGE_DELAYS,
   clampStage,
   isMaxStage,
+  isFinalStage,
   delayDaysFor,
   dateOnlyUTC,
   addDaysUTC,

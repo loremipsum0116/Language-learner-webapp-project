@@ -22,6 +22,26 @@ router.get('/', async (req, res) => {
             orderBy: { createdAt: 'desc' }
         });
 
+        // SRS 카드 정보를 별도로 조회
+        const vocabIds = items.map(item => item.vocabId);
+        const srsCards = vocabIds.length > 0 ? await prisma.sRSCard.findMany({
+            where: {
+                userId: req.user.id,
+                itemType: 'vocab',
+                itemId: { in: vocabIds }
+            },
+            select: {
+                itemId: true,
+                correctTotal: true,
+                wrongTotal: true,
+                stage: true,
+                nextReviewAt: true
+            }
+        }) : [];
+
+        // SRS 카드 정보 매핑
+        const srsCardMap = new Map(srsCards.map(card => [card.itemId, card]));
+
         const processedItems = items.map(item => {
             if (!item.vocab) return item;
             const examples = item.vocab.dictMeta?.examples || [];
@@ -29,8 +49,15 @@ router.get('/', async (req, res) => {
             if (examples[0]?.definitions?.[0]) {
                 gloss = examples[0].definitions[0].ko_def || null;
             }
-            return { ...item, vocab: { ...item.vocab, ko_gloss: gloss } };
-
+            
+            // SRS 카드 정보 포함
+            const srsCard = srsCardMap.get(item.vocabId);
+            
+            return { 
+                ...item, 
+                vocab: { ...item.vocab, ko_gloss: gloss },
+                srsCard: srsCard || null
+            };
         });
 
         return res.json({ data: processedItems });

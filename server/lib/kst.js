@@ -2,9 +2,17 @@
 const KST_OFFSET = 9 * 60 * 60 * 1000;
 
 function startOfKstDay(d = new Date()) {
-  // "해당 KST 날짜의 00:00"을 UTC Date로 반환
-  const utcMidnight = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate());
-  return new Date(utcMidnight - KST_OFFSET);
+  // 단순히 현재 날짜/시간을 그대로 반환 (테스트용)
+  const now = new Date();
+  console.log(`[KST] startOfKstDay - current time: ${now.toISOString()}, local: ${now.toLocaleString()}`);
+  console.log(`[KST] startOfKstDay - input: ${d.toISOString()}`);
+  
+  // 오늘 날짜의 자정으로 설정
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  
+  console.log(`[KST] startOfKstDay - result: ${today.toISOString()}, local: ${today.toLocaleString()}`);
+  return today;
 }
 
 function kstAddDays(kstDate00, days) {

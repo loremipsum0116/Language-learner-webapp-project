@@ -1,6 +1,7 @@
 // server/routes/quiz.js
 const express = require('express');
 const router = express.Router();
+const dayjs = require('dayjs');
 const { prisma } = require('../lib/prismaClient');
 const { startOfKstDay, addKstDays } = require('../services/srsJobs');
 const { ok, fail } = require('../lib/resp'); // ok, fail 헬퍼 임포트
@@ -101,135 +102,177 @@ router.post('/answer', async (req, res, next) => {
                 });
             }
 
-            // 카드 정보에서 현재 stage 가져오기
+            // 카드 정보에서 현재 stage와 nextReviewAt 가져오기
             const currentStage = card.stage || 0;
+            const currentNextReviewAt = await tx.sRSCard.findUnique({
+                where: { id: cardId },
+                select: { nextReviewAt: true }
+            });
+            
             let newStage, nextReviewAt;
+            let shouldUpdateReviewDate = false;
+
+            // 복습일 체크: 현재 시각이 예정된 복습일 이후인지 확인
+            // const todayKstStart = startOfKstDay(now);
+            // const cardReviewDate = currentNextReviewAt.nextReviewAt ?
+            //     startOfKstDay(currentNextReviewAt.nextReviewAt) : null;
+
+            // 복습일 체크 로직 간소화
+            let isDueForReview = false;
+            
+            if (!currentNextReviewAt.nextReviewAt) {
+                // 복습일이 없는 새 카드는 항상 학습 가능하고 stage 진행 가능
+                isDueForReview = true;
+                console.log(`[QUIZ] New card (no review date) - always due for review`);
+            } else {
+                // 기존 카드: 복습일이 오늘이거나 이전인지 체크 (간단한 방법)
+                const reviewDate = new Date(currentNextReviewAt.nextReviewAt);
+                const now = new Date();
+                
+                // 날짜만 비교 (시간 제거)
+                const reviewDateOnly = new Date(reviewDate.getFullYear(), reviewDate.getMonth(), reviewDate.getDate());
+                const todayOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                
+                isDueForReview = reviewDateOnly <= todayOnly;
+                
+                console.log(`[QUIZ] Review date: ${reviewDateOnly.toISOString().split('T')[0]}, Today: ${todayOnly.toISOString().split('T')[0]}, Due: ${isDueForReview}`);
+                console.log(`[QUIZ] Original review date: ${reviewDate.toISOString()}, Current time: ${now.toISOString()}`);
+            }
+
+            // console.log(`[QUIZ] Review date check: cardDate=${cardReviewDate?.format ? cardReviewDate.format('YYYY-MM-DD') : cardReviewDate}, today=${todayKstStart?.format ? todayKstStart.format('YYYY-MM-DD') : todayKstStart}, isDue=${isDueForReview}`);
 
             if (isCorrect) {
                 // 정답 처리
-                newStage = currentStage + 1;
-                console.log(`[QUIZ CORRECT] Current stage: ${currentStage}, New stage: ${newStage}`);
-
-                const { computeNextReviewDate } = require('../services/srsSchedule');
-
-                // 1. 오답이었던 단어가 정답으로 해결된 경우 - 복습일이 된 경우에만 동기화
-                if (currentStage === 0 && folderId) {
-                    console.log(`[SYNC REVIEW] Wrong word corrected, checking if sync is due...`);
-
-                    // 현재 카드의 nextReviewAt을 확인하여 복습일이 되었는지 체크
-                    const currentCard = await tx.sRSCard.findUnique({
-                        where: { id: cardId },
-                        select: { nextReviewAt: true }
-                    });
-
-                    const todayKstStart = startOfKstDay(now);
-                    const cardReviewDate = currentCard.nextReviewAt ?
-                        startOfKstDay(currentCard.nextReviewAt) : null;
-
-                    // 복습일이 오늘이거나 이미 지났을 때만 동기화
-                    const isDueForSync = cardReviewDate &&
-                        (cardReviewDate.isSame(todayKstStart, 'day') ||
-                            cardReviewDate.isBefore(todayKstStart, 'day'));
-
-                    console.log(`[SYNC REVIEW] Card review date: ${cardReviewDate?.format('YYYY-MM-DD')}, Today: ${todayKstStart.format('YYYY-MM-DD')}, isDue: ${isDueForSync}`);
-
-                    if (isDueForSync) {
-                        console.log(`[SYNC REVIEW] Wrong word is due for review, syncing with folder ${folderId}`);
-
-                        // 같은 폴더의 다른 stage 1+ 카드들 중 가장 빠른 nextReviewAt 찾기
-                        const folderCards = await tx.sRSCard.findMany({
-                            where: {
-                                userId,
-                                stage: { gt: 0 },
-                                folderItems: {
-                                    some: { folderId }
-                                }
-                            },
-                            select: { nextReviewAt: true },
-                            orderBy: { nextReviewAt: 'asc' },
-                            take: 1
-                        });
-
-                        if (folderCards.length > 0 && folderCards[0].nextReviewAt) {
-                            // 동일 폴더 다른 단어들과 같은 날짜로 동기화
-                            nextReviewAt = folderCards[0].nextReviewAt;
-                            newStage = 1; // stage 1로 설정 (기존 정답 단어들과 같은 레벨)
-                            console.log(`[SYNC REVIEW] Synchronized nextReviewAt to:`, nextReviewAt);
-                        } else {
-                            // 동기화할 다른 단어가 없으면 일반 SRS 로직
-                            nextReviewAt = computeNextReviewDate(startOfKstDay(now).toDate(), newStage);
-                            console.log(`[SYNC REVIEW] No other cards to sync with, using normal SRS logic`);
-                        }
-                    } else {
-                        // 복습일이 아직 오지 않았으면 동기화하지 않고 일반 SRS 로직 사용
-                        console.log(`[SYNC REVIEW] Not due for sync yet, using normal SRS logic`);
-                        nextReviewAt = computeNextReviewDate(startOfKstDay(now).toDate(), newStage);
-                    }
+                if (isDueForReview) {
+                    // 복습일이 되었거나 지났으면 stage 진행 및 다음 복습일 설정
+                    newStage = currentStage + 1;
+                    shouldUpdateReviewDate = true;
+                    
+                    const { computeNextReviewDate } = require('../services/srsSchedule');
+                    const todayStart = new Date();
+                    todayStart.setHours(0, 0, 0, 0);
+                    nextReviewAt = computeNextReviewDate(todayStart, newStage);
+                    console.log(`[QUIZ CORRECT] Stage advanced: ${currentStage} -> ${newStage}, next review: ${nextReviewAt.toISOString().split('T')[0]}`);
                 } else {
-                    // 2. 일반 정답 처리 (stage 1+ → stage 2+)
-                    nextReviewAt = computeNextReviewDate(startOfKstDay(now).toDate(), newStage);
-                    console.log(`[QUIZ CORRECT] Computing next review for stage ${newStage}`);
+                    // 복습일 이전이면 stage는 그대로, 복습일도 그대로
+                    newStage = currentStage;
+                    nextReviewAt = currentNextReviewAt.nextReviewAt;
+                    shouldUpdateReviewDate = false;
+                    console.log(`[QUIZ CORRECT] Review not due yet, keeping stage ${currentStage} and review date ${nextReviewAt?.toISOString().split('T')[0]}`);
                 }
             } else {
-                // 오답: stage 0으로 리셋, 다음날 복습
-                newStage = 0;
-                // KST 기준 다음날 00:00으로 설정
-                const tomorrow = startOfKstDay(now).add(1, 'day');
-                const tomorrowKst = tomorrow.format('YYYY-MM-DD');
-                nextReviewAt = new Date(tomorrowKst + 'T00:00:00.000Z');
-                console.log(`[QUIZ WRONG] Setting next review to tomorrow: ${tomorrowKst}`);
+                // 오답 처리
+                if (isDueForReview) {
+                    // 복습일이 되었거나 지났으면 stage 0으로 리셋, 다음날 복습
+                    newStage = 0;
+                    shouldUpdateReviewDate = true;
+                    // 다음날 00:00으로 설정
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    tomorrow.setHours(0, 0, 0, 0);
+                    nextReviewAt = tomorrow;
+                    console.log(`[QUIZ WRONG] Stage reset to 0, next review: ${tomorrow.toISOString().split('T')[0]}`);
+                } else {
+                    // 복습일 이전이면 stage는 그대로, 복습일도 그대로 (오답 통계만 증가)
+                    newStage = currentStage;
+                    nextReviewAt = currentNextReviewAt.nextReviewAt;
+                    shouldUpdateReviewDate = false;
+                    console.log(`[QUIZ WRONG] Review not due yet, keeping stage ${currentStage} and review date ${nextReviewAt?.toISOString().split('T')[0]}`);
+                }
             }
 
             // 카드 업데이트 (stage/통계/다음 복습일)
+            const updateData = {};
+            
+            // 통계 업데이트 (복습일일 때만 적용)
+            if (isCorrect) {
+                updateData.correctTotal = { increment: 1 };
+            } else if (isDueForReview) {
+                // 복습일일 때만 오답 횟수 증가
+                updateData.wrongTotal = { increment: 1 };
+                
+                // 같은 단어의 다른 모든 SRS 카드의 wrongTotal도 증가
+                await tx.sRSCard.updateMany({
+                    where: {
+                        userId: userId,
+                        itemType: 'vocab',
+                        itemId: card.itemId,
+                        id: { not: cardId } // 현재 카드는 제외 (아래에서 업데이트)
+                    },
+                    data: {
+                        wrongTotal: { increment: 1 }
+                    }
+                });
+                console.log(`[QUIZ] ✅ WRONG TOTAL INCREMENTED - vocab ${card.itemId} (review was due)`);
+            } else {
+                // 복습일이 아닐 때는 오답 횟수 증가 안함
+                console.log(`[QUIZ] ❌ NO WRONG TOTAL INCREMENT - vocab ${card.itemId} (review not due yet)`);
+            }
+            
+            // 복습일이 되었거나 오답인 경우에만 stage와 nextReviewAt 업데이트
+            if (shouldUpdateReviewDate) {
+                updateData.stage = newStage;
+                updateData.nextReviewAt = nextReviewAt;
+                console.log(`[QUIZ] Updating card: stage=${newStage}, nextReviewAt=${nextReviewAt?.toISOString().split('T')[0]}`);
+            } else {
+                console.log(`[QUIZ] Updating only stats, keeping existing stage and review date`);
+            }
+            
             await tx.sRSCard.update({
                 where: { id: cardId },
-                data: {
-                    stage: newStage,
-                    nextReviewAt: nextReviewAt,
-                    ...(isCorrect ? { correctTotal: { increment: 1 } } : { wrongTotal: { increment: 1 } }),
-                },
+                data: updateData,
             });
 
             // 오답노트 처리
             const vocabId = card.itemId; // SRSCard의 itemId가 vocabId
 
-            if (!isCorrect) {
-                // 오답 시 WrongAnswer 모델에 추가
-                console.log(`[QUIZ ANSWER] Adding wrong answer: userId=${userId}, vocabId=${vocabId}`);
-                if (vocabId) {
-                    try {
-                        const wrongAnswerResult = await addWrongAnswer(userId, vocabId);
-                        console.log(`[QUIZ ANSWER] Wrong answer added:`, wrongAnswerResult);
-                    } catch (wrongAnswerError) {
-                        console.error(`[QUIZ ANSWER] Failed to add wrong answer:`, wrongAnswerError);
-                        // 오답노트 추가 실패해도 답변 제출은 계속 진행
-                    }
-                }
-            } else {
-                // 정답 시 오답노트에서 해당 단어 완료 처리
-                console.log(`[QUIZ ANSWER] Completing wrong answer: userId=${userId}, vocabId=${vocabId}`);
-                if (vocabId) {
-                    try {
-                        const { completeWrongAnswer } = require('../services/wrongAnswerService');
-                        const completed = await completeWrongAnswer(userId, vocabId);
-                        if (completed) {
-                            console.log(`[QUIZ ANSWER] Wrong answer completed for vocabId=${vocabId}`);
-                        }
-                    } catch (completeError) {
-                        console.error(`[QUIZ ANSWER] Failed to complete wrong answer:`, completeError);
-                        // 오답노트 완료 실패해도 답변 제출은 계속 진행
-                    }
-                }
-            }
-
+            // 오답노트 처리는 트랜잭션 완료 후 처리
             return {
                 folderId,
                 cardId,
                 correct: isCorrect,
                 newStage: newStage,
                 nextReviewAt: nextReviewAt,
+                vocabId: vocabId, // 트랜잭션 완료 후 처리를 위해 추가
+                isDueForReview: isDueForReview, // 오답노트 처리 여부를 위해 추가
             };
         });
+
+        // 트랜잭션 완료 후 오답노트 처리
+        console.log(`[QUIZ ANSWER] Processing result:`, { vocabId: result.vocabId, correct: result.correct, userId });
+        if (result.vocabId) {
+            try {
+                if (!isCorrect && result.isDueForReview) {
+                    // 오답 시 WrongAnswer 모델에 추가 (복습일인 경우만)
+                    console.log(`[QUIZ ANSWER] Adding wrong answer: userId=${userId}, vocabId=${result.vocabId}`);
+                    const { addWrongAnswer } = require('../services/wrongAnswerService');
+                    const wrongResult = await addWrongAnswer(userId, result.vocabId);
+                    console.log(`[QUIZ ANSWER] Wrong answer added successfully:`, wrongResult);
+                    
+                    // 추가 검증: 실제로 저장되었는지 확인
+                    const verification = await prisma.wrongAnswer.findFirst({
+                        where: { userId, vocabId: result.vocabId, isCompleted: false },
+                        select: { id: true, wrongAt: true, attempts: true }
+                    });
+                    console.log(`[QUIZ ANSWER] Verification check:`, verification);
+                } else if (!isCorrect && !result.isDueForReview) {
+                    // 복습일이 아닌 날의 오답은 오답노트에 추가하지 않음
+                    console.log(`[QUIZ ANSWER] Wrong answer but not due for review - no odat-note addition for vocab ${result.vocabId}`);
+                } else if (result.isDueForReview) {
+                    // 정답 시 오답노트에서 해당 단어 완료 처리 (복습일인 경우만)
+                    console.log(`[QUIZ ANSWER] Completing wrong answer: userId=${userId}, vocabId=${result.vocabId}`);
+                    const { completeWrongAnswer } = require('../services/wrongAnswerService');
+                    const completed = await completeWrongAnswer(userId, result.vocabId);
+                    if (completed) {
+                        console.log(`[QUIZ ANSWER] Wrong answer completed for vocabId=${result.vocabId}`);
+                    }
+                }
+            } catch (wrongAnswerError) {
+                console.error(`[QUIZ ANSWER] Failed to process wrong answer:`, wrongAnswerError);
+                console.error(`[QUIZ ANSWER] Error stack:`, wrongAnswerError.stack);
+                // 오답노트 처리 실패해도 답변 제출은 성공으로 처리
+            }
+        }
 
         return res.json({ ok: true, data: result });
     } catch (e) {

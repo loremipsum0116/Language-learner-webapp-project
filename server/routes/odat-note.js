@@ -70,43 +70,33 @@ router.post('/quiz', async (req, res) => {
 
 /**
  * GET /odat-note/list
- * 오답누적(wrongTotal > 0) 카드 목록을 단순 리스트로 반환
+ * 새로운 WrongAnswer 모델 기반 오답노트 목록
  * 프론트에서 테이블/리스트로 보여줄 때 사용
  */
 router.get('/list', async (req, res) => {
   try {
-    const cards = await prisma.sRSCard.findMany({
+    // 새로운 WrongAnswer 모델에서 미완료 오답들을 조회
+    const wrongAnswers = await prisma.wrongAnswer.findMany({
       where: {
         userId: req.user.id,
-        itemType: 'vocab',
-        wrongTotal: { gt: 0 }, // ✅ 스키마 반영
+        isCompleted: false
       },
       orderBy: [
-        { wrongTotal: 'desc' }, // 오답 많은 것 우선
-        { id: 'asc' },          // 안정적인 정렬
+        { attempts: 'desc' }, // 시도 횟수 많은 것 우선
+        { wrongAt: 'desc' }   // 최근에 틀린 것 우선
       ],
-      select: {
-        id: true,
-        itemId: true,
-        wrongTotal: true,
-        correctTotal: true,
-        stage: true,
-        nextReviewAt: true,
+      include: {
+        vocab: {
+          include: {
+            dictMeta: true
+          }
+        }
       },
       take: 200,
     });
 
-    const vocabIds = cards.map((c) => c.itemId);
-    const vocabs = vocabIds.length
-      ? await prisma.vocab.findMany({
-          where: { id: { in: vocabIds } },
-          include: { dictMeta: true },
-        })
-      : [];
-    const vocabMap = new Map(vocabs.map((v) => [v.id, v]));
-
-    const data = cards.map((card) => {
-      const v = vocabMap.get(card.itemId);
+    const data = wrongAnswers.map((wa) => {
+      const v = wa.vocab;
       // gloss 찾기(있으면)
       let gloss = null;
       const ex = Array.isArray(v?.dictMeta?.examples) ? v.dictMeta.examples : [];
@@ -114,16 +104,17 @@ router.get('/list', async (req, res) => {
       if (g && typeof g.ko === 'string') gloss = g.ko;
 
       return {
-        cardId: card.id,
-        vocabId: card.itemId,
+        wrongAnswerId: wa.id,
+        vocabId: wa.vocabId,
         lemma: v?.lemma ?? '',
         ipa: v?.dictMeta?.ipa ?? null,
         ipaKo: v?.dictMeta?.ipaKo ?? null,
         ko_gloss: gloss,
-        wrongTotal: card.wrongTotal,
-        correctTotal: card.correctTotal,
-        stage: card.stage,
-        nextReviewAt: card.nextReviewAt,
+        attempts: wa.attempts,
+        wrongAt: wa.wrongAt,
+        reviewWindowStart: wa.reviewWindowStart,
+        reviewWindowEnd: wa.reviewWindowEnd,
+        canReview: new Date() >= wa.reviewWindowStart && new Date() <= wa.reviewWindowEnd
       };
     });
 
@@ -136,26 +127,35 @@ router.get('/list', async (req, res) => {
 
 /**
  * GET /odat-note/queue
- * 오답누적이 있는 카드들만 추려 MCQ 큐로 변환해 반환
+ * 새로운 WrongAnswer 모델 기반 오답 퀴즈 큐
  */
 router.get('/queue', async (req, res) => {
   try {
-    const cards = await prisma.sRSCard.findMany({
-      where: {
-        userId: req.user.id,
-        itemType: 'vocab',
-        wrongTotal: { gt: 0 }, // ✅ 스키마 반영
-      },
-      orderBy: [{ wrongTotal: 'desc' }, { id: 'asc' }],
-      take: 100,
-      select: { itemId: true },
-    });
+    // 복습 가능한 오답들만 조회
+    const { generateWrongAnswerQuiz } = require('../services/wrongAnswerService');
+    const wrongAnswerQuiz = await generateWrongAnswerQuiz(req.user.id, 100);
+    
+    if (wrongAnswerQuiz.length === 0) {
+      return res.json({ data: [] });
+    }
 
-    const vocabIds = cards.map((c) => c.itemId);
-    if (vocabIds.length === 0) return res.json({ data: [] });
-
+    // vocabIds 추출
+    const vocabIds = wrongAnswerQuiz.map(wa => wa.vocabId);
     const queue = await generateMcqQuizItems(prisma, req.user.id, vocabIds);
-    return res.json({ data: queue });
+    
+    // wrongAnswer 정보를 퀴즈에 추가
+    const enrichedQueue = queue.map(q => {
+      const wrongInfo = wrongAnswerQuiz.find(wa => wa.vocabId === q.vocabId);
+      return {
+        ...q,
+        wrongAnswerId: wrongInfo?.wrongAnswerId,
+        attempts: wrongInfo?.attempts,
+        wrongAt: wrongInfo?.wrongAt,
+        reviewWindowEnd: wrongInfo?.reviewWindowEnd
+      };
+    });
+    
+    return res.json({ data: enrichedQueue });
   } catch (e) {
     console.error('GET /odat-note/queue failed:', e);
     return res.status(500).json({ error: 'Failed to create quiz for incorrect notes' });

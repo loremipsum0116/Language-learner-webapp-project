@@ -9,6 +9,7 @@ const dayjs = require('dayjs');
  * @returns {Object} 생성된 오답노트 항목
  */
 async function addWrongAnswer(userId, vocabId) {
+  console.log(`[WRONG ANSWER SERVICE] Starting addWrongAnswer: userId=${userId}, vocabId=${vocabId}`);
   const wrongAt = dayjs();
   
   // 복습 윈도우: 틀린 시각 다음날 같은 시각부터 그 다음날 같은 시각까지
@@ -16,6 +17,7 @@ async function addWrongAnswer(userId, vocabId) {
   const reviewWindowEnd = wrongAt.add(2, 'day');
   
   // 이미 같은 단어로 미완료된 오답노트가 있는지 확인
+  console.log(`[WRONG ANSWER SERVICE] Checking for existing wrong answer`);
   const existingWrongAnswer = await prisma.wrongAnswer.findFirst({
     where: {
       userId,
@@ -23,9 +25,11 @@ async function addWrongAnswer(userId, vocabId) {
       isCompleted: false
     }
   });
+  console.log(`[WRONG ANSWER SERVICE] Existing wrong answer found:`, existingWrongAnswer);
   
   if (existingWrongAnswer) {
-    // 기존 항목의 attempts 증가
+    // 기존 항목의 attempts 증가하고 최신 정보로 업데이트
+    console.log(`[WRONG ANSWER SERVICE] Updating existing wrong answer`);
     return await prisma.wrongAnswer.update({
       where: { id: existingWrongAnswer.id },
       data: {
@@ -33,6 +37,7 @@ async function addWrongAnswer(userId, vocabId) {
         wrongAt: wrongAt.toDate(), // 최신 오답 시각으로 업데이트
         reviewWindowStart: reviewWindowStart.toDate(),
         reviewWindowEnd: reviewWindowEnd.toDate()
+        // 가장 최근에 틀린 폴더 정보는 quiz.js에서 추가로 처리 필요
       },
       include: {
         vocab: {
@@ -45,15 +50,19 @@ async function addWrongAnswer(userId, vocabId) {
   }
   
   // 새로운 오답노트 항목 생성
-  return await prisma.wrongAnswer.create({
-    data: {
-      userId,
-      vocabId,
-      wrongAt: wrongAt.toDate(),
-      reviewWindowStart: reviewWindowStart.toDate(),
-      reviewWindowEnd: reviewWindowEnd.toDate(),
-      attempts: 1
-    },
+  console.log(`[WRONG ANSWER SERVICE] Creating new wrong answer`);
+  const createData = {
+    userId,
+    vocabId,
+    wrongAt: wrongAt.toDate(),
+    reviewWindowStart: reviewWindowStart.toDate(),
+    reviewWindowEnd: reviewWindowEnd.toDate(),
+    attempts: 1
+  };
+  console.log(`[WRONG ANSWER SERVICE] Create data:`, createData);
+  
+  const created = await prisma.wrongAnswer.create({
+    data: createData,
     include: {
       vocab: {
         include: {
@@ -62,6 +71,9 @@ async function addWrongAnswer(userId, vocabId) {
       }
     }
   });
+  
+  console.log(`[WRONG ANSWER SERVICE] Created result:`, created);
+  return created;
 }
 
 /**
@@ -108,45 +120,76 @@ async function completeWrongAnswer(userId, vocabId) {
  * @returns {Array} 오답노트 목록
  */
 async function getWrongAnswers(userId, includeCompleted = false) {
-  const now = dayjs();
+  console.log(`[WRONG ANSWER SERVICE] Getting wrong answers: userId=${userId}, includeCompleted=${includeCompleted}`);
   
-  const wrongAnswers = await prisma.wrongAnswer.findMany({
-    where: {
-      userId,
-      isCompleted: includeCompleted ? undefined : false
-    },
-    include: {
-      vocab: {
-        include: {
-          dictMeta: true
+  try {
+    const now = dayjs();
+    
+    const wrongAnswers = await prisma.wrongAnswer.findMany({
+      where: {
+        userId,
+        isCompleted: includeCompleted ? undefined : false
+      },
+      include: {
+        vocab: {
+          include: {
+            dictMeta: true
+          }
         }
+      },
+      orderBy: [
+        { isCompleted: 'asc' },
+        { wrongAt: 'desc' }
+      ]
+    });
+    
+    console.log(`[WRONG ANSWER SERVICE] Found ${wrongAnswers.length} wrong answers`);
+    
+    // 각 항목에 복습 상태 정보 추가
+    const result = wrongAnswers.map((wa, index) => {
+      try {
+        const reviewWindowStart = dayjs(wa.reviewWindowStart);
+        const reviewWindowEnd = dayjs(wa.reviewWindowEnd);
+        
+        let reviewStatus = 'pending'; // 아직 복습 시간 전
+        try {
+          if (now.isAfter(reviewWindowEnd)) {
+            reviewStatus = 'overdue'; // 복습 시간 지남
+          } else if (now.isBetween(reviewWindowStart, reviewWindowEnd, null, '[]')) {
+            reviewStatus = 'available'; // 복습 가능 시간
+          }
+        } catch (dateError) {
+          console.error(`[WRONG ANSWER SERVICE] Date comparison error for item ${index}:`, dateError);
+          reviewStatus = 'pending'; // 기본값으로 설정
+        }
+        
+        return {
+          ...wa,
+          reviewStatus,
+          canReview: reviewStatus === 'available' || reviewStatus === 'overdue',
+          timeUntilReview: reviewStatus === 'pending' ? (
+            reviewWindowStart.isValid() ? reviewWindowStart.diff(now, 'hour') : 0
+          ) : 0
+        };
+      } catch (itemError) {
+        console.error(`[WRONG ANSWER SERVICE] Error processing item ${index}:`, itemError);
+        // 기본 정보만 반환
+        return {
+          ...wa,
+          reviewStatus: 'pending',
+          canReview: false,
+          timeUntilReview: 0
+        };
       }
-    },
-    orderBy: [
-      { isCompleted: 'asc' },
-      { wrongAt: 'desc' }
-    ]
-  });
-  
-  // 각 항목에 복습 상태 정보 추가
-  return wrongAnswers.map(wa => {
-    const reviewWindowStart = dayjs(wa.reviewWindowStart);
-    const reviewWindowEnd = dayjs(wa.reviewWindowEnd);
+    });
     
-    let reviewStatus = 'pending'; // 아직 복습 시간 전
-    if (now.isAfter(reviewWindowEnd)) {
-      reviewStatus = 'overdue'; // 복습 시간 지남
-    } else if (now.isBetween(reviewWindowStart, reviewWindowEnd, null, '[]')) {
-      reviewStatus = 'available'; // 복습 가능 시간
-    }
+    console.log(`[WRONG ANSWER SERVICE] Successfully processed ${result.length} items`);
+    return result;
     
-    return {
-      ...wa,
-      reviewStatus,
-      canReview: reviewStatus === 'available' || reviewStatus === 'overdue',
-      timeUntilReview: reviewStatus === 'pending' ? reviewWindowStart.diff(now, 'hour') : 0
-    };
-  });
+  } catch (error) {
+    console.error(`[WRONG ANSWER SERVICE] Error in getWrongAnswers:`, error);
+    throw error;
+  }
 }
 
 /**
@@ -175,13 +218,13 @@ async function getAvailableWrongAnswersCount(userId) {
  * @returns {Array} 퀴즈 데이터
  */
 async function generateWrongAnswerQuiz(userId, limit = 10) {
-  const now = dayjs();
+  console.log(`[WRONG ANSWER QUIZ] Generating quiz for userId=${userId}, limit=${limit}`);
   
   const wrongAnswers = await prisma.wrongAnswer.findMany({
     where: {
       userId,
-      isCompleted: false,
-      reviewWindowStart: { lte: now.toDate() }
+      isCompleted: false
+      // 복습 윈도우 체크 제거 - 모든 미완료 오답 포함
     },
     include: {
       vocab: {
@@ -194,8 +237,10 @@ async function generateWrongAnswerQuiz(userId, limit = 10) {
     orderBy: { wrongAt: 'asc' } // 오래된 것부터
   });
   
+  console.log(`[WRONG ANSWER QUIZ] Found ${wrongAnswers.length} wrong answers for quiz`);
+  
   // 퀴즈 형태로 변환
-  return wrongAnswers.map(wa => ({
+  const quizItems = wrongAnswers.map(wa => ({
     wrongAnswerId: wa.id,
     vocabId: wa.vocab.id,
     lemma: wa.vocab.lemma,
@@ -207,6 +252,9 @@ async function generateWrongAnswerQuiz(userId, limit = 10) {
     wrongAt: wa.wrongAt,
     reviewWindowEnd: wa.reviewWindowEnd
   }));
+  
+  console.log(`[WRONG ANSWER QUIZ] Returning ${quizItems.length} quiz items`);
+  return quizItems;
 }
 
 /**
