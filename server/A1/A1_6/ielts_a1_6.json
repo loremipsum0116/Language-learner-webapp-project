@@ -105,7 +105,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/slow-uk.mp3",
     "koGloss": "adj.느린; adv.천천히",
     "koExample": "거북이는 매우 느립니다.",
-    "koChirpScript": "slow. fast의 반대말이죠. 느린. 이라는 뜻입니다. The turtle is very slow. 거북이는 매우 느립니다. 라는 문장처럼 써요."
+    "koChirpScript": "slow. 느린. 이라는 뜻입니다. The turtle is very slow. 거북이는 매우 느립니다. 라는 문장처럼 써요."
   },
   {
     "lemma": "today",
@@ -237,7 +237,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/finish-uk.mp3",
     "koGloss": "v.끝내다, 마치다; n.끝, 마무리",
     "koExample": "숙제 다 끝냈니?",
-    "koChirpScript": "finish. start의 반대말! 끝내다입니다. Have you finished your homework? 숙제 다 끝냈니? 라고 물어볼 때 쓸 수 있어요."
+    "koChirpScript": "finish. 끝내다입니다. Have you finished your homework? 숙제 다 끝냈니? 라고 물어볼 때 쓸 수 있어요."
   },
   {
     "lemma": "drive",
@@ -633,7 +633,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/expensive-uk.mp3",
     "koGloss": "adj.비싼, 돈이 많이 드는",
     "koExample": "새 차는 매우 비쌀 수 있습니다.",
-    "koChirpScript": "expensive. cheap의 반대말! 비싼이라는 뜻이죠. A new car can be very expensive. 새 차는 매우 비쌀 수 있습니다. 라는 문장입니다."
+    "koChirpScript": "expensive. 비싼이라는 뜻이죠. A new car can be very expensive. 새 차는 매우 비쌀 수 있습니다. 라는 문장입니다."
   },
   {
     "lemma": "easy",
@@ -657,7 +657,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/difficult-uk.mp3",
     "koGloss": "adj.어려운, 힘든",
     "koExample": "새로운 언어를 배우는 것은 처음에는 어려울 수 있습니다.",
-    "koChirpScript": "difficult. easy의 반대말이죠. 어려운이라는 뜻입니다. Learning a new language can be difficult at first. 새로운 언어를 배우는 것은 처음에는 어려울 수 있습니다. 라는 뜻이에요."
+    "koChirpScript": "difficult. 어려운이라는 뜻입니다. Learning a new language can be difficult at first. 새로운 언어를 배우는 것은 처음에는 어려울 수 있습니다. 라는 뜻이에요."
   },
   {
     "lemma": "long",
@@ -681,7 +681,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/short-uk.mp3",
     "koGloss": "adj.짧은, 키가 작은; adv.짧게",
     "koExample": "이것은 매우 짧은 이야기입니다.",
-    "koChirpScript": "short. long의 반대말! 짧은이라는 뜻이죠. 키가 작다는 의미로도 쓰여요. This is a very short story. 이것은 매우 짧은 이야기입니다. 라는 뜻입니다."
+    "koChirpScript": "short. 짧은이라는 뜻이죠. 키가 작다는 의미로도 쓰여요. This is a very short story. 이것은 매우 짧은 이야기입니다. 라는 뜻입니다."
   },
   {
     "lemma": "dark",
@@ -1557,7 +1557,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/bottom-uk.mp3",
     "koGloss": "n.맨 아래, 바닥; adj.바닥의",
     "koExample": "제 열쇠는 가방 맨 아래에 있습니다.",
-    "koChirpScript": "bottom. top의 반대말! 맨 아래, 바닥을 뜻해요. My keys are at the bottom of my bag. 제 열쇠는 가방 맨 아래에 있습니다. 라는 뜻이에요."
+    "koChirpScript": "bottom. 맨 아래, 바닥을 뜻해요. My keys are at the bottom of my bag. 제 열쇠는 가방 맨 아래에 있습니다. 라는 뜻이에요."
   },
   {
     "lemma": "afternoon",
@@ -1893,7 +1893,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/pull-uk.mp3",
     "koGloss": "v.당기다, 끌다; n.끌기",
     "koExample": "이 무거운 상자 끄는 것 좀 도와줘요.",
-    "koChirpScript": "pull. push의 반대말! 당기다, 끌다라는 뜻입니다. 문에 PUSH 또는 PULL이라고 쓰여 있는 걸 잘 봐야 해요. Help me pull this heavy box. 이 무거운 상자 끄는 것 좀 도와줘요. 라는 뜻입니다."
+    "koChirpScript": "pull. 당기다, 끌다라는 뜻입니다. 문에 PUSH 또는 PULL이라고 쓰여 있는 걸 잘 봐야 해요. Help me pull this heavy box. 이 무거운 상자 끄는 것 좀 도와줘요. 라는 뜻입니다."
   },
   {
     "lemma": "send",
@@ -1929,7 +1929,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/dry-uk.mp3",
     "koGloss": "adj.마른, 건조한; v.말리다",
     "koExample": "마른 수건을 사용해 주세요.",
-    "koChirpScript": "dry. wet의 반대말! 마른, 건조한 이라는 뜻입니다. Please use a dry towel. 마른 수건을 사용해 주세요. 라는 뜻이에요."
+    "koChirpScript": "dry. 마른, 건조한 이라는 뜻입니다. Please use a dry towel. 마른 수건을 사용해 주세요. 라는 뜻이에요."
   },
   {
     "lemma": "heavy",
@@ -2109,7 +2109,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/thin-uk.mp3",
     "koGloss": "adj.마른, 얇은; v.얇게 만들다",
     "koExample": "그는 키가 크고 마른 남자입니다.",
-    "koChirpScript": "thin. fat의 반대말! 마른 또는 얇은 이라는 뜻이에요. He is a tall, thin man. 그는 키가 크고 마른 남자입니다. 라고 사람을 묘사할 수 있습니다."
+    "koChirpScript": "thin. 마른 또는 얇은 이라는 뜻이에요. He is a tall, thin man. 그는 키가 크고 마른 남자입니다. 라고 사람을 묘사할 수 있습니다."
   },
   {
     "lemma": "loud",
@@ -2157,7 +2157,7 @@
     "audioUrl": "https://api.dictionaryapi.dev/media/pronunciations/en/down-uk.mp3",
     "koGloss": "adv.아래로, 아래에",
     "koExample": "공이 언덕 아래로 굴러갔습니다.",
-    "koChirpScript": "down. up의 반대말! 아래로, 아래에 라는 방향을 나타냅니다. The ball rolled down the hill. 공이 언덕 아래로 굴러갔습니다. 라는 뜻입니다."
+    "koChirpScript": "down 아래로, 아래에 라는 방향을 나타냅니다. The ball rolled down the hill. 공이 언덕 아래로 굴러갔습니다. 라는 뜻입니다."
   },
   {
     "lemma": "around",
