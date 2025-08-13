@@ -201,6 +201,10 @@ model SRSCard {
   isFromWrongAnswer Boolean @default(false) // 오답으로 인해 생긴 카드인지
   wrongStreakCount Int @default(0) // 연속 오답 횟수 (누적)
   
+  /// 동결 상태 (Overdue 미응시 24시간 페널티)
+  isFrozen Boolean @default(false) // 파란색 동결 상태
+  frozenUntil DateTime? // 동결 해제 시간
+  
   /// 120일 마스터 완료 상태
   isMastered Boolean @default(false) // 120일 사이클 완료 여부
   masteredAt DateTime? // 마스터 완료 시각

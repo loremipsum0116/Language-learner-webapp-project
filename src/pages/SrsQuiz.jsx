@@ -15,6 +15,7 @@ export default function SrsQuiz() {
     const [idx, setIdx] = useState(0);
     const [submitting, setSubmitting] = useState(false);
     const [err, setErr] = useState(null);
+    const [streakInfo, setStreakInfo] = useState(null);
 
     // 폴더 ID가 변경될 때마다 퀴즈 큐를 가져옵니다.
     useEffect(() => {
@@ -29,10 +30,17 @@ export default function SrsQuiz() {
             try {
                 setLoading(true);
                 setErr(null);
-                const { data } = await fetchJSON(`/srs/folders/${folderId}/queue`, withCreds({ signal: ac.signal }));
+                
+                // 퀴즈 큐와 연속학습일 정보를 병렬로 가져오기
+                const [queueRes, streakRes] = await Promise.all([
+                    fetchJSON(`/srs/folders/${folderId}/queue`, withCreds({ signal: ac.signal })),
+                    fetchJSON('/srs/streak', withCreds({ signal: ac.signal }))
+                ]);
+                
                 if (!ac.signal.aborted) {
-                    setQueue(Array.isArray(data) ? data : []);
+                    setQueue(Array.isArray(queueRes.data) ? queueRes.data : []);
                     setIdx(0);
+                    setStreakInfo(streakRes.data);
                 }
             } catch (e) {
                 if (!isAbortError(e)) {
@@ -63,11 +71,21 @@ export default function SrsQuiz() {
 
         try {
             setSubmitting(true);
-            // 백엔드에 답안 제출
-            const response = await fetchJSON('/quiz/answer', withCreds({
-                method: 'POST',
-                body: JSON.stringify({ folderId, cardId: current.cardId, correct })
-            }));
+            // 백엔드에 답안 제출과 연속학습일 정보를 병렬로 가져오기
+            const [answerResponse, streakResponse] = await Promise.all([
+                fetchJSON('/quiz/answer', withCreds({
+                    method: 'POST',
+                    body: JSON.stringify({ folderId, cardId: current.cardId, correct })
+                })),
+                fetchJSON('/srs/streak', withCreds()) // 연속학습일 정보 업데이트
+            ]);
+            
+            const response = answerResponse;
+            
+            // 연속학습일 정보 업데이트
+            if (streakResponse?.data) {
+                setStreakInfo(streakResponse.data);
+            }
 
             // 서버 응답에서 카드 정보 가져오기
             const { 
@@ -77,6 +95,9 @@ export default function SrsQuiz() {
                 isOverdue,
                 overdueDeadline,
                 isFromWrongAnswer,
+                // 동결 상태 정보 추가
+                isFrozen,
+                frozenUntil,
                 canUpdateCardState, 
                 calculatedStage,
                 calculatedNextReviewAt,
@@ -84,6 +105,14 @@ export default function SrsQuiz() {
                 message,
                 isMasteryAchieved 
             } = response.data || {};
+
+            // 동결 상태 처리 (최우선)
+            if (isFrozen) {
+                toast.error('🧊 카드가 동결 상태입니다. 학습이 불가능합니다.', {
+                    duration: 3000
+                });
+                return;
+            }
 
             // 마스터 달성 축하 메시지 표시
             if (isMasteryAchieved) {
@@ -120,6 +149,9 @@ export default function SrsQuiz() {
                         isOverdue: isOverdue !== undefined ? isOverdue : item.isOverdue,
                         overdueDeadline: overdueDeadline || item.overdueDeadline,
                         isFromWrongAnswer: isFromWrongAnswer !== undefined ? isFromWrongAnswer : item.isFromWrongAnswer,
+                        // 동결 상태 정보 추가
+                        isFrozen: isFrozen !== undefined ? isFrozen : item.isFrozen,
+                        frozenUntil: frozenUntil || item.frozenUntil,
                         // 계산된 정보를 별도 필드로 저장 (참고용)
                         _calculatedStage: calculatedStage,
                         _calculatedNextReviewAt: calculatedNextReviewAt,
@@ -181,6 +213,43 @@ export default function SrsQuiz() {
 
     return (
         <main className="container py-4" style={{ maxWidth: 720 }}>
+            {/* 연속학습일 정보 (상단 배너) */}
+            {streakInfo && (
+                <div className="alert alert-light border mb-3" role="alert">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div className="d-flex align-items-center">
+                            <span className="me-2" style={{ fontSize: '20px' }}>
+                                {streakInfo.status?.icon || '🔥'}
+                            </span>
+                            <div>
+                                <strong className="me-2">연속 {streakInfo.streak}일째 학습 중</strong>
+                                <span className="badge bg-primary me-2">
+                                    {streakInfo.dailyQuizCount}/{streakInfo.requiredDaily}
+                                </span>
+                                {streakInfo.bonus?.current && (
+                                    <span className="badge bg-warning text-dark">
+                                        {streakInfo.bonus.current.emoji} {streakInfo.bonus.current.title}
+                                    </span>
+                                )}
+                            </div>
+                        </div>
+                        <small className="text-muted">
+                            {streakInfo.isCompletedToday ? '✅ 오늘 목표 달성!' : 
+                             `${streakInfo.remainingForStreak}개 더 필요`}
+                        </small>
+                    </div>
+                    {/* 미니 진행바 */}
+                    <div className="progress mt-2" style={{ height: '4px' }}>
+                        <div 
+                            className={`progress-bar ${
+                                streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
+                            }`}
+                            style={{ width: `${streakInfo.progressPercent}%` }}
+                        ></div>
+                    </div>
+                </div>
+            )}
+
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <h4 className="m-0">SRS 복습 퀴즈</h4>
                 <span className="badge bg-dark fs-6">{progress.learned} / {progress.total}</span>

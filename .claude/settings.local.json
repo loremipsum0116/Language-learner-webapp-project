@@ -19,7 +19,8 @@
       "Bash(npx prisma:*)",
       "Bash(del nul)",
       "Bash(del servernul)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(del temp_check_frozen.js temp_fix_frozen_24h.js)"
     ],
     "deny": []
   }

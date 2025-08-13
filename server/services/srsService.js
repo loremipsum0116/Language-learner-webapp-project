@@ -8,7 +8,7 @@ const {
   computeOverdueDeadline,
   STAGE_DELAYS 
 } = require('./srsSchedule');
-const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, hasOverdueCards } = require('./srsJobs');
+const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, isCardFrozen, hasOverdueCards } = require('./srsJobs');
 const dayjs = require('dayjs');
 
 // SRS 망각곡선 일수 (Stage 0: 0일, Stage 1: 3일, Stage 2: 7일, ...)
@@ -344,6 +344,15 @@ async function getQueue(userId, folderId) {
         learned: i.learned,
         wrongCount: i.wrongCount,
         vocab: i.card.itemType === 'vocab' ? vocabMap.get(i.card.itemId) : null,
+        // 동결 상태 정보 추가
+        stage: i.card.stage,
+        isFrozen: i.card.isFrozen,
+        frozenUntil: i.card.frozenUntil,
+        isOverdue: i.card.isOverdue,
+        overdueDeadline: i.card.overdueDeadline,
+        waitingUntil: i.card.waitingUntil,
+        nextReviewAt: i.card.nextReviewAt,
+        isFromWrongAnswer: i.card.isFromWrongAnswer
     }));
 }
 
@@ -406,6 +415,9 @@ async function bumpDailyStat(userId, { srsSolvedInc = 0, autoLearnedInc = 0, wro
  * 새 로직: 대기 시간 동안은 상태 변화 없음, overdue 상태에서만 학습 가능
  */
 async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
+    console.log(`[SRS SERVICE] ========== markAnswer called ==========`);
+    console.log(`[SRS SERVICE] userId: ${userId}, cardId: ${cardId}, correct: ${correct}, vocabId: ${vocabId}`);
+    
     // 타임머신 시간 오프셋 적용
     const { getOffsetDate } = require('../routes/timeMachine');
     const now = getOffsetDate();
@@ -422,12 +434,25 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             isOverdue: true,
             waitingUntil: true,
             overdueDeadline: true,
+            isFrozen: true,
+            frozenUntil: true,
             itemType: true,
             itemId: true
         }
     });
     
     if (!card) throw new Error('카드를 찾을 수 없습니다.');
+    
+    console.log(`[SRS SERVICE] Card found:`, {
+        id: card.id,
+        stage: card.stage,
+        nextReviewAt: card.nextReviewAt,
+        waitingUntil: card.waitingUntil,
+        isOverdue: card.isOverdue,
+        isFromWrongAnswer: card.isFromWrongAnswer,
+        isFrozen: card.isFrozen,
+        frozenUntil: card.frozenUntil
+    });
     
     // vocabId가 전달되지 않은 경우 카드에서 조회
     if (!vocabId && card.itemType === 'vocab') {
@@ -441,12 +466,37 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     let statusMessage = '';
     
     // 첫 학습 조건: stage 0이고 waitingUntil이 없고 nextReviewAt이 null이거나 과거인 카드
+    // isFromWrongAnswer 조건 제거 - stage 0에서 오답 처리된 후에도 다시 학습할 수 있어야 함
     const isFirstLearning = card.stage === 0 && 
                            !card.waitingUntil && 
-                           !card.isFromWrongAnswer &&
                            (!card.nextReviewAt || new Date(card.nextReviewAt) <= now);
     
     const isInOverdueWindow = isCardOverdue(card);
+    let isInFrozenState = isCardFrozen(card);
+    
+    // 동결 시간이 만료되었다면 즉시 overdue 상태로 전환 (명세: 동결 만료 후 Overdue로 복귀)
+    if (card.isFrozen && card.frozenUntil && !isInFrozenState) {
+        console.log(`[SRS SERVICE] Card ${cardId} frozen period expired - converting to overdue immediately`);
+        
+        // 동결 해제 후 overdue 데드라인은 타임머신 시간 기준 (학습 스케줄)
+        const overdueDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+        
+        await prisma.sRSCard.update({
+            where: { id: cardId },
+            data: {
+                isFrozen: false,
+                frozenUntil: null,
+                isOverdue: true,
+                overdueDeadline: overdueDeadline,
+                overdueStartAt: now,
+                waitingUntil: null,
+                nextReviewAt: overdueDeadline // overdue 데드라인을 nextReviewAt으로 설정하여 타이머 표시
+            }
+        });
+        
+        console.log(`[SRS SERVICE] Card ${cardId} unfrozen and converted to overdue with 24h deadline`);
+        isInFrozenState = false; // 이제 동결 상태가 아님
+    }
     
     // 오답 단어의 특별한 경우: waitingUntil이 지난 후 overdue 상태가 될 때까지의 틈새 시간
     const isWrongAnswerReady = card.isFromWrongAnswer && 
@@ -454,6 +504,42 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                               new Date() >= new Date(card.waitingUntil) && 
                               card.overdueDeadline && 
                               new Date() < new Date(card.overdueDeadline);
+    
+    // 동결 상태에서는 카드 상태 변경은 불가하지만 학습 통계는 기록
+    if (isInFrozenState) {
+        console.log(`[SRS SERVICE] Card ${cardId} is frozen - no state change but recording statistics`);
+        
+        // 동결 상태에서도 정답/오답 통계는 기록
+        if (correct) {
+            await prisma.sRSCard.update({
+                where: { id: cardId },
+                data: { correctTotal: { increment: 1 } }
+            });
+            console.log(`[SRS SERVICE] Frozen card ${cardId} - recorded correct answer`);
+        } else {
+            await prisma.sRSCard.update({
+                where: { id: cardId },
+                data: { wrongTotal: { increment: 1 } }
+            });
+            console.log(`[SRS SERVICE] Frozen card ${cardId} - recorded wrong answer`);
+        }
+        
+        return {
+            status: 'frozen',
+            newStage: card.stage,
+            waitingUntil: null,
+            nextReviewAt: null,
+            isOverdue: false,
+            overdueDeadline: null,
+            isFromWrongAnswer: card.isFromWrongAnswer,
+            isFrozen: true,
+            frozenUntil: card.frozenUntil,
+            streakInfo: { currentStreak: 0, maxStreak: 0 }, // 기본값
+            canUpdateCardState: false,
+            message: `카드가 동결 상태입니다. ${card.frozenUntil ? dayjs(card.frozenUntil).format('MM-DD HH:mm') : ''}까지 학습이 불가능합니다.`,
+            isMasteryAchieved: false
+        };
+    }
     
     if (isFirstLearning) {
         console.log(`[SRS SERVICE] Card ${cardId} - First learning allowed (stage 0, never studied before)`);
@@ -676,9 +762,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         if (card.isOverdue) {
             // overdue에서 오답: 현재 stage 유지하고 24시간 대기 후 다시 overdue 기회
             newStage = card.stage; // 현재 stage 유지 (리셋하지 않음)
-            // 실제 현재 시간 기준으로 24시간 대기 (타임머신 오프셋 적용 안 함)
-            const realNow = new Date();
-            waitingUntil = new Date(realNow.getTime() + 24 * 60 * 60 * 1000); // 24시간 대기
+            // 타임머신 시간 기준으로 24시간 대기 (학습 스케줄)
+            waitingUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000); // 24시간 대기
             nextReviewAt = waitingUntil;
             
             await prisma.sRSCard.update({
@@ -833,7 +918,9 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             waitingUntil: true,
             isOverdue: true,
             overdueDeadline: true,
-            isFromWrongAnswer: true
+            isFromWrongAnswer: true,
+            isFrozen: true,
+            frozenUntil: true
         }
     });
 
@@ -846,6 +933,9 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         isOverdue: updatedCard?.isOverdue ?? false,
         overdueDeadline: updatedCard?.overdueDeadline,
         isFromWrongAnswer: updatedCard?.isFromWrongAnswer ?? false,
+        // 동결 상태 정보
+        isFrozen: updatedCard?.isFrozen ?? false,
+        frozenUntil: updatedCard?.frozenUntil,
         streakInfo: streakInfo,
         canUpdateCardState: canUpdateCardState,
         message: statusMessage || (isMasteryAchieved ? '🎉 120일 마스터 완료! 축하합니다!' : (correct ? '정답입니다!' : '오답입니다.')),
@@ -963,9 +1053,11 @@ async function getWaitingCardsCount(userId) {
  * 사용자의 SRS 상태 대시보드 정보를 가져옵니다.
  */
 async function getSrsStatus(userId) {
-    const now = new Date();
+    // 타임머신 시간 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const now = getOffsetDate();
     
-    const [overdueCount, waitingCount, totalCards, masteredCount] = await Promise.all([
+    const [overdueCount, waitingCount, totalCards, masteredCount, frozenCount, userInfo] = await Promise.all([
         prisma.sRSCard.count({
             where: {
                 userId: userId,
@@ -977,7 +1069,8 @@ async function getSrsStatus(userId) {
             where: {
                 userId: userId,
                 waitingUntil: { gt: now },
-                isOverdue: false
+                isOverdue: false,
+                isFrozen: false
             }
         }),
         prisma.sRSCard.count({
@@ -988,18 +1081,96 @@ async function getSrsStatus(userId) {
                 userId: userId,
                 isMastered: true
             }
+        }),
+        prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isFrozen: true,
+                frozenUntil: { gt: now }
+            }
+        }),
+        prisma.user.findUnique({
+            where: { id: userId },
+            select: { 
+                hasOverdueCards: true,
+                nextOverdueAlarm: true,
+                lastOverdueCheck: true
+            }
         })
     ]);
 
     const masteryRate = totalCards > 0 ? (masteredCount / totalCards * 100).toFixed(1) : 0;
+    
+    // 8시간 간격 알림 계산
+    const shouldShowAlarm = overdueCount > 0;
+    const alarmInfo = shouldShowAlarm ? calculateAlarmInfo(now, userInfo?.nextOverdueAlarm) : null;
 
     return {
         overdueCount,
         waitingCount,
+        frozenCount,
         totalCards,
         masteredCount,
         masteryRate: parseFloat(masteryRate),
-        reviewableCount: overdueCount
+        reviewableCount: overdueCount,
+        // 알림 정보
+        shouldShowAlarm,
+        alarmInfo
+    };
+}
+
+/**
+ * 8시간 간격 알림 정보를 계산합니다.
+ * 00시부터 24시간동안 8시간 간격으로 알림 (0시, 8시, 16시)
+ */
+function calculateAlarmInfo(now, nextOverdueAlarm) {
+    const dayjs = require('dayjs');
+    const utc = require('dayjs/plugin/utc');
+    const timezone = require('dayjs/plugin/timezone');
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
+    
+    const nowKst = dayjs(now).tz('Asia/Seoul');
+    const todayStart = nowKst.startOf('day'); // 오늘 00:00 KST
+    const todayEnd = todayStart.add(24, 'hours'); // 내일 00:00 KST
+    
+    // 알림 시간대: 0시, 8시, 16시
+    const alarmHours = [0, 8, 16];
+    const currentHour = nowKst.hour();
+    
+    // 현재 알림 주기 찾기
+    let currentPeriodStart = 0;
+    let nextAlarmHour = 8; // 기본값
+    
+    for (let i = alarmHours.length - 1; i >= 0; i--) {
+        if (currentHour >= alarmHours[i]) {
+            currentPeriodStart = alarmHours[i];
+            nextAlarmHour = alarmHours[i + 1] || 24; // 다음날 0시
+            break;
+        }
+    }
+    
+    // 현재 알림 주기 시작 시각
+    const periodStart = todayStart.hour(currentPeriodStart);
+    
+    // 다음 알림 시각
+    const nextAlarm = nextAlarmHour === 24 
+        ? todayStart.add(1, 'day') // 내일 0시
+        : todayStart.hour(nextAlarmHour);
+    
+    // 현재 주기에서 경과 시간
+    const elapsedInPeriod = nowKst.diff(periodStart, 'minutes');
+    const totalPeriodMinutes = nextAlarmHour === 24 
+        ? (24 - currentPeriodStart) * 60 
+        : 8 * 60; // 8시간
+    
+    return {
+        currentPeriod: `${currentPeriodStart}:00 - ${nextAlarmHour === 24 ? '24:00' : nextAlarmHour + ':00'}`,
+        nextAlarmAt: nextAlarm.toDate(),
+        nextAlarmAtKst: nextAlarm.format('HH:mm'),
+        isInAlarmWindow: true, // overdue가 있으면 항상 알림 창구
+        minutesToNextAlarm: nextAlarm.diff(nowKst, 'minutes'),
+        periodProgress: Math.round((elapsedInPeriod / totalPeriodMinutes) * 100)
     };
 }
 

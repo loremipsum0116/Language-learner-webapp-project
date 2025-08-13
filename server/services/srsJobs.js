@@ -144,26 +144,70 @@ async function manageOverdueCards(logger = console) {
   const affectedUsers = new Set();
   
   try {
-    // 0. 기존 overdue 카드 수정 로직 비활성화 (타임머신에서 처리하므로)
-    // 타임머신 이동 후 중복 수정을 방지하기 위해 비활성화
-    /*
+    // 0. 기존 overdue 카드들의 데드라인을 타임머신 시간 기준으로 재계산
+    // 타임머신 이동 시 기존 overdue 카드들이 올바르게 동결될 수 있도록 데드라인 검증
     const allOverdueCards = await prisma.sRSCard.findMany({
-      where: { isOverdue: true },
-      select: { id: true, userId: true, overdueStartAt: true, overdueDeadline: true }
+      where: { 
+        isOverdue: true,
+        isFrozen: false // 이미 동결된 카드는 제외
+      },
+      select: { id: true, userId: true, overdueStartAt: true, overdueDeadline: true, stage: true }
     });
     
-    for (const card of allOverdueCards) {
-      const correctDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-      await prisma.sRSCard.update({
-        where: { id: card.id },
-        data: { overdueDeadline: correctDeadline, overdueStartAt: now }
-      });
-      affectedUsers.add(card.userId);
-    }
-    */
+    logger.info(`[srsJobs] ⏰ Time machine check: Current time: ${now.toISOString()}`);
     
-    // 1. 대기 시간이 끝난 카드들을 overdue 상태로 설정
-    const cardsToMarkOverdue = await prisma.sRSCard.findMany({
+    logger.info(`[srsJobs] Found ${allOverdueCards.length} overdue cards to check for time machine freeze`);
+    
+    for (const card of allOverdueCards) {
+      logger.info(`[srsJobs] Checking card ${card.id}:`);
+      logger.info(`  - stage: ${card.stage}`);
+      logger.info(`  - overdueStartAt: ${card.overdueStartAt?.toISOString()}`);
+      logger.info(`  - overdueDeadline: ${card.overdueDeadline?.toISOString()}`);
+      logger.info(`  - current time (time machine): ${now.toISOString()}`);
+      
+      // 기존 overdueStartAt에서 24시간 후가 현재 타임머신 시간보다 이전인 경우 즉시 동결 처리
+      if (card.overdueStartAt && card.overdueDeadline) {
+        const originalDeadline = new Date(card.overdueDeadline);
+        const hoursLeft = Math.round((originalDeadline.getTime() - now.getTime()) / (60 * 60 * 1000));
+        
+        logger.info(`  - hours left until deadline: ${hoursLeft}`);
+        
+        // 데드라인이 현재 타임머신 시간을 이미 지났다면 동결 상태로 전환
+        if (originalDeadline <= now) {
+          // 동결은 실제 시간 기준으로 24시간 (타임머신과 무관한 페널티)
+          const realNow = new Date();
+          const frozenUntil = new Date(realNow.getTime() + 24 * 60 * 60 * 1000);
+          
+          logger.info(`[srsJobs] ❄️  FREEZING Card ${card.id} due to expired deadline (time machine)`);
+          logger.info(`  - original deadline: ${originalDeadline.toISOString()}`);
+          logger.info(`  - current time: ${now.toISOString()}`);
+          logger.info(`  - frozenUntil: ${frozenUntil.toISOString()}`);
+          
+          await prisma.sRSCard.update({
+            where: { id: card.id },
+            data: {
+              isOverdue: false,
+              isFrozen: true,
+              frozenUntil: frozenUntil,
+              overdueDeadline: null,
+              overdueStartAt: null,
+              waitingUntil: null,
+              nextReviewAt: null
+            }
+          });
+          
+          affectedUsers.add(card.userId);
+        } else {
+          logger.info(`  - deadline not expired yet, no freeze needed`);
+        }
+      } else {
+        logger.info(`  - missing overdueStartAt or overdueDeadline, skipping`);
+      }
+    }
+    
+    // 1. overdue 상태로 변경해야 할 카드들 찾기
+    // 1-1. waitingUntil 기반 (오답 처리 후 대기)
+    const cardsToMarkOverdueWaiting = await prisma.sRSCard.findMany({
       where: {
         waitingUntil: { lte: now },
         isOverdue: false
@@ -171,13 +215,36 @@ async function manageOverdueCards(logger = console) {
       select: { id: true, userId: true, waitingUntil: true, isFromWrongAnswer: true, stage: true }
     });
 
+    // 1-2. nextReviewAt 기반 (정답 후 다음 복습일)
+    // nextReviewAt - 24시간이 현재 시간을 지났지만 아직 isOverdue가 false인 카드들
+    const cardsToMarkOverdueNext = await prisma.sRSCard.findMany({
+      where: {
+        nextReviewAt: { not: null },
+        isOverdue: false,
+        waitingUntil: null, // waitingUntil이 있는 카드는 위에서 이미 처리됨
+      },
+      select: { id: true, userId: true, nextReviewAt: true, isFromWrongAnswer: true, stage: true }
+    });
+
+    // nextReviewAt 카드들 중 overdue 시작 시간(nextReviewAt - 24시간)이 지난 것들만 필터링
+    const cardsToMarkOverdueNextFiltered = cardsToMarkOverdueNext.filter(card => {
+      const overdueStartTime = new Date(card.nextReviewAt.getTime() - 24 * 60 * 60 * 1000);
+      return overdueStartTime <= now;
+    });
+
+    const cardsToMarkOverdue = [...cardsToMarkOverdueWaiting, ...cardsToMarkOverdueNextFiltered];
+
     for (const card of cardsToMarkOverdue) {
       // overdue 상태로 변경하고 24시간 데드라인 설정
       // 수정: overdue 시작 시점(now)에서 24시간 후로 설정 (모든 stage 동일)
       const overdueDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
       
       logger.info(`[srsJobs] Card ${card.id} marked overdue:`);
-      logger.info(`  - waitingUntil: ${card.waitingUntil.toISOString()}`);
+      if (card.waitingUntil) {
+        logger.info(`  - waitingUntil: ${card.waitingUntil.toISOString()}`);
+      } else if (card.nextReviewAt) {
+        logger.info(`  - nextReviewAt: ${card.nextReviewAt.toISOString()}`);
+      }
       logger.info(`  - now (time machine): ${now.toISOString()}`);
       logger.info(`  - overdueDeadline: ${overdueDeadline.toISOString()}`);
       logger.info(`  - hours until deadline: ${Math.round((overdueDeadline.getTime() - now.getTime()) / (60 * 60 * 1000))}`);
@@ -199,64 +266,81 @@ async function manageOverdueCards(logger = console) {
       logger.info(`[srsJobs] Marked ${cardsToMarkOverdue.length} cards as overdue (waiting period ended)`);
     }
 
-    // 2. overdue 데드라인이 지난 카드들을 stage 0으로 리셋
-    const cardsToReset = await prisma.sRSCard.findMany({
+    // 2. overdue 데드라인이 지난 카드들을 동결 상태로 전환 (24시간 페널티)
+    const cardsToFreeze = await prisma.sRSCard.findMany({
       where: {
         isOverdue: true,
         overdueDeadline: { lte: now }
       },
-      select: { id: true, userId: true, overdueDeadline: true, isFromWrongAnswer: true, wrongStreakCount: true }
+      select: { id: true, userId: true, overdueDeadline: true, isFromWrongAnswer: true, wrongStreakCount: true, stage: true }
     });
 
-    for (const card of cardsToReset) {
-      if (card.isFromWrongAnswer) {
-        // 직전 오답 카드: stage 유지하고 24시간 대기 후 다시 overdue 기회
-        const waitingUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-        
-        await prisma.sRSCard.update({
-          where: { id: card.id },
-          data: {
-            // stage: 현재 stage 유지 (변경하지 않음)
-            nextReviewAt: null,
-            isOverdue: false,
-            waitingUntil: waitingUntil,
-            overdueDeadline: null,
-            overdueStartAt: null,
-            // isFromWrongAnswer: true, // 이미 true이므로 유지
-            wrongStreakCount: { increment: 1 }, // 연속 오답 횟수 증가
-            wrongTotal: { increment: 1 } // 오답 처리로 간주
-          }
-        });
-        
-        logger.info(`[srsJobs] Wrong answer card ${card.id}: stage ${card.stage} preserved, 24h wait for retry`);
-        
-      } else {
-        // 직전 정답 카드: 해당 stage의 초기 타이머로 복귀
-        const { computeWaitingUntil } = require('./srsSchedule');
-        const waitingUntil = computeWaitingUntil(now, card.stage);
-        
-        await prisma.sRSCard.update({
-          where: { id: card.id },
-          data: {
-            // stage: 현재 stage 유지
-            nextReviewAt: waitingUntil,
-            waitingUntil: waitingUntil,
-            isOverdue: false,
-            overdueDeadline: null,
-            overdueStartAt: null,
-            isFromWrongAnswer: false // 정답 카드로 복귀
-          }
-        });
-        
-        const stageDays = [0, 3, 7, 14, 30, 60, 120][card.stage] || 0;
-        logger.info(`[srsJobs] Correct answer card ${card.id}: restored to stage ${card.stage} timer (${stageDays} days)`);
-      }
+    for (const card of cardsToFreeze) {
+      // 동결 상태로 전환 (24시간 페널티)
+      // 동결은 실제 시간 기준으로 24시간 (타임머신과 무관한 페널티)
+      const realNow = new Date();
+      const frozenUntil = new Date(realNow.getTime() + 24 * 60 * 60 * 1000);
+      
+      await prisma.sRSCard.update({
+        where: { id: card.id },
+        data: {
+          isOverdue: false,
+          isFrozen: true, // 동결 상태 설정
+          frozenUntil: frozenUntil, // 24시간 후 해제
+          overdueDeadline: null,
+          overdueStartAt: null,
+          waitingUntil: null,
+          nextReviewAt: null
+        }
+      });
+      
+      logger.info(`[srsJobs] Card ${card.id} frozen for 24h due to overdue deadline exceeded`);
+      logger.info(`  - frozenUntil: ${frozenUntil.toISOString()}`);
       
       affectedUsers.add(card.userId);
     }
 
-    if (cardsToReset.length > 0) {
-      logger.info(`[srsJobs] Processed ${cardsToReset.length} overdue deadline-exceeded cards based on last answer type`);
+    if (cardsToFreeze.length > 0) {
+      logger.info(`[srsJobs] Froze ${cardsToFreeze.length} cards for overdue deadline exceeded`);
+    }
+    
+    // 3. 동결 해제된 카드들을 다시 overdue 상태로 전환
+    // 동결 해제는 실제 시간 기준으로 처리 (타임머신과 무관)
+    const realNow = new Date();
+    const cardsToUnfreeze = await prisma.sRSCard.findMany({
+      where: {
+        isFrozen: true,
+        frozenUntil: { lte: realNow }
+      },
+      select: { id: true, userId: true, frozenUntil: true, stage: true }
+    });
+
+    for (const card of cardsToUnfreeze) {
+      // 동결 해제 후 즉시 overdue 상태로 전환 (새로운 24시간 응시 창)
+      // overdue 데드라인은 타임머신 시간 기준 24시간 후로 설정 (학습 스케줄)
+      const overdueDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      
+      await prisma.sRSCard.update({
+        where: { id: card.id },
+        data: {
+          isFrozen: false,
+          frozenUntil: null,
+          isOverdue: true,
+          overdueDeadline: overdueDeadline,
+          overdueStartAt: now, // 타임머신 시간 기준으로 overdue 시작
+          waitingUntil: null,
+          nextReviewAt: overdueDeadline // overdue 데드라인을 nextReviewAt으로 설정하여 타이머 표시
+        }
+      });
+      
+      logger.info(`[srsJobs] Card ${card.id} unfrozen and marked overdue with new 24h deadline`);
+      logger.info(`  - new overdueDeadline: ${overdueDeadline.toISOString()}`);
+      
+      affectedUsers.add(card.userId);
+    }
+
+    if (cardsToUnfreeze.length > 0) {
+      logger.info(`[srsJobs] Unfroze ${cardsToUnfreeze.length} cards and marked them overdue`);
     }
     
     // 3. 영향받은 사용자들의 overdue 상태 업데이트
@@ -299,6 +383,16 @@ function isCardOverdue(card) {
   // overdue 상태인 카드는 데드라인과 관계없이 항상 정답/오답 처리 가능
   // 데드라인은 크론잡의 자동 stage 리셋을 위한 것이지, 사용자 입력을 막는 것이 아님
   return card.isOverdue === true;
+}
+
+/**
+ * 카드가 동결 상태인지 확인합니다.
+ */
+function isCardFrozen(card) {
+  if (!card.isFrozen) return false;
+  // 동결 해제는 실제 시간 기준 (타임머신과 무관한 페널티)
+  const realNow = new Date();
+  return card.frozenUntil && realNow < new Date(card.frozenUntil);
 }
 
 /**
@@ -409,6 +503,7 @@ module.exports = {
   manageOverdueCards,
   isCardInWaitingPeriod,
   isCardOverdue,
+  isCardFrozen,
   hasOverdueCards,
   updateAllUsersOverdueStatus,
   setOverdueAlarms

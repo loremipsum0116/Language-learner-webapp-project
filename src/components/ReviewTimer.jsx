@@ -10,7 +10,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 
-const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, className = "" }) => {
+const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, isFrozen, frozenUntil, className = "" }) => {
     const [timeLeft, setTimeLeft] = useState(null);
     const [isReviewable, setIsReviewable] = useState(false);
     const [dayOffset, setDayOffset] = useState(0); // 타임머신 오프셋 (일 단위)
@@ -19,14 +19,14 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
     useEffect(() => {
         const fetchTimeOffset = async () => {
             try {
-                // 타임머신 상태는 인증 없이 접근 가능하므로 withCreds() 제거
-                const response = await fetchJSON('/time-machine/status');
+                // 타임머신 상태 가져오기 (인증 필요)
+                const response = await fetchJSON('/time-machine/status', withCreds());
                 const offset = response.data?.dayOffset || 0;
                 setDayOffset(offset);
             } catch (e) {
-                // 에러 발생 시 현재 타임머신 오프셋을 1로 설정 (임시 수정)
-                console.error('Failed to fetch time offset, using dayOffset 1 as fallback (manual fix):', e);
-                setDayOffset(1); // 현재 타임머신이 1일 후로 설정되어 있으므로 1로 설정
+                // 에러 발생 시 오프셋 0 사용 (실제 시간)
+                console.warn('Failed to fetch time offset, using dayOffset 0 (real time):', e);
+                setDayOffset(0); // 실제 시간 사용
             }
         };
         
@@ -48,11 +48,48 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
     }, []);
 
     useEffect(() => {
-        if (!nextReviewAt) return;
+        // nextReviewAt이 없지만 동결 상태인 경우는 계속 진행
+        if (!nextReviewAt && !(isFrozen && frozenUntil)) return;
 
         const updateTimer = () => {
             // 타임머신 오프셋을 적용한 현재 시간 (실시간 계산)
             const now = dayjs().add(dayOffset, 'day').tz('Asia/Seoul');
+            
+            // 동결 상태 처리 (최우선) - nextReviewAt 없어도 동결 상태면 처리
+            if (isFrozen && frozenUntil) {
+                const frozenUntilTime = dayjs.utc(frozenUntil).tz('Asia/Seoul');
+                const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
+                const diff = frozenUntilTime.diff(realNow);
+                
+                if (diff > 0) {
+                    const duration = dayjs.duration(diff);
+                    const hours = Math.floor(duration.asHours());
+                    const minutes = duration.minutes();
+                    const seconds = duration.seconds();
+                    
+                    let timeString = "🧊 동결 중 ";
+                    if (hours > 0) {
+                        timeString += `${hours}시간 `;
+                    }
+                    timeString += `${minutes}분 ${seconds}초 후 해제`;
+                    
+                    setTimeLeft(timeString);
+                    setIsReviewable(false);
+                    return;
+                } else {
+                    // 동결 해제된 상태 - 단순히 overdue로 표시
+                    setTimeLeft("복습 가능!");
+                    setIsReviewable(true);
+                    return;
+                }
+            }
+            
+            // nextReviewAt이 없고 동결 상태도 아닌 경우 여기서 종료
+            if (!nextReviewAt) {
+                setTimeLeft("복습일 없음");
+                setIsReviewable(false);
+                return;
+            }
             
             // 디버깅 로그 (개발 중에만)
             if (isOverdue && isFromWrongAnswer) {
@@ -77,19 +114,13 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     // 오답 카드: overdue 상태에서 복습 가능하지만 24시간 데드라인까지 타이머 표시
                     if (overdueDeadline) {
                         const deadlineTime = dayjs.utc(overdueDeadline).tz('Asia/Seoul');
-                        // overdueDeadline은 서버에서 실제 현재 시간 기준으로 설정되므로 실제 현재 시간과 비교
-                        const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
-                        const diff = deadlineTime.diff(realNow);
+                        // overdue 데드라인은 타임머신 시간 기준으로 설정되므로 타임머신 시간과 비교
+                        const diff = deadlineTime.diff(now); // now는 이미 타임머신 오프셋이 적용된 시간
                         
                         if (diff <= 0) {
-                            // overdue 데드라인이 지났을 때: 즉시 적절한 타이머 표시
-                            // 오답 카드라면 24시간 대기 타이머 표시
-                            const wait24h = now.add(24, 'hour');
-                            const wait24hDiff = wait24h.diff(now);
-                            const wait24hDuration = dayjs.duration(wait24hDiff);
-                            
-                            setTimeLeft(`⏳ ${Math.floor(wait24hDuration.asHours())}시간 ${wait24hDuration.minutes()}분 ${wait24hDuration.seconds()}초 후 재도전`);
-                            setIsReviewable(false); // 대기 중이므로 복습 불가
+                            // overdue 데드라인이 지났을 때: 동결 상태로 표시해야 함
+                            setTimeLeft(`🧊 동결 상태 (24시간 페널티 적용 중)`);
+                            setIsReviewable(false); // 동결 중이므로 복습 불가
                             return;
                         }
                         
@@ -118,23 +149,13 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     // 일반 카드 overdue: overdueDeadline까지의 24시간 카운트다운 표시
                     if (overdueDeadline) {
                         const deadlineTime = dayjs.utc(overdueDeadline).tz('Asia/Seoul');
-                        // overdueDeadline은 서버에서 실제 현재 시간 기준으로 설정되므로 실제 현재 시간과 비교
-                        const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
-                        const deadlineDiff = deadlineTime.diff(realNow);
+                        // overdue 데드라인은 타임머신 시간 기준으로 설정되므로 타임머신 시간과 비교
+                        const deadlineDiff = deadlineTime.diff(now); // now는 이미 타임머신 오프셋이 적용된 시간
                         
                         if (deadlineDiff <= 0) {
-                            // overdue 데드라인이 지났을 때: stage별 초기 타이머 표시 (정답 카드의 경우)
-                            // Stage별 대기 시간: [0, 3, 7, 14, 30, 60, 120] 일
-                            const stageDays = [0, 3, 7, 14, 30, 60, 120];
-                            const currentStage = Math.min(Math.max(nextReviewAt ? 1 : 0, 0), 6); // 추정 stage
-                            const days = stageDays[currentStage] || 3; // 기본 3일
-                            
-                            const stageTimer = now.add(days, 'day');
-                            const stageTimerDiff = stageTimer.diff(now);
-                            const stageTimerDuration = dayjs.duration(stageTimerDiff);
-                            
-                            setTimeLeft(`⏳ ${Math.floor(stageTimerDuration.asDays())}일 ${stageTimerDuration.hours()}시간 후 복습`);
-                            setIsReviewable(false); // 대기 중이므로 복습 불가
+                            // overdue 데드라인이 지났을 때: 동결 상태로 표시해야 함
+                            setTimeLeft(`🧊 동결 상태 (24시간 페널티 적용 중)`);
+                            setIsReviewable(false); // 동결 중이므로 복습 불가
                             return;
                         }
                         
@@ -167,19 +188,8 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     dayjs.utc(waitingUntil).tz('Asia/Seoul') : 
                     dayjs.utc(nextReviewAt).tz('Asia/Seoul');
                 
-                // 오답 카드의 waitingUntil은 서버에서 타임머신 시간 기준으로 설정되므로
-                // UI에서는 실제 현재 시간과 비교해야 함
-                const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
-                const diff = targetTime.diff(realNow);
-                
-                // 디버깅 로그 추가
-                console.log(`[ReviewTimer] Wrong answer card waiting debug:`);
-                console.log(`  dayOffset: ${dayOffset}`);
-                console.log(`  now (with offset): ${now.toISOString()}`);
-                console.log(`  realNow (without offset): ${realNow.toISOString()}`);
-                console.log(`  waitingUntil: ${waitingUntil}`);
-                console.log(`  targetTime: ${targetTime.toISOString()}`);
-                console.log(`  diff hours: ${Math.round(diff / (60 * 60 * 1000))}`);
+                // 오답 카드의 waitingUntil은 타임머신 시간으로 설정되므로 타임머신 시간과 비교
+                const diff = targetTime.diff(now); // now는 이미 타임머신 오프셋이 적용된 시간
                 
                 if (diff <= 0) {
                     // 대기 시간이 지났을 경우: 실제로는 overdue 상태여야 함
@@ -218,9 +228,10 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
             }
 
             // waitingUntil이 있으면 이를 사용하여 정확한 대기 시간 표시
+            // waitingUntil은 타임머신 시간으로 설정되므로 타임머신 시간과 비교
             if (waitingUntil) {
                 const waitingTime = dayjs.utc(waitingUntil).tz('Asia/Seoul');
-                const waitingDiff = waitingTime.diff(now);
+                const waitingDiff = waitingTime.diff(now); // now는 이미 타임머신 오프셋이 적용된 시간
 
                 if (waitingDiff <= 0) {
                     // 대기 시간이 지났지만 아직 overdue 플래그가 false인 경우
@@ -298,10 +309,37 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
         const interval = setInterval(updateTimer, 1000);
 
         return () => clearInterval(interval);
-    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, dayOffset]);
+    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, isFrozen, frozenUntil, dayOffset]);
 
-    if (!nextReviewAt) {
+    // 동결 상태인 경우 nextReviewAt이 없어도 동결 타이머를 표시해야 함
+    if (!nextReviewAt && !isFrozen) {
         return <span className={`text-muted ${className}`}>복습일 없음</span>;
+    }
+    
+    // 동결 상태이지만 nextReviewAt이 없는 경우, 실시간 동결 타이머를 위한 useEffect 사용
+    if (!nextReviewAt && isFrozen && frozenUntil) {
+        // 이 경우 useEffect에서 타이머를 업데이트하므로 timeLeft 값을 사용
+        if (timeLeft !== null) {
+            return <span className={`text-info fw-bold ${className}`}>{timeLeft}</span>;
+        } else {
+            // 초기 로딩 중 - 간단한 동결 상태 표시
+            const now = new Date();
+            const frozenUntilTime = new Date(frozenUntil);
+            
+            if (now < frozenUntilTime) {
+                const diff = frozenUntilTime.getTime() - now.getTime();
+                const hours = Math.floor(diff / (60 * 60 * 1000));
+                const days = Math.floor(hours / 24);
+                
+                if (days > 0) {
+                    return <span className={`text-info fw-bold ${className}`}>🧊 동결 중 (약 ${days}일 ${hours % 24}시간 남음)</span>;
+                } else {
+                    return <span className={`text-info fw-bold ${className}`}>🧊 동결 중 (약 ${hours}시간 남음)</span>;
+                }
+            } else {
+                return <span className={`text-success fw-bold ${className}`}>복습 가능!</span>;
+            }
+        }
     }
 
     if (timeLeft === null) {
@@ -309,8 +347,12 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
     }
 
     return (
-        <span className={`${isReviewable ? (isOverdue ? 'text-warning fw-bold' : 'text-success fw-bold') : 'text-primary'} ${className}`}>
-            {isReviewable ? (isOverdue ? "⚠️ " : "✅ ") : "⏰ "}{timeLeft}
+        <span className={`${
+            isFrozen ? 'text-info fw-bold' :
+            isReviewable ? (isOverdue ? 'text-warning fw-bold' : 'text-success fw-bold') : 'text-primary'
+        } ${className}`}>
+            {isFrozen ? "🧊 " :
+             isReviewable ? (isOverdue ? "⚠️ " : "✅ ") : "⏰ "}{timeLeft}
         </span>
     );
 };

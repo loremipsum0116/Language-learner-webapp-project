@@ -214,6 +214,8 @@ export default function WrongAnswers() {
                             isOverdue={wa.srsCard.isOverdue}
                             overdueDeadline={wa.srsCard.overdueDeadline}
                             isFromWrongAnswer={wa.srsCard.isFromWrongAnswer}
+                            isFrozen={wa.srsCard.isFrozen}
+                            frozenUntil={wa.srsCard.frozenUntil}
                             className="small"
                           />
                         </div>

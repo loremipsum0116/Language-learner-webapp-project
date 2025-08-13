@@ -690,7 +690,10 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         waitingUntil: true,
                         isMastered: true,
                         masterCycles: true,
-                        masteredAt: true
+                        masteredAt: true,
+                        // 동결 상태 필드 추가
+                        isFrozen: true,
+                        frozenUntil: true
                     } 
                 },         // 카드의 완전한 SRS 정보 포함
             },
@@ -767,6 +770,9 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 isMastered: it.card?.isMastered || false,
                 masterCycles: it.card?.masterCycles || 0,
                 masteredAt: it.card?.masteredAt,
+                // 동결 상태 정보 추가
+                isFrozen: it.card?.isFrozen || false,
+                frozenUntil: it.card?.frozenUntil,
                 // 오답 단어 여부 판단
                 isWrongAnswer: it.wrongCount > 0,
                 vocab: v ? {
@@ -1110,16 +1116,15 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
                 }
             }
 
-            // 4. permanent 옵션이 true일 경우, SRSCard를 영구 삭제합니다.
-            if (permanent) {
-                const cardDeleteResult = await tx.sRSCard.deleteMany({
-                    where: {
-                        id: { in: cardIdsToDelete },
-                        userId: userId, // 본인 카드만 삭제하도록 이중 확인
-                    },
-                });
-                console.log('[BULK DELETE] SRSCard deleteMany result:', cardDeleteResult);
-            }
+            // 4. SRS 폴더에서 단어를 삭제할 때는 항상 해당 SRSCard도 함께 삭제
+            // (폴더에서 제거하면 학습 기록도 초기화되어야 함)
+            const cardDeleteResult = await tx.sRSCard.deleteMany({
+                where: {
+                    id: { in: cardIdsToDelete },
+                    userId: userId, // 본인 카드만 삭제하도록 이중 확인
+                },
+            });
+            console.log('[BULK DELETE] SRSCard deleteMany result (always delete):', cardDeleteResult);
         });
 
         return ok(res, { count: itemsToDelete.length, permanent });
@@ -1480,7 +1485,14 @@ router.get('/queue', async (req, res) => {
                     wrongCount: item?.wrongCount || 0,
                     stage: item?.card?.stage || 0,
                     nextReviewAt: item?.card?.nextReviewAt,
-                    hasBeenAnswered: (item?.card?.correctTotal || 0) + (item?.card?.wrongTotal || 0) > 0
+                    hasBeenAnswered: (item?.card?.correctTotal || 0) + (item?.card?.wrongTotal || 0) > 0,
+                    // 동결 상태 정보 추가
+                    isFrozen: item?.card?.isFrozen || false,
+                    frozenUntil: item?.card?.frozenUntil,
+                    isOverdue: item?.card?.isOverdue || false,
+                    overdueDeadline: item?.card?.overdueDeadline,
+                    waitingUntil: item?.card?.waitingUntil,
+                    isFromWrongAnswer: item?.card?.isFromWrongAnswer || false
                 };
             });
             

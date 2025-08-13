@@ -191,62 +191,31 @@ router.post('/set', auth, async (req, res) => {
         const now = new Date();
         const offsetDate = getOffsetDate(now);
         
-        // 타임머신 설정 즉시 모든 overdue 카드를 24시간으로 강제 리셋 (실제 현재 시간 기준)
-        try {
-            const { prisma } = require('../lib/prismaClient');
-            const result = await prisma.sRSCard.updateMany({
-                where: { isOverdue: true },
-                data: { 
-                    overdueDeadline: new Date(now.getTime() + 24 * 60 * 60 * 1000), // offsetDate가 아닌 now 사용
-                    overdueStartAt: now // 실제 현재 시간으로 설정
-                }
-            });
-            console.log(`[TIME MACHINE] Immediately force reset ${result.count} overdue cards to 24h`);
-        } catch (e) {
-            console.error(`[TIME MACHINE] Failed to immediate reset:`, e);
-        }
+        // 타임머신 설정 시 기존 overdue 카드들의 데드라인을 수정하지 않음
+        // (이미 설정된 overdue 창은 유지하고, 타임머신 이동 후 동결 로직이 자동으로 처리)
+        console.log(`[TIME MACHINE] ⚡ Skipping overdue deadline reset - letting freeze logic handle expired deadlines`);
         
         console.log(`[TIME MACHINE] Time offset set to ${dayOffset} days`);
         console.log(`[TIME MACHINE] Original time: ${now.toISOString()}`);
         console.log(`[TIME MACHINE] Offset time: ${offsetDate.toISOString()}`);
         
-        // 타임머신 설정 후 즈시 overdue 상태 업데이트 및 데드라인 수정
+        // 타임머신 설정 후 즉시 overdue 상태 업데이트 (동결 로직 포함)
         try {
             const { updateAllUsersOverdueStatus, manageOverdueCards } = require('../services/srsJobs');
-            const { prisma } = require('../lib/prismaClient');
             
-            // 순서 1: 먼저 새로운 overdue 카드들을 생성
+            console.log(`[TIME MACHINE] 🕰️  Starting overdue card management after time offset change`);
+            console.log(`[TIME MACHINE] Time offset: ${dayOffset} days`);
+            console.log(`[TIME MACHINE] Original time: ${now.toISOString()}`);
+            console.log(`[TIME MACHINE] Offset time: ${offsetDate.toISOString()}`);
+            
+            // overdue 카드 관리 (동결 로직 포함)
             await manageOverdueCards(console);
             
-            // 순서 2: 모든 overdue 카드들의 데드라인을 무조건 24시간으로 강제 설정
-            const allOverdueCards = await prisma.sRSCard.findMany({
-                where: { isOverdue: true },
-                select: { id: true, overdueStartAt: true, overdueDeadline: true }
-            });
-            
-            console.log(`[TIME MACHINE] Found ${allOverdueCards.length} overdue cards to force fix after manage`);
-            
-            // 모든 overdue 카드의 데드라인을 무조건 24시간으로 설정 (실제 현재 시간 기준)
-            for (const card of allOverdueCards) {
-                const correctDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000); // offsetDate가 아닌 now 사용
-                const currentHoursLeft = card.overdueDeadline ? 
-                    Math.round((card.overdueDeadline.getTime() - now.getTime()) / (60 * 60 * 1000)) : 0;
-                
-                await prisma.sRSCard.update({
-                    where: { id: card.id },
-                    data: { 
-                        overdueDeadline: correctDeadline,
-                        overdueStartAt: now // 실제 현재 시간으로 설정
-                    }
-                });
-                console.log(`[TIME MACHINE] Force fixed ALL overdue card ${card.id}: ${currentHoursLeft}h -> 24h`);
-            }
-            
-            // 순서 3: 사용자 상태 업데이트
+            // 사용자 상태 업데이트
             await updateAllUsersOverdueStatus(console);
-            console.log(`[TIME MACHINE] Updated overdue status and force fixed all deadlines to 24h`);
+            console.log(`[TIME MACHINE] ✅ Completed overdue status update with proper freeze logic`);
         } catch (e) {
-            console.error(`[TIME MACHINE] Failed to update overdue status:`, e);
+            console.error(`[TIME MACHINE] ❌ Failed to update overdue status:`, e);
         }
         
         return ok(res, {

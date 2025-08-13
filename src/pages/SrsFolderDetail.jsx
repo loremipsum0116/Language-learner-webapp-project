@@ -39,7 +39,8 @@ const getPosBadgeColor = (pos) => {
 };
 
 const getCardBackgroundColor = (item) => {
-    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색 (최우선)
+    if (item.isFrozen) return 'bg-info-subtle border-info'; // 동결 - 파란색 (최우선)
+    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색
     if (item.learned) return 'bg-success-subtle'; // 정답 - 초록색
     if (item.wrongCount > 0) return 'bg-danger-subtle'; // 틀림 - 빨간색
     return ''; // 미학습 - 기본색
@@ -294,14 +295,17 @@ export default function SrsFolderDetail() {
                                             {item.isMastered && (
                                                 <span className="text-purple-600 fw-bold">🌟 마스터 완료</span>
                                             )}
-                                            {!item.isMastered && item.isOverdue && (
+                                            {!item.isMastered && item.isFrozen && (
+                                                <span className="text-info fw-bold">🧊 동결 중</span>
+                                            )}
+                                            {!item.isMastered && !item.isFrozen && item.isOverdue && (
                                                 <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
                                             )}
-                                            {!item.isMastered && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
-                                            {!item.isMastered && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
+                                            {!item.isMastered && !item.isFrozen && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
+                                            {!item.isMastered && !item.isFrozen && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
                                                 <span className="text-danger">✗ 오답 {item.wrongCount}회</span>
                                             )}
-                                            {!item.isMastered && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
+                                            {!item.isMastered && !item.isFrozen && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
                                                 <span className="text-muted">미학습</span>
                                             )}
                                         </div>
@@ -353,17 +357,21 @@ export default function SrsFolderDetail() {
                                                     ) : (
                                                         <div>
                                                             <span className="badge bg-info">Stage {item.stage ?? 0}</span>
-                                                            {item.nextReviewAt && (
+                                                            {(item.nextReviewAt || (item.isFrozen && item.frozenUntil)) && (
                                                                 <div className="ms-2 mt-1">
-                                                                    <div className="text-muted small">
-                                                                        다음 복습: {fmt(item.nextReviewAt)}
-                                                                    </div>
+                                                                    {item.nextReviewAt && (
+                                                                        <div className="text-muted small">
+                                                                            다음 복습: {fmt(item.nextReviewAt)}
+                                                                        </div>
+                                                                    )}
                                                                     <ReviewTimer 
                                                                         nextReviewAt={item.nextReviewAt}
                                                                         waitingUntil={item.waitingUntil}
                                                                         isOverdue={item.isOverdue}
                                                                         overdueDeadline={item.overdueDeadline}
                                                                         isFromWrongAnswer={item.isFromWrongAnswer}
+                                                                        isFrozen={item.isFrozen}
+                                                                        frozenUntil={item.frozenUntil}
                                                                         className="small"
                                                                     />
                                                                 </div>

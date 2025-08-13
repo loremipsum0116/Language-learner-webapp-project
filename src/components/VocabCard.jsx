@@ -51,29 +51,68 @@ const VocabCard = ({
     };
   };
 
-  const getOverdueStatus = () => {
+  const getCardStatus = () => {
     if (!card || isCardMastered) return null;
     
+    // 실제 현재 시간 사용 (동결 상태는 타임머신과 관계없이 실시간으로 해제됨)
     const now = new Date();
     
+    // 동결 상태 확인 (최우선)
+    if (card.isFrozen && card.frozenUntil) {
+      const frozenUntil = new Date(card.frozenUntil);
+      if (now < frozenUntil) {
+        return {
+          text: '동결 중',
+          color: 'text-blue-800 bg-blue-200',
+          urgent: false,
+          type: 'frozen'
+        };
+      } else {
+        // 동결 해제된 경우 - 즉시 overdue 상태로 표시 (명세: 동결 만료 후 Overdue로 복귀)
+        return {
+          text: '복습 필요',
+          color: 'text-yellow-700 bg-yellow-200',
+          urgent: true,
+          type: 'overdue'
+        };
+      }
+    }
+    
+    // Overdue 상태 (노란색)
     if (card.isOverdue && card.overdueDeadline) {
       const deadline = new Date(card.overdueDeadline);
       if (now < deadline) {
         return {
           text: '복습 필요',
-          color: 'text-red-600 bg-red-100',
-          urgent: true
+          color: 'text-yellow-700 bg-yellow-200',
+          urgent: true,
+          type: 'overdue'
         };
       }
     }
     
-    if (card.waitingUntil) {
+    // 오답 대기 중 (빨간색)
+    if (card.isFromWrongAnswer && card.waitingUntil) {
       const waitingUntil = new Date(card.waitingUntil);
       if (now < waitingUntil) {
         return {
-          text: '대기 중',
-          color: 'text-blue-600 bg-blue-100',
-          urgent: false
+          text: '오답 대기',
+          color: 'text-red-700 bg-red-200',
+          urgent: false,
+          type: 'wrongWaiting'
+        };
+      }
+    }
+    
+    // 정답 대기 중 (초록색)
+    if (card.waitingUntil && !card.isFromWrongAnswer) {
+      const waitingUntil = new Date(card.waitingUntil);
+      if (now < waitingUntil) {
+        return {
+          text: '정답 대기',
+          color: 'text-green-700 bg-green-200',
+          urgent: false,
+          type: 'correctWaiting'
         };
       }
     }
@@ -82,13 +121,35 @@ const VocabCard = ({
   };
 
   const stageInfo = getStageInfo();
-  const overdueStatus = getOverdueStatus();
+  const cardStatus = getCardStatus();
+
+  const getCardBgClass = () => {
+    if (isCardMastered) {
+      return 'ring-2 ring-purple-300 bg-gradient-to-br from-white to-purple-50';
+    }
+    
+    if (cardStatus?.type === 'frozen') {
+      return 'ring-2 ring-blue-400 bg-gradient-to-br from-white to-blue-50';
+    }
+    
+    if (cardStatus?.type === 'overdue') {
+      return 'ring-1 ring-yellow-300 bg-gradient-to-br from-white to-yellow-50';
+    }
+    
+    if (cardStatus?.type === 'wrongWaiting') {
+      return 'ring-1 ring-red-300 bg-gradient-to-br from-white to-red-50';
+    }
+    
+    if (cardStatus?.type === 'correctWaiting') {
+      return 'ring-1 ring-green-300 bg-gradient-to-br from-white to-green-50';
+    }
+    
+    return 'bg-white';
+  };
 
   return (
     <div 
-      className={`vocab-card relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 cursor-pointer ${className} ${
-        isCardMastered ? 'ring-2 ring-purple-300 bg-gradient-to-br from-white to-purple-50' : ''
-      }`}
+      className={`vocab-card relative rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 cursor-pointer ${className} ${getCardBgClass()}`}
       onClick={onClick}
     >
       {/* 마스터 별 표시 */}
@@ -102,9 +163,9 @@ const VocabCard = ({
       )}
       
       {/* 긴급 복습 표시 */}
-      {overdueStatus?.urgent && (
+      {cardStatus?.urgent && (
         <div className="absolute top-2 left-2 z-10">
-          <span className="inline-flex items-center px-2 py-1 text-xs font-bold text-red-600 bg-red-100 rounded-full animate-pulse">
+          <span className="inline-flex items-center px-2 py-1 text-xs font-bold text-yellow-700 bg-yellow-200 rounded-full animate-pulse">
             ⚠️ 복습 필요
           </span>
         </div>
@@ -148,9 +209,12 @@ const VocabCard = ({
           </span>
           
           {/* 상태 표시 */}
-          {overdueStatus && (
-            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${overdueStatus.color}`}>
-              {overdueStatus.text}
+          {cardStatus && (
+            <span className={`inline-flex items-center px-2 py-1 text-xs font-medium rounded-full ${cardStatus.color} ${
+              cardStatus.type === 'frozen' ? 'border-2 border-blue-400' : ''
+            }`}>
+              {cardStatus.type === 'frozen' ? '🧊 ' : ''}
+              {cardStatus.text}
             </span>
           )}
           
