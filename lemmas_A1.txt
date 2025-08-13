@@ -1,0 +1,771 @@
+File: ielts_a1_1.json
+book
+
+friend
+
+go
+
+school
+
+student
+
+teacher
+
+water
+
+time
+
+people
+
+world
+
+ask
+
+become
+
+begin
+
+call
+
+can
+
+come
+
+do
+
+feel
+
+find
+
+get
+
+give
+
+have
+
+hear
+
+help
+
+keep
+
+know
+
+leave
+
+let
+
+like
+
+live
+
+make
+
+may
+
+mean
+
+move
+
+need
+
+play
+
+put
+
+run
+
+File: ielts_a1_2.json
+house
+
+car
+
+city
+
+street
+
+job
+
+work
+
+eat
+
+drink
+
+read
+
+write
+
+speak
+
+sleep
+
+listen
+
+File: ielts_a1_3.json
+cat
+
+dog
+
+apple
+
+banana
+
+chair
+
+table
+
+walk
+
+run
+
+blue
+
+happy
+
+big
+
+small
+
+pen
+
+phone
+
+music
+
+dance
+
+sing
+
+read
+
+write
+
+File: ielts_a1_4.json
+family
+
+mother
+
+father
+
+man
+
+woman
+
+hand
+
+eye
+
+food
+
+bread
+
+milk
+
+money
+
+name
+
+morning
+
+night
+
+day
+
+see
+
+look
+
+say
+
+tell
+
+want
+
+use
+
+think
+
+try
+
+sit
+
+open
+
+close
+
+good
+
+bad
+
+new
+
+old
+
+hot
+
+cold
+
+red
+
+white
+
+File: ielts_a1_5.json
+brother
+
+sister
+
+child
+
+baby
+
+parent
+
+room
+
+bed
+
+window
+
+door
+
+question
+
+answer
+
+weather
+
+sun
+
+rain
+
+week
+
+month
+
+year
+
+pay
+
+meet
+
+learn
+
+change
+
+understand
+
+watch
+
+follow
+
+stop
+
+talk
+
+turn
+
+high
+
+low
+
+right
+
+wrong
+
+black
+
+green
+
+different
+
+important
+
+young
+
+Of course. Here are the lemmas extracted from the JSON files you provided.
+
+### File: ielts_a1_6.json
+* bus
+* park
+* buy
+* wear
+* cook
+* swim
+* beautiful
+* fast
+* slow
+* today
+* here
+* always
+* kitchen
+* shirt
+* shoes
+* bag
+* key
+* love
+* start
+* finish
+* drive
+* breakfast
+* lunch
+* dinner
+* coffee
+* tea
+* son
+* daughter
+* boy
+* girl
+* bird
+* fish
+* tree
+* flower
+* sad
+* tired
+* hungry
+* travel
+* visit
+* wait
+* stand
+* wash
+* clean
+* number
+* letter
+* page
+* party
+* game
+* picture
+* office
+* store
+* cheap
+* expensive
+* easy
+* difficult
+* long
+* short
+* dark
+* light
+* yesterday
+* tomorrow
+* weekend
+* husband
+* wife
+* rice
+* vegetable
+* fruit
+* sugar
+* ticket
+* airport
+* station
+* mountain
+* beach
+* library
+* horse
+* sell
+* cost
+* show
+* thirsty
+* angry
+* quiet
+* under
+* pants
+* hat
+* head
+* face
+* arm
+* leg
+* country
+* word
+* minute
+* hour
+* study
+* hate
+* often
+* sometimes
+* never
+* yellow
+* orange
+* brown
+* purple
+* pink
+* animal
+* paper
+* pencil
+* map
+* meal
+* piece
+* meat
+* chicken
+* plate
+* bowl
+* fork
+* spoon
+* knife
+* cup
+* bottle
+* fall
+* grow
+* hold
+* hurt
+* jump
+* town
+* village
+* building
+* road
+* way
+* side
+* top
+* bottom
+* afternoon
+* evening
+* second
+* person
+* laugh
+* cry
+* smile
+* shout
+* kind
+* friendly
+* warm
+* cool
+* color
+* left
+* front
+* back
+* train
+* plane
+* boat
+* bicycle
+* foot
+* sport
+* movie
+* television
+* radio
+* kick
+* push
+* pull
+* send
+* wet
+* dry
+* heavy
+* internet
+* website
+* email
+* message
+* photo
+* video
+* song
+* sound
+* noise
+* spend
+* save
+* stay
+* fat
+* thin
+* loud
+* dirty
+* up
+* down
+* around
+* with
+
+***
+
+### File: ielts_a1_7.json
+* floor
+* wall
+* clock
+* coin
+* note
+* garden
+* class
+* lesson
+* police
+* doctor
+* nurse
+* fly
+* break
+* build
+* draw
+* pretty
+* sick
+* well
+* behind
+* usually
+* body
+* hair
+* nose
+* mouth
+* ear
+* finger
+* cloud
+* sky
+* wind
+* snow
+* summer
+* winter
+* spring
+* autumn
+* holiday
+* birthday
+* choose
+* cut
+* lose
+* win
+Of course. Here are the lemmas extracted from the JSON files you provided.
+
+### File: ielts_a1_8.json
+* animal
+* paper
+* pencil
+* map
+* meal
+* piece
+* meat
+* chicken
+* plate
+* bowl
+* fork
+* spoon
+* knife
+* cup
+* bottle
+* fall
+* grow
+* hold
+* hurt
+* jump
+* town
+* village
+* building
+* road
+* way
+* side
+* top
+* bottom
+* afternoon
+* evening
+* second
+* person
+* laugh
+* cry
+* smile
+* shout
+* kind
+* friendly
+* warm
+* cool
+* color
+* left
+* front
+* back
+* train
+* plane
+* boat
+* bicycle
+* foot
+* sport
+* movie
+* television
+* radio
+* kick
+* push
+* pull
+* send
+* wet
+* dry
+* heavy
+* internet
+* website
+* email
+* message
+* photo
+* video
+* song
+* sound
+* noise
+* spend
+* save
+* stay
+* fat
+* thin
+* loud
+* dirty
+* up
+* down
+* around
+* with
+* bathroom
+* bedroom
+* living room
+* address
+* age
+* price
+* size
+* computer
+* thing
+* story
+* teach
+* take
+* favorite
+* full
+* empty
+* tall
+* but
+* because
+* very
+* also
+
+***
+
+### File: ielts_a1_9.json
+* dessert
+* snack
+* date
+* fun
+* problem
+* idea
+* wake up
+* get up
+* go to bed
+* take a shower
+* nice
+* great
+* when
+* where
+* why
+* how
+* what
+* who
+* which
+* then
+* dress
+* skirt
+* jacket
+* coat
+* jeans
+* sock
+* market
+* hospital
+* bank
+* hotel
+* restaurant
+* menu
+* bill
+* put on
+* take off
+* look for
+* bring
+* carry
+* wonderful
+* correct
+* T-shirt
+* supermarket
+* cafe
+* glass
+* text
+* terrible
+* delicious
+* incorrect
+* straight
+* single
+* married
+* without
+* for
+* from
+* to
+* near
+* far
+* between
+* through
+* of
+* sweater
+* clothes
+* toy
+* grass
+* leaf
+* another
+* other
+* every
+* all
+* some
+* any
+* I
+* he
+* she
+* we
+* they
+* my
+* your
+* his
+* our
+* her
+* its
+* their
+* this
+* that
+* these
+* those
+* me
+* him
+* us
+* them
+* one
+* two
+* three
+* four
+* five
+* six
+* seven
+* eight
+* nine
+* ten
+* eleven
+* twelve
+* thirteen
+* fourteen
+* fifteen
+* sixteen
+* seventeen
+* eighteen
+* nineteen
+* twenty
+* thirty
+* forty
+* fifty
+* hundred
+* thousand
+* and
+* or
+* so
+* no
+* cinema
+* theatre
+* post office
+* apartment
+* pork
+* beef
+* tip
+* museum
+* farm
+* factory
+* agree
+* explain
+* invite
+* join
+* plan
+* remember
+* forget
+* hope
+* wish
+* return
+* fantastic
+* awful
+* clever
+* lovely
+* boring
+* first
+* last
+* next
+* before
+* after
