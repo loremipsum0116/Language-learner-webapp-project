@@ -296,6 +296,20 @@ export default function LearnVocab() {
             const { data } = await fetchJSON('/quiz/answer', withCreds({
                 method: 'POST', body: JSON.stringify({ folderId, cardId: current.cardId, correct: isCorrect })
             }));
+            
+            // 마스터 달성 축하 메시지 표시
+            if (data?.isMasteryAchieved) {
+                toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                    duration: 5000,
+                    style: {
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '16px'
+                    }
+                });
+            }
+            
             setFeedback({ status: data?.status ?? (isCorrect ? 'pass' : 'fail'), answer: current.answer });
         } catch (e) {
             console.error('답변 제출 실패:', e);

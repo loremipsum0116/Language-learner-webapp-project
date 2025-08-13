@@ -8,6 +8,7 @@ import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import SrsFolderPickerModal from '../components/SrsFolderPickerModal';
 import { SrsApi } from '../api/srs';
 import FlatFolderPickerModal from '../components/FlatFolderPickerModal';
+import RainbowStar from '../components/RainbowStar';
 
 // Helper functions (no changes)
 const getCefrBadgeColor = (level) => {
@@ -32,16 +33,31 @@ const getPosBadgeColor = (pos) => {
     }
 };
 
-// VocabCard component (no changes)
-function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, onDeleteVocab, isAdmin, isSelected, onToggleSelect, playingAudio }) {
+// VocabCard component (updated with RainbowStar support)
+function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, onDeleteVocab, isAdmin, isSelected, onToggleSelect, playingAudio, masteredCards }) {
     const koGloss = vocab.ko_gloss || '뜻 정보 없음';
     const isEnriching = enrichingId === vocab.id;
     const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
     const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+    
+    // 마스터된 카드 정보 찾기
+    const masteredCard = masteredCards?.find(card => card.itemType === 'vocab' && card.itemId === vocab.id);
+    const isMastered = !!masteredCard;
+    const masterCycles = masteredCard?.masterCycles || 0;
 
     return (
         <div className="col-md-6 col-lg-4 mb-3">
-            <div className={`card h-100 ${isSelected ? 'border-primary' : ''}`}>
+            <div className={`card h-100 ${isSelected ? 'border-primary' : ''} ${isMastered ? 'border-warning bg-light' : ''} position-relative`}>
+                {/* 마스터 별 표시 */}
+                {isMastered && (
+                    <RainbowStar 
+                        size="medium" 
+                        cycles={masterCycles} 
+                        animated={true}
+                        className="position-absolute"
+                        style={{ top: '8px', right: '8px', zIndex: 10 }}
+                    />
+                )}
                 <div className="card-header d-flex justify-content-end p-1">
                     <input
                         className="form-check-input"
@@ -159,7 +175,7 @@ export default function VocabList() {
     const [playingAudio, setPlayingAudio] = useState(null);
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [enrichingId, setEnrichingId] = useState(null);
-
+    const [masteredCards, setMasteredCards] = useState([]);
 
 
     const [pickerIds, setPickerIds] = useState([]); // 선택된 vocabIds 보관
@@ -205,6 +221,22 @@ export default function VocabList() {
             })
             .catch(e => {
                 if (!isAbortError(e)) console.error("Failed to fetch my wordbook IDs", e);
+            });
+        return () => ac.abort();
+    }, [user]);
+
+    // 마스터된 카드 정보 가져오기
+    useEffect(() => {
+        if (!user) return;
+        const ac = new AbortController();
+        fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal }))
+            .then(({ data }) => {
+                if (Array.isArray(data)) {
+                    setMasteredCards(data);
+                }
+            })
+            .catch(e => {
+                if (!isAbortError(e)) console.error("Failed to fetch mastered cards", e);
             });
         return () => ac.abort();
     }, [user]);
@@ -463,6 +495,7 @@ export default function VocabList() {
                         isSelected={selectedIds.has(vocab.id)}
                         onToggleSelect={handleToggleSelect}
                         playingAudio={playingAudio}
+                        masteredCards={masteredCards}
                     />
                 ))}
             </div>

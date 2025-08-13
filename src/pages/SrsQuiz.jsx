@@ -81,9 +81,23 @@ export default function SrsQuiz() {
                 calculatedStage,
                 calculatedNextReviewAt,
                 calculatedWaitingUntil,
-                message 
+                message,
+                isMasteryAchieved 
             } = response.data || {};
 
+            // 마스터 달성 축하 메시지 표시
+            if (isMasteryAchieved) {
+                toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                    duration: 5000, // 5초간 표시
+                    style: {
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                        color: 'white',
+                        fontWeight: 'bold',
+                        fontSize: '16px'
+                    }
+                });
+            }
+            
             // 사용자에게 SRS 상태 메시지 표시 (필요시)
             if (message && !canUpdateCardState) {
                 // 상태가 변경되지 않았음을 알리는 토스트는 표시하지 않음 (자율학습 방해 방지)

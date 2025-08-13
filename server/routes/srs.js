@@ -92,6 +92,32 @@ router.get('/waiting-count', async (req, res, next) => {
 });
 
 // GET /srs/mastered - 마스터 완료 단어 조회
+// 마스터된 카드의 간단한 정보만 반환 (VocabList용)
+router.get('/mastered-cards', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        
+        const masteredCards = await prisma.sRSCard.findMany({
+            where: {
+                userId: userId,
+                isMastered: true
+            },
+            select: {
+                id: true,
+                itemType: true,
+                itemId: true,
+                masterCycles: true,
+                masteredAt: true
+            }
+        });
+        
+        ok(res, masteredCards);
+    } catch (error) {
+        console.error('Failed to fetch mastered cards:', error);
+        next(error);
+    }
+});
+
 router.get('/mastered', async (req, res, next) => {
     try {
         const userId = req.user.id;
@@ -1753,8 +1779,42 @@ router.get('/wrong-answers', async (req, res, next) => {
                 { wrongAt: 'desc' }
             ]
         });
+
+        // 해당 단어들의 SRS 카드 상태 정보도 함께 조회
+        const vocabIds = wrongAnswers.map(wa => wa.vocabId);
+        const srsCards = vocabIds.length > 0 ? await prisma.sRSCard.findMany({
+            where: {
+                userId,
+                itemType: 'vocab',
+                itemId: { in: vocabIds }
+            },
+            select: {
+                id: true,
+                itemId: true,
+                stage: true,
+                nextReviewAt: true,
+                waitingUntil: true,
+                isOverdue: true,
+                overdueDeadline: true,
+                overdueStartAt: true,
+                isFromWrongAnswer: true,
+                wrongStreakCount: true,
+                isMastered: true,
+                masteredAt: true,
+                masterCycles: true,
+                correctTotal: true,
+                wrongTotal: true
+            }
+        }) : [];
         
         console.log(`[DEBUG] Wrong answers query result: ${wrongAnswers.length} items`);
+        console.log(`[DEBUG] SRS cards found: ${srsCards.length} items`);
+        
+        // SRS 카드 맵 생성 (빠른 조회를 위해)
+        const srsCardMap = new Map();
+        srsCards.forEach(card => {
+            srsCardMap.set(card.itemId, card);
+        });
         
         // 올바른 복습 상태 계산
         const now = new Date();
@@ -1779,6 +1839,9 @@ router.get('/wrong-answers', async (req, res, next) => {
             const timeUntilReview = reviewStatus === 'pending' ? 
                 Math.max(0, Math.ceil((reviewWindowStart.getTime() - now.getTime()) / (1000 * 60 * 60))) : 0;
             
+            // 해당 단어의 SRS 카드 상태 정보 추가
+            const srsCard = srsCardMap.get(wa.vocabId);
+            
             return {
                 id: wa.id,
                 vocabId: wa.vocabId,
@@ -1794,7 +1857,24 @@ router.get('/wrong-answers', async (req, res, next) => {
                     lemma: wa.vocab?.lemma || 'Unknown',
                     pos: wa.vocab?.pos || 'unknown',
                     dictMeta: wa.vocab?.dictMeta || null
-                }
+                },
+                // SRS 카드 상태 정보 추가
+                srsCard: srsCard ? {
+                    id: srsCard.id,
+                    stage: srsCard.stage,
+                    nextReviewAt: srsCard.nextReviewAt,
+                    waitingUntil: srsCard.waitingUntil,
+                    isOverdue: srsCard.isOverdue,
+                    overdueDeadline: srsCard.overdueDeadline,
+                    overdueStartAt: srsCard.overdueStartAt,
+                    isFromWrongAnswer: srsCard.isFromWrongAnswer,
+                    wrongStreakCount: srsCard.wrongStreakCount,
+                    isMastered: srsCard.isMastered,
+                    masteredAt: srsCard.masteredAt,
+                    masterCycles: srsCard.masterCycles,
+                    correctTotal: srsCard.correctTotal,
+                    wrongTotal: srsCard.wrongTotal
+                } : null
             };
         });
         

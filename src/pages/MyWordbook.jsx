@@ -7,6 +7,7 @@ import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import { useAuth } from '../context/AuthContext'; // ★ AuthContext에서 useAuth 임포트
 import FlatFolderPickerModal from '../components/FlatFolderPickerModal';
 import * as SrsApi from '../api/srs';
+import RainbowStar from '../components/RainbowStar';
 
 // 헬퍼 함수
 const getCefrBadgeColor = (level) => {
@@ -89,6 +90,7 @@ export default function MyWordbook() {
     const audioRef = useRef(null);
     const [playingAudio, setPlayingAudio] = useState(null);
     const [enrichingId, setEnrichingId] = useState(null);
+    const [masteredCards, setMasteredCards] = useState([]);
 
     // SRS 폴더 선택 모달 관련 state
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -142,6 +144,22 @@ export default function MyWordbook() {
         // 이 컴포넌트가 화면에서 사라질 때 stopAudio 함수를 호출합니다.
         return () => stopAudio();
     }, [])
+
+    // 마스터된 카드 정보 가져오기
+    useEffect(() => {
+        if (!user) return;
+        const ac = new AbortController();
+        fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal }))
+            .then(({ data }) => {
+                if (Array.isArray(data)) {
+                    setMasteredCards(data);
+                }
+            })
+            .catch(e => {
+                if (e.name !== 'AbortError') console.error("Failed to fetch mastered cards", e);
+            });
+        return () => ac.abort();
+    }, [user]);
 
     // ★ 2. useEffect에서 로컬 srsIds 로딩 로직을 제거합니다. (AuthContext가 처리)
     useEffect(() => {
@@ -391,20 +409,39 @@ export default function MyWordbook() {
                             const gloss = vocab.ko_gloss;
                             const checked = selectedIds.has(v.vocabId);
                             const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+                            
+                            // 마스터된 카드 정보 찾기
+                            const masteredCard = masteredCards.find(card => card.itemType === 'vocab' && card.itemId === v.vocabId);
+                            const isMastered = !!masteredCard;
+                            const masterCycles = masteredCard?.masterCycles || 0;
 
                             return (
-                                <div key={v.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                <div key={v.id} className={`list-group-item d-flex justify-content-between align-items-center ${isMastered ? 'bg-light border-warning' : ''}`}>
                                     <div className="d-flex align-items-center gap-2" style={{ flexGrow: 1 }}>
                                         <input type="checkbox" className="form-check-input" checked={checked} onChange={() => toggleSelect(v.vocabId)} />
                                         <div>
                                             <div className="d-flex align-items-center flex-wrap">
-                                                <div className="fw-semibold me-2" lang="en">{vocab.lemma}</div>
+                                                <div className={`fw-semibold me-2 ${isMastered ? 'text-warning' : ''}`} lang="en">{vocab.lemma}</div>
+                                                {/* 마스터 별을 단어명 옆 인라인으로 표시 */}
+                                                {isMastered && (
+                                                    <RainbowStar 
+                                                        size="small" 
+                                                        cycles={masterCycles} 
+                                                        animated={true}
+                                                        className="me-2"
+                                                        style={{ display: 'inline-block' }}
+                                                    />
+                                                )}
                                                 <div className="d-flex gap-1">
                                                     {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
                                                     {uniquePosList.map(p => p && p.toLowerCase() !== 'unk' && (
                                                         <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>{p}</span>
                                                     ))}
-                                                    {/* SRS 오답 횟수는 오답노트에서만 표시 */}
+                                                    {isMastered && (
+                                                        <span className="badge bg-warning text-dark">
+                                                            🌟 마스터 완료
+                                                        </span>
+                                                    )}
                                                 </div>
                                             </div>
                                             <Pron ipa={vocab.dictMeta?.ipa} ipaKo={vocab.dictMeta?.ipaKo} />

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import { fetchJSON, withCreds } from "../api/client";
+import ReviewTimer from "../components/ReviewTimer";
+import RainbowStar from "../components/RainbowStar";
 
 dayjs.locale("ko");
 
@@ -135,17 +137,31 @@ export default function WrongAnswers() {
       ) : (
         <div className="list-group">
           {wrongAnswers.map((wa, index) => (
-            <div key={wa.id} className="list-group-item">
+            <div key={wa.id} className={`list-group-item ${wa.srsCard?.isMastered ? 'border-warning bg-light' : ''}`}>
               <div className="d-flex justify-content-between align-items-start">
                 <div className="flex-grow-1">
-                  <h5 className="mb-2">
-                    {wa.vocab.lemma}
-                    <span className="ms-2 text-muted">({wa.vocab.pos})</span>
-                  </h5>
+                  <div className="d-flex align-items-center mb-2">
+                    <h5 className="mb-0 me-2">
+                      {wa.vocab.lemma}
+                      <span className="ms-2 text-muted">({wa.vocab.pos})</span>
+                    </h5>
+                    {/* 마스터된 단어에 RainbowStar 표시 */}
+                    {wa.srsCard?.isMastered && (
+                      <RainbowStar 
+                        size="small" 
+                        cycles={wa.srsCard.masterCycles || 1} 
+                        animated={true}
+                        className="me-2"
+                      />
+                    )}
+                  </div>
+                  
                   <p className="mb-2">
                     {wa.vocab.dictMeta?.examples?.[0]?.koGloss || '번역 정보 없음'}
                   </p>
-                  <div className="d-flex align-items-center gap-3">
+                  
+                  {/* 오답노트 관련 정보 */}
+                  <div className="d-flex align-items-center gap-3 mb-2">
                     {getStatusBadge(wa.reviewStatus)}
                     <small className="text-muted">
                       틀린 횟수: {wa.attempts}회
@@ -164,7 +180,60 @@ export default function WrongAnswers() {
                       </small>
                     )}
                   </div>
+                  
+                  {/* SRS 카드 상태 정보 */}
+                  {wa.srsCard && (
+                    <div className="border-top pt-2 mt-2">
+                      <div className="d-flex align-items-center gap-3 small">
+                        {wa.srsCard.isMastered ? (
+                          <div className="text-warning fw-bold">
+                            🌟 마스터 완료 ({wa.srsCard.masterCycles}회)
+                          </div>
+                        ) : (
+                          <>
+                            <span className="badge bg-info">Stage {wa.srsCard.stage}</span>
+                            {wa.srsCard.isOverdue && (
+                              <span className="badge bg-warning text-dark">⚠️ 복습 필요</span>
+                            )}
+                            {wa.srsCard.isFromWrongAnswer && (
+                              <span className="badge bg-danger">오답 단어</span>
+                            )}
+                            <span className="text-muted">
+                              정답: {wa.srsCard.correctTotal}회 / 오답: {wa.srsCard.wrongTotal}회
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      
+                      {/* 타이머 표시 */}
+                      {!wa.srsCard.isMastered && wa.srsCard.nextReviewAt && (
+                        <div className="mt-1">
+                          <ReviewTimer 
+                            nextReviewAt={wa.srsCard.nextReviewAt}
+                            waitingUntil={wa.srsCard.waitingUntil}
+                            isOverdue={wa.srsCard.isOverdue}
+                            overdueDeadline={wa.srsCard.overdueDeadline}
+                            isFromWrongAnswer={wa.srsCard.isFromWrongAnswer}
+                            className="small"
+                          />
+                        </div>
+                      )}
+                      
+                      {wa.srsCard.isMastered && wa.srsCard.masteredAt && (
+                        <div className="text-warning small mt-1">
+                          🏆 {dayjs(wa.srsCard.masteredAt).format('YYYY.MM.DD')} 마스터 달성
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  
+                  {!wa.srsCard && (
+                    <div className="border-top pt-2 mt-2">
+                      <small className="text-muted">SRS 카드 정보 없음</small>
+                    </div>
+                  )}
                 </div>
+                
                 <div>
                   {wa.canReview && !wa.isCompleted && (
                     <button

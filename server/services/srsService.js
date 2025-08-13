@@ -478,6 +478,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     }
 
     let newStage = card.stage, waitingUntil, nextReviewAt;
+    let isMasteryAchieved = false; // 마스터 달성 플래그
     
     // 항상 다음 상태를 계산 (실제 업데이트와 별개)
     let calculatedStage = newStage;
@@ -534,6 +535,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             
             // Stage 6에서 정답 시 120일 마스터 완료 처리
             if (card.stage === 6) {
+                isMasteryAchieved = true; // 마스터 달성 플래그 설정
+                
                 await prisma.sRSCard.update({
                     where: { id: cardId },
                     data: {
@@ -603,6 +606,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             
             // Stage 6에서 정답 시 120일 마스터 완료 처리
             if (card.stage === 6) {
+                isMasteryAchieved = true; // 마스터 달성 플래그 설정
+                
                 await prisma.sRSCard.update({
                     where: { id: cardId },
                     data: {
@@ -843,7 +848,9 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         isFromWrongAnswer: updatedCard?.isFromWrongAnswer ?? false,
         streakInfo: streakInfo,
         canUpdateCardState: canUpdateCardState,
-        message: statusMessage || (correct ? '정답입니다!' : '오답입니다.'),
+        message: statusMessage || (isMasteryAchieved ? '🎉 120일 마스터 완료! 축하합니다!' : (correct ? '정답입니다!' : '오답입니다.')),
+        // 마스터 달성 여부
+        isMasteryAchieved: isMasteryAchieved,
         // UI 표시용 계산된 정보 (실제 DB 변경과 무관)
         calculatedStage: calculatedStage,
         calculatedWaitingUntil: calculatedWaitingUntil,

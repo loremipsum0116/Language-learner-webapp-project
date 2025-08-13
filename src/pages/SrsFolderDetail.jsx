@@ -281,18 +281,7 @@ export default function SrsFolderDetail() {
                         
                         return (
                             <div key={itemId || cardId} className="col-md-6 col-lg-4 mb-3">
-                                <div className={`card h-100 position-relative ${isSelected ? 'border-primary' : ''} ${cardBgClass} ${item.isMastered ? 'border-purple-300 bg-gradient-to-br from-white to-purple-50' : ''}`}>
-                                    {/* 마스터 별 표시 */}
-                                    {item.isMastered && (
-                                        <RainbowStar 
-                                            size="medium" 
-                                            cycles={item.masterCycles || 1} 
-                                            animated={true}
-                                            className="position-absolute top-0 end-0 m-2"
-                                            style={{ zIndex: 10 }}
-                                        />
-                                    )}
-                                    
+                                <div className={`card h-100 ${isSelected ? 'border-primary' : ''} ${cardBgClass} ${item.isMastered ? 'border-purple-300 bg-gradient-to-br from-white to-purple-50' : ''}`}>
                                     <div className="card-header d-flex justify-content-between align-items-center p-2">
                                         <input
                                             className="form-check-input"
@@ -320,6 +309,15 @@ export default function SrsFolderDetail() {
                                     <div className="card-body pt-2">
                                         <div className="d-flex align-items-center mb-2">
                                             <h5 className="card-title mb-0 me-2" lang="en">{lemma}</h5>
+                                            {/* 마스터 별을 제목 옆에 인라인 배치 */}
+                                            {item.isMastered && (
+                                                <RainbowStar 
+                                                    size="small" 
+                                                    cycles={item.masterCycles || 1} 
+                                                    animated={true}
+                                                    className="me-2"
+                                                />
+                                            )}
                                             <div className="d-flex gap-1 flex-wrap">
                                                 {level && <span className={`badge ${getCefrBadgeColor(level)}`}>{level}</span>}
                                                 {uniquePosList.map(p => (
