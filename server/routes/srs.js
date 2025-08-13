@@ -653,7 +653,20 @@ router.get('/folders/:id/items', async (req, res, next) => {
             select: {
                 id: true, cardId: true, learned: true, wrongCount: true, lastReviewedAt: true,
                 vocabId: true,                               // 있으면 바로 사용
-                card: { select: { itemId: true, nextReviewAt: true, stage: true } },         // 카드의 복습 정보 포함
+                card: { 
+                    select: { 
+                        itemId: true, 
+                        nextReviewAt: true, 
+                        stage: true,
+                        isOverdue: true,
+                        overdueDeadline: true,
+                        isFromWrongAnswer: true,
+                        waitingUntil: true,
+                        isMastered: true,
+                        masterCycles: true,
+                        masteredAt: true
+                    } 
+                },         // 카드의 완전한 SRS 정보 포함
             },
             orderBy: { id: 'asc' },
         });
@@ -718,13 +731,16 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 learned: it.learned,
                 wrongCount: it.wrongCount,
                 lastReviewedAt: it.lastReviewedAt,
-                // 개별 카드의 SRS 정보 추가
+                // 개별 카드의 완전한 SRS 정보 추가
                 nextReviewAt: it.card?.nextReviewAt,
                 stage: it.card?.stage,
-                // overdue 상태 정보 추가
                 isOverdue: it.card?.isOverdue || false,
                 overdueDeadline: it.card?.overdueDeadline,
                 isFromWrongAnswer: it.card?.isFromWrongAnswer || false,
+                waitingUntil: it.card?.waitingUntil,
+                isMastered: it.card?.isMastered || false,
+                masterCycles: it.card?.masterCycles || 0,
+                masteredAt: it.card?.masteredAt,
                 // 오답 단어 여부 판단
                 isWrongAnswer: it.wrongCount > 0,
                 vocab: v ? {
@@ -906,26 +922,20 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
                         userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
                     },
                     update: {
-                        // 새로운 폴더에 추가될 때는 stage 0에서 다시 시작하고 당일 복습 가능
+                        // 새로운 폴더에 추가될 때는 stage 0에서 다시 시작하고 즉시 학습 가능
                         stage: 0,
-                        nextReviewAt: (() => {
-                            // 임시: 현재 시간을 직접 사용
-                            const now = new Date();
-                            console.log(`[SRS ADD] Setting nextReviewAt for existing card to current time: ${now.toISOString()} (local: ${now.toLocaleString()})`);
-                            return now;
-                        })()
+                        nextReviewAt: null,
+                        waitingUntil: null,
+                        isOverdue: false,
+                        overdueDeadline: null,
+                        isFromWrongAnswer: false
                     },
                     create: { 
                         userId, 
                         itemType: 'vocab', 
                         itemId: vid,
                         stage: 0,
-                        nextReviewAt: (() => {
-                            // 임시: 현재 시간을 직접 사용
-                            const now = new Date();
-                            console.log(`[SRS ADD] Setting nextReviewAt for new card to current time: ${now.toISOString()} (local: ${now.toLocaleString()})`);
-                            return now;
-                        })()
+                        nextReviewAt: null // 새로 추가된 단어는 즉시 학습 가능
                     },
                     select: { id: true, itemType: true, itemId: true },
                 });
@@ -1375,20 +1385,28 @@ router.get('/folders/:rootId/children-lite', auth, async (req, res, next) => {
 // 큐 API (폴더 기반 + 레거시 겸용)
 // ────────────────────────────────────────────────────────────
 
-// GET /srs/queue?folderId=123&limit=20
+// GET /srs/queue?folderId=123&limit=20&selectedItems=1,2,3
 router.get('/queue', async (req, res) => {
     try {
         const userId = req.user.id;
         const folderId = req.query.folderId ? Number(req.query.folderId) : null;
+        const selectedItems = req.query.selectedItems ? req.query.selectedItems.split(',').map(Number).filter(Boolean) : null;
 
         if (folderId) {
-            // 모든 아이템을 학습 가능하게 하되, 우선순위 적용
+            // 선택된 아이템이 있으면 해당 아이템만, 없으면 모든 아이템
+            const whereCondition = { 
+                folderId, 
+                folder: { userId }
+            };
+            
+            // 선택된 아이템이 있으면 해당 아이템만 필터링 (folderItemId 기준)
+            if (selectedItems && selectedItems.length > 0) {
+                whereCondition.id = { in: selectedItems };
+                console.log(`[SRS QUEUE] Filtering to selected items: ${selectedItems.join(',')}`);
+            }
+            
             const items = await prisma.srsFolderItem.findMany({
-                where: { 
-                    folderId, 
-                    folder: { userId }
-                    // learned 조건 제거 - 모든 아이템 학습 가능
-                },
+                where: whereCondition,
                 select: { 
                     id: true, 
                     cardId: true,

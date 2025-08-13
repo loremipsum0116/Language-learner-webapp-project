@@ -21,6 +21,9 @@ const odatNoteRoutes = require('./routes/odat-note');
 const srsFlatExt = require('./routes/srs-flat-extensions');         // 제공 파일
 const srsDashOverride = require('./routes/srs-dashboard-override');  // 제공 파일
 
+// 타임머신 라우터
+const { router: timeMachineRouter } = require('./routes/timeMachine');
+
 // --- 미들웨어 임포트 ---
 const authMiddleware = require('./middleware/auth');
 
@@ -52,6 +55,7 @@ app.use('/reading', readingRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);
+app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use(userRoutes);
 
 // --- 크론 ---

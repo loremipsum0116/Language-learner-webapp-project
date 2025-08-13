@@ -54,6 +54,7 @@ export default function LearnVocab() {
     const idsParam = query.get('ids');
     const autoParam = query.get('auto');
     const folderIdParam = query.get('folderId');
+    const selectedItemsParam = query.get('selectedItems');
 
     // 공통 상태
     const [loading, setLoading] = useState(true);
@@ -152,7 +153,10 @@ export default function LearnVocab() {
                     if (queue.length && !location.state?.fromFlashcardSrs) return;
                     let data = [];
                     if (mode === 'srs_folder' && folderIdParam) {
-                        ({ data } = await fetchJSON(`/srs/queue?folderId=${folderIdParam}`, withCreds({ signal: ac.signal })));
+                        const queueUrl = `/srs/queue?folderId=${folderIdParam}${
+                            selectedItemsParam ? `&selectedItems=${selectedItemsParam}` : ''
+                        }`;
+                        ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (mode === 'odat') {
                         ({ data } = await fetchJSON('/odat-note/queue?limit=100', withCreds({ signal: ac.signal })));
                     } else if (idsParam) {
@@ -179,7 +183,7 @@ export default function LearnVocab() {
         })();
 
         return () => { ac.abort(); stopAudio(); };
-    }, [mode, idsParam, folderIdParam, location.state?.fromFlashcardSrs, reloadKey, navigate]);
+    }, [mode, idsParam, folderIdParam, selectedItemsParam, location.state?.fromFlashcardSrs, reloadKey, navigate]);
 
     // ───────────────────── 카드 상세/발음 메타 ─────────────────────
     useEffect(() => {

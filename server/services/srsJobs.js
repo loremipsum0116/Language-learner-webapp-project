@@ -9,15 +9,36 @@ dayjs.extend(utc); dayjs.extend(tz);
 const { prisma } = require('../lib/prismaClient');
 const KST = 'Asia/Seoul';
 
-function kstStartOfDay(d = dayjs()) { return d.tz(KST).startOf('day'); }
-function kstNow() { return dayjs().tz(KST); }
+function kstStartOfDay(d) { 
+  // 타임머신 시간 오프셋 적용
+  try {
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const baseDate = d || dayjs(getOffsetDate());
+    return baseDate.tz(KST).startOf('day');
+  } catch {
+    const baseDate = d || dayjs();
+    return baseDate.tz(KST).startOf('day');
+  }
+}
+
+function kstNow() { 
+  // 타임머신 시간 오프셋 적용
+  try {
+    const { getOffsetDate } = require('../routes/timeMachine');
+    return dayjs(getOffsetDate()).tz(KST);
+  } catch {
+    return dayjs().tz(KST);
+  }
+}
 
 /**
  * overdue 기반 6시간 간격 알림
  * overdue 카드가 있는 사용자들에게만 알림 전송
  */
 async function sixHourlyNotify(logger = console) {
-  const now = kstNow().toDate();
+  // 타임머신 시간 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = getOffsetDate();
   
   try {
     // 1. 모든 사용자의 overdue 상태 업데이트
@@ -65,8 +86,12 @@ async function sixHourlyNotify(logger = console) {
  */
 async function midnightRoll(logger = console) {
   try {
+    // 타임머신 시간 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const now = getOffsetDate();
+    
     // 1. 기존 폴더 시스템 알림 정리 (호환성)
-    const yesterday = kstStartOfDay(dayjs().tz(KST).subtract(1,'day')).toDate();
+    const yesterday = kstStartOfDay(dayjs(now).tz(KST).subtract(1,'day')).toDate();
     const res = await prisma.srsFolder.updateMany({
       where: { nextReviewDate: yesterday, completedAt: null, alarmActive: true },
       data: { alarmActive: false, nextAlarmAt: null },
@@ -86,10 +111,18 @@ async function midnightRoll(logger = console) {
 }
 
 // Export additional utility functions needed by other modules
-function startOfKstDay(d = dayjs()) {
-  // d가 Date 객체인 경우 dayjs로 변환
-  const dayjsObj = dayjs.isDayjs(d) ? d : dayjs(d);
-  return dayjsObj.tz(KST).startOf('day');
+function startOfKstDay(d) {
+  // 타임머신 시간 오프셋 적용
+  try {
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const baseDate = d || getOffsetDate();
+    const dayjsObj = dayjs.isDayjs(baseDate) ? baseDate : dayjs(baseDate);
+    return dayjsObj.tz(KST).startOf('day');
+  } catch {
+    const baseDate = d || dayjs();
+    const dayjsObj = dayjs.isDayjs(baseDate) ? baseDate : dayjs(baseDate);
+    return dayjsObj.tz(KST).startOf('day');
+  }
 }
 
 function addKstDays(kstDate, days) {
@@ -105,10 +138,30 @@ function addKstDays(kstDate, days) {
  * 3. 사용자별 overdue 상태 업데이트
  */
 async function manageOverdueCards(logger = console) {
-  const now = new Date();
+  // 타임머신 시간 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = getOffsetDate();
   const affectedUsers = new Set();
   
   try {
+    // 0. 기존 overdue 카드 수정 로직 비활성화 (타임머신에서 처리하므로)
+    // 타임머신 이동 후 중복 수정을 방지하기 위해 비활성화
+    /*
+    const allOverdueCards = await prisma.sRSCard.findMany({
+      where: { isOverdue: true },
+      select: { id: true, userId: true, overdueStartAt: true, overdueDeadline: true }
+    });
+    
+    for (const card of allOverdueCards) {
+      const correctDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      await prisma.sRSCard.update({
+        where: { id: card.id },
+        data: { overdueDeadline: correctDeadline, overdueStartAt: now }
+      });
+      affectedUsers.add(card.userId);
+    }
+    */
+    
     // 1. 대기 시간이 끝난 카드들을 overdue 상태로 설정
     const cardsToMarkOverdue = await prisma.sRSCard.findMany({
       where: {
@@ -120,7 +173,14 @@ async function manageOverdueCards(logger = console) {
 
     for (const card of cardsToMarkOverdue) {
       // overdue 상태로 변경하고 24시간 데드라인 설정
+      // 수정: overdue 시작 시점(now)에서 24시간 후로 설정 (모든 stage 동일)
       const overdueDeadline = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+      
+      logger.info(`[srsJobs] Card ${card.id} marked overdue:`);
+      logger.info(`  - waitingUntil: ${card.waitingUntil.toISOString()}`);
+      logger.info(`  - now (time machine): ${now.toISOString()}`);
+      logger.info(`  - overdueDeadline: ${overdueDeadline.toISOString()}`);
+      logger.info(`  - hours until deadline: ${Math.round((overdueDeadline.getTime() - now.getTime()) / (60 * 60 * 1000))}`);
       
       await prisma.sRSCard.update({
         where: { id: card.id },
@@ -149,29 +209,54 @@ async function manageOverdueCards(logger = console) {
     });
 
     for (const card of cardsToReset) {
-      // stage 0으로 리셋하고 24시간 대기 설정
-      const waitingUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
-      
-      await prisma.sRSCard.update({
-        where: { id: card.id },
-        data: {
-          stage: 0,
-          nextReviewAt: null,
-          isOverdue: false,
-          waitingUntil: waitingUntil,
-          overdueDeadline: null,
-          overdueStartAt: null,
-          isFromWrongAnswer: true, // 데드라인 지나면 오답 단어로 취급
-          wrongStreakCount: { increment: 1 }, // 연속 오답 횟수 증가
-          wrongTotal: { increment: 1 } // 오답 처리로 간주
-        }
-      });
+      if (card.isFromWrongAnswer) {
+        // 직전 오답 카드: stage 유지하고 24시간 대기 후 다시 overdue 기회
+        const waitingUntil = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+        
+        await prisma.sRSCard.update({
+          where: { id: card.id },
+          data: {
+            // stage: 현재 stage 유지 (변경하지 않음)
+            nextReviewAt: null,
+            isOverdue: false,
+            waitingUntil: waitingUntil,
+            overdueDeadline: null,
+            overdueStartAt: null,
+            // isFromWrongAnswer: true, // 이미 true이므로 유지
+            wrongStreakCount: { increment: 1 }, // 연속 오답 횟수 증가
+            wrongTotal: { increment: 1 } // 오답 처리로 간주
+          }
+        });
+        
+        logger.info(`[srsJobs] Wrong answer card ${card.id}: stage ${card.stage} preserved, 24h wait for retry`);
+        
+      } else {
+        // 직전 정답 카드: 해당 stage의 초기 타이머로 복귀
+        const { computeWaitingUntil } = require('./srsSchedule');
+        const waitingUntil = computeWaitingUntil(now, card.stage);
+        
+        await prisma.sRSCard.update({
+          where: { id: card.id },
+          data: {
+            // stage: 현재 stage 유지
+            nextReviewAt: waitingUntil,
+            waitingUntil: waitingUntil,
+            isOverdue: false,
+            overdueDeadline: null,
+            overdueStartAt: null,
+            isFromWrongAnswer: false // 정답 카드로 복귀
+          }
+        });
+        
+        const stageDays = [0, 3, 7, 14, 30, 60, 120][card.stage] || 0;
+        logger.info(`[srsJobs] Correct answer card ${card.id}: restored to stage ${card.stage} timer (${stageDays} days)`);
+      }
       
       affectedUsers.add(card.userId);
     }
 
     if (cardsToReset.length > 0) {
-      logger.info(`[srsJobs] Reset ${cardsToReset.length} overdue cards to stage 0 (deadline passed)`);
+      logger.info(`[srsJobs] Processed ${cardsToReset.length} overdue deadline-exceeded cards based on last answer type`);
     }
     
     // 3. 영향받은 사용자들의 overdue 상태 업데이트
@@ -201,21 +286,28 @@ async function manageOverdueCards(logger = console) {
  */
 function isCardInWaitingPeriod(card) {
   if (!card.waitingUntil) return false;
-  return new Date() < new Date(card.waitingUntil);
+  // 타임머신 시간 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = getOffsetDate();
+  return now < new Date(card.waitingUntil);
 }
 
 /**
  * 카드가 overdue 상태인지 확인합니다.
  */
 function isCardOverdue(card) {
-  return card.isOverdue && card.overdueDeadline && new Date() < new Date(card.overdueDeadline);
+  // overdue 상태인 카드는 데드라인과 관계없이 항상 정답/오답 처리 가능
+  // 데드라인은 크론잡의 자동 stage 리셋을 위한 것이지, 사용자 입력을 막는 것이 아님
+  return card.isOverdue === true;
 }
 
 /**
  * 사용자에게 overdue 카드가 있는지 확인합니다.
  */
 async function hasOverdueCards(userId) {
-  const now = new Date();
+  // 타임머신 시간 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = getOffsetDate();
   
   const count = await prisma.sRSCard.count({
     where: {
@@ -233,7 +325,9 @@ async function hasOverdueCards(userId) {
  */
 async function updateAllUsersOverdueStatus(logger = console) {
   try {
-    const now = new Date();
+    // 타임머신 시간 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const now = getOffsetDate();
     
     // 모든 사용자 ID 조회
     const users = await prisma.user.findMany({
@@ -264,7 +358,9 @@ async function updateAllUsersOverdueStatus(logger = console) {
  */
 async function setOverdueAlarms(logger = console) {
   try {
-    const now = new Date();
+    // 타임머신 시간 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const now = getOffsetDate();
     const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // 6시간 후
     
     // overdue 카드가 있는 사용자들의 알림 시각 설정

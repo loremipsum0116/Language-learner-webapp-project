@@ -10,7 +10,9 @@ const dayjs = require('dayjs');
  */
 async function addWrongAnswer(userId, vocabId) {
   console.log(`[WRONG ANSWER SERVICE] Starting addWrongAnswer: userId=${userId}, vocabId=${vocabId}`);
-  const wrongAt = dayjs();
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const wrongAt = dayjs(getOffsetDate());
   
   // 복습 윈도우: 틀린 시각 다음날 같은 시각부터 그 다음날 같은 시각까지
   const reviewWindowStart = wrongAt.add(1, 'day');
@@ -83,7 +85,9 @@ async function addWrongAnswer(userId, vocabId) {
  * @returns {boolean} 성공 여부
  */
 async function completeWrongAnswer(userId, vocabId) {
-  const now = dayjs();
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = dayjs(getOffsetDate());
   
   // 현재 활성화된 복습 윈도우 내의 오답노트 찾기
   const wrongAnswer = await prisma.wrongAnswer.findFirst({
@@ -123,7 +127,9 @@ async function getWrongAnswers(userId, includeCompleted = false) {
   console.log(`[WRONG ANSWER SERVICE] Getting wrong answers: userId=${userId}, includeCompleted=${includeCompleted}`);
   
   try {
-    const now = dayjs();
+    // 타임머신 시간 오프셋 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const now = dayjs(getOffsetDate());
     
     const wrongAnswers = await prisma.wrongAnswer.findMany({
       where: {
@@ -198,7 +204,9 @@ async function getWrongAnswers(userId, includeCompleted = false) {
  * @returns {number} 복습 가능한 개수
  */
 async function getAvailableWrongAnswersCount(userId) {
-  const now = dayjs();
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = dayjs(getOffsetDate());
   
   const count = await prisma.wrongAnswer.count({
     where: {
@@ -261,7 +269,9 @@ async function generateWrongAnswerQuiz(userId, limit = 10) {
  * 만료된 복습 윈도우 정리 (일일 정리 작업)
  */
 async function cleanupExpiredReviewWindows() {
-  const threeDaysAgo = dayjs().subtract(3, 'day');
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const threeDaysAgo = dayjs(getOffsetDate()).subtract(3, 'day');
   
   // 3일 이상 지난 미완료 오답노트들을 완료 처리 또는 삭제
   const expiredWrongAnswers = await prisma.wrongAnswer.updateMany({

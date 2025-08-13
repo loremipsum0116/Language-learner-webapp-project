@@ -6,7 +6,9 @@ const { scheduleFolder } = require('../queues/alarmQueue');
 
 async function finishSession(req, res) {
     const userId = req.user.id;
-    const todayStart = dayjs().startOf('day').toDate();
+    // 타임머신 시간 오프셋 적용
+    const { getOffsetDate } = require('../routes/timeMachine');
+    const todayStart = dayjs(getOffsetDate()).startOf('day').toDate();
 
     const batches = await prisma.sessionBatch.findMany({
         where: { userId, createdAt: { gte: todayStart } }
@@ -26,9 +28,9 @@ async function finishSession(req, res) {
         const folder = await prisma.category.create({
             data: {
                 userId,
-                name: `High-Mistake ${dayjs().format('YYYY-MM-DD')}`,
+                name: `High-Mistake ${dayjs(getOffsetDate()).format('YYYY-MM-DD')}`,
                 kind: 'srs',
-                nextAlarmAt: nextAlarmSlot(dayjs().add(1, 'day')),
+                nextAlarmAt: nextAlarmSlot(dayjs(getOffsetDate()).add(1, 'day')),
                 remindEvery: 1,
                 items: { connect: hiErrIds.map(id => ({ id })) }
             }
@@ -38,7 +40,7 @@ async function finishSession(req, res) {
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (user) {
-        const today = dayjs().startOf('day');
+        const today = dayjs(getOffsetDate()).startOf('day');
         const lastDay = user.lastStudiedAt ? dayjs(user.lastStudiedAt).startOf('day') : null;
         let newStreak = user.streak;
 

@@ -64,18 +64,53 @@ export default function SrsQuiz() {
         try {
             setSubmitting(true);
             // 백엔드에 답안 제출
-            await fetchJSON('/quiz/answer', withCreds({
+            const response = await fetchJSON('/quiz/answer', withCreds({
                 method: 'POST',
                 body: JSON.stringify({ folderId, cardId: current.cardId, correct })
             }));
 
-            // 로컬 상태를 즉시 업데이트하여 UI에 반영
+            // 서버 응답에서 카드 정보 가져오기
+            const { 
+                stage, 
+                nextReviewAt, 
+                waitingUntil,
+                isOverdue,
+                overdueDeadline,
+                isFromWrongAnswer,
+                canUpdateCardState, 
+                calculatedStage,
+                calculatedNextReviewAt,
+                calculatedWaitingUntil,
+                message 
+            } = response.data || {};
+
+            // 사용자에게 SRS 상태 메시지 표시 (필요시)
+            if (message && !canUpdateCardState) {
+                // 상태가 변경되지 않았음을 알리는 토스트는 표시하지 않음 (자율학습 방해 방지)
+                console.log('SRS Status:', message);
+            }
+
+            // 로컬 상태를 업데이트하여 UI에 반영
             const updatedQueue = queue.map((item, index) => {
                 if (index === idx) {
                     return {
                         ...item,
-                        learned: correct,
-                        wrongCount: correct ? item.wrongCount : (item.wrongCount || 0) + 1,
+                        // learned 상태: SRS 상태 변경 가능할 때만 업데이트, 아니면 기존 상태 유지
+                        learned: canUpdateCardState ? correct : item.learned,
+                        // wrongCount: SRS 상태 변경 가능할 때만 증가
+                        wrongCount: (correct || !canUpdateCardState) ? item.wrongCount : (item.wrongCount || 0) + 1,
+                        // SRS 정보: 실제 변경된 값 또는 계산된 값 사용 (UI 표시용)
+                        stage: stage !== undefined ? stage : item.stage,
+                        nextReviewAt: nextReviewAt || item.nextReviewAt,
+                        waitingUntil: waitingUntil || item.waitingUntil,
+                        isOverdue: isOverdue !== undefined ? isOverdue : item.isOverdue,
+                        overdueDeadline: overdueDeadline || item.overdueDeadline,
+                        isFromWrongAnswer: isFromWrongAnswer !== undefined ? isFromWrongAnswer : item.isFromWrongAnswer,
+                        // 계산된 정보를 별도 필드로 저장 (참고용)
+                        _calculatedStage: calculatedStage,
+                        _calculatedNextReviewAt: calculatedNextReviewAt,
+                        _calculatedWaitingUntil: calculatedWaitingUntil,
+                        _canUpdateCardState: canUpdateCardState
                     };
                 }
                 return item;
@@ -94,7 +129,8 @@ export default function SrsQuiz() {
             } else {
                 // 모든 문제를 다 풀었을 경우
                 toast.success('🎉 모든 카드를 학습했습니다!');
-                navigate('/srs'); // 대시보드로 이동
+                // 폴더 상세 페이지로 돌아가기 (자율학습이므로 새로고침 불필요)
+                navigate(`/srs/folders/${folderId}`);
             }
 
         } catch (e) {

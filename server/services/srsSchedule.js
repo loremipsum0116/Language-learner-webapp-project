@@ -59,15 +59,28 @@ function computeNextReviewDate(baseDate, stage) {
 /**
  * 정답 카드의 대기 시간을 계산합니다.
  * 망각곡선 일수에서 1일을 뺀 만큼 대기합니다.
- * 예: 3일 복습 -> 2일(48시간) 대기, 7일 복습 -> 6일(144시간) 대기
+ * 예: stage 1(3일) -> 2일(48시간) 대기, stage 2(7일) -> 6일(144시간) 대기
  */
 function computeWaitingPeriod(stage) {
   const totalDelay = delayDaysFor(stage);
-  if (totalDelay <= 1) {
-    // 1일 이하인 경우는 24시간 대기 (stage 0과 동일)
-    return 24;
+  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}, totalDelay=${totalDelay} days`);
+  
+  // Stage 0은 즉시 복습 가능 (대기 시간 없음)
+  if (stage === 0) {
+    console.log(`[SRS SCHEDULE] Stage 0 -> immediate review (0 hours)`);
+    return 0;
   }
-  return (totalDelay - 1) * 24; // 시간 단위로 반환
+  
+  // Stage 1부터는 망각곡선 일수에서 1일을 뺀 만큼 대기
+  // stage 1(3일) -> 2일 대기, stage 2(7일) -> 6일 대기, ...
+  if (totalDelay <= 1) {
+    console.log(`[SRS SCHEDULE] totalDelay <= 1 -> immediate review (0 hours)`);
+    return 0; // 1일 이하인 경우 즉시 복습 가능
+  }
+  
+  const waitingHours = (totalDelay - 1) * 24;
+  console.log(`[SRS SCHEDULE] Stage ${stage} -> ${totalDelay} days - 1 = ${totalDelay - 1} days = ${waitingHours} hours`);
+  return waitingHours; // 시간 단위로 반환
 }
 
 /**
@@ -76,7 +89,7 @@ function computeWaitingPeriod(stage) {
 function computeWaitingUntil(baseDate, stage) {
   const waitingHours = computeWaitingPeriod(stage);
   const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
-  console.log(`[SRS SCHEDULE] computeWaitingUntil: stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()}`);
+  console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER: stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
   return result;
 }
 
@@ -85,7 +98,7 @@ function computeWaitingUntil(baseDate, stage) {
  */
 function computeWrongAnswerWaitingUntil(baseDate) {
   const result = new Date(baseDate.getTime() + 24 * 60 * 60 * 1000);
-  console.log(`[SRS SCHEDULE] computeWrongAnswerWaitingUntil: +24 hours from ${baseDate.toISOString()}`);
+  console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER: +24 hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
   return result;
 }
 

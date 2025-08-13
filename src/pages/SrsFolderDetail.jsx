@@ -172,7 +172,16 @@ export default function SrsFolderDetail() {
                 </div>
                 <div className="d-flex gap-2">
                     <Link className="btn btn-outline-secondary btn-sm" to="/srs">← 대시보드</Link>
-                    <Link className="btn btn-primary btn-sm" to={`/learn/vocab?mode=srs_folder&folderId=${folder.id}`}>복습 시작</Link>
+                    <Link 
+                        className="btn btn-primary btn-sm" 
+                        to={`/learn/vocab?mode=srs_folder&folderId=${folder.id}${
+                            selectedIds.size > 0 
+                                ? `&selectedItems=${Array.from(selectedIds).join(',')}` 
+                                : ''
+                        }`}
+                    >
+                        복습 시작 {selectedIds.size > 0 ? `(${selectedIds.size}개 선택)` : ''}
+                    </Link>
                 </div>
             </div>
 
@@ -353,6 +362,7 @@ export default function SrsFolderDetail() {
                                                                     </div>
                                                                     <ReviewTimer 
                                                                         nextReviewAt={item.nextReviewAt}
+                                                                        waitingUntil={item.waitingUntil}
                                                                         isOverdue={item.isOverdue}
                                                                         overdueDeadline={item.overdueDeadline}
                                                                         isFromWrongAnswer={item.isFromWrongAnswer}

@@ -9,7 +9,9 @@ const REQUIRED_DAILY_QUIZZES = 10; // 연속 학습 유지를 위한 최소 퀴�
  * 10개 이상 퀴즈를 풀면 streak 증가, 그렇지 않으면 0으로 리셋
  */
 async function updateUserStreak(userId) {
-  const now = dayjs();
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const now = dayjs(getOffsetDate());
   const today = now.startOf('day');
   
   const user = await prisma.user.findUnique({
@@ -79,7 +81,9 @@ async function updateUserStreak(userId) {
  * 전날에 10개 이상 퀴즈를 안 푼 사용자들의 streak을 0으로 리셋
  */
 async function resetStreaksForInactiveUsers() {
-  const yesterday = dayjs().subtract(1, 'day').startOf('day');
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const yesterday = dayjs(getOffsetDate()).subtract(1, 'day').startOf('day');
   
   // 어제 10개 이상 퀴즈를 안 푼 사용자들 찾기
   const inactiveUsers = await prisma.user.findMany({
@@ -141,7 +145,9 @@ async function getUserStreakInfo(userId) {
   
   if (!user) throw new Error('User not found');
   
-  const today = dayjs().startOf('day');
+  // 타임머신 시간 오프셋 적용
+  const { getOffsetDate } = require('../routes/timeMachine');
+  const today = dayjs(getOffsetDate()).startOf('day');
   const lastQuizDate = user.lastQuizDate ? dayjs(user.lastQuizDate).startOf('day') : null;
   
   // 오늘 퀴즈를 안 풀었으면 dailyQuizCount를 0으로 표시

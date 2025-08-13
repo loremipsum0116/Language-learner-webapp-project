@@ -14,7 +14,12 @@
       "Bash(del update_wrong_answer_cards.js)",
       "Bash(cmd /c:*)",
       "Bash(powershell:*)",
-      "Bash(set PORT=3001)"
+      "Bash(set PORT=3001)",
+      "Bash(npx prisma generate:*)",
+      "Bash(npx prisma:*)",
+      "Bash(del nul)",
+      "Bash(del servernul)",
+      "Bash(git add:*)"
     ],
     "deny": []
   }
