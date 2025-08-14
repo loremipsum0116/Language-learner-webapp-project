@@ -21,7 +21,8 @@
       "Bash(del servernul)",
       "Bash(git add:*)",
       "Bash(timeout:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"
