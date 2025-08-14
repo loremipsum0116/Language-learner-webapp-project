@@ -444,17 +444,29 @@ router.get('/reminders/today', async (req, res, next) => {
         const tickIndex = [0, 6, 12, 18].findIndex(h => nowKst.hour() >= h && nowKst.hour() < (h === 18 ? 24 : [0, 6, 12, 18][[0, 6, 12, 18].indexOf(h) + 1]));
         const currentTick = [0, 6, 12, 18][tickIndex] ?? 0;
 
-        // 사용자의 overdue 상태 및 알림 시각 확인
+        // 사용자의 알림 시각 확인
         const user = await prisma.user.findUnique({
             where: { id: userId },
             select: { 
-                hasOverdueCards: true, 
                 nextOverdueAlarm: true,
                 lastOverdueCheck: true 
             }
         });
 
-        if (!user || !user.hasOverdueCards) {
+        // overdue 카드 수 조회 (SRS 폴더에 실제로 존재하는 단어만)
+        const overdueCount = await prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isOverdue: true,
+                overdueDeadline: { gt: now },
+                srsfolderitem: {
+                    some: {} // SRS 폴더에 포함된 카드만
+                }
+            }
+        });
+
+        // 실제 overdue 카드가 없으면 알림하지 않음
+        if (!user || overdueCount === 0) {
             return ok(res, {
                 hasOverdueCards: false,
                 shouldNotifyNow: false,
@@ -463,15 +475,6 @@ router.get('/reminders/today', async (req, res, next) => {
                 message: '복습할 overdue 단어가 없습니다.'
             });
         }
-
-        // overdue 카드 수 조회
-        const overdueCount = await prisma.sRSCard.count({
-            where: {
-                userId: userId,
-                isOverdue: true,
-                overdueDeadline: { gt: now }
-            }
-        });
 
         // 알림 시간인지 확인
         const shouldNotifyNow = user.nextOverdueAlarm && user.nextOverdueAlarm <= now;
@@ -499,13 +502,19 @@ router.post('/reminders/ack', async (req, res, next) => {
         const now = new Date();
         const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // 6시간 후
 
-        // 사용자의 overdue 상태 확인
-        const user = await prisma.user.findUnique({
-            where: { id: userId },
-            select: { hasOverdueCards: true }
+        // overdue 카드 수 확인 (SRS 폴더에 실제로 존재하는 단어만)
+        const overdueCount = await prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                isOverdue: true,
+                overdueDeadline: { gt: now },
+                srsfolderitem: {
+                    some: {} // SRS 폴더에 포함된 카드만
+                }
+            }
         });
 
-        if (!user || !user.hasOverdueCards) {
+        if (overdueCount === 0) {
             return ok(res, { 
                 acknowledged: true, 
                 message: 'overdue 카드가 없어 알림을 비활성화합니다.' 

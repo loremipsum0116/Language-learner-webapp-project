@@ -98,7 +98,6 @@ export default function SrsQuiz() {
                 isFromWrongAnswer,
                 // 동결 상태 정보 추가
                 isFrozen,
-                frozenUntil,
                 canUpdateCardState, 
                 calculatedStage,
                 calculatedNextReviewAt,

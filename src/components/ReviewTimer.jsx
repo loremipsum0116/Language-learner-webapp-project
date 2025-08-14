@@ -168,18 +168,14 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         const deadlineDiff = deadlineTime.diff(realNow);
                         
                         if (deadlineDiff <= 0) {
-                            // overdue 데드라인이 지났을 때: stage별 초기 타이머 표시 (정답 카드의 경우)
-                            // Stage별 대기 시간: [0, 3, 7, 14, 30, 60, 120] 일
-                            const stageDays = [0, 3, 7, 14, 30, 60, 120];
-                            const currentStage = Math.min(Math.max(nextReviewAt ? 1 : 0, 0), 6); // 추정 stage
-                            const days = stageDays[currentStage] || 3; // 기본 3일
-                            
-                            const stageTimer = now.add(days, 'day');
-                            const stageTimerDiff = stageTimer.diff(now);
-                            const stageTimerDuration = dayjs.duration(stageTimerDiff);
-                            
-                            setTimeLeft(`⏳ ${Math.floor(stageTimerDuration.asDays())}일 ${stageTimerDuration.hours()}시간 후 복습`);
-                            setIsReviewable(false); // 대기 중이므로 복습 불가
+                            // overdue 데드라인이 지났을 때: 동결 전환 대기 상태로 표시
+                            if (accelerationFactor > 1) {
+                                setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
+                            } else {
+                                setTimeLeft("❄️ 동결 전환 중... (10분 내 동결)");
+                            }
+                            setIsReviewable(false);
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');
                             return;
                         }
                         
