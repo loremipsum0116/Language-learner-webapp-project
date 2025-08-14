@@ -29,6 +29,7 @@ export default function SrsDashboard() {
     const [newFolderName, setNewFolderName] = useState("");
     const [streakInfo, setStreakInfo] = useState(null);
     const [wrongAnswersCount, setWrongAnswersCount] = useState(0);
+    const [srsStatus, setSrsStatus] = useState(null);
 
     const reload = async () => {
         setLoading(true);
@@ -49,6 +50,10 @@ export default function SrsDashboard() {
             // 오답노트 개수 로드
             const wrongRes = await fetchJSON("/srs/wrong-answers/count", withCreds());
             setWrongAnswersCount(wrongRes.data.count);
+            
+            // SRS 상태 정보 로드 (overdue 알림용)
+            const statusRes = await fetchJSON("/srs/status", withCreds());
+            setSrsStatus(statusRes.data);
             
         } finally {
             setLoading(false);
@@ -110,9 +115,57 @@ export default function SrsDashboard() {
         }
     };
 
+    // Overdue 알림 메시지 컴포넌트
+    const OverdueAlertBanner = () => {
+        if (!srsStatus?.shouldShowAlarm || !srsStatus?.alarmInfo) return null;
+        
+        const { overdueCount, alarmInfo } = srsStatus;
+        const { currentPeriod, nextAlarmAtKst, minutesToNextAlarm, periodProgress } = alarmInfo;
+        
+        return (
+            <div className="alert alert-warning alert-dismissible mb-4" role="alert">
+                <div className="d-flex align-items-center justify-content-between">
+                    <div className="flex-grow-1">
+                        <div className="d-flex align-items-center mb-2">
+                            <strong className="me-2">🔔 복습 알림</strong>
+                            <span className="badge bg-danger text-white me-2">{overdueCount}개</span>
+                            <span className="text-muted small">
+                                ({currentPeriod})
+                            </span>
+                        </div>
+                        <div className="d-flex align-items-center">
+                            <span className="me-3">
+                                복습이 필요한 단어가 <strong>{overdueCount}개</strong> 있습니다.
+                            </span>
+                            <span className="text-muted small">
+                                다음 알림: {nextAlarmAtKst} ({minutesToNextAlarm}분 후)
+                            </span>
+                        </div>
+                        {/* 진행 바 */}
+                        <div className="progress mt-2" style={{ height: '4px' }}>
+                            <div 
+                                className="progress-bar bg-warning" 
+                                style={{ width: `${periodProgress}%` }}
+                                title={`현재 알림 주기 ${periodProgress}% 경과`}
+                            ></div>
+                        </div>
+                    </div>
+                    <div className="ms-3">
+                        <Link to="/srs/quiz" className="btn btn-warning btn-sm">
+                            <strong>지금 복습하기</strong>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        );
+    };
+
     return (
         <main className="container py-4">
             <h2 className="mb-4">SRS 학습 🧠</h2>
+
+            {/* Overdue 알림 배너 */}
+            <OverdueAlertBanner />
 
             {/* Streak 정보 및 오답노트 */}
             {streakInfo && (
@@ -120,21 +173,60 @@ export default function SrsDashboard() {
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title">🔥 연속 학습</h5>
-                                <h2 className="text-primary mb-2">{streakInfo.streak}일</h2>
+                                <div className="d-flex justify-content-between align-items-start mb-3">
+                                    <div>
+                                        <h5 className="card-title">
+                                            {streakInfo?.status?.icon || '🔥'} 연속 학습
+                                        </h5>
+                                        <h2 className="mb-1" style={{ 
+                                            color: streakInfo?.status?.color === 'gray' ? '#6c757d' :
+                                                   streakInfo?.status?.color === 'blue' ? '#0d6efd' :
+                                                   streakInfo?.status?.color === 'green' ? '#198754' :
+                                                   streakInfo?.status?.color === 'orange' ? '#fd7e14' :
+                                                   streakInfo?.status?.color === 'purple' ? '#6f42c1' : '#0d6efd'
+                                        }}>
+                                            {streakInfo.streak}일
+                                        </h2>
+                                        <small className={`text-${
+                                            streakInfo?.status?.color === 'purple' ? 'primary' : 'muted'
+                                        }`}>
+                                            {streakInfo?.status?.message || ''}
+                                        </small>
+                                    </div>
+                                    {/* 보너스 뱃지 */}
+                                    {streakInfo?.bonus?.current && (
+                                        <span className="badge bg-warning text-dark fs-6">
+                                            {streakInfo.bonus.current.emoji} {streakInfo.bonus.current.title}
+                                        </span>
+                                    )}
+                                </div>
+                                
+                                {/* 진행률 바 */}
                                 <div className="progress mb-2" style={{height: '20px'}}>
                                     <div 
-                                        className="progress-bar" 
-                                        style={{width: `${(streakInfo.dailyQuizCount / streakInfo.requiredDaily) * 100}%`}}
+                                        className={`progress-bar ${
+                                            streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
+                                        }`}
+                                        style={{width: `${streakInfo.progressPercent}%`}}
                                     >
                                         {streakInfo.dailyQuizCount}/{streakInfo.requiredDaily}
                                     </div>
                                 </div>
-                                <small className="text-muted">
-                                    오늘 {streakInfo.remainingForStreak > 0 ? 
-                                        `${streakInfo.remainingForStreak}개 더 필요` : 
-                                        '목표 달성! 🎉'}
-                                </small>
+                                
+                                {/* 상태 메시지 */}
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <small className="text-muted">
+                                        {streakInfo.isCompletedToday ? 
+                                            '오늘 목표 달성! 🎉' : 
+                                            `오늘 ${streakInfo.remainingForStreak}개 더 필요`}
+                                    </small>
+                                    {streakInfo?.bonus?.next && (
+                                        <small className="text-muted">
+                                            다음: {streakInfo.bonus.next.emoji} {streakInfo.bonus.next.title} 
+                                            ({streakInfo.bonus.next.days - streakInfo.streak}일 남음)
+                                        </small>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -82,6 +82,16 @@ router.post('/answer', async (req, res, next) => {
         
         console.log('[QUIZ ANSWER] markAnswer result:', result);
         
+        // 동결 상태 처리 (최우선)
+        if (result.status === 'frozen') {
+            return ok(res, {
+                message: result.message || '카드가 동결 상태입니다.',
+                isFrozen: result.isFrozen,
+                frozenUntil: result.frozenUntil,
+                canReview: false
+            });
+        }
+        
         // 대기 상태이거나 복습 불가능한 경우 처리
         if (result.status === 'waiting') {
             return ok(res, {

@@ -20,7 +20,8 @@
       "Bash(del nul)",
       "Bash(del servernul)",
       "Bash(git add:*)",
-      "Bash(timeout:*)"
+      "Bash(timeout:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

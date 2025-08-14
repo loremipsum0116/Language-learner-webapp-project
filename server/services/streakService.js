@@ -130,7 +130,75 @@ async function resetStreaksForInactiveUsers() {
 }
 
 /**
- * 사용자 streak 정보 조회
+ * 연속학습일 보너스 계산
+ */
+function getStreakBonus(streak) {
+  const bonuses = [
+    { days: 30, title: '한 달 달인', emoji: '🏅', description: '30일 연속 학습 달성!' },
+    { days: 100, title: '백일장', emoji: '💯', description: '100일 연속 학습 달성!' },
+    { days: 365, title: '일년 마스터', emoji: '👑', description: '1년 연속 학습 달성!' },
+    { days: 500, title: '레전드', emoji: '🌟', description: '500일 연속 학습 달성!' },
+    { days: 1000, title: '신화', emoji: '🔥', description: '1000일 연속 학습 달성!' }
+  ];
+  
+  // 현재 달성한 가장 높은 단계 찾기
+  const currentBonus = bonuses.reverse().find(bonus => streak >= bonus.days);
+  
+  // 다음 목표 찾기
+  bonuses.reverse(); // 원래 순서로 되돌리기
+  const nextBonus = bonuses.find(bonus => streak < bonus.days);
+  
+  return {
+    current: currentBonus || null,
+    next: nextBonus || null,
+    all: bonuses
+  };
+}
+
+/**
+ * 연속학습일 상태 계산
+ */
+function getStreakStatus(streak, dailyQuizCount) {
+  if (streak === 0) {
+    return {
+      status: 'none',
+      message: '연속학습을 시작해보세요!',
+      color: 'gray',
+      icon: '📚'
+    };
+  } else if (streak >= 1 && streak < 7) {
+    return {
+      status: 'beginner',
+      message: '좋은 시작입니다!',
+      color: 'blue',
+      icon: '🌱'
+    };
+  } else if (streak >= 7 && streak < 30) {
+    return {
+      status: 'consistent',
+      message: '꾸준히 하고 있어요!',
+      color: 'green',
+      icon: '🔥'
+    };
+  } else if (streak >= 30 && streak < 100) {
+    return {
+      status: 'dedicated',
+      message: '대단한 집중력이에요!',
+      color: 'orange',
+      icon: '⭐'
+    };
+  } else if (streak >= 100) {
+    return {
+      status: 'master',
+      message: '진정한 학습 마스터!',
+      color: 'purple',
+      icon: '👑'
+    };
+  }
+}
+
+/**
+ * 사용자 streak 정보 조회 (개선된 버전)
  */
 async function getUserStreakInfo(userId) {
   const user = await prisma.user.findUnique({
@@ -152,13 +220,26 @@ async function getUserStreakInfo(userId) {
   
   // 오늘 퀴즈를 안 풀었으면 dailyQuizCount를 0으로 표시
   const currentDailyCount = lastQuizDate && lastQuizDate.isSame(today) ? user.dailyQuizCount : 0;
+  const remainingForStreak = Math.max(0, REQUIRED_DAILY_QUIZZES - currentDailyCount);
+  const isCompletedToday = currentDailyCount >= REQUIRED_DAILY_QUIZZES;
+  
+  // 보너스 및 상태 정보
+  const bonus = getStreakBonus(user.streak);
+  const status = getStreakStatus(user.streak, currentDailyCount);
+  
+  // 진행률 계산
+  const progressPercent = Math.min(100, (currentDailyCount / REQUIRED_DAILY_QUIZZES) * 100);
   
   return {
     streak: user.streak,
     dailyQuizCount: currentDailyCount,
     requiredDaily: REQUIRED_DAILY_QUIZZES,
-    remainingForStreak: Math.max(0, REQUIRED_DAILY_QUIZZES - currentDailyCount),
-    lastQuizDate: user.lastQuizDate
+    remainingForStreak,
+    isCompletedToday,
+    progressPercent,
+    lastQuizDate: user.lastQuizDate,
+    bonus,
+    status
   };
 }
 

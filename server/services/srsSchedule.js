@@ -6,23 +6,27 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// SRS stages: 3d, 7d, 14d, 30d, 60d, 120d
+// SRS stages: 명세서에 따른 대기 시간 (시간 단위)
+// Stage 1: 48시간, Stage 2: 144시간, Stage 3: 14일, Stage 4: 30일, Stage 5: 60일, Stage 6: 120일
+const STAGE_WAITING_HOURS = [48, 144, 14*24, 30*24, 60*24, 120*24]; // 시간 단위
+
+// 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용)
 const STAGE_DELAYS = [3, 7, 14, 30, 60, 120];
 
 function clampStage(stage) {
-  return Math.max(0, Math.min(stage, STAGE_DELAYS.length));
+  return Math.max(0, Math.min(stage, STAGE_WAITING_HOURS.length));
 }
 
 function isMaxStage(stage) {
-  return clampStage(stage) === STAGE_DELAYS.length;
+  return clampStage(stage) === STAGE_WAITING_HOURS.length;
 }
 
 function isFinalStage(stage) {
-  return stage >= STAGE_DELAYS.length - 1; // Stage 5 is final (120 days)
+  return stage >= STAGE_WAITING_HOURS.length - 1; // Stage 5 is final (120 days)
 }
 
 function delayDaysFor(stage) {
-  // CRITICAL FIX: stage 시스템 정리
+  // 폴더 시스템을 위한 일수 계산 (기존 방식 유지)
   // stage 0: 즉시 복습 (새 단어/오답)
   // stage 1: 3일 후, stage 2: 7일 후, ..., stage 6: 120일 후
   if (stage <= 0) {
@@ -58,12 +62,11 @@ function computeNextReviewDate(baseDate, stage) {
 
 /**
  * 정답 카드의 대기 시간을 계산합니다.
- * 망각곡선 일수에서 1일을 뺀 만큼 대기합니다.
- * 예: stage 1(3일) -> 2일(48시간) 대기, stage 2(7일) -> 6일(144시간) 대기
+ * 명세서에 따른 직접적인 대기 시간을 적용합니다.
+ * Stage 1: 48시간, Stage 2: 144시간, Stage 3: 14일, Stage 4: 30일, Stage 5: 60일, Stage 6: 120일
  */
 function computeWaitingPeriod(stage) {
-  const totalDelay = delayDaysFor(stage);
-  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}, totalDelay=${totalDelay} days`);
+  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}`);
   
   // Stage 0은 즉시 복습 가능 (대기 시간 없음)
   if (stage === 0) {
@@ -71,16 +74,17 @@ function computeWaitingPeriod(stage) {
     return 0;
   }
   
-  // Stage 1부터는 망각곡선 일수에서 1일을 뺀 만큼 대기
-  // stage 1(3일) -> 2일 대기, stage 2(7일) -> 6일 대기, ...
-  if (totalDelay <= 1) {
-    console.log(`[SRS SCHEDULE] totalDelay <= 1 -> immediate review (0 hours)`);
-    return 0; // 1일 이하인 경우 즉시 복습 가능
+  // Stage 1부터는 명세서에 정의된 대기 시간을 직접 적용
+  if (stage >= 1 && stage <= STAGE_WAITING_HOURS.length) {
+    const waitingHours = STAGE_WAITING_HOURS[stage - 1]; // stage 1은 인덱스 0
+    console.log(`[SRS SCHEDULE] Stage ${stage} -> ${waitingHours} hours waiting`);
+    return waitingHours;
   }
   
-  const waitingHours = (totalDelay - 1) * 24;
-  console.log(`[SRS SCHEDULE] Stage ${stage} -> ${totalDelay} days - 1 = ${totalDelay - 1} days = ${waitingHours} hours`);
-  return waitingHours; // 시간 단위로 반환
+  // 범위를 벗어나면 마지막 단계 적용
+  const waitingHours = STAGE_WAITING_HOURS[STAGE_WAITING_HOURS.length - 1];
+  console.log(`[SRS SCHEDULE] Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
+  return waitingHours;
 }
 
 /**
