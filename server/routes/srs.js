@@ -688,6 +688,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         overdueDeadline: true,
                         isFromWrongAnswer: true,
                         waitingUntil: true,
+                        frozenUntil: true,        // ✅ 동결 필드 추가
                         isMastered: true,
                         masterCycles: true,
                         masteredAt: true
@@ -746,7 +747,8 @@ router.get('/folders/:id/items', async (req, res, next) => {
             const v = (vid && vocabMap.get(vid)) || null;
             
             // 디버깅용 로그 (상세)
-            console.log(`[DEBUG] Item ${it.id}: vocabId=${vid}, vocab found=${!!v}`);
+            console.log(`[DEBUG] Item ${it.id}: cardId=${it.cardId}, vocabId=${vid}, vocab found=${!!v}`);
+            console.log(`[DEBUG] Card data:`, it.card);
             if (v) {
                 console.log(`[DEBUG] Full vocab data:`, JSON.stringify(v, null, 2));
             }
@@ -764,6 +766,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 overdueDeadline: it.card?.overdueDeadline,
                 isFromWrongAnswer: it.card?.isFromWrongAnswer || false,
                 waitingUntil: it.card?.waitingUntil,
+                frozenUntil: it.card?.frozenUntil,        // ✅ 동결 필드 추가
                 isMastered: it.card?.isMastered || false,
                 masterCycles: it.card?.masterCycles || 0,
                 masteredAt: it.card?.masteredAt,

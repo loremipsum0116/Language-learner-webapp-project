@@ -9,6 +9,7 @@ import { SrsApi } from "../api/srs";
 import Pron from "../components/Pron";
 import ReviewTimer from "../components/ReviewTimer";
 import RainbowStar from "../components/RainbowStar";
+import TimeAcceleratorControl from "../components/TimeAcceleratorControl";
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -39,7 +40,16 @@ const getPosBadgeColor = (pos) => {
 };
 
 const getCardBackgroundColor = (item) => {
-    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색 (최우선)
+    // 동결 상태 체크 (최우선)
+    if (item.frozenUntil) {
+        const now = new Date();
+        const frozenUntil = new Date(item.frozenUntil);
+        if (now < frozenUntil) {
+            return 'bg-info-subtle'; // 동결 - 파란색 (최우선)
+        }
+    }
+    
+    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색
     if (item.learned) return 'bg-success-subtle'; // 정답 - 초록색
     if (item.wrongCount > 0) return 'bg-danger-subtle'; // 틀림 - 빨간색
     return ''; // 미학습 - 기본색
@@ -67,6 +77,30 @@ export default function SrsFolderDetail() {
             console.log('[DEBUG] Items array:', raw);
             if (raw.length > 0) {
                 console.log('[DEBUG] First item structure:', raw[0]);
+                console.log('[DEBUG] First item SRS fields:', {
+                    nextReviewAt: raw[0]?.nextReviewAt,
+                    waitingUntil: raw[0]?.waitingUntil,
+                    isOverdue: raw[0]?.isOverdue,
+                    overdueDeadline: raw[0]?.overdueDeadline,
+                    isFromWrongAnswer: raw[0]?.isFromWrongAnswer,
+                    frozenUntil: raw[0]?.frozenUntil,
+                    stage: raw[0]?.stage,
+                    isMastered: raw[0]?.isMastered
+                });
+                console.log('[DEBUG] FULL FIRST ITEM:', JSON.stringify(raw[0], null, 2));
+                if (raw.length > 1) {
+                    console.log('[DEBUG] SECOND ITEM SRS fields:', {
+                        nextReviewAt: raw[1]?.nextReviewAt,
+                        waitingUntil: raw[1]?.waitingUntil,
+                        isOverdue: raw[1]?.isOverdue,
+                        overdueDeadline: raw[1]?.overdueDeadline,
+                        isFromWrongAnswer: raw[1]?.isFromWrongAnswer,
+                        frozenUntil: raw[1]?.frozenUntil,
+                        stage: raw[1]?.stage,
+                        isMastered: raw[1]?.isMastered
+                    });
+                    console.log('[DEBUG] FULL SECOND ITEM:', JSON.stringify(raw[1], null, 2));
+                }
                 console.log('[DEBUG] First item vocab:', raw[0]?.vocab);
                 console.log('[DEBUG] First item dictMeta:', raw[0]?.vocab?.dictMeta);
                 console.log('[DEBUG] First item examples:', raw[0]?.vocab?.dictMeta?.examples);
@@ -183,6 +217,11 @@ export default function SrsFolderDetail() {
                         복습 시작 {selectedIds.size > 0 ? `(${selectedIds.size}개 선택)` : ''}
                     </Link>
                 </div>
+            </div>
+
+            {/* 시간 가속 컨트롤 */}
+            <div className="mb-4">
+                <TimeAcceleratorControl />
             </div>
 
             {/* 단어 관리 툴바 */}
@@ -353,21 +392,23 @@ export default function SrsFolderDetail() {
                                                     ) : (
                                                         <div>
                                                             <span className="badge bg-info">Stage {item.stage ?? 0}</span>
-                                                            {item.nextReviewAt && (
-                                                                <div className="ms-2 mt-1">
+                                                            <div className="ms-2 mt-1">
+                                                                {item.nextReviewAt && (
                                                                     <div className="text-muted small">
                                                                         다음 복습: {fmt(item.nextReviewAt)}
                                                                     </div>
-                                                                    <ReviewTimer 
-                                                                        nextReviewAt={item.nextReviewAt}
-                                                                        waitingUntil={item.waitingUntil}
-                                                                        isOverdue={item.isOverdue}
-                                                                        overdueDeadline={item.overdueDeadline}
-                                                                        isFromWrongAnswer={item.isFromWrongAnswer}
-                                                                        className="small"
-                                                                    />
-                                                                </div>
-                                                            )}
+                                                                )}
+                                                                <ReviewTimer 
+                                                                    nextReviewAt={item.nextReviewAt}
+                                                                    waitingUntil={item.waitingUntil}
+                                                                    isOverdue={item.isOverdue}
+                                                                    overdueDeadline={item.overdueDeadline}
+                                                                    isFromWrongAnswer={item.isFromWrongAnswer}
+                                                                    frozenUntil={item.frozenUntil}
+                                                                    isMastered={item.isMastered}
+                                                                    className="small"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     )}
                                                 </div>

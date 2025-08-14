@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시간 가속 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .status {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.8);
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: white;
+            transform: translateY(-2px);
+        }
+        button:active {
+            transform: translateY(0);
+        }
+        .custom-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin: 15px 0;
+        }
+        input {
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            width: 100px;
+        }
+        .log {
+            background: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ 시간 가속 테스트 패널</h1>
+        
+        <div id="status" class="status">
+            <h3>현재 상태 로딩 중...</h3>
+        </div>
+
+        <div class="controls">
+            <button onclick="setPreset('realtime')">1x 실시간</button>
+            <button onclick="setPreset('fast')">60x 빠름</button>
+            <button onclick="setPreset('veryfast')">1440x 매우빠름</button>
+            <button onclick="setPreset('extreme')">10080x 극한</button>
+        </div>
+
+        <div class="custom-input">
+            <label>커스텀 가속:</label>
+            <input type="number" id="customFactor" min="1" max="10080" value="1">
+            <button onclick="setCustom()">적용</button>
+        </div>
+
+        <div class="log" id="log"></div>
+    </div>
+
+    <script>
+        let logElement = document.getElementById('log');
+        let statusElement = document.getElementById('status');
+
+        function log(message) {
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.textContent += `[${timestamp}] ${message}\n`;
+            logElement.scrollTop = logElement.scrollHeight;
+        }
+
+        async function loadStatus() {
+            try {
+                const response = await fetch('/time-accelerator/status');
+                const data = await response.json();
+                
+                if (data.ok) {
+                    const status = data.data;
+                    statusElement.innerHTML = `
+                        <h3>현재 가속: ${status.accelerationFactor}x ${status.isActive ? '(활성)' : '(실시간)'}</h3>
+                        <p>오답 대기: ${status.examples.originalWrongAnswerWait} → ${status.examples.acceleratedWrongAnswerWait}</p>
+                        <p>Stage 3 대기: ${status.examples.originalStage3Wait} → ${status.examples.acceleratedStage3Wait}</p>
+                    `;
+                    log(`Status loaded: ${status.accelerationFactor}x acceleration`);
+                } else {
+                    throw new Error(data.error || 'Unknown error');
+                }
+            } catch (error) {
+                statusElement.innerHTML = '<h3>❌ 백엔드 연결 실패</h3>';
+                log(`Error loading status: ${error.message}`);
+            }
+        }
+
+        async function setPreset(preset) {
+            try {
+                log(`Setting preset: ${preset}`);
+                const response = await fetch('/time-accelerator/preset', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ preset })
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    log(`✅ Preset ${preset} applied: ${data.data.factor}x`);
+                    await loadStatus();
+                } else {
+                    throw new Error(data.error || 'Failed to set preset');
+                }
+            } catch (error) {
+                log(`❌ Error setting preset: ${error.message}`);
+            }
+        }
+
+        async function setCustom() {
+            const factor = parseInt(document.getElementById('customFactor').value);
+            
+            if (isNaN(factor) || factor < 1) {
+                log('❌ Invalid factor: must be >= 1');
+                return;
+            }
+
+            try {
+                log(`Setting custom factor: ${factor}x`);
+                const response = await fetch('/time-accelerator/set', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ factor })
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    log(`✅ Custom factor applied: ${factor}x`);
+                    await loadStatus();
+                } else {
+                    throw new Error(data.error || 'Failed to set factor');
+                }
+            } catch (error) {
+                log(`❌ Error setting custom factor: ${error.message}`);
+            }
+        }
+
+        // 페이지 로드 시 상태 로드
+        loadStatus();
+        
+        // 5초마다 상태 새로고침
+        setInterval(loadStatus, 5000);
+
+        log('🚀 Time Accelerator Test Panel loaded');
+        log('ℹ️ 이 패널로 시간 가속을 테스트할 수 있습니다');
+        log('ℹ️ 백엔드가 실행되면 자동으로 연결됩니다');
+    </script>
+</body>
+</html>

@@ -76,6 +76,7 @@ export default function SrsQuiz() {
                 waitingUntil,
                 isOverdue,
                 overdueDeadline,
+                frozenUntil,
                 isFromWrongAnswer,
                 canUpdateCardState, 
                 calculatedStage,
@@ -119,6 +120,7 @@ export default function SrsQuiz() {
                         waitingUntil: waitingUntil || item.waitingUntil,
                         isOverdue: isOverdue !== undefined ? isOverdue : item.isOverdue,
                         overdueDeadline: overdueDeadline || item.overdueDeadline,
+                        frozenUntil: frozenUntil || item.frozenUntil,
                         isFromWrongAnswer: isFromWrongAnswer !== undefined ? isFromWrongAnswer : item.isFromWrongAnswer,
                         // 계산된 정보를 별도 필드로 저장 (참고용)
                         _calculatedStage: calculatedStage,

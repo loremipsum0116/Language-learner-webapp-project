@@ -84,31 +84,80 @@ function computeWaitingPeriod(stage) {
 }
 
 /**
- * 대기 시간 종료 시각을 계산합니다.
+ * 대기 시간 종료 시각을 계산합니다. (가속 적용)
  */
 function computeWaitingUntil(baseDate, stage) {
-  const waitingHours = computeWaitingPeriod(stage);
-  const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
-  console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER: stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
-  return result;
+  try {
+    const { getAcceleratedStageWaitTime } = require('../routes/timeAccelerator');
+    const acceleratedMs = getAcceleratedStageWaitTime(stage);
+    const result = new Date(baseDate.getTime() + acceleratedMs);
+    
+    const originalHours = computeWaitingPeriod(stage);
+    const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
+    
+    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (ACCELERATED): stage ${stage}`);
+    console.log(`  Original: +${originalHours} hours`);
+    console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
+    console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    
+    return result;
+  } catch (e) {
+    // 가속 시스템 실패 시 원본 로직 사용
+    const waitingHours = computeWaitingPeriod(stage);
+    const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
+    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (FALLBACK): stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    return result;
+  }
 }
 
 /**
- * 오답 카드의 24시간 대기 종료 시각을 계산합니다.
+ * 오답 카드의 24시간 대기 종료 시각을 계산합니다. (가속 적용)
  */
 function computeWrongAnswerWaitingUntil(baseDate) {
-  const result = new Date(baseDate.getTime() + 24 * 60 * 60 * 1000);
-  console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER: +24 hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
-  return result;
+  try {
+    const { getAccelerated24Hours } = require('../routes/timeAccelerator');
+    const acceleratedMs = getAccelerated24Hours();
+    const result = new Date(baseDate.getTime() + acceleratedMs);
+    
+    const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
+    
+    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (ACCELERATED):`);
+    console.log(`  Original: +24 hours`);
+    console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
+    console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    
+    return result;
+  } catch (e) {
+    // 가속 시스템 실패 시 원본 로직 사용
+    const result = new Date(baseDate.getTime() + 24 * 60 * 60 * 1000);
+    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (FALLBACK): +24 hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    return result;
+  }
 }
 
 /**
- * overdue 상태의 24시간 데드라인을 계산합니다.
+ * overdue 상태의 24시간 데드라인을 계산합니다. (가속 적용)
  */
 function computeOverdueDeadline(overdueStartTime) {
-  const result = new Date(overdueStartTime.getTime() + 24 * 60 * 60 * 1000);
-  console.log(`[SRS SCHEDULE] computeOverdueDeadline: +24 hours from ${overdueStartTime.toISOString()}`);
-  return result;
+  try {
+    const { getAccelerated24Hours } = require('../routes/timeAccelerator');
+    const acceleratedMs = getAccelerated24Hours();
+    const result = new Date(overdueStartTime.getTime() + acceleratedMs);
+    
+    const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
+    
+    console.log(`[SRS SCHEDULE] computeOverdueDeadline (ACCELERATED):`);
+    console.log(`  Original: +24 hours`);
+    console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
+    console.log(`  ${overdueStartTime.toISOString()} -> ${result.toISOString()}`);
+    
+    return result;
+  } catch (e) {
+    // 가속 시스템 실패 시 원본 로직 사용
+    const result = new Date(overdueStartTime.getTime() + 24 * 60 * 60 * 1000);
+    console.log(`[SRS SCHEDULE] computeOverdueDeadline (FALLBACK): +24 hours from ${overdueStartTime.toISOString()}`);
+    return result;
+  }
 }
 
 module.exports = {

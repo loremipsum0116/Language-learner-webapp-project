@@ -19,8 +19,10 @@
       "Bash(npx prisma:*)",
       "Bash(del nul)",
       "Bash(del servernul)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(timeout:*)"
     ],
-    "deny": []
+    "deny": [],
+    "defaultMode": "acceptEdits"
   }
 }

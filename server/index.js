@@ -35,9 +35,11 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/A1/audio', express.static(path.join(__dirname, 'A1', 'audio')));
+app.use('/public', express.static(path.join(__dirname, 'public')));  // 정적 파일 서빙
 
 // --- 인증 불필요 라우트 ---
 app.use('/auth', authRoutes);
+app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 
 // --- 이 지점부터 인증 필요 ---
 app.use(authMiddleware);

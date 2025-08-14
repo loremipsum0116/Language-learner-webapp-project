@@ -56,12 +56,25 @@ const VocabCard = ({
     
     const now = new Date();
     
+    // 동결 상태 체크 (최우선)
+    if (card.frozenUntil) {
+      const frozenUntil = new Date(card.frozenUntil);
+      if (now < frozenUntil) {
+        return {
+          text: '동결됨',
+          color: 'text-blue-600 bg-blue-100',
+          urgent: false,
+          frozen: true
+        };
+      }
+    }
+    
     if (card.isOverdue && card.overdueDeadline) {
       const deadline = new Date(card.overdueDeadline);
       if (now < deadline) {
         return {
           text: '복습 필요',
-          color: 'text-red-600 bg-red-100',
+          color: 'text-yellow-600 bg-yellow-100', // 명세에 따라 노란색으로 변경
           urgent: true
         };
       }
@@ -70,9 +83,11 @@ const VocabCard = ({
     if (card.waitingUntil) {
       const waitingUntil = new Date(card.waitingUntil);
       if (now < waitingUntil) {
+        // 오답 대기와 정답 대기 구분
+        const isWrongAnswerWait = card.isFromWrongAnswer;
         return {
-          text: '대기 중',
-          color: 'text-blue-600 bg-blue-100',
+          text: isWrongAnswerWait ? '오답 대기' : '정답 대기',
+          color: isWrongAnswerWait ? 'text-red-600 bg-red-100' : 'text-green-600 bg-green-100',
           urgent: false
         };
       }
@@ -84,11 +99,39 @@ const VocabCard = ({
   const stageInfo = getStageInfo();
   const overdueStatus = getOverdueStatus();
 
+  // 명세에 따른 카드 배경색 결정
+  const getCardBackgroundColor = () => {
+    if (isCardMastered) {
+      return 'ring-2 ring-purple-300 bg-gradient-to-br from-white to-purple-50';
+    }
+    
+    if (!card) return 'bg-white'; // Default: 신규 단어
+    
+    if (overdueStatus?.frozen) {
+      return 'bg-gradient-to-br from-white to-blue-50'; // Blue: 동결
+    }
+    
+    if (card.isOverdue) {
+      return 'bg-gradient-to-br from-white to-yellow-50'; // Yellow: Overdue
+    }
+    
+    if (card.waitingUntil) {
+      const now = new Date();
+      if (now < new Date(card.waitingUntil)) {
+        if (card.isFromWrongAnswer) {
+          return 'bg-gradient-to-br from-white to-red-50'; // Red: 오답 대기
+        } else {
+          return 'bg-gradient-to-br from-white to-green-50'; // Green: 정답 대기
+        }
+      }
+    }
+    
+    return 'bg-white'; // Default
+  };
+
   return (
     <div 
-      className={`vocab-card relative bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 cursor-pointer ${className} ${
-        isCardMastered ? 'ring-2 ring-purple-300 bg-gradient-to-br from-white to-purple-50' : ''
-      }`}
+      className={`vocab-card relative rounded-lg shadow-md hover:shadow-lg transition-all duration-200 p-4 cursor-pointer ${className} ${getCardBackgroundColor()}`}
       onClick={onClick}
     >
       {/* 마스터 별 표시 */}
@@ -101,10 +144,19 @@ const VocabCard = ({
         />
       )}
       
-      {/* 긴급 복습 표시 */}
-      {overdueStatus?.urgent && (
+      {/* 동결 상태 표시 */}
+      {overdueStatus?.frozen && (
         <div className="absolute top-2 left-2 z-10">
-          <span className="inline-flex items-center px-2 py-1 text-xs font-bold text-red-600 bg-red-100 rounded-full animate-pulse">
+          <span className="inline-flex items-center px-2 py-1 text-xs font-bold text-blue-600 bg-blue-100 rounded-full">
+            🧊 동결됨
+          </span>
+        </div>
+      )}
+      
+      {/* 긴급 복습 표시 */}
+      {overdueStatus?.urgent && !overdueStatus?.frozen && (
+        <div className="absolute top-2 left-2 z-10">
+          <span className="inline-flex items-center px-2 py-1 text-xs font-bold text-yellow-600 bg-yellow-100 rounded-full animate-pulse">
             ⚠️ 복습 필요
           </span>
         </div>

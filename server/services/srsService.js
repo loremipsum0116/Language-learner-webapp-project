@@ -8,7 +8,7 @@ const {
   computeOverdueDeadline,
   STAGE_DELAYS 
 } = require('./srsSchedule');
-const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, hasOverdueCards } = require('./srsJobs');
+const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, isCardFrozen, hasOverdueCards } = require('./srsJobs');
 const dayjs = require('dayjs');
 
 // SRS 망각곡선 일수 (Stage 0: 0일, Stage 1: 3일, Stage 2: 7일, ...)
@@ -31,15 +31,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
             name: folderName,
             createdDate: todayUtcDate,
             nextReviewDate: todayUtcDate, // Stage 0은 즉시 복습 가능
-            cycleAnchorAt: (() => {
-                // 타임머신 시간 오프셋 적용
-                try {
-                    const { getOffsetDate } = require('../routes/timeMachine');
-                    return getOffsetDate();
-                } catch {
-                    return dayjs().toDate();
-                }
-            })(), // 망각곡선 기준점을 생성 시각으로 설정
+            cycleAnchorAt: new Date(), // 망각곡선 기준점을 생성 시각으로 설정
             kind: 'manual',
             autoCreated: false,
             alarmActive: true,
@@ -113,24 +105,8 @@ async function completeFolderAndScheduleNext(folderId, userId) {
                 alarmActive: false, // 알림 비활성화
                 // 새로운 사이클 시작을 위한 설정
                 stage: 0,
-                cycleAnchorAt: (() => {
-                    // 타임머신 시간 오프셋 적용
-                    try {
-                        const { getOffsetDate } = require('../routes/timeMachine');
-                        return getOffsetDate();
-                    } catch {
-                        return new Date();
-                    }
-                })(), // 새로운 사이클 앵커
-                nextReviewDate: (() => {
-                    // 타임머신 시간 오프셋 적용
-                    try {
-                        const { getOffsetDate } = require('../routes/timeMachine');
-                        return dayjs(getOffsetDate()).add(1, 'day').startOf('day').toDate();
-                    } catch {
-                        return dayjs().add(1, 'day').startOf('day').toDate();
-                    }
-                })(), // 1일 후 시작
+                cycleAnchorAt: new Date(), // 새로운 사이클 앵커
+                nextReviewDate: dayjs().add(1, 'day').startOf('day').toDate(), // 1일 후 시작
                 name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${completionCount}회차 완료!`
             }
         });
@@ -189,15 +165,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
 }
 
 async function listFoldersForDate(userId, dateKst00) {
-    // 타임머신 시간 오프셋 적용
-    const today = (() => {
-        try {
-            const { getOffsetDate } = require('../routes/timeMachine');
-            return dayjs(getOffsetDate()).startOf('day');
-        } catch {
-            return dayjs().startOf('day');
-        }
-    })();
+    const today = dayjs().startOf('day');
     
     const folders = await prisma.srsFolder.findMany({
         where: { 
@@ -406,9 +374,8 @@ async function bumpDailyStat(userId, { srsSolvedInc = 0, autoLearnedInc = 0, wro
  * 새 로직: 대기 시간 동안은 상태 변화 없음, overdue 상태에서만 학습 가능
  */
 async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
-    // 타임머신 시간 오프셋 적용
-    const { getOffsetDate } = require('../routes/timeMachine');
-    const now = getOffsetDate();
+    // 현재 시간 사용 (가속 시스템은 타이머 계산에만 적용)
+    const now = new Date();
     
     // 카드 정보 조회 (새 필드들 포함)
     const card = await prisma.sRSCard.findFirst({ 
@@ -422,6 +389,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             isOverdue: true,
             waitingUntil: true,
             overdueDeadline: true,
+            frozenUntil: true,
             itemType: true,
             itemId: true
         }
@@ -447,6 +415,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                            (!card.nextReviewAt || new Date(card.nextReviewAt) <= now);
     
     const isInOverdueWindow = isCardOverdue(card);
+    const isFrozen = isCardFrozen(card);
     
     // 오답 단어의 특별한 경우: waitingUntil이 지난 후 overdue 상태가 될 때까지의 틈새 시간
     const isWrongAnswerReady = card.isFromWrongAnswer && 
@@ -455,7 +424,11 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                               card.overdueDeadline && 
                               new Date() < new Date(card.overdueDeadline);
     
-    if (isFirstLearning) {
+    if (isFrozen) {
+        console.log(`[SRS SERVICE] Card ${cardId} is frozen - no study allowed until ${card.frozenUntil}`);
+        canUpdateCardState = false;
+        statusMessage = '카드가 동결 상태입니다. 복습 시기가 지나 24시간 페널티가 적용되었습니다.';
+    } else if (isFirstLearning) {
         console.log(`[SRS SERVICE] Card ${cardId} - First learning allowed (stage 0, never studied before)`);
         canUpdateCardState = true;
         statusMessage = '';
@@ -833,6 +806,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             waitingUntil: true,
             isOverdue: true,
             overdueDeadline: true,
+            frozenUntil: true,
             isFromWrongAnswer: true
         }
     });
@@ -845,6 +819,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         // 타이머 표시를 위한 추가 정보
         isOverdue: updatedCard?.isOverdue ?? false,
         overdueDeadline: updatedCard?.overdueDeadline,
+        frozenUntil: updatedCard?.frozenUntil,
         isFromWrongAnswer: updatedCard?.isFromWrongAnswer ?? false,
         streakInfo: streakInfo,
         canUpdateCardState: canUpdateCardState,
@@ -888,15 +863,7 @@ async function restartMasteredFolder(folderId, userId) {
             alarmActive: true,
             stage: 0, // Stage 0부터 다시 시작
             cycleAnchorAt: new Date(), // 새로운 사이클 앵커
-            nextReviewDate: (() => {
-                // 타임머신 시간 오프셋 적용
-                try {
-                    const { getOffsetDate } = require('../routes/timeMachine');
-                    return dayjs(getOffsetDate()).add(1, 'day').startOf('day').toDate();
-                } catch {
-                    return dayjs().add(1, 'day').startOf('day').toDate();
-                }
-            })(), // 내일부터
+            nextReviewDate: dayjs().add(1, 'day').startOf('day').toDate(), // 내일부터
             name: folder.name.replace(/ - 복습 \d+회차 완료!/, ' - 재학습'), // 이름 변경
             isCompleted: false // 다시 미완료 상태로
         }
@@ -965,7 +932,7 @@ async function getWaitingCardsCount(userId) {
 async function getSrsStatus(userId) {
     const now = new Date();
     
-    const [overdueCount, waitingCount, totalCards, masteredCount] = await Promise.all([
+    const [overdueCount, waitingCount, frozenCount, totalCards, masteredCount] = await Promise.all([
         prisma.sRSCard.count({
             where: {
                 userId: userId,
@@ -977,7 +944,14 @@ async function getSrsStatus(userId) {
             where: {
                 userId: userId,
                 waitingUntil: { gt: now },
-                isOverdue: false
+                isOverdue: false,
+                frozenUntil: null
+            }
+        }),
+        prisma.sRSCard.count({
+            where: {
+                userId: userId,
+                frozenUntil: { gt: now }
             }
         }),
         prisma.sRSCard.count({
@@ -996,6 +970,7 @@ async function getSrsStatus(userId) {
     return {
         overdueCount,
         waitingCount,
+        frozenCount,
         totalCards,
         masteredCount,
         masteryRate: parseFloat(masteryRate),

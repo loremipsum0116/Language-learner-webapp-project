@@ -10,86 +10,126 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 
-const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, className = "" }) => {
+const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, frozenUntil, isMastered, className = "" }) => {
     const [timeLeft, setTimeLeft] = useState(null);
     const [isReviewable, setIsReviewable] = useState(false);
-    const [dayOffset, setDayOffset] = useState(0); // 타임머신 오프셋 (일 단위)
+    const [accelerationFactor, setAccelerationFactor] = useState(1); // 시간 가속 팩터
 
-    // 타임머신 상태 가져오기 (5초마다 갱신)
+    // 시간 가속 팩터 가져오기 (5초마다 갱신)
     useEffect(() => {
-        const fetchTimeOffset = async () => {
+        const fetchAccelerationFactor = async () => {
             try {
-                // 타임머신 상태는 인증 없이 접근 가능하므로 withCreds() 제거
-                const response = await fetchJSON('/time-machine/status');
-                const offset = response.data?.dayOffset || 0;
-                setDayOffset(offset);
+                const response = await fetchJSON('/time-accelerator/status');
+                const factor = response.data?.accelerationFactor || 1;
+                setAccelerationFactor(factor);
             } catch (e) {
-                // 에러 발생 시 현재 타임머신 오프셋을 1로 설정 (임시 수정)
-                console.error('Failed to fetch time offset, using dayOffset 1 as fallback (manual fix):', e);
-                setDayOffset(1); // 현재 타임머신이 1일 후로 설정되어 있으므로 1로 설정
+                console.error('Failed to fetch acceleration factor:', e);
+                setAccelerationFactor(1); // 기본값
             }
         };
         
         // 즉시 실행
-        fetchTimeOffset();
+        fetchAccelerationFactor();
         
-        // 5초마다 타임머신 상태 확인 (타임머신 변경사항 실시간 반영)
-        // 에러가 발생해도 계속 시도하도록 래핑
-        const intervalFetch = async () => {
-            try {
-                await fetchTimeOffset();
-            } catch (e) {
-                // 이미 fetchTimeOffset 내부에서 에러 처리됨, 여기서는 조용히 넘어감
-            }
-        };
-        const interval = setInterval(intervalFetch, 5000);
+        // 5초마다 가속 팩터 확인
+        const interval = setInterval(fetchAccelerationFactor, 5000);
         
         return () => clearInterval(interval);
     }, []);
 
     useEffect(() => {
-        if (!nextReviewAt) return;
+        // nextReviewAt이 없어도 overdue, frozen 등의 상태는 확인해야 함
+        if (!nextReviewAt && !isOverdue && !frozenUntil && !waitingUntil) {
+            return;
+        }
 
         const updateTimer = () => {
-            // 타임머신 오프셋을 적용한 현재 시간 (실시간 계산)
-            const now = dayjs().add(dayOffset, 'day').tz('Asia/Seoul');
+            // 현재 시간 (가속 팩터는 서버에서 이미 적용되어 있으므로 실제 현재 시간 사용)
+            const now = dayjs().tz('Asia/Seoul');
+            
+            // 디버깅 로그 추가
+            console.log('[ReviewTimer DEBUG]', {
+                nextReviewAt,
+                waitingUntil,
+                isOverdue,
+                overdueDeadline,
+                isFromWrongAnswer,
+                frozenUntil,
+                accelerationFactor
+            });
             
             // 디버깅 로그 (개발 중에만)
-            if (isOverdue && isFromWrongAnswer) {
-                console.log(`[ReviewTimer] Debug info:`);
-                console.log(`  dayOffset: ${dayOffset}`);
-                console.log(`  now (with offset): ${now.toISOString()}`);
-                console.log(`  realNow (without offset): ${dayjs().tz('Asia/Seoul').toISOString()}`);
+            if (isOverdue && isFromWrongAnswer && accelerationFactor > 1) {
+                console.log(`[ReviewTimer] Acceleration Debug:`);
+                console.log(`  accelerationFactor: ${accelerationFactor}x`);
+                console.log(`  now: ${now.toISOString()}`);
                 console.log(`  overdueDeadline: ${overdueDeadline}`);
                 if (overdueDeadline) {
                     const deadlineTime = dayjs.utc(overdueDeadline).tz('Asia/Seoul');
-                    const realNow = dayjs().tz('Asia/Seoul');
-                    const diff = deadlineTime.diff(realNow);
-                    console.log(`  diff hours (real time): ${Math.round(diff / (60 * 60 * 1000))}`);
-                    const diffWithOffset = deadlineTime.diff(now);
-                    console.log(`  diff hours (with offset): ${Math.round(diffWithOffset / (60 * 60 * 1000))}`);
+                    const diff = deadlineTime.diff(now);
+                    console.log(`  diff hours: ${Math.round(diff / (60 * 60 * 1000))}`);
                 }
             }
             
-            // overdue 상태인 경우 처리
+            // 1. 동결 상태 확인 (최우선)
+            if (frozenUntil) {
+                const frozenTime = dayjs.utc(frozenUntil).tz('Asia/Seoul');
+                const frozenDiff = frozenTime.diff(now);
+                
+                if (frozenDiff > 0) {
+                    // 아직 동결 중
+                    const duration = dayjs.duration(frozenDiff);
+                    const hours = Math.floor(duration.asHours());
+                    const minutes = duration.minutes();
+                    const seconds = duration.seconds();
+
+                    let timeString;
+                    if (accelerationFactor > 1 && hours === 0 && minutes < 60) {
+                        // 가속 상태에서는 분/초만 표시
+                        timeString = `❄️ ${minutes}분 ${seconds}초 후 복습 재개 (${accelerationFactor}x 가속)`;
+                    } else {
+                        timeString = `❄️ 동결: `;
+                        if (hours > 0) {
+                            timeString += `${hours}시간 `;
+                        }
+                        timeString += `${minutes}분 ${seconds}초 후 복습 재개`;
+                    }
+
+                    setTimeLeft(timeString);
+                    setIsReviewable(false);
+                    console.log('[ReviewTimer DEBUG] Frozen state:', timeString);
+                    return;
+                } else {
+                    // 동결 해제되었지만 아직 서버에서 overdue로 전환되지 않음
+                    if (accelerationFactor > 1) {
+                        setTimeLeft("⚡ 동결 해제 중... (곧 복습 가능)");
+                    } else {
+                        setTimeLeft("🔄 동결 해제 중... (10분 내 복습 가능)");
+                    }
+                    setIsReviewable(false);
+                    console.log('[ReviewTimer DEBUG] Frozen unfreezing state');
+                    return;
+                }
+            }
+            
+            // 2. overdue 상태인 경우 처리
             if (isOverdue) {
                 if (isFromWrongAnswer) {
                     // 오답 카드: overdue 상태에서 복습 가능하지만 24시간 데드라인까지 타이머 표시
                     if (overdueDeadline) {
                         const deadlineTime = dayjs.utc(overdueDeadline).tz('Asia/Seoul');
-                        // overdueDeadline은 서버에서 실제 현재 시간 기준으로 설정되므로 실제 현재 시간과 비교
-                        const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
-                        const diff = deadlineTime.diff(realNow);
+                        // overdueDeadline은 서버에서 가속 시간이 적용되어 설정되므로 현재 시간과 비교
+                        const diff = deadlineTime.diff(now);
                         
                         if (diff <= 0) {
-                            // overdue 데드라인이 지났을 때: 즉시 적절한 타이머 표시
-                            // 오답 카드라면 24시간 대기 타이머 표시
-                            const wait24h = now.add(24, 'hour');
-                            const wait24hDiff = wait24h.diff(now);
-                            const wait24hDuration = dayjs.duration(wait24hDiff);
-                            
-                            setTimeLeft(`⏳ ${Math.floor(wait24hDuration.asHours())}시간 ${wait24hDuration.minutes()}분 ${wait24hDuration.seconds()}초 후 재도전`);
-                            setIsReviewable(false); // 대기 중이므로 복습 불가
+                            // overdue 데드라인이 지났을 때: 동결 전환 대기 상태로 표시
+                            if (accelerationFactor > 1) {
+                                setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
+                            } else {
+                                setTimeLeft("❄️ 동결 전환 중... (10분 내 동결)");
+                            }
+                            setIsReviewable(false);
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');
                             return;
                         }
                         
@@ -99,12 +139,17 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         const seconds = duration.seconds();
 
                         let timeString = "✅ 복습 가능! ";
-                        if (hours > 0) {
-                            timeString += `(${hours}시간 `;
+                        if (accelerationFactor > 1 && hours === 0 && minutes < 60) {
+                            // 가속 상태에서는 분/초만 표시
+                            timeString += `(${minutes}분 ${seconds}초 후 초기화, ${accelerationFactor}x 가속)`;
                         } else {
-                            timeString += `(`;
+                            if (hours > 0) {
+                                timeString += `(${hours}시간 `;
+                            } else {
+                                timeString += `(`;
+                            }
+                            timeString += `${minutes}분 ${seconds}초 후 초기화)`;
                         }
-                        timeString += `${minutes}분 ${seconds}초 후 초기화)`;
 
                         setTimeLeft(timeString);
                         setIsReviewable(true);
@@ -167,40 +212,45 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     dayjs.utc(waitingUntil).tz('Asia/Seoul') : 
                     dayjs.utc(nextReviewAt).tz('Asia/Seoul');
                 
-                // 오답 카드의 waitingUntil은 서버에서 타임머신 시간 기준으로 설정되므로
-                // UI에서는 실제 현재 시간과 비교해야 함
-                const realNow = dayjs().tz('Asia/Seoul'); // 타임머신 오프셋 적용 안 함
-                const diff = targetTime.diff(realNow);
+                // 오답 카드의 waitingUntil은 서버에서 가속 시간이 적용되어 설정되므로 현재 시간과 비교
+                const diff = targetTime.diff(now);
                 
-                // 디버깅 로그 추가
-                console.log(`[ReviewTimer] Wrong answer card waiting debug:`);
-                console.log(`  dayOffset: ${dayOffset}`);
-                console.log(`  now (with offset): ${now.toISOString()}`);
-                console.log(`  realNow (without offset): ${realNow.toISOString()}`);
-                console.log(`  waitingUntil: ${waitingUntil}`);
-                console.log(`  targetTime: ${targetTime.toISOString()}`);
-                console.log(`  diff hours: ${Math.round(diff / (60 * 60 * 1000))}`);
+                if (accelerationFactor > 1) {
+                    console.log(`[ReviewTimer] Wrong answer acceleration debug:`);
+                    console.log(`  accelerationFactor: ${accelerationFactor}x`);
+                    console.log(`  waitingUntil: ${waitingUntil}`);
+                    console.log(`  targetTime: ${targetTime.toISOString()}`);
+                    console.log(`  diff minutes: ${Math.round(diff / (60 * 1000))}`);
+                }
                 
                 if (diff <= 0) {
-                    // 대기 시간이 지났을 경우: 실제로는 overdue 상태여야 함
-                    // overdue 상태에서는 복습 가능하므로 해당 로직으로 이동
-                    // 여기서는 단순히 "복습 준비 중" 메시지만 표시
-                    setTimeLeft("🔄 복습 준비 중... (새로고침 해보세요)");
+                    // 대기 시간이 지났을 경우: overdue 전환 대기 중
+                    if (accelerationFactor > 1) {
+                        setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
+                    } else {
+                        setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
+                    }
                     setIsReviewable(false);
                     return;
                 }
                 
-                // 24시간 대기 카운트다운 표시
+                // 가속된 24시간 대기 카운트다운 표시
                 const duration = dayjs.duration(diff);
                 const hours = Math.floor(duration.asHours());
                 const minutes = duration.minutes();
                 const seconds = duration.seconds();
 
-                let timeString = "⏳ ";
-                if (hours > 0) {
-                    timeString += `${hours}시간 `;
+                let timeString;
+                if (accelerationFactor > 1 && hours === 0 && minutes < 60) {
+                    // 가속 상태에서는 분/초만 표시
+                    timeString = `⏱ ${minutes}분 ${seconds}초 후 복습 대기 (${accelerationFactor}x 가속)`;
+                } else {
+                    timeString = "⏳ ";
+                    if (hours > 0) {
+                        timeString += `${hours}시간 `;
+                    }
+                    timeString += `${minutes}분 ${seconds}초 후 복습 대기`;
                 }
-                timeString += `${minutes}분 ${seconds}초 후 복습 대기`;
 
                 setTimeLeft(timeString);
                 setIsReviewable(false);
@@ -226,7 +276,11 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     // 대기 시간이 지났지만 아직 overdue 플래그가 false인 경우
                     // (크론잡이 아직 실행되지 않은 상태)
                     setIsReviewable(false);
-                    setTimeLeft("곧 복습 대기 상태로 변경됩니다");
+                    if (accelerationFactor > 1) {
+                        setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
+                    } else {
+                        setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
+                    }
                     return;
                 }
 
@@ -264,7 +318,11 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                 // overdue 시작 시간이 지났지만 아직 overdue 플래그가 false인 경우
                 // (크론잡이 아직 실행되지 않은 상태)
                 setIsReviewable(false);
-                setTimeLeft("곧 복습 대기 상태로 변경됩니다");
+                if (accelerationFactor > 1) {
+                    setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
+                } else {
+                    setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
+                }
                 return;
             }
 
@@ -298,9 +356,15 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
         const interval = setInterval(updateTimer, 1000);
 
         return () => clearInterval(interval);
-    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, dayOffset]);
+    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, accelerationFactor]);
 
-    if (!nextReviewAt) {
+    // 마스터된 카드는 별도 표시
+    if (isMastered) {
+        return <span className={`text-success ${className}`}>🏆 마스터 완료</span>;
+    }
+    
+    // nextReviewAt이 없고 다른 상태도 없으면 복습일 없음 표시
+    if (!nextReviewAt && !isOverdue && !frozenUntil && !waitingUntil) {
         return <span className={`text-muted ${className}`}>복습일 없음</span>;
     }
 
