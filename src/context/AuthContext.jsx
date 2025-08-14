@@ -4,6 +4,8 @@ import { fetchJSON, withCreds, isAbortError } from "../api/client";
 
 const AuthContext = createContext(null);
 
+let globalAuthContext = null;
+
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -78,9 +80,21 @@ export function AuthProvider({ children }) {
             setSrsIds(new Set());
         }
     };
+
+    const handleTokenExpiration = useCallback(() => {
+        setUser(null);
+        setSrsIds(new Set());
+    }, []);
     
     // ✅ 2. value 객체에 register 함수 추가
-    const value = { user, loading, login, logout, register, srsIds, refreshSrsIds };
+    const value = { user, loading, login, logout, register, srsIds, refreshSrsIds, handleTokenExpiration };
+
+    useEffect(() => {
+        globalAuthContext = value;
+        return () => {
+            globalAuthContext = null;
+        };
+    }, [value]);
 
     return (
         <AuthContext.Provider value={value}>
@@ -91,4 +105,8 @@ export function AuthProvider({ children }) {
 
 export function useAuth() {
     return useContext(AuthContext);
+}
+
+export function getGlobalAuthContext() {
+    return globalAuthContext;
 }

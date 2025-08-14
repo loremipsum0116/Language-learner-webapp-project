@@ -14,7 +14,7 @@
   {
     "lemma": "damage",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈdæmɪdʒ/",
     "definition": "Physical harm caused to something in such a way as to impair its value, usefulness, or normal function.",
     "example": "The storm caused a lot of damage to the houses.",
@@ -50,7 +50,7 @@
   {
     "lemma": "deal",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/diːl/",
     "definition": "Distribute (cards) to players in a card game.",
     "example": "How do you deal with stress?",
@@ -62,7 +62,7 @@
   {
     "lemma": "debate",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈbeɪt/",
     "definition": "A formal discussion on a particular topic in a public meeting or legislative assembly, in which opposing arguments are put forward.",
     "example": "There was a lively debate about the new law.",
@@ -74,7 +74,7 @@
   {
     "lemma": "debt",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/det/",
     "definition": "A sum of money that is owed or due.",
     "example": "He is in debt to the bank.",
@@ -98,7 +98,7 @@
   {
     "lemma": "decorate",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈdekəreɪt/",
     "definition": "Make (something) look more attractive by adding extra items or images to it.",
     "example": "We decorated the room for the party.",
@@ -110,7 +110,7 @@
   {
     "lemma": "defend",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈfend/",
     "definition": "Resist an attack made on (someone or something); protect from harm or danger.",
     "example": "The soldiers defended the castle.",
@@ -134,7 +134,7 @@
   {
     "lemma": "delighted",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈlaɪtɪd/",
     "definition": "Feeling or showing great pleasure.",
     "example": "I was delighted to hear the good news.",
@@ -158,7 +158,7 @@
   {
     "lemma": "deliver",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈlɪvə(r)/",
     "definition": "Bring and hand over (a letter, parcel, or ordered goods) to the proper recipient or address.",
     "example": "The postman delivers letters every morning.",
@@ -170,7 +170,7 @@
   {
     "lemma": "depend",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈpend/",
     "definition": "Be controlled or determined by.",
     "example": "Our plan depends on the weather.",
@@ -182,7 +182,7 @@
   {
     "lemma": "depressed",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈprest/",
     "definition": "(of a person) in a state of general unhappiness or despondency.",
     "example": "She felt depressed after losing her job.",
@@ -194,7 +194,7 @@
   {
     "lemma": "depressing",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈpresɪŋ/",
     "definition": "Causing a feeling of unhappiness and despondency.",
     "example": "The news was very depressing.",
@@ -254,7 +254,7 @@
   {
     "lemma": "destroy",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈstrɔɪ/",
     "definition": "End the existence of (something) by damaging or attacking it.",
     "example": "The fire destroyed the entire building.",
@@ -290,7 +290,7 @@
   {
     "lemma": "dictionary",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈdɪkʃənəri/",
     "definition": "A book or electronic resource that lists the words of a language (typically in alphabetical order) and gives their meaning, or gives the equivalent words in a different language.",
     "example": "You can look up the word in a dictionary.",
@@ -314,7 +314,7 @@
   {
     "lemma": "dig",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪɡ/",
     "definition": "Break up and move earth with a tool or machine, or with hands, paws, snout, etc.",
     "example": "The dog was digging a hole in the garden.",
@@ -350,7 +350,7 @@
   {
     "lemma": "disadvantage",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌdɪsədˈvɑːntɪdʒ/",
     "definition": "An unfavorable circumstance or condition that reduces the chances of success or effectiveness.",
     "example": "Every advantage has its disadvantage.",
@@ -362,7 +362,7 @@
   {
     "lemma": "disappointed",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌdɪsəˈpɔɪntɪd/",
     "definition": "Sad or displeased because someone or something has failed to fulfill one's hopes or expectations.",
     "example": "I was disappointed with my exam results.",
@@ -374,7 +374,7 @@
   {
     "lemma": "disappointing",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌdɪsəˈpɔɪntɪŋ/",
     "definition": "Failing to fulfill someone's hopes or expectations.",
     "example": "The movie was very disappointing.",
@@ -422,7 +422,7 @@
   {
     "lemma": "disease",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈziːz/",
     "definition": "A disorder of structure or function in a human, animal, or plant, especially one that produces specific signs or symptoms or that affects a specific location and is not simply a direct result of physical injury.",
     "example": "He suffers from a rare disease.",
@@ -458,7 +458,7 @@
   {
     "lemma": "divide",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɪˈvaɪd/",
     "definition": "Separate or be separated into parts.",
     "example": "Let's divide the cake into four pieces.",
@@ -482,7 +482,7 @@
   {
     "lemma": "doll",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/dɒl/",
     "definition": "A small model of a human figure, typically one of a baby or girl, used as a child's toy.",
     "example": "My daughter loves to play with dolls.",
@@ -506,7 +506,7 @@
   {
     "lemma": "drawing",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈdrɔːɪŋ/",
     "definition": "A picture or diagram made with a pencil, pen, or crayon rather than paint.",
     "example": "She is good at drawing.",
@@ -530,7 +530,7 @@
   {
     "lemma": "drug",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/drʌɡ/",
     "definition": "A medicine or other substance which has a physiological effect when ingested or otherwise introduced into the body.",
     "example": "This drug can have some side effects.",
@@ -554,7 +554,7 @@
   {
     "lemma": "early",
     "pos": "adjective, adverb",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈɜːli/",
     "definition": "Happening or done before the usual or expected time.",
     "example": "I have to get up early tomorrow.",
@@ -602,7 +602,7 @@
   {
     "lemma": "embarrassed",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪmˈbærəst/",
     "definition": "Feeling awkward, self-conscious, or ashamed.",
     "example": "I was so embarrassed when I forgot her name.",
@@ -614,7 +614,7 @@
   {
     "lemma": "embarrassing",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪmˈbærəsɪŋ/",
     "definition": "Causing one to feel awkward, self-conscious, or ashamed.",
     "example": "It was an embarrassing situation.",
@@ -626,7 +626,7 @@
   {
     "lemma": "encourage",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪnˈkʌrɪdʒ/",
     "definition": "Give support, confidence, or hope to (someone).",
     "example": "My parents always encouraged me to follow my dreams.",
@@ -638,7 +638,7 @@
   {
     "lemma": "energetic",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌenəˈdʒetɪk/",
     "definition": "Showing or involving great activity or vitality.",
     "example": "He is a very energetic child.",
@@ -674,7 +674,7 @@
   {
     "lemma": "enthusiastic",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪnˌθjuːziˈæstɪk/",
     "definition": "Having or showing intense and eager enjoyment, interest, or approval.",
     "example": "She was very enthusiastic about the project.",
@@ -698,7 +698,7 @@
   {
     "lemma": "equipment",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪˈkwɪpmənt/",
     "definition": "The necessary items for a particular purpose.",
     "example": "The photographer has a lot of expensive equipment.",
@@ -710,7 +710,7 @@
   {
     "lemma": "escape",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪˈskeɪp/",
     "definition": "Break free from confinement or control.",
     "example": "The prisoner tried to escape.",
@@ -746,7 +746,7 @@
   {
     "lemma": "everybody",
     "pos": "pronoun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈevribɒdi/",
     "definition": "Every person.",
     "example": "Everybody loves pizza.",
@@ -758,7 +758,7 @@
   {
     "lemma": "everyone",
     "pos": "pronoun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈevriwʌn/",
     "definition": "Every person.",
     "example": "Hello everyone!",
@@ -770,7 +770,7 @@
   {
     "lemma": "everything",
     "pos": "pronoun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈevriθɪŋ/",
     "definition": "All things.",
     "example": "Is everything okay?",
@@ -794,7 +794,7 @@
   {
     "lemma": "exam",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪɡˈzæm/",
     "definition": "A formal test of a person's knowledge or proficiency in a particular subject or skill.",
     "example": "I have a math exam tomorrow.",
@@ -806,7 +806,7 @@
   {
     "lemma": "examine",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪɡˈzæmɪn/",
     "definition": "Inspect (someone or something) in detail to determine their nature or condition; investigate thoroughly.",
     "example": "The doctor examined the patient.",
@@ -866,7 +866,7 @@
   {
     "lemma": "exist",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪɡˈzɪst/",
     "definition": "Have objective reality or being.",
     "example": "Do you believe that ghosts exist?",
@@ -878,7 +878,7 @@
   {
     "lemma": "expect",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈspekt/",
     "definition": "Regard (something) as likely to happen.",
     "example": "I expect to be back on Sunday.",
@@ -902,7 +902,7 @@
   {
     "lemma": "experiment",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈsperɪmənt/",
     "definition": "A scientific procedure undertaken to make a discovery, test a hypothesis, or demonstrate a known fact.",
     "example": "The students did an experiment in the science class.",
@@ -914,7 +914,7 @@
   {
     "lemma": "expert",
     "pos": "noun, adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈekspɜːt/",
     "definition": "A person who has a comprehensive and authoritative knowledge of or skill in a particular area.",
     "example": "He is an expert in computer science.",
@@ -926,7 +926,7 @@
   {
     "lemma": "explanation",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌekspləˈneɪʃn/",
     "definition": "A statement or account that makes something clear.",
     "example": "Can you give me a simple explanation?",
@@ -938,7 +938,7 @@
   {
     "lemma": "explore",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈsplɔː(r)/",
     "definition": "Travel in or through (an unfamiliar country or area) in order to learn about or familiarize oneself with it.",
     "example": "Let's explore the city.",
@@ -950,7 +950,7 @@
   {
     "lemma": "express",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈspres/",
     "definition": "Convey (a thought or feeling) in words or by gestures and conduct.",
     "example": "He found it difficult to express his feelings.",
@@ -962,7 +962,7 @@
   {
     "lemma": "expression",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈspreʃn/",
     "definition": "The action of making known one's thoughts or feelings.",
     "example": "She had a sad expression on her face.",
@@ -974,7 +974,7 @@
   {
     "lemma": "extremely",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ɪkˈstriːmli/",
     "definition": "To a very great degree; very.",
     "example": "It was an extremely difficult exam.",
@@ -1010,7 +1010,7 @@
   {
     "lemma": "fair",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/feə(r)/",
     "definition": "Treating people equally without favoritism or discrimination.",
     "example": "The teacher is always fair to all the students.",
@@ -1022,7 +1022,7 @@
   {
     "lemma": "fairly",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfeəli/",
     "definition": "With justice.",
     "example": "It's a fairly easy question.",
@@ -1034,7 +1034,7 @@
   {
     "lemma": "famous",
     "pos": "adjective",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfeɪməs/",
     "definition": "Known about by many people.",
     "example": "He is a famous actor.",
@@ -1058,7 +1058,7 @@
   {
     "lemma": "fascinating",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfæsɪneɪtɪŋ/",
     "definition": "Extremely interesting.",
     "example": "The book is fascinating.",
@@ -1082,7 +1082,7 @@
   {
     "lemma": "fault",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fɔːlt/",
     "definition": "An unattractive or unsatisfactory feature, especially in a piece of work or in a person's character.",
     "example": "It's not my fault.",
@@ -1094,7 +1094,7 @@
   {
     "lemma": "fear",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fɪə(r)/",
     "definition": "An unpleasant emotion caused by the belief that someone or something is dangerous, likely to cause pain, or a threat.",
     "example": "He has a fear of heights.",
@@ -1106,7 +1106,7 @@
   {
     "lemma": "feature",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfiːtʃə(r)/",
     "definition": "A distinctive attribute or aspect of something.",
     "example": "This phone has many new features.",
@@ -1118,7 +1118,7 @@
   {
     "lemma": "fed up",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˌfed ˈʌp/",
     "definition": "Annoyed, unhappy, or bored, especially with a situation that has existed for a long time.",
     "example": "I'm fed up with this weather.",
@@ -1130,7 +1130,7 @@
   {
     "lemma": "fee",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fiː/",
     "definition": "A payment made to a professional person or to a professional or public body in exchange for advice or services.",
     "example": "The entrance fee is five dollars.",
@@ -1178,7 +1178,7 @@
   {
     "lemma": "figure",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfɪɡə(r)/",
     "definition": "A number, especially one that forms part of official statistics or relates to the financial performance of a company.",
     "example": "He has a good figure.",
@@ -1202,7 +1202,7 @@
   {
     "lemma": "film",
     "pos": "noun, verb",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/fɪlm/",
     "definition": "A story or event recorded by a camera as a set of moving images and shown in a theater or on television; a motion picture.",
     "example": "Have you seen that new film?",
@@ -1298,7 +1298,7 @@
   {
     "lemma": "fold",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fəʊld/",
     "definition": "Bend (something flexible and relatively flat) over on itself so that one part of it covers another.",
     "example": "Can you help me fold the laundry?",
@@ -1310,7 +1310,7 @@
   {
     "lemma": "fond",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fɒnd/",
     "definition": "Having an affection or liking for.",
     "example": "I'm very fond of my grandmother.",
@@ -1322,7 +1322,7 @@
   {
     "lemma": "forgive",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/fəˈɡɪv/",
     "definition": "Stop feeling angry or resentful toward (someone) for an offense, flaw, or mistake.",
     "example": "Please forgive me.",
@@ -1346,7 +1346,7 @@
   {
     "lemma": "fortunately",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfɔːtʃənətli/",
     "definition": "It is fortunate that.",
     "example": "Fortunately, no one was injured in the accident.",
@@ -1394,7 +1394,7 @@
   {
     "lemma": "frequently",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfriːkwəntli/",
     "definition": "Regularly or habitually; often.",
     "example": "We frequently go to the movies.",
@@ -1418,7 +1418,7 @@
   {
     "lemma": "frightened",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfraɪtnd/",
     "definition": "Afraid or anxious.",
     "example": "The little girl was frightened of the dark.",
@@ -1430,7 +1430,7 @@
   {
     "lemma": "frightening",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfraɪtnɪŋ/",
     "definition": "Making someone afraid or anxious; terrifying.",
     "example": "It was a frightening experience.",
@@ -1454,7 +1454,7 @@
   {
     "lemma": "fuel",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfjuːəl/",
     "definition": "Material such as coal, gas, or oil that is burned to produce heat or power.",
     "example": "We need to stop for fuel.",
@@ -1466,7 +1466,7 @@
   {
     "lemma": "funny",
     "pos": "adjective",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfʌni/",
     "definition": "Causing laughter or amusement; humorous.",
     "example": "He told a funny story.",
@@ -1490,7 +1490,7 @@
   {
     "lemma": "future",
     "pos": "noun, adjective",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈfjuːtʃə(r)/",
     "definition": "The time or a period of time following the moment of speaking or writing; time regarded as still to come.",
     "example": "What are your plans for the future?",

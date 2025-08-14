@@ -700,10 +700,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         frozenUntil: true,        // ✅ 동결 필드 추가
                         isMastered: true,
                         masterCycles: true,
-                        masteredAt: true,
-                        // 동결 상태 필드 추가
-                        isFrozen: true,
-                        frozenUntil: true
+                        masteredAt: true
                     } 
                 },         // 카드의 완전한 SRS 정보 포함
             },
@@ -966,20 +963,15 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
                         userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
                     },
                     update: {
-                        // 새로운 폴더에 추가될 때는 stage 0에서 다시 시작하고 즉시 학습 가능
-                        stage: 0,
-                        nextReviewAt: null,
-                        waitingUntil: null,
-                        isOverdue: false,
-                        overdueDeadline: null,
-                        isFromWrongAnswer: false
+                        // 폴더별 독립성을 위해 전역 상태는 건드리지 않음 (마스터 상태만 전역적)
+                        // 기존 카드의 다른 폴더 상태에 영향 주지 않도록 update 하지 않음
                     },
                     create: { 
                         userId, 
                         itemType: 'vocab', 
                         itemId: vid,
                         stage: 0,
-                        nextReviewAt: null // 새로 추가된 단어는 즉시 학습 가능
+                        nextReviewAt: null // 새로 생성된 카드는 즉시 학습 가능
                     },
                     select: { id: true, itemType: true, itemId: true },
                 });
@@ -1071,72 +1063,18 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
 
         // --- 트랜잭션으로 안전하게 처리 ---
         await prisma.$transaction(async (tx) => {
-            // 1. 폴더와 아이템의 연결을 먼저 끊습니다. (공통)
+            // ✅ 폴더별 독립성을 위해 srsfolderitem만 삭제하고 전역 카드는 유지
             const result = await tx.srsFolderItem.deleteMany({
                 where: { id: { in: folderItemIds } },
             });
             
             console.log('[BULK DELETE] SrsFolderItem deleteMany result:', result);
-
-            // 2. SRSCard의 오답 횟수 초기화
-            await tx.sRSCard.updateMany({
-                where: {
-                    id: { in: cardIdsToDelete },
-                    userId: userId
-                },
-                data: {
-                    wrongTotal: 0, // 오답 횟수 초기화
-                    stage: 0,      // Stage도 초기화
-                    nextReviewAt: null // 복습일 제거
-                }
-            });
-            console.log('[BULK DELETE] Reset wrong counts for cards:', cardIdsToDelete);
-
-            // 3. 해당 단어들의 오답노트도 삭제
-            const vocabIds = await tx.sRSCard.findMany({
-                where: { id: { in: cardIdsToDelete } },
-                select: { itemId: true }
-            });
-            const vocabIdList = vocabIds.map(card => card.itemId);
             
-            if (vocabIdList.length > 0) {
-                // 해당 단어가 다른 폴더에도 있는지 확인
-                const remainingCards = await tx.sRSCard.findMany({
-                    where: {
-                        userId: userId,
-                        itemType: 'vocab',
-                        itemId: { in: vocabIdList },
-                        id: { notIn: cardIdsToDelete } // 삭제 예정이 아닌 카드들
-                    },
-                    select: { itemId: true }
-                });
-                
-                const remainingVocabIds = new Set(remainingCards.map(card => card.itemId));
-                const vocabsToDeleteFromWrongAnswers = vocabIdList.filter(vid => !remainingVocabIds.has(vid));
-                
-                if (vocabsToDeleteFromWrongAnswers.length > 0) {
-                    // 다른 폴더에 없는 단어들만 오답노트에서 삭제
-                    const deletedCount = await tx.wrongAnswer.deleteMany({
-                        where: {
-                            userId: userId,
-                            vocabId: { in: vocabsToDeleteFromWrongAnswers }
-                        }
-                    });
-                    console.log('[BULK DELETE] Deleted wrong answers for vocabs:', vocabsToDeleteFromWrongAnswers, `(${deletedCount.count} items)`);
-                } else {
-                    console.log('[BULK DELETE] All vocabs exist in other folders, keeping wrong answers');
-                }
-            }
+            // ❌ 전역 카드 상태 초기화 제거 - 다른 폴더 독립성을 위해
+            // ❌ SRSCard 업데이트/삭제 제거 - 폴더별 독립성 보장
 
-            // 4. SRS 폴더에서 단어를 삭제할 때는 항상 해당 SRSCard도 함께 삭제
-            // (폴더에서 제거하면 학습 기록도 초기화되어야 함)
-            const cardDeleteResult = await tx.sRSCard.deleteMany({
-                where: {
-                    id: { in: cardIdsToDelete },
-                    userId: userId, // 본인 카드만 삭제하도록 이중 확인
-                },
-            });
-            console.log('[BULK DELETE] SRSCard deleteMany result (always delete):', cardDeleteResult);
+            // ✅ 폴더별 독립성을 위해 전역 카드나 오답노트는 건드리지 않음
+            // 오직 해당 폴더에서만 단어를 제거함
         });
 
         return ok(res, { count: itemsToDelete.length, permanent });
@@ -1167,35 +1105,9 @@ router.delete('/folders/:id', async (req, res, next) => {
             await tx.srsFolderItem.deleteMany({ where: { folderId: id } });
             await tx.srsFolder.delete({ where: { id } });
             
-            // 삭제된 단어들이 다른 폴더에 없으면 오답노트에서도 제거
-            if (vocabIds.length > 0) {
-                const remainingSrsCards = await tx.sRSCard.findMany({
-                    where: {
-                        userId: userId,
-                        itemType: 'vocab',
-                        itemId: { in: vocabIds },
-                        folderItems: {
-                            some: {
-                                folder: { userId: userId }
-                            }
-                        }
-                    },
-                    select: { itemId: true }
-                });
-                
-                const remainingVocabIds = new Set(remainingSrsCards.map(card => card.itemId));
-                const orphanedVocabIds = vocabIds.filter(vid => !remainingVocabIds.has(vid));
-                
-                if (orphanedVocabIds.length > 0) {
-                    const deletedCount = await tx.wrongAnswer.deleteMany({
-                        where: {
-                            userId: userId,
-                            vocabId: { in: orphanedVocabIds }
-                        }
-                    });
-                    console.log(`[FOLDER DELETE] Cleaned up ${deletedCount.count} orphaned wrong answers for vocabs:`, orphanedVocabIds);
-                }
-            }
+            // ✅ 폴더별 독립성을 위해 오답노트 정리 로직 제거
+            // 폴더 삭제 시에도 전역 SRS 카드나 오답노트는 건드리지 않음
+            // 다른 폴더에서 같은 단어를 사용할 수 있으므로 독립성 보장
         });
 
         return ok(res, { deleted: true, id });

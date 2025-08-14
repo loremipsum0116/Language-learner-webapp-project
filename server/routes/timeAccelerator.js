@@ -4,7 +4,7 @@ const { ok, fail } = require('../lib/resp');
 const auth = require('../middleware/auth');
 
 // 전역 가속 팩터 저장 (메모리에 저장, 서버 재시작시 리셋됨)
-let globalAccelerationFactor = 10080; // 10080x = 극한 가속
+let globalAccelerationFactor = 1; // 1x = 정상 시간
 
 /**
  * 현재 가속 팩터를 가져오는 함수

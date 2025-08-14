@@ -349,28 +349,21 @@ export default function VocabList() {
         });
     };
 
-    const playVocabAudio = async (vocab) => {
+    const safeFileName = (str) => {
+        if (!str) return '';
+        return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
+    };
+
+    const playVocabAudio = (vocab) => {
         const targetUrl = vocab.audio;
         if (targetUrl) {
             playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
-        try {
-            setEnrichingId(vocab.id);
-            const { data: updatedVocab } = await fetchJSON(`/vocab/${vocab.id}/enrich`, withCreds({ method: 'POST' }));
-            setWords(prevWords => prevWords.map(w => (w.id === updatedVocab.id ? updatedVocab : w)));
-            const enrichedUrl = updatedVocab.audio;
-            if (enrichedUrl) {
-                playUrl(enrichedUrl, 'vocab', vocab.id);
-            } else {
-                alert(`'${vocab.lemma}'에 대한 음성 파일을 찾을 수 없습니다.`);
-            }
-        } catch (e) {
-            console.error("Enrichment failed:", e);
-            alert("음성 정보를 가져오는 데 실패했습니다.");
-        } finally {
-            setEnrichingId(null);
-        }
+        
+        // Use the same path pattern as examples
+        const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
+        playUrl(localAudioPath, 'vocab', vocab.id);
     };
 
     const playExampleAudio = (url, type, id) => {

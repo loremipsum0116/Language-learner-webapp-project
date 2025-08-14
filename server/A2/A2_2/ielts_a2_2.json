@@ -14,7 +14,7 @@
   {
     "lemma": "badly",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbædli/",
     "definition": "In an unsatisfactory, inadequate, or unsuccessful way.",
     "example": "The team played badly and lost the game.",
@@ -62,7 +62,7 @@
   {
     "lemma": "beat",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/biːt/",
     "definition": "Defeat (someone) in a game or other competition.",
     "example": "Our team beat the champions.",
@@ -74,7 +74,7 @@
   {
     "lemma": "behave",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/bɪˈheɪv/",
     "definition": "Act or conduct oneself in a specified way, especially toward others.",
     "example": "The children behaved very well.",
@@ -98,7 +98,7 @@
   {
     "lemma": "belong",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/bɪˈlɒŋ/",
     "definition": "Be the property of.",
     "example": "Does this book belong to you?",
@@ -146,7 +146,7 @@
   {
     "lemma": "beyond",
     "pos": "preposition, adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/bɪˈjɒnd/",
     "definition": "At or to the further side of.",
     "example": "The mountains are beyond the river.",
@@ -170,7 +170,7 @@
   {
     "lemma": "blame",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/bleɪm/",
     "definition": "Feel or declare that (someone or something) is responsible for a fault or wrong.",
     "example": "Don't blame me for your mistake.",
@@ -230,7 +230,7 @@
   {
     "lemma": "border",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbɔːdə(r)/",
     "definition": "A line separating two countries, administrative divisions, or other areas.",
     "example": "We crossed the border into Canada.",
@@ -290,7 +290,7 @@
   {
     "lemma": "brain",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/breɪn/",
     "definition": "An organ of soft nervous tissue contained in the skull of vertebrates, functioning as the coordinating center of sensation and intellectual and nervous activity.",
     "example": "You need to use your brain to solve this puzzle.",
@@ -302,7 +302,7 @@
   {
     "lemma": "brave",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/breɪv/",
     "definition": "Ready to face and endure danger or pain; showing courage.",
     "example": "He was a brave soldier.",
@@ -314,7 +314,7 @@
   {
     "lemma": "bravely",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbreɪvli/",
     "definition": "In a way that shows readiness to face and endure danger or pain; courageously.",
     "example": "She fought bravely against the disease.",
@@ -326,7 +326,7 @@
   {
     "lemma": "breathe",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/briːð/",
     "definition": "Take air into the lungs and then expel it, as a regular physiological process.",
     "example": "Just relax and breathe deeply.",
@@ -350,7 +350,7 @@
   {
     "lemma": "brightly",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbraɪtli/",
     "definition": "In a way that gives out or reflects a lot of light.",
     "example": "The sun was shining brightly.",
@@ -362,7 +362,7 @@
   {
     "lemma": "brilliant",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbrɪliənt/",
     "definition": "Exceptionally clever or talented.",
     "example": "She has a brilliant mind.",
@@ -386,7 +386,7 @@
   {
     "lemma": "busy",
     "pos": "adjective",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈbɪzi/",
     "definition": "Having a great deal to do.",
     "example": "I'm sorry, I'm busy right now.",
@@ -398,7 +398,7 @@
   {
     "lemma": "but",
     "pos": "conjunction",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/bʌt/",
     "definition": "Used to introduce a phrase or clause contrasting with what has already been mentioned.",
     "example": "He is small but he is strong.",
@@ -410,7 +410,7 @@
   {
     "lemma": "calculate",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkælkjuleɪt/",
     "definition": "Determine (the amount or number of something) mathematically.",
     "example": "Can you calculate the total cost?",
@@ -434,7 +434,7 @@
   {
     "lemma": "calm",
     "pos": "adjective, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kɑːm/",
     "definition": "Not showing or feeling nervousness, anger, or other strong emotions.",
     "example": "Stay calm and don't panic.",
@@ -446,7 +446,7 @@
   {
     "lemma": "camera",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkæmərə/",
     "definition": "A device for recording visual images in the form of photographs, film, or video signals.",
     "example": "Smile for the camera!",
@@ -470,7 +470,7 @@
   {
     "lemma": "cancel",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkænsəl/",
     "definition": "Decide that an arranged or planned event will not take place.",
     "example": "They had to cancel the meeting.",
@@ -494,7 +494,7 @@
   {
     "lemma": "captain",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkæptɪn/",
     "definition": "The person in command of a ship.",
     "example": "He is the captain of the football team.",
@@ -542,7 +542,7 @@
   {
     "lemma": "careless",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkeələs/",
     "definition": "Not giving sufficient attention or thought to avoiding harm or errors.",
     "example": "He made a careless mistake.",
@@ -554,7 +554,7 @@
   {
     "lemma": "carelessly",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkeələsli/",
     "definition": "In a casual or reckless way; inattentively.",
     "example": "He carelessly left the door unlocked.",
@@ -638,7 +638,7 @@
   {
     "lemma": "channel",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈtʃænl/",
     "definition": "A band of frequencies used in radio and television transmission, especially as used by a particular station.",
     "example": "What's on the other channel?",
@@ -674,7 +674,7 @@
   {
     "lemma": "charge",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/tʃɑːdʒ/",
     "definition": "Demand (an amount) as a price for a service rendered or goods supplied.",
     "example": "How much do you charge for a haircut?",
@@ -686,7 +686,7 @@
   {
     "lemma": "chase",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/tʃeɪs/",
     "definition": "Pursue in order to catch or catch up with.",
     "example": "The cat was chasing a mouse.",
@@ -710,7 +710,7 @@
   {
     "lemma": "check",
     "pos": "verb, noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/tʃek/",
     "definition": "Examine (something) in order to determine its accuracy, quality, or condition, or to detect the presence of something.",
     "example": "Please check your answers before you hand in the test.",
@@ -722,7 +722,7 @@
   {
     "lemma": "cheer",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/tʃɪə(r)/",
     "definition": "Shout for joy or in praise or encouragement.",
     "example": "The crowd cheered for their team.",
@@ -734,7 +734,7 @@
   {
     "lemma": "cheerful",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈtʃɪəfl/",
     "definition": "Noticeably happy and optimistic.",
     "example": "She has a very cheerful personality.",
@@ -746,7 +746,7 @@
   {
     "lemma": "cheese",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/tʃiːz/",
     "definition": "A food made from the pressed curds of milk.",
     "example": "I like to eat bread and cheese for breakfast.",
@@ -782,7 +782,7 @@
   {
     "lemma": "client",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈklaɪənt/",
     "definition": "A person or organization using the services of a lawyer or other professional person or company.",
     "example": "The lawyer met with his client.",
@@ -818,7 +818,7 @@
   {
     "lemma": "club",
     "pos": "noun",
-    "levelCEFR": "A1",
+    "levelCEFR": "A2",
     "pronunciation": "/klʌb/",
     "definition": "An association dedicated to a particular interest or activity.",
     "example": "I joined a book club.",
@@ -842,7 +842,7 @@
   {
     "lemma": "colleague",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkɒliːɡ/",
     "definition": "A person with whom one works in a profession or business.",
     "example": "I went out for lunch with my colleagues.",
@@ -866,7 +866,7 @@
   {
     "lemma": "communicate",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəˈmjuːnɪkeɪt/",
     "definition": "Share or exchange information, news, or ideas.",
     "example": "We need to communicate better with each other.",
@@ -878,7 +878,7 @@
   {
     "lemma": "compare",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəmˈpeə(r)/",
     "definition": "Estimate, measure, or note the similarity or dissimilarity between.",
     "example": "Don't compare yourself to others.",
@@ -890,7 +890,7 @@
   {
     "lemma": "complain",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəmˈpleɪn/",
     "definition": "Express dissatisfaction or annoyance about something.",
     "example": "He's always complaining about the weather.",
@@ -902,7 +902,7 @@
   {
     "lemma": "complaint",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəmˈpleɪnt/",
     "definition": "A statement that a situation is unsatisfactory or unacceptable.",
     "example": "I'd like to make a complaint.",
@@ -926,7 +926,7 @@
   {
     "lemma": "completely",
     "pos": "adverb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəmˈpliːtli/",
     "definition": "Totally; utterly.",
     "example": "I completely forgot about the meeting.",
@@ -938,7 +938,7 @@
   {
     "lemma": "concentrate",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkɒnsntreɪt/",
     "definition": "Focus all one's attention on a particular object or activity.",
     "example": "I can't concentrate with all that noise.",
@@ -962,7 +962,7 @@
   {
     "lemma": "condition",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kənˈdɪʃn/",
     "definition": "The state of something with regard to its appearance, quality, or working order.",
     "example": "The car is in good condition.",
@@ -974,7 +974,7 @@
   {
     "lemma": "confident",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkɒnfɪdənt/",
     "definition": "Feeling or showing confidence in oneself; self-assured.",
     "example": "She is a confident and ambitious woman.",
@@ -986,7 +986,7 @@
   {
     "lemma": "connect",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəˈnekt/",
     "definition": "Bring together or into contact so that a real or notional link is established.",
     "example": "Can you connect to the Wi-Fi?",
@@ -998,7 +998,7 @@
   {
     "lemma": "connection",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kəˈnekʃn/",
     "definition": "A relationship in which a person, thing, or idea is linked or associated with something else.",
     "example": "The connection between smoking and lung cancer is well known.",
@@ -1010,7 +1010,7 @@
   {
     "lemma": "consider",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kənˈsɪdə(r)/",
     "definition": "Think carefully about (something), typically before making a decision.",
     "example": "We are considering buying a new car.",
@@ -1022,7 +1022,7 @@
   {
     "lemma": "contact",
     "pos": "noun, verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkɒntækt/",
     "definition": "The state or condition of physical touching.",
     "example": "Please contact me if you have any questions.",
@@ -1046,7 +1046,7 @@
   {
     "lemma": "control",
     "pos": "verb, noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kənˈtrəʊl/",
     "definition": "The power to influence or direct people's behavior or the course of events.",
     "example": "He lost control of the car.",
@@ -1106,7 +1106,7 @@
   {
     "lemma": "court",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kɔːt/",
     "definition": "A body of people presided over by a judge, judges, or magistrate, and acting as a tribunal in civil and criminal cases.",
     "example": "He will appear in court tomorrow.",
@@ -1130,7 +1130,7 @@
   {
     "lemma": "crazy",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkreɪzi/",
     "definition": "Mad, especially as manifested in wild or aggressive behavior.",
     "example": "That's a crazy idea!",
@@ -1142,7 +1142,7 @@
   {
     "lemma": "create",
     "pos": "verb",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kriˈeɪt/",
     "definition": "Bring (something) into existence.",
     "example": "The artist created a beautiful sculpture.",
@@ -1178,7 +1178,7 @@
   {
     "lemma": "crowd",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/kraʊd/",
     "definition": "A large number of people gathered together in a public place.",
     "example": "There was a large crowd at the concert.",
@@ -1190,7 +1190,7 @@
   {
     "lemma": "cruel",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkruːəl/",
     "definition": "Willfully causing pain or suffering to others, or feeling no concern about it.",
     "example": "It was cruel to lock the dog in the car.",
@@ -1202,7 +1202,7 @@
   {
     "lemma": "curious",
     "pos": "adjective",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkjʊəriəs/",
     "definition": "Eager to know or learn something.",
     "example": "I was curious to know what would happen next.",
@@ -1214,7 +1214,7 @@
   {
     "lemma": "currency",
     "pos": "noun",
-    "levelCEFR": "B1",
+    "levelCEFR": "A2",
     "pronunciation": "/ˈkʌrənsi/",
     "definition": "A system of money in general use in a particular country.",
     "example": "What is the currency of Japan?",

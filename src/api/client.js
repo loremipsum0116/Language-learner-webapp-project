@@ -1,4 +1,6 @@
 // src/api/client.js
+import { getGlobalAuthContext } from "../context/AuthContext";
+
 export const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
 export const withCreds = (opts = {}) => ({
@@ -46,6 +48,10 @@ export async function fetchJSON(url, opts = {}, timeoutMs = 8000) {
 
     const latency = Math.round(performance.now() - t0);
     if (res.status === 401) {
+      const authContext = getGlobalAuthContext();
+      if (authContext && authContext.handleTokenExpiration) {
+        authContext.handleTokenExpiration();
+      }
       const err = new Error("Unauthorized");
       err.status = 401;
       err.latency = latency;

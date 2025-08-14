@@ -246,8 +246,23 @@ async function ensureCardsForVocabs(userId, vocabIds) {
     const existMap = new Map(existing.map(e => [e.itemId, e.id]));
     const toCreate = uniq
         .filter(vId => !existMap.has(vId))
-        .map(vId => ({ userId, itemType: 'vocab', itemId: vId, stage: 0, nextReviewAt: new Date() }));
-    if (toCreate.length) await prisma.sRSCard.createMany({ data: toCreate });
+        .map(vId => ({ 
+            userId, 
+            itemType: 'vocab', 
+            itemId: vId, 
+            stage: 0, 
+            nextReviewAt: null,
+            waitingUntil: null,
+            isOverdue: false,
+            frozenUntil: null,
+            overdueDeadline: null,
+            overdueStartAt: null
+        }));
+    
+    if (toCreate.length) {
+        console.log(`[SRS DEBUG] Creating ${toCreate.length} new cards with initial state:`, toCreate[0]);
+        await prisma.sRSCard.createMany({ data: toCreate });
+    }
     const all = await prisma.sRSCard.findMany({
         where: { userId, itemType: 'vocab', itemId: { in: uniq } },
         select: { id: true, itemId: true }

@@ -83,6 +83,36 @@ export default function LearnVocab() {
     const [currentDetail, setDetail] = useState(null);
     const [currentPron, setPron] = useState(null);
     const [reviewQuiz, setReviewQuiz] = useState({ show: false, batch: [] });
+    const [audioPlayCount, setAudioPlayCount] = useState(0);
+    
+    // 설정 상태
+    const [maxPlayCount, setMaxPlayCount] = useState(3);
+    const [flipInterval, setFlipInterval] = useState(5000); // 5초 기본값
+    const [showSettings, setShowSettings] = useState(false);
+    const [showSettingsToast, setShowSettingsToast] = useState(false);
+    
+    // 현재 카드의 최대 재생횟수 고정 (카드 시작 시 설정값으로 고정)
+    const [currentCardMaxPlayCount, setCurrentCardMaxPlayCount] = useState(3);
+    const flipIntervalRef = useRef(flipInterval);
+    
+    // 설정값 변경 시 토스트 표시 (다음 카드부터 적용됨을 알림)
+    useEffect(() => {
+        if (maxPlayCount !== 3) { // 기본값이 아닐 때만 토스트 표시
+            showToast();
+        }
+    }, [maxPlayCount]);
+    
+    useEffect(() => {
+        flipIntervalRef.current = flipInterval;
+        if (flipInterval !== 5000) { // 기본값이 아닐 때만 토스트 표시
+            showToast();
+        }
+    }, [flipInterval]);
+    
+    const showToast = () => {
+        setShowSettingsToast(true);
+        setTimeout(() => setShowSettingsToast(false), 3000); // 3초 후 자동 사라짐
+    };
 
     // 공통 현재 카드 포인터 (TDZ 방지)
     const current = useMemo(
@@ -199,23 +229,60 @@ export default function LearnVocab() {
     // ───────────────────── 자동재생/타이머 ─────────────────────
     useEffect(() => {
         if (mode !== 'flash' || !auto || !current || !audioRef.current) return;
+        
+        // 새 카드 시작 시: 현재 설정값으로 고정하고 재생 횟수 초기화
+        setCurrentCardMaxPlayCount(maxPlayCount);
+        setAudioPlayCount(0);
+        
         const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
-        playUrl(localAudioPath, { loop: true });
+        const el = audioRef.current;
+        
+        // Setup audio event listeners
+        const handleAudioStart = () => {
+            setAudioPlayCount(prevCount => prevCount + 1);
+        };
+        
+        const handleAudioEnd = () => {
+            setAudioPlayCount(prevCount => {
+                if (prevCount >= currentCardMaxPlayCount) {
+                    // After max plays, advance to next card
+                    stopAudio();
+                    setIdx((i) => i + 1);
+                    return 0;
+                } else {
+                    // Play again
+                    setTimeout(() => {
+                        if (el && el.src) {
+                            el.currentTime = 0;
+                            el.play().catch(e => console.error('오디오 재생 실패:', e));
+                        }
+                    }, 1000); // 1-second gap between plays
+                    return prevCount;
+                }
+            });
+        };
 
-        const flip = setInterval(() => setFlipped((f) => !f), 5000);
-        const nextT = setInterval(() => {
-            stopAudio();
-            setIdx((i) => i + 1);
-        }, 20000);
+        // Start first play and setup listeners
+        el.addEventListener('play', handleAudioStart);
+        el.addEventListener('ended', handleAudioEnd);
+        playUrl(localAudioPath, { loop: false });
 
-        return () => { clearInterval(flip); clearInterval(nextT); stopAudio(); };
-    }, [mode, auto, current]);
+        const flip = setInterval(() => setFlipped((f) => !f), flipIntervalRef.current);
+
+        return () => { 
+            clearInterval(flip); 
+            el.removeEventListener('play', handleAudioStart);
+            el.removeEventListener('ended', handleAudioEnd);
+            stopAudio(); 
+        };
+    }, [mode, auto, current, maxPlayCount]);
 
     useEffect(() => { if (!queue[idx]) refreshSrsIds(); }, [queue, idx, refreshSrsIds]);
 
     // ───────────────────── 플로우 헬퍼 ─────────────────────
     const goToNextCard = () => {
         stopAudio();
+        setAudioPlayCount(0); // Reset play count when manually advancing
         const nextIdx = idx + 1;
         const isFlashLike = (mode === 'flash' || !!idsParam);
         const shouldTriggerQuiz = isFlashLike && queue.length >= 10 && nextIdx % 10 === 0 && nextIdx < queue.length;
@@ -232,12 +299,14 @@ export default function LearnVocab() {
     const handleReviewQuizDone = () => {
         setReviewQuiz({ show: false, batch: [] });
         setFlipped(false);
+        setAudioPlayCount(0); // Reset play count after quiz
         setIdx((i) => i + 1);
     };
 
     // ───────────────────── 배치 모드 핸들러 ─────────────────────
     const handleNextFlash = () => {
         stopAudio();
+        setAudioPlayCount(0); // Reset play count when advancing
         const currentBatch = allBatches[batchIndex] || [];
         if (idx < currentBatch.length - 1) {
             setIdx((i) => i + 1);
@@ -249,6 +318,7 @@ export default function LearnVocab() {
 
     const handleQuizDone = async () => {
         stopAudio();
+        setAudioPlayCount(0); // Reset play count when advancing
         if (batchIndex < allBatches.length - 1) {
             setBatchIndex((i) => i + 1);
             setIdx(0);
@@ -514,8 +584,8 @@ export default function LearnVocab() {
                         aria-label={auto ? '자동재생 멈춤' : '자동재생 시작'}
                     >
                         {auto
-                            ? <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 017 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5zm5 0A1.5 1.5 0 0112 5v6a1.5 1.5 0 01-3 0V5a1.5 1.5 0 011.5-1.5z" /></svg>
-                            : <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.058c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 010 1.393z" /></svg>}
+                            ? <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 16 16"><path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" /></svg>
+                            : <svg xmlns="http://www.w3.org/2000/svg" width="18" viewBox="0 0 16 16"><path d="m11.596 8.697-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.058c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z" /></svg>}
                     </button>
                     <span className="text-muted ms-2">{idx + 1} / {queue.length}</span>
                 </div>
@@ -527,6 +597,27 @@ export default function LearnVocab() {
                         onClick={() => setFlipped((f) => !f)}
                         style={{ minHeight: '45rem' }}
                     >
+                        {/* 재생횟수 표시 & 설정 버튼 - 카드 우측 상단 */}
+                        {auto && (
+                            <div 
+                                className="position-absolute d-flex align-items-center gap-2"
+                                style={{ top: '10px', right: '10px' }}
+                            >
+                                <div className="bg-info text-white px-2 py-1 rounded small" style={{ fontSize: '0.75rem' }}>
+                                    재생횟수: {audioPlayCount}회
+                                </div>
+                                <button
+                                    className="btn btn-sm btn-outline-secondary p-1 d-flex align-items-center justify-content-center"
+                                    style={{ width: '24px', height: '24px', fontSize: '12px' }}
+                                    onClick={(e) => { e.stopPropagation(); setShowSettings(true); }}
+                                    title="자동학습 설정"
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        )}
                         {!flipped ? (
                             <>
                                 <div className="d-flex justify-content-center gap-2 mb-2">
@@ -579,6 +670,108 @@ export default function LearnVocab() {
                         <button className="btn btn-primary w-75" onClick={goToNextCard}>다음 →</button>
                     </div>
                 </div>
+                
+                {/* 설정 모달 */}
+                {showSettings && (
+                    <div className="modal show d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">자동학습 설정</h5>
+                                    <button type="button" className="btn-close" onClick={() => setShowSettings(false)}></button>
+                                </div>
+                                <div className="modal-body">
+                                    <div className="mb-3">
+                                        <label className="form-label">재생 횟수 (1-10회)</label>
+                                        <input
+                                            type="range"
+                                            className="form-range"
+                                            min="1"
+                                            max="10"
+                                            value={maxPlayCount}
+                                            onChange={(e) => setMaxPlayCount(parseInt(e.target.value))}
+                                        />
+                                        <div className="d-flex justify-content-between">
+                                            <small>1회</small>
+                                            <strong>{maxPlayCount}회</strong>
+                                            <small>10회</small>
+                                        </div>
+                                    </div>
+                                    <div className="mb-3">
+                                        <label className="form-label">카드 뒤집기 간격</label>
+                                        <input
+                                            type="range"
+                                            className="form-range"
+                                            min="3000"
+                                            max="10000"
+                                            step="1000"
+                                            value={flipInterval}
+                                            onChange={(e) => setFlipInterval(parseInt(e.target.value))}
+                                        />
+                                        <div className="d-flex justify-content-between">
+                                            <small>3초</small>
+                                            <strong>{flipInterval / 1000}초</strong>
+                                            <small>10초</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" onClick={() => setShowSettings(false)}>
+                                        닫기
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                
+                {/* 설정 변경 토스트 알림 */}
+                {showSettingsToast && (
+                    <div 
+                        className="position-fixed top-50 start-50 translate-middle alert alert-info alert-dismissible shadow-lg border-0"
+                        style={{ 
+                            zIndex: 1060,
+                            minWidth: '320px',
+                            maxWidth: '400px',
+                            borderRadius: '12px',
+                            backgroundColor: '#d1ecf1',
+                            borderColor: '#bee5eb',
+                            opacity: showSettingsToast ? 1 : 0,
+                            transform: `translate(-50%, -50%) scale(${showSettingsToast ? 1 : 0.9})`,
+                            transition: 'all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                        }}
+                        role="alert"
+                    >
+                        <div className="d-flex align-items-center">
+                            <div 
+                                className="me-3 d-flex align-items-center justify-content-center"
+                                style={{ 
+                                    width: '40px', 
+                                    height: '40px', 
+                                    backgroundColor: '#0dcaf0', 
+                                    borderRadius: '50%',
+                                    flexShrink: 0
+                                }}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                                </svg>
+                            </div>
+                            <div className="flex-grow-1">
+                                <div className="fw-semibold text-info-emphasis mb-1">설정 변경됨</div>
+                                <div className="small text-muted">다음 카드부터 새 설정이 적용됩니다</div>
+                            </div>
+                        </div>
+                        <button 
+                            type="button" 
+                            className="btn-close position-absolute top-0 end-0 mt-2 me-2" 
+                            onClick={() => setShowSettingsToast(false)}
+                            aria-label="Close"
+                            style={{ fontSize: '0.75rem' }}
+                        ></button>
+                    </div>
+                )}
             </main>
         );
     }
