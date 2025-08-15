@@ -458,7 +458,7 @@ export default function MyWordbook() {
                                             ) : playingAudio?.type === 'vocab' && playingAudio?.id === v.vocabId ? (
                                                 <i className="fas fa-pause" style={{ fontSize: '12px' }}></i>
                                             ) : (
-                                                <i className="fas fa-volume-up" style={{ fontSize: '12px' }}></i>
+                                                <i className="fas fa-play" style={{ fontSize: '10px', marginLeft: '1px' }}></i>
                                             )}
                                         </button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>

@@ -227,8 +227,24 @@ export default function SrsFolderDetail() {
                                 : ''
                         }`}
                     >
-                        복습 시작 {selectedIds.size > 0 ? `(${selectedIds.size}개 선택)` : ''}
+                        학습 시작 {selectedIds.size > 0 ? `(${selectedIds.size}개 선택)` : ''}
                     </Link>
+                    {selectedIds.size > 0 ? (
+                        <Link 
+                            className="btn btn-success btn-sm" 
+                            to={`/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${Array.from(selectedIds).join(',')}`}
+                        >
+                            선택 자동학습 ({selectedIds.size}개)
+                        </Link>
+                    ) : (
+                        <button 
+                            className="btn btn-success btn-sm opacity-50" 
+                            disabled
+                            title="단어를 선택해주세요"
+                        >
+                            선택 자동학습
+                        </button>
+                    )}
                 </div>
             </div>
 

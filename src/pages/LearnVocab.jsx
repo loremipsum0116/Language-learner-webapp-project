@@ -84,6 +84,7 @@ export default function LearnVocab() {
     const [currentPron, setPron] = useState(null);
     const [reviewQuiz, setReviewQuiz] = useState({ show: false, batch: [] });
     const [audioPlayCount, setAudioPlayCount] = useState(0);
+    const audioPlayCountRef = useRef(0);
     
     // 깜짝 퀴즈 상태
     const [surpriseQuiz, setSurpriseQuiz] = useState({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
@@ -95,9 +96,9 @@ export default function LearnVocab() {
     const [showSettings, setShowSettings] = useState(false);
     const [showSettingsToast, setShowSettingsToast] = useState(false);
     
-    // 현재 카드의 최대 재생횟수 고정 (카드 시작 시 설정값으로 고정)
-    const [currentCardMaxPlayCount, setCurrentCardMaxPlayCount] = useState(3);
+    const [lastCardId, setLastCardId] = useState(null); // 카드 변경 감지용
     const flipIntervalRef = useRef(flipInterval);
+    const maxPlayCountRef = useRef(maxPlayCount); // maxPlayCount의 최신값을 참조하기 위한 ref
     
     // 설정값 변경 시 토스트 표시 (다음 카드부터 적용됨을 알림)
     useEffect(() => {
@@ -112,6 +113,12 @@ export default function LearnVocab() {
             showToast();
         }
     }, [flipInterval]);
+    
+    // maxPlayCount가 변경될 때 ref 업데이트
+    useEffect(() => {
+        maxPlayCountRef.current = maxPlayCount;
+    }, [maxPlayCount]);
+
     
     const showToast = () => {
         setShowSettingsToast(true);
@@ -137,11 +144,18 @@ export default function LearnVocab() {
     const playUrl = (url, { loop = false } = {}) => {
         const el = audioRef.current;
         if (!el || !url) return; // ref가 아직 준비되지 않았으면 재생하지 않음
+        
+        // Stop current audio first
         stopAudio();
-        el.loop = !!loop;
-        el.src = url.startsWith('/') ? `${API_BASE}${url}` : url;
-        try { el.load(); } catch { }
-        el.play().catch((e) => console.error('오디오 재생 실패:', e));
+        
+        // Small delay to ensure pause() completes before play()
+        setTimeout(() => {
+            if (!el) return; // Check again in case ref changed
+            el.loop = !!loop;
+            el.src = url.startsWith('/') ? `${API_BASE}${url}` : url;
+            try { el.load(); } catch { }
+            el.play().catch((e) => console.error('오디오 재생 실패:', e));
+        }, 10); // Very small delay to avoid play/pause conflict
     };
 
     // 페이지 언마운트/라우트 변경/탭 숨김 시 강제 정지
@@ -193,6 +207,10 @@ export default function LearnVocab() {
                         ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (mode === 'odat') {
                         ({ data } = await fetchJSON('/odat-note/queue?limit=100', withCreds({ signal: ac.signal })));
+                    } else if (mode === 'flash' && folderIdParam && selectedItemsParam) {
+                        // 플래시 모드에서 SRS 폴더의 선택된 아이템들로 자동학습
+                        const queueUrl = `/srs/queue?folderId=${folderIdParam}&selectedItems=${selectedItemsParam}`;
+                        ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (idsParam) {
                         const vocabIds = idsParam.split(',').map(Number).filter(Boolean);
                         ({ data } = await fetchJSON('/quiz/by-vocab', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds }), signal: ac.signal })));
@@ -237,52 +255,89 @@ export default function LearnVocab() {
     useEffect(() => {
         if (mode !== 'flash' || !auto || !current || !audioRef.current) return;
         
-        // 새 카드 시작 시: 현재 설정값으로 고정하고 재생 횟수 초기화
-        setCurrentCardMaxPlayCount(maxPlayCount);
-        setAudioPlayCount(0);
+        // 실제 카드가 변경된 경우에만 재생 횟수 초기화와 이벤트 리스너 설정
+        const currentCardId = current.vocabId || current.cardId;
+        const isNewCard = currentCardId !== lastCardId;
         
-        const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
-        const el = audioRef.current;
-        
-        // Setup audio event listeners
-        const handleAudioStart = () => {
-            setAudioPlayCount(prevCount => prevCount + 1);
-        };
-        
-        const handleAudioEnd = () => {
-            setAudioPlayCount(prevCount => {
-                if (prevCount >= currentCardMaxPlayCount) {
+        if (isNewCard) {
+            console.log('[AUDIO DEBUG] New card detected:', currentCardId, 'resetting count to 1, max:', maxPlayCountRef.current);
+            setLastCardId(currentCardId);
+            // 새 카드에서는 1부터 시작
+            audioPlayCountRef.current = 1;
+            setAudioPlayCount(1);
+            
+            const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
+            const el = audioRef.current;
+            
+            // Setup audio event listeners only for new cards
+            const handleAudioStart = () => {
+                console.log('[AUDIO DEBUG] Play started, count:', audioPlayCountRef.current);
+            };
+            
+            const handleAudioEnd = () => {
+                console.log('[AUDIO DEBUG] Audio ended, count:', audioPlayCountRef.current, 'max:', maxPlayCountRef.current);
+                if (audioPlayCountRef.current >= maxPlayCountRef.current) {
                     // After max plays, advance to next card
+                    console.log('[AUDIO DEBUG] Max plays reached, advancing to next card');
+                    el.removeEventListener('play', handleAudioStart);
+                    el.removeEventListener('ended', handleAudioEnd);
                     stopAudio();
                     setIdx((i) => i + 1);
-                    return 0;
                 } else {
-                    // Play again
+                    // Increment count and play again after delay
+                    audioPlayCountRef.current = audioPlayCountRef.current + 1;
+                    setAudioPlayCount(audioPlayCountRef.current);
+                    console.log('[AUDIO DEBUG] Playing again in 1 second, new count:', audioPlayCountRef.current);
                     setTimeout(() => {
                         if (el && el.src) {
+                            console.log('[AUDIO DEBUG] Actually playing again now');
                             el.currentTime = 0;
-                            el.play().catch(e => console.error('오디오 재생 실패:', e));
+                            el.play().then(() => {
+                                console.log('[AUDIO DEBUG] Repeat play started successfully');
+                            }).catch(e => {
+                                console.error('[AUDIO DEBUG] 재생 반복 실패:', e);
+                            });
                         }
                     }, 1000); // 1-second gap between plays
-                    return prevCount;
                 }
-            });
-        };
+            };
 
-        // Start first play and setup listeners
-        el.addEventListener('play', handleAudioStart);
-        el.addEventListener('ended', handleAudioEnd);
-        playUrl(localAudioPath, { loop: false });
-
-        const flip = setInterval(() => setFlipped((f) => !f), flipIntervalRef.current);
-
-        return () => { 
-            clearInterval(flip); 
+            // Remove any existing listeners first to prevent duplicates
             el.removeEventListener('play', handleAudioStart);
             el.removeEventListener('ended', handleAudioEnd);
-            stopAudio(); 
-        };
-    }, [mode, auto, current, maxPlayCount]);
+            
+            // Setup listeners first, then start first play
+            el.addEventListener('play', handleAudioStart);
+            el.addEventListener('ended', handleAudioEnd);
+            
+            console.log('[AUDIO DEBUG] Starting first play for new card:', currentCardId);
+            // 즉시 오디오 재생 (딜레이 제거)
+            el.loop = false;
+            el.src = localAudioPath.startsWith('/') ? `${API_BASE}${localAudioPath}` : localAudioPath;
+            console.log('[AUDIO DEBUG] Audio src set to:', el.src);
+            el.load();
+            el.play().then(() => {
+                console.log('[AUDIO DEBUG] Audio play started successfully');
+            }).catch((e) => {
+                console.error('[AUDIO DEBUG] 오디오 재생 실패:', e);
+            });
+
+            const flip = setInterval(() => setFlipped((f) => !f), flipIntervalRef.current);
+
+            return () => { 
+                clearInterval(flip); 
+                el.removeEventListener('play', handleAudioStart);
+                el.removeEventListener('ended', handleAudioEnd);
+                // 새 카드일 때만 오디오 정지
+                stopAudio();
+            };
+        } else {
+            // Same card - just handle flip interval changes, don't touch audio
+            console.log('[AUDIO DEBUG] Same card:', currentCardId, 'updating flip interval only');
+            const flip = setInterval(() => setFlipped((f) => !f), flipIntervalRef.current);
+            return () => clearInterval(flip);
+        }
+    }, [mode, auto, current?.vocabId, current?.cardId]); // lastCardId 의존성 제거로 중복 실행 방지
 
     useEffect(() => { if (!queue[idx]) refreshSrsIds(); }, [queue, idx, refreshSrsIds]);
 
@@ -709,13 +764,19 @@ export default function LearnVocab() {
                         <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
                             <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
 
-                            {/* --- 이 부분이 핵심 변경 사항입니다 --- */}
-                            {(mode === 'flash' || !!idsParam) && (
+                            {/* SRS 폴더에서 온 자동학습이 아닌 경우에만 "폴더에 저장" 버튼 표시 */}
+                            {(mode === 'flash' || !!idsParam) && !folderIdParam && (
                                 <button className="btn btn-primary" onClick={handleSaveToFolder}>
                                     학습 단어 폴더에 저장
                                 </button>
                             )}
-                            {/* --- 여기까지 --- */}
+                            
+                            {/* SRS 폴더에서 온 자동학습인 경우 "폴더로 돌아가기" 버튼 표시 */}
+                            {(mode === 'flash' || !!idsParam) && folderIdParam && (
+                                <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam}`}>
+                                    폴더로 돌아가기
+                                </Link>
+                            )}
 
                             {(!mode || mode === 'srs') && (
                                 <>
