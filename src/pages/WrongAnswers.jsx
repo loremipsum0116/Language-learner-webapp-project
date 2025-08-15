@@ -552,7 +552,7 @@ export default function WrongAnswers() {
                               <span className="badge bg-danger">오답 단어</span>
                             )}
                             <span className="text-muted">
-                              정답: {wa.srsCard.correctTotal}회 / 오답: {wa.srsCard.wrongTotal}회
+                              오답노트 기록: {wa.totalWrongAttempts}회 / SRS 전체: 정답 {wa.srsCard.correctTotal}회, 오답 {wa.srsCard.wrongTotal}회
                             </span>
                           </>
                         )}

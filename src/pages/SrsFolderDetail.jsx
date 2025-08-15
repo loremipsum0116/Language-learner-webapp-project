@@ -195,31 +195,53 @@ export default function SrsFolderDetail() {
 
     // 필터링된 아이템들
     const filteredItems = items.filter(item => {
-        switch (filterMode) {
-            case 'review':
-                return item.isOverdue; // 복습 대기중
-            case 'learning':
-                return !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0); // 학습 대기중
-            case 'frozen':
-                if (item.frozenUntil) {
-                    const now = new Date();
-                    const frozenUntil = new Date(item.frozenUntil);
-                    return now < frozenUntil; // 동결중
-                }
-                return false;
-            case 'stage':
-                return item.stage > 0 && !item.isOverdue && !item.isMastered; // stage 대기중이지만 overdue나 mastered가 아닌 단어들
-            case 'wrong':
-                // 빨간 배경을 가진 단어들 (현재 오답 대기중): wrongCount > 0이지만 동결/overdue/learned가 아닌 상태
-                if (item.frozenUntil) {
-                    const now = new Date();
-                    const frozenUntil = new Date(item.frozenUntil);
-                    if (now < frozenUntil) return false; // 동결중이면 제외
-                }
-                return !item.isOverdue && !item.learned && item.wrongCount > 0;
-            case 'all':
-            default:
-                return true;
+        if (folder.learningCurveType === 'free') {
+            // 자율학습모드용 필터링 - 마지막 학습 상태 기준
+            switch (filterMode) {
+                case 'correct':
+                    // 마지막 학습이 정답인 단어들: lastReviewedAt > lastWrongAt
+                    if (!item.lastReviewedAt) return false; // 아예 학습한 적 없음
+                    if (!item.lastWrongAt) return true; // 오답한 적 없고 학습한 적 있음 = 정답
+                    return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
+                case 'wrong':
+                    // 마지막 학습이 오답인 단어들: lastWrongAt > lastReviewedAt 또는 lastReviewedAt 없음
+                    if (!item.lastWrongAt) return false; // 오답한 적 없음
+                    if (!item.lastReviewedAt) return true; // 오답은 있지만 정답 학습 기록 없음
+                    return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
+                case 'unlearned':
+                    return !item.lastReviewedAt && !item.lastWrongAt; // 아예 학습한 적 없는 단어들
+                case 'all':
+                default:
+                    return true;
+            }
+        } else {
+            // 일반 SRS 모드용 필터링
+            switch (filterMode) {
+                case 'review':
+                    return item.isOverdue; // 복습 대기중
+                case 'learning':
+                    return !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0); // 학습 대기중
+                case 'frozen':
+                    if (item.frozenUntil) {
+                        const now = new Date();
+                        const frozenUntil = new Date(item.frozenUntil);
+                        return now < frozenUntil; // 동결중
+                    }
+                    return false;
+                case 'stage':
+                    return item.stage > 0 && !item.isOverdue && !item.isMastered; // stage 대기중이지만 overdue나 mastered가 아닌 단어들
+                case 'wrong':
+                    // 빨간 배경을 가진 단어들 (현재 오답 대기중): wrongCount > 0이지만 동결/overdue/learned가 아닌 상태
+                    if (item.frozenUntil) {
+                        const now = new Date();
+                        const frozenUntil = new Date(item.frozenUntil);
+                        if (now < frozenUntil) return false; // 동결중이면 제외
+                    }
+                    return !item.isOverdue && !item.learned && item.wrongCount > 0;
+                case 'all':
+                default:
+                    return true;
+            }
         }
     });
         
@@ -263,7 +285,7 @@ export default function SrsFolderDetail() {
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <h4 className="mb-1">
-                        {folder.learningCurveType === 'short' ? '🐰' : folder.learningCurveType === 'free' ? '📚' : '🐢'} {folder.name}
+                        {folder.learningCurveType === 'short' ? '🐰' : folder.learningCurveType === 'free' ? '🎯' : '🐢'} {folder.name}
                         <span className="badge ms-2" style={{
                             backgroundColor: folder.learningCurveType === 'short' ? '#ff6b6b' : 
                                            folder.learningCurveType === 'free' ? '#28a745' : '#4ecdc4',
@@ -281,29 +303,61 @@ export default function SrsFolderDetail() {
                     <small className="text-muted">
                         생성일: <strong>{fmt(created)}</strong>
                         <span className="mx-2">|</span>
-                        학습곡선: <strong>{folder.learningCurveType === 'short' 
-                            ? '2일 간격 고정 반복 (단기 집중형)' 
-                            : '1시간→1일→6일→13일→29일→44일 (장기 기억형)'
-                        }</strong>
-                        <span className="mx-2">|</span>
-                        단어 {items.length}개
-                        <span className="mx-2">|</span>
-                        복습 <span className="text-warning">{reviewWaitingCount}개</span>
-                        <span className="mx-2">|</span>
-                        미학습 <span className="text-info">{learningWaitingCount}개</span>
-                        <span className="mx-2">|</span>
-                        오답 <span className="text-danger">{wrongAnswerCount}개</span>
-                        <span className="mx-2">|</span>
-                        동결 <span className="text-secondary">{frozenCount}개</span>
-                        <span className="mx-2">|</span>
+                        {folder.learningCurveType === 'free' ? (
+                            // 자율학습모드용 통계
+                            <>
+                                단어 {items.length}개
+                                <span className="mx-2">|</span>
+                                정답한 단어 <span className="text-success">{items.filter(item => {
+                                    // 마지막 학습이 정답인 단어들
+                                    if (!item.lastReviewedAt) return false;
+                                    if (!item.lastWrongAt) return true;
+                                    return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
+                                }).length}개</span>
+                                <span className="mx-2">|</span>
+                                오답한 단어 <span className="text-danger">{items.filter(item => {
+                                    // 마지막 학습이 오답인 단어들
+                                    if (!item.lastWrongAt) return false;
+                                    if (!item.lastReviewedAt) return true;
+                                    return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
+                                }).length}개</span>
+                                <span className="mx-2">|</span>
+                                미학습 <span className="text-muted">{items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length}개</span>
+                            </>
+                        ) : (
+                            // 일반 SRS 모드용 통계
+                            <>
+                                학습곡선: <strong>{folder.learningCurveType === 'short' 
+                                    ? '2일 간격 고정 반복 (단기 집중형)' 
+                                    : '1시간→1일→6일→13일→29일→44일 (장기 기억형)'
+                                }</strong>
+                                <span className="mx-2">|</span>
+                                단어 {items.length}개
+                                <span className="mx-2">|</span>
+                                복습 <span className="text-warning">{reviewWaitingCount}개</span>
+                                <span className="mx-2">|</span>
+                                미학습 <span className="text-info">{learningWaitingCount}개</span>
+                                <span className="mx-2">|</span>
+                                오답 <span className="text-danger">{wrongAnswerCount}개</span>
+                                <span className="mx-2">|</span>
+                                동결 <span className="text-secondary">{frozenCount}개</span>
+                                <span className="mx-2">|</span>
+                            </>
+                        )}
                 
                         {filterMode !== 'all' && (
                             <span className="text-warning">
-                                {' '}({filterMode === 'review' ? '복습 대기중인 단어들만 표시' :
-                                      filterMode === 'learning' ? '학습 대기중인 단어들만 표시' :
-                                      filterMode === 'frozen' ? '동결중인 단어들만 표시' :
-                                      filterMode === 'stage' ? 'Stage 대기중인 단어들만 표시' :
-                                      filterMode === 'wrong' ? '오답 대기중인 단어들만 표시' : '필터링 중'})
+                                {' '}({folder.learningCurveType === 'free' ? (
+                                    filterMode === 'correct' ? '정답한 단어들만 표시' :
+                                    filterMode === 'wrong' ? '오답한 단어들만 표시' :
+                                    filterMode === 'unlearned' ? '미학습 단어들만 표시' : '필터링 중'
+                                ) : (
+                                    filterMode === 'review' ? '복습 대기중인 단어들만 표시' :
+                                    filterMode === 'learning' ? '학습 대기중인 단어들만 표시' :
+                                    filterMode === 'frozen' ? '동결중인 단어들만 표시' :
+                                    filterMode === 'stage' ? 'Stage 대기중인 단어들만 표시' :
+                                    filterMode === 'wrong' ? '오답 대기중인 단어들만 표시' : '필터링 중'
+                                )})
                             </span>
                         )}
                     </small>
@@ -370,13 +424,16 @@ export default function SrsFolderDetail() {
             </div>
 
 
-            {/* 시간 가속 컨트롤 */}
-            <div className="mb-4">
-                <TimeAcceleratorControl />
-            </div>
+            {/* 시간 가속 컨트롤 - 자율학습모드에서는 숨김 */}
+            {folder.learningCurveType !== 'free' && (
+                <div className="mb-4">
+                    <TimeAcceleratorControl />
+                </div>
+            )}
 
-            {/* 10분 이하 카드 즉시 학습 가능 버튼 */}
-            <div className="mb-4">
+            {/* 10분 이하 카드 즉시 학습 가능 버튼 - 자율학습모드에서는 숨김 */}
+            {folder.learningCurveType !== 'free' && (
+                <div className="mb-4">
                 <div className="p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
                     <div className="d-flex align-items-center justify-content-between">
                         <div>
@@ -451,7 +508,8 @@ export default function SrsFolderDetail() {
                         </button>
                     </div>
                 </div>
-            </div>
+                </div>
+            )}
 
             {/* 단어 관리 툴바 */}
             {items.length > 0 && (
@@ -481,41 +539,87 @@ export default function SrsFolderDetail() {
                         >
                             전체 보기 ({items.length})
                         </button>
-                        <button
-                            className={`btn btn-sm ${filterMode === 'review' ? 'btn-warning' : 'btn-outline-warning'}`}
-                            onClick={() => handleFilterChange('review')}
-                            disabled={reviewWaitingCount === 0}
-                        >
-                            복습 대기중인 단어들만 보기 ({reviewWaitingCount})
-                        </button>
-                        <button
-                            className={`btn btn-sm ${filterMode === 'learning' ? 'btn-secondary' : 'btn-outline-info'}`}
-                            onClick={() => handleFilterChange('learning')}
-                            disabled={learningWaitingCount === 0}
-                        >
-                            미학습 단어들만 보기 ({learningWaitingCount})
-                        </button>
-                        <button
-                            className={`btn btn-sm ${filterMode === 'frozen' ? 'btn-info' : 'btn-outline-secondary'}`}
-                            onClick={() => handleFilterChange('frozen')}
-                            disabled={frozenCount === 0}
-                        >
-                            동결중인 단어들만 보기 ({frozenCount})
-                        </button>
-                        <button
-                            className={`btn btn-sm ${filterMode === 'stage' ? 'btn-success' : 'btn-outline-success'}`}
-                            onClick={() => handleFilterChange('stage')}
-                            disabled={stageWaitingCount === 0}
-                        >
-                            Stage 대기중인 단어들만 보기 ({stageWaitingCount})
-                        </button>
-                        <button
-                            className={`btn btn-sm ${filterMode === 'wrong' ? 'btn-danger' : 'btn-outline-danger'}`}
-                            onClick={() => handleFilterChange('wrong')}
-                            disabled={wrongAnswerCount === 0}
-                        >
-                            오답만 보기 ({wrongAnswerCount})
-                        </button>
+                        {folder.learningCurveType === 'free' ? (
+                            // 자율학습모드용 필터 버튼들
+                            <>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'correct' ? 'btn-success' : 'btn-outline-success'}`}
+                                    onClick={() => handleFilterChange('correct')}
+                                    disabled={items.filter(item => {
+                                        if (!item.lastReviewedAt) return false;
+                                        if (!item.lastWrongAt) return true;
+                                        return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
+                                    }).length === 0}
+                                >
+                                    정답한 단어만 보기 ({items.filter(item => {
+                                        if (!item.lastReviewedAt) return false;
+                                        if (!item.lastWrongAt) return true;
+                                        return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
+                                    }).length})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'wrong' ? 'btn-danger' : 'btn-outline-danger'}`}
+                                    onClick={() => handleFilterChange('wrong')}
+                                    disabled={items.filter(item => {
+                                        if (!item.lastWrongAt) return false;
+                                        if (!item.lastReviewedAt) return true;
+                                        return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
+                                    }).length === 0}
+                                >
+                                    오답한 단어만 보기 ({items.filter(item => {
+                                        if (!item.lastWrongAt) return false;
+                                        if (!item.lastReviewedAt) return true;
+                                        return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
+                                    }).length})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'unlearned' ? 'btn-secondary' : 'btn-outline-secondary'}`}
+                                    onClick={() => handleFilterChange('unlearned')}
+                                    disabled={items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length === 0}
+                                >
+                                    미학습 단어만 보기 ({items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length})
+                                </button>
+                            </>
+                        ) : (
+                            // 일반 SRS 모드용 필터 버튼들
+                            <>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'review' ? 'btn-warning' : 'btn-outline-warning'}`}
+                                    onClick={() => handleFilterChange('review')}
+                                    disabled={reviewWaitingCount === 0}
+                                >
+                                    복습 대기중인 단어들만 보기 ({reviewWaitingCount})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'learning' ? 'btn-secondary' : 'btn-outline-info'}`}
+                                    onClick={() => handleFilterChange('learning')}
+                                    disabled={learningWaitingCount === 0}
+                                >
+                                    미학습 단어들만 보기 ({learningWaitingCount})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'frozen' ? 'btn-info' : 'btn-outline-secondary'}`}
+                                    onClick={() => handleFilterChange('frozen')}
+                                    disabled={frozenCount === 0}
+                                >
+                                    동결중인 단어들만 보기 ({frozenCount})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'stage' ? 'btn-success' : 'btn-outline-success'}`}
+                                    onClick={() => handleFilterChange('stage')}
+                                    disabled={stageWaitingCount === 0}
+                                >
+                                    Stage 대기중인 단어들만 보기 ({stageWaitingCount})
+                                </button>
+                                <button
+                                    className={`btn btn-sm ${filterMode === 'wrong' ? 'btn-danger' : 'btn-outline-danger'}`}
+                                    onClick={() => handleFilterChange('wrong')}
+                                    disabled={wrongAnswerCount === 0}
+                                >
+                                    오답만 보기 ({wrongAnswerCount})
+                                </button>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
@@ -641,15 +745,32 @@ export default function SrsFolderDetail() {
                                             {item.isMastered && (
                                                 <span className="text-purple-600 fw-bold">🌟 마스터 완료</span>
                                             )}
-                                            {!item.isMastered && item.isOverdue && (
-                                                <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
-                                            )}
-                                            {!item.isMastered && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
-                                            {!item.isMastered && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
-                                                <span className="text-danger">✗ 오답 {item.wrongCount}회</span>
-                                            )}
-                                            {!item.isMastered && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
-                                                <span className="text-muted">미학습</span>
+                                            {!item.isMastered && folder?.learningCurveType === 'free' ? (
+                                                // 자율학습모드 - 간단한 정답/오답 표시
+                                                <div className="d-flex gap-1">
+                                                    {(item.correctTotal > 0 || item.wrongTotal > 0) ? (
+                                                        <>
+                                                            <span className="text-success">✓ {item.correctTotal || 0}</span>
+                                                            <span className="text-danger">✗ {item.wrongTotal || 0}</span>
+                                                        </>
+                                                    ) : (
+                                                        <span className="text-muted">미학습</span>
+                                                    )}
+                                                </div>
+                                            ) : (
+                                                // 일반 SRS 모드
+                                                <>
+                                                    {!item.isMastered && item.isOverdue && (
+                                                        <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
+                                                    )}
+                                                    {!item.isMastered && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
+                                                    {!item.isMastered && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
+                                                        <span className="text-danger">✗ 오답 {item.wrongCount}회</span>
+                                                    )}
+                                                    {!item.isMastered && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
+                                                        <span className="text-muted">미학습</span>
+                                                    )}
+                                                </>
                                             )}
                                         </div>
                                     </div>
@@ -697,7 +818,31 @@ export default function SrsFolderDetail() {
                                                                 </div>
                                                             )}
                                                         </div>
+                                                    ) : folder?.learningCurveType === 'free' ? (
+                                                        // 자율학습모드 - 다른 정보 표시
+                                                        <div>
+                                                            <span className="badge bg-success">🎯 자율학습</span>
+                                                            <div className="mt-1 text-muted small">
+                                                                Stage {item.stage ?? 0}
+                                                                {(item.correctTotal > 0 || item.wrongTotal > 0) && (
+                                                                    <span className="ms-2">
+                                                                        정답 {item.correctTotal || 0}회, 오답 {item.wrongTotal || 0}회
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                            {item.lastReviewedAt && (
+                                                                <div className="text-muted small mt-1">
+                                                                    마지막 학습: {fmt(item.lastReviewedAt)}
+                                                                </div>
+                                                            )}
+                                                            {item.lastWrongAt && (
+                                                                <div className="text-danger small mt-1">
+                                                                    마지막 오답: {fmt(item.lastWrongAt)}
+                                                                </div>
+                                                            )}
+                                                        </div>
                                                     ) : (
+                                                        // 일반 SRS 모드
                                                         <div>
                                                             <span className="badge bg-info">Stage {item.stage ?? 0}</span>
                                                             <div className="ms-2 mt-1">
@@ -720,11 +865,27 @@ export default function SrsFolderDetail() {
                                                         </div>
                                                     )}
                                                 </div>
-                                                {item.wrongCount > 0 && (
-                                                    <span className="badge bg-danger">
-                                                        오답 {item.wrongCount}회
-                                                    </span>
-                                                )}
+                                                {/* 우측 통계 정보 */}
+                                                <div className="text-end">
+                                                    {folder?.learningCurveType === 'free' ? (
+                                                        // 자율학습모드에서는 총 정답/오답 횟수 표시
+                                                        <div>
+                                                            {(item.correctTotal > 0 || item.wrongTotal > 0) && (
+                                                                <div className="small">
+                                                                    <span className="badge bg-success">✓ {item.correctTotal || 0}</span>
+                                                                    <span className="badge bg-danger ms-1">✗ {item.wrongTotal || 0}</span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    ) : (
+                                                        // 일반 모드에서는 폴더 오답 횟수 표시
+                                                        item.wrongCount > 0 && (
+                                                            <span className="badge bg-danger">
+                                                                오답 {item.wrongCount}회
+                                                            </span>
+                                                        )
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

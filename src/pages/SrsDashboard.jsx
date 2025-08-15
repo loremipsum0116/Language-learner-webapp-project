@@ -289,7 +289,7 @@ export default function SrsDashboard() {
                                     <strong>💡 선택 가이드:</strong> 
                                     체계적 장기 기억을 원한다면 <strong>🐢 장기곡선</strong>, 
                                     시험 등 빠른 암기가 필요하다면 <strong>🐰 스퍼트곡선</strong>, 
-                                    자유롭게 학습하고 싶다면 <strong>📚 자율모드</strong>를 선택하세요.
+                                    자유롭게 학습하고 싶다면 <strong>🎯 자율모드</strong>를 선택하세요.
                                 </small>
                             </div>
                                 <div className="row g-3">
@@ -357,7 +357,7 @@ export default function SrsDashboard() {
                                                         onChange={(e) => setLearningCurveType(e.target.value)}
                                                     />
                                                     <label className="form-check-label" htmlFor="freeCurve">
-                                                        <strong>📚 자율 학습 모드</strong>
+                                                        <strong>🎯 자율 학습 모드</strong>
                                                     </label>
                                                 </div>
                                                 <small className="text-muted d-block mt-2">
@@ -401,7 +401,7 @@ export default function SrsDashboard() {
                                                 {f.kind === 'review' && !f.isMastered && !f.type && <span className="badge bg-info ms-2">복습</span>}
                                                 {f.learningCurveType === 'short' && !f.type && <span className="badge bg-warning ms-2">🐰 스퍼트곡선</span>}
                                                 {f.learningCurveType === 'long' && !f.type && <span className="badge bg-primary ms-2">🐢 장기곡선</span>}
-                                                {f.learningCurveType === 'free' && !f.type && <span className="badge bg-success ms-2">📚 자율모드</span>}
+                                                {f.learningCurveType === 'free' && !f.type && <span className="badge bg-success ms-2">🎯 자율모드</span>}
                                                 {f.isMastered && <span className="badge bg-warning text-dark ms-2">🏆 마스터</span>}
                                                 {f.isCompleted && !f.isMastered && <span className="badge bg-success ms-2">완료</span>}
                                             </h5>

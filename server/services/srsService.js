@@ -456,52 +456,60 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         vocabId = card.itemId;
     }
 
-    // SRS 엄격한 스케줄링 규칙: 카드 상태 변경은 다음 경우에만 허용
-    // 1) 처음 학습할 때 (stage 0이고 nextReviewAt이 null이거나 과거)
-    // 2) overdue 상태일 때 (24시간 복습 창구 내)
+    // 자율학습모드에서는 타이머 제약 없이 언제든 카드 상태 업데이트 허용
     let canUpdateCardState = false;
     let statusMessage = '';
     
-    // 첫 학습 조건: stage 0이고 waitingUntil이 없고 nextReviewAt이 null이거나 과거인 카드
-    const isFirstLearning = card.stage === 0 && 
-                           !card.waitingUntil && 
-                           !card.isFromWrongAnswer &&
-                           (!card.nextReviewAt || new Date(card.nextReviewAt) <= now);
-    
-    const isInOverdueWindow = isCardOverdue(card);
-    const isFrozen = isCardFrozen(card);
-    
-    // 오답 단어의 특별한 경우: waitingUntil이 지난 후 overdue 상태가 될 때까지의 틈새 시간
-    const isWrongAnswerReady = card.isFromWrongAnswer && 
-                              card.waitingUntil && 
-                              new Date() >= new Date(card.waitingUntil) && 
-                              card.overdueDeadline && 
-                              new Date() < new Date(card.overdueDeadline);
-    
-    if (isFrozen) {
-        console.log(`[SRS SERVICE] Card ${cardId} is frozen - no study allowed until ${card.frozenUntil}`);
-        canUpdateCardState = false;
-        statusMessage = '카드가 동결 상태입니다. 복습 시기가 지나 24시간 페널티가 적용되었습니다.';
-    } else if (isFirstLearning) {
-        console.log(`[SRS SERVICE] Card ${cardId} - First learning allowed (stage 0, never studied before)`);
+    if (learningCurveType === 'free') {
         canUpdateCardState = true;
         statusMessage = '';
-    } else if (isInOverdueWindow) {
-        console.log(`[SRS SERVICE] Card ${cardId} - Overdue review allowed (within 24h window)`);
-        canUpdateCardState = true;
-        statusMessage = '';
-    } else if (isWrongAnswerReady) {
-        console.log(`[SRS SERVICE] Card ${cardId} - Wrong answer card ready for review (waiting period ended)`);
-        canUpdateCardState = true;
-        statusMessage = '';
-    } else if (isCardInWaitingPeriod(card)) {
-        console.log(`[SRS SERVICE] Card ${cardId} is in waiting period - no card state change`);
-        canUpdateCardState = false;
-        statusMessage = '아직 대기 시간입니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
+        console.log(`[SRS SERVICE] Free learning mode - card state update always allowed`);
     } else {
-        console.log(`[SRS SERVICE] Card ${cardId} is not in review window - no card state change`);
-        canUpdateCardState = false;
-        statusMessage = '복습 시기가 아닙니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
+        // SRS 엄격한 스케줄링 규칙: 카드 상태 변경은 다음 경우에만 허용
+        // 1) 처음 학습할 때 (stage 0이고 nextReviewAt이 null이거나 과거)
+        // 2) overdue 상태일 때 (24시간 복습 창구 내)
+        
+        // 첫 학습 조건: stage 0이고 waitingUntil이 없고 nextReviewAt이 null이거나 과거인 카드
+        const isFirstLearning = card.stage === 0 && 
+                               !card.waitingUntil && 
+                               !card.isFromWrongAnswer &&
+                               (!card.nextReviewAt || new Date(card.nextReviewAt) <= now);
+        
+        const isInOverdueWindow = isCardOverdue(card);
+        const isFrozen = isCardFrozen(card);
+        
+        // 오답 단어의 특별한 경우: waitingUntil이 지난 후 overdue 상태가 될 때까지의 틈새 시간
+        const isWrongAnswerReady = card.isFromWrongAnswer && 
+                                  card.waitingUntil && 
+                                  new Date() >= new Date(card.waitingUntil) && 
+                                  card.overdueDeadline && 
+                                  new Date() < new Date(card.overdueDeadline);
+        
+        if (isFrozen) {
+            console.log(`[SRS SERVICE] Card ${cardId} is frozen - no study allowed until ${card.frozenUntil}`);
+            canUpdateCardState = false;
+            statusMessage = '카드가 동결 상태입니다. 복습 시기가 지나 24시간 페널티가 적용되었습니다.';
+        } else if (isFirstLearning) {
+            console.log(`[SRS SERVICE] Card ${cardId} - First learning allowed (stage 0, never studied before)`);
+            canUpdateCardState = true;
+            statusMessage = '';
+        } else if (isInOverdueWindow) {
+            console.log(`[SRS SERVICE] Card ${cardId} - Overdue review allowed (within 24h window)`);
+            canUpdateCardState = true;
+            statusMessage = '';
+        } else if (isWrongAnswerReady) {
+            console.log(`[SRS SERVICE] Card ${cardId} - Wrong answer card ready for review (waiting period ended)`);
+            canUpdateCardState = true;
+            statusMessage = '';
+        } else if (isCardInWaitingPeriod(card)) {
+            console.log(`[SRS SERVICE] Card ${cardId} is in waiting period - no card state change`);
+            canUpdateCardState = false;
+            statusMessage = '아직 대기 시간입니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
+        } else {
+            console.log(`[SRS SERVICE] Card ${cardId} is not in review window - no card state change`);
+            canUpdateCardState = false;
+            statusMessage = '복습 시기가 아닙니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
+        }
     }
 
     let newStage = card.stage, waitingUntil, nextReviewAt;
@@ -515,59 +523,79 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     
     if (correct) {
         // 정답 시 다음 상태 계산 (학습 곡선 타입에 따라 최대 스테이지가 다름)
-        const maxStage = learningCurveType === "short" ? 10 : 6;
-        calculatedStage = Math.min(card.stage + 1, maxStage);
-        
-        // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
-        const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
-                                   (learningCurveType === "long" && card.stage === 5);
-        
-        if (isFinalStageReached) {
-            // 마스터 완료 시
-            calculatedStage = 0;
+        if (learningCurveType === 'free') {
+            // 자율학습모드: 타이머 없이 stage만 증가
+            calculatedStage = Math.min(card.stage + 1, 999); // 자율모드는 제한 없음
             calculatedWaitingUntil = null;
             calculatedNextReviewAt = null;
-            console.log(`[SRS SERVICE] Mastery achieved (${learningCurveType} curve) - resetting to stage 0`);
+            console.log(`[SRS SERVICE] Free mode correct answer - stage ${card.stage} → ${calculatedStage}, no timers`);
         } else {
-            // Stage별 차별화된 대기 시간 적용
-            const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(calculatedStage, learningCurveType);
-            console.log(`[SRS SERVICE] Correct answer waiting period calculation: stage ${card.stage} → ${calculatedStage}, waitingPeriod: ${waitingPeriod} hours (${learningCurveType} curve)`);
+            const maxStage = learningCurveType === "short" ? 10 : 6;
+            calculatedStage = Math.min(card.stage + 1, maxStage);
             
-            if (waitingPeriod === 0) {
-                // Stage 0: 즉시 복습 가능
+            // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
+            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
+                                       (learningCurveType === "long" && card.stage === 5);
+            
+            if (isFinalStageReached) {
+                // 마스터 완료 시
+                calculatedStage = 0;
                 calculatedWaitingUntil = null;
                 calculatedNextReviewAt = null;
-                console.log(`[SRS SERVICE] Stage 0 → immediate review available`);
+                console.log(`[SRS SERVICE] Mastery achieved (${learningCurveType} curve) - resetting to stage 0`);
             } else {
-                // Stage 1 이상: 망각곡선에 따른 대기 시간
-                calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage, learningCurveType);
-                calculatedNextReviewAt = calculatedWaitingUntil; // 대기 완료 후 복습 가능
-                console.log(`[SRS SERVICE] Stage ${calculatedStage} → waiting until: ${calculatedWaitingUntil?.toISOString()}`);
+                // Stage별 차별화된 대기 시간 적용
+                const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(calculatedStage, learningCurveType);
+                console.log(`[SRS SERVICE] Correct answer waiting period calculation: stage ${card.stage} → ${calculatedStage}, waitingPeriod: ${waitingPeriod} hours (${learningCurveType} curve)`);
+                
+                if (waitingPeriod === 0) {
+                    // Stage 0: 즉시 복습 가능
+                    calculatedWaitingUntil = null;
+                    calculatedNextReviewAt = null;
+                    console.log(`[SRS SERVICE] Stage 0 → immediate review available`);
+                } else {
+                    // Stage 1 이상: 망각곡선에 따른 대기 시간
+                    calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage, learningCurveType);
+                    calculatedNextReviewAt = calculatedWaitingUntil; // 대기 완료 후 복습 가능
+                    console.log(`[SRS SERVICE] Stage ${calculatedStage} → waiting until: ${calculatedWaitingUntil?.toISOString()}`);
+                }
+                console.log(`[SRS SERVICE] Correct answer - stage ${card.stage} → ${calculatedStage}, waitingUntil: ${calculatedWaitingUntil}`);
             }
-            console.log(`[SRS SERVICE] Correct answer - stage ${card.stage} → ${calculatedStage}, waitingUntil: ${calculatedWaitingUntil}`);
         }
     } else {
         // 오답 시 다음 상태 계산
-        if (card.stage === 0) {
-            // stage 0에서 오답: 자동으로 stage 1로 올라가기
-            calculatedStage = 1;
-            // stage 1의 대기 시간 적용
-            const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(1, learningCurveType);
-            if (waitingPeriod === 0) {
-                calculatedWaitingUntil = null;
-                calculatedNextReviewAt = null;
+        if (learningCurveType === 'free') {
+            // 자율학습모드: 타이머 없이 stage 처리
+            if (card.stage === 0) {
+                calculatedStage = 1; // stage 0에서 오답시 stage 1로
             } else {
-                calculatedWaitingUntil = computeWaitingUntil(new Date(), 1, learningCurveType);
-                calculatedNextReviewAt = calculatedWaitingUntil;
+                calculatedStage = 0; // stage 1 이상에서 오답시 stage 0으로 리셋
             }
-            console.log(`[SRS SERVICE] Stage 0 wrong answer - auto upgrade to stage 1, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+            calculatedWaitingUntil = null;
+            calculatedNextReviewAt = null;
+            console.log(`[SRS SERVICE] Free mode wrong answer - stage ${card.stage} → ${calculatedStage}, no timers`);
         } else {
-            // stage 1 이상에서 오답: 기존 로직 (stage 0으로 리셋)
-            calculatedStage = 0;
-            // 실제 현재 시간 기준으로 오답 대기 시간 계산 (stage에 따라 1시간 또는 24시간)
-            calculatedWaitingUntil = computeWrongAnswerWaitingUntil(new Date(), card.stage);
-            calculatedNextReviewAt = calculatedWaitingUntil; // 오답 단어는 대기 시간 후 복습 가능
-            console.log(`[SRS SERVICE] Stage ${card.stage} wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+            if (card.stage === 0) {
+                // stage 0에서 오답: 자동으로 stage 1로 올라가기
+                calculatedStage = 1;
+                // stage 1의 대기 시간 적용
+                const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(1, learningCurveType);
+                if (waitingPeriod === 0) {
+                    calculatedWaitingUntil = null;
+                    calculatedNextReviewAt = null;
+                } else {
+                    calculatedWaitingUntil = computeWaitingUntil(new Date(), 1, learningCurveType);
+                    calculatedNextReviewAt = calculatedWaitingUntil;
+                }
+                console.log(`[SRS SERVICE] Stage 0 wrong answer - auto upgrade to stage 1, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+            } else {
+                // stage 1 이상에서 오답: 기존 로직 (stage 0으로 리셋)
+                calculatedStage = 0;
+                // 실제 현재 시간 기준으로 오답 대기 시간 계산 (stage에 따라 1시간 또는 24시간)
+                calculatedWaitingUntil = computeWrongAnswerWaitingUntil(new Date(), card.stage);
+                calculatedNextReviewAt = calculatedWaitingUntil; // 오답 단어는 대기 시간 후 복습 가능
+                console.log(`[SRS SERVICE] Stage ${card.stage} wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+            }
         }
     }
 
@@ -575,8 +603,15 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     if (canUpdateCardState && correct) {
         // 정답 처리
         newStage = calculatedStage;
-        waitingUntil = calculatedWaitingUntil;
-        nextReviewAt = calculatedNextReviewAt;
+        
+        // 자율학습모드에서는 타이머 없음
+        if (learningCurveType === 'free') {
+            waitingUntil = null;
+            nextReviewAt = null;
+        } else {
+            waitingUntil = calculatedWaitingUntil;
+            nextReviewAt = calculatedNextReviewAt;
+        }
         
         if (card.isFromWrongAnswer) {
             // 오답 단어가 정답을 맞춘 경우 → 현재 stage + 1로 업그레이드
@@ -728,8 +763,30 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         console.log(`[SRS SERVICE] Correct answer for card ${cardId} - stage ${card.stage} → ${newStage}`);
         
     } else if (canUpdateCardState && !correct) {
-        // 오답 처리: overdue 상태인지에 따라 다르게 처리
-        if (card.isOverdue) {
+        // 오답 처리
+        if (learningCurveType === 'free') {
+            // 자율학습모드: 타이머 없이 즉시 상태 변경
+            newStage = calculatedStage;
+            waitingUntil = null;
+            nextReviewAt = null;
+            
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: {
+                    stage: newStage,
+                    nextReviewAt: null,
+                    waitingUntil: null,
+                    isOverdue: false,
+                    overdueDeadline: null,
+                    overdueStartAt: null,
+                    isFromWrongAnswer: true,
+                    wrongStreakCount: { increment: 1 },
+                    wrongTotal: { increment: 1 }  // ✅ 자율모드에서도 wrongTotal 증가
+                }
+            });
+            
+            console.log(`[SRS SERVICE] Free mode wrong answer - stage ${card.stage} → ${newStage}, no timers, wrongTotal incremented`);
+        } else if (card.isOverdue) {
             // overdue에서 오답: stage 0인 경우에만 stage 1로 올라가고, 나머지는 현재 stage 유지
             const realNow = new Date();
             
@@ -778,18 +835,23 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         } else {
             // 일반 상태에서 오답: stage 0인 경우 stage 1로 올라가고, 나머지는 stage 0 리셋
             newStage = calculatedStage;  // 계산된 stage 사용 (stage 0 → 1, 나머지 → 0)
-            waitingUntil = calculatedWaitingUntil;
-            nextReviewAt = calculatedNextReviewAt;
+            if (learningCurveType === 'free') {
+                waitingUntil = null;
+                nextReviewAt = null;
+            } else {
+                waitingUntil = calculatedWaitingUntil;
+                nextReviewAt = calculatedNextReviewAt;
+            }
             
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
                     stage: newStage, // stage 0에서는 1로 올라가고, 나머지는 0으로 리셋
-                    nextReviewAt: waitingUntil,
+                    nextReviewAt: nextReviewAt,
                     waitingUntil: waitingUntil,
-                    isOverdue: false, // 대기상태 - 대기 시간 후 크론잡이 overdue로 변경
-                    overdueDeadline: null, // 대기 중에는 overdue 데드라인 없음
-                    overdueStartAt: null, // 대기 중에는 overdue 시작 시점 없음
+                    isOverdue: learningCurveType === 'free' ? false : false, // 자율모드는 overdue 없음
+                    overdueDeadline: learningCurveType === 'free' ? null : null, // 자율모드는 데드라인 없음
+                    overdueStartAt: learningCurveType === 'free' ? null : null, // 자율모드는 시작점 없음
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
                     wrongTotal: { increment: 1 }
@@ -866,8 +928,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     const streakInfo = await updateUserStreak(userId);
 
     // --- 오답노트 처리 (실제 오답일 때만 추가) ---
-    // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있고, 카드 상태 변경이 가능한 경우에만
-    const isActualWrongAnswer = correct === false && vocabId && canUpdateCardState;
+    // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있는 경우 (wrongTotal과 동기화)
+    const isActualWrongAnswer = correct === false && vocabId;
     
     if (isActualWrongAnswer) {
         console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}, correct=${correct}, canUpdateCardState=${canUpdateCardState}`);
@@ -878,12 +940,10 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         } catch (error) {
             console.error(`[SRS SERVICE] Failed to add wrong answer note:`, error);
         }
-    } else if (correct === false && !canUpdateCardState) {
-        console.log(`[SRS SERVICE] Wrong answer but card state cannot be updated (waiting period) - skipping wrong answer note`);
     } else if (correct === false && !vocabId) {
         console.log(`[SRS SERVICE] Wrong answer but no vocabId - skipping wrong answer note`);
     } else {
-        console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}, canUpdateCardState=${canUpdateCardState}`);
+        console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}`);
     }
 
     // --- 일일 학습 통계 업데이트 ---

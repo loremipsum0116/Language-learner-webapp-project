@@ -27,6 +27,9 @@ function isMaxStage(stage) {
 }
 
 function isFinalStage(stage, learningCurveType = "long") {
+  if (learningCurveType === "free") {
+    return false; // 자율 모드는 마스터 완료가 없음
+  }
   if (learningCurveType === "short") {
     return stage >= SHORT_CURVE_WAITING_HOURS.length - 1; // Stage 9 is final for short curve (10 stages total, 0-9)
   }
@@ -37,6 +40,10 @@ function delayDaysFor(stage, learningCurveType = "long") {
   // 폴더 시스템을 위한 일수 계산
   if (stage <= 0) {
     return 0; // 즉시 복습
+  }
+  
+  if (learningCurveType === "free") {
+    return 0; // 자율 모드는 항상 즉시 복습 가능
   }
   
   if (learningCurveType === "short") {
@@ -79,6 +86,12 @@ function computeNextReviewDate(baseDate, stage, learningCurveType = "long") {
  */
 function computeWaitingPeriod(stage, learningCurveType = "long") {
   console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}, curve=${learningCurveType}`);
+  
+  // 자율 모드는 대기 시간 없음
+  if (learningCurveType === "free") {
+    console.log(`[SRS SCHEDULE] FREE mode -> immediate review (0 hours)`);
+    return 0;
+  }
   
   // Stage 0은 즉시 복습 가능 (대기 시간 없음)
   if (stage === 0) {

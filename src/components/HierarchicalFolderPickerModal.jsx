@@ -13,6 +13,7 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
   const [newParentName, setNewParentName] = useState('');
   const [newChildName, setNewChildName] = useState('');
   const [creating, setCreating] = useState(false);
+  const [newFolderLearningCurve, setNewFolderLearningCurve] = useState('long'); // 학습곡선 타입 상태
 
   // 상위폴더 목록 로드
   useEffect(() => {
@@ -87,12 +88,13 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
       const { data } = await fetchJSON('/srs/folders', withCreds({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, parentId: null })
+        body: JSON.stringify({ name, parentId: null, learningCurveType: newFolderLearningCurve })
       }));
       
       // 새로 생성된 상위폴더를 목록에 추가
       setParentFolders(prev => [...prev, { ...data, type: 'parent' }]);
       setNewParentName('');
+      setNewFolderLearningCurve('long'); // 학습곡선 타입 초기화
       alert('상위폴더가 생성되었습니다.');
     } catch (e) {
       alert(`상위폴더 생성 실패: ${e.message || 'Unknown error'}`);
@@ -178,7 +180,7 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
                 
                 {/* 상위폴더 생성 */}
                 <div className="mb-3">
-                  <div className="input-group input-group-sm">
+                  <div className="input-group input-group-sm mb-2">
                     <input
                       type="text"
                       className="form-control"
@@ -194,6 +196,31 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
                     >
                       생성
                     </button>
+                  </div>
+                  
+                  {/* 학습곡선 선택 */}
+                  <div className="row g-1">
+                    <div className="col-4">
+                      <div className={`card h-100 ${newFolderLearningCurve === 'long' ? 'border-primary bg-light' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setNewFolderLearningCurve('long')}>
+                        <div className="card-body p-2 text-center">
+                          <small><strong>🐢 장기</strong></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className={`card h-100 ${newFolderLearningCurve === 'short' ? 'border-warning bg-light' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setNewFolderLearningCurve('short')}>
+                        <div className="card-body p-2 text-center">
+                          <small><strong>🐰 단기</strong></small>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-4">
+                      <div className={`card h-100 ${newFolderLearningCurve === 'free' ? 'border-success bg-light' : ''}`} style={{ cursor: 'pointer' }} onClick={() => setNewFolderLearningCurve('free')}>
+                        <div className="card-body p-2 text-center">
+                          <small><strong>🎯 자율</strong></small>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

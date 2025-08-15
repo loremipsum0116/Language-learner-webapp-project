@@ -764,7 +764,9 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         frozenUntil: true,        // ✅ 동결 필드 추가
                         isMastered: true,
                         masterCycles: true,
-                        masteredAt: true
+                        masteredAt: true,
+                        correctTotal: true,       // ✅ 정답 총 횟수 추가
+                        wrongTotal: true         // ✅ 오답 총 횟수 추가
                     } 
                 },         // 카드의 완전한 SRS 정보 포함
             },
@@ -814,7 +816,39 @@ router.get('/folders/:id/items', async (req, res, next) => {
             }
         }
 
-        // 4) SRS 카드의 오답 대기중 상태 확인 (오답노트가 아닌 카드 자체의 frozen/wrong 상태)
+        // 4) 마지막 오답일자 조회 (각 단어별로 가장 최근 오답노트 기록)
+        let lastWrongAtMap = new Map();
+        if (vocabIds.length > 0) {
+            try {
+                const latestWrongAnswers = await prisma.wronganswer.findMany({
+                    where: {
+                        userId,
+                        vocabId: { in: vocabIds },
+                        folderId: id  // 현재 폴더의 오답만
+                    },
+                    select: {
+                        vocabId: true,
+                        wrongAt: true
+                    },
+                    orderBy: [
+                        { vocabId: 'asc' },
+                        { wrongAt: 'desc' }
+                    ]
+                });
+                
+                // 각 단어별로 가장 최근 오답일자만 저장
+                latestWrongAnswers.forEach(wa => {
+                    if (!lastWrongAtMap.has(wa.vocabId)) {
+                        lastWrongAtMap.set(wa.vocabId, wa.wrongAt);
+                    }
+                });
+            } catch (wrongAnswerError) {
+                console.error('Wrong answer query failed:', wrongAnswerError);
+                // 오답 정보 조회 실패해도 계속 진행
+            }
+        }
+
+        // 5) SRS 카드의 오답 대기중 상태 확인 (오답노트가 아닌 카드 자체의 frozen/wrong 상태)
         // 이미 items에서 srscard 정보를 가져왔으므로 추가 쿼리 불필요
 
         // 5) 화면용 큐(learned=false 기준) 구성
@@ -865,6 +899,9 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 isMastered: it.srscard?.isMastered || false,
                 masterCycles: it.srscard?.masterCycles || 0,
                 masteredAt: it.srscard?.masteredAt,
+                correctTotal: it.srscard?.correctTotal || 0,  // ✅ 정답 총 횟수 추가
+                wrongTotal: it.srscard?.wrongTotal || 0,      // ✅ 오답 총 횟수 추가
+                lastWrongAt: vid ? lastWrongAtMap.get(vid) : null,  // ✅ 마지막 오답일자 추가
                 // 동결 상태 정보 추가
                 isFrozen: it.srscard?.isFrozen || false,
                 frozenUntil: it.srscard?.frozenUntil,
@@ -943,18 +980,27 @@ router.get('/folders/:id/children', async (req, res, next) => {
         if (childIds.length > 0) {
             // 각 폴더에 대해 상태별 카드 수 계산
             for (const childId of childIds) {
+                // 해당 폴더의 학습 곡선 타입 확인
+                const childFolder = children.find(c => c.id === childId);
+                const isAutonomousMode = childFolder.learningCurveType === 'free';
+                
+                // 자율모드에서는 lastWrongAt 정보가 필요
                 const items = await prisma.srsfolderitem.findMany({
                     where: { folderId: childId },
                     select: {
                         learned: true,
                         wrongCount: true,
                         lastReviewedAt: true,
+                        lastWrongAt: true,
+                        vocabId: true,
                         srscard: {
                             select: {
                                 isOverdue: true,
                                 frozenUntil: true,
                                 stage: true,
-                                isMastered: true
+                                isMastered: true,
+                                correctTotal: true,
+                                wrongTotal: true
                             }
                         }
                     }
@@ -966,33 +1012,64 @@ router.get('/folders/:id/children', async (req, res, next) => {
                 let wrongAnswers = 0;
                 let frozen = 0;
                 let stageWaiting = 0;
+                let correctWords = 0; // 자율모드용
                 
-                items.forEach(item => {
-                    // 동결 상태 체크 (최우선)
-                    if (item.srscard.frozenUntil && new Date(item.srscard.frozenUntil) > now) {
-                        frozen++;
-                        return;
-                    }
-                    
-                    if (item.srscard.isOverdue) {
-                        reviewWaiting++; // 복습 대기중
-                    } else if (item.learned) {
-                        // 정답 상태는 따로 카운트하지 않음
-                    } else if (item.wrongCount > 0) {
-                        wrongAnswers++; // 오답 대기중
-                    } else if (item.srscard.stage > 0 && !item.srscard.isMastered) {
-                        stageWaiting++; // Stage 대기중
-                    } else {
-                        learningWaiting++; // 미학습
-                    }
-                });
+                if (isAutonomousMode) {
+                    // 자율모드: 마지막 학습 상태 기준 분류
+                    items.forEach(item => {
+                        // 마지막 학습 상태 결정
+                        const hasLastReview = !!item.lastReviewedAt;
+                        const hasLastWrong = !!item.lastWrongAt;
+                        
+                        let lastState = 'unlearned'; // 기본값: 미학습
+                        if (hasLastReview && hasLastWrong) {
+                            // 둘 다 있으면 더 늦은 시간 기준
+                            lastState = new Date(item.lastReviewedAt) > new Date(item.lastWrongAt) ? 'correct' : 'wrong';
+                        } else if (hasLastReview) {
+                            lastState = 'correct';
+                        } else if (hasLastWrong) {
+                            lastState = 'wrong';
+                        }
+                        
+                        // 상태별 카운트
+                        if (lastState === 'correct') {
+                            correctWords++;
+                        } else if (lastState === 'wrong') {
+                            wrongAnswers++;
+                        } else {
+                            learningWaiting++; // 미학습
+                        }
+                    });
+                } else {
+                    // 일반 SRS 모드: 기존 로직
+                    items.forEach(item => {
+                        // 동결 상태 체크 (최우선)
+                        if (item.srscard.frozenUntil && new Date(item.srscard.frozenUntil) > now) {
+                            frozen++;
+                            return;
+                        }
+                        
+                        if (item.srscard.isOverdue) {
+                            reviewWaiting++; // 복습 대기중
+                        } else if (item.learned) {
+                            // 정답 상태는 따로 카운트하지 않음
+                        } else if (item.wrongCount > 0) {
+                            wrongAnswers++; // 오답 대기중
+                        } else if (item.srscard.stage > 0 && !item.srscard.isMastered) {
+                            stageWaiting++; // Stage 대기중
+                        } else {
+                            learningWaiting++; // 미학습
+                        }
+                    });
+                }
                 
                 childStats[childId] = {
                     reviewWaiting,
                     learningWaiting,
                     wrongAnswers,
                     frozen,
-                    stageWaiting
+                    stageWaiting,
+                    correctWords // 자율모드용 추가
                 };
             }
         }
@@ -1013,7 +1090,8 @@ router.get('/folders/:id/children', async (req, res, next) => {
             learningWaiting: childStats[c.id]?.learningWaiting || 0,
             wrongAnswers: childStats[c.id]?.wrongAnswers || 0,
             frozen: childStats[c.id]?.frozen || 0,
-            stageWaiting: childStats[c.id]?.stageWaiting || 0
+            stageWaiting: childStats[c.id]?.stageWaiting || 0,
+            correctWords: childStats[c.id]?.correctWords || 0
         }));
 
         return ok(res, { 
@@ -1315,7 +1393,12 @@ router.delete('/folders/:id', async (req, res, next) => {
             
             // 폴더 아이템들과 폴더 삭제
             await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
-            await tx.srsfolder.delete({ where: { id } });
+            if (tx.srsfolder && typeof tx.srsfolder.delete === 'function') {
+                await tx.srsfolder.delete({ where: { id } });
+            } else {
+                console.error('tx.srsfolder.delete is not available:', typeof tx.srsfolder);
+                throw new Error('Prisma transaction object is invalid');
+            }
             
             // ✅ 해당 폴더의 오답노트 삭제 (폴더별 독립성)
             if (vocabIds.length > 0) {

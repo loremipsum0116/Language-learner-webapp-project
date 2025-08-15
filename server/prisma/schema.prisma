@@ -99,12 +99,12 @@ model srscard {
   isFromWrongAnswer Boolean         @default(false)
   waitingUntil      DateTime?
   frozenUntil       DateTime?
+  folderId          Int?
   isMastered        Boolean         @default(false)
   masterCycles      Int             @default(0)
   masteredAt        DateTime?
   overdueStartAt    DateTime?
   wrongStreakCount  Int             @default(0)
-  folderId          Int?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
   folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
   user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
@@ -252,19 +252,19 @@ model vocab {
 }
 
 model wronganswer {
-  id                Int       @id @default(autoincrement())
+  id                Int        @id @default(autoincrement())
   userId            Int
   vocabId           Int
-  wrongAt           DateTime  @default(now())
+  wrongAt           DateTime   @default(now())
   reviewWindowStart DateTime
   reviewWindowEnd   DateTime
   reviewedAt        DateTime?
-  isCompleted       Boolean   @default(false)
-  attempts          Int       @default(0)
+  isCompleted       Boolean    @default(false)
+  attempts          Int        @default(0)
   folderId          Int?
-  user              user      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
-  vocab             vocab     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
   folder            srsfolder? @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
+  user              user       @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
+  vocab             vocab      @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
 
   @@unique([userId, vocabId, folderId, wrongAt], map: "WrongAnswer_userId_vocabId_folderId_wrongAt_key")
   @@index([reviewWindowStart, reviewWindowEnd], map: "WrongAnswer_reviewWindowStart_reviewWindowEnd_idx")

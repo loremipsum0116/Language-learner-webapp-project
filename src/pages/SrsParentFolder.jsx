@@ -163,20 +163,34 @@ export default function SrsParentFolder() {
                                             className="text-decoration-none"
                                         >
                                             <h6 className="mb-1">
-                                                {child.learningCurveType === 'short' ? '🐰' : '🐢'} {child.name}
+                                                {child.learningCurveType === 'short' ? '🐰' : child.learningCurveType === 'free' ? '🎯' : '🐢'} {child.name}
                                             </h6>
                                             <small className="text-muted">
                                                 생성일: {fmt(child.createdDate)}
                                                 <span className="mx-2">|</span>
                                                 단어 {child.total}개
                                                 <span className="mx-2">|</span>
-                                                복습 <span className="text-warning">{child.reviewWaiting}개</span>
-                                                <span className="mx-2">|</span>
-                                                미학습 <span className="text-info">{child.learningWaiting}개</span>
-                                                <span className="mx-2">|</span>
-                                                오답 <span className="text-danger">{child.wrongAnswers}개</span>
-                                                <span className="mx-2">|</span>
-                                                동결 <span className="text-secondary">{child.frozen}개</span>
+                                                {child.learningCurveType === 'free' ? (
+                                                    // 자율모드 통계
+                                                    <>
+                                                        정답한 단어 <span className="text-success">{child.correctWords}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        오답한 단어 <span className="text-danger">{child.wrongAnswers}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        미학습 <span className="text-muted">{child.learningWaiting}개</span>
+                                                    </>
+                                                ) : (
+                                                    // 일반 SRS 모드 통계
+                                                    <>
+                                                        복습 <span className="text-warning">{child.reviewWaiting}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        미학습 <span className="text-info">{child.learningWaiting}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        오답 <span className="text-danger">{child.wrongAnswers}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        동결 <span className="text-secondary">{child.frozen}개</span>
+                                                    </>
+                                                )}
                                             </small>
                                         </Link>
                                     </div>
