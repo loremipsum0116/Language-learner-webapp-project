@@ -91,6 +91,12 @@ export default function LearnVocab() {
     const [surpriseQuiz, setSurpriseQuiz] = useState({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
     const [studiedCards, setStudiedCards] = useState([]); // 이미 학습한 카드들 저장
     
+    // 스펠링 입력 상태
+    const [spellingInput, setSpellingInput] = useState('');
+    const [attemptCount, setAttemptCount] = useState(0);
+    const [maxAttempts] = useState(3);
+    const [showSpellingWarning, setShowSpellingWarning] = useState(false);
+    
     // 설정 상태
     const [maxPlayCount, setMaxPlayCount] = useState(3);
     const [flipInterval, setFlipInterval] = useState(5000); // 5초 기본값
@@ -225,6 +231,10 @@ export default function LearnVocab() {
                     setQueue(fetched);
                     setIdx(0);
                     setFlipped(false);
+                    // 스펠링 입력 상태 초기화
+                    setSpellingInput('');
+                    setAttemptCount(0);
+                    setShowSpellingWarning(false);
                     if (!mode && fetched.length === 0) {
                         alert('학습할 SRS 카드가 없습니다.');
                         navigate('/vocab');
@@ -491,19 +501,134 @@ export default function LearnVocab() {
         }
     };
 
+    // ───────────────────── 스펠링 입력 헬퍼 함수들 ─────────────────────
+    const isSpellingMixedType = () => {
+        if (quizTypeParam === 'mixed') {
+            const cardId = current.cardId || current.vocabId || 0;
+            // 혼합형에서 스펠링은 1/3 확률 (0, 3, 6, 9... 일 때)
+            return (cardId % 3) === 0;
+        }
+        return false;
+    };
+
+    const handleSpellingSubmit = async () => {
+        if (!current || !spellingInput.trim()) return;
+        
+        setSubmitting(true);
+        stopAudio();
+        
+        const correctAnswer = current.question || current.vocab?.lemma || '';
+        const isCorrect = spellingInput.trim().toLowerCase() === correctAnswer.toLowerCase();
+        
+        console.log('[SPELLING DEBUG] Input:', spellingInput, 'Correct:', correctAnswer, 'isCorrect:', isCorrect, 'Attempt:', attemptCount + 1);
+        
+        if (isCorrect) {
+            // 정답인 경우 바로 서버로 전송
+            try {
+                if (mode === 'odat') {
+                    setFeedback({ status: 'pass', answer: correctAnswer });
+                    return;
+                }
+                const folderId = current.folderId || folderIdParam;
+                if (!folderId) {
+                    toast.error('folderId가 없어 SRS 채점을 진행할 수 없습니다. 폴더에서 퀴즈를 시작하세요.');
+                    return;
+                }
+                const { data } = await fetchJSON('/quiz/answer', withCreds({
+                    method: 'POST', body: JSON.stringify({ folderId, cardId: current.cardId, correct: true })
+                }));
+                
+                // 마스터 달성 축하 메시지 표시
+                if (data?.isMasteryAchieved) {
+                    toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                        duration: 5000,
+                        style: {
+                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: '16px'
+                        }
+                    });
+                }
+                
+                setFeedback({ status: data?.status ?? 'pass', answer: correctAnswer });
+            } catch (e) {
+                console.error('답변 제출 실패:', e);
+                toast.error(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
+            } finally {
+                setSubmitting(false);
+            }
+        } else {
+            // 오답인 경우 시도 횟수 증가
+            const newAttemptCount = attemptCount + 1;
+            setAttemptCount(newAttemptCount);
+            
+            if (newAttemptCount >= maxAttempts) {
+                // 3번째 오답이면 최종 오답 처리
+                try {
+                    if (mode === 'odat') {
+                        setFeedback({ status: 'fail', answer: correctAnswer });
+                        return;
+                    }
+                    const folderId = current.folderId || folderIdParam;
+                    if (!folderId) {
+                        toast.error('folderId가 없어 SRS 채점을 진행할 수 없습니다. 폴더에서 퀴즈를 시작하세요.');
+                        return;
+                    }
+                    const { data } = await fetchJSON('/quiz/answer', withCreds({
+                        method: 'POST', body: JSON.stringify({ folderId, cardId: current.cardId, correct: false })
+                    }));
+                    
+                    setFeedback({ status: data?.status ?? 'fail', answer: correctAnswer });
+                } catch (e) {
+                    console.error('답변 제출 실패:', e);
+                    toast.error(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
+                } finally {
+                    setSubmitting(false);
+                }
+            } else {
+                // 아직 기회가 남은 경우
+                if (newAttemptCount === 2) {
+                    // 2번째 오답이면 노란색 경고 표시
+                    setShowSpellingWarning(true);
+                }
+                setSubmitting(false);
+                // 입력 필드 클리어하여 다시 입력 가능하게 함
+                setSpellingInput('');
+            }
+        }
+    };
+
     // ───────────────────── 기존(SRS/odat/ids) 핸들러 ─────────────────────
     const submit = async () => {
+        // 스펠링 입력 모드인지 확인
+        const isSpellingMode = quizTypeParam === 'spelling' || (quizTypeParam === 'mixed' && isSpellingMixedType());
+        
+        if (isSpellingMode) {
+            // 스펠링 입력 모드 처리
+            return await handleSpellingSubmit();
+        }
+        
+        // 기존 선택형 퀴즈 모드 처리
         if (!current || !userAnswer) return;
         setSubmitting(true);
         stopAudio();
         
         // 퀴즈 유형에 따라 정답 비교 로직 분기
         let isCorrect = false;
-        if (quizTypeParam === 'context' || (quizTypeParam === 'mixed' && current.contextQuestion)) {
-            // 예문 빈칸 채우기: 영단어끼리 비교
+        if (quizTypeParam === 'context' || (quizTypeParam === 'mixed' && (() => {
+            // 혼합형에서 context 타입 확인
+            if (quizTypeParam === 'mixed') {
+                const cardId = current.cardId || current.vocabId || 0;
+                const remainder = cardId % 3;
+                return remainder === 1; // context는 1일 때
+            }
+            return false;
+        })())) {
+            // 한국어 뜻 매칭: 영단어끼리 비교
             const correctAnswer = current.question || current.vocab?.lemma || '';
             isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
-            console.log('[SUBMIT DEBUG] Context quiz - userAnswer:', userAnswer, 'correctAnswer:', correctAnswer, 'isCorrect:', isCorrect);
+            console.log('[SUBMIT DEBUG] Context quiz (Korean meaning matching) - userAnswer:', userAnswer, 'correctAnswer:', correctAnswer, 'isCorrect:', isCorrect);
         } else {
             // 기존 뜻 맞추기: 한국어 뜻끼리 비교  
             isCorrect = userAnswer === current.answer;
@@ -551,6 +676,10 @@ export default function LearnVocab() {
             setIdx((i) => i + 1);
             setAnswer(null);
             setFeedback(null);
+            // 스펠링 입력 상태 초기화
+            setSpellingInput('');
+            setAttemptCount(0);
+            setShowSpellingWarning(false);
         } else {
             setIdx(queue.length);
         }
@@ -560,6 +689,10 @@ export default function LearnVocab() {
         setIdx(0);
         setAnswer(null);
         setFeedback(null);
+        // 스펠링 입력 상태 초기화
+        setSpellingInput('');
+        setAttemptCount(0);
+        setShowSpellingWarning(false);
         forceReload();
     };
 
@@ -593,7 +726,7 @@ export default function LearnVocab() {
                                 onClick={() => handleQuizTypeSelect('meaning')}
                             >
                                 <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>🔤</div>
+                                    <div className="me-3" style={{ fontSize: '2rem' }}>📖</div>
                                     <div>
                                         <h6 className="mb-1">4지선다 (영단어 뜻 맞추기)</h6>
                                         <small className="text-muted">영어 단어를 보고 한국어 뜻을 선택합니다</small>
@@ -606,10 +739,23 @@ export default function LearnVocab() {
                                 onClick={() => handleQuizTypeSelect('context')}
                             >
                                 <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>📝</div>
+                                    <div className="me-3" style={{ fontSize: '2rem' }}>🔤</div>
                                     <div>
-                                        <h6 className="mb-1">4지선다 (예문 빈칸 채우기)</h6>
-                                        <small className="text-muted">예문의 빈칸에 들어갈 알맞은 영어 단어를 선택합니다</small>
+                                        <h6 className="mb-1">4지선다 (한국어 뜻 매칭)</h6>
+                                        <small className="text-muted">한국어 뜻을 보고 알맞은 영어 단어를 선택합니다</small>
+                                    </div>
+                                </div>
+                            </button>
+                            
+                            <button 
+                                className="btn btn-outline-info btn-lg text-start p-3"
+                                onClick={() => handleQuizTypeSelect('spelling')}
+                            >
+                                <div className="d-flex align-items-center">
+                                    <div className="me-3" style={{ fontSize: '2rem' }}>✏️</div>
+                                    <div>
+                                        <h6 className="mb-1">스펠링 입력 (예문 직접 타이핑)</h6>
+                                        <small className="text-muted">예문의 빈칸에 영어 단어를 직접 입력합니다 (3번 기회)</small>
                                     </div>
                                 </div>
                             </button>
@@ -622,7 +768,7 @@ export default function LearnVocab() {
                                     <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
                                     <div>
                                         <h6 className="mb-1">혼합형</h6>
-                                        <small className="text-muted">두 유형이 랜덤하게 섞여서 출제됩니다</small>
+                                        <small className="text-muted">영단어→한국어, 한국어→영단어, 스펠링 입력이 랜덤하게 출제됩니다</small>
                                     </div>
                                 </div>
                             </button>
@@ -744,11 +890,17 @@ export default function LearnVocab() {
                         <p className="text-muted">오답률이 높은 단어들은 내일 복습 폴더에 자동으로 추가됩니다.</p>
                         <div className="d-flex justify-content-center gap-3 mt-4">
                             <button className="btn btn-outline-secondary" onClick={() => window.location.reload()}>다시 학습하기</button>
-                            <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
+                            
+                            {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
+                            {folderIdParam ? (
+                                <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam}`}>
+                                    폴더로 돌아가기
+                                </Link>
+                            ) : (
+                                <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
+                            )}
+                            
                             <Link className="btn btn-outline-secondary" to="/">홈으로</Link>
-
-
-
                         </div>
                     </div>
                 </main>
@@ -851,6 +1003,7 @@ export default function LearnVocab() {
                         <h4 className="mb-2">🎉 학습 완료!</h4>
                         <p className="text-muted">다음 작업을 선택하세요.</p>
                         <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                            
                             <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
 
                             {/* SRS 폴더에서 온 자동학습이 아닌 경우에만 "폴더에 저장" 버튼 표시 */}
@@ -867,10 +1020,21 @@ export default function LearnVocab() {
                                 </Link>
                             )}
 
-                            {(!mode || mode === 'srs') && (
+                            {(!mode || mode === 'srs' || mode === 'srs_folder') && (
                                 <>
-                                    <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
-                                    <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
+                                    
+                                    {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
+                                    {(folderIdParam || queue[0]?.folderId) ? (
+                                        <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam || queue[0]?.folderId}`}>
+                                            폴더로 돌아가기
+                                        </Link>
+                                    ) : (
+                                        <>
+                                            <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
+                                            <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
+                                            <Link className="btn btn-outline-primary" to="/srs">SRS 대시보드</Link>
+                                        </>
+                                    )}
                                 </>
                             )}
                             {mode === 'odat' && (<Link className="btn btn-primary" to="/learn/vocab">SRS 퀴즈로 가기</Link>)}
@@ -1113,66 +1277,70 @@ export default function LearnVocab() {
 
             <div className="card">
                 <div className="card-body text-center p-4">
-                    {/* 예문 빈칸 채우기 유형 */}
+                    {/* 퀴즈 유형 결정 및 렌더링 */}
                     {(() => {
-                        // 혼합형인 경우 클라이언트에서 랜덤하게 유형 결정
-                        if (quizTypeParam === 'mixed') {
-                            // 카드 ID를 시드로 사용하여 일관된 랜덤 결정 (50:50 비율)
-                            const cardId = current.cardId || current.vocabId || 0;
-                            const isContextType = (cardId % 2) === 0; // 짝수면 예문 빈칸 채우기, 홀수면 뜻 맞추기
-                            console.log('[MIXED DEBUG] Card ID:', cardId, 'isContextType:', isContextType, 'Type:', isContextType ? 'Context' : 'Meaning');
-                            return isContextType;
+                        // 스펠링 입력 모드 확인
+                        const isSpellingMode = quizTypeParam === 'spelling' || (quizTypeParam === 'mixed' && isSpellingMixedType());
+                        
+                        if (isSpellingMode) {
+                            return 'spelling';
                         }
-                        return quizTypeParam === 'context' || current.contextQuestion;
-                    })() ? (
+                        
+                        // 혼합형인 경우 클라이언트에서 랜덤하게 유형 결정  
+                        if (quizTypeParam === 'mixed') {
+                            // 카드 ID를 시드로 사용하여 일관된 랜덤 결정 (나머지 2/3은 50:50 비율)
+                            const cardId = current.cardId || current.vocabId || 0;
+                            const remainder = cardId % 3;
+                            if (remainder === 0) return 'spelling'; // 이미 위에서 처리됨
+                            return remainder === 1 ? 'context' : 'meaning'; // 1이면 예문, 2면 뜻 맞추기
+                        }
+                        
+                        return quizTypeParam === 'context' || current.contextQuestion ? 'context' : 'meaning';
+                    })() === 'spelling' ? (
                         <>
-                            {/* 예문과 한국어 번역 표시 */}
-                            <div className="mb-4">
-                                <h4 className="text-primary mb-3">다음 빈칸에 들어갈 알맞은 단어를 선택하세요</h4>
+                            {/* 스펠링 입력 유형 */}
+                            <div className={`mb-4 ${showSpellingWarning ? 'p-3 rounded' : ''}`} 
+                                 style={showSpellingWarning ? { backgroundColor: '#fff3cd', border: '1px solid #ffeaa7' } : {}}>
+                                <h4 className="text-primary mb-3">다음 빈칸에 들어갈 영어 단어를 입력하세요</h4>
+                                
+                                {showSpellingWarning && (
+                                    <div className="alert alert-warning mb-3">
+                                        <strong>⚠️ 다시 생각해보세요!</strong>
+                                        <div className="small mt-1">남은 기회: {maxAttempts - attemptCount}번</div>
+                                    </div>
+                                )}
+                                
                                 {(() => {
-                                    // 예문 데이터 찾기 - 여러 소스에서 시도
+                                    // 예문 데이터 찾기 (기존 로직 재사용)
                                     let exampleSentence = '';
                                     let exampleTranslation = '';
                                     
-                                    console.log('[CONTEXT DEBUG] Current data:', current);
-                                    console.log('[CONTEXT DEBUG] vocab.dictentry:', current.vocab?.dictentry);
-                                    console.log('[CONTEXT DEBUG] vocab.dictMeta:', current.vocab?.dictMeta);
+                                    console.log('[SPELLING DEBUG] Current data:', current);
                                     
                                     // 1. current.contextSentence가 있는 경우 (서버에서 직접 제공)
                                     if (current.contextSentence) {
                                         exampleSentence = current.contextSentence;
                                         exampleTranslation = current.contextTranslation || '';
-                                        console.log('[CONTEXT DEBUG] Found contextSentence:', exampleSentence);
                                     }
                                     // 2. vocab.dictentry.examples에서 찾기
                                     else if (current.vocab?.dictentry?.examples) {
                                         const examples = current.vocab.dictentry.examples;
-                                        console.log('[CONTEXT DEBUG] dictentry.examples:', examples);
-                                        console.log('[CONTEXT DEBUG] first example structure:', examples[0]);
                                         
-                                        // examples가 JSON 문자열인 경우 파싱
                                         let parsedExamples = examples;
                                         if (typeof examples === 'string') {
                                             try {
                                                 parsedExamples = JSON.parse(examples);
                                             } catch (e) {
-                                                console.warn('[CONTEXT DEBUG] Failed to parse examples:', e);
+                                                console.warn('[SPELLING DEBUG] Failed to parse examples:', e);
                                             }
                                         }
                                         
                                         for (const exampleBlock of parsedExamples) {
-                                            console.log('[CONTEXT DEBUG] processing exampleBlock:', exampleBlock);
-                                            
-                                            // 다양한 구조 시도
                                             if (exampleBlock.definitions) {
-                                                console.log('[CONTEXT DEBUG] found definitions:', exampleBlock.definitions);
                                                 for (const def of exampleBlock.definitions) {
                                                     if (def.examples && def.examples.length > 0) {
                                                         const firstExample = def.examples[0];
-                                                        console.log('[CONTEXT DEBUG] checking firstExample:', firstExample);
-                                                        // de 필드에 영어 예문이 있는 경우 처리
                                                         if ((firstExample.en || firstExample.de) && firstExample.ko) {
-                                                            // 영어 예문에서 현재 단어를 빈칸으로 교체
                                                             const lemma = current.question || current.vocab.lemma;
                                                             const englishSentence = firstExample.en || firstExample.de;
                                                             exampleSentence = englishSentence.replace(
@@ -1180,16 +1348,13 @@ export default function LearnVocab() {
                                                                 '____'
                                                             );
                                                             exampleTranslation = firstExample.ko;
-                                                            console.log('[CONTEXT DEBUG] Found example from definitions:', exampleSentence);
                                                             break;
                                                         }
                                                     }
                                                 }
                                                 if (exampleSentence) break;
                                             }
-                                            // 직접 examples 배열이 있는 경우도 확인
                                             else if (exampleBlock.examples && exampleBlock.examples.length > 0) {
-                                                console.log('[CONTEXT DEBUG] found direct examples:', exampleBlock.examples);
                                                 const firstExample = exampleBlock.examples[0];
                                                 if ((firstExample.en || firstExample.de) && firstExample.ko) {
                                                     const lemma = current.question || current.vocab.lemma;
@@ -1199,13 +1364,10 @@ export default function LearnVocab() {
                                                         '____'
                                                     );
                                                     exampleTranslation = firstExample.ko;
-                                                    console.log('[CONTEXT DEBUG] Found example from direct examples:', exampleSentence);
                                                     break;
                                                 }
                                             }
-                                            // exampleBlock 자체가 example인 경우
                                             else if ((exampleBlock.en || exampleBlock.de) && exampleBlock.ko) {
-                                                console.log('[CONTEXT DEBUG] exampleBlock is direct example:', exampleBlock);
                                                 const lemma = current.question || current.vocab.lemma;
                                                 const englishSentence = exampleBlock.en || exampleBlock.de;
                                                 exampleSentence = englishSentence.replace(
@@ -1213,53 +1375,15 @@ export default function LearnVocab() {
                                                     '____'
                                                 );
                                                 exampleTranslation = exampleBlock.ko;
-                                                console.log('[CONTEXT DEBUG] Found example from direct block:', exampleSentence);
                                                 break;
                                             }
                                         }
                                     }
-                                    // 3. vocab.dictMeta.examples에서 찾기 (백업)
-                                    else if (current.vocab?.dictMeta?.examples) {
-                                        const examples = current.vocab.dictMeta.examples;
-                                        console.log('[CONTEXT DEBUG] dictMeta.examples:', examples);
-                                        
-                                        // examples가 JSON 문자열인 경우 파싱
-                                        let parsedExamples = examples;
-                                        if (typeof examples === 'string') {
-                                            try {
-                                                parsedExamples = JSON.parse(examples);
-                                            } catch (e) {
-                                                console.warn('[CONTEXT DEBUG] Failed to parse dictMeta examples:', e);
-                                            }
-                                        }
-                                        
-                                        for (const exampleBlock of parsedExamples) {
-                                            if (exampleBlock.definitions) {
-                                                for (const def of exampleBlock.definitions) {
-                                                    if (def.examples && def.examples.length > 0) {
-                                                        const firstExample = def.examples[0];
-                                                        if (firstExample.en && firstExample.ko) {
-                                                            const lemma = current.question || current.vocab.lemma;
-                                                            exampleSentence = firstExample.en.replace(
-                                                                new RegExp(`\\b${lemma}\\b`, 'gi'), 
-                                                                '____'
-                                                            );
-                                                            exampleTranslation = firstExample.ko;
-                                                            console.log('[CONTEXT DEBUG] Found example from dictMeta:', exampleSentence);
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-                                                if (exampleSentence) break;
-                                            }
-                                        }
-                                    }
-                                    // 4. 임시 예문 생성 (마지막 fallback)
+                                    // 3. fallback 예문 생성
                                     else {
                                         const lemma = current.question || current.vocab?.lemma || 'word';
                                         exampleSentence = `This is an example sentence with ____.`;
                                         exampleTranslation = `이것은 ${lemma}가 포함된 예문입니다.`;
-                                        console.log('[CONTEXT DEBUG] Using fallback example:', exampleSentence);
                                     }
                                     
                                     return exampleSentence ? (
@@ -1268,31 +1392,43 @@ export default function LearnVocab() {
                                                 {exampleSentence.split('____').map((part, index, array) => (
                                                     <span key={index}>
                                                         {part}
-                                                        {index < array.length - 1 && <span className="text-danger fw-bold">____</span>}
+                                                        {index < array.length - 1 && (
+                                                            <span className="d-inline-block position-relative">
+                                                                <input
+                                                                    type="text"
+                                                                    className="form-control d-inline-block text-center fw-bold"
+                                                                    style={{
+                                                                        width: '120px',
+                                                                        display: 'inline-block',
+                                                                        margin: '0 4px',
+                                                                        borderColor: showSpellingWarning ? '#ffc107' : '#dee2e6'
+                                                                    }}
+                                                                    value={spellingInput}
+                                                                    onChange={(e) => setSpellingInput(e.target.value)}
+                                                                    onKeyPress={(e) => {
+                                                                        if (e.key === 'Enter' && spellingInput.trim()) {
+                                                                            submit();
+                                                                        }
+                                                                    }}
+                                                                    placeholder="단어 입력"
+                                                                    disabled={feedback || isSubmitting}
+                                                                    autoFocus={index === 0}
+                                                                />
+                                                            </span>
+                                                        )}
                                                     </span>
                                                 ))}
                                             </p>
                                             {exampleTranslation && (
                                                 <p className="text-muted">
                                                     {(() => {
-                                                        // 한국어 번역에서 정답에 해당하는 단어 찾기
                                                         const lemma = current.question || current.vocab?.lemma || '';
-                                                        // 여러 가능한 한국어 뜻들을 시도
-                                                        const possibleKoreanWords = [
-                                                            '가방', '봉지', // bag의 경우
-                                                            '책', // book의 경우  
-                                                            '집', '가정', // home의 경우
-                                                            '물', // water의 경우
-                                                        ];
-                                                        
-                                                        // current.answer에서 한국어 뜻 추출 (예: "n.가방, 봉지" → "가방")
                                                         let koreanMeaning = '';
                                                         if (current.answer && current.answer.includes('.')) {
                                                             const meaningPart = current.answer.split('.')[1];
                                                             koreanMeaning = meaningPart.split(',')[0].trim();
                                                         }
                                                         
-                                                        // 한국어 번역에서 해당 단어를 찾아서 빨간색으로 표시
                                                         if (koreanMeaning && exampleTranslation.includes(koreanMeaning)) {
                                                             return exampleTranslation.split(koreanMeaning).map((part, index, array) => (
                                                                 <span key={index}>
@@ -1302,7 +1438,6 @@ export default function LearnVocab() {
                                                             ));
                                                         }
                                                         
-                                                        // fallback: 전체 번역 표시
                                                         return exampleTranslation;
                                                     })()}
                                                 </p>
@@ -1317,8 +1452,79 @@ export default function LearnVocab() {
                             </div>
                             
                             {!feedback && (
+                                <div className="mt-3">
+                                    <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
+                                        <span className="text-muted small">
+                                            시도 {attemptCount + 1}/{maxAttempts} 
+                                            {attemptCount > 0 && ` (${maxAttempts - attemptCount}번 기회 남음)`}
+                                        </span>
+                                    </div>
+                                    <button 
+                                        className="btn btn-success btn-lg"
+                                        disabled={!spellingInput.trim() || isSubmitting}
+                                        onClick={submit}
+                                    >
+                                        {isSubmitting ? '처리 중…' : '제출하기'}
+                                    </button>
+                                </div>
+                            )}
+                        </>
+                    ) : (() => {
+                        const quizType = (() => {
+                            if (quizTypeParam === 'mixed') {
+                                const cardId = current.cardId || current.vocabId || 0;
+                                const remainder = cardId % 3;
+                                return remainder === 1 ? 'context' : 'meaning';
+                            }
+                            return quizTypeParam === 'context' || current.contextQuestion ? 'context' : 'meaning';
+                        })();
+                        
+                        return quizType === 'context';
+                    })() ? (
+                        <>
+                            {/* 한국어 뜻 매칭 문제 */}
+                            <div className="mb-4">
+                                <h4 className="text-primary mb-3">다음 한국어 뜻에 해당하는 영어 단어를 선택하세요</h4>
+                                {(() => {
+                                    // 한국어 뜻 추출하기
+                                    let koreanMeaning = '';
+                                    
+                                    console.log('[CONTEXT DEBUG] Current data:', current);
+                                    
+                                    // 1. current.answer 그대로 사용 (예: "n.가방, 봉지" 전체)
+                                    if (current.answer) {
+                                        koreanMeaning = current.answer.trim();
+                                        console.log('[CONTEXT DEBUG] Found meaning from current.answer:', koreanMeaning);
+                                    }
+                                    // 2. vocab.ko_gloss에서 추출
+                                    else if (current.vocab?.ko_gloss) {
+                                        koreanMeaning = current.vocab.ko_gloss;
+                                        console.log('[CONTEXT DEBUG] Found meaning from ko_gloss:', koreanMeaning);
+                                    }
+                                    // 3. fallback
+                                    else {
+                                        koreanMeaning = '한국어 뜻 정보 없음';
+                                    }
+                                    
+                                    return koreanMeaning ? (
+                                        <div className="mb-4">
+                                            <div className="p-4 bg-light rounded">
+                                                <h2 className="display-6 text-center text-primary mb-0">
+                                                    {koreanMeaning}
+                                                </h2>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="alert alert-warning">
+                                            이 단어의 한국어 뜻을 찾을 수 없습니다.
+                                        </div>
+                                    );
+                                })()}
+                            </div>
+                            
+                            {!feedback && (
                                 <div className="d-grid gap-2 col-8 mx-auto mt-3">
-                                    {/* 예문 빈칸 채우기에서는 영단어 옵션 사용 */}
+                                    {/* 한국어 뜻 매칭에서는 영단어 옵션 사용 */}
                                     {(() => {
                                         // 1. 서버에서 wordOptions를 제공하는 경우
                                         if (current.wordOptions && current.wordOptions.length > 0) {
@@ -1332,45 +1538,51 @@ export default function LearnVocab() {
                                             ));
                                         }
                                         
-                                        // 2. fallback: 클라이언트에서 현실적인 영단어 옵션 생성
+                                        // 2. current.options가 있는 경우 (기존 로직과 호환)
+                                        if (current.options && current.options.length > 0) {
+                                            // 기존 options는 한국어 뜻이므로, 영단어로 변환 필요
+                                            // 여기서는 정답 영단어와 오답 영단어들을 생성
+                                            const correctAnswer = current.question || current.vocab?.lemma || 'unknown';
+                                            
+                                            // 기본 오답 영단어 풀
+                                            const commonWords = [
+                                                'apple', 'book', 'chair', 'door', 'egg', 'face', 'good', 'hand', 
+                                                'ice', 'job', 'key', 'love', 'make', 'name', 'open', 'page',
+                                                'quick', 'read', 'send', 'time', 'use', 'very', 'work', 'year'
+                                            ];
+                                            
+                                            // 정답이 아닌 단어들 중에서 3개 선택
+                                            const wrongOptions = commonWords
+                                                .filter(word => word.toLowerCase() !== correctAnswer.toLowerCase())
+                                                .slice(0, 3);
+                                            
+                                            const allOptions = [correctAnswer, ...wrongOptions];
+                                            
+                                            // 카드 ID를 시드로 사용하여 일관된 순서 생성
+                                            const cardId = current.cardId || current.vocabId || 0;
+                                            const shuffledOptions = [...allOptions].sort((a, b) => {
+                                                const hashA = (cardId + a.charCodeAt(0)) % 1000;
+                                                const hashB = (cardId + b.charCodeAt(0)) % 1000;
+                                                return hashA - hashB;
+                                            });
+                                            
+                                            return shuffledOptions.map((opt) => (
+                                                <button key={opt}
+                                                    className={`btn btn-lg ${userAnswer === opt ? 'btn-primary' : 'btn-outline-primary'}`}
+                                                    onClick={() => setAnswer(opt)}
+                                                    disabled={isSubmitting}>
+                                                    {opt}
+                                                </button>
+                                            ));
+                                        }
+                                        
+                                        // 3. fallback: 기본 영단어 옵션 생성
                                         const correctAnswer = current.question || current.vocab?.lemma || 'unknown';
+                                        const basicWrongOptions = ['example', 'sample', 'test'];
+                                        const allOptions = [correctAnswer, ...basicWrongOptions];
                                         
-                                        // 단어 유형별 오답 옵션 풀
-                                        const wordPools = {
-                                            // 명사
-                                            'bag': ['box', 'cup', 'book', 'pen'],
-                                            'book': ['bag', 'pen', 'cup', 'desk'],
-                                            'cup': ['bag', 'book', 'pen', 'box'],
-                                            'pen': ['book', 'bag', 'cup', 'desk'],
-                                            'desk': ['chair', 'table', 'bed', 'door'],
-                                            'chair': ['desk', 'table', 'bed', 'door'],
-                                            'car': ['bus', 'bike', 'train', 'plane'],
-                                            'house': ['school', 'park', 'store', 'hotel'],
-                                            // 동사  
-                                            'run': ['walk', 'jump', 'sit', 'sleep'],
-                                            'walk': ['run', 'jump', 'sit', 'stand'],
-                                            'eat': ['drink', 'sleep', 'read', 'write'],
-                                            'read': ['write', 'eat', 'sleep', 'walk'],
-                                            // 형용사
-                                            'big': ['small', 'long', 'short', 'tall'],
-                                            'small': ['big', 'long', 'short', 'wide'],
-                                            'good': ['bad', 'nice', 'great', 'fine'],
-                                            'bad': ['good', 'nice', 'great', 'fine'],
-                                            // 기본 풀
-                                            'default': ['word', 'item', 'thing', 'part']
-                                        };
-                                        
-                                        // 현재 단어에 맞는 오답 옵션 가져오기
-                                        const lowerAnswer = correctAnswer.toLowerCase();
-                                        const wrongOptions = wordPools[lowerAnswer] || wordPools['default'];
-                                        
-                                        // 정답 + 오답 3개 조합
-                                        const allOptions = [correctAnswer, ...wrongOptions.slice(0, 3)];
-                                        
-                                        // 카드 ID를 시드로 사용하여 일관된 순서 생성
                                         const cardId = current.cardId || current.vocabId || 0;
                                         const shuffledOptions = [...allOptions].sort((a, b) => {
-                                            // 카드 ID와 옵션 텍스트를 조합하여 일관된 해시 생성
                                             const hashA = (cardId + a.charCodeAt(0)) % 1000;
                                             const hashB = (cardId + b.charCodeAt(0)) % 1000;
                                             return hashA - hashB;
