@@ -139,7 +139,7 @@ router.post('/add-many', async (req, res) => {
 
 // POST /my-wordbook/remove-many (✅ 누락된 삭제 라우트 추가)
 router.post('/remove-many', async (req, res) => {
-    const { vocabIds } = req.body;
+    const { vocabIds, categoryId } = req.body;
     if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
         return fail(res, 400, 'vocabIds must be a non-empty array');
     }
@@ -148,6 +148,50 @@ router.post('/remove-many', async (req, res) => {
     const idsToDelete = vocabIds.map(Number).filter(id => !isNaN(id));
 
     try {
+        // 1. 먼저 해당 폴더(카테고리)의 SRS 카드들을 삭제
+        if (categoryId !== undefined) {
+            const folderId = categoryId === 'none' ? null : parseInt(categoryId);
+            
+            // 해당 폴더의 SRS 카드들 조회
+            const srsCards = await prisma.srscard.findMany({
+                where: {
+                    userId: userId,
+                    itemType: 'vocab',
+                    itemId: { in: idsToDelete },
+                    folderId: folderId
+                },
+                select: { id: true }
+            });
+            
+            const cardIds = srsCards.map(card => card.id);
+            
+            if (cardIds.length > 0) {
+                // SRS 폴더 아이템들 삭제
+                await prisma.srsfolderitem.deleteMany({
+                    where: { cardId: { in: cardIds } }
+                });
+                
+                // SRS 카드들 삭제
+                await prisma.srscard.deleteMany({
+                    where: { id: { in: cardIds } }
+                });
+                
+                console.log(`Deleted ${cardIds.length} SRS cards for vocab deletion`);
+            }
+            
+            // 2. 해당 폴더의 오답노트 항목들 삭제
+            const deletedWrongAnswers = await prisma.wronganswer.deleteMany({
+                where: {
+                    userId: userId,
+                    vocabId: { in: idsToDelete },
+                    folderId: folderId
+                }
+            });
+            
+            console.log(`Deleted ${deletedWrongAnswers.count} wrong answer entries for vocab deletion`);
+        }
+
+        // 3. 마지막으로 사용자 단어장에서 삭제
         const result = await prisma.uservocab.deleteMany({
             where: {
                 userId: userId,
@@ -155,6 +199,8 @@ router.post('/remove-many', async (req, res) => {
             }
         });
 
+        console.log(`Deleted ${result.count} vocab entries from user wordbook`);
+        
         // 삭제된 개수를 반환합니다.
         return ok(res, { count: result.count });
 

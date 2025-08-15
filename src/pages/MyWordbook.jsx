@@ -220,34 +220,24 @@ export default function MyWordbook() {
         el.onended = () => setPlayingAudio(null);
     };
 
-    const playVocabAudio = async (vocabData) => {
+    // vocab 페이지와 동일한 safeFileName 함수 추가
+    const safeFileName = (str) => {
+        if (!str) return '';
+        return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
+    };
+
+    const playVocabAudio = (vocabData) => {
         const vocab = vocabData.vocab || vocabData;
-        const targetUrl = vocab.audioUrl || vocab.dictMeta?.audioUrl || vocab.audio;
+        // vocab 페이지와 동일한 우선순위: vocab.audio || vocab.dictentry?.audioUrl
+        const targetUrl = vocab.audio || vocab.dictentry?.audioUrl;
         if (targetUrl) {
             playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
-        try {
-            setEnrichingId(vocab.id);
-            const { data: updatedVocab } = await fetchJSON(`/vocab/${vocab.id}/enrich`, withCreds({ method: 'POST' }));
-            setWords(prevWords => prevWords.map(w => {
-                if (w.vocabId === updatedVocab.id) {
-                    return { ...w, vocab: { ...w.vocab, ...updatedVocab } };
-                }
-                return w;
-            }));
-            const enrichedUrl = updatedVocab.audio || updatedVocab.dictMeta?.audioUrl;
-            if (enrichedUrl) {
-                playUrl(enrichedUrl, 'vocab', vocab.id);
-            } else {
-                alert(`'${vocab.lemma}'에 대한 음성 파일을 찾을 수 없습니다.`);
-            }
-        } catch (e) {
-            console.error("Enrichment failed:", e);
-            alert("음성 정보를 가져오는 데 실패했습니다.");
-        } finally {
-            setEnrichingId(null);
-        }
+        
+        // vocab 페이지와 동일한 fallback: 로컬 오디오 패스 생성
+        const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
+        playUrl(localAudioPath, 'vocab', vocab.id);
     };
 
     useEffect(() => {
@@ -278,10 +268,13 @@ export default function MyWordbook() {
         if (ids.length === 0) { alert('이동할 단어를 선택하세요.'); return; }
         try {
             if (moveTarget === 'none') {
-                // 미분류로 이동: 기존 카테고리 연결 제거
+                // 미분류로 이동: 기존 카테고리 연결 제거 (현재 폴더 정보 포함)
                 await fetchJSON('/my-wordbook/remove-many', withCreds({
                     method: 'POST',
-                    body: JSON.stringify({ vocabIds: ids }),
+                    body: JSON.stringify({ 
+                        vocabIds: ids,
+                        categoryId: filter // 현재 폴더에서 이동하므로 SRS/오답노트 정리
+                    }),
                 }));
             } else {
                 // 특정 카테고리로 이동: 일괄 추가 (서버는 categoryId를 사용)
@@ -333,9 +326,13 @@ export default function MyWordbook() {
         if (ids.length === 0) { alert('삭제할 단어를 선택하세요.'); return; }
         if (window.confirm(`${ids.length}개의 단어를 내 단어장에서 삭제하시겠습니까?`)) {
             try {
+                // 현재 선택된 폴더 정보를 categoryId로 전달하여 SRS/오답노트 정리
                 await fetchJSON('/my-wordbook/remove-many', withCreds({
                     method: 'POST',
-                    body: JSON.stringify({ vocabIds: ids }),
+                    body: JSON.stringify({ 
+                        vocabIds: ids,
+                        categoryId: filter // 현재 필터(폴더) 정보 포함
+                    }),
                 }));
                 alert(`${ids.length}개의 단어를 삭제했습니다.`);
                 await Promise.all([loadWordbook(filter), loadCategories()]);
@@ -449,6 +446,21 @@ export default function MyWordbook() {
                                         </div>
                                     </div>
                                     <div className="d-flex gap-2">
+                                        <button
+                                            className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center"
+                                            style={{ width: '32px', height: '32px' }}
+                                            onClick={(e) => { e.stopPropagation(); playVocabAudio(v); }}
+                                            disabled={enrichingId === v.vocabId}
+                                            title="음성 듣기"
+                                        >
+                                            {enrichingId === v.vocabId ? (
+                                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            ) : playingAudio?.type === 'vocab' && playingAudio?.id === v.vocabId ? (
+                                                <i className="fas fa-pause" style={{ fontSize: '12px' }}></i>
+                                            ) : (
+                                                <i className="fas fa-volume-up" style={{ fontSize: '12px' }}></i>
+                                            )}
+                                        </button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>
                                         {/* ★ 4. 버튼의 상태와 동작이 전역 srsIds를 사용하도록 수정되었습니다. */}
                                         <button

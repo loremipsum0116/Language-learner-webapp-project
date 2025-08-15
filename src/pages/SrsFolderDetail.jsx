@@ -182,12 +182,25 @@ export default function SrsFolderDetail() {
     const nextDue = folder.nextReviewDate ?? folder.nextReviewAt;
     const stage = folder.stage ?? 0;
 
-    // 필터링된 아이템들
+    // 필터링된 아이템들 - SRS 카드가 오답 대기중 상태인 것들만
     const filteredItems = showWrongOnly 
-        ? items.filter(item => item.wrongCount > 0 || item.isWrongAnswer)
+        ? items.filter(item => item.isWrongAnswerWaiting)
         : items;
         
-    const wrongAnswerCount = items.filter(item => item.wrongCount > 0 || item.isWrongAnswer).length;
+    const wrongAnswerCount = items.filter(item => item.isWrongAnswerWaiting).length;
+    
+    // 디버깅 로그
+    console.log('[FRONTEND DEBUG] Total items:', items.length);
+    console.log('[FRONTEND DEBUG] Wrong answer waiting items:', 
+        items.filter(item => item.isWrongAnswerWaiting).map(item => ({
+            lemma: item.vocab?.lemma,
+            isWrongAnswerWaiting: item.isWrongAnswerWaiting,
+            frozenUntil: item.frozenUntil,
+            isFromWrongAnswer: item.isFromWrongAnswer,
+            isMastered: item.isMastered
+        }))
+    );
+    console.log('[FRONTEND DEBUG] Wrong answer count:', wrongAnswerCount);
 
     return (
         <main className="container py-4">

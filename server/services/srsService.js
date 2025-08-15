@@ -40,11 +40,14 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
         },
     });
     
-    // 단어들을 폴더에 추가
+    // 단어들을 폴더에 추가 (폴더별 독립적인 카드 생성)
     if (vocabIds.length > 0) {
-        const folderItems = vocabIds.map(vocabId => ({
+        const cardIds = await ensureCardsForVocabs(userId, vocabIds, folder.id);
+        
+        const folderItems = cardIds.map((cardId, index) => ({
             folderId: folder.id,
-            vocabId: vocabId,
+            cardId: cardId,
+            vocabId: vocabIds[index],
             learned: false
         }));
         
@@ -238,12 +241,19 @@ async function createCustomFolder(userId, { name, dateKst00, scheduledOffset = 0
     });
 }
 
-// vocabIds로 들어오면 SRSCard를 보장(없으면 생성)하고 cardIds를 리턴
-async function ensureCardsForVocabs(userId, vocabIds) {
+// vocabIds로 들어오면 특정 폴더에 대한 SRSCard를 보장(없으면 생성)하고 cardIds를 리턴
+async function ensureCardsForVocabs(userId, vocabIds, folderId = null) {
     const uniq = [...new Set(vocabIds.map(Number).filter(Boolean))];
     if (!uniq.length) return [];
+    
+    // 폴더별 독립적인 카드 조회
     const existing = await prisma.srscard.findMany({
-        where: { userId, itemType: 'vocab', itemId: { in: uniq } },
+        where: { 
+            userId, 
+            itemType: 'vocab', 
+            itemId: { in: uniq },
+            folderId: folderId  // 폴더별 독립성
+        },
         select: { id: true, itemId: true }
     });
     const existMap = new Map(existing.map(e => [e.itemId, e.id]));
@@ -252,7 +262,8 @@ async function ensureCardsForVocabs(userId, vocabIds) {
         .map(vId => ({ 
             userId, 
             itemType: 'vocab', 
-            itemId: vId, 
+            itemId: vId,
+            folderId: folderId, // 폴더별 독립성
             stage: 0, 
             nextReviewAt: null,
             waitingUntil: null,
@@ -263,11 +274,16 @@ async function ensureCardsForVocabs(userId, vocabIds) {
         }));
     
     if (toCreate.length) {
-        console.log(`[SRS DEBUG] Creating ${toCreate.length} new cards with initial state:`, toCreate[0]);
+        console.log(`[SRS DEBUG] Creating ${toCreate.length} new cards for folder ${folderId} with initial state:`, toCreate[0]);
         await prisma.srscard.createMany({ data: toCreate });
     }
     const all = await prisma.srscard.findMany({
-        where: { userId, itemType: 'vocab', itemId: { in: uniq } },
+        where: { 
+            userId, 
+            itemType: 'vocab', 
+            itemId: { in: uniq },
+            folderId: folderId  // 폴더별 독립성
+        },
         select: { id: true, itemId: true }
     });
     return all.map(x => x.id); // cardIds 반환
@@ -396,9 +412,14 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     // 현재 시간 사용 (가속 시스템은 타이머 계산에만 적용)
     const now = new Date();
     
-    // 카드 정보 조회 (새 필드들 포함)
+    // 카드 정보 조회 (새 필드들 포함) - 폴더별 독립성을 위해 folderId도 확인
+    const whereCondition = { id: cardId, userId };
+    if (folderId !== null && folderId !== undefined) {
+        whereCondition.folderId = folderId;
+    }
+    
     const card = await prisma.srscard.findFirst({ 
-        where: { id: cardId, userId },
+        where: whereCondition,
         select: {
             id: true,
             stage: true,
@@ -410,7 +431,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             overdueDeadline: true,
             frozenUntil: true,
             itemType: true,
-            itemId: true
+            itemId: true,
+            folderId: true  // 폴더 정보도 포함
         }
     });
     
@@ -785,10 +807,10 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
 
     // --- 오답노트 처리 (SRS 상태 변경이 가능할 때만) ---
     if (!correct && vocabId && canUpdateCardState) {
-        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}`);
+        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}`);
         const { addWrongAnswer } = require('./wrongAnswerService');
-        await addWrongAnswer(userId, vocabId);
-        console.log(`[SRS SERVICE] Successfully added to wrong answer note`);
+        await addWrongAnswer(userId, vocabId, folderId);
+        console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
     } else if (!correct && vocabId && !canUpdateCardState) {
         console.log(`[SRS SERVICE] Wrong answer during autonomous learning - not adding to wrong answer note (SRS state unchanged)`);
     } else if (!correct) {
@@ -816,9 +838,9 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         // 에러가 나도 복습 자체는 성공으로 처리
     }
 
-    // 최신 카드 정보 조회 (DB 업데이트 후)
+    // 최신 카드 정보 조회 (DB 업데이트 후) - 폴더별 독립성을 위해 folderId도 확인
     const updatedCard = await prisma.srscard.findFirst({ 
-        where: { id: cardId, userId },
+        where: whereCondition,  // 위에서 정의한 whereCondition 재사용
         select: {
             stage: true,
             nextReviewAt: true,

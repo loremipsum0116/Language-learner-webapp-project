@@ -160,22 +160,23 @@ export default function WrongAnswers() {
           </Link>
         )}
         
-        {selectedIds.size > 0 && (
-          <button 
-            className="btn btn-danger" 
-            onClick={handleDeleteSelected}
-          >
-            🗑️ 선택한 {selectedIds.size}개 삭제
-          </button>
-        )}
-        
-        {wrongAnswers.length > 0 && (
-          <button 
-            className="btn btn-outline-secondary" 
-            onClick={handleSelectAll}
-          >
-            {selectedIds.size === wrongAnswers.length ? '전체 해제' : '전체 선택'}
-          </button>
+{wrongAnswers.length > 0 && (
+          <>
+            <button 
+              className="btn btn-outline-secondary" 
+              onClick={handleSelectAll}
+            >
+              {selectedIds.size === wrongAnswers.length ? '전체 해제' : '전체 선택'}
+            </button>
+            
+            <button 
+              className={`btn ${selectedIds.size > 0 ? 'btn-danger' : 'btn-outline-danger'}`}
+              onClick={handleDeleteSelected}
+              disabled={selectedIds.size === 0}
+            >
+              🗑️ 선택 삭제 {selectedIds.size > 0 && `(${selectedIds.size}개)`}
+            </button>
+          </>
         )}
         
         <div className="form-check form-switch">

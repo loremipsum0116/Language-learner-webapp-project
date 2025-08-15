@@ -88,6 +88,7 @@ model srscard {
   userId            Int
   itemType          String
   itemId            Int
+  folderId          Int?            // 폴더별 독립적인 SRS 카드 관리
   stage             Int             @default(0)
   nextReviewAt      DateTime?
   categoryId        Int?
@@ -106,10 +107,12 @@ model srscard {
   frozenUntil       DateTime?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
   user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
+  folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
   srsfolderitem     srsfolderitem[]
 
-  @@unique([userId, itemType, itemId], map: "SRSCard_userId_itemType_itemId_key")
+  @@unique([userId, itemType, itemId, folderId], map: "SRSCard_userId_itemType_itemId_folderId_key")
   @@index([categoryId], map: "SRSCard_categoryId_fkey")
+  @@index([folderId], map: "SRSCard_folderId_fkey")
   @@index([userId, isMastered], map: "SRSCard_userId_isMastered_idx")
   @@index([userId, nextReviewAt], map: "SRSCard_userId_nextReviewAt_idx")
 }
@@ -142,6 +145,8 @@ model srsfolder {
   isMastered          Boolean         @default(false)
   user                user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SrsFolder_userId_fkey")
   srsfolderitem       srsfolderitem[]
+  wronganswer         wronganswer[]
+  srscard             srscard[]
 
   @@index([nextAlarmAt], map: "SrsFolder_nextAlarmAt_idx")
   @@index([parentId], map: "SrsFolder_parentId_idx")
@@ -240,20 +245,23 @@ model vocab {
 }
 
 model wronganswer {
-  id                Int       @id @default(autoincrement())
+  id                Int         @id @default(autoincrement())
   userId            Int
   vocabId           Int
-  wrongAt           DateTime  @default(now())
+  folderId          Int?        // 폴더별 독립적인 오답 관리를 위한 폴더 ID (nullable for backward compatibility)
+  wrongAt           DateTime    @default(now())
   reviewWindowStart DateTime
   reviewWindowEnd   DateTime
   reviewedAt        DateTime?
-  isCompleted       Boolean   @default(false)
-  attempts          Int       @default(0)
-  user              user      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
-  vocab             vocab     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
+  isCompleted       Boolean     @default(false)
+  attempts          Int         @default(0)
+  user              user        @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
+  vocab             vocab       @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
+  folder            srsfolder?  @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
 
-  @@unique([userId, vocabId, wrongAt], map: "WrongAnswer_userId_vocabId_wrongAt_key")
+  @@unique([userId, vocabId, folderId, wrongAt], map: "WrongAnswer_userId_vocabId_folderId_wrongAt_key")
   @@index([reviewWindowStart, reviewWindowEnd], map: "WrongAnswer_reviewWindowStart_reviewWindowEnd_idx")
   @@index([userId, isCompleted], map: "WrongAnswer_userId_isCompleted_idx")
   @@index([vocabId], map: "WrongAnswer_vocabId_fkey")
+  @@index([folderId], map: "WrongAnswer_folderId_fkey")
 }

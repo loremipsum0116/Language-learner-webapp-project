@@ -752,17 +752,39 @@ router.get('/folders/:id/items', async (req, res, next) => {
             }
         }
 
-        // 4) 화면용 큐(learned=false 기준) 구성
+        // 4) SRS 카드의 오답 대기중 상태 확인 (오답노트가 아닌 카드 자체의 frozen/wrong 상태)
+        // 이미 items에서 srscard 정보를 가져왔으므로 추가 쿼리 불필요
+
+        // 5) 화면용 큐(learned=false 기준) 구성
         const quizItems = items.map(it => {
             const vid = it.vocabId ?? it.srscard?.itemId ?? null;
             const v = (vid && vocabMap.get(vid)) || null;
             
-            // 디버깅용 로그 (상세)
-            console.log(`[DEBUG] Item ${it.id}: cardId=${it.cardId}, vocabId=${vid}, vocab found=${!!v}`);
-            console.log(`[DEBUG] Card data:`, it.srscard);
-            if (v) {
-                console.log(`[DEBUG] Full vocab data:`, JSON.stringify(v, null, 2));
-            }
+            // 디버깅: 전체 srscard 구조 확인
+            console.log(`[DEBUG CARD STRUCTURE] Item ${it.id}:`, {
+                hasSrscard: !!it.srscard,
+                srscard: it.srscard,
+                vocabLemma: v?.lemma
+            });
+            
+            // 오답 대기중 상태 판단 (더 포괄적인 조건)
+            const isFrozenForWrongAnswer = it.srscard?.frozenUntil && new Date(it.srscard.frozenUntil) > new Date();
+            const isFromWrongAnswerAndNotMastered = it.srscard?.isFromWrongAnswer && !it.srscard?.isMastered;
+            const isWaitingFromWrongAnswer = it.srscard?.waitingUntil && new Date(it.srscard.waitingUntil) > new Date() && it.srscard?.isFromWrongAnswer;
+            const isWrongAnswerWaiting = isFrozenForWrongAnswer || isFromWrongAnswerAndNotMastered || isWaitingFromWrongAnswer;
+            
+            // 디버깅용 로그 (오답 대기중 상태)
+            console.log(`[DEBUG WRONG] Item ${it.id} (${v?.lemma}):`, {
+                frozenUntil: it.srscard?.frozenUntil,
+                waitingUntil: it.srscard?.waitingUntil,
+                isFrozenForWrongAnswer,
+                isFromWrongAnswer: it.srscard?.isFromWrongAnswer,
+                isMastered: it.srscard?.isMastered,
+                isFromWrongAnswerAndNotMastered,
+                isWaitingFromWrongAnswer,
+                finalIsWrongAnswerWaiting: isWrongAnswerWaiting,
+                wrongCount: it.wrongCount
+            });
             
             return {
                 folderItemId: it.id,
@@ -784,8 +806,10 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 // 동결 상태 정보 추가
                 isFrozen: it.srscard?.isFrozen || false,
                 frozenUntil: it.srscard?.frozenUntil,
-                // 오답 단어 여부 판단
+                // 오답 단어 여부 판단 (폴더 레벨)
                 isWrongAnswer: it.wrongCount > 0,
+                // SRS 카드 오답 대기중 상태 판단 (위에서 계산한 값 사용)
+                isWrongAnswerWaiting,
                 vocab: v ? {
                     id: v.id,
                     lemma: v.lemma,
@@ -959,20 +983,57 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
 
             console.log('[SRS ADD] Adding words (duplicates allowed):', { total: vocabIds.length });
 
-            // 1) vocabIds → 카드가 없으면 생성 후 아이템 upsert (중복 허용)
+            // 1) vocabIds → 폴더별 독립적인 카드 생성 후 아이템 upsert (중복 허용)
             for (const vid of vocabIds) {
+                // 먼저 해당 폴더에 이미 srsfolderitem이 있는지 확인
+                const existingFolderItem = await tx.srsfolderitem.findFirst({
+                    where: {
+                        folderId: folderId,
+                        srscard: {
+                            userId,
+                            itemType: 'vocab',
+                            itemId: vid,
+                            folderId: folderId
+                        }
+                    }
+                });
+
+                const isReAdding = !existingFolderItem; // 폴더아이템이 없으면 재추가로 판단
+
                 const card = await tx.srscard.upsert({
                     where: {
-                        userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
+                        userId_itemType_itemId_folderId: { 
+                            userId, 
+                            itemType: 'vocab', 
+                            itemId: vid,
+                            folderId: folderId  // 폴더별 독립성
+                        },
                     },
-                    update: {
-                        // 폴더별 독립성을 위해 전역 상태는 건드리지 않음 (마스터 상태만 전역적)
-                        // 기존 카드의 다른 폴더 상태에 영향 주지 않도록 update 하지 않음
+                    update: isReAdding ? {
+                        // 재추가 시에만 상태 초기화 (마스터 상태도 리셋)
+                        stage: 0,
+                        nextReviewAt: null,
+                        correctTotal: 0,
+                        wrongTotal: 0,
+                        cohortDate: null,
+                        isFromWrongAnswer: false,
+                        isMastered: false,
+                        isOverdue: false,
+                        masterCycles: 0,
+                        masteredAt: null,
+                        overdueDeadline: null,
+                        overdueStartAt: null,
+                        waitingUntil: null,
+                        wrongStreakCount: 0,
+                        frozenUntil: null
+                    } : {
+                        // 이미 존재하는 경우 상태 유지 (중복 추가)
                     },
                     create: { 
                         userId, 
                         itemType: 'vocab', 
                         itemId: vid,
+                        folderId: folderId,  // 폴더별 독립성
                         stage: 0,
                         nextReviewAt: null // 새로 생성된 카드는 즉시 학습 가능
                     },
@@ -1072,12 +1133,27 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
             });
             
             console.log('[BULK DELETE] SrsFolderItem deleteMany result:', result);
-            
-            // ❌ 전역 카드 상태 초기화 제거 - 다른 폴더 독립성을 위해
-            // ❌ SRSCard 업데이트/삭제 제거 - 폴더별 독립성 보장
 
-            // ✅ 폴더별 독립성을 위해 전역 카드나 오답노트는 건드리지 않음
-            // 오직 해당 폴더에서만 단어를 제거함
+            // ✅ 삭제되는 단어들의 vocabId 조회
+            const cardsToDelete = await tx.srscard.findMany({
+                where: { id: { in: cardIdsToDelete } },
+                select: { itemId: true },
+            });
+            
+            const vocabIdsToDelete = cardsToDelete.map(card => card.itemId);
+            
+            // ✅ 해당 폴더의 오답노트도 함께 삭제
+            if (vocabIdsToDelete.length > 0) {
+                const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
+                    where: { 
+                        userId,
+                        folderId,
+                        vocabId: { in: vocabIdsToDelete }
+                    },
+                });
+                
+                console.log('[BULK DELETE] Wrong answers deleted:', wrongAnswersDeleted.count);
+            }
         });
 
         return ok(res, { count: itemsToDelete.length, permanent });

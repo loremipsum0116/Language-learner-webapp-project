@@ -6,10 +6,11 @@ const dayjs = require('dayjs');
  * 오답을 오답노트에 추가합니다.
  * @param {number} userId 
  * @param {number} vocabId 
+ * @param {number} folderId - 폴더별 독립적인 오답 관리를 위한 폴더 ID
  * @returns {Object} 생성된 오답노트 항목
  */
-async function addWrongAnswer(userId, vocabId) {
-  console.log(`[WRONG ANSWER SERVICE] Starting addWrongAnswer: userId=${userId}, vocabId=${vocabId}`);
+async function addWrongAnswer(userId, vocabId, folderId = null) {
+  console.log(`[WRONG ANSWER SERVICE] Starting addWrongAnswer: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}`);
   // 타임머신 시간 오프셋 적용
   const { getOffsetDate } = require('../routes/timeMachine');
   const wrongAt = dayjs(getOffsetDate());
@@ -18,14 +19,16 @@ async function addWrongAnswer(userId, vocabId) {
   const reviewWindowStart = wrongAt.add(1, 'day');
   const reviewWindowEnd = wrongAt.add(2, 'day');
   
-  // 이미 같은 단어로 미완료된 오답노트가 있는지 확인
+  // 이미 같은 단어로 미완료된 오답노트가 있는지 확인 (폴더별 독립성 적용)
   console.log(`[WRONG ANSWER SERVICE] Checking for existing wrong answer`);
+  
+  // folderId가 제공된 경우 폴더별 독립적 관리, 없으면 기존 방식 (전역 관리)
+  const whereCondition = folderId 
+    ? { userId, vocabId, folderId, isCompleted: false }  // 폴더별 독립
+    : { userId, vocabId, isCompleted: false };           // 전역 관리 (하위호환)
+    
   const existingWrongAnswer = await prisma.wronganswer.findFirst({
-    where: {
-      userId,
-      vocabId,
-      isCompleted: false
-    }
+    where: whereCondition
   });
   console.log(`[WRONG ANSWER SERVICE] Existing wrong answer found:`, existingWrongAnswer);
   
@@ -61,6 +64,12 @@ async function addWrongAnswer(userId, vocabId) {
     reviewWindowEnd: reviewWindowEnd.toDate(),
     attempts: 1
   };
+  
+  // folderId가 제공된 경우에만 추가
+  if (folderId) {
+    createData.folderId = folderId;
+  }
+  
   console.log(`[WRONG ANSWER SERVICE] Create data:`, createData);
   
   const created = await prisma.wronganswer.create({
@@ -82,22 +91,22 @@ async function addWrongAnswer(userId, vocabId) {
  * 오답노트 복습 성공 처리
  * @param {number} userId 
  * @param {number} vocabId 
+ * @param {number} folderId - 폴더별 독립적인 오답 관리를 위한 폴더 ID
  * @returns {boolean} 성공 여부
  */
-async function completeWrongAnswer(userId, vocabId) {
+async function completeWrongAnswer(userId, vocabId, folderId = null) {
   // 타임머신 시간 오프셋 적용
   const { getOffsetDate } = require('../routes/timeMachine');
   const now = dayjs(getOffsetDate());
   
+  // folderId가 제공된 경우 폴더별 독립적 관리, 없으면 기존 방식 (전역 관리)
+  const whereCondition = folderId 
+    ? { userId, vocabId, folderId, isCompleted: false, reviewWindowStart: { lte: now.toDate() }, reviewWindowEnd: { gte: now.toDate() } }
+    : { userId, vocabId, isCompleted: false, reviewWindowStart: { lte: now.toDate() }, reviewWindowEnd: { gte: now.toDate() } };
+  
   // 현재 활성화된 복습 윈도우 내의 오답노트 찾기
   const wrongAnswer = await prisma.wronganswer.findFirst({
-    where: {
-      userId,
-      vocabId,
-      isCompleted: false,
-      reviewWindowStart: { lte: now.toDate() },
-      reviewWindowEnd: { gte: now.toDate() }
-    }
+    where: whereCondition
   });
   
   if (!wrongAnswer) {
@@ -121,27 +130,37 @@ async function completeWrongAnswer(userId, vocabId) {
  * 사용자의 오답노트 목록 조회
  * @param {number} userId 
  * @param {boolean} includeCompleted 완료된 항목도 포함할지 여부
+ * @param {number} folderId 특정 폴더의 오답만 조회 (null이면 전체)
  * @returns {Array} 오답노트 목록
  */
-async function getWrongAnswers(userId, includeCompleted = false) {
-  console.log(`[WRONG ANSWER SERVICE] Getting wrong answers: userId=${userId}, includeCompleted=${includeCompleted}`);
+async function getWrongAnswers(userId, includeCompleted = false, folderId = null) {
+  console.log(`[WRONG ANSWER SERVICE] Getting wrong answers: userId=${userId}, includeCompleted=${includeCompleted}, folderId=${folderId}`);
   
   try {
     // 타임머신 시간 오프셋 적용
     const { getOffsetDate } = require('../routes/timeMachine');
     const now = dayjs(getOffsetDate());
     
+    // 기본 where 조건
+    const whereCondition = {
+      userId,
+      isCompleted: includeCompleted ? undefined : false
+    };
+    
+    // folderId가 제공된 경우 폴더별 필터링 추가
+    if (folderId !== null) {
+      whereCondition.folderId = folderId;
+    }
+    
     const wrongAnswers = await prisma.wronganswer.findMany({
-      where: {
-        userId,
-        isCompleted: includeCompleted ? undefined : false
-      },
+      where: whereCondition,
       include: {
         vocab: {
           include: {
             dictentry: true
           }
-        }
+        },
+        folder: folderId ? true : false // folderId가 지정된 경우에만 folder 정보 포함
       },
       orderBy: [
         { isCompleted: 'asc' },
@@ -201,19 +220,28 @@ async function getWrongAnswers(userId, includeCompleted = false) {
 /**
  * 현재 복습 가능한 오답노트 개수 조회
  * @param {number} userId 
+ * @param {number} folderId 특정 폴더의 오답만 카운트 (null이면 전체)
  * @returns {number} 복습 가능한 개수
  */
-async function getAvailableWrongAnswersCount(userId) {
+async function getAvailableWrongAnswersCount(userId, folderId = null) {
   // 타임머신 시간 오프셋 적용
   const { getOffsetDate } = require('../routes/timeMachine');
   const now = dayjs(getOffsetDate());
   
+  // 기본 where 조건
+  const whereCondition = {
+    userId,
+    isCompleted: false,
+    reviewWindowStart: { lte: now.toDate() }
+  };
+  
+  // folderId가 제공된 경우 폴더별 필터링 추가
+  if (folderId !== null) {
+    whereCondition.folderId = folderId;
+  }
+  
   const count = await prisma.wronganswer.count({
-    where: {
-      userId,
-      isCompleted: false,
-      reviewWindowStart: { lte: now.toDate() }
-    }
+    where: whereCondition
   });
   
   return count;
@@ -223,23 +251,33 @@ async function getAvailableWrongAnswersCount(userId) {
  * 복습 가능한 오답노트로 퀴즈 데이터 생성
  * @param {number} userId 
  * @param {number} limit 최대 문제 수
+ * @param {number} folderId 특정 폴더의 오답만 포함 (null이면 전체)
  * @returns {Array} 퀴즈 데이터
  */
-async function generateWrongAnswerQuiz(userId, limit = 10) {
-  console.log(`[WRONG ANSWER QUIZ] Generating quiz for userId=${userId}, limit=${limit}`);
+async function generateWrongAnswerQuiz(userId, limit = 10, folderId = null) {
+  console.log(`[WRONG ANSWER QUIZ] Generating quiz for userId=${userId}, limit=${limit}, folderId=${folderId}`);
+  
+  // 기본 where 조건
+  const whereCondition = {
+    userId,
+    isCompleted: false
+    // 복습 윈도우 체크 제거 - 모든 미완료 오답 포함
+  };
+  
+  // folderId가 제공된 경우 폴더별 필터링 추가
+  if (folderId !== null) {
+    whereCondition.folderId = folderId;
+  }
   
   const wrongAnswers = await prisma.wronganswer.findMany({
-    where: {
-      userId,
-      isCompleted: false
-      // 복습 윈도우 체크 제거 - 모든 미완료 오답 포함
-    },
+    where: whereCondition,
     include: {
       vocab: {
         include: {
           dictentry: true
         }
-      }
+      },
+      folder: folderId ? true : false // folderId가 지정된 경우에만 folder 정보 포함
     },
     take: limit,
     orderBy: { wrongAt: 'asc' } // 오래된 것부터
