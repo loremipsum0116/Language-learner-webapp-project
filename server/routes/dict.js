@@ -12,7 +12,7 @@ router.get('/search', async (req, res) => {
   if (!q) return res.status(400).json({ error: 'q required' });
 
   const v = await prisma.vocab.findFirst({ where: { lemma: q } });
-  if (v?.dictMeta) return res.json({ data: v.dictMeta });
+  if (v?.dictentry) return res.json({ data: v.dictentry });
 
   return res.status(404).json({ error: 'not found' });
 });

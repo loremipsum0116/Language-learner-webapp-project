@@ -19,16 +19,16 @@ async function generateMcqQuizItems(prisma, userId, vocabIds) {
     if (ids.length === 0) return [];
 
     const [vocabs, cards, distractorPool] = await Promise.all([
-        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictMeta: true } }),
-        prisma.sRSCard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
-        prisma.vocab.findMany({ where: { id: { notIn: ids }, dictMeta: { isNot: null } }, include: { dictMeta: true }, take: 500 }),
+        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictentry: true } }),
+        prisma.srscard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
+        prisma.vocab.findMany({ where: { id: { notIn: ids }, dictentry: { isNot: null } }, include: { dictentry: true }, take: 500 }),
     ]);
 
     const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
     const distractorGlosses = new Set();
     distractorPool.forEach(v => {
         // 여러 스키마 구조에 대응하여 안정적으로 뜻을 추출
-        const examples = Array.isArray(v.dictMeta?.examples) ? v.dictMeta.examples : [];
+        const examples = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
         const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
         let gloss = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
         if (gloss) distractorGlosses.add(gloss.split(';')[0].split(',')[0].trim());
@@ -36,9 +36,9 @@ async function generateMcqQuizItems(prisma, userId, vocabIds) {
 
     const quizItems = [];
     for (const vocab of vocabs) {
-        if (!vocab.dictMeta) continue;
+        if (!vocab.dictentry) continue;
 
-        const examples = Array.isArray(vocab.dictMeta.examples) ? vocab.dictMeta.examples : [];
+        const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
         const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
         const correct = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
 
@@ -61,7 +61,7 @@ async function generateMcqQuizItems(prisma, userId, vocabIds) {
             answer: correct, // 정답(한글 뜻)
             quizType: 'mcq',
             options: shuffleArray(options),
-            pron: { ipa: vocab.dictMeta.ipa, ipaKo: vocab.dictMeta.ipaKo },
+            pron: { ipa: vocab.dictentry.ipa, ipaKo: vocab.dictentry.ipaKo },
             levelCEFR: vocab.levelCEFR,
             pos: vocab.pos, // 품사 정보 추가
             vocab: vocab, // ★★★ 단어의 모든 상세 정보(예문 포함)를 통째로 전달

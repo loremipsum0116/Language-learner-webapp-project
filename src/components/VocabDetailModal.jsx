@@ -42,8 +42,8 @@ export default function VocabDetailModal({
   playingAudio,
   onAddSRS,
 }) {
-  const dictMeta = vocab?.dictMeta || {};
-  const meanings = Array.isArray(dictMeta.examples) ? dictMeta.examples : [];
+  const dictentry = vocab?.dictentry || {};
+  const meanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
   const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
   const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
 
@@ -86,7 +86,7 @@ export default function VocabDetailModal({
           </div>
 
           <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
-            <Pron ipa={dictMeta.ipa} ipaKo={dictMeta.ipaKo} />
+            <Pron ipa={dictentry.ipa} ipaKo={dictentry.ipaKo} />
 
             {meanings.length > 0 ? (
               meanings.map((meaning, index) => (

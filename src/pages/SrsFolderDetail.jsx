@@ -271,17 +271,18 @@ export default function SrsFolderDetail() {
                         const lemma = v?.lemma ?? "—";
                         const pos = v?.pos ?? "";
                         const level = v?.level ?? v?.levelCEFR ?? "";
-                        // dictMeta.examples에서 한국어 뜻 추출
+                        // dictentry.examples에서 한국어 뜻 추출
                         let koGloss = '뜻 정보 없음';
                         try {
-                            if (v?.dictMeta?.examples) {
-                                const examples = Array.isArray(v.dictMeta.examples) 
-                                    ? v.dictMeta.examples 
-                                    : JSON.parse(v.dictMeta.examples);
+                            // 우선 dictentry.examples 확인 (올바른 데이터 소스)
+                            if (v?.dictentry?.examples) {
+                                const examples = Array.isArray(v.dictentry.examples) 
+                                    ? v.dictentry.examples 
+                                    : JSON.parse(v.dictentry.examples);
                                 
                                 // 다양한 구조에서 한국어 뜻 찾기
                                 for (const ex of examples) {
-                                    // definitions 안에 ko_def가 있는 경우 (새로 발견된 구조)
+                                    // definitions 안에 ko_def가 있는 경우 (표준 구조)
                                     if (ex?.definitions && Array.isArray(ex.definitions)) {
                                         for (const def of ex.definitions) {
                                             if (def?.ko_def) {
@@ -311,9 +312,44 @@ export default function SrsFolderDetail() {
                                     }
                                 }
                             }
+                            // 백업: dictMeta.examples도 확인 (하위 호환성)
+                            else if (v?.dictMeta?.examples) {
+                                const examples = Array.isArray(v.dictMeta.examples) 
+                                    ? v.dictMeta.examples 
+                                    : JSON.parse(v.dictMeta.examples);
+                                
+                                for (const ex of examples) {
+                                    if (ex?.definitions && Array.isArray(ex.definitions)) {
+                                        for (const def of ex.definitions) {
+                                            if (def?.ko_def) {
+                                                koGloss = def.ko_def;
+                                                break;
+                                            }
+                                            if (def?.ko) {
+                                                koGloss = def.ko;
+                                                break;
+                                            }
+                                        }
+                                        if (koGloss !== '뜻 정보 없음') break;
+                                    }
+                                    if (ex?.koGloss) {
+                                        koGloss = ex.koGloss;
+                                        break;
+                                    }
+                                    if (ex?.kind === 'gloss' && ex?.ko) {
+                                        koGloss = ex.ko;
+                                        break;
+                                    }
+                                }
+                            }
                         } catch (e) {
-                            console.warn('Failed to parse examples:', e, v?.dictMeta?.examples);
+                            console.warn('Failed to parse examples:', e, v?.dictentry?.examples || v?.dictMeta?.examples);
                         }
+                        
+                        // IPA 발음 기호 추출
+                        const ipa = v?.dictentry?.ipa || null;
+                        const ipaKo = v?.dictentry?.ipaKo || null;
+                        
                         const uniquePosList = pos ? [...new Set(pos.split(',').map(p => p.trim()))].filter(Boolean) : [];
                         const isSelected = selectedIds.has(itemId);
                         const cardBgClass = getCardBackgroundColor(item);
@@ -368,7 +404,7 @@ export default function SrsFolderDetail() {
                                                 ))}
                                             </div>
                                         </div>
-                                        <Pron ipa={v?.dictMeta?.ipa || v?.ipa} ipaKo={v?.dictMeta?.ipaKo || v?.ipaKo} />
+                                        <Pron ipa={ipa} ipaKo={ipaKo} />
                                         <div className="card-subtitle text-muted mt-2">{koGloss}</div>
                                         
                                         {/* SRS 정보 표시 */}

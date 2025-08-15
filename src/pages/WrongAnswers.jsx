@@ -33,6 +33,8 @@ export default function WrongAnswers() {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [includeCompleted, setIncludeCompleted] = useState(false);
+  const [selectedIds, setSelectedIds] = useState(new Set());
+  const [expandedDetails, setExpandedDetails] = useState(new Set());
 
   const reload = async () => {
     setLoading(true);
@@ -62,6 +64,52 @@ export default function WrongAnswers() {
     } catch (error) {
       alert(`복습 완료 처리 실패: ${error.message}`);
     }
+  };
+
+  const handleSelectItem = (id) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.size === wrongAnswers.length) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(wrongAnswers.map(wa => wa.id)));
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedIds.size === 0) return;
+    
+    if (!window.confirm(`선택한 ${selectedIds.size}개 항목을 삭제하시겠습니까?`)) return;
+    
+    try {
+      await fetchJSON('/srs/wrong-answers/delete-multiple', withCreds({
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wrongAnswerIds: Array.from(selectedIds) })
+      }));
+      setSelectedIds(new Set());
+      await reload();
+    } catch (error) {
+      alert(`삭제 실패: ${error.message}`);
+    }
+  };
+
+  const toggleDetails = (id) => {
+    const newExpanded = new Set(expandedDetails);
+    if (newExpanded.has(id)) {
+      newExpanded.delete(id);
+    } else {
+      newExpanded.add(id);
+    }
+    setExpandedDetails(newExpanded);
   };
 
   const availableCount = wrongAnswers.filter(wa => wa.canReview).length;
@@ -105,12 +153,31 @@ export default function WrongAnswers() {
       </div>
 
       {/* 액션 버튼들 */}
-      <div className="d-flex gap-2 mb-4">
+      <div className="d-flex gap-2 mb-4 flex-wrap">
         {availableCount > 0 && (
           <Link to="/srs/wrong-answers/quiz" className="btn btn-warning">
             🎯 복습하기 ({availableCount}개)
           </Link>
         )}
+        
+        {selectedIds.size > 0 && (
+          <button 
+            className="btn btn-danger" 
+            onClick={handleDeleteSelected}
+          >
+            🗑️ 선택한 {selectedIds.size}개 삭제
+          </button>
+        )}
+        
+        {wrongAnswers.length > 0 && (
+          <button 
+            className="btn btn-outline-secondary" 
+            onClick={handleSelectAll}
+          >
+            {selectedIds.size === wrongAnswers.length ? '전체 해제' : '전체 선택'}
+          </button>
+        )}
+        
         <div className="form-check form-switch">
           <input
             className="form-check-input"
@@ -137,9 +204,16 @@ export default function WrongAnswers() {
       ) : (
         <div className="list-group">
           {wrongAnswers.map((wa, index) => (
-            <div key={wa.id} className={`list-group-item ${wa.srsCard?.isMastered ? 'border-warning bg-light' : ''}`}>
+            <div key={wa.id} className={`list-group-item ${wa.srsCard?.isMastered ? 'border-warning bg-light' : ''} ${selectedIds.has(wa.id) ? 'border-primary bg-light' : ''}`}>
               <div className="d-flex justify-content-between align-items-start">
-                <div className="flex-grow-1">
+                <div className="d-flex align-items-start gap-3">
+                  <input
+                    type="checkbox"
+                    className="form-check-input mt-1"
+                    checked={selectedIds.has(wa.id)}
+                    onChange={() => handleSelectItem(wa.id)}
+                  />
+                  <div className="flex-grow-1">
                   <div className="d-flex align-items-center mb-2">
                     <h5 className="mb-0 me-2">
                       {wa.vocab.lemma}
@@ -179,7 +253,48 @@ export default function WrongAnswers() {
                         완료: {dayjs(wa.reviewedAt).format('MM/DD HH:mm')}
                       </small>
                     )}
+                    <button 
+                      className="btn btn-sm btn-outline-info" 
+                      onClick={() => toggleDetails(wa.id)}
+                    >
+                      {expandedDetails.has(wa.id) ? '▼ 세부정보 접기' : '▶ 세부정보 보기'}
+                    </button>
                   </div>
+                  
+                  {/* 확장된 세부 정보 */}
+                  {expandedDetails.has(wa.id) && (
+                    <div className="border rounded p-3 mb-2 bg-light">
+                      <h6 className="text-primary mb-2">📊 오답 세부 정보</h6>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <div className="mb-2">
+                            <strong>복습 기간:</strong><br/>
+                            <small className="text-muted">
+                              {dayjs(wa.reviewWindowStart).format('YYYY.MM.DD HH:mm')} ~ {dayjs(wa.reviewWindowEnd).format('YYYY.MM.DD HH:mm')}
+                            </small>
+                          </div>
+                          <div className="mb-2">
+                            <strong>첫 오답 시각:</strong><br/>
+                            <small className="text-muted">{dayjs(wa.wrongAt).format('YYYY년 MM월 DD일 HH:mm')}</small>
+                          </div>
+                        </div>
+                        <div className="col-md-6">
+                          <div className="mb-2">
+                            <strong>총 시도 횟수:</strong> <span className="badge bg-warning">{wa.attempts}회</span>
+                          </div>
+                          <div className="mb-2">
+                            <strong>복습 상태:</strong> {getStatusBadge(wa.reviewStatus)}
+                          </div>
+                          {wa.isCompleted && wa.reviewedAt && (
+                            <div className="mb-2">
+                              <strong>복습 완료:</strong><br/>
+                              <small className="text-success">{dayjs(wa.reviewedAt).format('YYYY년 MM월 DD일 HH:mm')}</small>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                   
                   {/* SRS 카드 상태 정보 */}
                   {wa.srsCard && (
@@ -234,6 +349,7 @@ export default function WrongAnswers() {
                       <small className="text-muted">SRS 카드 정보 없음</small>
                     </div>
                   )}
+                  </div>
                 </div>
                 
                 <div>

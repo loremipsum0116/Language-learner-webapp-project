@@ -201,7 +201,7 @@ async function recalculateAllActiveTimers() {
     console.log('[TIME ACCELERATOR] Starting timer recalculation...');
     
     // 1. 대기 중인 카드들 재계산
-    const waitingCards = await prisma.sRSCard.findMany({
+    const waitingCards = await prisma.srscard.findMany({
         where: {
             waitingUntil: { gt: now },
             isOverdue: false
@@ -228,7 +228,7 @@ async function recalculateAllActiveTimers() {
             newWaitingUntil = new Date(now.getTime() + acceleratedWaitTime);
         }
         
-        await prisma.sRSCard.update({
+        await prisma.srscard.update({
             where: { id: card.id },
             data: {
                 waitingUntil: newWaitingUntil,
@@ -238,7 +238,7 @@ async function recalculateAllActiveTimers() {
     }
     
     // 2. Overdue 카드들의 데드라인 재계산
-    const overdueCards = await prisma.sRSCard.findMany({
+    const overdueCards = await prisma.srscard.findMany({
         where: {
             isOverdue: true,
             overdueDeadline: { gt: now }
@@ -252,7 +252,7 @@ async function recalculateAllActiveTimers() {
         // 새로운 24시간 데드라인으로 설정
         const newDeadline = new Date(now.getTime() + getAccelerated24Hours());
         
-        await prisma.sRSCard.update({
+        await prisma.srscard.update({
             where: { id: card.id },
             data: {
                 overdueDeadline: newDeadline,
@@ -262,7 +262,7 @@ async function recalculateAllActiveTimers() {
     }
     
     // 3. 동결 카드들 재계산
-    const frozenCards = await prisma.sRSCard.findMany({
+    const frozenCards = await prisma.srscard.findMany({
         where: {
             frozenUntil: { gt: now }
         },
@@ -275,7 +275,7 @@ async function recalculateAllActiveTimers() {
         // 새로운 24시간 동결 시간으로 설정
         const newFrozenUntil = new Date(now.getTime() + getAccelerated24Hours());
         
-        await prisma.sRSCard.update({
+        await prisma.srscard.update({
             where: { id: card.id },
             data: {
                 frozenUntil: newFrozenUntil

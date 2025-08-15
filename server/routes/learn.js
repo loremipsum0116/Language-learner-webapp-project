@@ -33,7 +33,7 @@ router.post('/learn/flash/finish', auth, async (req, res, next) => {
         if ((!resolvedCardIds || resolvedCardIds.length === 0) && Array.isArray(vocabIds) && vocabIds.length > 0) {
             const uniqVocabIds = [...new Set(vocabIds.map(Number).filter(Boolean))];
             // 유저의 해당 단어 SRSCard 조회
-            const existing = await prisma.sRSCard.findMany({
+            const existing = await prisma.srscard.findMany({
                 where: { userId, itemType: 'vocab', itemId: { in: uniqVocabIds } },
                 select: { id: true, itemId: true }
             });
@@ -41,10 +41,10 @@ router.post('/learn/flash/finish', auth, async (req, res, next) => {
             const toCreate = uniqVocabIds.filter(vId => !existMap.has(vId))
                 .map(vId => ({ userId, itemType: 'vocab', itemId: vId, stage: 0, nextReviewAt: new Date() }));
             if (toCreate.length) {
-                await prisma.sRSCard.createMany({ data: toCreate });
+                await prisma.srscard.createMany({ data: toCreate });
             }
             // 다시 조회(또는 createMany({skipDuplicates:true}) 후 합쳐서 조회)
-            const allCards = await prisma.sRSCard.findMany({
+            const allCards = await prisma.srscard.findMany({
                 where: { userId, itemType: 'vocab', itemId: { in: uniqVocabIds } },
                 select: { id: true, itemId: true }
             });

@@ -54,7 +54,7 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
                 }
             });
 
-            const existingEntry = await prisma.dictEntry.findUnique({
+            const existingEntry = await prisma.dictentry.findUnique({
                 where: { vocabId: vocab.id },
             });
 
@@ -80,24 +80,25 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
                     existingExamples.push(newMeaningBlock);
                 }
 
-                await prisma.dictEntry.update({
+                await prisma.dictentry.update({
                     where: { vocabId: vocab.id },
                     data: {
                         examples: existingExamples,
                         audioUrl: r.audioUrl || existingEntry.audioUrl,
-                        // ★★★ pronunciation 필드를 ipa 필드에 업데이트 ★★★
                         ipa: r.pronunciation || existingEntry.ipa,
+                        // Add missing fields
+                        ipaKo: r.pronunciation || existingEntry.ipaKo, // Use same as ipa for now
                     }
                 });
 
             } else {
-                await prisma.dictEntry.create({
+                await prisma.dictentry.create({
                     data: {
                         vocabId: vocab.id,
                         examples: [newMeaningBlock],
                         audioUrl: r.audioUrl,
-                        // ★★★ pronunciation 필드를 ipa 필드에 생성 ★★★
                         ipa: r.pronunciation,
+                        ipaKo: r.pronunciation, // Use same as ipa for now
                         license: 'Proprietary',
                         attribution: 'ielts-api-v2'
                     }

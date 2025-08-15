@@ -20,7 +20,7 @@ router.post('/resolve-many', async (req, res) => {
       return res.status(400).json({ error: 'cardIds must be a non-empty array' });
     }
 
-    const result = await prisma.sRSCard.updateMany({
+    const result = await prisma.srscard.updateMany({
       where: {
         userId: req.user.id,
         id: { in: cardIds.map(Number) },
@@ -49,7 +49,7 @@ router.post('/quiz', async (req, res) => {
       return res.json({ data: [] });
     }
 
-    const cards = await prisma.sRSCard.findMany({
+    const cards = await prisma.srscard.findMany({
       where: {
         userId: req.user.id,
         id: { in: cardIds.map(Number) },
@@ -76,7 +76,7 @@ router.post('/quiz', async (req, res) => {
 router.get('/list', async (req, res) => {
   try {
     // 새로운 WrongAnswer 모델에서 미완료 오답들을 조회
-    const wrongAnswers = await prisma.wrongAnswer.findMany({
+    const wrongAnswers = await prisma.wronganswer.findMany({
       where: {
         userId: req.user.id,
         isCompleted: false
@@ -88,7 +88,7 @@ router.get('/list', async (req, res) => {
       include: {
         vocab: {
           include: {
-            dictMeta: true
+            dictentry: true
           }
         }
       },
@@ -99,7 +99,7 @@ router.get('/list', async (req, res) => {
       const v = wa.vocab;
       // gloss 찾기(있으면)
       let gloss = null;
-      const ex = Array.isArray(v?.dictMeta?.examples) ? v.dictMeta.examples : [];
+      const ex = Array.isArray(v?.dictentry?.examples) ? v.dictentry.examples : [];
       const g = ex.find((e) => e && e.kind === 'gloss');
       if (g && typeof g.ko === 'string') gloss = g.ko;
 
@@ -107,8 +107,8 @@ router.get('/list', async (req, res) => {
         wrongAnswerId: wa.id,
         vocabId: wa.vocabId,
         lemma: v?.lemma ?? '',
-        ipa: v?.dictMeta?.ipa ?? null,
-        ipaKo: v?.dictMeta?.ipaKo ?? null,
+        ipa: v?.dictentry?.ipa ?? null,
+        ipaKo: v?.dictentry?.ipaKo ?? null,
         ko_gloss: gloss,
         attempts: wa.attempts,
         wrongAt: wa.wrongAt,

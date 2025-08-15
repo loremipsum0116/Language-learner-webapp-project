@@ -126,7 +126,7 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                             if (accelerationFactor > 1) {
                                 setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
                             } else {
-                                setTimeLeft("❄️ 동결 전환 중... (10분 내 동결)");
+                                setTimeLeft("❄️ 동결 전환 중... (1분 내 동결)");
                             }
                             setIsReviewable(false);
                             console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');
@@ -172,7 +172,7 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                             if (accelerationFactor > 1) {
                                 setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
                             } else {
-                                setTimeLeft("❄️ 동결 전환 중... (10분 내 동결)");
+                                setTimeLeft("❄️ 동결 전환 중... (1분 내 동결)");
                             }
                             setIsReviewable(false);
                             console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');

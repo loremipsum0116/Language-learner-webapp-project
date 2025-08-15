@@ -61,7 +61,7 @@ router.post('/answer', async (req, res, next) => {
         // 폴더 소유 검증(루트/자식 모두 허용) - folderId가 있을 때만
         let folder = null;
         if (folderId) {
-            folder = await prisma.srsFolder.findFirst({
+            folder = await prisma.srsfolder.findFirst({
                 where: { id: folderId, userId },
                 select: { id: true, userId: true, date: true },
             });
@@ -122,7 +122,7 @@ router.post('/answer', async (req, res, next) => {
         // 기존 트랜잭션 코드 - 새 로직으로 대체됨
         const result = await prisma.$transaction(async (tx) => {
             // 카드 존재/소유 검증
-            const card = await tx.sRSCard.findFirst({
+            const card = await tx.srscard.findFirst({
                 where: { id: cardId, userId },
                 select: { 
                     id: true, 
@@ -140,13 +140,13 @@ router.post('/answer', async (req, res, next) => {
 
             // 폴더 소유 및 아이템 검증
             if (folderId) {
-                const folder = await tx.srsFolder.findFirst({
+                const folder = await tx.srsfolder.findFirst({
                     where: { id: folderId, userId },
                     select: { id: true, userId: true, date: true },
                 });
                 if (!folder) throw Object.assign(new Error('폴더 없음'), { status: 404 });
 
-                const existing = await tx.srsFolderItem.findUnique({
+                const existing = await tx.srsfolderitem.findUnique({
                     // 이 부분은 새 로직에서 제거됨
                     // markAnswer 함수에서 처리
                 });

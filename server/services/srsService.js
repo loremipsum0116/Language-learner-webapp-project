@@ -25,7 +25,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
     console.log('[CREATE FOLDER] KST date string:', todayKst);
     console.log('[CREATE FOLDER] UTC Date for storage:', todayUtcDate);
     
-    const folder = await prisma.srsFolder.create({
+    const folder = await prisma.srsfolder.create({
         data: {
             userId,
             name: folderName,
@@ -36,6 +36,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
             autoCreated: false,
             alarmActive: true,
             stage: 0, // 초기 단계
+            updatedAt: new Date(), // updatedAt 필드 추가
         },
     });
     
@@ -47,7 +48,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
             learned: false
         }));
         
-        await prisma.srsFolderItem.createMany({
+        await prisma.srsfolderitem.createMany({
             data: folderItems
         });
     }
@@ -59,7 +60,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
  * 폴더 완료 처리 및 다음 복습 폴더 생성
  */
 async function completeFolderAndScheduleNext(folderId, userId) {
-    const folder = await prisma.srsFolder.findFirst({
+    const folder = await prisma.srsfolder.findFirst({
         where: { id: folderId, userId },
         include: {
             items: true
@@ -79,7 +80,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
     }
     
     // 현재 폴더를 완료 상태로 변경
-    await prisma.srsFolder.update({
+    await prisma.srsfolder.update({
         where: { id: folderId },
         data: {
             isCompleted: true,
@@ -97,7 +98,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
         // 120일 사이클 완료 - 마스터 상태로 변경
         const completionCount = (folder.completionCount || 0) + 1;
         
-        await prisma.srsFolder.update({
+        await prisma.srsfolder.update({
             where: { id: folderId },
             data: {
                 isMastered: true,
@@ -128,7 +129,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
     const nextReviewDate = computeNextReviewDate(folder.cycleAnchorAt, nextStage);
     
     // 다음 복습 폴더 생성
-    const nextFolder = await prisma.srsFolder.create({
+    const nextFolder = await prisma.srsfolder.create({
         data: {
             userId,
             name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${nextStage}단계`,
@@ -139,7 +140,8 @@ async function completeFolderAndScheduleNext(folderId, userId) {
             stage: nextStage,
             autoCreated: true,
             alarmActive: true,
-            completionCount: folder.completionCount || 0
+            completionCount: folder.completionCount || 0,
+            updatedAt: new Date()
         }
     });
     
@@ -152,7 +154,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
             learned: false // 복습에서는 다시 미학습 상태로
         }));
     
-    await prisma.srsFolderItem.createMany({
+    await prisma.srsfolderitem.createMany({
         data: nextFolderItems
     });
     
@@ -167,7 +169,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
 async function listFoldersForDate(userId, dateKst00) {
     const today = dayjs().startOf('day');
     
-    const folders = await prisma.srsFolder.findMany({
+    const folders = await prisma.srsfolder.findMany({
         where: { 
             userId,
             OR: [
@@ -210,7 +212,7 @@ async function listFoldersForDate(userId, dateKst00) {
 }
 
 async function getFolder(userId, folderId) {
-    const folder = await prisma.srsFolder.findFirst({
+    const folder = await prisma.srsfolder.findFirst({
         where: { id: folderId, userId },
         include: { items: { include: { card: true } } },
     });
@@ -221,7 +223,7 @@ async function getFolder(userId, folderId) {
 async function createCustomFolder(userId, { name, dateKst00, scheduledOffset = 0, originSessionId = null }) {
     // 요구사항: 생성 즉시 "당일 학습 폴더"로 취급, 알림 ON 고정
     const date = dateKst00 ?? startOfKstDay();
-    return prisma.srsFolder.create({
+    return prisma.srsfolder.create({
         data: {
             userId,
             name: name || '오늘',
@@ -231,6 +233,7 @@ async function createCustomFolder(userId, { name, dateKst00, scheduledOffset = 0
             originSessionId: originSessionId ?? undefined,
             alarmActive: true,      // 종 아이콘 ON
             autoCreated: false,
+            updatedAt: new Date(),
         },
     });
 }
@@ -239,7 +242,7 @@ async function createCustomFolder(userId, { name, dateKst00, scheduledOffset = 0
 async function ensureCardsForVocabs(userId, vocabIds) {
     const uniq = [...new Set(vocabIds.map(Number).filter(Boolean))];
     if (!uniq.length) return [];
-    const existing = await prisma.sRSCard.findMany({
+    const existing = await prisma.srscard.findMany({
         where: { userId, itemType: 'vocab', itemId: { in: uniq } },
         select: { id: true, itemId: true }
     });
@@ -261,9 +264,9 @@ async function ensureCardsForVocabs(userId, vocabIds) {
     
     if (toCreate.length) {
         console.log(`[SRS DEBUG] Creating ${toCreate.length} new cards with initial state:`, toCreate[0]);
-        await prisma.sRSCard.createMany({ data: toCreate });
+        await prisma.srscard.createMany({ data: toCreate });
     }
-    const all = await prisma.sRSCard.findMany({
+    const all = await prisma.srscard.findMany({
         where: { userId, itemType: 'vocab', itemId: { in: uniq } },
         select: { id: true, itemId: true }
     });
@@ -271,10 +274,10 @@ async function ensureCardsForVocabs(userId, vocabIds) {
 }
 
 async function addItemsToFolder(userId, folderId, cardIds) {
-    const folder = await prisma.srsFolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
+    const folder = await prisma.srsfolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
 
-    const existing = await prisma.srsFolderItem.findMany({
+    const existing = await prisma.srsfolderitem.findMany({
         where: { folderId, cardId: { in: cardIds } },
         select: { cardId: true },
     });
@@ -286,7 +289,7 @@ async function addItemsToFolder(userId, folderId, cardIds) {
         throw createError(409, msg);
     }
 
-    await prisma.srsFolderItem.createMany({
+    await prisma.srsfolderitem.createMany({
         data: cardIds.map(cardId => ({ folderId, cardId })),
         skipDuplicates: true,
     });
@@ -295,23 +298,23 @@ async function addItemsToFolder(userId, folderId, cardIds) {
 
 async function removeItem(userId, folderId, cardId) {
     // 권한 체크: 해당 폴더가 본인 것인지
-    const folder = await prisma.srsFolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
+    const folder = await prisma.srsfolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
-    await prisma.srsFolderItem.deleteMany({ where: { folderId, cardId } });
+    await prisma.srsfolderitem.deleteMany({ where: { folderId, cardId } });
     return { ok: true };
 }
 
 async function getQueue(userId, folderId) {
     // 학습 안 한 카드만, vocab 상세 포함(단순 버전)
-    const folder = await prisma.srsFolder.findFirst({
+    const folder = await prisma.srsfolder.findFirst({
         where: { id: folderId, userId },
         select: { id: true, items: { where: { learned: false }, include: { card: true } } },
     });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
 
     const vocabIds = folder.items
-        .filter(i => i.card.itemType === 'vocab')
-        .map(i => i.card.itemId);
+        .filter(i => i.srscard.itemType === 'vocab')
+        .map(i => i.srscard.itemId);
 
     const vocabMap = new Map();
     if (vocabIds.length) {
@@ -322,11 +325,11 @@ async function getQueue(userId, folderId) {
     return folder.items.map(i => ({
         folderId,
         cardId: i.cardId,
-        itemType: i.card.itemType,
-        itemId: i.card.itemId,
+        itemType: i.srscard.itemType,
+        itemId: i.srscard.itemId,
         learned: i.learned,
         wrongCount: i.wrongCount,
-        vocab: i.card.itemType === 'vocab' ? vocabMap.get(i.card.itemId) : null,
+        vocab: i.srscard.itemType === 'vocab' ? vocabMap.get(i.srscard.itemId) : null,
     }));
 }
 
@@ -338,11 +341,11 @@ async function getQueue(userId, folderId) {
 
 async function ensureTomorrowFolderForCard(userId, cardId) {
     const tomorrow = kstAddDays(startOfKstDay(), 1);
-    let folder = await prisma.srsFolder.findFirst({
+    let folder = await prisma.srsfolder.findFirst({
         where: { userId, date: tomorrow, kind: 'review', scheduledOffset: 1 },
     });
     if (!folder) {
-        folder = await prisma.srsFolder.create({
+        folder = await prisma.srsfolder.create({
             data: {
                 userId,
                 name: '내일',
@@ -351,11 +354,12 @@ async function ensureTomorrowFolderForCard(userId, cardId) {
                 scheduledOffset: 1,
                 autoCreated: true,
                 alarmActive: true,
+                updatedAt: new Date(),
             },
         });
     }
     // 폴더-아이템 존재 보장
-    await prisma.srsFolderItem.upsert({
+    await prisma.srsfolderitem.upsert({
         where: { folderId_cardId: { folderId: folder.id, cardId } },
         update: {},
         create: { folderId: folder.id, cardId },
@@ -364,7 +368,7 @@ async function ensureTomorrowFolderForCard(userId, cardId) {
 
 async function bumpDailyStat(userId, { srsSolvedInc = 0, autoLearnedInc = 0, wrongDueNextInc = 0 }) {
     const today = startOfKstDay();
-    await prisma.dailyStudyStat.upsert({
+    await prisma.dailystudystat.upsert({
         where: { userId_date: { userId, date: today } },
         update: {
             srsSolved: { increment: srsSolvedInc },
@@ -393,7 +397,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     const now = new Date();
     
     // 카드 정보 조회 (새 필드들 포함)
-    const card = await prisma.sRSCard.findFirst({ 
+    const card = await prisma.srscard.findFirst({ 
         where: { id: cardId, userId },
         select: {
             id: true,
@@ -525,7 +529,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             if (card.stage === 6) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
-                await prisma.sRSCard.update({
+                await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
                         stage: 0, // stage 0으로 리셋
@@ -566,7 +570,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = newWaitingUntil;
                 }
                 
-                await prisma.sRSCard.update({
+                await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
                         stage: upgradedStage,
@@ -596,7 +600,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             if (card.stage === 6) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
-                await prisma.sRSCard.update({
+                await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
                         stage: 0, // stage 0으로 리셋
@@ -635,7 +639,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = newWaitingUntil;
                 }
                 
-                await prisma.sRSCard.update({
+                await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
                         stage: upgradedStage,
@@ -669,7 +673,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             waitingUntil = new Date(realNow.getTime() + 24 * 60 * 60 * 1000); // 24시간 대기
             nextReviewAt = waitingUntil;
             
-            await prisma.sRSCard.update({
+            await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
                     // stage: 현재 stage 유지 (변경하지 않음)
@@ -695,7 +699,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             waitingUntil = calculatedWaitingUntil;
             nextReviewAt = calculatedNextReviewAt;
             
-            await prisma.sRSCard.update({
+            await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
                     stage: 0, // stage 0으로 리셋
@@ -719,7 +723,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         waitingUntil = calculatedWaitingUntil;
         nextReviewAt = calculatedNextReviewAt;
         
-        await prisma.sRSCard.update({
+        await prisma.srscard.update({
             where: { id: cardId },
             data: {
                 wrongTotal: { increment: 1 }
@@ -734,7 +738,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         waitingUntil = calculatedWaitingUntil;
         nextReviewAt = calculatedNextReviewAt;
         
-        await prisma.sRSCard.update({
+        await prisma.srscard.update({
             where: { id: cardId },
             data: {
                 correctTotal: { increment: 1 }
@@ -749,7 +753,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     // --- SrsFolderItem Update ---
     if (folderId) {
         // 현재 폴더 아이템 상태 조회
-        const currentItem = await prisma.srsFolderItem.findFirst({
+        const currentItem = await prisma.srsfolderitem.findFirst({
             where: { folderId: folderId, cardId: cardId },
             select: { learned: true }
         });
@@ -764,7 +768,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             newLearnedState = currentItem?.learned ?? false;
         }
         
-        await prisma.srsFolderItem.updateMany({
+        await prisma.srsfolderitem.updateMany({
             where: { folderId: folderId, cardId: cardId },
             data: {
                 lastReviewedAt: now,
@@ -813,7 +817,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     }
 
     // 최신 카드 정보 조회 (DB 업데이트 후)
-    const updatedCard = await prisma.sRSCard.findFirst({ 
+    const updatedCard = await prisma.srscard.findFirst({ 
         where: { id: cardId, userId },
         select: {
             stage: true,
@@ -862,7 +866,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
  * 마스터된 폴더를 다시 활성화합니다 (새로운 120일 사이클 시작)
  */
 async function restartMasteredFolder(folderId, userId) {
-    const folder = await prisma.srsFolder.findFirst({
+    const folder = await prisma.srsfolder.findFirst({
         where: { id: folderId, userId, isMastered: true },
         include: { items: true }
     });
@@ -872,7 +876,7 @@ async function restartMasteredFolder(folderId, userId) {
     }
     
     // 폴더를 다시 활성화
-    await prisma.srsFolder.update({
+    await prisma.srsfolder.update({
         where: { id: folderId },
         data: {
             alarmActive: true,
@@ -885,7 +889,7 @@ async function restartMasteredFolder(folderId, userId) {
     });
     
     // 모든 아이템을 미학습 상태로 리셋
-    await prisma.srsFolderItem.updateMany({
+    await prisma.srsfolderitem.updateMany({
         where: { folderId: folderId },
         data: { learned: false }
     });
@@ -902,7 +906,7 @@ async function restartMasteredFolder(folderId, userId) {
 async function getAvailableCardsForReview(userId) {
     const now = new Date();
     
-    const cards = await prisma.sRSCard.findMany({
+    const cards = await prisma.srscard.findMany({
         where: {
             userId: userId,
             isOverdue: true,
@@ -930,7 +934,7 @@ async function getAvailableCardsForReview(userId) {
 async function getWaitingCardsCount(userId) {
     const now = new Date();
     
-    const count = await prisma.sRSCard.count({
+    const count = await prisma.srscard.count({
         where: {
             userId: userId,
             waitingUntil: { gt: now },
@@ -948,14 +952,14 @@ async function getSrsStatus(userId) {
     const now = new Date();
     
     const [overdueCount, waitingCount, frozenCount, totalCards, masteredCount] = await Promise.all([
-        prisma.sRSCard.count({
+        prisma.srscard.count({
             where: {
                 userId: userId,
                 isOverdue: true,
                 overdueDeadline: { gt: now }
             }
         }),
-        prisma.sRSCard.count({
+        prisma.srscard.count({
             where: {
                 userId: userId,
                 waitingUntil: { gt: now },
@@ -963,16 +967,16 @@ async function getSrsStatus(userId) {
                 frozenUntil: null
             }
         }),
-        prisma.sRSCard.count({
+        prisma.srscard.count({
             where: {
                 userId: userId,
                 frozenUntil: { gt: now }
             }
         }),
-        prisma.sRSCard.count({
+        prisma.srscard.count({
             where: { userId: userId }
         }),
-        prisma.sRSCard.count({
+        prisma.srscard.count({
             where: {
                 userId: userId,
                 isMastered: true

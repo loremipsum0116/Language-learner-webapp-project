@@ -11,14 +11,14 @@ router.get('/', async (req, res) => {
             orderBy: { createdAt: 'asc' }
         });
 
-        const totals = await prisma.userVocab.groupBy({
+        const totals = await prisma.uservocab.groupBy({
             by: ['categoryId'],
             where: { userId: req.user.id },
             _count: { _all: true }
         });
 
         const countMap = new Map(totals.map(t => [t.categoryId, t._count._all]));
-        const uncategorized = (await prisma.userVocab.count({ where: { userId: req.user.id, categoryId: null }}));
+        const uncategorized = (await prisma.uservocab.count({ where: { userId: req.user.id, categoryId: null }}));
 
         const data = cats.map(c => ({ ...c, count: countMap.get(c.id) || 0 }));
 

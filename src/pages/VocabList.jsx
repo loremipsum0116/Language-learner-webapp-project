@@ -355,7 +355,8 @@ export default function VocabList() {
     };
 
     const playVocabAudio = (vocab) => {
-        const targetUrl = vocab.audio;
+        // 목록에서는 vocab.audio, 상세에서는 vocab.dictentry.audioUrl 사용
+        const targetUrl = vocab.audio || vocab.dictentry?.audioUrl;
         if (targetUrl) {
             playUrl(targetUrl, 'vocab', vocab.id);
             return;

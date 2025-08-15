@@ -97,7 +97,7 @@ router.get('/mastered-cards', async (req, res, next) => {
     try {
         const userId = req.user.id;
         
-        const masteredCards = await prisma.sRSCard.findMany({
+        const masteredCards = await prisma.srscard.findMany({
             where: {
                 userId: userId,
                 isMastered: true
@@ -123,17 +123,17 @@ router.get('/mastered', async (req, res, next) => {
         const userId = req.user.id;
         const { limit = 50, offset = 0, sortBy = 'masteredAt', sortOrder = 'desc' } = req.query;
         
-        const masteredCards = await prisma.sRSCard.findMany({
+        const masteredCards = await prisma.srscard.findMany({
             where: {
                 userId: userId,
                 isMastered: true
             },
             include: {
-                folderItems: {
+                srsfolderitem: {
                     include: {
                         vocab: {
                             include: {
-                                dictMeta: true
+                                dictentry: true
                             }
                         }
                     }
@@ -147,7 +147,7 @@ router.get('/mastered', async (req, res, next) => {
         });
         
         // 마스터 단어 통계
-        const totalMastered = await prisma.sRSCard.count({
+        const totalMastered = await prisma.srscard.count({
             where: {
                 userId: userId,
                 isMastered: true
@@ -155,7 +155,7 @@ router.get('/mastered', async (req, res, next) => {
         });
         
         // 사용자 마스터 단어 대시보드 정보
-        const masteryStats = await prisma.sRSCard.groupBy({
+        const masteryStats = await prisma.srscard.groupBy({
             by: ['masterCycles'],
             where: {
                 userId: userId,
@@ -168,7 +168,7 @@ router.get('/mastered', async (req, res, next) => {
         
         // 데이터 정제 및 가공
         const processedCards = masteredCards.map(card => {
-            const vocab = card.folderItems[0]?.vocab || null;
+            const vocab = card.srsfolderitem[0]?.vocab || null;
             return {
                 id: card.id,
                 stage: card.stage,
@@ -182,7 +182,7 @@ router.get('/mastered', async (req, res, next) => {
                     lemma: vocab.lemma,
                     pos: vocab.pos,
                     levelCEFR: vocab.levelCEFR,
-                    dictMeta: vocab.dictMeta
+                    dictentry: vocab.dictentry
                 } : null
             };
         });
@@ -210,14 +210,14 @@ router.get('/mastery-stats', async (req, res, next) => {
         const userId = req.user.id;
         
         // 기본 통계
-        const basicStats = await prisma.sRSCard.groupBy({
+        const basicStats = await prisma.srscard.groupBy({
             by: ['isMastered'],
             where: { userId: userId },
             _count: { isMastered: true }
         });
         
         // 마스터 사이클별 통계
-        const cycleStats = await prisma.sRSCard.groupBy({
+        const cycleStats = await prisma.srscard.groupBy({
             by: ['masterCycles'],
             where: {
                 userId: userId,
@@ -228,7 +228,7 @@ router.get('/mastery-stats', async (req, res, next) => {
         });
         
         // 최근 마스터 완룉
-        const recentMastery = await prisma.sRSCard.findMany({
+        const recentMastery = await prisma.srscard.findMany({
             where: {
                 userId: userId,
                 isMastered: true
@@ -236,7 +236,7 @@ router.get('/mastery-stats', async (req, res, next) => {
             orderBy: { masteredAt: 'desc' },
             take: 5,
             include: {
-                folderItems: {
+                srsfolderitem: {
                     include: {
                         vocab: true
                     }
@@ -254,7 +254,7 @@ router.get('/mastery-stats', async (req, res, next) => {
             masteryRate: parseFloat(masteryRate),
             cycleStats,
             recentMastery: recentMastery.map(card => ({
-                lemma: card.folderItems[0]?.vocab?.lemma || 'Unknown',
+                lemma: card.srsfolderitem[0]?.vocab?.lemma || 'Unknown',
                 masteredAt: card.masteredAt,
                 masterCycles: card.masterCycles
             }))
@@ -324,14 +324,14 @@ router.post('/folders', async (req, res, next) => {
 router.get('/dashboard', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const folders = await prisma.srsFolder.findMany({
+        const folders = await prisma.srsfolder.findMany({
             where: { userId },
             select: {
                 id: true, name: true,
                 createdDate: true,        // ★ 추가
                 nextReviewDate: true,     // ★ 추가
                 stage: true, alarmActive: true,
-                _count: { select: { items: true } },
+                _count: { select: { srsfolderitem: true } },
             },
             orderBy: [{ nextReviewDate: 'asc' }, { id: 'asc' }],
         });
@@ -343,7 +343,7 @@ router.get('/dashboard', async (req, res, next) => {
             nextReviewDate: f.nextReviewDate,
             stage: f.stage,
             alarmActive: f.alarmActive,
-            total: f._count.items,
+            total: f._count.srsfolderitem,
         }));
         
         console.log('[SRS DASHBOARD] Response data:', JSON.stringify(data, null, 2));
@@ -361,7 +361,7 @@ router.post('/folders/:id/complete', async (req, res, next) => {
         const userId = req.user.id;
         const id = Number(req.params.id);
 
-        const folder = await prisma.srsFolder.findFirst({ where: { id, userId } });
+        const folder = await prisma.srsfolder.findFirst({ where: { id, userId } });
         if (!folder) return fail(res, 404, 'Folder not found.');
 
         const DELAYS = [3, 7, 14, 30, 60, 120]; // 상한 120일
@@ -370,7 +370,7 @@ router.post('/folders/:id/complete', async (req, res, next) => {
         const nextDate = dayjs(baseDate).add(DELAYS[nextStage], 'day').toDate();
         const isFinal = nextStage === (DELAYS.length - 1);
         const doneAll = nextStage === STAGE_DELAYS.length - 1;
-        const updatedFolder = await prisma.srsFolder.update({
+        const updatedFolder = await prisma.srsfolder.update({
             where: { id },
             data: {
                 stage: nextStage,
@@ -383,7 +383,7 @@ router.post('/folders/:id/complete', async (req, res, next) => {
         });
 
         // Reset learned state for all items in the folder for the next session
-        await prisma.srsFolderItem.updateMany({
+        await prisma.srsfolderitem.updateMany({
             where: { folderId: id },
             data: { learned: false, wrongCount: 0 },
         });
@@ -402,7 +402,7 @@ router.post('/folders/:id/alarm', async (req, res, next) => {
         const id = Number(req.params.id);
         const { active } = req.body; // Only need 'active' status
 
-        const folder = await prisma.srsFolder.findFirst({ where: { id, userId } });
+        const folder = await prisma.srsfolder.findFirst({ where: { id, userId } });
         if (!folder) return fail(res, 404, 'Folder not found.');
 
         let dataToUpdate = { alarmActive: !!active };
@@ -418,13 +418,13 @@ router.post('/folders/:id/alarm', async (req, res, next) => {
                 cycleAnchorAt: new Date(),         // 앵커를 '재시작 시점'으로
             };
             // Reset items within the folder as well
-            await prisma.srsFolderItem.updateMany({
+            await prisma.srsfolderitem.updateMany({
                 where: { folderId: id },
                 data: { learned: false, wrongCount: 0 },
             });
         }
 
-        const updatedFolder = await prisma.srsFolder.update({
+        const updatedFolder = await prisma.srsfolder.update({
             where: { id },
             data: dataToUpdate,
         });
@@ -454,7 +454,7 @@ router.get('/reminders/today', async (req, res, next) => {
         });
 
         // overdue 카드 수 조회 (SRS 폴더에 실제로 존재하는 단어만)
-        const overdueCount = await prisma.sRSCard.count({
+        const overdueCount = await prisma.srscard.count({
             where: {
                 userId: userId,
                 isOverdue: true,
@@ -503,7 +503,7 @@ router.post('/reminders/ack', async (req, res, next) => {
         const nextAlarmTime = new Date(now.getTime() + 6 * 60 * 60 * 1000); // 6시간 후
 
         // overdue 카드 수 확인 (SRS 폴더에 실제로 존재하는 단어만)
-        const overdueCount = await prisma.sRSCard.count({
+        const overdueCount = await prisma.srscard.count({
             where: {
                 userId: userId,
                 isOverdue: true,
@@ -554,7 +554,7 @@ router.post('/folders/quick-create', async (req, res, next) => {
         const date = startOfKstDay(); // KST 00:00(Date 객체)
         console.log(`[QUICK-CREATE] date=${date.toISOString()}`);
 
-        const exists = await prisma.srsFolder.findFirst({
+        const exists = await prisma.srsfolder.findFirst({
             where: { userId, kind },
             select: { id: true },
         });
@@ -567,7 +567,7 @@ router.post('/folders/quick-create', async (req, res, next) => {
         console.log(`[QUICK-CREATE] Creating new folder...`);
         const now = dayjs();
 
-        const created = await prisma.srsFolder.create({
+        const created = await prisma.srsfolder.create({
             data: {
                 userId,
                 name: `오늘의 SRS - ${now.tz(KST).format('YYYY-MM-DD')}`,
@@ -578,6 +578,7 @@ router.post('/folders/quick-create', async (req, res, next) => {
                 autoCreated: true,
                 alarmActive: enableAlarm,
                 cycleAnchorAt: now.toDate(),
+                updatedAt: new Date(),
             },
             select: { id: true },
         });
@@ -610,14 +611,14 @@ router.post('/folders/:parentId/subfolders', async (req, res, next) => {
         const name = String(req.body?.name ?? '').trim();
         if (!name) return fail(res, 400, 'name is required');
 
-        const parent = await prisma.srsFolder.findFirst({
+        const parent = await prisma.srsfolder.findFirst({
             where: { id: parentId, userId, parentId: null },
             select: { id: true, date: true, alarmActive: true }
         });
         if (!parent) return fail(res, 404, 'parent not found');
 
         // 같은 부모에서 이름 중복만 금지
-        const dup = await prisma.srsFolder.findFirst({
+        const dup = await prisma.srsfolder.findFirst({
             where: { userId, parentId, name },
             select: { id: true }
         });
@@ -629,7 +630,7 @@ router.post('/folders/:parentId/subfolders', async (req, res, next) => {
         console.log('[SUBFOLDER.CREATE] userId=%s parentId=%s date=%s kind=%s name=%s',
             userId, parentId, parent.date?.toISOString?.(), uniqueKind, name);
 
-        const sub = await prisma.srsFolder.create({
+        const sub = await prisma.srsfolder.create({
             data: {
                 userId,
                 parentId,
@@ -638,6 +639,7 @@ router.post('/folders/:parentId/subfolders', async (req, res, next) => {
                 kind: uniqueKind,           // ← 중요
                 scheduledOffset: null,      // ← 명시해도 됨 (nullable)
                 alarmActive: parent.alarmActive,
+                updatedAt: new Date(),
             },
             select: { id: true, name: true }
         });
@@ -654,7 +656,7 @@ router.post('/folders/:parentId/subfolders', async (req, res, next) => {
 router.post('/legacy/clear', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const r = await prisma.sRSCard.deleteMany({ where: { userId } });
+        const r = await prisma.srscard.deleteMany({ where: { userId } });
         return ok(res, { deleted: r.count });
     } catch (e) { next(e); }
 });
@@ -671,7 +673,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
         if (!Number.isFinite(id)) return fail(res, 400, 'invalid id');
 
         // 1) 폴더 메타
-        const folder = await prisma.srsFolder.findFirst({
+        const folder = await prisma.srsfolder.findFirst({
             where: { id, userId },
             select: {
                 id: true, name: true,
@@ -683,12 +685,12 @@ router.get('/folders/:id/items', async (req, res, next) => {
         if (!folder) return fail(res, 404, 'Folder not found');
 
         // 2) 폴더 아이템(카드/로컬 learned 상태 포함)
-        const items = await prisma.srsFolderItem.findMany({
+        const items = await prisma.srsfolderitem.findMany({
             where: { folderId: id },
             select: {
                 id: true, cardId: true, learned: true, wrongCount: true, lastReviewedAt: true,
                 vocabId: true,                               // 있으면 바로 사용
-                card: { 
+                srscard: { 
                     select: { 
                         itemId: true, 
                         nextReviewAt: true, 
@@ -711,7 +713,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
         const vocabIdSet = new Set();
         for (const it of items) {
             if (it.vocabId) vocabIdSet.add(it.vocabId);
-            else if (it.card?.itemId) vocabIdSet.add(it.card.itemId);
+            else if (it.srscard?.itemId) vocabIdSet.add(it.srscard.itemId);
         }
         const vocabIds = Array.from(vocabIdSet);
         let vocabMap = new Map();
@@ -724,7 +726,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         lemma: true,
                         pos: true,
                         levelCEFR: true,
-                        dictMeta: {
+                        dictentry: {
                             select: {
                                 ipa: true,
                                 ipaKo: true,
@@ -736,7 +738,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 vocabMap = new Map(vocabs.map(v => [v.id, v]));
             } catch (vocabError) {
                 console.error('Vocab query failed:', vocabError);
-                // fallback to basic vocab without dictMeta
+                // fallback to basic vocab without dictentry
                 const vocabs = await prisma.vocab.findMany({
                     where: { id: { in: vocabIds } },
                     select: {
@@ -752,12 +754,12 @@ router.get('/folders/:id/items', async (req, res, next) => {
 
         // 4) 화면용 큐(learned=false 기준) 구성
         const quizItems = items.map(it => {
-            const vid = it.vocabId ?? it.card?.itemId ?? null;
+            const vid = it.vocabId ?? it.srscard?.itemId ?? null;
             const v = (vid && vocabMap.get(vid)) || null;
             
             // 디버깅용 로그 (상세)
             console.log(`[DEBUG] Item ${it.id}: cardId=${it.cardId}, vocabId=${vid}, vocab found=${!!v}`);
-            console.log(`[DEBUG] Card data:`, it.card);
+            console.log(`[DEBUG] Card data:`, it.srscard);
             if (v) {
                 console.log(`[DEBUG] Full vocab data:`, JSON.stringify(v, null, 2));
             }
@@ -769,19 +771,19 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 wrongCount: it.wrongCount,
                 lastReviewedAt: it.lastReviewedAt,
                 // 개별 카드의 완전한 SRS 정보 추가
-                nextReviewAt: it.card?.nextReviewAt,
-                stage: it.card?.stage,
-                isOverdue: it.card?.isOverdue || false,
-                overdueDeadline: it.card?.overdueDeadline,
-                isFromWrongAnswer: it.card?.isFromWrongAnswer || false,
-                waitingUntil: it.card?.waitingUntil,
-                frozenUntil: it.card?.frozenUntil,        // ✅ 동결 필드 추가
-                isMastered: it.card?.isMastered || false,
-                masterCycles: it.card?.masterCycles || 0,
-                masteredAt: it.card?.masteredAt,
+                nextReviewAt: it.srscard?.nextReviewAt,
+                stage: it.srscard?.stage,
+                isOverdue: it.srscard?.isOverdue || false,
+                overdueDeadline: it.srscard?.overdueDeadline,
+                isFromWrongAnswer: it.srscard?.isFromWrongAnswer || false,
+                waitingUntil: it.srscard?.waitingUntil,
+                frozenUntil: it.srscard?.frozenUntil,        // ✅ 동결 필드 추가
+                isMastered: it.srscard?.isMastered || false,
+                masterCycles: it.srscard?.masterCycles || 0,
+                masteredAt: it.srscard?.masteredAt,
                 // 동결 상태 정보 추가
-                isFrozen: it.card?.isFrozen || false,
-                frozenUntil: it.card?.frozenUntil,
+                isFrozen: it.srscard?.isFrozen || false,
+                frozenUntil: it.srscard?.frozenUntil,
                 // 오답 단어 여부 판단
                 isWrongAnswer: it.wrongCount > 0,
                 vocab: v ? {
@@ -789,7 +791,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                     lemma: v.lemma,
                     pos: v.pos,
                     level: v.levelCEFR,
-                    dictMeta: v.dictMeta || null,
+                    dictentry: v.dictentry || null,
                 } : null,
             };
         });
@@ -825,21 +827,21 @@ router.get('/folders/:id/children', async (req, res, next) => {
         const userId = req.user.id;
         const id = Number(req.params.id);
 
-        const root = await prisma.srsFolder.findFirst({
+        const root = await prisma.srsfolder.findFirst({
             where: { id, userId, parentId: null },
             select: { id: true, name: true, date: true, alarmActive: true },
         });
         if (!root) return fail(res, 404, 'root not found');
 
         // 1. 하위 폴더와 그 안의 아이템, 카드 정보까지 모두 조회합니다.
-        const children = await prisma.srsFolder.findMany({
+        const children = await prisma.srsfolder.findMany({
             where: { userId, parentId: id },
 
             include: {
                 items: {
                     include: {
                         // ✅ card와 그 안의 vocabId(itemId)까지 포함합니다.
-                        card: { select: { itemId: true } }
+                        srscard: { select: { itemId: true } }
                     }
                 }
             },
@@ -849,7 +851,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
 
         // 2. 모든 하위 폴더에서 필요한 vocabId를 중복 없이 추출합니다.
         const vocabIds = [...new Set(
-            children.flatMap(c => c.items.map(i => i.card.itemId))
+            children.flatMap(c => c.items.map(i => i.srscard.itemId))
         )];
         // 3. 추출한 ID로 Vocab 테이블에서 단어 정보를 한 번에 조회합니다.
         const vocabs = vocabIds.length > 0
@@ -865,7 +867,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
             completed: c.items.filter((i) => i.learned).length,
             incorrect: c.items.filter((i) => (i.wrongCount ?? 0) > 0).length,
             // ✅ 각 아이템에 `vocab` 상세 정보를 매핑하여 추가합니다.
-            items: c.items.map(item => ({ ...item, vocab: vocabMap.get(item.card.itemId) || null })),
+            items: c.items.map(item => ({ ...item, vocab: vocabMap.get(item.srscard.itemId) || null })),
         }));
 
         return ok(res, { root, children: mapped });
@@ -884,14 +886,14 @@ router.post('/folders/:rootId/children', auth, async (req, res, next) => {
         }
 
         // 1) 루트 폴더 검증 (본인 소유/parentId NULL)
-        const root = await prisma.srsFolder.findFirst({
+        const root = await prisma.srsfolder.findFirst({
             where: { id: rootId, userId, parentId: null },
             select: { id: true, date: true, kind: true },
         });
         if (!root) return res.status(404).json({ error: '루트 폴더가 없습니다.' });
 
         // 2) 해당 루트 밑에서 scheduledOffset 최대값 조회
-        const max = await prisma.srsFolder.aggregate({
+        const max = await prisma.srsfolder.aggregate({
             _max: { scheduledOffset: true },
             where: {
                 userId,
@@ -903,7 +905,7 @@ router.post('/folders/:rootId/children', auth, async (req, res, next) => {
         const nextOffset = (max._max.scheduledOffset ?? 0) + 1;
 
         // 3) 동일 parentId에서 이름 중복 방지(스키마 @@unique[userId,parentId,name])
-        const exists = await prisma.srsFolder.findFirst({
+        const exists = await prisma.srsfolder.findFirst({
             where: { userId, parentId: root.id, name },
             select: { id: true },
         });
@@ -912,7 +914,7 @@ router.post('/folders/:rootId/children', auth, async (req, res, next) => {
         }
 
         // 4) 하위 폴더 생성 (루트의 date/kind 상속)
-        const child = await prisma.srsFolder.create({
+        const child = await prisma.srsfolder.create({
             data: {
                 userId,
                 parentId: root.id,
@@ -922,6 +924,7 @@ router.post('/folders/:rootId/children', auth, async (req, res, next) => {
                 scheduledOffset: nextOffset,
                 autoCreated: false,
                 alarmActive: true,
+                updatedAt: new Date(),
             },
         });
 
@@ -945,7 +948,7 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
         }
 
         // 폴더 소유 확인
-        const folder = await prisma.srsFolder.findFirst({
+        const folder = await prisma.srsfolder.findFirst({
             where: { id: folderId, userId },
             select: { id: true, date: true, kind: true, parentId: true },
         });
@@ -958,7 +961,7 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
 
             // 1) vocabIds → 카드가 없으면 생성 후 아이템 upsert (중복 허용)
             for (const vid of vocabIds) {
-                const card = await tx.sRSCard.upsert({
+                const card = await tx.srscard.upsert({
                     where: {
                         userId_itemType_itemId: { userId, itemType: 'vocab', itemId: vid },
                     },
@@ -976,7 +979,7 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
                     select: { id: true, itemType: true, itemId: true },
                 });
 
-                await tx.srsFolderItem.upsert({
+                await tx.srsfolderitem.upsert({
                     where: { folderId_cardId: { folderId, cardId: card.id } },
                     update: {},
                     create: {
@@ -992,14 +995,14 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
 
             // 2) cardIds → 존재/소유 검증 후 아이템 upsert
             if (cardIds.length) {
-                const cards = await tx.sRSCard.findMany({
+                const cards = await tx.srscard.findMany({
                     where: { id: { in: cardIds }, userId },
                     select: { id: true, itemType: true, itemId: true },
                 });
                 if (cards.length === 0) throw Object.assign(new Error('cards not found'), { status: 404 });
 
                 for (const c of cards) {
-                    await tx.srsFolderItem.upsert({
+                    await tx.srsfolderitem.upsert({
                         where: { folderId_cardId: { folderId, cardId: c.id } },
                         update: {},
                         create: {
@@ -1046,7 +1049,7 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
         // ... (기존 유효성 검사 및 폴더 소유권 확인) ...
 
         // ✅ SrsFolderItem ID로 실제 SRSCard ID를 조회합니다.
-        const itemsToDelete = await prisma.srsFolderItem.findMany({
+        const itemsToDelete = await prisma.srsfolderitem.findMany({
             where: { id: { in: itemIds }, folderId: folderId },
             select: { id: true, cardId: true },
         });
@@ -1064,7 +1067,7 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
         // --- 트랜잭션으로 안전하게 처리 ---
         await prisma.$transaction(async (tx) => {
             // ✅ 폴더별 독립성을 위해 srsfolderitem만 삭제하고 전역 카드는 유지
-            const result = await tx.srsFolderItem.deleteMany({
+            const result = await tx.srsfolderitem.deleteMany({
                 where: { id: { in: folderItemIds } },
             });
             
@@ -1090,19 +1093,19 @@ router.delete('/folders/:id', async (req, res, next) => {
         const id = Number(req.params.id);
         if (!Number.isFinite(id)) return fail(res, 400, 'invalid id');
 
-        const exists = await prisma.srsFolder.findFirst({ where: { id, userId }, select: { id: true } });
+        const exists = await prisma.srsfolder.findFirst({ where: { id, userId }, select: { id: true } });
         if (!exists) return fail(res, 404, 'Folder not found');
 
         await prisma.$transaction(async (tx) => {
             // 폴더 아이템들 가져오기 (오답노트 정리를 위해)
-            const folderItems = await tx.srsFolderItem.findMany({
+            const srsfolderitem = await tx.srsfolderitem.findMany({
                 where: { folderId: id },
                 select: { vocabId: true }
             });
-            const vocabIds = folderItems.map(item => item.vocabId).filter(Boolean);
+            const vocabIds = srsfolderitem.map(item => item.vocabId).filter(Boolean);
             
             // 폴더 아이템들과 폴더 삭제
-            await tx.srsFolderItem.deleteMany({ where: { folderId: id } });
+            await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
             await tx.srsFolder.delete({ where: { id } });
             
             // ✅ 폴더별 독립성을 위해 오답노트 정리 로직 제거
@@ -1137,33 +1140,33 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
                 const childIds = children.map((c) => c.id);
                 const allFolderIds = [id, ...childIds];
                 
-                const folderItems = await tx.srsFolderItem.findMany({
+                const srsfolderitem = await tx.srsfolderitem.findMany({
                     where: { folderId: { in: allFolderIds } },
                     select: { vocabId: true }
                 });
-                const vocabIds = folderItems.map(item => item.vocabId).filter(Boolean);
+                const vocabIds = srsfolderitem.map(item => item.vocabId).filter(Boolean);
                 allVocabIds.push(...vocabIds);
                 
                 // 폴더 삭제
                 if (childIds.length) {
-                    await tx.srsFolderItem.deleteMany({ where: { folderId: { in: childIds } } });
+                    await tx.srsfolderitem.deleteMany({ where: { folderId: { in: childIds } } });
                     await tx.srsFolder.deleteMany({ where: { id: { in: childIds } } });
                 }
-                await tx.srsFolderItem.deleteMany({ where: { folderId: id } });
+                await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
                 await tx.srsFolder.delete({ where: { id } });
             }
             
             // 모든 삭제된 단어들에 대해 오답노트 정리
             if (allVocabIds.length > 0) {
                 const uniqueVocabIds = [...new Set(allVocabIds)];
-                const remainingSrsCards = await tx.sRSCard.findMany({
+                const remainingSrsCards = await tx.srscard.findMany({
                     where: {
                         userId: userId,
                         itemType: 'vocab',
                         itemId: { in: uniqueVocabIds },
-                        folderItems: {
+                        srsfolderitem: {
                             some: {
-                                folder: { userId: userId }
+                                srsfolder: { userId: userId }
                             }
                         }
                     },
@@ -1195,7 +1198,7 @@ router.post('/wrong-answers/cleanup', async (req, res, next) => {
         const userId = req.user.id;
         
         // 먼저 사용자의 SRS 폴더가 있는지 확인
-        const userSrsFolders = await prisma.srsFolder.findMany({
+        const userSrsFolders = await prisma.srsfolder.findMany({
             where: { userId: userId },
             select: { id: true, name: true }
         });
@@ -1204,7 +1207,7 @@ router.post('/wrong-answers/cleanup', async (req, res, next) => {
         
         if (userSrsFolders.length === 0) {
             // SRS 폴더가 없으면 모든 오답노트 삭제
-            const deletedCount = await prisma.wrongAnswer.deleteMany({
+            const deletedCount = await prisma.wronganswer.deleteMany({
                 where: { userId: userId }
             });
             
@@ -1216,13 +1219,13 @@ router.post('/wrong-answers/cleanup', async (req, res, next) => {
         }
         
         // SRS 폴더가 있으면 기존 로직 사용
-        const activeSrsCards = await prisma.sRSCard.findMany({
+        const activeSrsCards = await prisma.srscard.findMany({
             where: {
                 userId: userId,
                 itemType: 'vocab',
-                folderItems: {
+                srsfolderitem: {
                     some: {
-                        folder: { userId: userId }
+                        srsfolder: { userId: userId }
                     }
                 }
             },
@@ -1233,7 +1236,7 @@ router.post('/wrong-answers/cleanup', async (req, res, next) => {
         console.log(`[CLEANUP] Found ${activeVocabIds.size} active vocab IDs in SRS folders`);
         
         // 모든 오답노트 조회
-        const allWrongAnswers = await prisma.wrongAnswer.findMany({
+        const allWrongAnswers = await prisma.wronganswer.findMany({
             where: { userId: userId },
             select: { id: true, vocabId: true }
         });
@@ -1244,7 +1247,7 @@ router.post('/wrong-answers/cleanup', async (req, res, next) => {
         const orphanedWrongAnswers = allWrongAnswers.filter(wa => !activeVocabIds.has(wa.vocabId));
         
         if (orphanedWrongAnswers.length > 0) {
-            const deletedCount = await prisma.wrongAnswer.deleteMany({
+            const deletedCount = await prisma.wronganswer.deleteMany({
                 where: {
                     userId: userId,
                     vocabId: { in: orphanedWrongAnswers.map(wa => wa.vocabId) }
@@ -1275,7 +1278,7 @@ router.get('/folders/picker', async (req, res, next) => {
         const flatten = String(req.query.flatten || '').toLowerCase();
 
         if (flatten === 'sub') {
-            const subs = await prisma.srsFolder.findMany({
+            const subs = await prisma.srsfolder.findMany({
                 where: { userId, parentId: { not: null } },
                 orderBy: [{ date: 'desc' }, { id: 'desc' }],
                 select: { id: true, name: true, parentId: true, date: true }
@@ -1284,7 +1287,7 @@ router.get('/folders/picker', async (req, res, next) => {
         }
 
         // (기존 동작: 루트 등 목록)
-        const data = await prisma.srsFolder.findMany({
+        const data = await prisma.srsfolder.findMany({
             where: { userId },
             orderBy: [{ date: 'desc' }, { id: 'desc' }],
             select: { id: true, name: true, date: true, parentId: true, alarmActive: true }
@@ -1301,13 +1304,13 @@ router.get('/folders/:rootId/children-lite', auth, async (req, res, next) => {
         const userId = req.user.id;
         const rootId = Number(req.params.rootId);
 
-        const root = await prisma.srsFolder.findFirst({
+        const root = await prisma.srsfolder.findFirst({
             where: { id: rootId, userId, parentId: null },
             select: { id: true, date: true, kind: true }
         });
         if (!root) return res.status(404).json({ error: '루트 폴더 없음' });
 
-        const children = await prisma.srsFolder.findMany({
+        const children = await prisma.srsfolder.findMany({
             where: { userId, parentId: root.id, date: root.date, kind: root.kind },
             select: { id: true, name: true, scheduledOffset: true, nextAlarmAt: true },
             orderBy: [{ scheduledOffset: 'asc' }, { id: 'asc' }],
@@ -1315,7 +1318,7 @@ router.get('/folders/:rootId/children-lite', auth, async (req, res, next) => {
 
         const ids = children.map(c => c.id);
         const counts = ids.length
-            ? await prisma.srsFolderItem.groupBy({
+            ? await prisma.srsfolderitem.groupBy({
                 by: ['folderId'],
                 where: { folderId: { in: ids }, learned: false },
                 _count: { _all: true }
@@ -1351,7 +1354,7 @@ router.get('/queue', async (req, res) => {
             // 선택된 아이템이 있으면 해당 아이템만, 없으면 모든 아이템
             const whereCondition = { 
                 folderId, 
-                folder: { userId }
+                srsfolder: { userId }
             };
             
             // 선택된 아이템이 있으면 해당 아이템만 필터링 (folderItemId 기준)
@@ -1360,7 +1363,7 @@ router.get('/queue', async (req, res) => {
                 console.log(`[SRS QUEUE] Filtering to selected items: ${selectedItems.join(',')}`);
             }
             
-            const items = await prisma.srsFolderItem.findMany({
+            const items = await prisma.srsfolderitem.findMany({
                 where: whereCondition,
                 select: { 
                     id: true, 
@@ -1368,7 +1371,7 @@ router.get('/queue', async (req, res) => {
                     vocabId: true,
                     learned: true,
                     wrongCount: true,
-                    card: { 
+                    srscard: { 
                         select: { 
                             itemId: true, 
                             stage: true, 
@@ -1426,15 +1429,15 @@ router.get('/queue', async (req, res) => {
 
         // 레거시 큐 — 현재 활성 폴더에 속한 카드만
         const limit = Math.min(Number(req.query.limit || 20), 100);
-        const cards = await prisma.sRSCard.findMany({
+        const cards = await prisma.srscard.findMany({
             where: { 
                 userId, 
                 itemType: 'vocab', 
                 nextReviewAt: { lte: new Date() },
                 // 현재 어떤 폴더에든 속해있는 카드만
-                folderItems: {
+                srsfolderitem: {
                     some: {
-                        folder: {
+                        srsfolder: {
                             userId: userId
                         }
                     }
@@ -1460,7 +1463,7 @@ router.get('/queue', async (req, res) => {
 router.get('/dashboard', async (req, res) => {
     try {
         const userId = req.user.id;
-        const roots = await prisma.srsFolder.findMany({
+        const roots = await prisma.srsfolder.findMany({
             where: { userId, parentId: null },
             orderBy: [{ date: 'desc' }, { id: 'desc' }],
             include: { items: { select: { learned: true, wrongCount: true } } },
@@ -1494,7 +1497,7 @@ router.get('/quiz', async (req, res) => {
         const startOfDay = dayjs.tz(date, KST).startOf('day').toDate();
         const endOfDay = dayjs.tz(date, KST).endOf('day').toDate();
 
-        const cards = await prisma.sRSCard.findMany({
+        const cards = await prisma.srscard.findMany({
             where: { userId: req.user.id, itemType: 'vocab', nextReviewAt: { gte: startOfDay, lte: endOfDay } },
             select: { itemId: true },
         });
@@ -1509,7 +1512,7 @@ router.post('/create-many', async (req, res) => {
     if (!Array.isArray(vocabIds) || vocabIds.length === 0) return fail(res, 400, 'vocabIds must be non-empty');
     const userId = req.user.id;
 
-    const existing = await prisma.sRSCard.findMany({
+    const existing = await prisma.srscard.findMany({
         where: { userId, itemId: { in: vocabIds }, itemType: 'vocab' },
         select: { itemId: true },
     });
@@ -1521,20 +1524,20 @@ router.post('/create-many', async (req, res) => {
         .map((vocabId) => ({ userId, itemType: 'vocab', itemId: vocabId, stage: 0, nextReviewAt: new Date() }));
     if (!toCreate.length) return fail(res, 409, '이미 SRS에 추가된 단어입니다.');
 
-    const r = await prisma.sRSCard.createMany({ data: toCreate });
+    const r = await prisma.srscard.createMany({ data: toCreate });
     return ok(res, { count: r.count });
 });
 
 router.get('/all-cards', async (req, res) => {
     try {
-        const cards = await prisma.sRSCard.findMany({
+        const cards = await prisma.srscard.findMany({
             where: { userId: req.user.id, itemType: 'vocab' },
             select: { id: true, itemId: true, nextReviewAt: true, stage: true },
         });
         if (!cards.length) return ok(res, []);
 
         const vocabIds = cards.map((c) => c.itemId);
-        const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } }, include: { dictMeta: true } });
+        const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } }, include: { dictentry: true } });
         const map = new Map(vocabs.map((v) => [v.id, v]));
 
         const result = cards
@@ -1542,13 +1545,13 @@ router.get('/all-cards', async (req, res) => {
                 cardId: c.id,
                 vocabId: c.itemId,
                 lemma: map.get(c.itemId)?.lemma,
-                ko_gloss: Array.isArray(map.get(c.itemId)?.dictMeta?.examples)
-                    ? map.get(c.itemId).dictMeta.examples.find((ex) => ex?.kind === 'gloss')?.ko
+                ko_gloss: Array.isArray(map.get(c.itemId)?.dictentry?.examples)
+                    ? map.get(c.itemId).dictentry.examples.find((ex) => ex?.kind === 'gloss')?.ko
                     : null,
                 nextReviewAt: c.nextReviewAt,
                 stage: c.stage,
-                ipa: map.get(c.itemId)?.dictMeta?.ipa,
-                ipaKo: map.get(c.itemId)?.dictMeta?.ipaKo,
+                ipa: map.get(c.itemId)?.dictentry?.ipa,
+                ipaKo: map.get(c.itemId)?.dictentry?.ipaKo,
             }))
             .filter((x) => x.lemma);
 
@@ -1567,9 +1570,9 @@ router.post('/replace-deck', async (req, res) => {
     const unique = [...new Set(vocabIds.map(Number).filter(Boolean))];
     try {
         await prisma.$transaction(async (tx) => {
-            await tx.sRSCard.deleteMany({ where: { userId, itemType: 'vocab' } });
+            await tx.srscard.deleteMany({ where: { userId, itemType: 'vocab' } });
             if (unique.length) {
-                await tx.sRSCard.createMany({
+                await tx.srscard.createMany({
                     data: unique.map((id) => ({ userId, itemType: 'vocab', itemId: id, stage: 0, nextReviewAt: new Date() })),
                 });
             }
@@ -1641,7 +1644,7 @@ router.post('/folders/:id/enable-learning', async (req, res, next) => {
         const userId = req.user.id;
         const folderId = Number(req.params.id);
         
-        const folder = await prisma.srsFolder.findFirst({
+        const folder = await prisma.srsfolder.findFirst({
             where: { id: folderId, userId },
             include: { items: true }
         });
@@ -1651,7 +1654,7 @@ router.post('/folders/:id/enable-learning', async (req, res, next) => {
         }
         
         // 폴더를 학습 가능 상태로 설정하되, 복습일은 변경하지 않음
-        await prisma.srsFolder.update({
+        await prisma.srsfolder.update({
             where: { id: folderId },
             data: {
                 alarmActive: true, // 알림 활성화
@@ -1660,7 +1663,7 @@ router.post('/folders/:id/enable-learning', async (req, res, next) => {
         });
         
         // 모든 아이템을 미학습 상태로 리셋하여 다시 학습 가능하게 함
-        await prisma.srsFolderItem.updateMany({
+        await prisma.srsfolderitem.updateMany({
             where: { folderId: folderId },
             data: { learned: false }
         });
@@ -1698,7 +1701,7 @@ router.get('/wrong-answers', async (req, res, next) => {
         const includeCompleted = req.query.includeCompleted === 'true';
         
         // 실제 오답노트 데이터 조회
-        const wrongAnswers = await prisma.wrongAnswer.findMany({
+        const wrongAnswers = await prisma.wronganswer.findMany({
             where: {
                 userId,
                 isCompleted: includeCompleted ? undefined : false
@@ -1706,7 +1709,7 @@ router.get('/wrong-answers', async (req, res, next) => {
             include: {
                 vocab: {
                     include: {
-                        dictMeta: true
+                        dictentry: true
                     }
                 }
             },
@@ -1718,7 +1721,7 @@ router.get('/wrong-answers', async (req, res, next) => {
 
         // 해당 단어들의 SRS 카드 상태 정보도 함께 조회
         const vocabIds = wrongAnswers.map(wa => wa.vocabId);
-        const srsCards = vocabIds.length > 0 ? await prisma.sRSCard.findMany({
+        const srsCards = vocabIds.length > 0 ? await prisma.srscard.findMany({
             where: {
                 userId,
                 itemType: 'vocab',
@@ -1792,7 +1795,7 @@ router.get('/wrong-answers', async (req, res, next) => {
                     id: wa.vocab?.id || wa.vocabId,
                     lemma: wa.vocab?.lemma || 'Unknown',
                     pos: wa.vocab?.pos || 'unknown',
-                    dictMeta: wa.vocab?.dictMeta || null
+                    dictentry: wa.vocab?.dictentry || null
                 },
                 // SRS 카드 상태 정보 추가
                 srsCard: srsCard ? {
@@ -1873,6 +1876,34 @@ router.post('/wrong-answers/:vocabId/complete', async (req, res, next) => {
         return ok(res, { message: 'Wrong answer completed successfully' });
     } catch (e) {
         next(e);
+    }
+});
+
+// POST /srs/wrong-answers/delete-multiple — 오답노트 대량 삭제
+router.post('/wrong-answers/delete-multiple', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { wrongAnswerIds } = req.body;
+        
+        if (!Array.isArray(wrongAnswerIds) || wrongAnswerIds.length === 0) {
+            return fail(res, 400, 'wrongAnswerIds must be a non-empty array');
+        }
+        
+        // 사용자 소유 확인 후 삭제
+        const result = await prisma.wronganswer.deleteMany({
+            where: {
+                id: { in: wrongAnswerIds.map(Number) },
+                userId: userId
+            }
+        });
+        
+        return ok(res, { 
+            message: `${result.count}개 항목이 삭제되었습니다.`,
+            deletedCount: result.count
+        });
+    } catch (e) {
+        console.error('POST /srs/wrong-answers/delete-multiple failed:', e);
+        return fail(res, 500, 'Failed to delete wrong answers');
     }
 });
 

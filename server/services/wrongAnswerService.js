@@ -20,7 +20,7 @@ async function addWrongAnswer(userId, vocabId) {
   
   // 이미 같은 단어로 미완료된 오답노트가 있는지 확인
   console.log(`[WRONG ANSWER SERVICE] Checking for existing wrong answer`);
-  const existingWrongAnswer = await prisma.wrongAnswer.findFirst({
+  const existingWrongAnswer = await prisma.wronganswer.findFirst({
     where: {
       userId,
       vocabId,
@@ -32,7 +32,7 @@ async function addWrongAnswer(userId, vocabId) {
   if (existingWrongAnswer) {
     // 기존 항목의 attempts 증가하고 최신 정보로 업데이트
     console.log(`[WRONG ANSWER SERVICE] Updating existing wrong answer`);
-    return await prisma.wrongAnswer.update({
+    return await prisma.wronganswer.update({
       where: { id: existingWrongAnswer.id },
       data: {
         attempts: existingWrongAnswer.attempts + 1,
@@ -44,7 +44,7 @@ async function addWrongAnswer(userId, vocabId) {
       include: {
         vocab: {
           include: {
-            dictMeta: true
+            dictentry: true
           }
         }
       }
@@ -63,12 +63,12 @@ async function addWrongAnswer(userId, vocabId) {
   };
   console.log(`[WRONG ANSWER SERVICE] Create data:`, createData);
   
-  const created = await prisma.wrongAnswer.create({
+  const created = await prisma.wronganswer.create({
     data: createData,
     include: {
       vocab: {
         include: {
-          dictMeta: true
+          dictentry: true
         }
       }
     }
@@ -90,7 +90,7 @@ async function completeWrongAnswer(userId, vocabId) {
   const now = dayjs(getOffsetDate());
   
   // 현재 활성화된 복습 윈도우 내의 오답노트 찾기
-  const wrongAnswer = await prisma.wrongAnswer.findFirst({
+  const wrongAnswer = await prisma.wronganswer.findFirst({
     where: {
       userId,
       vocabId,
@@ -106,7 +106,7 @@ async function completeWrongAnswer(userId, vocabId) {
   }
   
   // 오답노트 완료 처리
-  await prisma.wrongAnswer.update({
+  await prisma.wronganswer.update({
     where: { id: wrongAnswer.id },
     data: {
       isCompleted: true,
@@ -131,7 +131,7 @@ async function getWrongAnswers(userId, includeCompleted = false) {
     const { getOffsetDate } = require('../routes/timeMachine');
     const now = dayjs(getOffsetDate());
     
-    const wrongAnswers = await prisma.wrongAnswer.findMany({
+    const wrongAnswers = await prisma.wronganswer.findMany({
       where: {
         userId,
         isCompleted: includeCompleted ? undefined : false
@@ -139,7 +139,7 @@ async function getWrongAnswers(userId, includeCompleted = false) {
       include: {
         vocab: {
           include: {
-            dictMeta: true
+            dictentry: true
           }
         }
       },
@@ -208,7 +208,7 @@ async function getAvailableWrongAnswersCount(userId) {
   const { getOffsetDate } = require('../routes/timeMachine');
   const now = dayjs(getOffsetDate());
   
-  const count = await prisma.wrongAnswer.count({
+  const count = await prisma.wronganswer.count({
     where: {
       userId,
       isCompleted: false,
@@ -228,7 +228,7 @@ async function getAvailableWrongAnswersCount(userId) {
 async function generateWrongAnswerQuiz(userId, limit = 10) {
   console.log(`[WRONG ANSWER QUIZ] Generating quiz for userId=${userId}, limit=${limit}`);
   
-  const wrongAnswers = await prisma.wrongAnswer.findMany({
+  const wrongAnswers = await prisma.wronganswer.findMany({
     where: {
       userId,
       isCompleted: false
@@ -237,7 +237,7 @@ async function generateWrongAnswerQuiz(userId, limit = 10) {
     include: {
       vocab: {
         include: {
-          dictMeta: true
+          dictentry: true
         }
       }
     },
@@ -253,9 +253,9 @@ async function generateWrongAnswerQuiz(userId, limit = 10) {
     vocabId: wa.vocab.id,
     lemma: wa.vocab.lemma,
     pos: wa.vocab.pos,
-    definition: wa.vocab.dictMeta?.examples?.[0]?.definition || '',
-    example: wa.vocab.dictMeta?.examples?.[0]?.example || '',
-    koGloss: wa.vocab.dictMeta?.examples?.[0]?.koGloss || '',
+    definition: wa.vocab.dictentry?.examples?.[0]?.definition || '',
+    example: wa.vocab.dictentry?.examples?.[0]?.example || '',
+    koGloss: wa.vocab.dictentry?.examples?.[0]?.koGloss || '',
     attempts: wa.attempts,
     wrongAt: wa.wrongAt,
     reviewWindowEnd: wa.reviewWindowEnd
@@ -274,7 +274,7 @@ async function cleanupExpiredReviewWindows() {
   const threeDaysAgo = dayjs(getOffsetDate()).subtract(3, 'day');
   
   // 3일 이상 지난 미완료 오답노트들을 완료 처리 또는 삭제
-  const expiredWrongAnswers = await prisma.wrongAnswer.updateMany({
+  const expiredWrongAnswers = await prisma.wronganswer.updateMany({
     where: {
       reviewWindowEnd: { lt: threeDaysAgo.toDate() },
       isCompleted: false

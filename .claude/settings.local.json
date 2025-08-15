@@ -25,7 +25,9 @@
       "Bash(git commit:*)",
       "mcp__ide__getDiagnostics",
       "Bash(npm test:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(rg:*)",
+      "Bash(del check_wrong_answers.js)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits"

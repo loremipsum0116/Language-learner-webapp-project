@@ -16,15 +16,15 @@ router.get('/', async (req, res) => {
             where.categoryId = parseInt(categoryId);
         }
 
-        const items = await prisma.userVocab.findMany({
+        const items = await prisma.uservocab.findMany({
             where,
-            include: { vocab: { include: { dictMeta: true } } },
+            include: { vocab: { include: { dictentry: true } } },
             orderBy: { createdAt: 'desc' }
         });
 
         // SRS 카드 정보를 별도로 조회
         const vocabIds = items.map(item => item.vocabId);
-        const srsCards = vocabIds.length > 0 ? await prisma.sRSCard.findMany({
+        const srsCards = vocabIds.length > 0 ? await prisma.srscard.findMany({
             where: {
                 userId: req.user.id,
                 itemType: 'vocab',
@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
 
         const processedItems = items.map(item => {
             if (!item.vocab) return item;
-            const examples = item.vocab.dictMeta?.examples || [];
+            const examples = item.vocab.dictentry?.examples || [];
             let gloss = null;
             if (examples[0]?.definitions?.[0]) {
                 gloss = examples[0].definitions[0].ko_def || null;
@@ -78,7 +78,7 @@ router.post('/add', async (req, res) => {
         const userId = req.user.id;
         const id = parseInt(vocabId);
 
-        const existing = await prisma.userVocab.findUnique({
+        const existing = await prisma.uservocab.findUnique({
             where: {
                 userId_vocabId: { userId, vocabId: id }
             }
@@ -88,7 +88,7 @@ router.post('/add', async (req, res) => {
             return res.status(200).json({ data: existing, meta: { already: true } });
         }
 
-        const newItem = await prisma.userVocab.create({
+        const newItem = await prisma.uservocab.create({
             data: { userId, vocabId: id }
         });
 
@@ -110,7 +110,7 @@ router.post('/add-many', async (req, res) => {
     const idsToProcess = vocabIds.map(Number).filter(id => !isNaN(id));
 
     try {
-        const existing = await prisma.userVocab.findMany({
+        const existing = await prisma.uservocab.findMany({
             where: { userId, vocabId: { in: idsToProcess } },
             select: { vocabId: true }
         });
@@ -121,7 +121,7 @@ router.post('/add-many', async (req, res) => {
             .map(vocabId => ({ userId, vocabId }));
 
         if (newData.length > 0) {
-            const result = await prisma.userVocab.createMany({ data: newData });
+            const result = await prisma.uservocab.createMany({ data: newData });
             return ok(res, { count: result.count });
         }
 
@@ -148,7 +148,7 @@ router.post('/remove-many', async (req, res) => {
     const idsToDelete = vocabIds.map(Number).filter(id => !isNaN(id));
 
     try {
-        const result = await prisma.userVocab.deleteMany({
+        const result = await prisma.uservocab.deleteMany({
             where: {
                 userId: userId,
                 vocabId: { in: idsToDelete }
