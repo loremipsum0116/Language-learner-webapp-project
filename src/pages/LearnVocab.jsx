@@ -85,6 +85,10 @@ export default function LearnVocab() {
     const [reviewQuiz, setReviewQuiz] = useState({ show: false, batch: [] });
     const [audioPlayCount, setAudioPlayCount] = useState(0);
     
+    // 깜짝 퀴즈 상태
+    const [surpriseQuiz, setSurpriseQuiz] = useState({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
+    const [studiedCards, setStudiedCards] = useState([]); // 이미 학습한 카드들 저장
+    
     // 설정 상태
     const [maxPlayCount, setMaxPlayCount] = useState(3);
     const [flipInterval, setFlipInterval] = useState(5000); // 5초 기본값
@@ -222,8 +226,11 @@ export default function LearnVocab() {
         const cur = current;
         if (!cur || !cur.vocab) return;
         const vocabData = cur.vocab;
-        setDetail(vocabData.dictMeta || {});
-        setPron({ ipa: vocabData.dictMeta?.ipa, ipaKo: vocabData.dictMeta?.ipaKo });
+        console.log('[DEBUG DETAIL] vocabData:', vocabData);
+        console.log('[DEBUG DETAIL] dictentry:', vocabData.dictentry);
+        console.log('[DEBUG DETAIL] dictMeta:', vocabData.dictMeta);
+        setDetail(vocabData.dictentry || vocabData.dictMeta || {});
+        setPron({ ipa: vocabData.dictentry?.ipa || vocabData.dictMeta?.ipa, ipaKo: vocabData.dictentry?.ipaKo || vocabData.dictMeta?.ipaKo });
     }, [current]);
 
     // ───────────────────── 자동재생/타이머 ─────────────────────
@@ -283,13 +290,53 @@ export default function LearnVocab() {
     const goToNextCard = () => {
         stopAudio();
         setAudioPlayCount(0); // Reset play count when manually advancing
+        
+        // 현재 카드를 학습 완료된 카드 목록에 추가
+        if (current) {
+            setStudiedCards(prev => [...prev, current]);
+        }
+        
         const nextIdx = idx + 1;
         const isFlashLike = (mode === 'flash' || !!idsParam);
-        const shouldTriggerQuiz = isFlashLike && queue.length >= 10 && nextIdx % 10 === 0 && nextIdx < queue.length;
-        if (shouldTriggerQuiz) {
-            const lastTenWords = queue.slice(nextIdx - 10, nextIdx);
-            const quizBatch = _.sampleSize(lastTenWords, 3);
-            setReviewQuiz({ show: true, batch: quizBatch });
+        const shouldTriggerSurpriseQuiz = isFlashLike && queue.length >= 11 && nextIdx % 10 === 0 && nextIdx < queue.length;
+        
+        if (shouldTriggerSurpriseQuiz) {
+            // 방금 학습한 10개 카드에서 랜덤으로 3개 선택 (새로 추가될 현재 카드 포함)
+            const allStudiedCards = [...studiedCards, current];
+            const lastTenCards = allStudiedCards.slice(-10);
+            const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
+            
+            // 깜짝 퀴즈 문제 생성
+            const quizQuestions = selectedCards.map(card => {
+                // 오답 선택지를 전체 큐에서 생성 (더 많은 선택지 확보)
+                const otherAnswers = queue
+                    .filter(q => q.vocabId !== card.vocabId)
+                    .map(q => q.answer);
+                
+                const wrongOptions = _.sampleSize(otherAnswers, 3);
+                
+                // 중복 제거 후 4개가 안 되면 기본 오답 추가
+                const uniqueOptions = _.uniq([card.answer, ...wrongOptions]);
+                while (uniqueOptions.length < 4) {
+                    uniqueOptions.push(`기타 선택지 ${uniqueOptions.length}`);
+                }
+                
+                const allOptions = _.shuffle(uniqueOptions.slice(0, 4));
+                
+                return {
+                    question: card.question,
+                    correctAnswer: card.answer,
+                    options: allOptions,
+                    vocabId: card.vocabId
+                };
+            });
+            
+            setSurpriseQuiz({ 
+                show: true, 
+                questions: quizQuestions, 
+                currentQ: 0, 
+                answers: [] 
+            });
         } else {
             setFlipped(false);
             setIdx(nextIdx);
@@ -301,6 +348,45 @@ export default function LearnVocab() {
         setFlipped(false);
         setAudioPlayCount(0); // Reset play count after quiz
         setIdx((i) => i + 1);
+    };
+
+    // 깜짝 퀴즈 핸들러
+    const handleSurpriseQuizAnswer = (selectedAnswer) => {
+        const currentQuestion = surpriseQuiz.questions[surpriseQuiz.currentQ];
+        const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
+        
+        // 피드백 표시
+        setSurpriseQuiz(prev => ({
+            ...prev,
+            showFeedback: true,
+            selectedAnswer: selectedAnswer
+        }));
+        
+        const newAnswers = [...surpriseQuiz.answers, {
+            question: currentQuestion.question,
+            selected: selectedAnswer,
+            correct: currentQuestion.correctAnswer,
+            isCorrect: isCorrect
+        }];
+
+        // 1.5초 후 다음 문제로 이동 또는 퀴즈 완료
+        setTimeout(() => {
+            if (surpriseQuiz.currentQ < surpriseQuiz.questions.length - 1) {
+                // 다음 문제로
+                setSurpriseQuiz(prev => ({
+                    ...prev,
+                    currentQ: prev.currentQ + 1,
+                    answers: newAnswers,
+                    showFeedback: false,
+                    selectedAnswer: null
+                }));
+            } else {
+                // 퀴즈 완료
+                setSurpriseQuiz({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
+                setFlipped(false);
+                setIdx(idx + 1); // 다음 카드로 이동
+            }
+        }, 1500);
     };
 
     // ───────────────────── 배치 모드 핸들러 ─────────────────────
@@ -412,6 +498,69 @@ export default function LearnVocab() {
     if (loading) return <main className="container py-4"><h4>학습 데이터 로딩 중…</h4></main>;
     if (err) return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
 
+    // 깜짝 퀴즈 렌더링
+    if (surpriseQuiz.show) {
+        const currentQ = surpriseQuiz.questions[surpriseQuiz.currentQ];
+        const isCorrect = surpriseQuiz.selectedAnswer === currentQ.correctAnswer;
+        
+        return (
+            <main className="container py-4" style={{ maxWidth: 720 }}>
+                <div className="card">
+                    <div className="card-header bg-warning text-dark">
+                        <h5 className="mb-0">🎯 깜짝 퀴즈! ({surpriseQuiz.currentQ + 1}/{surpriseQuiz.questions.length})</h5>
+                    </div>
+                    <div className="card-body text-center p-4">
+                        <h3 className="mb-4" lang="en">{currentQ.question}</h3>
+                        
+                        {surpriseQuiz.showFeedback && (
+                            <div className={`alert ${isCorrect ? 'alert-success' : 'alert-danger'} mb-4`}>
+                                <strong>{isCorrect ? '✅ 정답!' : '❌ 오답!'}</strong>
+                                {!isCorrect && (
+                                    <div className="mt-1">
+                                        정답: <strong>{currentQ.correctAnswer}</strong>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        
+                        <div className="d-grid gap-2">
+                            {currentQ.options.map((option, index) => {
+                                let btnClass = 'btn btn-outline-primary btn-lg text-start';
+                                
+                                if (surpriseQuiz.showFeedback) {
+                                    if (option === currentQ.correctAnswer) {
+                                        btnClass = 'btn btn-success btn-lg text-start';
+                                    } else if (option === surpriseQuiz.selectedAnswer && !isCorrect) {
+                                        btnClass = 'btn btn-danger btn-lg text-start';
+                                    } else {
+                                        btnClass = 'btn btn-secondary btn-lg text-start';
+                                    }
+                                }
+                                
+                                return (
+                                    <button
+                                        key={index}
+                                        className={btnClass}
+                                        onClick={() => !surpriseQuiz.showFeedback && handleSurpriseQuizAnswer(option)}
+                                        disabled={surpriseQuiz.showFeedback}
+                                    >
+                                        {option}
+                                    </button>
+                                );
+                            })}
+                        </div>
+                        
+                        {!surpriseQuiz.showFeedback && (
+                            <div className="mt-3 text-muted small">
+                                방금 학습한 단어들 중에서 출제됩니다
+                            </div>
+                        )}
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
     if (reviewQuiz.show) {
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
@@ -476,23 +625,49 @@ export default function LearnVocab() {
                         <div className="card-body text-center p-5" style={{ minHeight: '300px', cursor: 'pointer' }} onClick={() => setFlipped(f => !f)}>
                             {!flipped ? (
                                 <>
-                                    <h2 className="display-4">{current.question}</h2>
+                                    <div className="d-flex justify-content-center gap-2 mb-2">
+                                        {(current.pos || '').split(',').map((t) => t.trim()).filter((t) => t && t !== 'unk')
+                                            .map((t) => <span key={t} className={`badge ${getPosBadgeColor(t)}`}>{t}</span>)}
+                                    </div>
                                     <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
+                                    <h2 className="display-4">{current.question}</h2>
                                 </>
                             ) : (
                                 <>
                                     <h3 className="display-5 text-primary">{current.answer}</h3>
-                                    {Array.isArray(current.examples) && current.examples.length > 0 && (
-                                        <div className="mt-4 p-3 bg-light rounded w-100 text-start">
-                                            <h6 className="fw-bold">예문</h6>
-                                            {current.examples.map((ex, index) => (
-                                                <div key={index} className="mt-2">
-                                                    <p className="mb-0" lang="en">{ex.de}</p>
-                                                    <small className="text-muted">— {ex.ko}</small>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    )}
+{/* 예문 표시 - 배치 모드에서도 동일한 로직 사용 */}
+                                    {(() => {
+                                        const examples = current.vocab?.dictentry?.examples || [];
+                                        
+                                        // 예문 구조 파싱
+                                        let displayExamples = [];
+                                        
+                                        for (const ex of examples) {
+                                            if (ex.definitions) {
+                                                for (const def of ex.definitions) {
+                                                    if (def.examples && Array.isArray(def.examples)) {
+                                                        displayExamples.push(...def.examples.slice(0, 2));
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            if (displayExamples.length > 0) break;
+                                        }
+                                        
+                                        if (displayExamples.length === 0) return null;
+                                        
+                                        return (
+                                            <div className="mt-4 p-3 bg-light rounded w-100 text-start">
+                                                <h6 className="fw-bold">예문</h6>
+                                                {displayExamples.map((example, index) => (
+                                                    <div key={index} className="mt-2">
+                                                        <p className="mb-0" lang="en">{example.en}</p>
+                                                        <small className="text-muted">— {example.ko}</small>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        );
+                                    })()}
                                 </>
                             )}
                         </div>
@@ -624,8 +799,8 @@ export default function LearnVocab() {
                                     {(current.pos || '').split(',').map((t) => t.trim()).filter((t) => t && t !== 'unk')
                                         .map((t) => <span key={t} className={`badge ${getPosBadgeColor(t)}`}>{t}</span>)}
                                 </div>
-                                <h2 className="display-5 mb-3" lang="en">{current.question}</h2>
                                 <Pron ipa={current.pron?.ipa || currentPron?.ipa} ipaKo={current.pron?.ipaKo || currentPron?.ipaKo} />
+                                <h2 className="display-5 mb-3" lang="en">{current.question}</h2>
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻이 표시됩니다.</div>
                             </>
                         ) : (
