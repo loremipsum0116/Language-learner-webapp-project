@@ -218,7 +218,13 @@ export default function SrsFolderDetail() {
                     </small>
                 </div>
                 <div className="d-flex gap-2">
-                    <Link className="btn btn-outline-secondary btn-sm" to="/srs">← 대시보드</Link>
+                    {folder.parentId ? (
+                        <Link className="btn btn-outline-secondary btn-sm" to={`/srs/parent/${folder.parentId}`}>
+                            ← 상위폴더로
+                        </Link>
+                    ) : (
+                        <Link className="btn btn-outline-secondary btn-sm" to="/srs">← 대시보드</Link>
+                    )}
                     <Link 
                         className="btn btn-primary btn-sm" 
                         to={`/learn/vocab?mode=srs_folder&folderId=${folder.id}${

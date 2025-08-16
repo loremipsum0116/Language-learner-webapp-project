@@ -27,9 +27,13 @@
       "Bash(npm test:*)",
       "Bash(npx tsc:*)",
       "Bash(rg:*)",
-      "Bash(del check_wrong_answers.js)"
+      "Bash(del check_wrong_answers.js)",
+      "Bash(cd:*)"
     ],
     "deny": [],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "C:\\d C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project"
+    ]
   }
 }

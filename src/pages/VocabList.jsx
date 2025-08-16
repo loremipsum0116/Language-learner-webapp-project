@@ -5,9 +5,8 @@ import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
-import SrsFolderPickerModal from '../components/SrsFolderPickerModal';
 import { SrsApi } from '../api/srs';
-import FlatFolderPickerModal from '../components/FlatFolderPickerModal';
+import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
 import RainbowStar from '../components/RainbowStar';
 
 // Helper functions (no changes)
@@ -516,7 +515,7 @@ export default function VocabList() {
                 </div>
             )}
             {pickerOpen && (
-                <FlatFolderPickerModal
+                <HierarchicalFolderPickerModal
                     show={pickerOpen}
                     onClose={() => { setPickerOpen(false); setPickerIds([]); }}
                     onPick={async (folder) => {

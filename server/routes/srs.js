@@ -267,7 +267,7 @@ router.get('/mastery-stats', async (req, res, next) => {
 });
 
 // srs.js 상단 router 선언 직후에 추가
-const FLAT_MODE = true;
+const FLAT_MODE = false; // 3단계 구조 활성화
 if (FLAT_MODE) {
     // 하위폴더 읽기: 항상 빈 목록
     router.get('/folders/:id/children', (req, res) => ok(res, []));
@@ -295,56 +295,114 @@ const { STAGE_DELAYS, computeNextReviewDate, isFinalStage } = require('../servic
 // 폴더 API
 // ────────────────────────────────────────────────────────────
 
-// (NEW) POST /srs/folders — Create a new manual learning folder
+// (NEW) POST /srs/folders — Create a new manual learning folder (3단계 구조 지원)
 router.post('/folders', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const { name, vocabIds = [] } = req.body;
+        const { name, vocabIds = [], parentId = null } = req.body;
         if (!name || typeof name !== 'string' || name.trim().length === 0) {
             return fail(res, 400, 'A valid name is required.');
         }
 
-        const folder = await createManualFolder(userId, name.trim(), vocabIds);
+        // parentId가 있으면 해당 부모 폴더의 소유권 확인
+        if (parentId) {
+            const parent = await prisma.srsfolder.findFirst({
+                where: { id: parentId, userId },
+                select: { id: true, date: true, kind: true }
+            });
+            if (!parent) {
+                return fail(res, 404, 'Parent folder not found.');
+            }
+            
+            // 하위 폴더 생성 시 부모의 설정 상속
+            const uniqueKind = `custom:${parentId}:${Date.now()}`;
+            const folder = await prisma.srsfolder.create({
+                data: {
+                    userId,
+                    parentId,
+                    name: name.trim(),
+                    date: parent.date,
+                    createdDate: parent.date || new Date(),
+                    kind: uniqueKind,
+                    stage: 0,
+                    nextReviewDate: parent.date,
+                    alarmActive: true,
+                    updatedAt: new Date(),
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    parentId: true,
+                    stage: true,
+                    kind: true,
+                    createdDate: true,
+                    alarmActive: true
+                }
+            });
 
-        return ok(res, {
-            id: folder.id,
-            name: folder.name,
-            stage: folder.stage,
-            kind: folder.kind,
-            createdDate: folder.createdDate,
-            alarmActive: folder.alarmActive
-        });
+            return ok(res, folder);
+        } else {
+            // 최상위 폴더 생성 (기존 로직)
+            const folder = await createManualFolder(userId, name.trim(), vocabIds);
+
+            return ok(res, {
+                id: folder.id,
+                name: folder.name,
+                parentId: null,
+                stage: folder.stage,
+                kind: folder.kind,
+                createdDate: folder.createdDate,
+                alarmActive: folder.alarmActive
+            });
+        }
     } catch (e) {
         if (e.code === 'P2002') return fail(res, 409, 'A folder with this name already exists.');
         next(e);
     }
 });
 
-// (MODIFIED) GET /srs/dashboard — Fetch all folders, sorted by due date
+// (MODIFIED) GET /srs/dashboard — Fetch all folders, sorted by due date (3단계 구조 지원)
 router.get('/dashboard', async (req, res, next) => {
     try {
         const userId = req.user.id;
         const folders = await prisma.srsfolder.findMany({
             where: { userId },
             select: {
-                id: true, name: true,
-                createdDate: true,        // ★ 추가
-                nextReviewDate: true,     // ★ 추가
+                id: true, name: true, parentId: true,
+                createdDate: true,        
+                nextReviewDate: true,     
                 stage: true, alarmActive: true,
                 _count: { select: { srsfolderitem: true } },
             },
-            orderBy: [{ nextReviewDate: 'asc' }, { id: 'asc' }],
+            orderBy: [
+                { parentId: 'asc' },      // 최상위 폴더가 먼저
+                { nextReviewDate: 'asc' }, 
+                { id: 'asc' }
+            ],
         });
 
-        const data = folders.map(f => ({
-            id: f.id,
-            name: f.name,
-            createdDate: f.createdDate,      // ★ 추가
-            nextReviewDate: f.nextReviewDate,
-            stage: f.stage,
-            alarmActive: f.alarmActive,
-            total: f._count.srsfolderitem,
-        }));
+        // 상위폴더만 반환 (하위폴더는 별도 API에서 처리)
+        const topLevelFolders = folders.filter(f => f.parentId === null);
+        const subFolders = folders.filter(f => f.parentId !== null);
+        
+        const data = topLevelFolders.map(topFolder => {
+            const children = subFolders.filter(sub => sub.parentId === topFolder.id);
+            const totalItems = children.reduce((sum, child) => sum + child._count.srsfolderitem, 0);
+            
+            return {
+                id: topFolder.id,
+                name: topFolder.name,
+                parentId: null,
+                createdDate: topFolder.createdDate,
+                nextReviewDate: topFolder.nextReviewDate,
+                stage: topFolder.stage,
+                alarmActive: topFolder.alarmActive,
+                total: totalItems, // 상위폴더 자체 카드는 0, 하위폴더들의 카드 합계만
+                hasChildren: children.length > 0,
+                childrenCount: children.length,
+                type: 'parent' // 상위폴더 표시
+            };
+        });
         
         console.log('[SRS DASHBOARD] Response data:', JSON.stringify(data, null, 2));
 
@@ -676,7 +734,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
         const folder = await prisma.srsfolder.findFirst({
             where: { id, userId },
             select: {
-                id: true, name: true,
+                id: true, name: true, parentId: true,
                 createdDate: true,        // ★
                 nextReviewDate: true,     // ★
                 stage: true, alarmActive: true,
@@ -845,56 +903,51 @@ router.get('/folders/:id/items', async (req, res, next) => {
 
 
 
-// GET /srs/folders/:id/children  → 루트 + 하위 폴더 요약
+// GET /srs/folders/:id/children  → 상위폴더의 하위폴더 목록
 router.get('/folders/:id/children', async (req, res, next) => {
     try {
         const userId = req.user.id;
         const id = Number(req.params.id);
 
-        const root = await prisma.srsfolder.findFirst({
+        // 상위폴더 확인 (parentId가 null인 폴더)
+        const parentFolder = await prisma.srsfolder.findFirst({
             where: { id, userId, parentId: null },
-            select: { id: true, name: true, date: true, alarmActive: true },
+            select: { id: true, name: true, createdDate: true, date: true, alarmActive: true },
         });
-        if (!root) return fail(res, 404, 'root not found');
+        if (!parentFolder) return fail(res, 404, 'Parent folder not found');
 
-        // 1. 하위 폴더와 그 안의 아이템, 카드 정보까지 모두 조회합니다.
+        // 하위 폴더들 조회
         const children = await prisma.srsfolder.findMany({
             where: { userId, parentId: id },
-
-            include: {
-                items: {
-                    include: {
-                        // ✅ card와 그 안의 vocabId(itemId)까지 포함합니다.
-                        srscard: { select: { itemId: true } }
-                    }
-                }
+            select: {
+                id: true,
+                name: true,
+                createdDate: true,
+                nextReviewDate: true,
+                stage: true,
+                alarmActive: true,
+                _count: { select: { srsfolderitem: true } }
             },
-            orderBy: { id: 'asc' },
+            orderBy: [{ id: 'asc' }],
         });
 
-
-        // 2. 모든 하위 폴더에서 필요한 vocabId를 중복 없이 추출합니다.
-        const vocabIds = [...new Set(
-            children.flatMap(c => c.items.map(i => i.srscard.itemId))
-        )];
-        // 3. 추출한 ID로 Vocab 테이블에서 단어 정보를 한 번에 조회합니다.
-        const vocabs = vocabIds.length > 0
-            ? await prisma.vocab.findMany({ where: { id: { in: vocabIds } } })
-            : [];
-        const vocabMap = new Map(vocabs.map(v => [v.id, v]));
-
-        // 4. 최종적으로 각 하위 폴더 정보에 상세한 카드(단어) 목록을 추가합니다.
         const mapped = children.map((c) => ({
             id: c.id,
             name: c.name,
-            total: c.items.length,
-            completed: c.items.filter((i) => i.learned).length,
-            incorrect: c.items.filter((i) => (i.wrongCount ?? 0) > 0).length,
-            // ✅ 각 아이템에 `vocab` 상세 정보를 매핑하여 추가합니다.
-            items: c.items.map(item => ({ ...item, vocab: vocabMap.get(item.srscard.itemId) || null })),
+            parentId: id,
+            createdDate: c.createdDate,
+            nextReviewDate: c.nextReviewDate,
+            stage: c.stage,
+            alarmActive: c.alarmActive,
+            total: c._count.srsfolderitem,
+            type: 'child' // 하위폴더 표시
         }));
 
-        return ok(res, { root, children: mapped });
+        return ok(res, { 
+            parentFolder, 
+            children: mapped,
+            canAddCards: false // 상위폴더에는 카드 추가 불가
+        });
     } catch (e) { next(e); }
 });
 
@@ -977,6 +1030,13 @@ router.post('/folders/:folderId/items', auth, async (req, res, next) => {
             select: { id: true, date: true, kind: true, parentId: true },
         });
         if (!folder) return res.status(404).json({ error: 'folder not found' });
+
+        // 3단계 구조 강제: 상위폴더(parentId가 null)에는 직접 카드 추가 금지
+        if (folder.parentId === null) {
+            return res.status(400).json({ 
+                error: '상위 폴더에는 직접 카드를 추가할 수 없습니다. 먼저 하위 폴더를 만든 후 카드를 추가해주세요.' 
+            });
+        }
 
         const result = await prisma.$transaction(async (tx) => {
             const added = [];

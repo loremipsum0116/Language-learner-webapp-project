@@ -77,7 +77,7 @@ export default function SrsDashboard() {
             await fetchJSON("/srs/folders", withCreds({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name }),
+                body: JSON.stringify({ name, parentId: null }), // 최상위 폴더 생성
             }));
             setNewFolderName("");
             await reload();
@@ -100,6 +100,7 @@ export default function SrsDashboard() {
             alert(`알림 상태 변경 실패: ${e.message || "Unknown error"}`);
         }
     };
+
 
     const restartMasteredFolder = async (folder) => {
         if (!window.confirm(`${folder.name}을 새로운 120일 사이클로 재시작하시겠습니까?\n\n모든 단어가 미학습 상태로 리셋되고 Stage 0부터 다시 시작합니다.`)) return;
@@ -263,89 +264,104 @@ export default function SrsDashboard() {
             {loading ? <div className="spinner-border" /> : (
                 <div className="list-group">
                     {folders.map(f => (
-                        <Link
-                            to={`/srs/folder/${f.id}`}
-                            key={f.id}
-                            className="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                        >
-                            <div>
-                                <h5 className={`mb-1 ${f.isDue && !f.isMastered ? "text-primary" : ""}`}>
-                                    {f.name}
-                                    {f.kind === 'manual' && !f.isMastered && <span className="badge bg-secondary ms-2">수동</span>}
-                                    {f.kind === 'review' && !f.isMastered && <span className="badge bg-info ms-2">복습</span>}
-                                    {f.isMastered && <span className="badge bg-warning text-dark ms-2">🏆 마스터</span>}
-                                    {f.isCompleted && !f.isMastered && <span className="badge bg-success ms-2">완료</span>}
-                                </h5>
-                                <small>
-                                    생성일: <strong>{fmt(f.createdDate ?? f.createdAt ?? f.date ?? null)}</strong>
-                                    <span className="mx-2">|</span>
-                                    {f.isMastered ? (
+                        <div key={f.id} className="border rounded mb-2">
+                            {/* 최상위 폴더 */}
+                            <div className="list-group-item d-flex justify-content-between align-items-center">
+                                <div className="flex-grow-1">
+                                    <div className="d-flex align-items-center">
+                                        <Link
+                                            to={f.type === 'parent' ? `/srs/parent/${f.id}` : `/srs/folder/${f.id}`}
+                                            className="text-decoration-none flex-grow-1"
+                                        >
+                                            <h5 className={`mb-1 ${f.isDue && !f.isMastered ? "text-primary" : ""}`}>
+                                                📁 {f.name}
+                                                {f.type === 'parent' && <span className="badge bg-primary ms-2">상위폴더</span>}
+                                                {f.kind === 'manual' && !f.isMastered && !f.type && <span className="badge bg-secondary ms-2">수동</span>}
+                                                {f.kind === 'review' && !f.isMastered && !f.type && <span className="badge bg-info ms-2">복습</span>}
+                                                {f.isMastered && <span className="badge bg-warning text-dark ms-2">🏆 마스터</span>}
+                                                {f.isCompleted && !f.isMastered && <span className="badge bg-success ms-2">완료</span>}
+                                            </h5>
+                                            <small>
+                                                생성일: <strong>{fmt(f.createdDate ?? f.createdAt ?? f.date ?? null)}</strong>
+                                                <span className="mx-2">|</span>
+                                                {f.type === 'parent' ? (
+                                                    <>
+                                                        하위폴더 <strong>{f.childrenCount || 0}개</strong>
+                                                        <span className="mx-2">|</span>
+                                                        총 카드 <strong>{f.total ?? 0}개</strong>
+                                                    </>
+                                                ) : f.isMastered ? (
+                                                    <>
+                                                        <strong className="text-warning">🏆 {f.completionCount || 1}회차 마스터 완료</strong>
+                                                        <span className="mx-2">|</span>
+                                                        <span className="text-muted">알림 비활성화</span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        {f.kind === 'manual' && !f.isCompleted ? 
+                                                            <strong className="text-primary">학습 중</strong> :
+                                                            f.isDue
+                                                                ? <strong className="text-success">오늘 복습!</strong>
+                                                                : (
+                                                                    <>
+                                                                        다음 복습: <strong>{fmt(f.nextReviewDate)}</strong>
+                                                                        <br />
+                                                                        <ReviewTimer 
+                                                                            nextReviewAt={f.nextReviewDate}
+                                                                            className="small"
+                                                                        />
+                                                                    </>
+                                                                )}
+                                                        <span className="mx-2">|</span>
+                                                        Stage {f.stage}
+                                                        <span className="mx-2">|</span>
+                                                        카드 {f.total ?? 0}개
+                                                    </>
+                                                )}
+                                                {f.counts && (
+                                                    <>
+                                                        <span className="mx-2">|</span>
+                                                        <span className="text-success">완료 {f.counts.learned}</span> / 
+                                                        <span className="text-warning"> 남은 {f.counts.remaining}</span>
+                                                    </>
+                                                )}
+                                            </small>
+                                        </Link>
+                                    </div>
+                                </div>
+                                <div className="d-flex align-items-center gap-2">
+                                    {f.type === 'parent' ? (
+                                        <span className="text-muted small">하위폴더에서 카드 관리</span>
+                                    ) : f.isMastered ? (
                                         <>
-                                            <strong className="text-warning">🏆 {f.completionCount || 1}회차 마스터 완료</strong>
-                                            <span className="mx-2">|</span>
-                                            <span className="text-muted">알림 비활성화</span>
+                                            <button
+                                                className="btn btn-sm btn-warning"
+                                                onClick={(e) => { e.preventDefault(); restartMasteredFolder(f); }}
+                                                title="새로운 120일 사이클 재시작"
+                                            >
+                                                🔄 재시작
+                                            </button>
+                                            <span className="text-muted small">🔕 알림 OFF</span>
                                         </>
                                     ) : (
-                                        <>
-                                            {f.kind === 'manual' && !f.isCompleted ? 
-                                                <strong className="text-primary">학습 중</strong> :
-                                                f.isDue
-                                                    ? <strong className="text-success">오늘 복습!</strong>
-                                                    : (
-                                                        <>
-                                                            다음 복습: <strong>{fmt(f.nextReviewDate)}</strong>
-                                                            <br />
-                                                            <ReviewTimer 
-                                                                nextReviewAt={f.nextReviewDate}
-                                                                className="small"
-                                                            />
-                                                        </>
-                                                    )}
-                                            <span className="mx-2">|</span>
-                                            Stage {f.stage}
-                                        </>
-                                    )}
-                                    <span className="mx-2">|</span>
-                                    카드 {f.total ?? 0}개
-                                    {f.counts && (
-                                        <>
-                                            <span className="mx-2">|</span>
-                                            <span className="text-success">완료 {f.counts.learned}</span> / 
-                                            <span className="text-warning"> 남은 {f.counts.remaining}</span>
-                                        </>
-                                    )}
-                                </small>
-                            </div>
-                            <div className="d-flex align-items-center gap-2">
-                                {f.isMastered ? (
-                                    <>
                                         <button
-                                            className="btn btn-sm btn-warning"
-                                            onClick={(e) => { e.preventDefault(); restartMasteredFolder(f); }}
-                                            title="새로운 120일 사이클 재시작"
+                                            className="btn btn-sm"
+                                            onClick={(e) => { e.preventDefault(); toggleAlarm(f); }}
+                                            title={f.alarmActive ? "알림 끄기" : "알림 켜기 (stage 0 초기화)"}
                                         >
-                                            🔄 재시작
+                                            {f.alarmActive ? "🔔" : "🔕"}
                                         </button>
-                                        <span className="text-muted small">🔕 알림 OFF</span>
-                                    </>
-                                ) : (
+                                    )}
                                     <button
-                                        className="btn btn-sm"
-                                        onClick={(e) => { e.preventDefault(); toggleAlarm(f); }}
-                                        title={f.alarmActive ? "알림 끄기" : "알림 켜기 (stage 0 초기화)"}
+                                        className="btn btn-sm btn-outline-danger"
+                                        title="폴더 삭제"
+                                        onClick={(e) => deleteFolderSafely(e, f.id, reload)}
                                     >
-                                        {f.alarmActive ? "🔔" : "🔕"}
+                                        🗑️
                                     </button>
-                                )}
-                                <button
-                                    className="btn btn-sm btn-outline-danger"
-                                    title="폴더 삭제"
-                                    onClick={(e) => deleteFolderSafely(e, f.id, reload)}
-                                >
-                                    🗑️
-                                </button>
+                                </div>
                             </div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             )}

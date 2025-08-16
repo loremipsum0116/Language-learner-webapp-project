@@ -22,6 +22,7 @@ import GrammarQuiz from './pages/GrammarQuiz';
 import SrsDashboard from "./pages/SrsDashboard";
 import SrsQuiz from "./pages/SrsQuiz";
 import SrsFolderDetail from './pages/SrsFolderDetail';
+import SrsParentFolder from './pages/SrsParentFolder';
 import WrongAnswers from "./pages/WrongAnswers";
 import WrongAnswerQuiz from "./pages/WrongAnswerQuiz";
 import TimeMachine from "./components/TimeMachine";
@@ -54,6 +55,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/my-wordbook" element={<MyWordbook />} />
           <Route path="/srs/folder/:id" element={<SrsFolderDetail />} />
+          <Route path="/srs/parent/:id" element={<SrsParentFolder />} />
           {/* SRS 관련 라우트 추가 */}
           <Route path="/srs" element={<SrsDashboard />} />
           <Route path="/srs/quiz" element={<SrsQuiz />} />

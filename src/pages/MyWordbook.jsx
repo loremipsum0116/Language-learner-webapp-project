@@ -5,7 +5,7 @@ import { fetchJSON, withCreds, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import { useAuth } from '../context/AuthContext'; // ★ AuthContext에서 useAuth 임포트
-import FlatFolderPickerModal from '../components/FlatFolderPickerModal';
+import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
 import * as SrsApi from '../api/srs';
 import RainbowStar from '../components/RainbowStar';
 
@@ -505,7 +505,7 @@ export default function MyWordbook() {
 
             {/* SRS 폴더 선택 모달 */}
             {pickerOpen && (
-                <FlatFolderPickerModal
+                <HierarchicalFolderPickerModal
                     show={pickerOpen}
                     onClose={() => { setPickerOpen(false); setPickerIds([]); }}
                     onPick={async (folder) => {
