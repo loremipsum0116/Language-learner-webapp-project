@@ -946,17 +946,12 @@ router.get('/folders/:id/children', async (req, res, next) => {
                 const items = await prisma.srsfolderitem.findMany({
                     where: { folderId: childId },
                     select: {
+                        isOverdue: true,
                         learned: true,
                         wrongCount: true,
-                        lastReviewedAt: true,
-                        srscard: {
-                            select: {
-                                isOverdue: true,
-                                frozenUntil: true,
-                                stage: true,
-                                isMastered: true
-                            }
-                        }
+                        frozenUntil: true,
+                        stage: true,
+                        isMastered: true
                     }
                 });
                 
@@ -969,18 +964,18 @@ router.get('/folders/:id/children', async (req, res, next) => {
                 
                 items.forEach(item => {
                     // 동결 상태 체크 (최우선)
-                    if (item.srscard.frozenUntil && new Date(item.srscard.frozenUntil) > now) {
+                    if (item.frozenUntil && new Date(item.frozenUntil) > now) {
                         frozen++;
                         return;
                     }
                     
-                    if (item.srscard.isOverdue) {
+                    if (item.isOverdue) {
                         reviewWaiting++; // 복습 대기중
                     } else if (item.learned) {
                         // 정답 상태는 따로 카운트하지 않음
                     } else if (item.wrongCount > 0) {
                         wrongAnswers++; // 오답 대기중
-                    } else if (item.srscard.stage > 0 && !item.srscard.isMastered) {
+                    } else if (item.stage > 0 && !item.isMastered) {
                         stageWaiting++; // Stage 대기중
                     } else {
                         learningWaiting++; // 미학습
@@ -1007,13 +1002,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
             alarmActive: c.alarmActive,
             learningCurveType: c.learningCurveType,
             total: c._count.srsfolderitem,
-            type: 'child', // 하위폴더 표시
-            // 상태별 카드 개수 추가
-            reviewWaiting: childStats[c.id]?.reviewWaiting || 0,
-            learningWaiting: childStats[c.id]?.learningWaiting || 0,
-            wrongAnswers: childStats[c.id]?.wrongAnswers || 0,
-            frozen: childStats[c.id]?.frozen || 0,
-            stageWaiting: childStats[c.id]?.stageWaiting || 0
+            type: 'child', // 하위폴더 표시\n            // 상태별 카드 개수 추가\n            reviewWaiting: childStats[c.id]?.reviewWaiting || 0,\n            learningWaiting: childStats[c.id]?.learningWaiting || 0,\n            wrongAnswers: childStats[c.id]?.wrongAnswers || 0,\n            frozen: childStats[c.id]?.frozen || 0,\n            stageWaiting: childStats[c.id]?.stageWaiting || 0
         }));
 
         return ok(res, { 

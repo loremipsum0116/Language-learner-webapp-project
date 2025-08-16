@@ -41,30 +41,52 @@ function getAcceleratedDateTime(baseDate = new Date(), originalMs) {
  * @returns {number} - 가속된 대기시간 (밀리초)
  */
 function getAcceleratedStageWaitTime(stage, learningCurveType = "long") {
-    let originalDays = 0;
-    
-    if (learningCurveType === "short") {
-        // 단기 스퍼트 곡선: 모든 단계에서 2일
-        if (stage >= 1 && stage <= 10) {
-            originalDays = 2;
+    try {
+        // srsSchedule.js의 계산 함수를 사용하여 정확한 대기시간 가져오기
+        const { computeWaitingPeriod } = require('../services/srsSchedule');
+        const originalHours = computeWaitingPeriod(stage, learningCurveType);
+        const originalMs = originalHours * 60 * 60 * 1000;
+        return getAcceleratedTime(originalMs);
+    } catch (e) {
+        console.error('[TIME ACCELERATOR] Failed to get waiting period from srsSchedule:', e);
+        
+        // 폴백: 기존 로직 사용
+        let originalDays = 0;
+        
+        if (learningCurveType === "short") {
+            // 단기 스퍼트 곡선: [1시간, 24h, 48h, 48h, ...]
+            const SHORT_CURVE_HOURS = [1, 24, 48, 48, 48, 48, 48, 48, 48, 48];
+            const originalHours = SHORT_CURVE_HOURS[stage - 1] || 48;
+            return getAcceleratedTime(originalHours * 60 * 60 * 1000);
+        } else {
+            // 장기 학습 곡선: [1시간, 24h, 144h, 312h, 696h, 1056h]
+            const LONG_CURVE_HOURS = [1, 24, 144, 312, 696, 1056];
+            const originalHours = LONG_CURVE_HOURS[stage - 1] || 1056;
+            return getAcceleratedTime(originalHours * 60 * 60 * 1000);
         }
-    } else {
-        // 장기 학습 곡선: 기존 망각 곡선 (하루씩 차감된 버전)
-        const LONG_CURVE_DAYS = [0, 2, 6, 13, 29, 59, 119]; // Stage 0-6
-        originalDays = LONG_CURVE_DAYS[stage] || 0;
     }
-    
-    const originalMs = originalDays * 24 * 60 * 60 * 1000;
-    return getAcceleratedTime(originalMs);
 }
 
 /**
- * 24시간을 가속 적용하여 계산 (오답 대기, overdue 데드라인 등)
+ * 24시간을 가속 적용하여 계산 (overdue 데드라인 등)
  * @returns {number} - 가속된 24시간 (밀리초)
  */
 function getAccelerated24Hours() {
     const original24h = 24 * 60 * 60 * 1000;
     return getAcceleratedTime(original24h);
+}
+
+/**
+ * 오답 대기시간을 가속 적용하여 계산
+ * stage0에서만 1시간, 이외는 24시간
+ * @param {number} currentStage - 현재 카드의 stage
+ * @returns {number} - 가속된 오답 대기시간 (밀리초)
+ */
+function getAcceleratedWrongAnswerWaitTime(currentStage = 0) {
+    // stage0에서 틀렸을 경우에만 1시간, 이외는 24시간
+    const waitingHours = currentStage === 0 ? 1 : 24;
+    const originalMs = waitingHours * 60 * 60 * 1000;
+    return getAcceleratedTime(originalMs);
 }
 
 // GET /time-accelerator/status - 현재 가속 상태 조회
@@ -77,16 +99,16 @@ router.get('/status', (req, res) => {
         const accelerated24h = getAccelerated24Hours();
         const realMinutes = Math.round(accelerated24h / (60 * 1000));
         
-        const exampleStage3 = getAcceleratedStageWaitTime(3); // Stage 3 = 14일
+        const exampleStage3 = getAcceleratedStageWaitTime(3, "long"); // Stage 3 = 144시간 (6일)
         const stage3Minutes = Math.round(exampleStage3 / (60 * 1000));
         
         return ok(res, {
             accelerationFactor: factor,
             isActive: factor > 1,
             examples: {
-                originalWrongAnswerWait: '24시간',
+                originalWrongAnswerWait: '1시간(stage0) / 24시간(기타)',
                 acceleratedWrongAnswerWait: `${realMinutes}분`,
-                originalStage3Wait: '14일',
+                originalStage3Wait: '144시간(6일)',
                 acceleratedStage3Wait: `${stage3Minutes}분`
             },
             presets: {
@@ -244,8 +266,9 @@ async function recalculateAllActiveTimers() {
         const learningCurveType = card.srsfolderitem?.[0]?.srsfolder?.learningCurveType || "long";
         
         if (card.isFromWrongAnswer) {
-            // 오답 카드: 24시간 대기를 가속 적용 (학습 곡선 타입 무관)
-            newWaitingUntil = new Date(now.getTime() + getAccelerated24Hours());
+            // 오답 카드: stage에 따라 1시간 또는 24시간 대기를 가속 적용
+            const acceleratedWrongWaitTime = getAcceleratedWrongAnswerWaitTime(card.stage);
+            newWaitingUntil = new Date(now.getTime() + acceleratedWrongWaitTime);
         } else {
             // 정답 카드: stage별 대기시간을 학습 곡선 타입에 따라 가속 적용
             const acceleratedWaitTime = getAcceleratedStageWaitTime(card.stage, learningCurveType);
@@ -318,5 +341,6 @@ module.exports = {
     getAcceleratedTime,
     getAcceleratedDateTime,
     getAcceleratedStageWaitTime,
-    getAccelerated24Hours
+    getAccelerated24Hours,
+    getAcceleratedWrongAnswerWaitTime
 };

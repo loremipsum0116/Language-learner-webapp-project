@@ -29,7 +29,10 @@
       "Bash(rg:*)",
       "Bash(del check_wrong_answers.js)",
       "Bash(cd:*)",
-      "Bash(mysql:*)"
+      "Bash(mysql:*)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\src\\components\\TimeMachine.jsx\")",
+      "Bash(cp:*)",
+      "Bash(del update_learning_curves.js)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

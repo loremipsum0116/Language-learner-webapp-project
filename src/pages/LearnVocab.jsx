@@ -232,6 +232,13 @@ export default function LearnVocab() {
                     let fetched = Array.isArray(data) ? data : [];
                     if (mode === 'flash') fetched = shuffleArray(fetched);
                     setQueue(fetched);
+                    
+                    // 플래시 모드에서 선택된 아이템들의 경우 allBatches도 설정
+                    if (mode === 'flash' && folderIdParam && selectedItemsParam && fetched.length > 0) {
+                        console.log('[BATCH DEBUG] Setting allBatches for selected items:', fetched);
+                        setAllBatches(_.chunk(fetched, 10));
+                        setModeForBatch('flash');
+                    }
                     setIdx(0);
                     setFlipped(false);
                     // 스펠링 입력 상태 초기화
@@ -298,7 +305,22 @@ export default function LearnVocab() {
                     el.removeEventListener('play', handleAudioStart);
                     el.removeEventListener('ended', handleAudioEnd);
                     stopAudio();
-                    setIdx((i) => i + 1);
+                    
+                    // 자동재생에서도 배치 완료 체크
+                    setIdx((prevIdx) => {
+                        const currentBatch = allBatches[batchIndex] || [];
+                        console.log('[AUDIO DEBUG] Checking batch completion - prevIdx:', prevIdx, 'length:', currentBatch.length, 'allBatches:', allBatches);
+                        
+                        if (prevIdx < currentBatch.length - 1) {
+                            setFlipped(false);
+                            return prevIdx + 1;
+                        } else {
+                            console.log('[AUDIO DEBUG] Auto mode batch completed - calling handleQuizDone');
+                            // 다음 틱에서 handleQuizDone 호출
+                            setTimeout(() => handleQuizDone(), 0);
+                            return prevIdx;
+                        }
+                    });
                 } else {
                     // Increment count and play again after delay
                     audioPlayCountRef.current = audioPlayCountRef.current + 1;
@@ -355,7 +377,31 @@ export default function LearnVocab() {
         }
     }, [mode, auto, current?.vocabId, current?.cardId]); // lastCardId 의존성 제거로 중복 실행 방지
 
+    // 페이지 이탈 감지
+    useEffect(() => {
+        const handleBeforeUnload = () => {
+            console.log('[PAGE DEBUG] Page unloading - auto:', auto, 'mode:', mode, 'modeForBatch:', modeForBatch);
+        };
+        
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    }, [auto, mode, modeForBatch]);
+
     useEffect(() => { if (!queue[idx]) refreshSrsIds(); }, [queue, idx, refreshSrsIds]);
+
+    // 컴포넌트 상태 디버깅 및 자동완료 체크
+    useEffect(() => {
+        console.log('[COMPONENT DEBUG] Current state - mode:', mode, 'auto:', auto, 'modeForBatch:', modeForBatch, 'idx:', idx, 'batchIndex:', batchIndex, 'allBatches.length:', allBatches.length);
+        
+        // 자동학습 모드에서 배치 완료 체크
+        if (mode === 'flash' && auto && modeForBatch === 'flash' && allBatches.length > 0) {
+            const currentBatch = allBatches[batchIndex] || [];
+            if (idx >= currentBatch.length) {
+                console.log('[AUTO COMPLETE DEBUG] Batch completed via state change - calling handleQuizDone');
+                setTimeout(() => handleQuizDone(), 100);
+            }
+        }
+    }, [mode, auto, modeForBatch, idx, batchIndex, allBatches.length]);
 
     // ───────────────────── 플로우 헬퍼 ─────────────────────
     const goToNextCard = () => {
@@ -465,11 +511,19 @@ export default function LearnVocab() {
         stopAudio();
         setAudioPlayCount(0); // Reset play count when advancing
         const currentBatch = allBatches[batchIndex] || [];
+        console.log('[NEXT FLASH DEBUG] idx:', idx, 'currentBatch.length:', currentBatch.length);
         if (idx < currentBatch.length - 1) {
             setIdx((i) => i + 1);
             setFlipped(false);
         } else {
-            setModeForBatch('quiz');
+            console.log('[NEXT FLASH DEBUG] Batch completed, auto:', auto);
+            // 자동학습 모드에서는 퀴즈 건너뛰고 바로 완료 처리
+            if (auto) {
+                console.log('[NEXT FLASH DEBUG] Auto mode - calling handleQuizDone');
+                handleQuizDone();
+            } else {
+                setModeForBatch('quiz');
+            }
         }
     };
 
@@ -485,11 +539,25 @@ export default function LearnVocab() {
         }
         setModeForBatch('finished');
         try {
-            const currentBatchIds = (allBatches[batchIndex] || []).map(it => it.vocabId).filter(Boolean);
-            if (currentBatchIds.length) {
+            const currentBatch = allBatches[batchIndex] || [];
+            const currentBatchVocabIds = currentBatch.map(it => it.vocabId).filter(Boolean);
+            const currentBatchCardIds = currentBatch.map(it => it.cardId).filter(Boolean);
+            
+            console.log('[LEARN FINISH DEBUG] currentBatch:', currentBatch);
+            console.log('[LEARN FINISH DEBUG] vocabIds:', currentBatchVocabIds);
+            console.log('[LEARN FINISH DEBUG] cardIds:', currentBatchCardIds);
+            
+            if (currentBatchVocabIds.length || currentBatchCardIds.length) {
+                const requestBody = { 
+                    vocabIds: currentBatchVocabIds, 
+                    cardIds: currentBatchCardIds, 
+                    createFolder: true 
+                };
+                console.log('[LEARN FINISH DEBUG] Sending request body:', requestBody);
+                
                 await fetchJSON('/learn/flash/finish', withCreds({
                     method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ vocabIds: currentBatchIds, createFolder: true })
+                    body: JSON.stringify(requestBody)
                 }));
             }
         } catch (e) {
@@ -497,10 +565,16 @@ export default function LearnVocab() {
         }
         try {
             const { data } = await fetchJSON('/learn/session/finish', withCreds({ method: 'POST' }));
-            if (data?.highMistake > 0) toast.success(`오답률 높은 단어 ${data.highMistake}개로 복습 폴더가 생성되었습니다!`);
-            else toast.info('완벽히 학습하셨네요! 다음날 복습 폴더는 생성되지 않았습니다.');
+            // 자동학습 모드에서는 토스트 메시지 출력하지 않음
+            if (!auto) {
+                if (data?.highMistake > 0) toast.success(`오답률 높은 단어 ${data.highMistake}개로 복습 폴더가 생성되었습니다!`);
+                else toast.info('완벽히 학습하셨네요! 다음날 복습 폴더는 생성되지 않았습니다.');
+            }
         } catch (e) {
-            toast.error('세션 종료 중 오류 발생: ' + e.message);
+            // 자동학습 모드에서는 세션 종료 에러도 조용히 처리
+            if (!auto) {
+                toast.error('세션 종료 중 오류 발생: ' + e.message);
+            }
         }
     };
 

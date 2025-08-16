@@ -6,16 +6,17 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// SRS stages: 기존 대기 시간에서 하루씩 차감된 대기 시간 (시간 단위)
-// Stage 1: 24시간(기존 48시간-24), Stage 2: 120시간(기존 144시간-24), Stage 3: 13일, Stage 4: 29일, Stage 5: 59일, Stage 6: 119일
-const STAGE_WAITING_HOURS = [24, 120, 13*24, 29*24, 59*24, 119*24]; // 시간 단위
+// 장기 학습 곡선 (long): Stage 0 → 1 → 2 → 3 → 4 → 5 → 마스터
+// 대기 시간: [즉시, 1시간, 24h, 144h, 312h, 696h, 1056h(마스터)]
+const STAGE_WAITING_HOURS = [1, 24, 144, 312, 696, 1056]; // 시간 단위
 
-// 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용) - 하루씩 차감
-const STAGE_DELAYS = [2, 6, 13, 29, 59, 119];
+// 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용)
+const STAGE_DELAYS = [1/24, 1, 6, 13, 29, 44]; // 시간을 일수로 변환
 
-// 단기 스퍼트 곡선: 2일 간격으로 10회 반복 (Stage 10에서 마스터)
-const SHORT_CURVE_DELAYS = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; // 10 stages all with 2 days
-const SHORT_CURVE_WAITING_HOURS = [48, 48, 48, 48, 48, 48, 48, 48, 48, 48]; // 10 stages all with 48 hours (2 days)
+// 단기 스퍼트 곡선 (short): Stage 0 → 1 → ... → 9 → 마스터
+// 대기 시간: [즉시, 1시간, 24h, 이후 모든 단계에서 2일(48h)]
+const SHORT_CURVE_DELAYS = [1/24, 1, 2, 2, 2, 2, 2, 2, 2, 2]; // 10 stages: 1시간, 1일, 2일...
+const SHORT_CURVE_WAITING_HOURS = [1, 24, 48, 48, 48, 48, 48, 48, 48, 48]; // 10 stages
 
 function clampStage(stage) {
   return Math.max(0, Math.min(stage, STAGE_WAITING_HOURS.length));
@@ -138,26 +139,31 @@ function computeWaitingUntil(baseDate, stage, learningCurveType = "long") {
 }
 
 /**
- * 오답 카드의 24시간 대기 종료 시각을 계산합니다. (가속 적용)
+ * 오답 카드의 대기 종료 시각을 계산합니다. (가속 적용)
+ * stage0에서만 1시간, 이외는 24시간
  */
-function computeWrongAnswerWaitingUntil(baseDate) {
+function computeWrongAnswerWaitingUntil(baseDate, currentStage = 0) {
+  // stage0에서 틀렸을 경우에만 1시간, 이외에는 24시간
+  const waitingHours = currentStage === 0 ? 1 : 24;
+  
   try {
-    const { getAccelerated24Hours } = require('../routes/timeAccelerator');
-    const acceleratedMs = getAccelerated24Hours();
-    const result = new Date(baseDate.getTime() + acceleratedMs);
+    // 새로운 오답 대기시간 가속 함수 사용
+    const { getAcceleratedWrongAnswerWaitTime } = require('../routes/timeAccelerator');
+    const acceleratedMs = getAcceleratedWrongAnswerWaitTime(currentStage);
     
+    const result = new Date(baseDate.getTime() + acceleratedMs);
     const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
     
-    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (ACCELERATED):`);
-    console.log(`  Original: +24 hours`);
+    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (ACCELERATED): stage=${currentStage}`);
+    console.log(`  Original: +${waitingHours} hours`);
     console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
     console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
     
     return result;
   } catch (e) {
     // 가속 시스템 실패 시 원본 로직 사용
-    const result = new Date(baseDate.getTime() + 24 * 60 * 60 * 1000);
-    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (FALLBACK): +24 hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
+    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (FALLBACK): stage=${currentStage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
     return result;
   }
 }

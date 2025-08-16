@@ -16,6 +16,7 @@ const readingRoutes = require('./routes/reading');
 const categoryRoutes = require('./routes/categories');
 const myWordbookRoutes = require('./routes/my-wordbook');
 const odatNoteRoutes = require('./routes/odat-note');
+const dictRoutes = require('./routes/dict');
 
 // (선택) 대시보드 오버라이드/Flat 확장 라우터
 const srsFlatExt = require('./routes/srs-flat-extensions');         // 제공 파일
@@ -57,6 +58,7 @@ app.use('/reading', readingRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);
+app.use('/dict', dictRoutes);
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use(userRoutes);
 

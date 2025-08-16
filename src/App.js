@@ -25,7 +25,6 @@ import SrsFolderDetail from './pages/SrsFolderDetail';
 import SrsParentFolder from './pages/SrsParentFolder';
 import WrongAnswers from "./pages/WrongAnswers";
 import WrongAnswerQuiz from "./pages/WrongAnswerQuiz";
-import TimeMachine from "./components/TimeMachine";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -39,7 +38,6 @@ export default function App() {
     <>
       <Header />
       <ToastContainer /> {/* ToastContainer 추가 */}
-      <TimeMachine /> {/* 타임머신 UI 추가 */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />

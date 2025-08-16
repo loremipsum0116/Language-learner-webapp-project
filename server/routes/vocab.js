@@ -172,17 +172,43 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/bookmark', async (req, res) => {
   const vocabId = parseInt(req.params.id, 10);
   const userId = req.user.id;
+  const folderId = req.body.folderId ? parseInt(req.body.folderId, 10) : null;
 
   if (isNaN(vocabId)) {
     return res.status(400).json({ error: 'Invalid vocab ID' });
   }
 
+  // 폴더별 독립적인 SRS 카드 검사
   const existing = await prisma.srscard.findFirst({
-    where: { userId, itemId: vocabId, itemType: 'vocab' }
+    where: { 
+      userId, 
+      itemId: vocabId, 
+      itemType: 'vocab',
+      folderId: folderId 
+    }
   });
 
   if (existing) {
     return res.status(200).json({ ok: true, id: existing.id, already: true });
+  }
+
+  // 폴더별 독립적인 사용자 단어 추가
+  const existingUserVocab = await prisma.uservocab.findFirst({
+    where: { 
+      userId, 
+      vocabId,
+      folderId: folderId 
+    }
+  });
+
+  if (!existingUserVocab) {
+    await prisma.uservocab.create({
+      data: {
+        userId,
+        vocabId,
+        folderId: folderId
+      }
+    });
   }
 
   const newCard = await prisma.srscard.create({
@@ -191,11 +217,135 @@ router.post('/:id/bookmark', async (req, res) => {
       itemId: vocabId,
       itemType: 'vocab',
       stage: 0,
-      nextReviewAt: new Date()
+      nextReviewAt: new Date(),
+      folderId: folderId
     }
   });
 
   return res.status(201).json({ ok: true, id: newCard.id });
+});
+
+// GET /vocab/user/:userId/folder/:folderId - 특정 폴더의 사용자 단어 목록
+router.get('/user/:userId/folder/:folderId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId, 10);
+    const folderId = parseInt(req.params.folderId, 10);
+
+    if (isNaN(userId) || isNaN(folderId)) {
+      return res.status(400).json({ error: 'Invalid user ID or folder ID' });
+    }
+
+    const userVocabs = await prisma.uservocab.findMany({
+      where: {
+        userId: userId,
+        folderId: folderId
+      },
+      include: {
+        vocab: {
+          include: {
+            dictentry: true
+          }
+        }
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    const data = userVocabs.map(uv => {
+      const v = uv.vocab;
+      const dictentry = v.dictentry;
+      const meanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      let primaryGloss = null;
+      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
+        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      }
+      return {
+        id: v.id,
+        lemma: v.lemma,
+        pos: v.pos,
+        levelCEFR: v.levelCEFR,
+        ko_gloss: primaryGloss,
+        ipa: dictentry?.ipa ?? null,
+        ipaKo: dictentry?.ipaKo ?? null,
+        audio: dictentry?.audioUrl ?? null,
+        examples: meanings,
+        addedAt: uv.createdAt
+      };
+    });
+
+    return res.json({ data });
+  } catch (e) {
+    console.error('GET /vocab/user/:userId/folder/:folderId failed:', e);
+    return res.status(500).json({ error: 'Failed to fetch user vocabulary for folder' });
+  }
+});
+
+// GET /vocab/user/:userId - 특정 사용자의 모든 폴더별 단어 목록 (옵션: folderId가 없는 단어들 포함)
+router.get('/user/:userId', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId, 10);
+    const includeLegacy = req.query.includeLegacy === 'true'; // 기존 folderId가 null인 단어들 포함 여부
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: 'Invalid user ID' });
+    }
+
+    const where = { userId: userId };
+    if (!includeLegacy) {
+      where.folderId = { not: null };
+    }
+
+    const userVocabs = await prisma.uservocab.findMany({
+      where: where,
+      include: {
+        vocab: {
+          include: {
+            dictentry: true
+          }
+        },
+        folder: {
+          select: {
+            id: true,
+            name: true
+          }
+        }
+      },
+      orderBy: [
+        { folderId: 'asc' },
+        { createdAt: 'desc' }
+      ]
+    });
+
+    const data = userVocabs.map(uv => {
+      const v = uv.vocab;
+      const dictentry = v.dictentry;
+      const meanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      let primaryGloss = null;
+      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
+        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      }
+      return {
+        id: v.id,
+        lemma: v.lemma,
+        pos: v.pos,
+        levelCEFR: v.levelCEFR,
+        ko_gloss: primaryGloss,
+        ipa: dictentry?.ipa ?? null,
+        ipaKo: dictentry?.ipaKo ?? null,
+        audio: dictentry?.audioUrl ?? null,
+        examples: meanings,
+        addedAt: uv.createdAt,
+        folderId: uv.folderId,
+        folderName: uv.folder?.name || 'Legacy'
+      };
+    });
+
+    return res.json({ data });
+  } catch (e) {
+    console.error('GET /vocab/user/:userId failed:', e);
+    return res.status(500).json({ error: 'Failed to fetch user vocabulary' });
+  }
 });
 
 module.exports = router;

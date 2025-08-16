@@ -64,7 +64,13 @@ export default function SrsFolderDetail() {
     const [items, setItems] = useState([]); // 폴더에 담긴 모든 단어
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [deleting, setDeleting] = useState(false);
-    const [showWrongOnly, setShowWrongOnly] = useState(false); // 오답 단어만 보기 필터
+    const [filterMode, setFilterMode] = useState('all'); // 'all', 'review', 'learning', 'frozen', 'stage', 'wrong'
+    
+    // 필터 변경 시 선택 상태 초기화
+    const handleFilterChange = (newFilter) => {
+        setFilterMode(newFilter);
+        setSelectedIds(new Set()); // 기존 선택 상태 모두 초기화
+    };
 
     const reload = async () => {
         setLoading(true);
@@ -182,12 +188,56 @@ export default function SrsFolderDetail() {
     const nextDue = folder.nextReviewDate ?? folder.nextReviewAt;
     const stage = folder.stage ?? 0;
 
-    // 필터링된 아이템들 - SRS 카드가 오답 대기중 상태인 것들만
-    const filteredItems = showWrongOnly 
-        ? items.filter(item => item.isWrongAnswerWaiting)
-        : items;
+    // 필터링된 아이템들
+    const filteredItems = items.filter(item => {
+        switch (filterMode) {
+            case 'review':
+                return item.isOverdue; // 복습 대기중
+            case 'learning':
+                return !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0); // 학습 대기중
+            case 'frozen':
+                if (item.frozenUntil) {
+                    const now = new Date();
+                    const frozenUntil = new Date(item.frozenUntil);
+                    return now < frozenUntil; // 동결중
+                }
+                return false;
+            case 'stage':
+                return item.stage > 0 && !item.isOverdue && !item.isMastered; // stage 대기중이지만 overdue나 mastered가 아닌 단어들
+            case 'wrong':
+                // 빨간 배경을 가진 단어들 (현재 오답 대기중): wrongCount > 0이지만 동결/overdue/learned가 아닌 상태
+                if (item.frozenUntil) {
+                    const now = new Date();
+                    const frozenUntil = new Date(item.frozenUntil);
+                    if (now < frozenUntil) return false; // 동결중이면 제외
+                }
+                return !item.isOverdue && !item.learned && item.wrongCount > 0;
+            case 'all':
+            default:
+                return true;
+        }
+    });
         
-    const wrongAnswerCount = items.filter(item => item.isWrongAnswerWaiting).length;
+    const wrongAnswerCount = items.filter(item => {
+        // 빨간 배경을 가진 단어들과 동일한 조건
+        if (item.frozenUntil) {
+            const now = new Date();
+            const frozenUntil = new Date(item.frozenUntil);
+            if (now < frozenUntil) return false; // 동결중이면 제외
+        }
+        return !item.isOverdue && !item.learned && item.wrongCount > 0;
+    }).length;
+    const reviewWaitingCount = items.filter(item => item.isOverdue).length;
+    const learningWaitingCount = items.filter(item => !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0)).length;
+    const frozenCount = items.filter(item => {
+        if (item.frozenUntil) {
+            const now = new Date();
+            const frozenUntil = new Date(item.frozenUntil);
+            return now < frozenUntil;
+        }
+        return false;
+    }).length;
+    const stageWaitingCount = items.filter(item => item.stage > 0 && !item.isOverdue && !item.isMastered).length;
     
     // 디버깅 로그
     console.log('[FRONTEND DEBUG] Total items:', items.length);
@@ -215,8 +265,24 @@ export default function SrsFolderDetail() {
                         <span className="mx-2">|</span>
                         단어 {items.length}개
                         <span className="mx-2">|</span>
+                        복습 <span className="text-warning">{reviewWaitingCount}개</span>
+                        <span className="mx-2">|</span>
+                        미학습 <span className="text-info">{learningWaitingCount}개</span>
+                        <span className="mx-2">|</span>
                         오답 <span className="text-danger">{wrongAnswerCount}개</span>
-                        {showWrongOnly && <span className="text-warning"> (오답만 표시)</span>}
+                        <span className="mx-2">|</span>
+                        동결 <span className="text-secondary">{frozenCount}개</span>
+                        <span className="mx-2">|</span>
+                
+                        {filterMode !== 'all' && (
+                            <span className="text-warning">
+                                {' '}({filterMode === 'review' ? '복습 대기중인 단어들만 표시' :
+                                      filterMode === 'learning' ? '학습 대기중인 단어들만 표시' :
+                                      filterMode === 'frozen' ? '동결중인 단어들만 표시' :
+                                      filterMode === 'stage' ? 'Stage 대기중인 단어들만 표시' :
+                                      filterMode === 'wrong' ? '오답 대기중인 단어들만 표시' : '필터링 중'})
+                            </span>
+                        )}
                     </small>
                 </div>
                 <div className="d-flex gap-2">
@@ -227,23 +293,47 @@ export default function SrsFolderDetail() {
                     ) : (
                         <Link className="btn btn-outline-secondary btn-sm" to="/srs">← 대시보드</Link>
                     )}
-                    <Link 
-                        className="btn btn-primary btn-sm" 
-                        to={`/learn/vocab?mode=srs_folder&folderId=${folder.id}${
-                            selectedIds.size > 0 
-                                ? `&selectedItems=${Array.from(selectedIds).join(',')}` 
-                                : ''
-                        }`}
-                    >
-                        학습 시작 {selectedIds.size > 0 ? `(${selectedIds.size}개 선택)` : ''}
-                    </Link>
                     {selectedIds.size > 0 ? (
-                        <Link 
-                            className="btn btn-success btn-sm" 
-                            to={`/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${Array.from(selectedIds).join(',')}`}
+                        selectedIds.size > 100 ? (
+                            <button 
+                                className="btn btn-primary btn-sm" 
+                                onClick={() => alert('100개를 초과하여 선택하신 단어는 학습할 수 없습니다. 100개 이하로 선택해주세요.')}
+                            >
+                                학습 시작 ({selectedIds.size}개 선택) - 100개 초과
+                            </button>
+                        ) : (
+                            <Link 
+                                className="btn btn-primary btn-sm" 
+                                to={`/learn/vocab?mode=srs_folder&folderId=${folder.id}&selectedItems=${Array.from(selectedIds).join(',')}`}
+                            >
+                                학습 시작 ({selectedIds.size}개 선택)
+                            </Link>
+                        )
+                    ) : (
+                        <button 
+                            className="btn btn-primary btn-sm opacity-50" 
+                            disabled
+                            title="단어를 선택해주세요"
                         >
-                            선택 자동학습 ({selectedIds.size}개)
-                        </Link>
+                            학습 시작
+                        </button>
+                    )}
+                    {selectedIds.size > 0 ? (
+                        selectedIds.size > 100 ? (
+                            <button 
+                                className="btn btn-success btn-sm" 
+                                onClick={() => alert('100개를 초과하여 선택하신 단어는 학습할 수 없습니다. 100개 이하로 선택해주세요.')}
+                            >
+                                선택 자동학습 ({selectedIds.size}개) - 100개 초과
+                            </button>
+                        ) : (
+                            <Link 
+                                className="btn btn-success btn-sm" 
+                                to={`/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${Array.from(selectedIds).join(',')}`}
+                            >
+                                선택 자동학습 ({selectedIds.size}개)
+                            </Link>
+                        )
                     ) : (
                         <button 
                             className="btn btn-success btn-sm opacity-50" 
@@ -256,6 +346,7 @@ export default function SrsFolderDetail() {
                 </div>
             </div>
 
+
             {/* 시간 가속 컨트롤 */}
             <div className="mb-4">
                 <TimeAcceleratorControl />
@@ -263,28 +354,66 @@ export default function SrsFolderDetail() {
 
             {/* 단어 관리 툴바 */}
             {items.length > 0 && (
-                <div className="d-flex gap-2 mb-3">
-                    <button
-                        className="btn btn-sm btn-outline-secondary"
-                        onClick={handleSelectAll}
-                    >
-                        {filteredItems.length > 0 && filteredItems.every(item => selectedIds.has(item.folderItemId ?? item.id))
-                            ? '전체 선택 해제' : '전체 선택'}
-                    </button>
-                    <button
-                        className="btn btn-sm btn-outline-danger"
-                        onClick={handleDeleteSelected}
-                        disabled={selectedIds.size === 0 || deleting}
-                    >
-                        {deleting ? '삭제 중...' : `선택 삭제 (${selectedIds.size})`}
-                    </button>
-                    <div className="ms-auto d-flex gap-2">
+                <div className="mb-3">
+                    {/* 첫 번째 줄: 선택/삭제 버튼 */}
+                    <div className="d-flex gap-2 mb-2">
                         <button
-                            className={`btn btn-sm ${showWrongOnly ? 'btn-warning' : 'btn-outline-warning'}`}
-                            onClick={() => setShowWrongOnly(!showWrongOnly)}
+                            className="btn btn-sm btn-outline-secondary"
+                            onClick={handleSelectAll}
+                        >
+                            {filteredItems.length > 0 && filteredItems.every(item => selectedIds.has(item.folderItemId ?? item.id))
+                                ? '전체 선택 해제' : '전체 선택'}
+                        </button>
+                        <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={handleDeleteSelected}
+                            disabled={selectedIds.size === 0 || deleting}
+                        >
+                            {deleting ? '삭제 중...' : `선택 삭제 (${selectedIds.size})`}
+                        </button>
+                    </div>
+                    {/* 두 번째 줄: 필터 버튼들 */}
+                    <div className="d-flex flex-wrap gap-2">
+                        <button
+                            className={`btn btn-sm ${filterMode === 'all' ? 'btn-primary' : 'btn-outline-primary'}`}
+                            onClick={() => handleFilterChange('all')}
+                        >
+                            전체 보기 ({items.length})
+                        </button>
+                        <button
+                            className={`btn btn-sm ${filterMode === 'review' ? 'btn-warning' : 'btn-outline-warning'}`}
+                            onClick={() => handleFilterChange('review')}
+                            disabled={reviewWaitingCount === 0}
+                        >
+                            복습 대기중인 단어들만 보기 ({reviewWaitingCount})
+                        </button>
+                        <button
+                            className={`btn btn-sm ${filterMode === 'learning' ? 'btn-secondary' : 'btn-outline-info'}`}
+                            onClick={() => handleFilterChange('learning')}
+                            disabled={learningWaitingCount === 0}
+                        >
+                            미학습 단어들만 보기 ({learningWaitingCount})
+                        </button>
+                        <button
+                            className={`btn btn-sm ${filterMode === 'frozen' ? 'btn-info' : 'btn-outline-secondary'}`}
+                            onClick={() => handleFilterChange('frozen')}
+                            disabled={frozenCount === 0}
+                        >
+                            동결중인 단어들만 보기 ({frozenCount})
+                        </button>
+                        <button
+                            className={`btn btn-sm ${filterMode === 'stage' ? 'btn-success' : 'btn-outline-success'}`}
+                            onClick={() => handleFilterChange('stage')}
+                            disabled={stageWaitingCount === 0}
+                        >
+                            Stage 대기중인 단어들만 보기 ({stageWaitingCount})
+                        </button>
+                        <button
+                            className={`btn btn-sm ${filterMode === 'wrong' ? 'btn-danger' : 'btn-outline-danger'}`}
+                            onClick={() => handleFilterChange('wrong')}
                             disabled={wrongAnswerCount === 0}
                         >
-                            {showWrongOnly ? '전체 보기' : `오답만 보기 (${wrongAnswerCount})`}
+                            오답만 보기 ({wrongAnswerCount})
                         </button>
                     </div>
                 </div>
@@ -297,7 +426,12 @@ export default function SrsFolderDetail() {
                 </div>
             ) : filteredItems.length === 0 ? (
                 <div className="alert alert-warning">
-                    {showWrongOnly ? "오답 단어가 없습니다. 모든 단어를 정답으로 맞춘 상태입니다!" : "표시할 단어가 없습니다."}
+                    {filterMode === 'wrong' ? "오답 대기중인 단어가 없습니다. 모든 단어를 정답으로 맞춘 상태입니다!" : 
+                     filterMode === 'review' ? "복습 대기중인 단어가 없습니다." :
+                     filterMode === 'learning' ? "학습 대기중인 단어가 없습니다." :
+                     filterMode === 'frozen' ? "동결중인 단어가 없습니다." :
+                     filterMode === 'stage' ? "Stage 대기중인 단어가 없습니다." :
+                     "표시할 단어가 없습니다."}
                 </div>
             ) : (
                 <div className="row">

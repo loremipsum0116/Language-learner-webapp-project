@@ -2,7 +2,8 @@
 const express = require('express');
 const { createFlashBatches } = require('../services/srsService');
 const { finishSession } = require('../services/sessionService');
-const { ensureTodayFolder, addItemsToFolder, bumpDailyStat } = require('../services/srsService');
+const { bumpDailyStat } = require('../services/srsService');
+const { prisma } = require('../lib/prismaClient');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
@@ -23,23 +24,68 @@ router.post('/flash/start', async (req, res) => {
         res.status(500).json({ error: 'Failed to start learning session.' });
     }
 });
-router.post('/learn/flash/finish', auth, async (req, res, next) => {
+router.post('/flash/finish', auth, async (req, res, next) => {
     try {
         const userId = req.user.id;
         const { sessionId, createFolder, cardIds, vocabIds } = req.body || {};
+        
+        console.log(`[LEARN FLASH FINISH] userId: ${userId}, cardIds: ${JSON.stringify(cardIds)}, vocabIds: ${JSON.stringify(vocabIds)}`);
 
-        // ① vocabIds가 온 경우 → SRSCard upsert 후 cardIds로 변환
+        // ① cardIds가 직접 온 경우 기존 미학습 카드들을 overdue로 전환
         let resolvedCardIds = Array.isArray(cardIds) ? cardIds.map(Number) : [];
+        if (resolvedCardIds.length > 0) {
+            // cardIds로 직접 전달된 경우, 해당 카드들 중 미학습인 것들을 overdue로 전환
+            const existingCards = await prisma.srscard.findMany({
+                where: { 
+                    id: { in: resolvedCardIds },
+                    userId 
+                },
+                select: { id: true, stage: true, isOverdue: true }
+            });
+            
+            const unlearnedCardIds = existingCards
+                .filter(card => card.stage === 0 && !card.isOverdue)
+                .map(card => card.id);
+                
+            if (unlearnedCardIds.length > 0) {
+                console.log(`[LEARN FLASH FINISH] Updating ${unlearnedCardIds.length} unlearned cards to overdue:`, unlearnedCardIds);
+                const updateResult = await prisma.srscard.updateMany({
+                    where: { 
+                        id: { in: unlearnedCardIds },
+                        userId 
+                    },
+                    data: { isOverdue: true, nextReviewAt: new Date() }
+                });
+                console.log(`[LEARN FLASH FINISH] Update result:`, updateResult);
+            }
+        }
+        
+        // ② vocabIds가 온 경우 → SRSCard upsert 후 cardIds로 변환
         if ((!resolvedCardIds || resolvedCardIds.length === 0) && Array.isArray(vocabIds) && vocabIds.length > 0) {
             const uniqVocabIds = [...new Set(vocabIds.map(Number).filter(Boolean))];
             // 유저의 해당 단어 SRSCard 조회
             const existing = await prisma.srscard.findMany({
                 where: { userId, itemType: 'vocab', itemId: { in: uniqVocabIds } },
-                select: { id: true, itemId: true }
+                select: { id: true, itemId: true, stage: true, isOverdue: true }
             });
             const existMap = new Map(existing.map(e => [e.itemId, e.id]));
+            
+            // 기존 미학습 카드들(stage 0이고 overdue가 아닌 것들)을 overdue로 전환
+            const unlearnedCards = existing.filter(card => card.stage === 0 && !card.isOverdue);
+            if (unlearnedCards.length > 0) {
+                console.log(`[LEARN FLASH FINISH] Updating ${unlearnedCards.length} unlearned vocab cards to overdue:`, unlearnedCards.map(c => c.id));
+                const updateResult = await prisma.srscard.updateMany({
+                    where: { 
+                        id: { in: unlearnedCards.map(c => c.id) },
+                        userId 
+                    },
+                    data: { isOverdue: true, nextReviewAt: new Date() }
+                });
+                console.log(`[LEARN FLASH FINISH] Vocab update result:`, updateResult);
+            }
+            
             const toCreate = uniqVocabIds.filter(vId => !existMap.has(vId))
-                .map(vId => ({ userId, itemType: 'vocab', itemId: vId, stage: 0, nextReviewAt: new Date() }));
+                .map(vId => ({ userId, itemType: 'vocab', itemId: vId, stage: 0, nextReviewAt: new Date(), isOverdue: true }));
             if (toCreate.length) {
                 await prisma.srscard.createMany({ data: toCreate });
             }
@@ -51,13 +97,13 @@ router.post('/learn/flash/finish', auth, async (req, res, next) => {
             resolvedCardIds = allCards.map(x => x.id);
         }
 
-        if (createFolder) {
-            const f = await ensureTodayFolder(userId, sessionId ?? null);
-
-            if (Array.isArray(resolvedCardIds) && resolvedCardIds.length) {
-                await addItemsToFolder(userId, f.id, resolvedCardIds);
-            }
-        }
+        // 폴더 생성 기능은 일시적으로 비활성화
+        // if (createFolder) {
+        //     const f = await ensureTodayFolder(userId, sessionId ?? null);
+        //     if (Array.isArray(resolvedCardIds) && resolvedCardIds.length) {
+        //         await addItemsToFolder(userId, f.id, resolvedCardIds);
+        //     }
+        // }
 
         // 통계(자동학습 개수)
 
@@ -66,7 +112,10 @@ router.post('/learn/flash/finish', auth, async (req, res, next) => {
         }
 
         return res.status(204).end();
-    } catch (e) { next(e); }
+    } catch (e) { 
+        console.error('[LEARN FLASH FINISH ERROR]', e);
+        next(e); 
+    }
 });
 router.use(auth);
 /*

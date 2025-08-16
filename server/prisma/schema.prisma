@@ -88,26 +88,26 @@ model srscard {
   userId            Int
   itemType          String
   itemId            Int
-  folderId          Int?            // 폴더별 독립적인 SRS 카드 관리
   stage             Int             @default(0)
   nextReviewAt      DateTime?
   categoryId        Int?
   correctTotal      Int             @default(0)
   wrongTotal        Int             @default(0)
   cohortDate        DateTime?
-  isFromWrongAnswer Boolean         @default(false)
-  isMastered        Boolean         @default(false)
   isOverdue         Boolean         @default(false)
+  overdueDeadline   DateTime?
+  isFromWrongAnswer Boolean         @default(false)
+  waitingUntil      DateTime?
+  frozenUntil       DateTime?
+  isMastered        Boolean         @default(false)
   masterCycles      Int             @default(0)
   masteredAt        DateTime?
-  overdueDeadline   DateTime?
   overdueStartAt    DateTime?
-  waitingUntil      DateTime?
   wrongStreakCount  Int             @default(0)
-  frozenUntil       DateTime?
+  folderId          Int?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
-  user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
   folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
+  user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
   srsfolderitem     srsfolderitem[]
 
   @@unique([userId, itemType, itemId, folderId], map: "SRSCard_userId_itemType_itemId_folderId_key")
@@ -135,19 +135,20 @@ model srsfolder {
   scheduledOffset     Int?
   autoCreated         Boolean         @default(false)
   originSessionId     Int?
+  isCompleted         Boolean         @default(false)
+  completedWordsCount Int             @default(0)
+  completionCount     Int             @default(0)
+  isMastered          Boolean         @default(false)
   date                DateTime        @default(now())
   createdAt           DateTime        @default(now())
   updatedAt           DateTime
-  learningCurveType   String          @default("long")
   reminderMask        Int             @default(0)
-  completedWordsCount Int             @default(0)
-  isCompleted         Boolean         @default(false)
-  completionCount     Int             @default(0)
-  isMastered          Boolean         @default(false)
+  learningCurveType   String          @default("long")
+  srscard             srscard[]
   user                user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SrsFolder_userId_fkey")
   srsfolderitem       srsfolderitem[]
+  uservocab           uservocab[]
   wronganswer         wronganswer[]
-  srscard             srscard[]
 
   @@index([nextAlarmAt], map: "SrsFolder_nextAlarmAt_idx")
   @@index([parentId], map: "SrsFolder_parentId_idx")
@@ -197,9 +198,9 @@ model user {
   createdAt        DateTime         @default(now())
   lastStudiedAt    DateTime?
   streak           Int              @default(0)
+  streakUpdatedAt  DateTime?
   dailyQuizCount   Int              @default(0)
   lastQuizDate     DateTime?
-  streakUpdatedAt  DateTime?
   hasOverdueCards  Boolean          @default(false)
   lastOverdueCheck DateTime?
   nextOverdueAlarm DateTime?
@@ -213,18 +214,22 @@ model user {
 }
 
 model uservocab {
-  id         Int       @id @default(autoincrement())
+  id         Int        @id @default(autoincrement())
   userId     Int
   vocabId    Int
-  createdAt  DateTime  @default(now())
+  createdAt  DateTime   @default(now())
   categoryId Int?
-  category   category? @relation(fields: [categoryId], references: [id], map: "UserVocab_categoryId_fkey")
-  user       user      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "UserVocab_userId_fkey")
-  vocab      vocab     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "UserVocab_vocabId_fkey")
+  folderId   Int?
+  category   category?  @relation(fields: [categoryId], references: [id], map: "UserVocab_categoryId_fkey")
+  folder     srsfolder? @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "UserVocab_folderId_fkey")
+  user       user       @relation(fields: [userId], references: [id], onDelete: Cascade, map: "UserVocab_userId_fkey")
+  vocab      vocab      @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "UserVocab_vocabId_fkey")
 
-  @@unique([userId, vocabId], map: "UserVocab_userId_vocabId_key")
+  @@unique([userId, vocabId, folderId], map: "UserVocab_userId_vocabId_folderId_key")
   @@index([categoryId], map: "UserVocab_categoryId_fkey")
+  @@index([folderId], map: "UserVocab_folderId_fkey")
   @@index([userId, categoryId], map: "UserVocab_userId_categoryId_idx")
+  @@index([userId, folderId], map: "UserVocab_userId_folderId_idx")
   @@index([vocabId], map: "UserVocab_vocabId_fkey")
 }
 
@@ -246,19 +251,19 @@ model vocab {
 }
 
 model wronganswer {
-  id                Int         @id @default(autoincrement())
+  id                Int       @id @default(autoincrement())
   userId            Int
   vocabId           Int
-  folderId          Int?        // 폴더별 독립적인 오답 관리를 위한 폴더 ID (nullable for backward compatibility)
-  wrongAt           DateTime    @default(now())
+  wrongAt           DateTime  @default(now())
   reviewWindowStart DateTime
   reviewWindowEnd   DateTime
   reviewedAt        DateTime?
-  isCompleted       Boolean     @default(false)
-  attempts          Int         @default(0)
-  user              user        @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
-  vocab             vocab       @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
-  folder            srsfolder?  @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
+  isCompleted       Boolean   @default(false)
+  attempts          Int       @default(0)
+  folderId          Int?
+  user              user      @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
+  vocab             vocab     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
+  folder            srsfolder? @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
 
   @@unique([userId, vocabId, folderId, wrongAt], map: "WrongAnswer_userId_vocabId_folderId_wrongAt_key")
   @@index([reviewWindowStart, reviewWindowEnd], map: "WrongAnswer_reviewWindowStart_reviewWindowEnd_idx")

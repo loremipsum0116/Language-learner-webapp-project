@@ -548,11 +548,27 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         }
     } else {
         // 오답 시 다음 상태 계산
-        calculatedStage = 0;
-        // 실제 현재 시간 기준으로 24시간 대기 계산 (타임머신 오프셋 적용 안 함)
-        calculatedWaitingUntil = computeWrongAnswerWaitingUntil(new Date());
-        calculatedNextReviewAt = calculatedWaitingUntil; // 오답 단어는 24시간 후 복습 가능
-        console.log(`[SRS SERVICE] Wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil?.toISOString()}, nextReviewAt: ${calculatedNextReviewAt?.toISOString()}`);
+        if (card.stage === 0) {
+            // stage 0에서 오답: 자동으로 stage 1로 올라가기
+            calculatedStage = 1;
+            // stage 1의 대기 시간 적용
+            const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(1, learningCurveType);
+            if (waitingPeriod === 0) {
+                calculatedWaitingUntil = null;
+                calculatedNextReviewAt = null;
+            } else {
+                calculatedWaitingUntil = computeWaitingUntil(new Date(), 1, learningCurveType);
+                calculatedNextReviewAt = calculatedWaitingUntil;
+            }
+            console.log(`[SRS SERVICE] Stage 0 wrong answer - auto upgrade to stage 1, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+        } else {
+            // stage 1 이상에서 오답: 기존 로직 (stage 0으로 리셋)
+            calculatedStage = 0;
+            // 실제 현재 시간 기준으로 오답 대기 시간 계산 (stage에 따라 1시간 또는 24시간)
+            calculatedWaitingUntil = computeWrongAnswerWaitingUntil(new Date(), card.stage);
+            calculatedNextReviewAt = calculatedWaitingUntil; // 오답 단어는 대기 시간 후 복습 가능
+            console.log(`[SRS SERVICE] Stage ${card.stage} wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+        }
     }
 
     // 카드 상태 업데이트가 가능한 경우에만 실제 업데이트 실행
@@ -714,20 +730,38 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     } else if (canUpdateCardState && !correct) {
         // 오답 처리: overdue 상태인지에 따라 다르게 처리
         if (card.isOverdue) {
-            // overdue에서 오답: 현재 stage 유지하고 24시간 대기 후 다시 overdue 기회
-            newStage = card.stage; // 현재 stage 유지 (리셋하지 않음)
-            // 실제 현재 시간 기준으로 24시간 대기 (타임머신 오프셋 적용 안 함)
+            // overdue에서 오답: stage 0인 경우에만 stage 1로 올라가고, 나머지는 현재 stage 유지
             const realNow = new Date();
-            waitingUntil = new Date(realNow.getTime() + 24 * 60 * 60 * 1000); // 24시간 대기
-            nextReviewAt = waitingUntil;
+            
+            if (card.stage === 0) {
+                // stage 0에서 overdue 오답: 자동으로 stage 1로 올라가기
+                newStage = 1;
+                // stage 1의 대기 시간 적용
+                const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(1, learningCurveType);
+                if (waitingPeriod === 0) {
+                    waitingUntil = null;
+                    nextReviewAt = null;
+                } else {
+                    waitingUntil = computeWaitingUntil(realNow, 1, learningCurveType);
+                    nextReviewAt = waitingUntil;
+                }
+                console.log(`[SRS SERVICE] Stage 0 overdue wrong answer - auto upgrade to stage 1, waitingUntil: ${waitingUntil?.toISOString()}`);
+            } else {
+                // stage 1 이상에서 overdue 오답: 현재 stage 유지하고 stage에 따른 대기 시간 후 다시 overdue 기회
+                newStage = card.stage; // 현재 stage 유지 (리셋하지 않음)
+                // 실제 현재 시간 기준으로 stage에 따른 오답 대기 시간 계산 (stage0: 1시간, 이외: 24시간)
+                waitingUntil = computeWrongAnswerWaitingUntil(realNow, card.stage);
+                nextReviewAt = waitingUntil;
+                console.log(`[SRS SERVICE] Stage ${card.stage} overdue wrong answer - stage preserved, waitingUntil: ${waitingUntil?.toISOString()}`);
+            }
             
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
-                    // stage: 현재 stage 유지 (변경하지 않음)
-                    nextReviewAt: waitingUntil, // 24시간 후 다시 overdue 기회
+                    stage: newStage, // stage 0에서는 1로 올라가고, 나머지는 현재 stage 유지
+                    nextReviewAt: waitingUntil,
                     waitingUntil: waitingUntil,
-                    isOverdue: false, // 대기상태로 전환 - 24시간 후 크론잡이 overdue로 변경
+                    isOverdue: false, // 대기상태로 전환 - 대기 시간 후 크론잡이 overdue로 변경
                     overdueDeadline: null, // 대기 중에는 overdue 데드라인 없음
                     overdueStartAt: null, // 대기 중에는 overdue 시작 시점 없음  
                     isFromWrongAnswer: true,
@@ -742,18 +776,18 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             console.log(`[SRS SERVICE] Hours diff: ${Math.round((waitingUntil.getTime() - now.getTime()) / (60 * 60 * 1000))}`);
             
         } else {
-            // 일반 상태에서 오답: 기존 로직 (stage 0 리셋)
-            newStage = 0;
+            // 일반 상태에서 오답: stage 0인 경우 stage 1로 올라가고, 나머지는 stage 0 리셋
+            newStage = calculatedStage;  // 계산된 stage 사용 (stage 0 → 1, 나머지 → 0)
             waitingUntil = calculatedWaitingUntil;
             nextReviewAt = calculatedNextReviewAt;
             
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
-                    stage: 0, // stage 0으로 리셋
-                    nextReviewAt: waitingUntil, // 24시간 후 복습 가능
+                    stage: newStage, // stage 0에서는 1로 올라가고, 나머지는 0으로 리셋
+                    nextReviewAt: waitingUntil,
                     waitingUntil: waitingUntil,
-                    isOverdue: false, // 대기상태 - 24시간 후 크론잡이 overdue로 변경
+                    isOverdue: false, // 대기상태 - 대기 시간 후 크론잡이 overdue로 변경
                     overdueDeadline: null, // 대기 중에는 overdue 데드라인 없음
                     overdueStartAt: null, // 대기 중에는 overdue 시작 시점 없음
                     isFromWrongAnswer: true,
@@ -762,7 +796,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 }
             });
             
-            console.log(`[SRS SERVICE] Wrong answer for card ${cardId} - reset to stage 0`);
+            console.log(`[SRS SERVICE] Wrong answer for card ${cardId} - stage ${card.stage} → ${newStage}`);
         }
     } else if (!canUpdateCardState && !correct) {
         // 카드 상태는 업데이트할 수 없지만 오답 통계는 업데이트
