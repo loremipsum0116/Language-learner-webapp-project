@@ -299,7 +299,7 @@ const { STAGE_DELAYS, computeNextReviewDate, isFinalStage } = require('../servic
 router.post('/folders', async (req, res, next) => {
     try {
         const userId = req.user.id;
-        const { name, vocabIds = [], parentId = null } = req.body;
+        const { name, vocabIds = [], parentId = null, learningCurveType = "long" } = req.body;
         if (!name || typeof name !== 'string' || name.trim().length === 0) {
             return fail(res, 400, 'A valid name is required.');
         }
@@ -308,7 +308,7 @@ router.post('/folders', async (req, res, next) => {
         if (parentId) {
             const parent = await prisma.srsfolder.findFirst({
                 where: { id: parentId, userId },
-                select: { id: true, date: true, kind: true }
+                select: { id: true, date: true, kind: true, learningCurveType: true }
             });
             if (!parent) {
                 return fail(res, 404, 'Parent folder not found.');
@@ -327,6 +327,7 @@ router.post('/folders', async (req, res, next) => {
                     stage: 0,
                     nextReviewDate: parent.date,
                     alarmActive: true,
+                    learningCurveType: parent.learningCurveType || "long", // 부모 폴더의 학습 곡선 타입 상속
                     updatedAt: new Date(),
                 },
                 select: {
@@ -343,7 +344,7 @@ router.post('/folders', async (req, res, next) => {
             return ok(res, folder);
         } else {
             // 최상위 폴더 생성 (기존 로직)
-            const folder = await createManualFolder(userId, name.trim(), vocabIds);
+            const folder = await createManualFolder(userId, name.trim(), vocabIds, learningCurveType);
 
             return ok(res, {
                 id: folder.id,
@@ -372,6 +373,7 @@ router.get('/dashboard', async (req, res, next) => {
                 createdDate: true,        
                 nextReviewDate: true,     
                 stage: true, alarmActive: true,
+                learningCurveType: true,
                 _count: { select: { srsfolderitem: true } },
             },
             orderBy: [
@@ -397,6 +399,7 @@ router.get('/dashboard', async (req, res, next) => {
                 nextReviewDate: topFolder.nextReviewDate,
                 stage: topFolder.stage,
                 alarmActive: topFolder.alarmActive,
+                learningCurveType: topFolder.learningCurveType, // 학습 곡선 타입 추가
                 total: totalItems, // 상위폴더 자체 카드는 0, 하위폴더들의 카드 합계만
                 hasChildren: children.length > 0,
                 childrenCount: children.length,
@@ -738,6 +741,7 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 createdDate: true,        // ★
                 nextReviewDate: true,     // ★
                 stage: true, alarmActive: true,
+                learningCurveType: true,  // 학습 곡선 타입 추가
             },
         });
         if (!folder) return fail(res, 404, 'Folder not found');
@@ -912,7 +916,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
         // 상위폴더 확인 (parentId가 null인 폴더)
         const parentFolder = await prisma.srsfolder.findFirst({
             where: { id, userId, parentId: null },
-            select: { id: true, name: true, createdDate: true, date: true, alarmActive: true },
+            select: { id: true, name: true, createdDate: true, date: true, alarmActive: true, learningCurveType: true },
         });
         if (!parentFolder) return fail(res, 404, 'Parent folder not found');
 
@@ -926,6 +930,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
                 nextReviewDate: true,
                 stage: true,
                 alarmActive: true,
+                learningCurveType: true,
                 _count: { select: { srsfolderitem: true } }
             },
             orderBy: [{ id: 'asc' }],
@@ -939,6 +944,7 @@ router.get('/folders/:id/children', async (req, res, next) => {
             nextReviewDate: c.nextReviewDate,
             stage: c.stage,
             alarmActive: c.alarmActive,
+            learningCurveType: c.learningCurveType,
             total: c._count.srsfolderitem,
             type: 'child' // 하위폴더 표시
         }));
@@ -1242,7 +1248,7 @@ router.delete('/folders/:id', async (req, res, next) => {
             
             // 폴더 아이템들과 폴더 삭제
             await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
-            await tx.srsFolder.delete({ where: { id } });
+            await tx.srsfolder.delete({ where: { id } });
             
             // ✅ 폴더별 독립성을 위해 오답노트 정리 로직 제거
             // 폴더 삭제 시에도 전역 SRS 카드나 오답노트는 건드리지 않음
@@ -1268,11 +1274,11 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
             let allVocabIds = [];
             
             for (const id of ids) {
-                const found = await tx.srsFolder.findFirst({ where: { id, userId }, select: { id: true } });
+                const found = await tx.srsfolder.findFirst({ where: { id, userId }, select: { id: true } });
                 if (!found) continue;
                 
                 // 삭제할 폴더들의 모든 아이템 수집
-                const children = await tx.srsFolder.findMany({ where: { parentId: id }, select: { id: true } });
+                const children = await tx.srsfolder.findMany({ where: { parentId: id }, select: { id: true } });
                 const childIds = children.map((c) => c.id);
                 const allFolderIds = [id, ...childIds];
                 
@@ -1286,10 +1292,10 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
                 // 폴더 삭제
                 if (childIds.length) {
                     await tx.srsfolderitem.deleteMany({ where: { folderId: { in: childIds } } });
-                    await tx.srsFolder.deleteMany({ where: { id: { in: childIds } } });
+                    await tx.srsfolder.deleteMany({ where: { id: { in: childIds } } });
                 }
                 await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
-                await tx.srsFolder.delete({ where: { id } });
+                await tx.srsfolder.delete({ where: { id } });
             }
             
             // 모든 삭제된 단어들에 대해 오답노트 정리

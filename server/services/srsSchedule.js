@@ -6,12 +6,16 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// SRS stages: 명세서에 따른 대기 시간 (시간 단위)
-// Stage 1: 48시간, Stage 2: 144시간, Stage 3: 14일, Stage 4: 30일, Stage 5: 60일, Stage 6: 120일
-const STAGE_WAITING_HOURS = [48, 144, 14*24, 30*24, 60*24, 120*24]; // 시간 단위
+// SRS stages: 기존 대기 시간에서 하루씩 차감된 대기 시간 (시간 단위)
+// Stage 1: 24시간(기존 48시간-24), Stage 2: 120시간(기존 144시간-24), Stage 3: 13일, Stage 4: 29일, Stage 5: 59일, Stage 6: 119일
+const STAGE_WAITING_HOURS = [24, 120, 13*24, 29*24, 59*24, 119*24]; // 시간 단위
 
-// 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용)
-const STAGE_DELAYS = [3, 7, 14, 30, 60, 120];
+// 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용) - 하루씩 차감
+const STAGE_DELAYS = [2, 6, 13, 29, 59, 119];
+
+// 단기 스퍼트 곡선: 2일 간격으로 10회 반복 (Stage 10에서 마스터)
+const SHORT_CURVE_DELAYS = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2]; // 10 stages all with 2 days
+const SHORT_CURVE_WAITING_HOURS = [48, 48, 48, 48, 48, 48, 48, 48, 48, 48]; // 10 stages all with 48 hours (2 days)
 
 function clampStage(stage) {
   return Math.max(0, Math.min(stage, STAGE_WAITING_HOURS.length));
@@ -21,21 +25,28 @@ function isMaxStage(stage) {
   return clampStage(stage) === STAGE_WAITING_HOURS.length;
 }
 
-function isFinalStage(stage) {
+function isFinalStage(stage, learningCurveType = "long") {
+  if (learningCurveType === "short") {
+    return stage >= SHORT_CURVE_WAITING_HOURS.length - 1; // Stage 9 is final for short curve (10 stages total, 0-9)
+  }
   return stage >= STAGE_WAITING_HOURS.length - 1; // Stage 5 is final (120 days)
 }
 
-function delayDaysFor(stage) {
-  // 폴더 시스템을 위한 일수 계산 (기존 방식 유지)
-  // stage 0: 즉시 복습 (새 단어/오답)
-  // stage 1: 3일 후, stage 2: 7일 후, ..., stage 6: 120일 후
+function delayDaysFor(stage, learningCurveType = "long") {
+  // 폴더 시스템을 위한 일수 계산
   if (stage <= 0) {
     return 0; // 즉시 복습
   }
   
-  const index = Math.min(stage - 1, STAGE_DELAYS.length - 1);
-  console.log(`[SRS SCHEDULE] delayDaysFor stage ${stage} -> index ${index} -> ${STAGE_DELAYS[index]} days`);
-  return STAGE_DELAYS[index];
+  if (learningCurveType === "short") {
+    const index = Math.min(stage - 1, SHORT_CURVE_DELAYS.length - 1);
+    console.log(`[SRS SCHEDULE] delayDaysFor (SHORT) stage ${stage} -> index ${index} -> ${SHORT_CURVE_DELAYS[index]} days`);
+    return SHORT_CURVE_DELAYS[index];
+  } else {
+    const index = Math.min(stage - 1, STAGE_DELAYS.length - 1);
+    console.log(`[SRS SCHEDULE] delayDaysFor (LONG) stage ${stage} -> index ${index} -> ${STAGE_DELAYS[index]} days`);
+    return STAGE_DELAYS[index];
+  }
 }
 
 function dateOnlyUTC(yyyy_mm_dd) {
@@ -54,9 +65,9 @@ function addDaysUTC(date, days) {
  * stage=1 ⇒ +3d, stage=2 ⇒ +7d, ... capped at 120.
  * Returns Date at 00:00:00Z (treat as date-only).
  */
-function computeNextReviewDate(baseDate, stage) {
-  const delay = delayDaysFor(stage);
-  console.log(`[SRS SCHEDULE] computeNextReviewDate: stage ${stage} -> +${delay} days from ${baseDate.toISOString().split('T')[0]}`);
+function computeNextReviewDate(baseDate, stage, learningCurveType = "long") {
+  const delay = delayDaysFor(stage, learningCurveType);
+  console.log(`[SRS SCHEDULE] computeNextReviewDate (${learningCurveType}): stage ${stage} -> +${delay} days from ${baseDate.toISOString().split('T')[0]}`);
   return addDaysUTC(baseDate, delay);
 }
 
@@ -65,8 +76,8 @@ function computeNextReviewDate(baseDate, stage) {
  * 명세서에 따른 직접적인 대기 시간을 적용합니다.
  * Stage 1: 48시간, Stage 2: 144시간, Stage 3: 14일, Stage 4: 30일, Stage 5: 60일, Stage 6: 120일
  */
-function computeWaitingPeriod(stage) {
-  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}`);
+function computeWaitingPeriod(stage, learningCurveType = "long") {
+  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}, curve=${learningCurveType}`);
   
   // Stage 0은 즉시 복습 가능 (대기 시간 없음)
   if (stage === 0) {
@@ -74,32 +85,44 @@ function computeWaitingPeriod(stage) {
     return 0;
   }
   
-  // Stage 1부터는 명세서에 정의된 대기 시간을 직접 적용
-  if (stage >= 1 && stage <= STAGE_WAITING_HOURS.length) {
-    const waitingHours = STAGE_WAITING_HOURS[stage - 1]; // stage 1은 인덱스 0
-    console.log(`[SRS SCHEDULE] Stage ${stage} -> ${waitingHours} hours waiting`);
+  if (learningCurveType === "short") {
+    // 단기 스퍼트 곡선: 모든 단계에서 3일(72시간) 대기
+    if (stage >= 1 && stage <= SHORT_CURVE_WAITING_HOURS.length) {
+      const waitingHours = SHORT_CURVE_WAITING_HOURS[stage - 1];
+      console.log(`[SRS SCHEDULE] SHORT Stage ${stage} -> ${waitingHours} hours waiting`);
+      return waitingHours;
+    }
+    // 범위를 벗어나면 마지막 단계 적용
+    const waitingHours = SHORT_CURVE_WAITING_HOURS[SHORT_CURVE_WAITING_HOURS.length - 1];
+    console.log(`[SRS SCHEDULE] SHORT Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
+    return waitingHours;
+  } else {
+    // 기존 장기 학습 곡선
+    if (stage >= 1 && stage <= STAGE_WAITING_HOURS.length) {
+      const waitingHours = STAGE_WAITING_HOURS[stage - 1]; // stage 1은 인덱스 0
+      console.log(`[SRS SCHEDULE] LONG Stage ${stage} -> ${waitingHours} hours waiting`);
+      return waitingHours;
+    }
+    // 범위를 벗어나면 마지막 단계 적용
+    const waitingHours = STAGE_WAITING_HOURS[STAGE_WAITING_HOURS.length - 1];
+    console.log(`[SRS SCHEDULE] LONG Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
     return waitingHours;
   }
-  
-  // 범위를 벗어나면 마지막 단계 적용
-  const waitingHours = STAGE_WAITING_HOURS[STAGE_WAITING_HOURS.length - 1];
-  console.log(`[SRS SCHEDULE] Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
-  return waitingHours;
 }
 
 /**
  * 대기 시간 종료 시각을 계산합니다. (가속 적용)
  */
-function computeWaitingUntil(baseDate, stage) {
+function computeWaitingUntil(baseDate, stage, learningCurveType = "long") {
   try {
     const { getAcceleratedStageWaitTime } = require('../routes/timeAccelerator');
-    const acceleratedMs = getAcceleratedStageWaitTime(stage);
+    const acceleratedMs = getAcceleratedStageWaitTime(stage, learningCurveType);
     const result = new Date(baseDate.getTime() + acceleratedMs);
     
-    const originalHours = computeWaitingPeriod(stage);
+    const originalHours = computeWaitingPeriod(stage, learningCurveType);
     const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
     
-    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (ACCELERATED): stage ${stage}`);
+    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (ACCELERATED): stage ${stage}, curve=${learningCurveType}`);
     console.log(`  Original: +${originalHours} hours`);
     console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
     console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
@@ -107,9 +130,9 @@ function computeWaitingUntil(baseDate, stage) {
     return result;
   } catch (e) {
     // 가속 시스템 실패 시 원본 로직 사용
-    const waitingHours = computeWaitingPeriod(stage);
+    const waitingHours = computeWaitingPeriod(stage, learningCurveType);
     const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
-    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (FALLBACK): stage ${stage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (FALLBACK): stage ${stage}, curve=${learningCurveType} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
     return result;
   }
 }
@@ -166,6 +189,8 @@ function computeOverdueDeadline(overdueStartTime) {
 
 module.exports = {
   STAGE_DELAYS,
+  SHORT_CURVE_DELAYS,
+  SHORT_CURVE_WAITING_HOURS,
   clampStage,
   isMaxStage,
   isFinalStage,

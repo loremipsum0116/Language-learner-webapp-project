@@ -28,7 +28,8 @@
       "Bash(npx tsc:*)",
       "Bash(rg:*)",
       "Bash(del check_wrong_answers.js)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(mysql:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

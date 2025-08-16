@@ -138,6 +138,7 @@ model srsfolder {
   date                DateTime        @default(now())
   createdAt           DateTime        @default(now())
   updatedAt           DateTime
+  learningCurveType   String          @default("long")
   reminderMask        Int             @default(0)
   completedWordsCount Int             @default(0)
   isCompleted         Boolean         @default(false)

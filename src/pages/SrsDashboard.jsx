@@ -27,6 +27,7 @@ export default function SrsDashboard() {
     const [folders, setFolders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newFolderName, setNewFolderName] = useState("");
+    const [learningCurveType, setLearningCurveType] = useState("long"); // "long" 또는 "short"
     const [streakInfo, setStreakInfo] = useState(null);
     const [wrongAnswersCount, setWrongAnswersCount] = useState(0);
     const [srsStatus, setSrsStatus] = useState(null);
@@ -77,9 +78,14 @@ export default function SrsDashboard() {
             await fetchJSON("/srs/folders", withCreds({
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, parentId: null }), // 최상위 폴더 생성
+                body: JSON.stringify({ 
+                    name, 
+                    parentId: null, // 최상위 폴더 생성
+                    learningCurveType: learningCurveType // 학습 곡선 타입 추가
+                }),
             }));
             setNewFolderName("");
+            setLearningCurveType("long"); // 기본값으로 리셋
             await reload();
         } catch (e) {
             alert(`폴더 생성 실패: ${e.message || "Unknown error"}`);
@@ -250,16 +256,96 @@ export default function SrsDashboard() {
                 </div>
             )}
 
-            <form onSubmit={handleCreateFolder} className="d-flex gap-2 mb-4">
-                <input
-                    type="text"
-                    className="form-control"
-                    placeholder="새 학습 폴더 이름..."
-                    value={newFolderName}
-                    onChange={(e) => setNewFolderName(e.target.value)}
-                />
-                <button type="submit" className="btn btn-primary">만들기</button>
-            </form>
+            {/* 폴더 생성 폼 */}
+            <div className="card mb-4">
+                <div className="card-header">
+                    <h5 className="card-title mb-0">🆕 새 학습 폴더 만들기</h5>
+                </div>
+                <div className="card-body">
+                    <form onSubmit={handleCreateFolder}>
+                        <div className="row g-3">
+                            <div className="col-md-8">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    placeholder="새 학습 폴더 이름..."
+                                    value={newFolderName}
+                                    onChange={(e) => setNewFolderName(e.target.value)}
+                                    required
+                                />
+                            </div>
+                            <div className="col-md-4">
+                                <button type="submit" className="btn btn-primary w-100">만들기</button>
+                            </div>
+                        </div>
+                        
+                        <div className="mt-3">
+                            <label className="form-label">
+                                <strong>📊 학습 곡선 선택 (중요!)</strong>
+                                <small className="text-muted ms-2">- 폴더 생성 후 변경 불가</small>
+                            </label>
+                                <div className="row g-3">
+                                    <div className="col-md-6">
+                                        <div className={`card h-100 ${learningCurveType === 'long' ? 'border-primary bg-light' : ''}`}>
+                                            <div className="card-body p-3">
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="learningCurve"
+                                                        id="longCurve"
+                                                        value="long"
+                                                        checked={learningCurveType === 'long'}
+                                                        onChange={(e) => setLearningCurveType(e.target.value)}
+                                                    />
+                                                    <label className="form-check-label" htmlFor="longCurve">
+                                                        <strong>🐢 장기 학습 곡선 (추천)</strong>
+                                                    </label>
+                                                </div>
+                                                <small className="text-muted d-block mt-2">
+                                                    2일 → 6일 → 13일 → 29일 → 59일 → 119일<br/>
+                                                    <strong>Stage 6</strong>에서 마스터 완료<br/>
+                                                    망각곡선에 최적화된 장기 기억
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <div className={`card h-100 ${learningCurveType === 'short' ? 'border-warning bg-light' : ''}`}>
+                                            <div className="card-body p-3">
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="learningCurve"
+                                                        id="shortCurve"
+                                                        value="short"
+                                                        checked={learningCurveType === 'short'}
+                                                        onChange={(e) => setLearningCurveType(e.target.value)}
+                                                    />
+                                                    <label className="form-check-label" htmlFor="shortCurve">
+                                                        <strong>🐰 단기 스퍼트 곡선</strong>
+                                                    </label>
+                                                </div>
+                                                <small className="text-muted d-block mt-2">
+                                                    2일 간격으로 10회 반복<br/>
+                                                    <strong>Stage 10</strong>에서 마스터 완료<br/>
+                                                    빠른 집중 학습 선호자용
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-2">
+                                    <small className="text-muted">
+                                        💡 <strong>팁:</strong> 장기 학습 곡선은 망각곡선 이론에 기반하여 장기 기억에 최적화되어 있습니다. 
+                                        단기 스퍼트 곡선은 시험 준비 등 빠른 암기가 필요한 경우에 적합합니다. 어떤 곡선을 택하든, 자율 복습은 언제든지 가능합니다!
+                                    </small>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             {loading ? <div className="spinner-border" /> : (
                 <div className="list-group">
@@ -278,6 +364,8 @@ export default function SrsDashboard() {
                                                 {f.type === 'parent' && <span className="badge bg-primary ms-2">상위폴더</span>}
                                                 {f.kind === 'manual' && !f.isMastered && !f.type && <span className="badge bg-secondary ms-2">수동</span>}
                                                 {f.kind === 'review' && !f.isMastered && !f.type && <span className="badge bg-info ms-2">복습</span>}
+                                                {f.learningCurveType === 'short' && !f.type && <span className="badge bg-warning ms-2">🐰 단기</span>}
+                                                {f.learningCurveType === 'long' && !f.type && <span className="badge bg-primary ms-2">🐢 장기</span>}
                                                 {f.isMastered && <span className="badge bg-warning text-dark ms-2">🏆 마스터</span>}
                                                 {f.isCompleted && !f.isMastered && <span className="badge bg-success ms-2">완료</span>}
                                             </h5>

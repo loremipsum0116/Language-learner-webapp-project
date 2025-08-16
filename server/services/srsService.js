@@ -17,7 +17,7 @@ const OFFSETS = [0, ...STAGE_DELAYS];
 /**
  * 수동으로 새 학습 폴더를 생성합니다.
  */
-async function createManualFolder(userId, folderName, vocabIds = []) {
+async function createManualFolder(userId, folderName, vocabIds = [], learningCurveType = "long") {
     // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, UTC 기준 자정으로 변환
     const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
     const todayUtcDate = new Date(todayKst + 'T00:00:00.000Z'); // UTC 기준 자정으로 저장
@@ -36,6 +36,7 @@ async function createManualFolder(userId, folderName, vocabIds = []) {
             autoCreated: false,
             alarmActive: true,
             stage: 0, // 초기 단계
+            learningCurveType: learningCurveType, // 학습 곡선 타입 저장
             updatedAt: new Date(), // updatedAt 필드 추가
         },
     });
@@ -96,9 +97,9 @@ async function completeFolderAndScheduleNext(folderId, userId) {
     const nextStage = folder.stage + 1;
     const { isFinalStage } = require('./srsSchedule');
     
-    // 120일 사이클 완료 체크 (Stage 5 완료)
-    if (isFinalStage(folder.stage)) {
-        // 120일 사이클 완료 - 마스터 상태로 변경
+    // 마스터 완료 체크 (학습 곡선 타입에 따라 다름)
+    if (isFinalStage(folder.stage, folder.learningCurveType)) {
+        // 마스터 사이클 완료 - 마스터 상태로 변경
         const completionCount = (folder.completionCount || 0) + 1;
         
         await prisma.srsfolder.update({
@@ -129,7 +130,7 @@ async function completeFolderAndScheduleNext(folderId, userId) {
     }
     
     // 일반적인 다음 단계 진행
-    const nextReviewDate = computeNextReviewDate(folder.cycleAnchorAt, nextStage);
+    const nextReviewDate = computeNextReviewDate(folder.cycleAnchorAt, nextStage, folder.learningCurveType);
     
     // 다음 복습 폴더 생성
     const nextFolder = await prisma.srsfolder.create({
@@ -438,6 +439,18 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     
     if (!card) throw new Error('카드를 찾을 수 없습니다.');
     
+    // 폴더의 학습 곡선 타입 조회
+    let learningCurveType = "long"; // 기본값
+    if (card.folderId) {
+        const folder = await prisma.srsfolder.findFirst({
+            where: { id: card.folderId },
+            select: { learningCurveType: true }
+        });
+        if (folder && folder.learningCurveType) {
+            learningCurveType = folder.learningCurveType;
+        }
+    }
+    
     // vocabId가 전달되지 않은 경우 카드에서 조회
     if (!vocabId && card.itemType === 'vocab') {
         vocabId = card.itemId;
@@ -501,19 +514,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     console.log(`[SRS SERVICE] Calculating next state: current stage=${card.stage}, correct=${correct}`);
     
     if (correct) {
-        // 정답 시 다음 상태 계산
-        calculatedStage = Math.min(card.stage + 1, 6);
+        // 정답 시 다음 상태 계산 (학습 곡선 타입에 따라 최대 스테이지가 다름)
+        const maxStage = learningCurveType === "short" ? 10 : 6;
+        calculatedStage = Math.min(card.stage + 1, maxStage);
         
-        if (card.stage === 6) {
+        // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
+        const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
+                                   (learningCurveType === "long" && card.stage === 5);
+        
+        if (isFinalStageReached) {
             // 마스터 완료 시
             calculatedStage = 0;
             calculatedWaitingUntil = null;
             calculatedNextReviewAt = null;
-            console.log(`[SRS SERVICE] Mastery achieved - resetting to stage 0`);
+            console.log(`[SRS SERVICE] Mastery achieved (${learningCurveType} curve) - resetting to stage 0`);
         } else {
             // Stage별 차별화된 대기 시간 적용
-            const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(calculatedStage);
-            console.log(`[SRS SERVICE] Correct answer waiting period calculation: stage ${card.stage} → ${calculatedStage}, waitingPeriod: ${waitingPeriod} hours`);
+            const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(calculatedStage, learningCurveType);
+            console.log(`[SRS SERVICE] Correct answer waiting period calculation: stage ${card.stage} → ${calculatedStage}, waitingPeriod: ${waitingPeriod} hours (${learningCurveType} curve)`);
             
             if (waitingPeriod === 0) {
                 // Stage 0: 즉시 복습 가능
@@ -522,7 +540,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 console.log(`[SRS SERVICE] Stage 0 → immediate review available`);
             } else {
                 // Stage 1 이상: 망각곡선에 따른 대기 시간
-                calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage);
+                calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage, learningCurveType);
                 calculatedNextReviewAt = calculatedWaitingUntil; // 대기 완료 후 복습 가능
                 console.log(`[SRS SERVICE] Stage ${calculatedStage} → waiting until: ${calculatedWaitingUntil?.toISOString()}`);
             }
@@ -547,8 +565,11 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         if (card.isFromWrongAnswer) {
             // 오답 단어가 정답을 맞춘 경우 → 현재 stage + 1로 업그레이드
             
-            // Stage 6에서 정답 시 120일 마스터 완료 처리
-            if (card.stage === 6) {
+            // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
+            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
+                                       (learningCurveType === "long" && card.stage === 5);
+            
+            if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
                 await prisma.srscard.update({
@@ -569,18 +590,19 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     }
                 });
                 
-                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Wrong answer card ${cardId} completed 120-day cycle`);
+                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Wrong answer card ${cardId} completed ${learningCurveType} curve cycle`);
                 newStage = 0; // 변수 업데이트
                 waitingUntil = null;
                 nextReviewAt = null;
                 
             } else {
                 // 오답 단어: 현재 stage + 1로 업그레이드하고 해당 stage의 대기시간 설정
-                const upgradedStage = Math.min(card.stage + 1, 6);
+                const maxStage = learningCurveType === "short" ? 10 : 6;
+                const upgradedStage = Math.min(card.stage + 1, maxStage);
                 const { computeWaitingUntil, computeWaitingPeriod } = require('./srsSchedule');
                 
                 let newWaitingUntil, newNextReviewAt;
-                const waitingPeriod = computeWaitingPeriod(upgradedStage);
+                const waitingPeriod = computeWaitingPeriod(upgradedStage, learningCurveType);
                 
                 if (waitingPeriod === 0) {
                     // Stage 0: 즉시 복습 가능
@@ -588,7 +610,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = null;
                 } else {
                     // Stage 1 이상: 망각곡선에 따른 대기 시간
-                    newWaitingUntil = computeWaitingUntil(now, upgradedStage);
+                    newWaitingUntil = computeWaitingUntil(now, upgradedStage, learningCurveType);
                     newNextReviewAt = newWaitingUntil;
                 }
                 
@@ -618,8 +640,11 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         } else {
             // 일반 단어가 정답을 맞춘 경우 → stage 증가 후 해당 stage의 대기시간 설정
             
-            // Stage 6에서 정답 시 120일 마스터 완료 처리
-            if (card.stage === 6) {
+            // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
+            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
+                                       (learningCurveType === "long" && card.stage === 5);
+            
+            if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
                 await prisma.srscard.update({
@@ -638,18 +663,19 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     }
                 });
                 
-                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Normal card ${cardId} completed 120-day cycle`);
+                console.log(`[SRS SERVICE] 🌟 MASTERY ACHIEVED! Normal card ${cardId} completed ${learningCurveType} curve cycle`);
                 newStage = 0; // 변수 업데이트
                 waitingUntil = null;
                 nextReviewAt = null;
                 
             } else {
                 // 일반 카드: 현재 stage + 1로 업그레이드하고 해당 stage의 대기시간 설정
-                const upgradedStage = Math.min(card.stage + 1, 6);
+                const maxStage = learningCurveType === "short" ? 10 : 6;
+                const upgradedStage = Math.min(card.stage + 1, maxStage);
                 const { computeWaitingUntil, computeWaitingPeriod } = require('./srsSchedule');
                 
                 let newWaitingUntil, newNextReviewAt;
-                const waitingPeriod = computeWaitingPeriod(upgradedStage);
+                const waitingPeriod = computeWaitingPeriod(upgradedStage, learningCurveType);
                 
                 if (waitingPeriod === 0) {
                     // Stage 0: 즉시 복습 가능
@@ -657,7 +683,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = null;
                 } else {
                     // Stage 1 이상: 망각곡선에 따른 대기 시간
-                    newWaitingUntil = computeWaitingUntil(now, upgradedStage);
+                    newWaitingUntil = computeWaitingUntil(now, upgradedStage, learningCurveType);
                     newNextReviewAt = newWaitingUntil;
                 }
                 

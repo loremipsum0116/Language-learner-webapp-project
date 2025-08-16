@@ -162,7 +162,9 @@ export default function SrsParentFolder() {
                                             to={`/srs/folder/${child.id}`}
                                             className="text-decoration-none"
                                         >
-                                            <h6 className="mb-1">📄 {child.name}</h6>
+                                            <h6 className="mb-1">
+                                                {child.learningCurveType === 'short' ? '🐰' : '🐢'} {child.name}
+                                            </h6>
                                             <small className="text-muted">
                                                 생성일: {fmt(child.createdDate)}
                                                 <span className="mx-2">|</span>

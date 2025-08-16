@@ -207,7 +207,9 @@ export default function SrsFolderDetail() {
             {/* 헤더 */}
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
-                    <h4 className="mb-1">{folder.name}</h4>
+                    <h4 className="mb-1">
+                        {folder.learningCurveType === 'short' ? '🐰' : '🐢'} {folder.name}
+                    </h4>
                     <small className="text-muted">
                         생성일: <strong>{fmt(created)}</strong>
                         <span className="mx-2">|</span>

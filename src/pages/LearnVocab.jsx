@@ -97,6 +97,9 @@ export default function LearnVocab() {
     const [maxAttempts] = useState(3);
     const [showSpellingWarning, setShowSpellingWarning] = useState(false);
     
+    // 오답 추적 상태
+    const [wrongAnswerCards, setWrongAnswerCards] = useState([]);
+    
     // 설정 상태
     const [maxPlayCount, setMaxPlayCount] = useState(3);
     const [flipInterval, setFlipInterval] = useState(5000); // 5초 기본값
@@ -580,6 +583,15 @@ export default function LearnVocab() {
                     }));
                     
                     setFeedback({ status: data?.status ?? 'fail', answer: correctAnswer });
+                    
+                    // 오답인 경우 wrongAnswerCards에 추가
+                    setWrongAnswerCards(prev => {
+                        const cardExists = prev.some(card => card.cardId === current.cardId || card.vocabId === current.vocabId);
+                        if (!cardExists) {
+                            return [...prev, current];
+                        }
+                        return prev;
+                    });
                 } catch (e) {
                     console.error('답변 제출 실패:', e);
                     toast.error(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
@@ -662,6 +674,17 @@ export default function LearnVocab() {
             }
             
             setFeedback({ status: data?.status ?? (isCorrect ? 'pass' : 'fail'), answer: current.answer });
+            
+            // 오답인 경우 wrongAnswerCards에 추가
+            if (!isCorrect) {
+                setWrongAnswerCards(prev => {
+                    const cardExists = prev.some(card => card.cardId === current.cardId || card.vocabId === current.vocabId);
+                    if (!cardExists) {
+                        return [...prev, current];
+                    }
+                    return prev;
+                });
+            }
         } catch (e) {
             console.error('답변 제출 실패:', e);
             toast.error(`답변 제출 실패: ${e.message || 'Internal Server Error'}`);
@@ -1005,6 +1028,23 @@ export default function LearnVocab() {
                         <div className="d-flex flex-wrap justify-content-center gap-3 mt-4">
                             
                             <button className="btn btn-outline-secondary" onClick={handleRestart}>다시 학습하기</button>
+                            
+                            {/* 오답문제 다시 학습 버튼 */}
+                            {wrongAnswerCards.length > 0 && (
+                                <button className="btn btn-warning" onClick={() => {
+                                    // 오답 카드들로 새로운 학습 세션 시작
+                                    setQueue(wrongAnswerCards);
+                                    setWrongAnswerCards([]); // 초기화
+                                    setIdx(0);
+                                    setAnswer(null);
+                                    setFeedback(null);
+                                    setSpellingInput('');
+                                    setAttemptCount(0);
+                                    setShowSpellingWarning(false);
+                                }}>
+                                    오답문제 다시 학습 ({wrongAnswerCards.length}개)
+                                </button>
+                            )}
 
                             {/* SRS 폴더에서 온 자동학습이 아닌 경우에만 "폴더에 저장" 버튼 표시 */}
                             {(mode === 'flash' || !!idsParam) && !folderIdParam && (
