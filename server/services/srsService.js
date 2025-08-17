@@ -6,7 +6,8 @@ const {
   computeWaitingUntil,
   computeWrongAnswerWaitingUntil,
   computeOverdueDeadline,
-  STAGE_DELAYS 
+  STAGE_DELAYS,
+  isFinalStage
 } = require('./srsSchedule');
 const { startOfKstDay, addKstDays, isCardInWaitingPeriod, isCardOverdue, isCardFrozen, hasOverdueCards } = require('./srsJobs');
 const dayjs = require('dayjs');
@@ -95,8 +96,6 @@ async function completeFolderAndScheduleNext(folderId, userId) {
     
     // 다음 복습 단계 계산
     const nextStage = folder.stage + 1;
-    const { isFinalStage } = require('./srsSchedule');
-    
     // 마스터 완료 체크 (학습 곡선 타입에 따라 다름)
     if (isFinalStage(folder.stage, folder.learningCurveType)) {
         // 마스터 사이클 완료 - 마스터 상태로 변경
@@ -534,8 +533,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             calculatedStage = Math.min(card.stage + 1, maxStage);
             
             // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
-            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
-                                       (learningCurveType === "long" && card.stage === 5);
+            const isFinalStageReached = isFinalStage(card.stage, learningCurveType);
             
             if (isFinalStageReached) {
                 // 마스터 완료 시
@@ -617,8 +615,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // 오답 단어가 정답을 맞춘 경우 → 현재 stage + 1로 업그레이드
             
             // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
-            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
-                                       (learningCurveType === "long" && card.stage === 5);
+            const isFinalStageReached = isFinalStage(card.stage, learningCurveType);
             
             if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
@@ -692,8 +689,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // 일반 단어가 정답을 맞춘 경우 → stage 증가 후 해당 stage의 대기시간 설정
             
             // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
-            const isFinalStageReached = (learningCurveType === "short" && card.stage === 9) || 
-                                       (learningCurveType === "long" && card.stage === 5);
+            const isFinalStageReached = isFinalStage(card.stage, learningCurveType);
             
             if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정

@@ -109,7 +109,7 @@ router.post('/answer', async (req, res, next) => {
         }
         
         // 성공적인 응답
-        return ok(res, {
+        const response = ok(res, {
             correct: result.status === 'correct',
             stage: result.newStage,
             waitingUntil: result.waitingUntil,
@@ -117,6 +117,20 @@ router.post('/answer', async (req, res, next) => {
             streakInfo: result.streakInfo,
             canReview: true
         });
+        
+        // 퀴즈 답변 처리 후 즉시 크론잡 실행하여 상태 업데이트
+        try {
+            const { manageOverdueCards } = require('../services/srsJobs');
+            setImmediate(() => {
+                manageOverdueCards().catch(error => {
+                    console.error('[QUIZ ANSWER] Auto cron execution failed:', error);
+                });
+            });
+        } catch (e) {
+            console.error('[QUIZ ANSWER] Failed to trigger auto cron:', e);
+        }
+        
+        return response;
 
         /*
         // 기존 트랜잭션 코드 - 새 로직으로 대체됨

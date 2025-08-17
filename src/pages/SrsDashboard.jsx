@@ -311,8 +311,8 @@ export default function SrsDashboard() {
                                                     </label>
                                                 </div>
                                                 <small className="text-muted d-block mt-2">
-                                                    1시간 → 1일 → 6일 → 13일 → 29일 → 44일<br/>
-                                                    <strong>6단계</strong>에서 마스터 완료<br/>
+                                                    1시간 → 1일 → 3일 → 7일 → 13일 → 29일 → 60일<br/>
+                                                    <strong>7단계</strong>에서 마스터 완료<br/>
                                                     점진적 간격 확장으로 장기 기억 형성
                                                 </small>
                                             </div>

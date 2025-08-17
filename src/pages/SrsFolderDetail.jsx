@@ -296,52 +296,51 @@ export default function SrsFolderDetail() {
                                 ? '스퍼트 곡선 (10단계, 빠른 반복)' 
                                 : folder.learningCurveType === 'free'
                                 ? '자율 모드 (타이머 없음, 자유 학습)'
-                                : '장기 곡선 (6단계, 점진적 확장)'
+                                : '장기 곡선 (7단계, 점진적 확장)'
                             }
                         </span>
                     </h4>
                     <small className="text-muted">
-                        생성일: <strong>{fmt(created)}</strong>
+                        생성일: {fmt(created)}
                         <span className="mx-2">|</span>
                         {folder.learningCurveType === 'free' ? (
                             // 자율학습모드용 통계
                             <>
                                 단어 {items.length}개
                                 <span className="mx-2">|</span>
-                                정답한 단어 <span className="text-success">{items.filter(item => {
+                                정답한 단어 {items.filter(item => {
                                     // 마지막 학습이 정답인 단어들
                                     if (!item.lastReviewedAt) return false;
                                     if (!item.lastWrongAt) return true;
                                     return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
-                                }).length}개</span>
+                                }).length}개
                                 <span className="mx-2">|</span>
-                                오답한 단어 <span className="text-danger">{items.filter(item => {
+                                오답한 단어 {items.filter(item => {
                                     // 마지막 학습이 오답인 단어들
                                     if (!item.lastWrongAt) return false;
                                     if (!item.lastReviewedAt) return true;
                                     return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
-                                }).length}개</span>
+                                }).length}개
                                 <span className="mx-2">|</span>
-                                미학습 <span className="text-muted">{items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length}개</span>
+                                미학습 {items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length}개
                             </>
                         ) : (
                             // 일반 SRS 모드용 통계
                             <>
                                 학습곡선: <strong>{folder.learningCurveType === 'short' 
                                     ? '2일 간격 고정 반복 (단기 집중형)' 
-                                    : '1시간→1일→6일→13일→29일→44일 (장기 기억형)'
+                                    : '1시간→1일→3일→7일→13일→29일→60일 (장기 기억형)'
                                 }</strong>
                                 <span className="mx-2">|</span>
                                 단어 {items.length}개
                                 <span className="mx-2">|</span>
-                                복습 <span className="text-warning">{reviewWaitingCount}개</span>
+                                복습 {reviewWaitingCount}개
                                 <span className="mx-2">|</span>
-                                미학습 <span className="text-info">{learningWaitingCount}개</span>
+                                미학습 {learningWaitingCount}개
                                 <span className="mx-2">|</span>
-                                오답 <span className="text-danger">{wrongAnswerCount}개</span>
+                                오답 {wrongAnswerCount}개
                                 <span className="mx-2">|</span>
-                                동결 <span className="text-secondary">{frozenCount}개</span>
-                                <span className="mx-2">|</span>
+                                동결 {frozenCount}개
                             </>
                         )}
                 

@@ -25,7 +25,46 @@ export default function SrsParentFolder() {
         try {
             const { data } = await fetchJSON(`/srs/folders/${id}/children`, withCreds());
             setParentFolder(data.parentFolder);
-            setChildren(data.children || []);
+            
+            // 각 하위 폴더의 items를 가져와서 상세페이지와 동일한 계산 수행
+            const childrenWithStats = await Promise.all(
+                (data.children || []).map(async (child) => {
+                    if (child.learningCurveType === 'free') {
+                        try {
+                            const folderData = await SrsApi.getFolderItems(child.id);
+                            const items = folderData?.quizItems ?? folderData?.items ?? [];
+                            
+                            // 상세페이지와 동일한 계산 로직
+                            const correctWords = items.filter(item => {
+                                if (!item.lastReviewedAt) return false;
+                                if (!item.lastWrongAt) return true;
+                                return new Date(item.lastReviewedAt) > new Date(item.lastWrongAt);
+                            }).length;
+                            
+                            const wrongAnswers = items.filter(item => {
+                                if (!item.lastWrongAt) return false;
+                                if (!item.lastReviewedAt) return true;
+                                return new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt);
+                            }).length;
+                            
+                            const learningWaiting = items.filter(item => !item.lastReviewedAt && !item.lastWrongAt).length;
+                            
+                            return {
+                                ...child,
+                                correctWords,
+                                wrongAnswers,
+                                learningWaiting
+                            };
+                        } catch (e) {
+                            console.error(`Failed to load items for folder ${child.id}:`, e);
+                            return child; // 실패시 원본 데이터 사용
+                        }
+                    }
+                    return child; // 자율모드가 아니면 원본 데이터 사용
+                })
+            );
+            
+            setChildren(childrenWithStats);
         } catch (e) {
             console.error('Failed to load parent folder:', e);
             alert('폴더를 불러오는데 실패했습니다.');
@@ -173,11 +212,11 @@ export default function SrsParentFolder() {
                                                 {child.learningCurveType === 'free' ? (
                                                     // 자율모드 통계
                                                     <>
-                                                        정답한 단어 <span className="text-success">{child.correctWords}개</span>
+                                                        정답한 단어 {child.correctWords}개
                                                         <span className="mx-2">|</span>
-                                                        오답한 단어 <span className="text-danger">{child.wrongAnswers}개</span>
+                                                        오답한 단어 {child.wrongAnswers}개
                                                         <span className="mx-2">|</span>
-                                                        미학습 <span className="text-muted">{child.learningWaiting}개</span>
+                                                        미학습 {child.learningWaiting}개
                                                     </>
                                                 ) : (
                                                     // 일반 SRS 모드 통계

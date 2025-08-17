@@ -44,9 +44,9 @@ function updateOverdueCronFrequency() {
             cronPattern = '*/1 * * * *';
             description = '1분마다 (가속 모드)';
         } else {
-            // 1x (실시간): 30초마다 실행 (즉각적 상태 전환)
-            cronPattern = '*/30 * * * * *';
-            description = '30초마다 (실시간)';
+            // 1x (실시간): 10초마다 실행 (즉각적 상태 전환)
+            cronPattern = '*/10 * * * * *';
+            description = '10초마다 (실시간)';
         }
         
         // 새로운 태스크 생성 및 시작
@@ -63,9 +63,9 @@ function updateOverdueCronFrequency() {
         
     } catch (e) {
         console.error('[cron] Failed to update overdue cron frequency:', e);
-        // 에러 시 기본 크론잡 사용 (30초마다)
+        // 에러 시 기본 크론잡 사용 (10초마다)
         if (!dynamicManageOverdueTask) {
-            dynamicManageOverdueTask = cron.schedule('*/30 * * * * *', () => {
+            dynamicManageOverdueTask = cron.schedule('*/10 * * * * *', () => {
                 manageOverdueCards().catch(console.error);
             }, { timezone: 'Asia/Seoul' });
         }

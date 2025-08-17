@@ -180,6 +180,7 @@ const TimeAcceleratorControl = ({ className = '' }) => {
         </div>
       </div>
 
+
       {/* 주의사항 */}
       <div className="mt-4 p-2 bg-yellow-50 border border-yellow-200 rounded text-xs text-yellow-800">
         ⚠️ 가속 모드는 테스트용입니다. 모든 SRS 타이머가 가속됩니다.

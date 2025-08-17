@@ -59,9 +59,9 @@ function getAcceleratedStageWaitTime(stage, learningCurveType = "long") {
             const originalHours = SHORT_CURVE_HOURS[stage - 1] || 48;
             return getAcceleratedTime(originalHours * 60 * 60 * 1000);
         } else {
-            // 장기 학습 곡선: [1시간, 24h, 144h, 312h, 696h, 1056h]
-            const LONG_CURVE_HOURS = [1, 24, 144, 312, 696, 1056];
-            const originalHours = LONG_CURVE_HOURS[stage - 1] || 1056;
+            // 장기 학습 곡선: [1시간, 24h, 72h, 168h, 312h, 696h, 1440h]
+            const LONG_CURVE_HOURS = [1, 24, 72, 168, 312, 696, 1440];
+            const originalHours = LONG_CURVE_HOURS[stage - 1] || 1440;
             return getAcceleratedTime(originalHours * 60 * 60 * 1000);
         }
     }
@@ -245,6 +245,37 @@ router.post('/preset', auth, async (req, res) => {
     } catch (e) {
         console.error('[TIME ACCELERATOR] Preset error:', e);
         return fail(res, 500, 'Failed to apply preset');
+    }
+});
+
+// 즉시 크론잡 실행 엔드포인트
+router.post('/trigger-cron', async (req, res) => {
+    try {
+        const { manageOverdueCards } = require('../services/srsJobs');
+        
+        console.log('[TIME ACCELERATOR] Manual cron trigger requested');
+        
+        // 즉시 overdue 관리 실행
+        await manageOverdueCards();
+        
+        // 크론잡 주기도 즉시 업데이트
+        try {
+            const { updateOverdueCronFrequency } = require('../cron/index');
+            if (typeof updateOverdueCronFrequency === 'function') {
+                updateOverdueCronFrequency();
+                console.log('[TIME ACCELERATOR] Updated cron frequency after manual trigger');
+            }
+        } catch (e) {
+            console.error('[TIME ACCELERATOR] Failed to update cron frequency:', e);
+        }
+        
+        return ok(res, {
+            message: 'Cron job executed successfully',
+            timestamp: new Date().toISOString()
+        });
+    } catch (e) {
+        console.error('[TIME ACCELERATOR] Manual cron trigger error:', e);
+        return fail(res, 500, 'Failed to execute cron job');
     }
 });
 

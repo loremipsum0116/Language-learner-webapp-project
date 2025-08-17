@@ -1006,6 +1006,14 @@ router.get('/folders/:id/children', async (req, res, next) => {
                     }
                 });
                 
+                console.log(`[DEBUG] Found ${items.length} items in folder ${childId}:`, items.map(item => ({
+                    vocabId: item.vocabId,
+                    lastReviewedAt: item.lastReviewedAt,
+                    lastWrongAt: item.lastWrongAt,
+                    learned: item.learned,
+                    wrongCount: item.wrongCount
+                })));
+                
                 const now = new Date();
                 let reviewWaiting = 0;
                 let learningWaiting = 0;
@@ -1021,15 +1029,22 @@ router.get('/folders/:id/children', async (req, res, next) => {
                         const hasLastReview = !!item.lastReviewedAt;
                         const hasLastWrong = !!item.lastWrongAt;
                         
+                        console.log(`[DEBUG] Item ${item.vocabId}: lastReviewedAt=${item.lastReviewedAt}, lastWrongAt=${item.lastWrongAt}`);
+                        
                         let lastState = 'unlearned'; // 기본값: 미학습
                         if (hasLastReview && hasLastWrong) {
                             // 둘 다 있으면 더 늦은 시간 기준
-                            lastState = new Date(item.lastReviewedAt) > new Date(item.lastWrongAt) ? 'correct' : 'wrong';
+                            lastState = new Date(item.lastWrongAt) >= new Date(item.lastReviewedAt) ? 'wrong' : 'correct';
+                            console.log(`[DEBUG] Both dates exist: ${item.lastReviewedAt} vs ${item.lastWrongAt} -> ${lastState}`);
                         } else if (hasLastReview) {
                             lastState = 'correct';
+                            console.log(`[DEBUG] Only review date exists -> correct`);
                         } else if (hasLastWrong) {
                             lastState = 'wrong';
+                            console.log(`[DEBUG] Only wrong date exists -> wrong`);
                         }
+                        
+                        console.log(`[DEBUG] Final state for item ${item.vocabId}: ${lastState}`);
                         
                         // 상태별 카운트
                         if (lastState === 'correct') {
@@ -1074,25 +1089,36 @@ router.get('/folders/:id/children', async (req, res, next) => {
             }
         }
 
-        const mapped = children.map((c) => ({
-            id: c.id,
-            name: c.name,
-            parentId: id,
-            createdDate: c.createdDate,
-            nextReviewDate: c.nextReviewDate,
-            stage: c.stage,
-            alarmActive: c.alarmActive,
-            learningCurveType: c.learningCurveType,
-            total: c._count.srsfolderitem,
-            type: 'child', // 하위폴더 표시
-            // 상태별 카드 개수 추가
-            reviewWaiting: childStats[c.id]?.reviewWaiting || 0,
-            learningWaiting: childStats[c.id]?.learningWaiting || 0,
-            wrongAnswers: childStats[c.id]?.wrongAnswers || 0,
-            frozen: childStats[c.id]?.frozen || 0,
-            stageWaiting: childStats[c.id]?.stageWaiting || 0,
-            correctWords: childStats[c.id]?.correctWords || 0
-        }));
+        const mapped = children.map((c) => {
+            const stats = childStats[c.id] || {};
+            const result = {
+                id: c.id,
+                name: c.name,
+                parentId: id,
+                createdDate: c.createdDate,
+                nextReviewDate: c.nextReviewDate,
+                stage: c.stage,
+                alarmActive: c.alarmActive,
+                learningCurveType: c.learningCurveType,
+                total: c._count.srsfolderitem,
+                type: 'child', // 하위폴더 표시
+                // 상태별 카드 개수 추가
+                reviewWaiting: stats.reviewWaiting || 0,
+                learningWaiting: stats.learningWaiting || 0,
+                wrongAnswers: stats.wrongAnswers || 0,
+                frozen: stats.frozen || 0,
+                stageWaiting: stats.stageWaiting || 0,
+                correctWords: stats.correctWords || 0
+            };
+            console.log(`[DEBUG] Child folder ${c.name} (${c.learningCurveType}):`, {
+                total: result.total,
+                correctWords: result.correctWords,
+                wrongAnswers: result.wrongAnswers,
+                learningWaiting: result.learningWaiting,
+                stats: stats
+            });
+            return result;
+        });
 
         return ok(res, { 
             parentFolder, 

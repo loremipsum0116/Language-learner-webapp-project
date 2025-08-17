@@ -6,12 +6,12 @@ const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-// 장기 학습 곡선 (long): Stage 0 → 1 → 2 → 3 → 4 → 5 → 마스터
-// 대기 시간: [즉시, 1시간, 24h, 144h, 312h, 696h, 1056h(마스터)]
-const STAGE_WAITING_HOURS = [1, 24, 144, 312, 696, 1056]; // 시간 단위
+// 장기 학습 곡선 (long): Stage 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 마스터
+// 대기 시간: [즉시, 1시간, 24h, 72h, 168h, 312h, 696h, 1440h, 마스터]
+const STAGE_WAITING_HOURS = [1, 24, 72, 168, 312, 696, 1440]; // 시간 단위
 
 // 기존 호환성을 위한 일수 배열 (폴더 시스템 등에서 사용)
-const STAGE_DELAYS = [1/24, 1, 6, 13, 29, 44]; // 시간을 일수로 변환
+const STAGE_DELAYS = [1/24, 1, 3, 7, 13, 29, 60]; // 시간을 일수로 변환
 
 // 단기 스퍼트 곡선 (short): Stage 0 → 1 → ... → 9 → 마스터
 // 대기 시간: [즉시, 1시간, 24h, 이후 모든 단계에서 2일(48h)]
@@ -33,7 +33,7 @@ function isFinalStage(stage, learningCurveType = "long") {
   if (learningCurveType === "short") {
     return stage >= SHORT_CURVE_WAITING_HOURS.length - 1; // Stage 9 is final for short curve (10 stages total, 0-9)
   }
-  return stage >= STAGE_WAITING_HOURS.length - 1; // Stage 5 is final (120 days)
+  return stage > STAGE_WAITING_HOURS.length; // Stage 7 완료 후 마스터 (60 days)
 }
 
 function delayDaysFor(stage, learningCurveType = "long") {

@@ -595,7 +595,165 @@ export default function LearnVocab() {
         stopAudio();
         
         const correctAnswer = current.question || current.vocab?.lemma || '';
-        const isCorrect = spellingInput.trim().toLowerCase() === correctAnswer.toLowerCase();
+        
+        // 예문에서 실제 사용된 형태를 찾는 함수
+        const findOriginalFormInSentence = (sentence, baseWord) => {
+            if (!sentence) return null;
+            
+            const words = sentence.toLowerCase().match(/\b\w+\b/g) || [];
+            const base = baseWord.toLowerCase();
+            
+            // 불규칙 동사 매핑
+            const irregularForms = {
+                'call': ['calls', 'called', 'calling'],
+                'receive': ['receives', 'received', 'receiving'],
+                'go': ['goes', 'went', 'going', 'gone'],
+                'get': ['gets', 'got', 'getting', 'gotten'],
+                'make': ['makes', 'made', 'making'],
+                'take': ['takes', 'took', 'taking', 'taken'],
+                'have': ['has', 'had', 'having'],
+                'be': ['is', 'are', 'was', 'were', 'being', 'been'],
+                'do': ['does', 'did', 'doing', 'done'],
+                'say': ['says', 'said', 'saying'],
+                'see': ['sees', 'saw', 'seeing', 'seen'],
+                'know': ['knows', 'knew', 'knowing', 'known'],
+                'think': ['thinks', 'thought', 'thinking'],
+                'come': ['comes', 'came', 'coming'],
+                'give': ['gives', 'gave', 'giving', 'given'],
+                'find': ['finds', 'found', 'finding'],
+                'tell': ['tells', 'told', 'telling'],
+                'become': ['becomes', 'became', 'becoming'],
+                'leave': ['leaves', 'left', 'leaving'],
+                'feel': ['feels', 'felt', 'feeling'],
+                'bring': ['brings', 'brought', 'bringing'],
+                'begin': ['begins', 'began', 'beginning', 'begun'],
+                'keep': ['keeps', 'kept', 'keeping'],
+                'hold': ['holds', 'held', 'holding'],
+                'write': ['writes', 'wrote', 'writing', 'written'],
+                'stand': ['stands', 'stood', 'standing'],
+                'hear': ['hears', 'heard', 'hearing'],
+                'let': ['lets', 'letting'],
+                'mean': ['means', 'meant', 'meaning'],
+                'set': ['sets', 'setting'],
+                'meet': ['meets', 'met', 'meeting'],
+                'run': ['runs', 'ran', 'running'],
+                'pay': ['pays', 'paid', 'paying'],
+                'sit': ['sits', 'sat', 'sitting'],
+                'speak': ['speaks', 'spoke', 'speaking', 'spoken'],
+                'lie': ['lies', 'lay', 'lying'],
+                'lead': ['leads', 'led', 'leading'],
+                'read': ['reads', 'reading'],
+                'grow': ['grows', 'grew', 'growing', 'grown'],
+                'lose': ['loses', 'lost', 'losing'],
+                'send': ['sends', 'sent', 'sending'],
+                'build': ['builds', 'built', 'building'],
+                'understand': ['understands', 'understood', 'understanding'],
+                'draw': ['draws', 'drew', 'drawing', 'drawn'],
+                'break': ['breaks', 'broke', 'breaking', 'broken'],
+                'spend': ['spends', 'spent', 'spending'],
+                'cut': ['cuts', 'cutting'],
+                'rise': ['rises', 'rose', 'rising', 'risen'],
+                'drive': ['drives', 'drove', 'driving', 'driven'],
+                'buy': ['buys', 'bought', 'buying'],
+                'wear': ['wears', 'wore', 'wearing', 'worn'],
+                'choose': ['chooses', 'chose', 'choosing', 'chosen']
+            };
+            
+            // 1. 불규칙 동사 확인
+            if (irregularForms[base]) {
+                for (const form of irregularForms[base]) {
+                    if (words.includes(form)) {
+                        return form;
+                    }
+                }
+            }
+            
+            // 2. 규칙 변화 확인
+            for (const word of words) {
+                // 복수형 s, es
+                if (word === base + 's' || word === base + 'es') return word;
+                
+                // 과거형 ed
+                if (word === base + 'ed') return word;
+                
+                // ing형
+                if (word === base + 'ing') return word;
+                
+                // y -> ies 변화
+                if (base.endsWith('y') && word === base.slice(0, -1) + 'ies') return word;
+                
+                // e 탈락 변화
+                if (base.endsWith('e')) {
+                    const baseWithoutE = base.slice(0, -1);
+                    if (word === baseWithoutE + 'ed' || word === baseWithoutE + 'ing') return word;
+                }
+            }
+            
+            return null;
+        };
+        
+        // 스펠링 정답 체크 함수 - 원형과 예문의 실제 형태만 인정
+        const checkSpellingAnswer = (userInput, targetWord) => {
+            const input = userInput.trim().toLowerCase();
+            const target = targetWord.toLowerCase();
+            
+            // 1. 원형은 항상 정답
+            if (input === target) return true;
+            
+            // 2. 예문에서 실제 사용된 형태 찾기
+            let exampleSentence = '';
+            if (current.contextSentence) {
+                exampleSentence = current.contextSentence;
+            } else if (current.vocab?.dictentry?.examples) {
+                // 현재 표시된 예문을 찾기 (빈칸 대체 전 원본)
+                const examples = current.vocab.dictentry.examples;
+                let parsedExamples = examples;
+                if (typeof examples === 'string') {
+                    try {
+                        parsedExamples = JSON.parse(examples);
+                    } catch (e) {
+                        console.warn('Failed to parse examples:', e);
+                    }
+                }
+                
+                for (const exampleBlock of parsedExamples) {
+                    if (exampleBlock.definitions) {
+                        for (const def of exampleBlock.definitions) {
+                            if (def.examples && def.examples.length > 0) {
+                                const firstExample = def.examples[0];
+                                if (firstExample.en || firstExample.de) {
+                                    exampleSentence = firstExample.en || firstExample.de;
+                                    break;
+                                }
+                            }
+                        }
+                        if (exampleSentence) break;
+                    }
+                    else if (exampleBlock.examples && exampleBlock.examples.length > 0) {
+                        const firstExample = exampleBlock.examples[0];
+                        if (firstExample.en || firstExample.de) {
+                            exampleSentence = firstExample.en || firstExample.de;
+                            break;
+                        }
+                    }
+                    else if (exampleBlock.en || exampleBlock.de) {
+                        exampleSentence = exampleBlock.en || exampleBlock.de;
+                        break;
+                    }
+                }
+            }
+            
+            console.log('[SPELLING DEBUG] Finding original form in sentence:', exampleSentence);
+            const originalForm = findOriginalFormInSentence(exampleSentence, target);
+            console.log('[SPELLING DEBUG] Original form found:', originalForm);
+            
+            // 3. 예문에서 찾은 형태도 정답으로 인정
+            if (originalForm && input === originalForm) return true;
+            
+            return false;
+        };
+        
+        const isCorrect = checkSpellingAnswer(spellingInput, correctAnswer);
         
         console.log('[SPELLING DEBUG] Input:', spellingInput, 'Correct:', correctAnswer, 'isCorrect:', isCorrect, 'Attempt:', attemptCount + 1);
         
@@ -1431,6 +1589,57 @@ export default function LearnVocab() {
                                     
                                     console.log('[SPELLING DEBUG] Current data:', current);
                                     
+                                    // 단어 변형을 고려한 빈칸 대체 함수
+                                    const replaceWithBlank = (sentence, targetWord) => {
+                                        let result = sentence;
+                                        
+                                        // 1. 정확한 매칭 시도
+                                        result = result.replace(new RegExp(`\\b${targetWord}\\b`, 'gi'), '____');
+                                        
+                                        // 2. 매칭이 안 된 경우, 다양한 변형 고려
+                                        if (result === sentence) {
+                                            const lowerTarget = targetWord.toLowerCase();
+                                            
+                                            // 불규칙 변화 우선 처리
+                                            const irregularForms = {
+                                                'call': ['calls', 'called', 'calling'],
+                                                'receive': ['receives', 'received', 'receiving'],
+                                                'go': ['goes', 'went', 'going', 'gone'],
+                                                'get': ['gets', 'got', 'getting', 'gotten'],
+                                                'make': ['makes', 'made', 'making'],
+                                                'take': ['takes', 'took', 'taking', 'taken']
+                                            };
+                                            
+                                            if (irregularForms[lowerTarget]) {
+                                                for (const form of irregularForms[lowerTarget]) {
+                                                    result = result.replace(new RegExp(`\\b${form}\\b`, 'gi'), '____');
+                                                    if (result !== sentence) break;
+                                                }
+                                            }
+                                            
+                                            // 여전히 매칭 안 된 경우, 규칙 변화 시도
+                                            if (result === sentence) {
+                                                // 복수형 (s, es)
+                                                result = result.replace(new RegExp(`\\b${targetWord}s\\b`, 'gi'), '____');
+                                                if (result === sentence) {
+                                                    result = result.replace(new RegExp(`\\b${targetWord}es\\b`, 'gi'), '____');
+                                                }
+                                                
+                                                // 과거형 (ed)
+                                                if (result === sentence) {
+                                                    result = result.replace(new RegExp(`\\b${targetWord}ed\\b`, 'gi'), '____');
+                                                }
+                                                
+                                                // ing형
+                                                if (result === sentence) {
+                                                    result = result.replace(new RegExp(`\\b${targetWord}ing\\b`, 'gi'), '____');
+                                                }
+                                            }
+                                        }
+                                        
+                                        return result;
+                                    };
+                                    
                                     // 1. current.contextSentence가 있는 경우 (서버에서 직접 제공)
                                     if (current.contextSentence) {
                                         exampleSentence = current.contextSentence;
@@ -1457,10 +1666,9 @@ export default function LearnVocab() {
                                                         if ((firstExample.en || firstExample.de) && firstExample.ko) {
                                                             const lemma = current.question || current.vocab.lemma;
                                                             const englishSentence = firstExample.en || firstExample.de;
-                                                            exampleSentence = englishSentence.replace(
-                                                                new RegExp(`\\b${lemma}\\b`, 'gi'), 
-                                                                '____'
-                                                            );
+                                                            console.log('[SPELLING DEBUG] Replacing:', { lemma, englishSentence });
+                                                            exampleSentence = replaceWithBlank(englishSentence, lemma);
+                                                            console.log('[SPELLING DEBUG] Result:', exampleSentence);
                                                             exampleTranslation = firstExample.ko;
                                                             break;
                                                         }
@@ -1473,10 +1681,7 @@ export default function LearnVocab() {
                                                 if ((firstExample.en || firstExample.de) && firstExample.ko) {
                                                     const lemma = current.question || current.vocab.lemma;
                                                     const englishSentence = firstExample.en || firstExample.de;
-                                                    exampleSentence = englishSentence.replace(
-                                                        new RegExp(`\\b${lemma}\\b`, 'gi'), 
-                                                        '____'
-                                                    );
+                                                    exampleSentence = replaceWithBlank(englishSentence, lemma);
                                                     exampleTranslation = firstExample.ko;
                                                     break;
                                                 }
@@ -1484,10 +1689,7 @@ export default function LearnVocab() {
                                             else if ((exampleBlock.en || exampleBlock.de) && exampleBlock.ko) {
                                                 const lemma = current.question || current.vocab.lemma;
                                                 const englishSentence = exampleBlock.en || exampleBlock.de;
-                                                exampleSentence = englishSentence.replace(
-                                                    new RegExp(`\\b${lemma}\\b`, 'gi'), 
-                                                    '____'
-                                                );
+                                                exampleSentence = replaceWithBlank(englishSentence, lemma);
                                                 exampleTranslation = exampleBlock.ko;
                                                 break;
                                             }
