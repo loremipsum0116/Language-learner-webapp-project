@@ -88,6 +88,14 @@ export const SrsApi = {
         return fetchJSON(`/srs/folders/${folderId}/items`, { credentials: "include" })
             .then(r => r.data ?? r);
     },
+    accelerateCards(folderId, { cardIds }) {
+        return fetchJSON(`/srs/folders/${folderId}/accelerate-cards`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ cardIds }),
+        }).then(r => r.data ?? r);
+    },
     // 학습 큐(기존)
     getQueue(folderId) {
         const qs = folderId ? `?folderId=${encodeURIComponent(folderId)}` : "";

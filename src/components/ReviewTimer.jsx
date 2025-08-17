@@ -100,14 +100,10 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                     console.log('[ReviewTimer DEBUG] Frozen state:', timeString);
                     return;
                 } else {
-                    // 동결 해제되었지만 아직 서버에서 overdue로 전환되지 않음
-                    if (accelerationFactor > 1) {
-                        setTimeLeft("⚡ 동결 해제 중... (곧 복습 가능)");
-                    } else {
-                        setTimeLeft("🔄 동결 해제 중... (10분 내 복습 가능)");
-                    }
-                    setIsReviewable(false);
-                    console.log('[ReviewTimer DEBUG] Frozen unfreezing state');
+                    // 동결 해제됨 - 즉시 복습 가능
+                    setTimeLeft("✅ 복습 가능!");
+                    setIsReviewable(true);
+                    console.log('[ReviewTimer DEBUG] Frozen resolved - immediately reviewable');
                     return;
                 }
             }
@@ -122,14 +118,10 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         const diff = deadlineTime.diff(now);
                         
                         if (diff <= 0) {
-                            // overdue 데드라인이 지났을 때: 동결 전환 대기 상태로 표시
-                            if (accelerationFactor > 1) {
-                                setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
-                            } else {
-                                setTimeLeft("❄️ 동결 전환 중... (1분 내 동결)");
-                            }
+                            // overdue 데드라인 지남 - 즉시 동결 상태로 전환
+                            setTimeLeft("❄️ 동결됨 (시간 초과)");
                             setIsReviewable(false);
-                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - immediately frozen');
                             return;
                         }
                         
@@ -141,14 +133,14 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         let timeString = "✅ 복습 가능! ";
                         if (accelerationFactor > 1 && hours === 0 && minutes < 60) {
                             // 가속 상태에서는 분/초만 표시
-                            timeString += `(${minutes}분 ${seconds}초 후 초기화, ${accelerationFactor}x 가속)`;
+                            timeString += `(${minutes}분 ${seconds}초 후 동결, ${accelerationFactor}x 가속)`;
                         } else {
                             if (hours > 0) {
                                 timeString += `(${hours}시간 `;
                             } else {
                                 timeString += `(`;
                             }
-                            timeString += `${minutes}분 ${seconds}초 후 초기화)`;
+                            timeString += `${minutes}분 ${seconds}초 후 동결)`;
                         }
 
                         setTimeLeft(timeString);
@@ -168,14 +160,10 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         const deadlineDiff = deadlineTime.diff(realNow);
                         
                         if (deadlineDiff <= 0) {
-                            // overdue 데드라인이 지났을 때: 동결 전환 대기 상태로 표시
-                            if (accelerationFactor > 1) {
-                                setTimeLeft("❄️ 동결 전환 중... (곧 동결됨)");
-                            } else {
-                                setTimeLeft("❄️ 동결 전환 중... (1분 내 동결)");
-                            }
+                            // overdue 데드라인 지남 - 즉시 동결 상태로 전환
+                            setTimeLeft("❄️ 동결됨 (시간 초과)");
                             setIsReviewable(false);
-                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded, waiting for freeze');
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - immediately frozen');
                             return;
                         }
                         
@@ -220,13 +208,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                 }
                 
                 if (diff <= 0) {
-                    // 대기 시간이 지났을 경우: overdue 전환 대기 중
-                    if (accelerationFactor > 1) {
-                        setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
-                    } else {
-                        setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
-                    }
-                    setIsReviewable(false);
+                    // 대기 시간 완료 - 즉시 복습 가능
+                    setTimeLeft("✅ 복습 가능!");
+                    setIsReviewable(true);
                     return;
                 }
                 
@@ -269,14 +253,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                 const waitingDiff = waitingTime.diff(now);
 
                 if (waitingDiff <= 0) {
-                    // 대기 시간이 지났지만 아직 overdue 플래그가 false인 경우
-                    // (크론잡이 아직 실행되지 않은 상태)
-                    setIsReviewable(false);
-                    if (accelerationFactor > 1) {
-                        setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
-                    } else {
-                        setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
-                    }
+                    // 대기 시간 완료 - 즉시 복습 가능
+                    setIsReviewable(true);
+                    setTimeLeft("✅ 복습 가능!");
                     return;
                 }
 
@@ -311,14 +290,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
             const overdueStartDiff = overdueStartTime.diff(now);
 
             if (overdueStartDiff <= 0) {
-                // overdue 시작 시간이 지났지만 아직 overdue 플래그가 false인 경우
-                // (크론잡이 아직 실행되지 않은 상태)
-                setIsReviewable(false);
-                if (accelerationFactor > 1) {
-                    setTimeLeft("⚡ overdue 전환 중... (곧 복습 가능)");
-                } else {
-                    setTimeLeft("🔄 overdue 전환 중... (10분 내 복습 가능)");
-                }
+                // overdue 시작 시간 도달 - 즉시 복습 가능
+                setIsReviewable(true);
+                setTimeLeft("✅ 복습 가능!");
                 return;
             }
 

@@ -90,33 +90,56 @@ function getAcceleratedWrongAnswerWaitTime(currentStage = 0) {
 }
 
 // GET /time-accelerator/status - 현재 가속 상태 조회
-router.get('/status', (req, res) => {
+router.get('/status', async (req, res) => {
     try {
         const factor = getAccelerationFactor();
         
-        // 예시 계산
+        // 다양한 예시 계산
         const original24h = 24 * 60 * 60 * 1000;
         const accelerated24h = getAccelerated24Hours();
         const realMinutes = Math.round(accelerated24h / (60 * 1000));
         
-        const exampleStage3 = getAcceleratedStageWaitTime(3, "long"); // Stage 3 = 144시간 (6일)
-        const stage3Minutes = Math.round(exampleStage3 / (60 * 1000));
+        // 다양한 stage별 예시
+        const stage1Long = getAcceleratedStageWaitTime(1, "long"); // 1시간
+        const stage2Long = getAcceleratedStageWaitTime(2, "long"); // 24시간  
+        const stage3Long = getAcceleratedStageWaitTime(3, "long"); // 144시간 (6일)
+        const stage4Long = getAcceleratedStageWaitTime(4, "long"); // 312시간 (13일)
+        
+        const stage1Short = getAcceleratedStageWaitTime(1, "short"); // 1시간
+        const stage2Short = getAcceleratedStageWaitTime(2, "short"); // 24시간
+        const stage3Short = getAcceleratedStageWaitTime(3, "short"); // 48시간
+        
+        const wrongStage0 = getAcceleratedWrongAnswerWaitTime(0); // 1시간
+        const wrongStage1 = getAcceleratedWrongAnswerWaitTime(1); // 24시간
         
         return ok(res, {
             accelerationFactor: factor,
             isActive: factor > 1,
             examples: {
-                originalWrongAnswerWait: '1시간(stage0) / 24시간(기타)',
-                acceleratedWrongAnswerWait: `${realMinutes}분`,
-                originalStage3Wait: '144시간(6일)',
-                acceleratedStage3Wait: `${stage3Minutes}분`
+                longCurve: {
+                    stage1: { original: '1시간', accelerated: `${Math.round(stage1Long / (60 * 1000))}분` },
+                    stage2: { original: '24시간(1일)', accelerated: `${Math.round(stage2Long / (60 * 1000))}분` },
+                    stage3: { original: '144시간(6일)', accelerated: `${Math.round(stage3Long / (60 * 1000))}분` },
+                    stage4: { original: '312시간(13일)', accelerated: `${Math.round(stage4Long / (60 * 1000))}분` }
+                },
+                shortCurve: {
+                    stage1: { original: '1시간', accelerated: `${Math.round(stage1Short / (60 * 1000))}분` },
+                    stage2: { original: '24시간(1일)', accelerated: `${Math.round(stage2Short / (60 * 1000))}분` },
+                    stage3: { original: '48시간(2일)', accelerated: `${Math.round(stage3Short / (60 * 1000))}분` }
+                },
+                wrongAnswer: {
+                    stage0: { original: '1시간', accelerated: `${Math.round(wrongStage0 / (60 * 1000))}분` },
+                    stageOther: { original: '24시간', accelerated: `${Math.round(wrongStage1 / (60 * 1000))}분` }
+                },
+                overdue: { original: '24시간', accelerated: `${realMinutes}분` }
             },
             presets: {
                 realtime: { factor: 1, description: '실시간 (1일 = 1일)' },
                 fast: { factor: 60, description: '빠름 (1일 = 24분)' },
                 veryfast: { factor: 1440, description: '매우빠름 (1일 = 1분)' },
                 extreme: { factor: 10080, description: '극한 (1주일 = 1분)' }
-            }
+            },
+            stats: await getAccelerationStats()
         });
     } catch (e) {
         return fail(res, 500, 'Failed to get acceleration status');
@@ -234,7 +257,7 @@ async function recalculateAllActiveTimers() {
     
     console.log('[TIME ACCELERATOR] Starting timer recalculation...');
     
-    // 1. 대기 중인 카드들 재계산
+    // 1. 대기 중인 카드들 재계산 (학습곡선 정보 포함)
     const waitingCards = await prisma.srscard.findMany({
         where: {
             waitingUntil: { gt: now },
@@ -265,14 +288,23 @@ async function recalculateAllActiveTimers() {
         // 카드가 속한 폴더의 학습 곡선 타입 가져오기
         const learningCurveType = card.srsfolderitem?.[0]?.srsfolder?.learningCurveType || "long";
         
-        if (card.isFromWrongAnswer) {
-            // 오답 카드: stage에 따라 1시간 또는 24시간 대기를 가속 적용
-            const acceleratedWrongWaitTime = getAcceleratedWrongAnswerWaitTime(card.stage);
-            newWaitingUntil = new Date(now.getTime() + acceleratedWrongWaitTime);
+        // Stage 1 카드는 특별 처리: 무조건 1시간 대기시간으로 설정 (오답/정답 무관)
+        if (card.stage === 1) {
+            const oneHourMs = 60 * 60 * 1000; // 1시간
+            const acceleratedOneHour = getAcceleratedTime(oneHourMs);
+            newWaitingUntil = new Date(now.getTime() + acceleratedOneHour);
+            console.log(`[TIME ACCELERATOR] Card ${card.id}: Stage 1 reset to 1 hour (${Math.round(acceleratedOneHour / (60 * 1000))} minutes with acceleration)`);
         } else {
-            // 정답 카드: stage별 대기시간을 학습 곡선 타입에 따라 가속 적용
-            const acceleratedWaitTime = getAcceleratedStageWaitTime(card.stage, learningCurveType);
-            newWaitingUntil = new Date(now.getTime() + acceleratedWaitTime);
+            // 다른 Stage들은 원래 로직: 카드 타입에 따라 새로운 타이머로 재설정
+            if (card.isFromWrongAnswer) {
+                // 오답 카드: stage에 따라 1시간 또는 24시간 대기를 가속 적용
+                const acceleratedWrongWaitTime = getAcceleratedWrongAnswerWaitTime(card.stage);
+                newWaitingUntil = new Date(now.getTime() + acceleratedWrongWaitTime);
+            } else {
+                // 정답 카드: stage별 대기시간을 학습 곡선 타입에 따라 가속 적용
+                const acceleratedWaitTime = getAcceleratedStageWaitTime(card.stage, learningCurveType);
+                newWaitingUntil = new Date(now.getTime() + acceleratedWaitTime);
+            }
         }
         
         console.log(`[TIME ACCELERATOR] Card ${card.id}: Stage ${card.stage}, Curve: ${learningCurveType}, Wrong: ${card.isFromWrongAnswer}`);
@@ -333,6 +365,67 @@ async function recalculateAllActiveTimers() {
     }
     
     console.log(`[TIME ACCELERATOR] Recalculated ${waitingCards.length + overdueCards.length + frozenCards.length} total timers`);
+}
+
+/**
+ * 현재 가속 상태 통계 정보
+ */
+async function getAccelerationStats() {
+    try {
+        const { prisma } = require('../lib/prismaClient');
+        const now = new Date();
+        
+        // 전체 카드 통계
+        const totalCards = await prisma.srscard.count();
+        
+        // 대기 중인 카드들
+        const waitingCards = await prisma.srscard.count({
+            where: {
+                waitingUntil: { gt: now },
+                isOverdue: false
+            }
+        });
+        
+        // overdue 카드들
+        const overdueCards = await prisma.srscard.count({
+            where: {
+                isOverdue: true
+            }
+        });
+        
+        // 동결 카드들
+        const frozenCards = await prisma.srscard.count({
+            where: {
+                frozenUntil: { gt: now }
+            }
+        });
+        
+        // 마스터 완료 카드들
+        const masteredCards = await prisma.srscard.count({
+            where: {
+                isMastered: true
+            }
+        });
+        
+        return {
+            totalCards,
+            waitingCards,
+            overdueCards,
+            frozenCards,
+            masteredCards,
+            readyForReview: overdueCards
+        };
+    } catch (e) {
+        console.error('[TIME ACCELERATOR] Failed to get stats:', e);
+        return {
+            totalCards: 0,
+            waitingCards: 0,
+            overdueCards: 0,
+            frozenCards: 0,
+            masteredCards: 0,
+            readyForReview: 0
+        };
+    }
 }
 
 module.exports = { 

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon --watch . server.js",
+    "dev": "nodemon --watch . index.js",
     "seed": "node prisma/seed.js",
     "fixup": "node tools/fixup.js",
     "cleanup": "node tools/cleanup_wiki_entries.js",

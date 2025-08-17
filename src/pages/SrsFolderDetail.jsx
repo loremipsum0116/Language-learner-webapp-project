@@ -39,14 +39,19 @@ const getPosBadgeColor = (pos) => {
     }
 };
 
-const getCardBackgroundColor = (item) => {
-    // 동결 상태 체크 (최우선)
+const isCardFrozen = (item) => {
     if (item.frozenUntil) {
         const now = new Date();
         const frozenUntil = new Date(item.frozenUntil);
-        if (now < frozenUntil) {
-            return 'bg-info-subtle'; // 동결 - 파란색 (최우선)
-        }
+        return now < frozenUntil;
+    }
+    return false;
+};
+
+const getCardBackgroundColor = (item) => {
+    // 동결 상태 체크 (최우선)
+    if (isCardFrozen(item)) {
+        return 'bg-info-subtle'; // 동결 - 파란색 (최우선)
     }
     
     if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색
@@ -258,10 +263,28 @@ export default function SrsFolderDetail() {
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <div>
                     <h4 className="mb-1">
-                        {folder.learningCurveType === 'short' ? '🐰' : '🐢'} {folder.name}
+                        {folder.learningCurveType === 'short' ? '🐰' : folder.learningCurveType === 'free' ? '📚' : '🐢'} {folder.name}
+                        <span className="badge ms-2" style={{
+                            backgroundColor: folder.learningCurveType === 'short' ? '#ff6b6b' : 
+                                           folder.learningCurveType === 'free' ? '#28a745' : '#4ecdc4',
+                            color: 'white',
+                            fontSize: '0.7em'
+                        }}>
+                            {folder.learningCurveType === 'short' 
+                                ? '스퍼트 곡선 (10단계, 빠른 반복)' 
+                                : folder.learningCurveType === 'free'
+                                ? '자율 모드 (타이머 없음, 자유 학습)'
+                                : '장기 곡선 (6단계, 점진적 확장)'
+                            }
+                        </span>
                     </h4>
                     <small className="text-muted">
                         생성일: <strong>{fmt(created)}</strong>
+                        <span className="mx-2">|</span>
+                        학습곡선: <strong>{folder.learningCurveType === 'short' 
+                            ? '2일 간격 고정 반복 (단기 집중형)' 
+                            : '1시간→1일→6일→13일→29일→44일 (장기 기억형)'
+                        }</strong>
                         <span className="mx-2">|</span>
                         단어 {items.length}개
                         <span className="mx-2">|</span>
@@ -350,6 +373,84 @@ export default function SrsFolderDetail() {
             {/* 시간 가속 컨트롤 */}
             <div className="mb-4">
                 <TimeAcceleratorControl />
+            </div>
+
+            {/* 10분 이하 카드 즉시 학습 가능 버튼 */}
+            <div className="mb-4">
+                <div className="p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg border border-green-200">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div>
+                            <h6 className="mb-1 fw-bold text-green-700">⚡ 빠른 복습</h6>
+                            <small className="text-muted">10분 이하 남은 카드들을 즉시 학습 가능하게 만듭니다</small>
+                        </div>
+                        <button
+                            className="btn btn-success btn-sm"
+                            onClick={async () => {
+                                const cardsUnder10Min = items.filter(item => {
+                                    if (item.isOverdue || item.isMastered) return false;
+                                    
+                                    const now = new Date();
+                                    let targetTime = null;
+                                    
+                                    // 동결 카드인 경우 frozenUntil 시간 확인
+                                    if (isCardFrozen(item)) {
+                                        targetTime = new Date(item.frozenUntil);
+                                    }
+                                    // 일반 카드인 경우 nextReviewAt 시간 확인
+                                    else if (item.nextReviewAt) {
+                                        targetTime = new Date(item.nextReviewAt);
+                                    }
+                                    
+                                    if (!targetTime) return false;
+                                    
+                                    const timeDiff = targetTime.getTime() - now.getTime();
+                                    const minutesLeft = Math.floor(timeDiff / (1000 * 60));
+                                    
+                                    return minutesLeft <= 10 && minutesLeft > 0;
+                                });
+                                
+                                if (cardsUnder10Min.length === 0) {
+                                    alert('10분 이하 남은 카드가 없습니다.');
+                                    return;
+                                }
+                                
+                                if (window.confirm(`${cardsUnder10Min.length}개의 카드를 즉시 학습 가능하게 만드시겠습니까?`)) {
+                                    try {
+                                        const cardIds = cardsUnder10Min.map(c => c.id || c.cardId);
+                                        const result = await SrsApi.accelerateCards(folder.id, { cardIds });
+                                        alert(result.message || `${result.acceleratedCount}개 카드가 즉시 학습 가능하게 설정되었습니다.`);
+                                        await reload(); // 페이지 새로고침
+                                    } catch (e) {
+                                        alert(`카드 가속 실패: ${e?.message || "서버 오류"}`);
+                                    }
+                                }
+                            }}
+                        >
+                            즉시 학습 가능 ({items.filter(item => {
+                                if (item.isOverdue || item.isMastered) return false;
+                                
+                                const now = new Date();
+                                let targetTime = null;
+                                
+                                // 동결 카드인 경우 frozenUntil 시간 확인
+                                if (isCardFrozen(item)) {
+                                    targetTime = new Date(item.frozenUntil);
+                                }
+                                // 일반 카드인 경우 nextReviewAt 시간 확인
+                                else if (item.nextReviewAt) {
+                                    targetTime = new Date(item.nextReviewAt);
+                                }
+                                
+                                if (!targetTime) return false;
+                                
+                                const timeDiff = targetTime.getTime() - now.getTime();
+                                const minutesLeft = Math.floor(timeDiff / (1000 * 60));
+                                
+                                return minutesLeft <= 10 && minutesLeft > 0;
+                            }).length}개)
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* 단어 관리 툴바 */}

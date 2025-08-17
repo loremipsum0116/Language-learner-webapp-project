@@ -865,16 +865,25 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     const { updateUserStreak } = require('./streakService');
     const streakInfo = await updateUserStreak(userId);
 
-    // --- 오답노트 처리 (SRS 상태 변경이 가능할 때만) ---
-    if (!correct && vocabId && canUpdateCardState) {
-        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}`);
-        const { addWrongAnswer } = require('./wrongAnswerService');
-        await addWrongAnswer(userId, vocabId, folderId);
-        console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
-    } else if (!correct && vocabId && !canUpdateCardState) {
-        console.log(`[SRS SERVICE] Wrong answer during autonomous learning - not adding to wrong answer note (SRS state unchanged)`);
-    } else if (!correct) {
+    // --- 오답노트 처리 (실제 오답일 때만 추가) ---
+    // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있고, 카드 상태 변경이 가능한 경우에만
+    const isActualWrongAnswer = correct === false && vocabId && canUpdateCardState;
+    
+    if (isActualWrongAnswer) {
+        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}, correct=${correct}, canUpdateCardState=${canUpdateCardState}`);
+        try {
+            const { addWrongAnswer } = require('./wrongAnswerService');
+            await addWrongAnswer(userId, vocabId, folderId);
+            console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
+        } catch (error) {
+            console.error(`[SRS SERVICE] Failed to add wrong answer note:`, error);
+        }
+    } else if (correct === false && !canUpdateCardState) {
+        console.log(`[SRS SERVICE] Wrong answer but card state cannot be updated (waiting period) - skipping wrong answer note`);
+    } else if (correct === false && !vocabId) {
         console.log(`[SRS SERVICE] Wrong answer but no vocabId - skipping wrong answer note`);
+    } else {
+        console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}, canUpdateCardState=${canUpdateCardState}`);
     }
 
     // --- 일일 학습 통계 업데이트 ---

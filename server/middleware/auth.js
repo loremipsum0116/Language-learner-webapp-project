@@ -4,12 +4,14 @@ const jwt = require('jsonwebtoken');
 // JWT는 httpOnly 쿠키 'token'에 있다고 가정(또는 Authorization 헤더 허용)
 module.exports = function auth(req, res, next) {
   try {
+    console.log('[AUTH] Checking request to:', req.path);
     const bearer = req.headers.authorization;
     const token =
       (req.cookies && req.cookies.token) ||
       (bearer && bearer.startsWith('Bearer ') ? bearer.slice(7) : null);
 
     if (!token) {
+      console.log('[AUTH] No token found, blocking request to:', req.path);
       return res.status(401).json({ ok: false, error: 'Unauthorized' });
     }
 

@@ -19,50 +19,31 @@ async function addWrongAnswer(userId, vocabId, folderId = null) {
   const reviewWindowStart = wrongAt.add(1, 'day');
   const reviewWindowEnd = wrongAt.add(2, 'day');
   
-  // 이미 같은 단어로 미완료된 오답노트가 있는지 확인 (폴더별 독립성 적용)
-  console.log(`[WRONG ANSWER SERVICE] Checking for existing wrong answer`);
+  // 오답 히스토리를 위해 항상 새로운 레코드 생성
+  console.log(`[WRONG ANSWER SERVICE] Creating new wrong answer history record`);
   
-  // folderId가 제공된 경우 폴더별 독립적 관리, 없으면 기존 방식 (전역 관리)
+  // 현재 틀린 횟수 계산 (같은 단어의 기존 오답 개수 + 1)
   const whereCondition = folderId 
-    ? { userId, vocabId, folderId, isCompleted: false }  // 폴더별 독립
-    : { userId, vocabId, isCompleted: false };           // 전역 관리 (하위호환)
+    ? { userId, vocabId, folderId }  // 폴더별 독립
+    : { userId, vocabId };           // 전역 관리 (하위호환)
     
-  const existingWrongAnswer = await prisma.wronganswer.findFirst({
+  const existingCount = await prisma.wronganswer.count({
     where: whereCondition
   });
-  console.log(`[WRONG ANSWER SERVICE] Existing wrong answer found:`, existingWrongAnswer);
   
-  if (existingWrongAnswer) {
-    // 기존 항목의 attempts 증가하고 최신 정보로 업데이트
-    console.log(`[WRONG ANSWER SERVICE] Updating existing wrong answer`);
-    return await prisma.wronganswer.update({
-      where: { id: existingWrongAnswer.id },
-      data: {
-        attempts: existingWrongAnswer.attempts + 1,
-        wrongAt: wrongAt.toDate(), // 최신 오답 시각으로 업데이트
-        reviewWindowStart: reviewWindowStart.toDate(),
-        reviewWindowEnd: reviewWindowEnd.toDate()
-        // 가장 최근에 틀린 폴더 정보는 quiz.js에서 추가로 처리 필요
-      },
-      include: {
-        vocab: {
-          include: {
-            dictentry: true
-          }
-        }
-      }
-    });
-  }
+  const currentAttempts = existingCount + 1;
+  console.log(`[WRONG ANSWER SERVICE] This will be attempt #${currentAttempts} for this vocab`);
   
-  // 새로운 오답노트 항목 생성
-  console.log(`[WRONG ANSWER SERVICE] Creating new wrong answer`);
+  
+  // 새로운 오답노트 항목 생성 (히스토리로 관리)
+  console.log(`[WRONG ANSWER SERVICE] Creating new wrong answer history entry`);
   const createData = {
     userId,
     vocabId,
     wrongAt: wrongAt.toDate(),
     reviewWindowStart: reviewWindowStart.toDate(),
     reviewWindowEnd: reviewWindowEnd.toDate(),
-    attempts: 1
+    attempts: currentAttempts
   };
   
   // folderId가 제공된 경우에만 추가

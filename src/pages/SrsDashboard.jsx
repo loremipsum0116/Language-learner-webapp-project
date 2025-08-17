@@ -27,7 +27,7 @@ export default function SrsDashboard() {
     const [folders, setFolders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [newFolderName, setNewFolderName] = useState("");
-    const [learningCurveType, setLearningCurveType] = useState("long"); // "long" 또는 "short"
+    const [learningCurveType, setLearningCurveType] = useState("long"); // "long", "short", "free"
     const [streakInfo, setStreakInfo] = useState(null);
     const [wrongAnswersCount, setWrongAnswersCount] = useState(0);
     const [srsStatus, setSrsStatus] = useState(null);
@@ -282,10 +282,18 @@ export default function SrsDashboard() {
                         <div className="mt-3">
                             <label className="form-label">
                                 <strong>📊 학습 곡선 선택 (중요!)</strong>
-                                <small className="text-muted ms-2">- 폴더 생성 후 변경 불가</small>
+                                <small className="text-muted ms-2">- 폴더 생성 후 변경 불가능, 신중히 선택하세요</small>
                             </label>
+                            <div className="alert alert-info py-2 mb-3">
+                                <small>
+                                    <strong>💡 선택 가이드:</strong> 
+                                    체계적 장기 기억을 원한다면 <strong>🐢 장기곡선</strong>, 
+                                    시험 등 빠른 암기가 필요하다면 <strong>🐰 스퍼트곡선</strong>, 
+                                    자유롭게 학습하고 싶다면 <strong>📚 자율모드</strong>를 선택하세요.
+                                </small>
+                            </div>
                                 <div className="row g-3">
-                                    <div className="col-md-6">
+                                    <div className="col-md-4">
                                         <div className={`card h-100 ${learningCurveType === 'long' ? 'border-primary bg-light' : ''}`}>
                                             <div className="card-body p-3">
                                                 <div className="form-check">
@@ -303,14 +311,14 @@ export default function SrsDashboard() {
                                                     </label>
                                                 </div>
                                                 <small className="text-muted d-block mt-2">
-                                                    2일 → 6일 → 13일 → 29일 → 59일 → 119일<br/>
-                                                    <strong>Stage 6</strong>에서 마스터 완료<br/>
-                                                    망각곡선에 최적화된 장기 기억
+                                                    1시간 → 1일 → 6일 → 13일 → 29일 → 44일<br/>
+                                                    <strong>6단계</strong>에서 마스터 완료<br/>
+                                                    점진적 간격 확장으로 장기 기억 형성
                                                 </small>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-4">
                                         <div className={`card h-100 ${learningCurveType === 'short' ? 'border-warning bg-light' : ''}`}>
                                             <div className="card-body p-3">
                                                 <div className="form-check">
@@ -328,9 +336,34 @@ export default function SrsDashboard() {
                                                     </label>
                                                 </div>
                                                 <small className="text-muted d-block mt-2">
-                                                    2일 간격으로 10회 반복<br/>
-                                                    <strong>Stage 10</strong>에서 마스터 완료<br/>
-                                                    빠른 집중 학습 선호자용
+                                                    1시간 → 1일 → 2일 고정 간격 반복<br/>
+                                                    <strong>10단계</strong>에서 마스터 완료<br/>
+                                                    빠른 반복으로 단기 집중 학습
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className={`card h-100 ${learningCurveType === 'free' ? 'border-success bg-light' : ''}`}>
+                                            <div className="card-body p-3">
+                                                <div className="form-check">
+                                                    <input
+                                                        className="form-check-input"
+                                                        type="radio"
+                                                        name="learningCurve"
+                                                        id="freeCurve"
+                                                        value="free"
+                                                        checked={learningCurveType === 'free'}
+                                                        onChange={(e) => setLearningCurveType(e.target.value)}
+                                                    />
+                                                    <label className="form-check-label" htmlFor="freeCurve">
+                                                        <strong>📚 자율 학습 모드</strong>
+                                                    </label>
+                                                </div>
+                                                <small className="text-muted d-block mt-2">
+                                                    타이머 없음, 자유로운 복습<br/>
+                                                    <strong>학습 기록</strong>만 저장<br/>
+                                                    원하는 대로 학습 가능
                                                 </small>
                                             </div>
                                         </div>
@@ -338,8 +371,10 @@ export default function SrsDashboard() {
                                 </div>
                                 <div className="mt-2">
                                     <small className="text-muted">
-                                        💡 <strong>팁:</strong> 장기 학습 곡선은 망각곡선 이론에 기반하여 장기 기억에 최적화되어 있습니다. 
-                                        단기 스퍼트 곡선은 시험 준비 등 빠른 암기가 필요한 경우에 적합합니다. 어떤 곡선을 택하든, 자율 복습은 언제든지 가능합니다!
+                                        💡 <strong>팁:</strong> 
+                                        <strong>장기곡선</strong>은 망각곡선 이론에 최적화, 
+                                        <strong>스퍼트곡선</strong>은 시험 대비용, 
+                                        <strong>자율모드</strong>는 스케줄 없이 편안한 학습이 가능합니다.
                                     </small>
                             </div>
                         </div>
@@ -364,8 +399,9 @@ export default function SrsDashboard() {
                                                 {f.type === 'parent' && <span className="badge bg-primary ms-2">상위폴더</span>}
                                                 {f.kind === 'manual' && !f.isMastered && !f.type && <span className="badge bg-secondary ms-2">수동</span>}
                                                 {f.kind === 'review' && !f.isMastered && !f.type && <span className="badge bg-info ms-2">복습</span>}
-                                                {f.learningCurveType === 'short' && !f.type && <span className="badge bg-warning ms-2">🐰 단기</span>}
-                                                {f.learningCurveType === 'long' && !f.type && <span className="badge bg-primary ms-2">🐢 장기</span>}
+                                                {f.learningCurveType === 'short' && !f.type && <span className="badge bg-warning ms-2">🐰 스퍼트곡선</span>}
+                                                {f.learningCurveType === 'long' && !f.type && <span className="badge bg-primary ms-2">🐢 장기곡선</span>}
+                                                {f.learningCurveType === 'free' && !f.type && <span className="badge bg-success ms-2">📚 자율모드</span>}
                                                 {f.isMastered && <span className="badge bg-warning text-dark ms-2">🏆 마스터</span>}
                                                 {f.isCompleted && !f.isMastered && <span className="badge bg-success ms-2">완료</span>}
                                             </h5>

@@ -27,22 +27,26 @@ function updateOverdueCronFrequency() {
         let cronPattern;
         let description;
         
-        if (accelerationFactor >= 1440) {
-            // 1440x 이상: 5초마다 실행
-            cronPattern = '*/5 * * * * *'; 
-            description = '5초마다 (극한 가속)';
+        if (accelerationFactor >= 10080) {
+            // 10080x (극한): 3초마다 실행
+            cronPattern = '*/3 * * * * *'; 
+            description = '3초마다 (극한 가속)';
+        } else if (accelerationFactor >= 1440) {
+            // 1440x 이상: 10초마다 실행
+            cronPattern = '*/10 * * * * *'; 
+            description = '10초마다 (매우빠름 가속)';
         } else if (accelerationFactor >= 60) {
-            // 60x 이상: 15초마다 실행
-            cronPattern = '*/15 * * * * *';
-            description = '15초마다 (고속 가속)';
-        } else if (accelerationFactor > 1) {
-            // 1x 초과: 30초마다 실행
+            // 60x 이상: 30초마다 실행
             cronPattern = '*/30 * * * * *';
-            description = '30초마다 (가속 모드)';
-        } else {
-            // 1x (실시간): 1분마다 실행 (기본값)
+            description = '30초마다 (빠름 가속)';
+        } else if (accelerationFactor > 1) {
+            // 1x 초과: 1분마다 실행
             cronPattern = '*/1 * * * *';
-            description = '1분마다 (실시간)';
+            description = '1분마다 (가속 모드)';
+        } else {
+            // 1x (실시간): 30초마다 실행 (즉각적 상태 전환)
+            cronPattern = '*/30 * * * * *';
+            description = '30초마다 (실시간)';
         }
         
         // 새로운 태스크 생성 및 시작
@@ -59,9 +63,9 @@ function updateOverdueCronFrequency() {
         
     } catch (e) {
         console.error('[cron] Failed to update overdue cron frequency:', e);
-        // 에러 시 기본 크론잡 사용
+        // 에러 시 기본 크론잡 사용 (30초마다)
         if (!dynamicManageOverdueTask) {
-            dynamicManageOverdueTask = cron.schedule('*/1 * * * *', () => {
+            dynamicManageOverdueTask = cron.schedule('*/30 * * * * *', () => {
                 manageOverdueCards().catch(console.error);
             }, { timezone: 'Asia/Seoul' });
         }

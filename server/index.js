@@ -41,6 +41,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));  // 정적 �
 // --- 인증 불필요 라우트 ---
 app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
+app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
 
 // --- 이 지점부터 인증 필요 ---
 app.use(authMiddleware);
@@ -58,7 +59,7 @@ app.use('/reading', readingRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);
-app.use('/dict', dictRoutes);
+// app.use('/dict', dictRoutes);  // 이미 인증 불필요 섹션에서 등록됨
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use(userRoutes);
 

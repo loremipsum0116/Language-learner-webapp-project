@@ -97,8 +97,35 @@ const TimeAcceleratorControl = ({ className = '' }) => {
         
         {status.examples && (
           <div className="mt-2 text-xs text-gray-500">
-            <div>• 오답 대기: {status.examples.originalWrongAnswerWait} → {status.examples.acceleratedWrongAnswerWait}</div>
-            <div>• Stage 3 대기: {status.examples.originalStage3Wait} → {status.examples.acceleratedStage3Wait}</div>
+            <div className="mb-2">
+              <strong>장기 곡선:</strong>
+              <div>• Stage 1: {status.examples.longCurve?.stage1?.original} → {status.examples.longCurve?.stage1?.accelerated}</div>
+              <div>• Stage 2: {status.examples.longCurve?.stage2?.original} → {status.examples.longCurve?.stage2?.accelerated}</div>
+              <div>• Stage 3: {status.examples.longCurve?.stage3?.original} → {status.examples.longCurve?.stage3?.accelerated}</div>
+            </div>
+            <div className="mb-2">
+              <strong>단기 곡선:</strong>
+              <div>• Stage 1: {status.examples.shortCurve?.stage1?.original} → {status.examples.shortCurve?.stage1?.accelerated}</div>
+              <div>• Stage 3: {status.examples.shortCurve?.stage3?.original} → {status.examples.shortCurve?.stage3?.accelerated}</div>
+            </div>
+            <div>
+              <strong>오답/동결:</strong>
+              <div>• 오답 Stage0: {status.examples.wrongAnswer?.stage0?.original} → {status.examples.wrongAnswer?.stage0?.accelerated}</div>
+              <div>• 동결/overdue: {status.examples.overdue?.original} → {status.examples.overdue?.accelerated}</div>
+            </div>
+          </div>
+        )}
+        
+        {status.stats && (
+          <div className="mt-3 p-2 bg-gray-50 rounded text-xs">
+            <div className="text-sm font-medium text-gray-700 mb-1">현재 카드 상태:</div>
+            <div className="grid grid-cols-2 gap-1">
+              <div>• 총 카드: {status.stats.totalCards}</div>
+              <div>• 대기중: {status.stats.waitingCards}</div>
+              <div>• 복습가능: {status.stats.overdueCards}</div>
+              <div>• 동결중: {status.stats.frozenCards}</div>
+              <div>• 마스터: {status.stats.masteredCards}</div>
+            </div>
           </div>
         )}
       </div>

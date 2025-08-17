@@ -1317,9 +1317,17 @@ router.delete('/folders/:id', async (req, res, next) => {
             await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
             await tx.srsfolder.delete({ where: { id } });
             
-            // ✅ 폴더별 독립성을 위해 오답노트 정리 로직 제거
-            // 폴더 삭제 시에도 전역 SRS 카드나 오답노트는 건드리지 않음
-            // 다른 폴더에서 같은 단어를 사용할 수 있으므로 독립성 보장
+            // ✅ 해당 폴더의 오답노트 삭제 (폴더별 독립성)
+            if (vocabIds.length > 0) {
+                const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
+                    where: { 
+                        userId,
+                        folderId: id,
+                        vocabId: { in: vocabIds }
+                    }
+                });
+                console.log(`[FOLDER DELETE] Deleted ${wrongAnswersDeleted.count} wrong answers for folder ${id}`);
+            }
         });
 
         return ok(res, { deleted: true, id });
@@ -1356,6 +1364,18 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
                 const vocabIds = srsfolderitem.map(item => item.vocabId).filter(Boolean);
                 allVocabIds.push(...vocabIds);
                 
+                // 해당 폴더들의 오답노트 삭제 (폴더별 독립성)
+                if (vocabIds.length > 0) {
+                    const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
+                        where: { 
+                            userId,
+                            folderId: { in: allFolderIds },
+                            vocabId: { in: vocabIds }
+                        }
+                    });
+                    console.log(`[BULK FOLDER DELETE] Deleted ${wrongAnswersDeleted.count} wrong answers for folders:`, allFolderIds);
+                }
+                
                 // 폴더 삭제
                 if (childIds.length) {
                     await tx.srsfolderitem.deleteMany({ where: { folderId: { in: childIds } } });
@@ -1386,7 +1406,7 @@ router.post('/folders/bulk-delete', async (req, res, next) => {
                 const orphanedVocabIds = uniqueVocabIds.filter(vid => !remainingVocabIds.has(vid));
                 
                 if (orphanedVocabIds.length > 0) {
-                    const deletedCount = await tx.wrongAnswer.deleteMany({
+                    const deletedCount = await tx.wronganswer.deleteMany({
                         where: {
                             userId: userId,
                             vocabId: { in: orphanedVocabIds }
@@ -1566,10 +1586,28 @@ router.get('/queue', async (req, res) => {
                 srsfolder: { userId }
             };
             
-            // 선택된 아이템이 있으면 해당 아이템만 필터링 (folderItemId 기준)
+            // 선택된 아이템이 있으면 해당 아이템만 필터링
             if (selectedItems && selectedItems.length > 0) {
-                whereCondition.id = { in: selectedItems };
-                console.log(`[SRS QUEUE] Filtering to selected items: ${selectedItems.join(',')}`);
+                // 숫자 크기로 folderItemId인지 vocabId인지 구분
+                // vocabId는 보통 큰 수, folderItemId는 작은 수
+                // 더 정확하게는 실제 존재하는지 확인
+                const testItem = await prisma.srsfolderitem.findFirst({
+                    where: { 
+                        folderId,
+                        id: selectedItems[0]
+                    },
+                    select: { id: true }
+                });
+                
+                if (testItem) {
+                    // folderItemId로 필터링
+                    whereCondition.id = { in: selectedItems };
+                    console.log(`[SRS QUEUE] Filtering by folderItemIds: ${selectedItems.join(',')}`);
+                } else {
+                    // vocabId로 필터링 (오답노트에서 오는 경우)
+                    whereCondition.vocabId = { in: selectedItems };
+                    console.log(`[SRS QUEUE] Filtering by vocabIds: ${selectedItems.join(',')}`);
+                }
             }
             
             const items = await prisma.srsfolderitem.findMany({
@@ -1928,7 +1966,7 @@ router.get('/wrong-answers', async (req, res, next) => {
             ]
         });
 
-        // 해당 단어들의 SRS 카드 상태 정보도 함께 조회
+        // 해당 단어들의 SRS 카드 상태 정보와 폴더 정보도 함께 조회
         const vocabIds = wrongAnswers.map(wa => wa.vocabId);
         const srsCards = vocabIds.length > 0 ? await prisma.srscard.findMany({
             where: {
@@ -1951,7 +1989,19 @@ router.get('/wrong-answers', async (req, res, next) => {
                 masteredAt: true,
                 masterCycles: true,
                 correctTotal: true,
-                wrongTotal: true
+                wrongTotal: true,
+                frozenUntil: true,
+                srsfolderitem: {
+                    select: {
+                        srsfolder: {
+                            select: {
+                                id: true,
+                                name: true,
+                                parentId: true
+                            }
+                        }
+                    }
+                }
             }
         }) : [];
         
@@ -1964,9 +2014,28 @@ router.get('/wrong-answers', async (req, res, next) => {
             srsCardMap.set(card.itemId, card);
         });
         
-        // 올바른 복습 상태 계산
+        // 각 vocabId별로 모든 오답 기록을 그룹핑
+        const wrongAnswersByVocab = new Map();
+        wrongAnswers.forEach(wa => {
+            if (!wrongAnswersByVocab.has(wa.vocabId)) {
+                wrongAnswersByVocab.set(wa.vocabId, []);
+            }
+            wrongAnswersByVocab.get(wa.vocabId).push(wa);
+        });
+
+        // 단어별로 그룹화하여 최신 오답을 대표로 하고 나머지는 히스토리로 처리
         const now = new Date();
-        const result = wrongAnswers.map(wa => {
+        
+        // 단어별로 최신 오답 레코드만 추출 (폴더별 독립성 고려)
+        const latestWrongAnswers = new Map();
+        wrongAnswers.forEach(wa => {
+            const key = wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString();
+            if (!latestWrongAnswers.has(key) || new Date(wa.wrongAt) > new Date(latestWrongAnswers.get(key).wrongAt)) {
+                latestWrongAnswers.set(key, wa);
+            }
+        });
+        
+        const result = Array.from(latestWrongAnswers.values()).map(wa => {
             const reviewWindowStart = new Date(wa.reviewWindowStart);
             const reviewWindowEnd = new Date(wa.reviewWindowEnd);
             
@@ -1990,6 +2059,27 @@ router.get('/wrong-answers', async (req, res, next) => {
             // 해당 단어의 SRS 카드 상태 정보 추가
             const srsCard = srsCardMap.get(wa.vocabId);
             
+            // 해당 단어+폴더의 모든 오답 기록 가져오기 (폴더별 독립성)
+            const allWrongAnswersForVocab = wrongAnswers.filter(record => {
+                if (wa.folderId) {
+                    return record.vocabId === wa.vocabId && record.folderId === wa.folderId;
+                } else {
+                    return record.vocabId === wa.vocabId;
+                }
+            });
+            
+            const wrongAnswerHistory = allWrongAnswersForVocab
+                .sort((a, b) => new Date(a.wrongAt) - new Date(b.wrongAt)) // 오래된 것부터 정렬 (첫 오답이 먼저)
+                .map(record => ({
+                    id: record.id,
+                    wrongAt: record.wrongAt,
+                    attempts: record.attempts,
+                    isCompleted: record.isCompleted,
+                    reviewedAt: record.reviewedAt,
+                    // SRS 카드에서 현재 stage 정보를 추정
+                    stageAtTime: srsCard ? srsCard.stage : 0
+                }));
+            
             return {
                 id: wa.id,
                 vocabId: wa.vocabId,
@@ -2000,6 +2090,9 @@ router.get('/wrong-answers', async (req, res, next) => {
                 reviewStatus: reviewStatus,
                 canReview: canReview,
                 timeUntilReview: timeUntilReview,
+                // 같은 단어의 모든 오답 기록
+                wrongAnswerHistory: wrongAnswerHistory,
+                totalWrongAttempts: allWrongAnswersForVocab.length, // 실제 오답 횟수 = 레코드 개수
                 vocab: {
                     id: wa.vocab?.id || wa.vocabId,
                     lemma: wa.vocab?.lemma || 'Unknown',
@@ -2021,7 +2114,15 @@ router.get('/wrong-answers', async (req, res, next) => {
                     masteredAt: srsCard.masteredAt,
                     masterCycles: srsCard.masterCycles,
                     correctTotal: srsCard.correctTotal,
-                    wrongTotal: srsCard.wrongTotal
+                    wrongTotal: srsCard.wrongTotal,
+                    frozenUntil: srsCard.frozenUntil,
+                    // 폴더 정보 추가
+                    folders: srsCard.srsfolderitem ? srsCard.srsfolderitem.map(item => ({
+                        id: item.srsfolder.id,
+                        name: item.srsfolder.name,
+                        parentId: item.srsfolder.parentId,
+                        parentName: null // parent 관계가 스키마에 정의되지 않음
+                    })) : []
                 } : null
             };
         });
@@ -2037,8 +2138,8 @@ router.get('/wrong-answers', async (req, res, next) => {
         console.error('Error details:', {
             message: e.message,
             stack: e.stack,
-            userId,
-            includeCompleted
+            userId: req.user?.id,
+            includeCompleted: req.query?.includeCompleted
         });
         return fail(res, 500, 'Failed to load wrong answers');
     }
@@ -2113,6 +2214,114 @@ router.post('/wrong-answers/delete-multiple', async (req, res, next) => {
     } catch (e) {
         console.error('POST /srs/wrong-answers/delete-multiple failed:', e);
         return fail(res, 500, 'Failed to delete wrong answers');
+    }
+});
+
+// POST /srs/folders/:folderId/accelerate-cards - 특정 카드들의 대기시간을 즉시 만료시키기
+router.post('/folders/:folderId/accelerate-cards', auth, async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const folderId = Number(req.params.folderId);
+        const { cardIds } = req.body;
+
+        if (!folderId) {
+            return fail(res, 400, 'folderId is required');
+        }
+
+        if (!Array.isArray(cardIds) || cardIds.length === 0) {
+            return fail(res, 400, 'cardIds array is required');
+        }
+
+        // 폴더 소유권 확인
+        const folder = await prisma.srsfolder.findFirst({
+            where: { 
+                id: folderId, 
+                userId 
+            },
+            select: { id: true, name: true }
+        });
+
+        if (!folder) {
+            return fail(res, 404, 'Folder not found or access denied');
+        }
+
+        // 해당 폴더에 속한 카드들만 확인
+        const folderItems = await prisma.srsfolderitem.findMany({
+            where: {
+                folderId: folderId,
+                srscard: {
+                    id: { in: cardIds.map(Number) }
+                }
+            },
+            include: {
+                srscard: {
+                    select: {
+                        id: true,
+                        nextReviewAt: true,
+                        waitingUntil: true,
+                        isOverdue: true,
+                        isMastered: true,
+                        frozenUntil: true
+                    }
+                }
+            }
+        });
+
+        if (folderItems.length === 0) {
+            return fail(res, 404, 'No matching cards found in this folder');
+        }
+
+        const now = new Date();
+        const cardsToUpdate = [];
+
+        // 업데이트할 카드들 필터링 (overdue가 아니고 mastered가 아닌 카드들만)
+        for (const item of folderItems) {
+            const card = item.srscard;
+            
+            // 이미 overdue거나 mastered인 카드는 제외
+            if (card.isOverdue || card.isMastered) {
+                continue;
+            }
+            
+            // 동결 카드인지 확인
+            const isFrozen = card.frozenUntil && new Date(card.frozenUntil) > now;
+            
+            // 일반 카드이거나 동결 카드 모두 포함
+            if (card.nextReviewAt || isFrozen) {
+                cardsToUpdate.push(card.id);
+            }
+        }
+
+        if (cardsToUpdate.length === 0) {
+            return fail(res, 400, 'No cards are eligible for acceleration');
+        }
+
+        // 카드들의 nextReviewAt과 waitingUntil을 현재 시간으로 설정
+        const updateResult = await prisma.srscard.updateMany({
+            where: {
+                id: { in: cardsToUpdate }
+            },
+            data: {
+                nextReviewAt: now,
+                waitingUntil: now,
+                isOverdue: true, // 즉시 복습 가능하도록 overdue로 설정
+                overdueStartAt: now,
+                overdueDeadline: new Date(now.getTime() + (24 * 60 * 60 * 1000)), // 24시간 후 데드라인
+                frozenUntil: null // 동결 상태 해제
+            }
+        });
+
+        console.log(`[SRS] Accelerated ${updateResult.count} cards to immediate review in folder ${folderId}`);
+
+        return ok(res, {
+            message: `${updateResult.count}개 카드가 즉시 학습 가능하게 설정되었습니다.`,
+            acceleratedCount: updateResult.count,
+            requestedCount: cardIds.length
+        });
+
+    } catch (e) {
+        console.error('POST /srs/folders/:folderId/accelerate-cards failed:', e);
+        return fail(res, 500, 'Failed to accelerate cards');
     }
 });
 
