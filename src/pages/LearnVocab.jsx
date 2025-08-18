@@ -124,37 +124,102 @@ export default function LearnVocab() {
         }
     }, [flipInterval]);
     
-    // maxPlayCount가 변경될 때 현재 카드에도 즉시 적용 (선택 자동학습 포함)
+    // maxPlayCount ref 업데이트 (항상)
     useEffect(() => {
-        if (mode === 'flash' && auto) {
-            // 선택 자동학습에서는 현재 카드에도 즉시 적용
-            maxPlayCountRef.current = maxPlayCount;
-            console.log('[SETTINGS] maxPlayCount changed to:', maxPlayCount, 'applied immediately for flash auto mode');
-            
-            // 만약 maxPlayCount가 0 이하로 설정되면 즉시 다음 카드로 넘어가기
-            if (maxPlayCount <= 0) {
-                console.log('[SETTINGS] maxPlayCount is 0 or less, advancing immediately');
-                stopAudio();
-                const currentBatch = allBatches[batchIndex] || [];
-                const isLastCard = idx >= currentBatch.length - 1;
-                
-                console.log('[SETTINGS] isLastCard:', isLastCard, 'idx:', idx, 'batchLength:', currentBatch.length);
-                
-                if (isLastCard) {
-                    // 마지막 카드는 무조건 완료
-                    console.log('[SETTINGS] LAST CARD - Force completing immediately');
-                    handleQuizDone();
-                } else {
-                    // 다음 카드로 이동
-                    setIdx(idx + 1);
-                    setFlipped(false);
-                }
-            }
-        } else {
-            // SRS 학습에서는 다음 카드부터 적용
-            console.log('[SETTINGS] maxPlayCount changed to:', maxPlayCount, 'will apply on next card for SRS mode');
+        maxPlayCountRef.current = maxPlayCount;
+        console.log('[SETTINGS] maxPlayCount ref updated to:', maxPlayCount);
+    }, [maxPlayCount]);
+    
+    // maxPlayCount 변경 시 즉시 진행 체크 (설정 변경에만 반응)
+    useEffect(() => {
+        console.log('[SETTINGS] maxPlayCount changed to:', maxPlayCount, '- checking conditions');
+        
+        // 초기 로딩이나 기본값인 경우 무시
+        if (maxPlayCount === 3) {
+            console.log('[SETTINGS] Default value (3) - skipping');
+            return; 
         }
-    }, [maxPlayCount, mode, auto, batchIndex, allBatches]);
+        
+        // 선택 자동학습 모드가 아니면 무시
+        if (!(mode === 'flash' && auto)) {
+            console.log('[SETTINGS] Not flash auto mode - skipping');
+            return;
+        }
+        
+        // 데이터 로딩 상태 확인
+        const currentBatch = allBatches[batchIndex] || [];
+        const hasQueueData = queue && queue.length > 0;
+        const hasBatchData = currentBatch.length > 0;
+        
+        if (!hasQueueData && !hasBatchData) {
+            console.log('[SETTINGS] No data loaded yet - skipping. Queue length:', queue?.length, 'Batch length:', currentBatch.length);
+            return;
+        }
+        
+        // 현재 오디오가 재생 중인지 확인 (재생 중이 아닐 때만 진행 체크)
+        const el = audioRef.current;
+        if (el && el.currentSrc && !el.paused) {
+            console.log('[SETTINGS] Audio is playing - waiting for natural end');
+            return;
+        }
+        
+        const currentCount = audioPlayCountRef.current;
+        console.log('[SETTINGS] All checks passed - current count:', currentCount, 'new max:', maxPlayCount);
+        
+        // 현재 재생 횟수가 새로운 설정값에 이미 도달한 경우에만 즉시 진행
+        if (maxPlayCount > 0 && currentCount >= maxPlayCount) {
+            console.log('[SETTINGS] IMMEDIATE ADVANCE NEEDED - current:', currentCount, 'max:', maxPlayCount);
+            
+            // 현재 재생 중인 오디오가 있다면 정리
+            const el = audioRef.current;
+            if (el) {
+                console.log('[SETTINGS] Cleaning up audio listeners');
+                if (el._currentPlayHandler) {
+                    el.removeEventListener('play', el._currentPlayHandler);
+                    el._currentPlayHandler = null;
+                }
+                if (el._currentEndHandler) {
+                    el.removeEventListener('ended', el._currentEndHandler);
+                    el._currentEndHandler = null;
+                }
+                stopAudio();
+            }
+            
+            // 다음 카드로 진행 (timeout으로 비동기 처리)
+            setTimeout(() => {
+                setIdx(currentIdx => {
+                    // 실제 사용 중인 데이터 구조 확인
+                    const currentBatch = allBatches[batchIndex] || [];
+                    const queueLength = queue?.length || 0;
+                    
+                    // batch 모드인지 queue 모드인지 확인
+                    let isLastCard, totalLength;
+                    if (mode === 'batch' && currentBatch.length > 0) {
+                        isLastCard = currentIdx >= currentBatch.length - 1;
+                        totalLength = currentBatch.length;
+                    } else {
+                        isLastCard = currentIdx >= queueLength - 1;
+                        totalLength = queueLength;
+                    }
+                    
+                    console.log('[SETTINGS] ADVANCING - isLastCard:', isLastCard, 'currentIdx:', currentIdx, 'totalLength:', totalLength, 'mode:', mode);
+                    
+                    if (isLastCard) {
+                        console.log('[SETTINGS] LAST CARD - COMPLETING');
+                        setModeForBatch('finished');
+                        return currentIdx;
+                    } else {
+                        console.log('[SETTINGS] NEXT CARD');
+                        setFlipped(false);
+                        return currentIdx + 1;
+                    }
+                });
+            }, 100);
+            
+        } else {
+            console.log('[SETTINGS] No advance needed - current:', currentCount, 'max:', maxPlayCount);
+        }
+    }, [maxPlayCount]);
 
     
     const showToast = () => {
@@ -325,11 +390,11 @@ export default function LearnVocab() {
         if (isNewCard) {
             // 새 카드에서만 maxPlayCount 설정을 업데이트
             maxPlayCountRef.current = maxPlayCount;
-            console.log('[AUDIO DEBUG] New card detected:', currentCardId, 'resetting count to 1, max:', maxPlayCountRef.current);
+            console.log('[AUDIO DEBUG] New card detected:', currentCardId, 'resetting count to 0, max:', maxPlayCountRef.current);
             setLastCardId(currentCardId);
-            // 새 카드에서는 1부터 시작
-            audioPlayCountRef.current = 1;
-            setAudioPlayCount(1);
+            // 새 카드에서는 0부터 시작 (첫 재생 후 1이 됨)
+            audioPlayCountRef.current = 0;
+            setAudioPlayCount(0);
             
             const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
             const el = audioRef.current;
@@ -339,69 +404,67 @@ export default function LearnVocab() {
             el.removeEventListener('ended', el._currentEndHandler);
             
             const handleAudioStart = () => {
-                console.log('[AUDIO DEBUG] Play started, count:', audioPlayCountRef.current);
+                audioPlayCountRef.current = audioPlayCountRef.current + 1;
+                setAudioPlayCount(audioPlayCountRef.current);
+                console.log('[AUDIO DEBUG] Play started, count increased to:', audioPlayCountRef.current);
             };
             
             const handleAudioEnd = () => {
                 console.log('[AUDIO DEBUG] Audio ended, count:', audioPlayCountRef.current, 'max:', maxPlayCountRef.current);
                 
-                // 우선적으로 마지막 카드인지 확인
-                const currentBatch = allBatches[batchIndex] || [];
-                const isLastCard = idx >= currentBatch.length - 1;
-                
-                console.log('[AUDIO DEBUG] isLastCard:', isLastCard, 'idx:', idx, 'batchLength:', currentBatch.length);
-                
-                if (isLastCard) {
-                    // 마지막 카드는 재생횟수와 상관없이 무조건 완료
-                    console.log('[AUDIO DEBUG] LAST CARD - Force completing regardless of play count');
-                    el.removeEventListener('play', handleAudioStart);
-                    el.removeEventListener('ended', handleAudioEnd);
-                    stopAudio();
-                    handleQuizDone();
-                    return;
-                }
-                
-                if (audioPlayCountRef.current >= maxPlayCountRef.current) {
-                    // After max plays, advance to next card
-                    console.log('[AUDIO DEBUG] Max plays reached, advancing to next card');
-                    el.removeEventListener('play', handleAudioStart);
-                    el.removeEventListener('ended', handleAudioEnd);
-                    stopAudio();
-                    
-                    // 다음 카드로 이동 (마지막 카드가 아닌 경우)
-                    setIdx(idx + 1);
-                    setFlipped(false);
-                } else {
-                    // 마지막 카드인지 다시 한번 체크 (안전장치)
+                // 동적으로 현재 인덱스와 배치 정보 가져오기
+                setIdx(currentIdx => {
                     const currentBatch = allBatches[batchIndex] || [];
-                    const isLastCard = idx >= currentBatch.length - 1;
+                    const queueLength = queue?.length || 0;
                     
-                    if (isLastCard) {
-                        // 마지막 카드에서는 더 이상 반복하지 않고 바로 완료
-                        console.log('[AUDIO DEBUG] LAST CARD detected during repeat - Force completing');
+                    // batch 모드인지 queue 모드인지 확인하여 올바른 길이 사용
+                    let isLastCard, totalLength;
+                    if (mode === 'batch' && currentBatch.length > 0) {
+                        isLastCard = currentIdx >= currentBatch.length - 1;
+                        totalLength = currentBatch.length;
+                    } else {
+                        isLastCard = currentIdx >= queueLength - 1;
+                        totalLength = queueLength;
+                    }
+                    
+                    console.log('[AUDIO DEBUG] isLastCard:', isLastCard, 'currentIdx:', currentIdx, 'totalLength:', totalLength, 'mode:', mode, 'queueLength:', queueLength);
+                    
+                    if (audioPlayCountRef.current >= maxPlayCountRef.current) {
+                        // After max plays, check if last card or advance to next
+                        console.log('[AUDIO DEBUG] Max plays reached');
                         el.removeEventListener('play', handleAudioStart);
                         el.removeEventListener('ended', handleAudioEnd);
                         stopAudio();
-                        handleQuizDone();
-                        return;
-                    }
-                    
-                    // Increment count and play again after delay
-                    audioPlayCountRef.current = audioPlayCountRef.current + 1;
-                    setAudioPlayCount(audioPlayCountRef.current);
-                    console.log('[AUDIO DEBUG] Playing again in 1 second, new count:', audioPlayCountRef.current);
-                    setTimeout(() => {
-                        if (el && el.src) {
-                            console.log('[AUDIO DEBUG] Actually playing again now');
-                            el.currentTime = 0;
-                            el.play().then(() => {
-                                console.log('[AUDIO DEBUG] Repeat play started successfully');
-                            }).catch(e => {
-                                console.error('[AUDIO DEBUG] 재생 반복 실패:', e);
-                            });
+                        
+                        if (isLastCard) {
+                            // 마지막 카드이면 완료 처리
+                            console.log('[AUDIO DEBUG] LAST CARD - Force completing after max plays');
+                            handleQuizDone();
+                            return currentIdx; // 인덱스 변경 없음
+                        } else {
+                            // 다음 카드로 이동
+                            console.log('[AUDIO DEBUG] Advancing to next card');
+                            setFlipped(false);
+                            return currentIdx + 1; // 다음 카드로
                         }
-                    }, 1000); // 1-second gap between plays
-                }
+                    } else {
+                        // 아직 최대 재생 횟수에 도달하지 않음 - 다시 재생
+                        // Play again after delay (count will be incremented on 'play' event)
+                        console.log('[AUDIO DEBUG] Playing again in 1 second, current count:', audioPlayCountRef.current);
+                        setTimeout(() => {
+                            if (el && el.src) {
+                                console.log('[AUDIO DEBUG] Actually playing again now');
+                                el.currentTime = 0;
+                                el.play().then(() => {
+                                    console.log('[AUDIO DEBUG] Repeat play started successfully');
+                                }).catch(e => {
+                                    console.error('[AUDIO DEBUG] 재생 반복 실패:', e);
+                                });
+                            }
+                        }, 1000); // 1-second gap between plays
+                        return currentIdx; // 인덱스 변경 없음
+                    }
+                });
             };
 
             // Remove any existing listeners first to prevent duplicates
@@ -474,7 +537,6 @@ export default function LearnVocab() {
     // ───────────────────── 플로우 헬퍼 ─────────────────────
     const goToNextCard = () => {
         stopAudio();
-        setAudioPlayCount(0); // Reset play count when manually advancing
         
         // 현재 카드를 학습 완료된 카드 목록에 추가
         if (current) {
@@ -482,6 +544,11 @@ export default function LearnVocab() {
         }
         
         const nextIdx = idx + 1;
+        
+        // 마지막 카드가 아닐 때만 재생횟수 초기화
+        if (nextIdx < queue.length) {
+            setAudioPlayCount(0); // Reset play count when manually advancing
+        }
         const isFlashLike = (mode === 'flash' || !!idsParam);
         const shouldTriggerSurpriseQuiz = isFlashLike && queue.length >= 11 && nextIdx % 10 === 0 && nextIdx < queue.length;
         
@@ -577,13 +644,15 @@ export default function LearnVocab() {
     // ───────────────────── 배치 모드 핸들러 ─────────────────────
     const handleNextFlash = () => {
         stopAudio();
-        setAudioPlayCount(0); // Reset play count when advancing
         const currentBatch = allBatches[batchIndex] || [];
         console.log('[NEXT FLASH DEBUG] idx:', idx, 'currentBatch.length:', currentBatch.length);
+        
         if (idx < currentBatch.length - 1) {
+            setAudioPlayCount(0); // Reset play count when advancing to next card
             setIdx((i) => i + 1);
             setFlipped(false);
         } else {
+            // 마지막 카드인 경우 재생횟수 초기화하지 않음
             console.log('[NEXT FLASH DEBUG] Batch completed, auto:', auto);
             // 자동학습 모드에서는 퀴즈 건너뛰고 바로 완료 처리
             if (auto) {
@@ -597,28 +666,45 @@ export default function LearnVocab() {
 
     const handleQuizDone = async () => {
         stopAudio();
-        setAudioPlayCount(0); // Reset play count when advancing
+        
+        // 다음 배치가 있는 경우에만 재생횟수 초기화 (마지막 완료가 아닌 경우)
         if (batchIndex < allBatches.length - 1) {
+            setAudioPlayCount(0); // Reset play count when advancing to next batch
             setBatchIndex((i) => i + 1);
             setIdx(0);
             setFlipped(false);
             setModeForBatch('flash');
             return;
         }
+        
+        // 마지막 배치 완료 시에는 재생횟수를 초기화하지 않음
         setModeForBatch('finished');
         try {
+            // 실제 사용 중인 데이터 구조 확인
             const currentBatch = allBatches[batchIndex] || [];
-            const currentBatchVocabIds = currentBatch.map(it => it.vocabId).filter(Boolean);
-            const currentBatchCardIds = currentBatch.map(it => it.cardId).filter(Boolean);
+            const queueData = queue || [];
             
-            console.log('[LEARN FINISH DEBUG] currentBatch:', currentBatch);
-            console.log('[LEARN FINISH DEBUG] vocabIds:', currentBatchVocabIds);
-            console.log('[LEARN FINISH DEBUG] cardIds:', currentBatchCardIds);
+            let vocabIds = [];
+            let cardIds = [];
             
-            if (currentBatchVocabIds.length || currentBatchCardIds.length) {
+            // batch 모드인지 queue 모드인지 확인하여 올바른 데이터 사용
+            if (mode === 'batch' && currentBatch.length > 0) {
+                vocabIds = currentBatch.map(it => it.vocabId).filter(Boolean);
+                cardIds = currentBatch.map(it => it.cardId).filter(Boolean);
+                console.log('[LEARN FINISH DEBUG] Using batch data - currentBatch:', currentBatch);
+            } else {
+                vocabIds = queueData.map(it => it.vocabId).filter(Boolean);
+                cardIds = queueData.map(it => it.cardId).filter(Boolean);
+                console.log('[LEARN FINISH DEBUG] Using queue data - queue:', queueData);
+            }
+            
+            console.log('[LEARN FINISH DEBUG] vocabIds:', vocabIds);
+            console.log('[LEARN FINISH DEBUG] cardIds:', cardIds);
+            
+            if (vocabIds.length || cardIds.length) {
                 const requestBody = { 
-                    vocabIds: currentBatchVocabIds, 
-                    cardIds: currentBatchCardIds, 
+                    vocabIds: vocabIds, 
+                    cardIds: cardIds, 
                     createFolder: true 
                 };
                 console.log('[LEARN FINISH DEBUG] Sending request body:', requestBody);
@@ -644,6 +730,14 @@ export default function LearnVocab() {
                 toast.error('세션 종료 중 오류 발생: ' + e.message);
             }
         }
+        
+        // API 요청 완료 후 강제로 상태 재설정하여 완료 페이지가 확실히 표시되도록 함
+        console.log('[LEARN FINISH DEBUG] All API calls completed - forcing rerender with finished state');
+        setTimeout(() => {
+            setModeForBatch('finished');
+            // 추가로 컴포넌트 상태도 업데이트하여 리렌더링 확실히 트리거
+            setFlipped(false);
+        }, 100);
     };
 
     // ───────────────────── 스펠링 입력 헬퍼 함수들 ─────────────────────
@@ -1189,6 +1283,33 @@ export default function LearnVocab() {
         );
     }
 
+    // 학습 완료 상태 체크 (모든 모드에서 공통)
+    if (modeForBatch === 'finished') {
+        return (
+            <main className="container py-4" style={{ maxWidth: 720 }}>
+                <audio ref={audioRef} style={{ display: 'none' }} />
+                <div className="p-4 bg-light rounded text-center">
+                    <h4 className="mb-2">🎉 모든 학습 완료!</h4>
+                    <p className="text-muted">오답률이 높은 단어들은 내일 복습 폴더에 자동으로 추가됩니다.</p>
+                    <div className="d-flex justify-content-center gap-3 mt-4">
+                        <button className="btn btn-outline-secondary" onClick={() => window.location.reload()}>다시 학습하기</button>
+                        
+                        {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
+                        {folderIdParam ? (
+                            <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam}`}>
+                                폴더로 돌아가기
+                            </Link>
+                        ) : (
+                            <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
+                        )}
+                        
+                        <Link className="btn btn-outline-secondary" to="/">홈으로</Link>
+                    </div>
+                </div>
+            </main>
+        );
+    }
+
     // 배치 모드
     if (mode === 'batch') {
         const currentBatch = allBatches[batchIndex];
@@ -1200,32 +1321,6 @@ export default function LearnVocab() {
                     <h4>🎉</h4>
                     <p className="lead">오늘 학습할 단어가 없습니다.</p>
                     <button onClick={() => navigate('/my-wordbook')} className="btn btn-primary">단어 추가하러 가기</button>
-                </main>
-            );
-        }
-
-        if (modeForBatch === 'finished') {
-            return (
-                <main className="container py-4" style={{ maxWidth: 720 }}>
-                    <audio ref={audioRef} style={{ display: 'none' }} />
-                    <div className="p-4 bg-light rounded text-center">
-                        <h4 className="mb-2">🎉 모든 학습 완료!</h4>
-                        <p className="text-muted">오답률이 높은 단어들은 내일 복습 폴더에 자동으로 추가됩니다.</p>
-                        <div className="d-flex justify-content-center gap-3 mt-4">
-                            <button className="btn btn-outline-secondary" onClick={() => window.location.reload()}>다시 학습하기</button>
-                            
-                            {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
-                            {folderIdParam ? (
-                                <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam}`}>
-                                    폴더로 돌아가기
-                                </Link>
-                            ) : (
-                                <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
-                            )}
-                            
-                            <Link className="btn btn-outline-secondary" to="/">홈으로</Link>
-                        </div>
-                    </div>
                 </main>
             );
         }
@@ -1419,11 +1514,7 @@ export default function LearnVocab() {
                                 
                                 const el = audioRef.current;
                                 if (el && current) {
-                                    // 재생횟수가 0이면 1로 설정 (처음 시작하는 경우)
-                                    if (audioPlayCountRef.current === 0) {
-                                        audioPlayCountRef.current = 1;
-                                        setAudioPlayCount(1);
-                                    }
+                                    // 재생횟수가 0인 상태는 유지 (첫 재생 시 증가됨)
                                     
                                     // lastCardId를 현재 카드 ID로 설정하여 새 카드 감지 방지
                                     const currentCardId = current?.vocabId || current?.cardId;
@@ -1439,28 +1530,57 @@ export default function LearnVocab() {
                                     el.removeEventListener('ended', el._currentEndHandler);
                                     
                                     const handleResumeStart = () => {
-                                        console.log('[AUTO RESUME] Play started, count:', audioPlayCountRef.current);
+                                        audioPlayCountRef.current = audioPlayCountRef.current + 1;
+                                        setAudioPlayCount(audioPlayCountRef.current);
+                                        console.log('[AUTO RESUME] Play started, count increased to:', audioPlayCountRef.current);
                                     };
                                     
                                     const handleResumeEnd = () => {
                                         console.log('[AUTO RESUME] Audio ended, count:', audioPlayCountRef.current, 'max:', maxPlayCountRef.current);
-                                        if (audioPlayCountRef.current >= maxPlayCountRef.current) {
-                                            // 최대 재생횟수 도달 - 다음 카드로
-                                            el.removeEventListener('play', handleResumeStart);
-                                            el.removeEventListener('ended', handleResumeEnd);
-                                            stopAudio();
-                                            setIdx(prevIdx => prevIdx + 1);
-                                        } else {
-                                            // 다시 재생
-                                            audioPlayCountRef.current = audioPlayCountRef.current + 1;
-                                            setAudioPlayCount(audioPlayCountRef.current);
-                                            setTimeout(() => {
-                                                if (el && el.src) {
-                                                    el.currentTime = 0;
-                                                    el.play().catch(console.error);
+                                        
+                                        // 동적으로 현재 인덱스와 배치 정보 가져오기
+                                        setIdx(currentIdx => {
+                                            const currentBatch = allBatches[batchIndex] || [];
+                                            const queueLength = queue?.length || 0;
+                                            
+                                            // batch 모드인지 queue 모드인지 확인하여 올바른 길이 사용
+                                            let isLastCard, totalLength;
+                                            if (mode === 'batch' && currentBatch.length > 0) {
+                                                isLastCard = currentIdx >= currentBatch.length - 1;
+                                                totalLength = currentBatch.length;
+                                            } else {
+                                                isLastCard = currentIdx >= queueLength - 1;
+                                                totalLength = queueLength;
+                                            }
+                                            
+                                            if (audioPlayCountRef.current >= maxPlayCountRef.current) {
+                                                // 최대 재생횟수 도달
+                                                el.removeEventListener('play', handleResumeStart);
+                                                el.removeEventListener('ended', handleResumeEnd);
+                                                stopAudio();
+                                                
+                                                if (isLastCard) {
+                                                    // 마지막 카드이면 완료 처리
+                                                    console.log('[AUTO RESUME] LAST CARD - Force completing after max plays');
+                                                    handleQuizDone();
+                                                    return currentIdx; // 인덱스 변경 없음
+                                                } else {
+                                                    // 다음 카드로 이동
+                                                    console.log('[AUTO RESUME] Advancing to next card');
+                                                    setFlipped(false);
+                                                    return currentIdx + 1; // 다음 카드로
                                                 }
-                                            }, 1000);
-                                        }
+                                            } else {
+                                                // 다시 재생 (count는 'play' 이벤트에서 증가됨)
+                                                setTimeout(() => {
+                                                    if (el && el.src) {
+                                                        el.currentTime = 0;
+                                                        el.play().catch(console.error);
+                                                    }
+                                                }, 1000);
+                                                return currentIdx; // 인덱스 변경 없음
+                                            }
+                                        });
                                     };
                                     
                                     // 새 이벤트 리스너 등록

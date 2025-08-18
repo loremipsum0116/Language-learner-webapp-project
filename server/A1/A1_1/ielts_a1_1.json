@@ -9,7 +9,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/a-v.mp3",
     "koGloss": "art. 하나의",
     "koExample": "이것을 받아 적으려면 펜이 하나 필요해요.",
-    "koChirpScript": "a. 하나의 라는 뜻의 부정관사입니다. 뒤에 오는 단어가 자음 소리로 시작할 때 사용합니다. I need a pen to write this down. 이것을 받아 적으려면 펜이 하나 필요해요."
+    "koChirpScript": "a. 하나의 라는 뜻을 가진 부정관사입니다. 뒤에 오는 단어가 자음 소리로 시작할 때 사용해요. 예문은 I need a pen to write this down이고, 이것을 받아 적으려면 펜이 하나 필요해요 라는 뜻입니다."
   },
   {
     "lemma": "an",
@@ -21,7 +21,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/an-v.mp3",
     "koGloss": "art. 하나의",
     "koExample": "그녀는 사과 한 개를 먹고 싶어해요.",
-    "koChirpScript": "an. 하나의 라는 뜻의 부정관사입니다. 뒤에 오는 단어가 모음 소리로 시작할 때 사용합니다. She wants to eat an apple. 그녀는 사과 한 개를 먹고 싶어해요."
+    "koChirpScript": "an. 하나의 라는 뜻의 부정관사로, 뒤에 오는 단어가 모음 소리로 시작할 때 사용합니다. She wants to eat an apple. 그녀는 사과 한 개를 먹고 싶어해요 처럼 쓸 수 있어요."
   },
   {
     "lemma": "about",
@@ -33,7 +33,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/about-v.mp3",
     "koGloss": "prep. ~에 대하여; adv. 약, 대략",
     "koExample": "그 책은 무엇에 관한 건가요?",
-    "koChirpScript": "about. 무엇무엇에 대하여 또는 약, 대략 이라는 뜻입니다. What is the book about? 그 책은 무엇에 관한 건가요?"
+    "koChirpScript": "about. 무엇무엇에 대하여 또는 약, 대략 이라는 뜻을 가진 단어입니다. What is the book about? 그 책은 무엇에 관한 건가요? 와 같이 사용됩니다."
   },
   {
     "lemma": "above",
@@ -45,7 +45,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/above-v.mp3",
     "koGloss": "prep. ~보다 위에; adv. 위에",
     "koExample": "헬리콥터가 건물 위를 날고 있어요.",
-    "koChirpScript": "above. 무엇무엇보다 위에 라는 뜻입니다. The helicopter is flying above the building. 헬리콥터가 건물 위를 날고 있어요."
+    "koChirpScript": "above. 무엇무엇보다 위에 라는 의미를 가집니다. 예를 들어, The helicopter is flying above the building.은 헬리콥터가 건물 위를 날고 있어요 라는 뜻이 됩니다."
   },
   {
     "lemma": "across",
@@ -57,7 +57,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/across-v.mp3",
     "koGloss": "prep. ~을 가로질러; adv. 가로질러",
     "koExample": "길을 건널 때는 조심하세요.",
-    "koChirpScript": "across. 무엇무엇을 가로질러 라는 뜻입니다. Be careful when you walk across the road. 길을 건널 때는 조심하세요."
+    "koChirpScript": "across. 무엇무엇을 가로질러 라는 뜻이에요. Be careful when you walk across the road. 이 문장은 길을 건널 때는 조심하세요 라는 의미입니다."
   },
   {
     "lemma": "action",
@@ -69,7 +69,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/action-v.mp3",
     "koGloss": "n. 행동, 조치",
     "koExample": "그 영화는 액션으로 가득했다.",
-    "koChirpScript": "action. 행동 또는 조치 라는 뜻입니다. The movie was full of action. 그 영화는 액션으로 가득했다."
+    "koChirpScript": "action. 행동 또는 조치 라는 뜻의 명사입니다. The movie was full of action. 그 영화는 액션으로 가득했다. 와 같이 사용해요."
   },
   {
     "lemma": "activity",
@@ -81,7 +81,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/activity-v.mp3",
     "koGloss": "n. 활동",
     "koExample": "우리는 오늘 수업 시간에 재미있는 활동을 했다.",
-    "koChirpScript": "activity. 활동 이라는 뜻입니다. We did a fun activity in class today. 우리는 오늘 수업 시간에 재미있는 활동을 했다."
+    "koChirpScript": "activity. 활동 이라는 뜻입니다. We did a fun activity in class today. 우리는 오늘 수업 시간에 재미있는 활동을 했다. 처럼 쓸 수 있습니다."
   },
   {
     "lemma": "actor",
@@ -93,7 +93,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/actor-v.mp3",
     "koGloss": "n. 배우",
     "koExample": "제가 가장 좋아하는 배우는 톰 행크스입니다.",
-    "koChirpScript": "actor. 배우 라는 뜻입니다. My favorite actor is Tom Hanks. 제가 가장 좋아하는 배우는 톰 행크스입니다."
+    "koChirpScript": "actor. 남자 배우를 뜻하는 단어입니다. My favorite actor is Tom Hanks. 제가 가장 좋아하는 배우는 톰 행크스입니다. 라는 예문처럼 사용됩니다."
   },
   {
     "lemma": "actress",
@@ -105,7 +105,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/actress-v.mp3",
     "koGloss": "n. 여배우",
     "koExample": "그녀는 재능 있는 여배우이다.",
-    "koChirpScript": "actress. 여배우 라는 뜻입니다. She is a talented actress. 그녀는 재능 있는 여배우이다."
+    "koChirpScript": "actress. 여자 배우를 의미합니다. She is a talented actress. 그녀는 재능 있는 여배우이다. 와 같이 말할 수 있어요."
   },
   {
     "lemma": "add",
@@ -117,7 +117,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/add-v.mp3",
     "koGloss": "v. 더하다, 추가하다",
     "koExample": "제 커피에 설탕을 좀 넣어주세요.",
-    "koChirpScript": "add. 더하다 또는 추가하다 라는 뜻입니다. Please add some sugar to my coffee. 제 커피에 설탕을 좀 넣어주세요."
+    "koChirpScript": "add. 더하다 또는 추가하다 라는 뜻의 동사입니다. Please add some sugar to my coffee. 이 문장은 제 커피에 설탕을 좀 넣어주세요 라는 뜻입니다."
   },
   {
     "lemma": "address",
@@ -129,7 +129,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/address-v.mp3",
     "koGloss": "n. 주소",
     "koExample": "집 주소가 어떻게 되세요?",
-    "koChirpScript": "address. 주소 라는 뜻입니다. What is your home address? 집 주소가 어떻게 되세요?"
+    "koChirpScript": "address. 주소 라는 뜻의 명사입니다. What is your home address? 라고 물으면 집 주소가 어떻게 되세요? 라는 질문입니다."
   },
   {
     "lemma": "adult",
@@ -141,7 +141,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/adult-v.mp3",
     "koGloss": "n. 성인, 어른",
     "koExample": "이 영화를 보려면 성인이어야 합니다.",
-    "koChirpScript": "adult. 성인 또는 어른 이라는 뜻입니다. You must be an adult to watch this movie. 이 영화를 보려면 성인이어야 합니다."
+    "koChirpScript": "adult. 성인 또는 어른을 의미합니다. You must be an adult to watch this movie. 이 영화를 보려면 성인이어야 합니다. 처럼 사용됩니다."
   },
   {
     "lemma": "advice",
@@ -153,7 +153,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/advice-v.mp3",
     "koGloss": "n. 조언, 충고",
     "koExample": "저에게 조언 좀 해주실 수 있나요?",
-    "koChirpScript": "advice. 조언 또는 충고 라는 뜻입니다. Can you give me some advice? 저에게 조언 좀 해주실 수 있나요?"
+    "koChirpScript": "advice. 조언 또는 충고 라는 뜻의 명사입니다. Can you give me some advice? 저에게 조언 좀 해주실 수 있나요? 라는 뜻의 문장입니다."
   },
   {
     "lemma": "afraid",
@@ -165,7 +165,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/afraid-v.mp3",
     "koGloss": "adj. 두려워하는, 무서워하는",
     "koExample": "저는 거미를 무서워해요.",
-    "koChirpScript": "afraid. 두려워하는 또는 무서워하는 이라는 뜻입니다. I'm afraid of spiders. 저는 거미를 무서워해요."
+    "koChirpScript": "afraid. 두려워하는 또는 무서워하는 이라는 상태를 나타내는 형용사입니다. I'm afraid of spiders. 저는 거미를 무서워해요. 와 같이 쓸 수 있어요."
   },
   {
     "lemma": "after",
@@ -177,7 +177,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/after-v.mp3",
     "koGloss": "prep. ~후에",
     "koExample": "방과 후에 만나자.",
-    "koChirpScript": "after. 무엇무엇 후에 라는 뜻입니다. Let's meet after school. 방과 후에 만나자."
+    "koChirpScript": "after. 무엇무엇 후에 라는 뜻을 가집니다. Let's meet after school. 방과 후에 만나자. 처럼 시간을 나타낼 때 사용합니다."
   },
   {
     "lemma": "afternoon",
@@ -189,7 +189,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/afternoon-v.mp3",
     "koGloss": "n. 오후",
     "koExample": "오늘 오후에 뵐게요.",
-    "koChirpScript": "afternoon. 오후 라는 뜻입니다. I will see you this afternoon. 오늘 오후에 뵐게요."
+    "koChirpScript": "afternoon. 오후 라는 뜻의 명사입니다. I will see you this afternoon. 오늘 오후에 뵐게요. 와 같이 인사말로도 자주 쓰여요."
   },
   {
     "lemma": "again",
@@ -201,7 +201,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/again-v.mp3",
     "koGloss": "adv. 다시, 또",
     "koExample": "다시 한번 말씀해 주시겠어요?",
-    "koChirpScript": "again. 다시 또는 또 라는 뜻입니다. Can you say that again, please? 다시 한번 말씀해 주시겠어요?"
+    "koChirpScript": "again. 다시 또는 또 라는 의미를 가진 부사입니다. Can you say that again, please? 다시 한번 말씀해 주시겠어요? 처럼 반복을 요청할 때 유용하게 쓸 수 있습니다."
   },
   {
     "lemma": "age",
@@ -213,7 +213,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/age-v.mp3",
     "koGloss": "n. 나이",
     "koExample": "나이가 어떻게 되세요?",
-    "koChirpScript": "age. 나이 라는 뜻입니다. What is your age? 나이가 어떻게 되세요?"
+    "koChirpScript": "age. 나이 라는 뜻의 명사입니다. What is your age? 라고 물으면 나이가 어떻게 되세요? 라는 뜻입니다."
   },
   {
     "lemma": "ago",
@@ -225,7 +225,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/ago-v.mp3",
     "koGloss": "adv. ~전에",
     "koExample": "그녀는 오래 전에 떠났어요.",
-    "koChirpScript": "ago. 무엇무엇 전에 라는 뜻입니다. She left a long time ago. 그녀는 오래 전에 떠났어요."
+    "koChirpScript": "ago. 무엇무엇 전에 라는 뜻으로, 현재를 기준으로 과거의 특정 시점을 나타냅니다. She left a long time ago. 그녀는 오래 전에 떠났어요. 처럼 사용됩니다."
   },
   {
     "lemma": "agree",
@@ -237,7 +237,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/agree-v.mp3",
     "koGloss": "v. 동의하다",
     "koExample": "당신 의견에 동의해요.",
-    "koChirpScript": "agree. 동의하다 라는 뜻입니다. I agree with you. 당신 의견에 동의해요."
+    "koChirpScript": "agree. 동의하다 라는 뜻의 동사입니다. I agree with you. 당신 의견에 동의해요. 와 같이 상대방의 의견에 찬성할 때 사용합니다."
   },
   {
     "lemma": "air",
@@ -249,7 +249,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/air-v.mp3",
     "koGloss": "n. 공기, 하늘",
     "koExample": "신선한 공기가 필요해요.",
-    "koChirpScript": "air. 공기 또는 하늘 이라는 뜻입니다. I need some fresh air. 신선한 공기가 필요해요."
+    "koChirpScript": "air. 공기 또는 하늘 이라는 뜻입니다. I need some fresh air. 신선한 공기가 필요해요. 라는 문장처럼 쓰입니다."
   },
   {
     "lemma": "airport",
@@ -261,7 +261,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/airport-v.mp3",
     "koGloss": "n. 공항",
     "koExample": "비행기를 타려면 공항에 가야 해요.",
-    "koChirpScript": "airport. 공항 이라는 뜻입니다. We need to go to the airport to catch our flight. 비행기를 타려면 공항에 가야 해요."
+    "koChirpScript": "airport. 공항 이라는 뜻의 단어입니다. We need to go to the airport to catch our flight. 비행기를 타려면 공항에 가야 해요. 처럼 여행 관련 대화에서 자주 등장합니다."
   },
   {
     "lemma": "all",
@@ -273,7 +273,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/all-v.mp3",
     "koGloss": "det. 모든; pron. 모두",
     "koExample": "모든 학생들은 회의에 참석해야 합니다.",
-    "koChirpScript": "all. 모든 또는 모두 라는 뜻입니다. All students must attend the meeting. 모든 학생들은 회의에 참석해야 합니다."
+    "koChirpScript": "all. 모든 또는 모두 라는 뜻으로, 전체를 나타낼 때 사용합니다. All students must attend the meeting. 모든 학생들은 회의에 참석해야 합니다. 와 같이 쓰입니다."
   },
   {
     "lemma": "also",
@@ -285,7 +285,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/also-v.mp3",
     "koGloss": "adv. 또한, 역시",
     "koExample": "그녀는 의사이자 작가이기도 하다.",
-    "koChirpScript": "also. 또한 또는 역시 라는 뜻입니다. She is a doctor and also a writer. 그녀는 의사이자 작가이기도 하다."
+    "koChirpScript": "also. 또한 또는 역시 라는 뜻으로, 무언가를 덧붙여 말할 때 사용합니다. She is a doctor and also a writer. 그녀는 의사이자 작가이기도 하다. 처럼요."
   },
   {
     "lemma": "always",
@@ -297,7 +297,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/always-v.mp3",
     "koGloss": "adv. 항상, 언제나",
     "koExample": "그는 항상 제시간에 도착한다.",
-    "koChirpScript": "always. 항상 또는 언제나 라는 뜻입니다. He always arrives on time. 그는 항상 제시간에 도착한다."
+    "koChirpScript": "always. 항상 또는 언제나 라는 뜻의 부사입니다. 습관이나 변함없는 사실을 말할 때 사용해요. He always arrives on time. 그는 항상 제시간에 도착한다. 처럼요."
   },
   {
     "lemma": "amazing",
@@ -309,7 +309,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/amazing-v.mp3",
     "koGloss": "adj. 놀라운, 굉장한",
     "koExample": "정상에서 본 경치는 정말 놀라웠다.",
-    "koChirpScript": "amazing. 놀라운 또는 굉장한 이라는 뜻입니다. The view from the top was amazing. 정상에서 본 경치는 정말 놀라웠다."
+    "koChirpScript": "amazing. 놀라운 또는 굉장한 이라는 뜻으로, 아주 좋은 것을 묘사할 때 쓰는 형용사입니다. The view from the top was amazing. 정상에서 본 경치는 정말 놀라웠다. 와 같이 감탄할 때 사용해 보세요."
   },
   {
     "lemma": "and",
@@ -321,7 +321,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/and-v.mp3",
     "koGloss": "conj. 그리고, ~와/과",
     "koExample": "나는 빵과 버터를 좋아한다.",
-    "koChirpScript": "and. 그리고 또는 무엇무엇와/과 라는 뜻입니다. I like bread and butter. 나는 빵과 버터를 좋아한다."
+    "koChirpScript": "and. 그리고 또는 무엇무엇와/과 라는 뜻으로, 단어나 문장을 연결할 때 사용합니다. I like bread and butter. 나는 빵과 버터를 좋아한다. 처럼 비슷한 것들을 나열할 때 쓸 수 있어요."
   },
   {
     "lemma": "angry",
@@ -333,7 +333,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/angry-v.mp3",
     "koGloss": "adj. 화난",
     "koExample": "그녀는 그에게 화가 났다.",
-    "koChirpScript": "angry. 화난 이라는 뜻입니다. She was angry with him. 그녀는 그에게 화가 났다."
+    "koChirpScript": "angry. 화난 이라는 감정을 나타내는 형용사입니다. She was angry with him. 그녀는 그에게 화가 났다. 와 같이 사용합니다."
   },
   {
     "lemma": "animal",
@@ -345,7 +345,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/animal-v.mp3",
     "koGloss": "n. 동물",
     "koExample": "개는 가축이다.",
-    "koChirpScript": "animal. 동물 이라는 뜻입니다. A dog is a domestic animal. 개는 가축이다."
+    "koChirpScript": "animal. 동물 이라는 뜻의 명사입니다. A dog is a domestic animal. 개는 가축이다. 처럼 동물을 지칭할 때 사용합니다."
   },
   {
     "lemma": "another",
@@ -357,7 +357,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/another-v.mp3",
     "koGloss": "det. 또 하나의; pron. 또 다른 것",
     "koExample": "커피 한 잔 더 주시겠어요?",
-    "koChirpScript": "another. 또 하나의 또는 또 다른 것 이라는 뜻입니다. Can I have another cup of coffee? 커피 한 잔 더 주시겠어요?"
+    "koChirpScript": "another. 또 하나의 또는 또 다른 것 이라는 뜻으로, 추가적인 하나를 의미합니다. Can I have another cup of coffee? 커피 한 잔 더 주시겠어요? 와 같이 무언가를 더 원할 때 사용할 수 있어요."
   },
   {
     "lemma": "answer",
@@ -369,7 +369,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/answer-v.mp3",
     "koGloss": "n. 대답, 답; v. 대답하다",
     "koExample": "나는 그 질문에 대한 답을 모른다.",
-    "koChirpScript": "answer. 대답 또는 답, 그리고 대답하다 라는 뜻입니다. I don't know the answer to the question. 나는 그 질문에 대한 답을 모른다."
+    "koChirpScript": "answer. 명사로는 대답, 답, 동사로는 대답하다 라는 뜻을 가집니다. I don't know the answer to the question. 나는 그 질문에 대한 답을 모른다. 처럼 명사로 쓰거나, Answer the phone. 전화 받으세요. 처럼 동사로 쓸 수 있습니다."
   },
   {
     "lemma": "any",
@@ -381,7 +381,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/any-v.mp3",
     "koGloss": "det. 어떤, 아무; pron. 어느 것",
     "koExample": "질문 있으신가요?",
-    "koChirpScript": "any. 어떤 또는 아무 라는 뜻으로, 주로 의문문이나 부정문에 쓰입니다. Do you have any questions? 질문 있으신가요?"
+    "koChirpScript": "any. 어떤 또는 아무 라는 뜻으로, 주로 물어보는 문장이나 부정하는 문장에서 쓰입니다. Do you have any questions? 질문 있으신가요? 와 같이 질문할 때 자주 사용돼요."
   },
   {
     "lemma": "anyone",
@@ -393,7 +393,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/anyone-v.mp3",
     "koGloss": "pron. 누군가, 아무나",
     "koExample": "집에 누구 있어요?",
-    "koChirpScript": "anyone. 누군가 또는 아무나 라는 뜻입니다. Is anyone home? 집에 누구 있어요?"
+    "koChirpScript": "anyone. 누군가 또는 아무나 라는 뜻으로, 사람을 가리킬 때 씁니다. Is anyone home? 집에 누구 있어요? 처럼 의문문에서 자주 볼 수 있습니다."
   },
   {
     "lemma": "anything",
@@ -405,7 +405,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/anything-v.mp3",
     "koGloss": "pron. 무엇이든, 아무것도",
     "koExample": "마실 것 좀 드릴까요?",
-    "koChirpScript": "anything. 무엇이든 또는 아무것도 라는 뜻입니다. Can I get you anything to drink? 마실 것 좀 드릴까요?"
+    "koChirpScript": "anything. 무엇이든 또는 아무것도 라는 뜻으로, 사물을 가리킬 때 사용합니다. Can I get you anything to drink? 마실 것 좀 드릴까요? 와 같이 질문에 자주 쓰입니다."
   },
   {
     "lemma": "apartment",
@@ -417,7 +417,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/apartment-v.mp3",
     "koGloss": "n. 아파트",
     "koExample": "그들은 작은 아파트에 산다.",
-    "koChirpScript": "apartment. 아파트 라는 뜻입니다. They live in a small apartment. 그들은 작은 아파트에 산다."
+    "koChirpScript": "apartment. 우리가 흔히 말하는 아파트 라는 뜻입니다. They live in a small apartment. 그들은 작은 아파트에 산다. 처럼 주거 형태를 나타낼 때 사용합니다."
   },
   {
     "lemma": "apple",
@@ -429,7 +429,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/apple-v.mp3",
     "koGloss": "n. 사과",
     "koExample": "하루에 사과 한 개를 먹으면 의사가 필요 없다.",
-    "koChirpScript": "apple. 사과 라는 뜻입니다. An apple a day keeps the doctor away. 하루에 사과 한 개를 먹으면 의사가 필요 없다."
+    "koChirpScript": "apple. 과일의 한 종류인 사과 라는 뜻입니다. An apple a day keeps the doctor away. 라는 유명한 속담이 있죠. 하루에 사과 한 개를 먹으면 의사가 필요 없다 라는 뜻이에요."
   },
   {
     "lemma": "April",
@@ -441,7 +441,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/April-v.mp3",
     "koGloss": "n. 4월",
     "koExample": "제 생일은 4월이에요.",
-    "koChirpScript": "April. 4월 이라는 뜻입니다. My birthday is in April. 제 생일은 4월이에요."
+    "koChirpScript": "April. 1년 중 네 번째 달인 4월을 의미합니다. My birthday is in April. 제 생일은 4월이에요. 와 같이 특정 월을 말할 때 사용합니다."
   },
   {
     "lemma": "area",
@@ -453,7 +453,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/area-v.mp3",
     "koGloss": "n. 지역, 구역",
     "koExample": "이곳은 조용한 주거 지역이다.",
-    "koChirpScript": "area. 지역 또는 구역 이라는 뜻입니다. This is a quiet residential area. 이곳은 조용한 주거 지역이다."
+    "koChirpScript": "area. 지역 또는 구역 이라는 뜻의 명사입니다. This is a quiet residential area. 이곳은 조용한 주거 지역이다. 처럼 특정 장소의 범위를 나타낼 때 사용합니다."
   },
   {
     "lemma": "arm",
@@ -465,7 +465,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/arm-v.mp3",
     "koGloss": "n. 팔",
     "koExample": "그는 축구를 하다가 팔이 부러졌다.",
-    "koChirpScript": "arm. 팔 이라는 뜻입니다. He broke his arm playing soccer. 그는 축구를 하다가 팔이 부러졌다."
+    "koChirpScript": "arm. 우리 몸의 일부인 팔 이라는 뜻입니다. He broke his arm playing soccer. 그는 축구를 하다가 팔이 부러졌다. 처럼 신체 부위를 말할 때 사용됩니다."
   },
   {
     "lemma": "around",
@@ -477,7 +477,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/around-v.mp3",
     "koGloss": "prep. ~주위에; adv. 주위에, 대략",
     "koExample": "우리는 테이블 주위에 앉았다.",
-    "koChirpScript": "around. 무엇무엇 주위에 또는 대략 이라는 뜻입니다. We sat around the table. 우리는 테이블 주위에 앉았다."
+    "koChirpScript": "around. 무엇무엇 주위에 또는 대략 이라는 뜻으로 쓰입니다. We sat around the table. 우리는 테이블 주위에 앉았다. 처럼 위치를 나타내거나, It costs around 10 dollars. 그것은 대략 10달러입니다. 처럼 숫자를 어림잡아 말할 때 사용합니다."
   },
   {
     "lemma": "arrive",
@@ -489,7 +489,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/arrive-v.mp3",
     "koGloss": "v. 도착하다",
     "koExample": "기차는 몇 시에 도착하나요?",
-    "koChirpScript": "arrive. 도착하다 라는 뜻입니다. What time does the train arrive? 기차는 몇 시에 도착하나요?"
+    "koChirpScript": "arrive. 도착하다 라는 뜻의 동사입니다. What time does the train arrive? 기차는 몇 시에 도착하나요? 와 같이 특정 장소에 도달하는 것을 의미합니다."
   },
   {
     "lemma": "art",
@@ -501,7 +501,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/art-v.mp3",
     "koGloss": "n. 예술, 미술",
     "koExample": "저는 미술관 가는 것을 즐겨요.",
-    "koChirpScript": "art. 예술 또는 미술 이라는 뜻입니다. I enjoy visiting art museums. 저는 미술관 가는 것을 즐겨요."
+    "koChirpScript": "art. 예술 또는 미술 이라는 뜻의 명사입니다. I enjoy visiting art museums. 저는 미술관 가는 것을 즐겨요. 처럼 창의적인 활동이나 그 결과물을 의미합니다."
   },
   {
     "lemma": "article",
@@ -513,7 +513,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/article-v.mp3",
     "koGloss": "n. 기사, 관사",
     "koExample": "오늘 신문에서 흥미로운 기사를 읽었다.",
-    "koChirpScript": "article. 기사 또는 문법에서의 관사 라는 뜻입니다. I read an interesting article in the newspaper today. 오늘 신문에서 흥미로운 기사를 읽었다."
+    "koChirpScript": "article. 신문이나 잡지에 실린 기사 라는 뜻과, 문법에서 a, an, the 와 같은 관사 라는 뜻을 가지고 있습니다. I read an interesting article in the newspaper today. 오늘 신문에서 흥미로운 기사를 읽었다. 라는 예문에서는 기사 라는 의미로 쓰였습니다."
   },
   {
     "lemma": "artist",
@@ -525,7 +525,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/artist-v.mp3",
     "koGloss": "n. 예술가, 화가",
     "koExample": "반 고흐는 유명한 화가이다.",
-    "koChirpScript": "artist. 예술가 또는 화가 라는 뜻입니다. Van Gogh is a famous artist. 반 고흐는 유명한 화가이다."
+    "koChirpScript": "artist. 예술가 또는 화가 라는 뜻입니다. Van Gogh is a famous artist. 반 고흐는 유명한 화가이다. 처럼 예술 활동을 하는 사람을 가리킵니다."
   },
   {
     "lemma": "as",
@@ -537,7 +537,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/as-v.mp3",
     "koGloss": "prep. ~로서",
     "koExample": "그는 교사로서 일한다.",
-    "koChirpScript": "as. 무엇무엇로서 라는 뜻입니다. He works as a teacher. 그는 교사로서 일한다."
+    "koChirpScript": "as. 무엇무엇로서 라는 뜻으로, 자격이나 기능을 나타낼 때 사용합니다. He works as a teacher. 그는 교사로서 일한다. 처럼 직업이나 역할을 설명할 때 쓸 수 있습니다."
   },
   {
     "lemma": "ask",
@@ -549,7 +549,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/ask-v.mp3",
     "koGloss": "v. 묻다, 질문하다",
     "koExample": "질문 하나 해도 될까요?",
-    "koChirpScript": "ask. 묻다 또는 질문하다 라는 뜻입니다. Can I ask you a question? 질문 하나 해도 될까요?"
+    "koChirpScript": "ask. 묻다 또는 질문하다 라는 뜻의 동사입니다. Can I ask you a question? 질문 하나 해도 될까요? 와 같이 정보를 얻기 위해 무언가를 물어볼 때 사용합니다."
   },
   {
     "lemma": "at",
@@ -561,7 +561,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/at-v.mp3",
     "koGloss": "prep. ~에",
     "koExample": "역에서 만나요.",
-    "koChirpScript": "at. 특정 장소나 시간을 나타내는 무엇무엇에 라는 뜻입니다. I will meet you at the station. 역에서 만나요."
+    "koChirpScript": "at. 특정 장소나 시간을 나타내는 무엇무엇에 라는 뜻입니다. I will meet you at the station. 역에서 만나요. 처럼 구체적인 장소를 말하거나, at 3 o'clock. 3시에. 처럼 정확한 시간을 말할 때 사용합니다."
   },
   {
     "lemma": "August",
@@ -573,7 +573,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/August-v.mp3",
     "koGloss": "n. 8월",
     "koExample": "우리는 8월에 휴가를 갈 것이다.",
-    "koChirpScript": "August. 8월 이라는 뜻입니다. We are going on vacation in August. 우리는 8월에 휴가를 갈 것이다."
+    "koChirpScript": "August. 1년 중 여덟 번째 달인 8월을 의미합니다. We are going on vacation in August. 우리는 8월에 휴가를 갈 것이다. 와 같이 날짜를 말할 때 사용합니다."
   },
   {
     "lemma": "aunt",
@@ -585,7 +585,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/aunt-v.mp3",
     "koGloss": "n. 이모, 고모, 숙모",
     "koExample": "나의 이모는 캐나다에 사신다.",
-    "koChirpScript": "aunt. 이모, 고모, 숙모 라는 뜻입니다. My aunt lives in Canada. 나의 이모는 캐나다에 사신다."
+    "koChirpScript": "aunt. 이모, 고모, 숙모 등 부모님의 여자 형제를 부르는 말입니다. My aunt lives in Canada. 나의 이모는 캐나다에 사신다. 처럼 가족 관계를 설명할 때 사용됩니다."
   },
   {
     "lemma": "away",
@@ -597,7 +597,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/away-v.mp3",
     "koGloss": "adv. 떨어져, 멀리",
     "koExample": "저리 가서 나를 혼자 있게 해줘.",
-    "koChirpScript": "away. 떨어져 또는 멀리 라는 뜻입니다. Please go away and leave me alone. 저리 가서 나를 혼자 있게 해줘."
+    "koChirpScript": "away. 떨어져 또는 멀리 라는 뜻으로, 현재 위치에서 벗어나는 것을 의미합니다. Please go away and leave me alone. 저리 가서 나를 혼자 있게 해줘. 와 같이 사용합니다."
   },
   {
     "lemma": "awesome",
@@ -609,7 +609,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/awesome-v.mp3",
     "koGloss": "adj. 굉장한, 아주 멋진",
     "koExample": "산 정상에서 본 경치는 정말 굉장했다.",
-    "koChirpScript": "awesome. 굉장한 또는 아주 멋진 이라는 뜻입니다. The view from the mountain top was awesome. 산 정상에서 본 경치는 정말 굉장했다."
+    "koChirpScript": "awesome. 굉장한 또는 아주 멋진 이라는 뜻으로, amazing과 비슷하게 감탄을 표현할 때 사용합니다. The view from the mountain top was awesome. 산 정상에서 본 경치는 정말 굉장했다. 처럼요."
   },
   {
     "lemma": "baby",
@@ -621,7 +621,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/baby-v.mp3",
     "koGloss": "n. 아기",
     "koExample": "누나가 방금 아기를 낳았어요.",
-    "koChirpScript": "baby. 아기 라는 뜻입니다. My sister just had a baby. 누나가 방금 아기를 낳았어요."
+    "koChirpScript": "baby. 아기 라는 뜻의 명사입니다. My sister just had a baby. 누나가 방금 아기를 낳았어요. 와 같이 갓 태어난 아이를 가리킵니다."
   },
   {
     "lemma": "back",
@@ -633,7 +633,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/back-v.mp3",
     "koGloss": "n. 등; adv. 뒤로",
     "koExample": "테니스를 치다가 등을 다쳤어요.",
-    "koChirpScript": "back. 등 또는 뒤로 라는 뜻입니다. I hurt my back playing tennis. 테니스를 치다가 등을 다쳤어요."
+    "koChirpScript": "back. 명사로는 등, 부사로는 뒤로 라는 뜻을 가집니다. I hurt my back playing tennis. 테니스를 치다가 등을 다쳤어요. 처럼 신체 부위를 말하거나, Go back. 뒤로 가. 처럼 방향을 나타낼 수 있습니다."
   },
   {
     "lemma": "bad",
@@ -645,7 +645,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bad-v.mp3",
     "koGloss": "adj. 나쁜",
     "koExample": "이 사과는 썩었다.",
-    "koChirpScript": "bad. 나쁜 이라는 뜻입니다. This is a bad apple. 이 사과는 썩었다."
+    "koChirpScript": "bad. 나쁜 이라는 뜻으로, 좋지 않은 상태나 품질을 나타냅니다. This is a bad apple. 이 사과는 썩었다. 처럼 사용할 수 있습니다."
   },
   {
     "lemma": "bag",
@@ -657,7 +657,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bag-v.mp3",
     "koGloss": "n. 가방",
     "koExample": "이거 제 가방에 좀 넣어줄래요?",
-    "koChirpScript": "bag. 가방 이라는 뜻입니다. Can you put this in my bag? 이거 제 가방에 좀 넣어줄래요?"
+    "koChirpScript": "bag. 가방 이라는 뜻입니다. Can you put this in my bag? 이거 제 가방에 좀 넣어줄래요? 처럼 물건을 담는 용도를 가진 것을 말합니다."
   },
   {
     "lemma": "ball",
@@ -669,7 +669,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/ball-v.mp3",
     "koGloss": "n. 공",
     "koExample": "공 가지고 놀자.",
-    "koChirpScript": "ball. 공 이라는 뜻입니다. Let's play with the ball. 공 가지고 놀자."
+    "koChirpScript": "ball. 공 이라는 뜻의 명사입니다. Let's play with the ball. 공 가지고 놀자. 처럼 스포츠나 놀이에 사용되는 둥근 물체를 의미합니다."
   },
   {
     "lemma": "banana",
@@ -681,7 +681,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/banana-v.mp3",
     "koGloss": "n. 바나나",
     "koExample": "저는 아침으로 바나나를 먹어요.",
-    "koChirpScript": "banana. 바나나 라는 뜻입니다. I eat a banana for breakfast. 저는 아침으로 바나나를 먹어요."
+    "koChirpScript": "banana. 과일의 한 종류인 바나나 입니다. I eat a banana for breakfast. 저는 아침으로 바나나를 먹어요. 처럼 음식에 대해 말할 때 사용합니다."
   },
   {
     "lemma": "band",
@@ -693,7 +693,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/band-v.mp3",
     "koGloss": "n. 밴드, 악단",
     "koExample": "제가 가장 좋아하는 밴드가 오늘 밤에 공연해요.",
-    "koChirpScript": "band. 밴드 또는 악단 이라는 뜻입니다. My favorite band is playing tonight. 제가 가장 좋아하는 밴드가 오늘 밤에 공연해요."
+    "koChirpScript": "band. 밴드 또는 악단 이라는 뜻으로, 함께 음악을 연주하는 그룹을 의미합니다. My favorite band is playing tonight. 제가 가장 좋아하는 밴드가 오늘 밤에 공연해요. 와 같이 음악 취향을 말할 때 쓸 수 있어요."
   },
   {
     "lemma": "bank (money)",
@@ -705,7 +705,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bank-v.mp3",
     "koGloss": "n. 은행",
     "koExample": "은행에 가야 해요.",
-    "koChirpScript": "bank. 돈을 다루는 은행 이라는 뜻입니다. I need to go to the bank. 은행에 가야 해요."
+    "koChirpScript": "bank. 돈을 다루는 은행 이라는 뜻입니다. I need to go to the bank. 은행에 가야 해요. 처럼 금융 기관을 말할 때 사용합니다."
   },
   {
     "lemma": "bar",
@@ -717,7 +717,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bar-v.mp3",
     "koGloss": "n. 술집, 바",
     "koExample": "바에서 만나서 한잔하자.",
-    "koChirpScript": "bar. 술집 또는 바 라는 뜻입니다. Let's meet at the bar for a drink. 바에서 만나서 한잔하자."
+    "koChirpScript": "bar. 술집 또는 바 라는 뜻입니다. Let's meet at the bar for a drink. 바에서 만나서 한잔하자. 처럼 술을 마시는 장소를 의미합니다."
   },
   {
     "lemma": "baseball",
@@ -729,7 +729,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/baseball-v.mp3",
     "koGloss": "n. 야구",
     "koExample": "그는 야구하는 것을 아주 좋아한다.",
-    "koChirpScript": "baseball. 야구 라는 뜻입니다. He loves to play baseball. 그는 야구하는 것을 아주 좋아한다."
+    "koChirpScript": "baseball. 스포츠의 한 종류인 야구 라는 뜻입니다. He loves to play baseball. 그는 야구하는 것을 아주 좋아한다. 처럼 취미나 좋아하는 운동에 대해 말할 때 사용합니다."
   },
   {
     "lemma": "basketball",
@@ -741,7 +741,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/basketball-v.mp3",
     "koGloss": "n. 농구",
     "koExample": "방과 후에 농구하자.",
-    "koChirpScript": "basketball. 농구 라는 뜻입니다. Let's play basketball after school. 방과 후에 농구하자."
+    "koChirpScript": "basketball. 스포츠의 한 종류인 농구 라는 뜻입니다. Let's play basketball after school. 방과 후에 농구하자. 와 같이 친구에게 운동을 제안할 때 쓸 수 있어요."
   },
   {
     "lemma": "bath",
@@ -753,7 +753,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bath-v.mp3",
     "koGloss": "n. 목욕",
     "koExample": "목욕 좀 해야겠어요.",
-    "koChirpScript": "bath. 목욕 이라는 뜻입니다. I'm going to take a bath. 목욕 좀 해야겠어요."
+    "koChirpScript": "bath. 목욕 이라는 뜻입니다. I'm going to take a bath. 목욕 좀 해야겠어요. 처럼 몸을 씻는 행위를 말합니다."
   },
   {
     "lemma": "bathroom",
@@ -765,7 +765,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bathroom-v.mp3",
     "koGloss": "n. 화장실, 욕실",
     "koExample": "화장실 좀 써도 될까요?",
-    "koChirpScript": "bathroom. 화장실 또는 욕실 이라는 뜻입니다. May I use your bathroom? 화장실 좀 써도 될까요?"
+    "koChirpScript": "bathroom. 화장실 또는 욕실 이라는 뜻입니다. May I use your bathroom? 화장실 좀 써도 될까요? 와 같이 다른 사람의 집에 방문했을 때 유용하게 사용할 수 있는 표현입니다."
   },
   {
     "lemma": "be",
@@ -777,7 +777,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/be-v.mp3",
     "koGloss": "v. ~이다, 있다; aux. (진행형, 수동태에 쓰임)",
     "koExample": "저는 의사가 되고 싶어요.",
-    "koChirpScript": "be. 무엇무엇이다 또는 있다 라는 뜻의 동사입니다. I want to be a doctor. 저는 의사가 되고 싶어요."
+    "koChirpScript": "be. 무엇무엇이다 또는 있다 라는 뜻을 가진 아주 기본적인 동사입니다. 주어에 따라 am, are, is 등으로 형태가 바뀝니다. I want to be a doctor. 저는 의사가 되고 싶어요. 처럼 장래 희망을 말할 때도 사용됩니다."
   },
   {
     "lemma": "beach",
@@ -789,7 +789,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/beach-v.mp3",
     "koGloss": "n. 해변, 바닷가",
     "koExample": "해변에 가자.",
-    "koChirpScript": "beach. 해변 또는 바닷가 라는 뜻입니다. Let's go to the beach. 해변에 가자."
+    "koChirpScript": "beach. 해변 또는 바닷가 라는 뜻입니다. Let's go to the beach. 해변에 가자. 처럼 휴가나 여가 활동에 대해 이야기할 때 자주 사용됩니다."
   },
   {
     "lemma": "beautiful",
@@ -801,7 +801,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/beautiful-v.mp3",
     "koGloss": "adj. 아름다운",
     "koExample": "그녀는 아름다운 여성이다.",
-    "koChirpScript": "beautiful. 아름다운 이라는 뜻입니다. She is a beautiful woman. 그녀는 아름다운 여성이다."
+    "koChirpScript": "beautiful. 아름다운 이라는 뜻의 형용사입니다. 사람이나 사물, 경치 등이 보기 좋을 때 칭찬하는 의미로 사용합니다. She is a beautiful woman. 그녀는 아름다운 여성이다. 처럼요."
   },
   {
     "lemma": "because",
@@ -813,7 +813,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/because-v.mp3",
     "koGloss": "conj. ~때문에",
     "koExample": "교통 체증 때문에 늦었어요.",
-    "koChirpScript": "because. 무엇무엇 때문에 라는 뜻의 접속사입니다. I was late because of the traffic. 교통 체증 때문에 늦었어요."
+    "koChirpScript": "because. 무엇무엇 때문에 라는 뜻으로, 이유를 설명할 때 사용하는 접속사입니다. I was late because of the traffic. 교통 체증 때문에 늦었어요. 와 같이 어떤 일의 원인을 말할 때 씁니다."
   },
   {
     "lemma": "become",
@@ -825,7 +825,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/become-v.mp3",
     "koGloss": "v. ~이 되다",
     "koExample": "그는 유명한 가수가 되기를 원한다.",
-    "koChirpScript": "become. 무엇무엇이 되다 라는 뜻입니다. He wants to become a famous singer. 그는 유명한 가수가 되기를 원한다."
+    "koChirpScript": "become. 무엇무엇이 되다 라는 뜻으로, 상태의 변화를 나타냅니다. He wants to become a famous singer. 그는 유명한 가수가 되기를 원한다. 처럼 장래 희망이나 목표를 말할 때 자주 사용됩니다."
   },
   {
     "lemma": "bed",
@@ -837,7 +837,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bed-v.mp3",
     "koGloss": "n. 침대",
     "koExample": "자러 갈 시간이야.",
-    "koChirpScript": "bed. 침대 라는 뜻입니다. It's time to go to bed. 자러 갈 시간이야."
+    "koChirpScript": "bed. 침대 라는 뜻의 명사입니다. It's time to go to bed. 자러 갈 시간이야. 라는 문장에서처럼 잠자리를 의미하기도 합니다."
   },
   {
     "lemma": "bedroom",
@@ -849,7 +849,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bedroom-v.mp3",
     "koGloss": "n. 침실",
     "koExample": "제 침실은 매우 작아요.",
-    "koChirpScript": "bedroom. 침실 이라는 뜻입니다. My bedroom is very small. 제 침실은 매우 작아요."
+    "koChirpScript": "bedroom. 침실 이라는 뜻으로, 집 안의 공간을 설명할 때 사용합니다. My bedroom is very small. 제 침실은 매우 작아요. 처럼 방의 크기나 특징을 묘사할 수 있습니다."
   },
   {
     "lemma": "beer",
@@ -861,7 +861,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/beer-v.mp3",
     "koGloss": "n. 맥주",
     "koExample": "맥주 한 잔 하시겠어요?",
-    "koChirpScript": "beer. 맥주 라는 뜻입니다. Would you like a glass of beer? 맥주 한 잔 하시겠어요?"
+    "koChirpScript": "beer. 술의 한 종류인 맥주 라는 뜻입니다. Would you like a glass of beer? 맥주 한 잔 하시겠어요? 와 같이 음료를 권할 때 사용할 수 있습니다."
   },
   {
     "lemma": "before",
@@ -873,7 +873,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/before-v.mp3",
     "koGloss": "prep. ~전에",
     "koExample": "저녁 식사 전에 손을 씻으세요.",
-    "koChirpScript": "before. 무엇무엇 전에 라는 뜻입니다. Please wash your hands before dinner. 저녁 식사 전에 손을 씻으세요."
+    "koChirpScript": "before. 무엇무엇 전에 라는 뜻으로, 시간이나 순서상 앞서는 것을 나타냅니다. Please wash your hands before dinner. 저녁 식사 전에 손을 씻으세요. 처럼 어떤 행동을 먼저 하라고 말할 때 사용합니다."
   },
   {
     "lemma": "begin",
@@ -885,7 +885,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/begin-v.mp3",
     "koGloss": "v. 시작하다",
     "koExample": "수업을 시작합시다.",
-    "koChirpScript": "begin. 시작하다 라는 뜻입니다. Let's begin the lesson. 수업을 시작합시다."
+    "koChirpScript": "begin. 시작하다 라는 뜻으로, start와 비슷한 의미를 가집니다. Let's begin the lesson. 수업을 시작합시다. 처럼 회의나 수업 등을 시작할 때 자주 사용됩니다."
   },
   {
     "lemma": "beginning",
@@ -897,7 +897,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/beginning-v.mp3",
     "koGloss": "n. 시작",
     "koExample": "이것은 시작에 불과하다.",
-    "koChirpScript": "beginning. 시작 이라는 뜻입니다. This is just the beginning. 이것은 시작에 불과하다."
+    "koChirpScript": "beginning. 시작 이라는 뜻의 명사입니다. This is just the beginning. 이것은 시작에 불과하다. 처럼 어떤 일의 첫 단계를 의미합니다."
   },
   {
     "lemma": "behind",
@@ -909,7 +909,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/behind-v.mp3",
     "koGloss": "prep. ~뒤에; adv. 뒤에",
     "koExample": "고양이가 나무 뒤에 있다.",
-    "koChirpScript": "behind. 무엇무엇 뒤에 라는 뜻입니다. The cat is behind the tree. 고양이가 나무 뒤에 있다."
+    "koChirpScript": "behind. 무엇무엇 뒤에 라는 뜻으로, 위치를 나타낼 때 사용합니다. The cat is behind the tree. 고양이가 나무 뒤에 있다. 처럼 어떤 사물의 뒤쪽을 가리킵니다."
   },
   {
     "lemma": "believe",
@@ -921,7 +921,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/believe-v.mp3",
     "koGloss": "v. 믿다",
     "koExample": "나는 당신을 믿어요.",
-    "koChirpScript": "believe. 믿다 라는 뜻입니다. I believe you. 나는 당신을 믿어요."
+    "koChirpScript": "believe. 믿다 라는 뜻의 동사입니다. I believe you. 나는 당신을 믿어요. 처럼 누군가의 말을 사실이라고 생각할 때 사용합니다."
   },
   {
     "lemma": "below",
@@ -933,7 +933,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/below-v.mp3",
     "koGloss": "adv. 아래에; prep. ~아래에",
     "koExample": "아래 글을 읽어주세요.",
-    "koChirpScript": "below. 아래에 라는 뜻입니다. Please read the text below. 아래 글을 읽어주세요."
+    "koChirpScript": "below. 아래에 라는 뜻으로, above의 반대 의미를 가집니다. Please read the text below. 아래 글을 읽어주세요. 처럼 어떤 기준보다 낮은 위치를 나타냅니다."
   },
   {
     "lemma": "best",
@@ -945,7 +945,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/best-v.mp3",
     "koGloss": "adj. 최고의",
     "koExample": "이것은 내가 먹어본 케이크 중에 최고야.",
-    "koChirpScript": "best. 최고의 라는 뜻입니다. This is the best cake I've ever had. 이것은 내가 먹어본 케이크 중에 최고야."
+    "koChirpScript": "best. 최고의 라는 뜻으로, good의 최상급 형태입니다. This is the best cake I've ever had. 이것은 내가 먹어본 케이크 중에 최고야. 처럼 여러 개 중에서 가장 뛰어난 것을 묘사할 때 사용합니다."
   },
   {
     "lemma": "better",
@@ -957,7 +957,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/better-v.mp3",
     "koGloss": "adj. 더 좋은",
     "koExample": "곧 괜찮아지길 바라요.",
-    "koChirpScript": "better. 더 좋은 이라는 뜻입니다. I hope you feel better soon. 곧 괜찮아지길 바라요."
+    "koChirpScript": "better. 더 좋은 이라는 뜻으로, good의 비교급 형태입니다. I hope you feel better soon. 곧 괜찮아지길 바라요. 처럼 두 가지를 비교하여 더 나은 쪽을 말하거나, 상태가 호전되는 것을 나타낼 때 사용합니다."
   },
   {
     "lemma": "between",
@@ -969,7 +969,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/between-v.mp3",
     "koGloss": "prep. ~사이에",
     "koExample": "펜이 책과 공책 사이에 있다.",
-    "koChirpScript": "between. 무엇무엇 사이에 라는 뜻입니다. The pen is between the book and the notebook. 펜이 책과 공책 사이에 있다."
+    "koChirpScript": "between. 무엇무엇 사이에 라는 뜻으로, 두 개의 사물이나 사람의 중간 위치를 나타냅니다. The pen is between the book and the notebook. 펜이 책과 공책 사이에 있다. 처럼 사용됩니다."
   },
   {
     "lemma": "bicycle",
@@ -981,7 +981,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bicycle-v.mp3",
     "koGloss": "n. 자전거",
     "koExample": "저는 공원에서 자전거 타는 것을 좋아해요.",
-    "koChirpScript": "bicycle. 자전거 라는 뜻입니다. I like to ride my bicycle in the park. 저는 공원에서 자전거 타는 것을 좋아해요."
+    "koChirpScript": "bicycle. 자전거 라는 뜻입니다. bike 라고 줄여서 말하기도 해요. I like to ride my bicycle in the park. 저는 공원에서 자전거 타는 것을 좋아해요. 처럼 취미 활동을 말할 때 사용할 수 있습니다."
   },
   {
     "lemma": "big",
@@ -993,7 +993,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/big-v.mp3",
     "koGloss": "adj. 큰",
     "koExample": "저 개는 크다.",
-    "koChirpScript": "big. 큰 이라는 뜻입니다. That is a big dog. 저 개는 크다."
+    "koChirpScript": "big. 큰 이라는 뜻으로, 크기나 규모를 나타내는 기본적인 형용사입니다. That is a big dog. 저 개는 크다. 처럼 사물의 크기를 묘사할 때 사용합니다."
   },
   {
     "lemma": "bike",
@@ -1005,7 +1005,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bike-v.mp3",
     "koGloss": "n. 자전거",
     "koExample": "그는 자전거를 타고 학교에 간다.",
-    "koChirpScript": "bike. 자전거 라는 뜻으로, bicycle의 줄임말입니다. He goes to school by bike. 그는 자전거를 타고 학교에 간다."
+    "koChirpScript": "bike. 자전거 라는 뜻으로, bicycle의 줄임말입니다. 일상 대화에서는 bike를 더 자주 사용해요. He goes to school by bike. 그는 자전거를 타고 학교에 간다. 처럼 교통수단을 말할 때 쓸 수 있습니다."
   },
   {
     "lemma": "bill",
@@ -1017,7 +1017,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bill-v.mp3",
     "koGloss": "n. 계산서, 청구서",
     "koExample": "계산서 좀 갖다 주시겠어요?",
-    "koChirpScript": "bill. 계산서 또는 청구서 라는 뜻입니다. Can I have the bill, please? 계산서 좀 갖다 주시겠어요?"
+    "koChirpScript": "bill. 계산서 또는 청구서 라는 뜻입니다. 식당이나 상점에서 지불해야 할 금액이 적힌 종이를 의미해요. Can I have the bill, please? 계산서 좀 갖다 주시겠어요? 라는 표현은 식당에서 매우 유용합니다."
   },
   {
     "lemma": "bird",
@@ -1029,7 +1029,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bird-v.mp3",
     "koGloss": "n. 새",
     "koExample": "새가 나무에서 노래하고 있다.",
-    "koChirpScript": "bird. 새 라는 뜻입니다. A bird is singing in the tree. 새가 나무에서 노래하고 있다."
+    "koChirpScript": "bird. 새 라는 뜻의 명사입니다. A bird is singing in the tree. 새가 나무에서 노래하고 있다. 처럼 동물을 묘사할 때 사용합니다."
   },
   {
     "lemma": "birthday",
@@ -1041,7 +1041,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/birthday-v.mp3",
     "koGloss": "n. 생일",
     "koExample": "생일 축하해요!",
-    "koChirpScript": "birthday. 생일 이라는 뜻입니다. Happy birthday to you! 생일 축하해요!"
+    "koChirpScript": "birthday. 생일 이라는 뜻입니다. Happy birthday to you! 라는 노래 제목으로도 익숙하죠. 생일 축하해요! 라는 의미입니다."
   },
   {
     "lemma": "black",
@@ -1053,7 +1053,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/black-v.mp3",
     "koGloss": "adj. 검은색의; n. 검은색",
     "koExample": "그녀는 긴 검은 머리를 가지고 있다.",
-    "koChirpScript": "black. 검은색의 또는 검은색 이라는 뜻입니다. She has long black hair. 그녀는 긴 검은 머리를 가지고 있다."
+    "koChirpScript": "black. 검은색의 또는 검은색 이라는 뜻입니다. She has long black hair. 그녀는 긴 검은 머리를 가지고 있다. 처럼 색깔을 묘사할 때 사용합니다."
   },
   {
     "lemma": "blog",
@@ -1065,7 +1065,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/blog-v.mp3",
     "koGloss": "n. 블로그",
     "koExample": "저는 제 여행에 대한 블로그를 써요.",
-    "koChirpScript": "blog. 블로그 라는 뜻입니다. I write a blog about my travels. 저는 제 여행에 대한 블로그를 써요."
+    "koChirpScript": "blog. 온라인에 개인의 생각이나 경험을 기록하는 블로그 라는 뜻입니다. I write a blog about my travels. 저는 제 여행에 대한 블로그를 써요. 처럼 자신의 취미나 활동을 설명할 때 사용할 수 있습니다."
   },
   {
     "lemma": "blond",
@@ -1077,7 +1077,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/blond-v.mp3",
     "koGloss": "adj. 금발의",
     "koExample": "그녀는 금발에 파란 눈을 가졌다.",
-    "koChirpScript": "blond. 금발의 라는 뜻입니다. She has blond hair and blue eyes. 그녀는 금발에 파란 눈을 가졌다."
+    "koChirpScript": "blond. 머리카락 색깔이 금발인 것을 묘사하는 형용사입니다. She has blond hair and blue eyes. 그녀는 금발에 파란 눈을 가졌다. 처럼 사람의 외모를 설명할 때 사용됩니다."
   },
   {
     "lemma": "blue",
@@ -1089,7 +1089,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/blue-v.mp3",
     "koGloss": "adj. 파란색의; n. 파란색",
     "koExample": "오늘 하늘은 파랗다.",
-    "koChirpScript": "blue. 파란색의 또는 파란색 이라는 뜻입니다. The sky is blue today. 오늘 하늘은 파랗다."
+    "koChirpScript": "blue. 파란색의 또는 파란색 이라는 뜻입니다. The sky is blue today. 오늘 하늘은 파랗다. 처럼 색깔을 나타낼 때 사용합니다."
   },
   {
     "lemma": "boat",
@@ -1101,7 +1101,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/boat-v.mp3",
     "koGloss": "n. 보트, 배",
     "koExample": "우리는 배를 타고 강을 건넜다.",
-    "koChirpScript": "boat. 보트 또는 배 라는 뜻입니다. We crossed the river by boat. 우리는 배를 타고 강을 건넜다."
+    "koChirpScript": "boat. 보트 또는 배 라는 뜻입니다. We crossed the river by boat. 우리는 배를 타고 강을 건넜다. 처럼 물 위를 이동하는 교통수단을 의미합니다."
   },
   {
     "lemma": "body",
@@ -1113,7 +1113,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/body-v.mp3",
     "koGloss": "n. 몸, 신체",
     "koExample": "운동은 몸에 좋다.",
-    "koChirpScript": "body. 몸 또는 신체 라는 뜻입니다. Exercise is good for the body. 운동은 몸에 좋다."
+    "koChirpScript": "body. 몸 또는 신체 라는 뜻입니다. Exercise is good for the body. 운동은 몸에 좋다. 처럼 건강에 대해 이야기할 때 자주 사용됩니다."
   },
   {
     "lemma": "book",
@@ -1125,7 +1125,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/book-v.mp3",
     "koGloss": "n. 책",
     "koExample": "나는 좋은 책을 읽고 있다.",
-    "koChirpScript": "book. 책 이라는 뜻입니다. I am reading a good book. 나는 좋은 책을 읽고 있다."
+    "koChirpScript": "book. 책 이라는 뜻의 명사입니다. I am reading a good book. 나는 좋은 책을 읽고 있다. 처럼 독서와 관련된 대화에서 사용됩니다."
   },
   {
     "lemma": "boot",
@@ -1137,7 +1137,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/boot-v.mp3",
     "koGloss": "n. 부츠, 장화",
     "koExample": "겨울에 신을 새 부츠가 필요해요.",
-    "koChirpScript": "boot. 부츠 또는 장화 라는 뜻입니다. I need a new pair of boots for winter. 겨울에 신을 새 부츠가 필요해요."
+    "koChirpScript": "boot. 부츠 또는 장화 라는 뜻으로, 발목이나 그 이상을 덮는 신발을 말합니다. I need a new pair of boots for winter. 겨울에 신을 새 부츠가 필요해요. 처럼 옷차림에 대해 말할 때 사용합니다."
   },
   {
     "lemma": "bored",
@@ -1149,7 +1149,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bored-v.mp3",
     "koGloss": "adj. 지루한, 심심한",
     "koExample": "심심해. 뭐 좀 하자.",
-    "koChirpScript": "bored. 지루함을 느끼는 또는 심심한 이라는 뜻입니다. I'm bored. Let's do something. 심심해. 뭐 좀 하자."
+    "koChirpScript": "bored. 지루함을 느끼는 또는 심심한 이라는 뜻으로, 감정을 나타내는 형용사입니다. I'm bored. Let's do something. 심심해. 뭐 좀 하자. 처럼 현재의 감정 상태를 표현할 때 사용합니다."
   },
   {
     "lemma": "boring",
@@ -1161,7 +1161,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/boring-v.mp3",
     "koGloss": "adj. 지루한, 재미없는",
     "koExample": "이 영화는 너무 지루하다.",
-    "koChirpScript": "boring. 지루하게 만드는 또는 재미없는 이라는 뜻입니다. This movie is so boring. 이 영화는 너무 지루하다."
+    "koChirpScript": "boring. 지루하게 만드는 또는 재미없는 이라는 뜻입니다. bored가 감정을 느끼는 것을 표현한다면, boring은 지루함을 유발하는 대상을 묘사합니다. This movie is so boring. 이 영화는 너무 지루하다. 처럼요."
   },
   {
     "lemma": "born",
@@ -1173,7 +1173,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/born-v.mp3",
     "koGloss": "v. 태어난",
     "koExample": "저는 1990년에 태어났어요.",
-    "koChirpScript": "born. 태어난 이라는 뜻으로, 동사 bear의 과거분사형입니다. I was born in 1990. 저는 1990년에 태어났어요."
+    "koChirpScript": "born. 태어난 이라는 뜻으로, 동사 bear의 과거분사형입니다. 항상 be동사와 함께 I was born... 형태로 사용되어 출생에 대해 말합니다. I was born in 1990. 저는 1990년에 태어났어요. 처럼요."
   },
   {
     "lemma": "both",
@@ -1185,7 +1185,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/both-v.mp3",
     "koGloss": "det./pron. 둘 다",
     "koExample": "우리 부모님은 두 분 다 교사이시다.",
-    "koChirpScript": "both. 둘 다 라는 뜻입니다. Both of my parents are teachers. 우리 부모님은 두 분 다 교사이시다."
+    "koChirpScript": "both. 둘 다 라는 뜻으로, 두 사람이나 두 사물을 함께 가리킬 때 사용합니다. Both of my parents are teachers. 우리 부모님은 두 분 다 교사이시다. 와 같이 사용됩니다."
   },
   {
     "lemma": "bottle",
@@ -1197,6 +1197,6 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/bottle-v.mp3",
     "koGloss": "n. 병",
     "koExample": "물 한 병 주시겠어요?",
-    "koChirpScript": "bottle. 병 이라는 뜻입니다. Can I have a bottle of water? 물 한 병 주시겠어요?"
+    "koChirpScript": "bottle. 병 이라는 뜻입니다. Can I have a bottle of water? 물 한 병 주시겠어요? 처럼 음료의 단위를 나타낼 때 자주 사용됩니다."
   }
 ]

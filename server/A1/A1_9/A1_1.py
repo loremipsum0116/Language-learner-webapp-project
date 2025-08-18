@@ -26,7 +26,7 @@ def split_script_by_language(script_text):
 
     for char in script_text:
         if '\uac00' <= char <= '\ud7af':  # 한글
-            lang = 'en-US'
+            lang = 'ko-KR'
         elif 'a' <= char.lower() <= 'z':
             lang = 'en-US'
         elif char.isspace():
@@ -48,9 +48,9 @@ def split_script_by_language(script_text):
 
 # 언어별 음성 설정
 VOICE_PARAMS = {
-    "en-US": texttospeech.VoiceSelectionParams(
-        language_code="en-US",
-        name="en-US-Chirp3-HD-Charon"
+    "ko-KR": texttospeech.VoiceSelectionParams(
+        language_code="ko-KR",
+        name="ko-KR-Chirp3-HD-Charon"
     ),
     "en-US": texttospeech.VoiceSelectionParams(
         language_code="en-US",
@@ -130,5 +130,5 @@ def synthesize_vocab_audio(json_file_path):
 
 
 if __name__ == "__main__":
-    file_to_process = "ielts_a1_9.json"
+    file_to_process = "ielts_a1_1.json"
     synthesize_vocab_audio(file_to_process)

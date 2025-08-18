@@ -2093,6 +2093,13 @@ router.get('/wrong-answers', async (req, res, next) => {
                     include: {
                         dictentry: true
                     }
+                },
+                folder: {
+                    select: {
+                        id: true,
+                        name: true,
+                        parentId: true
+                    }
                 }
             },
             orderBy: [
@@ -2101,17 +2108,22 @@ router.get('/wrong-answers', async (req, res, next) => {
             ]
         });
 
-        // 해당 단어들의 SRS 카드 상태 정보와 폴더 정보도 함께 조회
-        const vocabIds = wrongAnswers.map(wa => wa.vocabId);
-        const srsCards = vocabIds.length > 0 ? await prisma.srscard.findMany({
+        // 폴더별 독립적인 SRS 카드 상태 정보 조회
+        // 오답노트의 folderId와 정확히 일치하는 SRS 카드들만 조회
+        const vocabFolderPairs = wrongAnswers.map(wa => ({ vocabId: wa.vocabId, folderId: wa.folderId }));
+        const srsCards = vocabFolderPairs.length > 0 ? await prisma.srscard.findMany({
             where: {
                 userId,
                 itemType: 'vocab',
-                itemId: { in: vocabIds }
+                OR: vocabFolderPairs.map(pair => ({
+                    itemId: pair.vocabId,
+                    folderId: pair.folderId // 폴더별 독립성 보장
+                }))
             },
             select: {
                 id: true,
                 itemId: true,
+                folderId: true, // 폴더 ID 포함
                 stage: true,
                 nextReviewAt: true,
                 waitingUntil: true,
@@ -2140,14 +2152,18 @@ router.get('/wrong-answers', async (req, res, next) => {
             }
         }) : [];
         
-        console.log(`[DEBUG] Wrong answers query result: ${wrongAnswers.length} items`);
-        console.log(`[DEBUG] SRS cards found: ${srsCards.length} items`);
         
-        // SRS 카드 맵 생성 (빠른 조회를 위해)
+        // SRS 카드 맵 생성 (폴더별 독립성을 위해 vocabId + folderId 조합으로 키 생성)
         const srsCardMap = new Map();
         srsCards.forEach(card => {
-            srsCardMap.set(card.itemId, card);
+            const key = card.folderId ? `${card.itemId}_${card.folderId}` : card.itemId.toString();
+            srsCardMap.set(key, card);
         });
+        
+        console.log(`[DEBUG] Wrong answers query result: ${wrongAnswers.length} items`);
+        console.log(`[DEBUG] SRS cards found: ${srsCards.length} items`);
+        console.log(`[DEBUG] SRS card map keys:`, Array.from(srsCardMap.keys()));
+        console.log(`[DEBUG] Wrong answer folder IDs:`, wrongAnswers.map(wa => `${wa.vocabId}_${wa.folderId}`));
         
         // 각 vocabId별로 모든 오답 기록을 그룹핑
         const wrongAnswersByVocab = new Map();
@@ -2191,8 +2207,9 @@ router.get('/wrong-answers', async (req, res, next) => {
             const timeUntilReview = reviewStatus === 'pending' ? 
                 Math.max(0, Math.ceil((reviewWindowStart.getTime() - now.getTime()) / (1000 * 60 * 60))) : 0;
             
-            // 해당 단어의 SRS 카드 상태 정보 추가
-            const srsCard = srsCardMap.get(wa.vocabId);
+            // 해당 단어+폴더의 SRS 카드 상태 정보 추가 (폴더별 독립성)
+            const srsCardKey = wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString();
+            const srsCard = srsCardMap.get(srsCardKey);
             
             // 해당 단어+폴더의 모든 오답 기록 가져오기 (폴더별 독립성)
             const allWrongAnswersForVocab = wrongAnswers.filter(record => {
@@ -2218,6 +2235,7 @@ router.get('/wrong-answers', async (req, res, next) => {
             return {
                 id: wa.id,
                 vocabId: wa.vocabId,
+                folderId: wa.folderId, // 폴더 ID 추가
                 wrongAt: wa.wrongAt,
                 attempts: wa.attempts,
                 isCompleted: wa.isCompleted,
@@ -2234,6 +2252,12 @@ router.get('/wrong-answers', async (req, res, next) => {
                     pos: wa.vocab?.pos || 'unknown',
                     dictentry: wa.vocab?.dictentry || null
                 },
+                // 오답노트의 직접적인 폴더 정보
+                folder: wa.folder ? {
+                    id: wa.folder.id,
+                    name: wa.folder.name,
+                    parentId: wa.folder.parentId
+                } : null,
                 // SRS 카드 상태 정보 추가
                 srsCard: srsCard ? {
                     id: srsCard.id,
@@ -2251,13 +2275,38 @@ router.get('/wrong-answers', async (req, res, next) => {
                     correctTotal: srsCard.correctTotal,
                     wrongTotal: srsCard.wrongTotal,
                     frozenUntil: srsCard.frozenUntil,
-                    // 폴더 정보 추가
-                    folders: srsCard.srsfolderitem ? srsCard.srsfolderitem.map(item => ({
-                        id: item.srsfolder.id,
-                        name: item.srsfolder.name,
-                        parentId: item.srsfolder.parentId,
-                        parentName: null // parent 관계가 스키마에 정의되지 않음
-                    })) : []
+                    // 폴더 정보 추가: 오답노트와 정확히 연결된 폴더만 표시 (폴더별 독립성)
+                    folders: (() => {
+                        const folders = [];
+                        
+                        // 오답노트의 직접 폴더가 있으면 추가
+                        if (wa.folder) {
+                            folders.push({
+                                id: wa.folder.id,
+                                name: wa.folder.name,
+                                parentId: wa.folder.parentId,
+                                parentName: null,
+                                isWrongAnswerFolder: true // 이 오답과 직접 연결된 폴더임을 표시
+                            });
+                        } else if (srsCard && srsCard.srsfolderitem && srsCard.srsfolderitem.length > 0) {
+                            // wa.folder가 없고 SRS 카드에 폴더 정보가 있는 경우 (하위 호환성)
+                            // 해당 SRS 카드의 폴더만 표시 (폴더별 독립성 보장)
+                            const cardFolder = srsCard.srsfolderitem.find(item => 
+                                item.srsfolder.id === srsCard.folderId
+                            );
+                            if (cardFolder) {
+                                folders.push({
+                                    id: cardFolder.srsfolder.id,
+                                    name: cardFolder.srsfolder.name,
+                                    parentId: cardFolder.srsfolder.parentId,
+                                    parentName: null,
+                                    isWrongAnswerFolder: true
+                                });
+                            }
+                        }
+                        
+                        return folders;
+                    })()
                 } : null
             };
         });
@@ -2475,15 +2524,28 @@ router.get('/study-log', async (req, res, next) => {
         const startOfDay = targetDate.startOf('day').toDate();
         const endOfDay = targetDate.endOf('day').toDate();
         
-        // SRS 카드에서 해당 날짜에 실제로 SRS 학습한 기록 조회
-        // lastReviewedAt이 오늘 날짜인 카드들만 포함 (실제 SRS 학습한 카드들)
-        const studiedCards = await prisma.srscard.findMany({
+        // SRS 폴더 아이템에서 해당 날짜에 실제로 SRS 학습한 기록 조회
+        // lastReviewedAt이 오늘 날짜인 아이템들만 포함 (실제 SRS 학습한 카드들)
+        const studiedItems = await prisma.srsfolderitem.findMany({
             where: {
-                userId: userId,
-                itemType: 'vocab',
+                srscard: {
+                    userId: userId,
+                    itemType: 'vocab'
+                },
                 lastReviewedAt: { 
                     gte: startOfDay, 
                     lte: endOfDay 
+                }
+            },
+            include: {
+                srscard: {
+                    select: {
+                        id: true,
+                        itemId: true,
+                        stage: true,
+                        correctTotal: true,
+                        wrongTotal: true
+                    }
                 }
             },
             orderBy: {
@@ -2492,7 +2554,7 @@ router.get('/study-log', async (req, res, next) => {
         });
 
         // vocab 정보를 별도로 조회
-        const vocabIds = studiedCards.map(card => card.itemId);
+        const vocabIds = studiedItems.map(item => item.srscard.itemId);
         const vocabs = vocabIds.length > 0 ? await prisma.vocab.findMany({
             where: {
                 id: { in: vocabIds }
@@ -2506,9 +2568,14 @@ router.get('/study-log', async (req, res, next) => {
 
         // vocab 정보와 매핑
         const vocabMap = new Map(vocabs.map(v => [v.id, v]));
-        const enrichedCards = studiedCards.map(card => ({
-            ...card,
-            vocab: vocabMap.get(card.itemId)
+        const enrichedCards = studiedItems.map(item => ({
+            id: item.srscard.id,
+            itemId: item.srscard.itemId,
+            stage: item.srscard.stage,
+            correctTotal: item.srscard.correctTotal,
+            wrongTotal: item.srscard.wrongTotal,
+            lastReviewedAt: item.lastReviewedAt,
+            vocab: vocabMap.get(item.srscard.itemId)
         }));
         
         // 학습 통계 계산

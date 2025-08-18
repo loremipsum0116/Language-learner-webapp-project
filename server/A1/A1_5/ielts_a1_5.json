@@ -9,7 +9,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/its-v.mp3",
     "koGloss": "det. 그것의",
     "koExample": "그 개는 꼬리를 흔들었다.",
-    "koChirpScript": "its. 그것의 라는 뜻의 소유격입니다. it's와 헷갈리지 않도록 주의하세요. The dog wagged its tail. 그 개는 꼬리를 흔들었다."
+    "koChirpScript": "its. 그것의 라는 뜻의 소유격입니다. its와 헷갈리지 않도록 주의하세요. The dog wagged its tail.  그 개는 꼬리를 흔들었다. 라는 의미네요."
   },
   {
     "lemma": "jacket",
@@ -21,7 +21,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/jacket-v.mp3",
     "koGloss": "n. 재킷",
     "koExample": "그는 가죽 재킷을 입었다.",
-    "koChirpScript": "jacket. 재킷 이라는 뜻입니다. He wore a leather jacket. 그는 가죽 재킷을 입었다."
+    "koChirpScript": "jacket. 재킷이라는 뜻입니다. He wore a leather jacket.  그는 가죽 재킷을 입었다. 라는 의미네요."
   },
   {
     "lemma": "January",
@@ -33,7 +33,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/January-v.mp3",
     "koGloss": "n. 1월",
     "koExample": "새해 첫날은 1월에 있다.",
-    "koChirpScript": "January. 1월 이라는 뜻입니다. New Year's Day is in January. 새해 첫날은 1월에 있다."
+    "koChirpScript": "January. 일월이라는 뜻입니다. New Years Day is in January.  새해 첫날은 일월에 있다. 라는 의미네요."
   },
   {
     "lemma": "jeans",
@@ -45,7 +45,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/jeans-v.mp3",
     "koGloss": "n. 청바지",
     "koExample": "그녀는 청바지를 입고 있다.",
-    "koChirpScript": "jeans. 청바지 라는 뜻입니다. 항상 복수형으로 씁니다. She is wearing blue jeans. 그녀는 청바지를 입고 있다."
+    "koChirpScript": "jeans. 청바지라는 뜻입니다. 항상 복수형으로 씁니다. She is wearing blue jeans.  그녀는 청바지를 입고 있다. 라는 의미네요."
   },
   {
     "lemma": "job",
@@ -57,7 +57,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/job-v.mp3",
     "koGloss": "n. 직업, 일",
     "koExample": "그는 새 직업을 찾고 있다.",
-    "koChirpScript": "job. 직업 또는 일 이라는 뜻입니다. He is looking for a new job. 그는 새 직업을 찾고 있다."
+    "koChirpScript": "job. 직업 또는 일이라는 뜻입니다. He is looking for a new job.  그는 새 직업을 찾고 있다. 라는 의미네요."
   },
   {
     "lemma": "join",
@@ -69,7 +69,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/join-v.mp3",
     "koGloss": "v. 함께하다, 가입하다",
     "koExample": "우리와 함께 저녁 식사하시겠어요?",
-    "koChirpScript": "join. 함께하다 또는 가입하다 라는 뜻입니다. Would you like to join us for dinner? 우리와 함께 저녁 식사하시겠어요?"
+    "koChirpScript": "join. 함께하다 또는 가입하다라는 뜻입니다. Would you like to join us for dinner?  우리와 함께 저녁 식사하시겠어요? 라는 의미네요."
   },
   {
     "lemma": "juice",
@@ -81,7 +81,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/juice-v.mp3",
     "koGloss": "n. 주스",
     "koExample": "나는 아침에 오렌지 주스 마시는 것을 좋아한다.",
-    "koChirpScript": "juice. 주스 라는 뜻입니다. I like to drink orange juice in the morning. 나는 아침에 오렌지 주스 마시는 것을 좋아한다."
+    "koChirpScript": "juice. 주스라는 뜻입니다. I like to drink orange juice in the morning.  나는 아침에 오렌지 주스 마시는 것을 좋아한다. 라는 의미네요."
   },
   {
     "lemma": "July",
@@ -93,7 +93,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/July-v.mp3",
     "koGloss": "n. 7월",
     "koExample": "내 생일은 7월이다.",
-    "koChirpScript": "July. 7월 이라는 뜻입니다. My birthday is in July. 내 생일은 7월이다."
+    "koChirpScript": "July. 7월이라는 뜻입니다. My birthday is in July.  내 생일은 7월이다. 라는 의미네요."
   },
   {
     "lemma": "June",
@@ -105,7 +105,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/June-v.mp3",
     "koGloss": "n. 6월",
     "koExample": "여름은 6월에 시작된다.",
-    "koChirpScript": "June. 6월 이라는 뜻입니다. Summer begins in June. 여름은 6월에 시작된다."
+    "koChirpScript": "June. 6월이라는 뜻입니다. Summer begins in June.  여름은 6월에 시작된다. 라는 의미네요."
   },
   {
     "lemma": "just",
@@ -117,7 +117,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/just-v.mp3",
     "koGloss": "adv. 방금, 막",
     "koExample": "나는 방금 일을 끝냈다.",
-    "koChirpScript": "just. 방금 또는 막 이라는 뜻입니다. I've just finished my work. 나는 방금 일을 끝냈다."
+    "koChirpScript": "just. 방금 또는 막이라는 뜻입니다. Ive just finished my work.  나는 방금 일을 끝냈다. 라는 의미네요."
   },
   {
     "lemma": "keep",
@@ -129,7 +129,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/keep-v.mp3",
     "koGloss": "v. 유지하다, 계속하다",
     "koExample": "거스름돈은 가지세요.",
-    "koChirpScript": "keep. 유지하다 또는 계속하다 라는 뜻입니다. You can keep the change. 거스름돈은 가지세요."
+    "koChirpScript": "keep. 유지하다 또는 계속하다라는 뜻입니다. You can keep the change.  거스름돈은 가지세요. 라는 의미네요."
   },
   {
     "lemma": "key",
@@ -141,7 +141,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/key-v.mp3",
     "koGloss": "n. 열쇠; adj. 핵심적인",
     "koExample": "나는 차 열쇠를 잃어버렸다. 소통은 성공의 핵심이다.",
-    "koChirpScript": "key. 열쇠 또는 핵심적인 이라는 뜻입니다. I lost my car keys. 나는 차 열쇠를 잃어버렸다. Communication is the key to success. 소통은 성공의 핵심이다."
+    "koChirpScript": "key. 열쇠라는 명사와 핵심적인 이라는 형용사로 쓰입니다. I lost my car keys. 는 나는 차 열쇠를 잃어버렸다. 라는 뜻이고, Communication is the key to success. 는 소통은 성공의 핵심이다. 라는 의미네요."
   },
   {
     "lemma": "kind",
@@ -153,7 +153,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/kind-v.mp3",
     "koGloss": "n. 종류",
     "koExample": "어떤 종류의 음악을 좋아하세요?",
-    "koChirpScript": "kind. 종류 라는 뜻입니다. '친절한'이라는 뜻의 형용사와 철자가 같으니 주의하세요. What kind of music do you like? 어떤 종류의 음악을 좋아하세요?"
+    "koChirpScript": "kind. 종류라는 뜻입니다. 친절한이라는 뜻의 형용사와 철자가 같으니 주의하세요. What kind of music do you like?  어떤 종류의 음악을 좋아하세요? 라는 의미네요."
   },
   {
     "lemma": "kitchen",
@@ -165,7 +165,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/kitchen-v.mp3",
     "koGloss": "n. 부엌",
     "koExample": "어머니는 부엌에서 요리하고 계신다.",
-    "koChirpScript": "kitchen. 부엌 이라는 뜻입니다. My mother is cooking in the kitchen. 어머니는 부엌에서 요리하고 계신다."
+    "koChirpScript": "kitchen. 부엌이라는 뜻입니다. My mother is cooking in the kitchen.  어머니는 부엌에서 요리하고 계신다. 라는 의미네요."
   },
   {
     "lemma": "know",
@@ -177,7 +177,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/know-v.mp3",
     "koGloss": "v. 알다",
     "koExample": "답을 아시나요?",
-    "koChirpScript": "know. 알다 라는 뜻입니다. Do you know the answer? 답을 아시나요?"
+    "koChirpScript": "know. 알다라는 뜻입니다. Do you know the answer?  답을 아시나요? 라는 의미네요."
   },
   {
     "lemma": "land",
@@ -189,7 +189,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/land-v.mp3",
     "koGloss": "n. 땅, 육지",
     "koExample": "비행기가 곧 착륙할 것이다.",
-    "koChirpScript": "land. 땅 또는 육지 라는 뜻입니다. 동사로는 '착륙하다'라는 의미도 있습니다. The plane is about to land. 비행기가 곧 착륙할 것이다."
+    "koChirpScript": "land. 땅 또는 육지라는 뜻입니다. 동사로는 착륙하다라는 의미도 있습니다. The plane is about to land.  비행기가 곧 착륙할 것이다. 라는 의미네요."
   },
   {
     "lemma": "language",
@@ -201,7 +201,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/language-v.mp3",
     "koGloss": "n. 언어",
     "koExample": "몇 개의 언어를 할 수 있나요?",
-    "koChirpScript": "language. 언어 라는 뜻입니다. How many languages can you speak? 몇 개의 언어를 할 수 있나요?"
+    "koChirpScript": "language. 언어라는 뜻입니다. How many languages can you speak?  몇 개의 언어를 할 수 있나요? 라는 의미네요."
   },
   {
     "lemma": "large",
@@ -213,7 +213,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/large-v.mp3",
     "koGloss": "adj. 큰",
     "koExample": "우리는 큰 집에 산다.",
-    "koChirpScript": "large. 큰 이라는 뜻입니다. We live in a large house. 우리는 큰 집에 산다."
+    "koChirpScript": "large. 큰이라는 뜻입니다. We live in a large house.  우리는 큰 집에 산다. 라는 의미네요."
   },
   {
     "lemma": "last",
@@ -225,7 +225,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/last-v.mp3",
     "koGloss": "det. 마지막의",
     "koExample": "이것이 마지막 버스이다.",
-    "koChirpScript": "last. 마지막의 라는 뜻입니다. This is the last bus. 이것이 마지막 버스이다."
+    "koChirpScript": "last. 마지막의 라는 뜻입니다. This is the last bus.  이것이 마지막 버스이다. 라는 의미네요."
   },
   {
     "lemma": "late",
@@ -237,7 +237,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/late-v.mp3",
     "koGloss": "adj. 늦은; adv. 늦게",
     "koExample": "학교에 늦지 마라.",
-    "koChirpScript": "late. 늦은 또는 늦게 라는 뜻입니다. Don't be late for school. 학교에 늦지 마라."
+    "koChirpScript": "late. 늦은 또는 늦게 라는 뜻입니다. Dont be late for school.  학교에 늦지 마라. 라는 의미네요."
   },
   {
     "lemma": "later",
@@ -249,7 +249,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/later-v.mp3",
     "koGloss": "adv. 나중에, 더 늦게",
     "koExample": "나중에 전화할게.",
-    "koChirpScript": "later. 나중에 또는 더 늦게 라는 뜻입니다. I'll call you later. 나중에 전화할게."
+    "koChirpScript": "later. 나중에 또는 더 늦게 라는 뜻입니다. Ill call you later.  나중에 전화할게. 라는 의미네요."
   },
   {
     "lemma": "laugh",
@@ -261,7 +261,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/laugh-v.mp3",
     "koGloss": "v. 웃다; n. 웃음",
     "koExample": "그의 농담은 항상 나를 웃게 만든다. 그녀는 웃음소리가 크다.",
-    "koChirpScript": "laugh. 웃다 또는 웃음 이라는 뜻입니다. His jokes always make me laugh. 그의 농담은 항상 나를 웃게 만든다. She has a loud laugh. 그녀는 웃음소리가 크다."
+    "koChirpScript": "laugh. 웃다라는 동사와 웃음이라는 명사로 쓰입니다. His jokes always make me laugh. 는 그의 농담은 항상 나를 웃게 만든다. 라는 뜻이고, She has a loud laugh. 는 그녀는 웃음소리가 크다. 라는 의미네요."
   },
   {
     "lemma": "learn",
@@ -273,7 +273,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/learn-v.mp3",
     "koGloss": "v. 배우다",
     "koExample": "나는 피아노 치는 법을 배우고 싶다.",
-    "koChirpScript": "learn. 배우다 라는 뜻입니다. I want to learn how to play the piano. 나는 피아노 치는 법을 배우고 싶다."
+    "koChirpScript": "learn. 배우다라는 뜻입니다. I want to learn how to play the piano.  나는 피아노 치는 법을 배우고 싶다. 라는 의미네요."
   },
   {
     "lemma": "leave",
@@ -285,7 +285,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/leave-v.mp3",
     "koGloss": "v. 떠나다, 남기다",
     "koExample": "기차는 몇 시에 떠나나요?",
-    "koChirpScript": "leave. 떠나다 또는 남기다 라는 뜻입니다. What time does the train leave? 기차는 몇 시에 떠나나요?"
+    "koChirpScript": "leave. 떠나다 또는 남기다라는 뜻입니다. What time does the train leave?  기차는 몇 시에 떠나나요? 라는 의미네요."
   },
   {
     "lemma": "left",
@@ -297,7 +297,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/left-v.mp3",
     "koGloss": "adj. 왼쪽의; adv. 왼쪽으로; n. 왼쪽",
     "koExample": "다음 모퉁이에서 왼쪽으로 도세요.",
-    "koChirpScript": "left. 왼쪽 이라는 뜻입니다. Turn left at the next corner. 다음 모퉁이에서 왼쪽으로 도세요."
+    "koChirpScript": "left. 왼쪽이라는 뜻입니다. Turn left at the next corner.  다음 모퉁이에서 왼쪽으로 도세요. 라는 의미네요."
   },
   {
     "lemma": "leg",
@@ -309,7 +309,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/leg-v.mp3",
     "koGloss": "n. 다리",
     "koExample": "그는 사고로 다리가 부러졌다.",
-    "koChirpScript": "leg. 다리 라는 뜻입니다. He broke his leg in the accident. 그는 사고로 다리가 부러졌다."
+    "koChirpScript": "leg. 다리라는 뜻입니다. He broke his leg in the accident.  그는 사고로 다리가 부러졌다. 라는 의미네요."
   },
   {
     "lemma": "lesson",
@@ -321,7 +321,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lesson-v.mp3",
     "koGloss": "n. 수업, 교훈",
     "koExample": "나는 매주 화요일에 피아노 수업이 있다.",
-    "koChirpScript": "lesson. 수업 또는 교훈 이라는 뜻입니다. I have a piano lesson every Tuesday. 나는 매주 화요일에 피아노 수업이 있다."
+    "koChirpScript": "lesson. 수업 또는 교훈이라는 뜻입니다. I have a piano lesson every Tuesday.  나는 매주 화요일에 피아노 수업이 있다. 라는 의미네요."
   },
   {
     "lemma": "let",
@@ -333,7 +333,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/let-v.mp3",
     "koGloss": "v. ~하게 하다, 허락하다",
     "koExample": "제가 그것을 도와드릴게요.",
-    "koChirpScript": "let. 무엇무엇하게 하다 또는 허락하다 라는 뜻입니다. Let me help you with that. 제가 그것을 도와드릴게요."
+    "koChirpScript": "let. 무엇무엇하게 하다 또는 허락하다라는 뜻입니다. Let me help you with that.  제가 그것을 도와드릴게요. 라는 의미네요."
   },
   {
     "lemma": "letter",
@@ -345,7 +345,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/letter-v.mp3",
     "koGloss": "n. 편지, 글자",
     "koExample": "나는 친구에게 편지를 썼다.",
-    "koChirpScript": "letter. 편지 또는 글자 라는 뜻입니다. I wrote a letter to my friend. 나는 친구에게 편지를 썼다."
+    "koChirpScript": "letter. 편지 또는 글자라는 뜻입니다. I wrote a letter to my friend.  나는 친구에게 편지를 썼다. 라는 의미네요."
   },
   {
     "lemma": "library",
@@ -357,7 +357,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/library-v.mp3",
     "koGloss": "n. 도서관",
     "koExample": "나는 공부하러 도서관에 갈 것이다.",
-    "koChirpScript": "library. 도서관 이라는 뜻입니다. I'm going to the library to study. 나는 공부하러 도서관에 갈 것이다."
+    "koChirpScript": "library. 도서관이라는 뜻입니다. Im going to the library to study.  나는 공부하러 도서관에 갈 것이다. 라는 의미네요."
   },
   {
     "lemma": "lie",
@@ -369,7 +369,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lie-v.mp3",
     "koGloss": "v. 눕다",
     "koExample": "고양이가 소파에 누워 있다.",
-    "koChirpScript": "lie. 눕다 라는 뜻입니다. '거짓말하다'라는 뜻의 동사와 철자가 같으니 주의하세요. The cat is lying on the sofa. 고양이가 소파에 누워 있다."
+    "koChirpScript": "lie. 눕다라는 뜻입니다. 거짓말하다라는 뜻의 동사와 철자가 같으니 주의하세요. The cat is lying on the sofa.  고양이가 소파에 누워 있다. 라는 의미네요."
   },
   {
     "lemma": "life",
@@ -381,7 +381,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/life-v.mp3",
     "koGloss": "n. 삶, 인생",
     "koExample": "인생은 아름답다.",
-    "koChirpScript": "life. 삶 또는 인생 이라는 뜻입니다. 복수형은 lives 입니다. Life is beautiful. 인생은 아름답다."
+    "koChirpScript": "life. 삶 또는 인생이라는 뜻입니다. 복수형은 lives 입니다. Life is beautiful.  인생은 아름답다. 라는 의미네요."
   },
   {
     "lemma": "light",
@@ -393,7 +393,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/light-v.mp3",
     "koGloss": "n. 빛, 조명; adj. 가벼운",
     "koExample": "불을 켜 주세요. 이 상자는 매우 가볍다.",
-    "koChirpScript": "light. 빛 또는 조명, 그리고 가벼운 이라는 뜻입니다. Please turn on the light. 불을 켜 주세요. This box is very light. 이 상자는 매우 가볍다."
+    "koChirpScript": "light. 빛, 조명이라는 명사와 가벼운 이라는 형용사로 쓰입니다. Please turn on the light. 는 불을 켜 주세요. 라는 뜻이고, This box is very light. 는 이 상자는 매우 가볍다. 라는 의미네요."
   },
   {
     "lemma": "like",
@@ -405,7 +405,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/like-prep-v.mp3",
     "koGloss": "prep. ~처럼, ~같이",
     "koExample": "그는 아버지를 닮았다.",
-    "koChirpScript": "like. 무엇무엇처럼 또는 무엇무엇같이 라는 뜻의 전치사입니다. He looks like his father. 그는 아버지를 닮았다."
+    "koChirpScript": "like. 무엇무엇처럼 또는 무엇무엇같이 라는 뜻의 전치사입니다. He looks like his father.  그는 아버지를 닮았다. 라는 의미네요."
   },
   {
     "lemma": "like",
@@ -417,7 +417,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/like-v.mp3",
     "koGloss": "v. 좋아하다",
     "koExample": "나는 아이스크림을 좋아한다.",
-    "koChirpScript": "like. 좋아하다 라는 뜻의 동사입니다. I like ice cream. 나는 아이스크림을 좋아한다."
+    "koChirpScript": "like. 좋아하다라는 뜻의 동사입니다. I like ice cream.  나는 아이스크림을 좋아한다. 라는 의미네요."
   },
   {
     "lemma": "line",
@@ -429,7 +429,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/line-v.mp3",
     "koGloss": "n. 선, 줄",
     "koExample": "줄을 서서 기다려 주세요.",
-    "koChirpScript": "line. 선 또는 줄 이라는 뜻입니다. Please wait in line. 줄을 서서 기다려 주세요."
+    "koChirpScript": "line. 선 또는 줄이라는 뜻입니다. Please wait in line.  줄을 서서 기다려 주세요. 라는 의미네요."
   },
   {
     "lemma": "lion",
@@ -441,7 +441,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lion-v.mp3",
     "koGloss": "n. 사자",
     "koExample": "사자는 정글의 왕이다.",
-    "koChirpScript": "lion. 사자 라는 뜻입니다. The lion is the king of the jungle. 사자는 정글의 왕이다."
+    "koChirpScript": "lion. 사자라는 뜻입니다. The lion is the king of the jungle.  사자는 정글의 왕이다. 라는 의미네요."
   },
   {
     "lemma": "list",
@@ -453,7 +453,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/list-v.mp3",
     "koGloss": "n. 목록; v. 목록을 작성하다",
     "koExample": "나는 쇼핑 목록을 만들었다. 필요한 모든 품목의 목록을 작성해 주세요.",
-    "koChirpScript": "list. 목록 또는 목록을 작성하다 라는 뜻입니다. I made a shopping list. 나는 쇼핑 목록을 만들었다. Please list all the items you need. 필요한 모든 품목의 목록을 작성해 주세요."
+    "koChirpScript": "list. 목록이라는 명사와 목록을 작성하다 라는 동사로 쓰입니다. I made a shopping list. 는 나는 쇼핑 목록을 만들었다. 라는 뜻이고, Please list all the items you need. 는 필요한 모든 품목의 목록을 작성해 주세요. 라는 의미네요."
   },
   {
     "lemma": "listen",
@@ -465,7 +465,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/listen-v.mp3",
     "koGloss": "v. 듣다",
     "koExample": "지시 사항을 주의 깊게 들으세요.",
-    "koChirpScript": "listen. 듣다 라는 뜻입니다. Listen carefully to the instructions. 지시 사항을 주의 깊게 들으세요."
+    "koChirpScript": "listen. 듣다라는 뜻입니다. Listen carefully to the instructions.  지시 사항을 주의 깊게 들으세요. 라는 의미네요."
   },
   {
     "lemma": "little",
@@ -477,7 +477,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/little-v.mp3",
     "koGloss": "adj. 작은; det./pron. 약간의",
     "koExample": "나는 작은 개를 한 마리 키운다.",
-    "koChirpScript": "little. 작은 또는 약간의 라는 뜻입니다. I have a little dog. 나는 작은 개를 한 마리 키운다."
+    "koChirpScript": "little. 작은 또는 약간의 라는 뜻입니다. I have a little dog.  나는 작은 개를 한 마리 키운다. 라는 의미네요."
   },
   {
     "lemma": "live",
@@ -489,7 +489,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/live-v.mp3",
     "koGloss": "v. 살다",
     "koExample": "어디에 사세요?",
-    "koChirpScript": "live. 살다 라는 뜻입니다. Where do you live? 어디에 사세요?"
+    "koChirpScript": "live. 살다라는 뜻입니다. Where do you live?  어디에 사세요? 라는 의미네요."
   },
   {
     "lemma": "local",
@@ -501,7 +501,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/local-v.mp3",
     "koGloss": "adj. 지역의, 현지의",
     "koExample": "나는 지역 시장에서 채소를 산다.",
-    "koChirpScript": "local. 지역의 또는 현지의 라는 뜻입니다. I buy my vegetables from the local market. 나는 지역 시장에서 채소를 산다."
+    "koChirpScript": "local. 지역의 또는 현지의 라는 뜻입니다. I buy my vegetables from the local market.  나는 지역 시장에서 채소를 산다. 라는 의미네요."
   },
   {
     "lemma": "long",
@@ -513,7 +513,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/long-v.mp3",
     "koGloss": "adj. 긴; adv. 오랫동안",
     "koExample": "그녀는 머리가 길다. 얼마나 오래 걸릴 건가요?",
-    "koChirpScript": "long. 긴 또는 오랫동안 이라는 뜻입니다. She has long hair. 그녀는 머리가 길다. How long will you be? 얼마나 오래 걸릴 건가요?"
+    "koChirpScript": "long. 긴 이라는 형용사와 오랫동안 이라는 부사로 쓰입니다. She has long hair. 는 그녀는 머리가 길다. 라는 뜻이고, How long will you be? 는 얼마나 오래 걸릴 건가요? 라는 의미네요."
   },
   {
     "lemma": "look",
@@ -525,7 +525,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/look-v.mp3",
     "koGloss": "v. 보다",
     "koExample": "저 아름다운 일몰을 봐!",
-    "koChirpScript": "look. 보다 라는 뜻입니다. Look at that beautiful sunset! 저 아름다운 일몰을 봐!"
+    "koChirpScript": "look. 보다라는 뜻입니다. Look at that beautiful sunset!  저 아름다운 일몰을 봐! 라는 의미네요."
   },
   {
     "lemma": "lose",
@@ -537,7 +537,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lose-v.mp3",
     "koGloss": "v. 잃다, 지다",
     "koExample": "표를 잃어버리지 마세요.",
-    "koChirpScript": "lose. 잃다 또는 지다 라는 뜻입니다. Don't lose your ticket. 표를 잃어버리지 마세요."
+    "koChirpScript": "lose. 잃다 또는 지다라는 뜻입니다. Dont lose your ticket.  표를 잃어버리지 마세요. 라는 의미네요."
   },
   {
     "lemma": "lot",
@@ -549,7 +549,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lot-v.mp3",
     "koGloss": "pron./det./adv. 많음, 많이",
     "koExample": "나는 친구가 많다.",
-    "koChirpScript": "lot. 많음 또는 많이 라는 뜻으로, 주로 a lot of 형태로 쓰입니다. I have a lot of friends. 나는 친구가 많다."
+    "koChirpScript": "lot. 많음 또는 많이 라는 뜻으로, 주로 a lot of 형태로 쓰입니다. I have a lot of friends.  나는 친구가 많다. 라는 의미네요."
   },
   {
     "lemma": "love",
@@ -561,7 +561,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/love-v.mp3",
     "koGloss": "n. 사랑; v. 사랑하다",
     "koExample": "나는 나의 가족을 사랑한다. 사랑은 아름다운 것이다.",
-    "koChirpScript": "love. 사랑 또는 사랑하다 라는 뜻입니다. I love my family. 나는 나의 가족을 사랑한다. Love is a beautiful thing. 사랑은 아름다운 것이다."
+    "koChirpScript": "love. 사랑이라는 명사와 사랑하다 라는 동사로 쓰입니다. I love my family. 는 나는 나의 가족을 사랑한다. 라는 뜻이고, Love is a beautiful thing. 은 사랑은 아름다운 것이다. 라는 의미네요."
   },
   {
     "lemma": "lunch",
@@ -573,7 +573,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/lunch-v.mp3",
     "koGloss": "n. 점심 식사",
     "koExample": "오늘 점심은 무엇인가요?",
-    "koChirpScript": "lunch. 점심 식사 라는 뜻입니다. What's for lunch today? 오늘 점심은 무엇인가요?"
+    "koChirpScript": "lunch. 점심 식사라는 뜻입니다. Whats for lunch today?  오늘 점심은 무엇인가요? 라는 의미네요."
   },
   {
     "lemma": "machine",
@@ -585,7 +585,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/machine-v.mp3",
     "koGloss": "n. 기계",
     "koExample": "이것은 세탁기이다.",
-    "koChirpScript": "machine. 기계 라는 뜻입니다. This is a washing machine. 이것은 세탁기이다."
+    "koChirpScript": "machine. 기계라는 뜻입니다. This is a washing machine.  이것은 세탁기이다. 라는 의미네요."
   },
   {
     "lemma": "magazine",
@@ -597,7 +597,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/magazine-v.mp3",
     "koGloss": "n. 잡지",
     "koExample": "나는 패션 잡지 읽는 것을 좋아한다.",
-    "koChirpScript": "magazine. 잡지 라는 뜻입니다. I like to read fashion magazines. 나는 패션 잡지 읽는 것을 좋아한다."
+    "koChirpScript": "magazine. 잡지라는 뜻입니다. I like to read fashion magazines.  나는 패션 잡지 읽는 것을 좋아한다. 라는 의미네요."
   },
   {
     "lemma": "main",
@@ -609,7 +609,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/main-v.mp3",
     "koGloss": "adj. 주된, 주요한",
     "koExample": "내 방문의 주된 이유는 당신을 보기 위함이다.",
-    "koChirpScript": "main. 주된 또는 주요한 이라는 뜻입니다. The main reason for my visit is to see you. 내 방문의 주된 이유는 당신을 보기 위함이다."
+    "koChirpScript": "main. 주된 또는 주요한이라는 뜻입니다. The main reason for my visit is to see you.  내 방문의 주된 이유는 당신을 보기 위함이다. 라는 의미네요."
   },
   {
     "lemma": "make",
@@ -621,7 +621,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/make-v.mp3",
     "koGloss": "v. 만들다",
     "koExample": "네 생일 케이크를 만들어 줄게.",
-    "koChirpScript": "make. 만들다 라는 뜻입니다. I will make a cake for your birthday. 네 생일 케이크를 만들어 줄게."
+    "koChirpScript": "make. 만들다라는 뜻입니다. I will make a cake for your birthday.  네 생일 케이크를 만들어 줄게. 라는 의미네요."
   },
   {
     "lemma": "mall",
@@ -633,7 +633,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mall-v.mp3",
     "koGloss": "n. 쇼핑몰",
     "koExample": "쇼핑몰에 쇼핑하러 가자.",
-    "koChirpScript": "mall. 쇼핑몰 이라는 뜻입니다. Let's go shopping at the mall. 쇼핑몰에 쇼핑하러 가자."
+    "koChirpScript": "mall. 쇼핑몰이라는 뜻입니다. Lets go shopping at the mall.  쇼핑몰에 쇼핑하러 가자. 라는 의미네요."
   },
   {
     "lemma": "man",
@@ -645,7 +645,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/man-v.mp3",
     "koGloss": "n. 남자, 사람",
     "koExample": "한 남자가 길을 걷고 있다.",
-    "koChirpScript": "man. 남자 또는 사람 이라는 뜻입니다. 복수형은 men 입니다. A man is walking down the street. 한 남자가 길을 걷고 있다."
+    "koChirpScript": "man. 남자 또는 사람이라는 뜻입니다. 복수형은 men 입니다. A man is walking down the street.  한 남자가 길을 걷고 있다. 라는 의미네요."
   },
   {
     "lemma": "many",
@@ -657,7 +657,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/many-v.mp3",
     "koGloss": "det./pron. 많은",
     "koExample": "책장에 많은 책이 있다.",
-    "koChirpScript": "many. 많은 이라는 뜻으로, 셀 수 있는 명사와 함께 씁니다. There are many books on the shelf. 책장에 많은 책이 있다."
+    "koChirpScript": "many. 많은 이라는 뜻으로, 셀 수 있는 명사와 함께 씁니다. There are many books on the shelf.  책장에 많은 책이 있다. 라는 의미네요."
   },
   {
     "lemma": "map",
@@ -669,7 +669,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/map-v.mp3",
     "koGloss": "n. 지도",
     "koExample": "길을 찾으려면 지도가 필요하다.",
-    "koChirpScript": "map. 지도 라는 뜻입니다. I need a map to find the way. 길을 찾으려면 지도가 필요하다."
+    "koChirpScript": "map. 지도라는 뜻입니다. I need a map to find the way.  길을 찾으려면 지도가 필요하다. 라는 의미네요."
   },
   {
     "lemma": "March",
@@ -681,7 +681,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/March-v.mp3",
     "koGloss": "n. 3월",
     "koExample": "봄은 3월에 시작된다.",
-    "koChirpScript": "March. 3월 이라는 뜻입니다. Spring starts in March. 봄은 3월에 시작된다."
+    "koChirpScript": "March. 3월이라는 뜻입니다. Spring starts in March.  봄은 3월에 시작된다. 라는 의미네요."
   },
   {
     "lemma": "market",
@@ -693,7 +693,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/market-v.mp3",
     "koGloss": "n. 시장",
     "koExample": "신선한 채소를 사러 시장에 갈 것이다.",
-    "koChirpScript": "market. 시장 이라는 뜻입니다. I'm going to the market to buy some fresh vegetables. 신선한 채소를 사러 시장에 갈 것이다."
+    "koChirpScript": "market. 시장이라는 뜻입니다. Im going to the market to buy some fresh vegetables.  신선한 채소를 사러 시장에 갈 것이다. 라는 의미네요."
   },
   {
     "lemma": "married",
@@ -705,7 +705,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/married-v.mp3",
     "koGloss": "adj. 결혼한",
     "koExample": "결혼하셨나요?",
-    "koChirpScript": "married. 결혼한 이라는 뜻입니다. Are you married? 결혼하셨나요?"
+    "koChirpScript": "married. 결혼한이라는 뜻입니다. Are you married?  결혼하셨나요? 라는 의미네요."
   },
   {
     "lemma": "match",
@@ -717,7 +717,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/match-v.mp3",
     "koGloss": "n. 경기, 시합; v. 어울리다",
     "koExample": "축구 시합은 누가 이겼나요? 넥타이가 셔츠와 잘 어울리네요.",
-    "koChirpScript": "match. 경기 또는 시합, 그리고 어울리다 라는 뜻입니다. Who won the football match? 축구 시합은 누가 이겼나요? Your tie matches your shirt. 넥타이가 셔츠와 잘 어울리네요."
+    "koChirpScript": "match. 경기, 시합이라는 명사와 어울리다 라는 동사로 쓰입니다. Who won the football match? 는 축구 시합은 누가 이겼나요? 라는 뜻이고, Your tie matches your shirt. 는 넥타이가 셔츠와 잘 어울리네요. 라는 의미네요."
   },
   {
     "lemma": "May",
@@ -729,7 +729,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/May-v.mp3",
     "koGloss": "n. 5월",
     "koExample": "내 생일은 5월이다.",
-    "koChirpScript": "May. 5월 이라는 뜻입니다. My birthday is in May. 내 생일은 5월이다."
+    "koChirpScript": "May. 5월이라는 뜻입니다. My birthday is in May.  내 생일은 5월이다. 라는 의미네요."
   },
   {
     "lemma": "maybe",
@@ -741,7 +741,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/maybe-v.mp3",
     "koGloss": "adv. 아마도, 어쩌면",
     "koExample": "아마 내일 비가 올지도 모른다.",
-    "koChirpScript": "maybe. 아마도 또는 어쩌면 이라는 뜻입니다. Maybe it will rain tomorrow. 아마 내일 비가 올지도 모른다."
+    "koChirpScript": "maybe. 아마도 또는 어쩌면이라는 뜻입니다. Maybe it will rain tomorrow.  아마 내일 비가 올지도 모른다. 라는 의미네요."
   },
   {
     "lemma": "me",
@@ -753,7 +753,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/me-v.mp3",
     "koGloss": "pron. 나를",
     "koExample": "저 좀 도와주시겠어요?",
-    "koChirpScript": "me. '나를' 이라는 뜻의 목적격 대명사입니다. Can you help me? 저 좀 도와주시겠어요?"
+    "koChirpScript": "me. 나를 이라는 뜻의 목적격 대명사입니다. Can you help me?  저 좀 도와주시겠어요? 라는 의미네요."
   },
   {
     "lemma": "meal",
@@ -765,7 +765,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meal-v.mp3",
     "koGloss": "n. 식사",
     "koExample": "나는 하루에 세 끼를 먹는다.",
-    "koChirpScript": "meal. 식사 라는 뜻입니다. I eat three meals a day. 나는 하루에 세 끼를 먹는다."
+    "koChirpScript": "meal. 식사라는 뜻입니다. I eat three meals a day.  나는 하루에 세 끼를 먹는다. 라는 의미네요."
   },
   {
     "lemma": "mean",
@@ -777,7 +777,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mean-v.mp3",
     "koGloss": "v. 의미하다",
     "koExample": "이 단어는 무슨 뜻인가요?",
-    "koChirpScript": "mean. 의미하다 라는 뜻입니다. What does this word mean? 이 단어는 무슨 뜻인가요?"
+    "koChirpScript": "mean. 의미하다라는 뜻입니다. What does this word mean?  이 단어는 무슨 뜻인가요? 라는 의미네요."
   },
   {
     "lemma": "meaning",
@@ -789,7 +789,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meaning-v.mp3",
     "koGloss": "n. 의미, 뜻",
     "koExample": "나는 이 문장의 의미를 이해하지 못하겠다.",
-    "koChirpScript": "meaning. 의미 또는 뜻 이라는 뜻입니다. I don't understand the meaning of this sentence. 나는 이 문장의 의미를 이해하지 못하겠다."
+    "koChirpScript": "meaning. 의미 또는 뜻이라는 뜻입니다. I dont understand the meaning of this sentence.  나는 이 문장의 의미를 이해하지 못하겠다. 라는 의미네요."
   },
   {
     "lemma": "meat",
@@ -801,7 +801,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meat-v.mp3",
     "koGloss": "n. 고기",
     "koExample": "나는 고기를 먹지 않는다.",
-    "koChirpScript": "meat. 고기 라는 뜻입니다. I don't eat meat. 나는 고기를 먹지 않는다."
+    "koChirpScript": "meat. 고기라는 뜻입니다. I dont eat meat.  나는 고기를 먹지 않는다. 라는 의미네요."
   },
   {
     "lemma": "meet",
@@ -813,7 +813,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meet-v.mp3",
     "koGloss": "v. 만나다",
     "koExample": "만나서 반갑습니다.",
-    "koChirpScript": "meet. 만나다 라는 뜻입니다. Nice to meet you. 만나서 반갑습니다."
+    "koChirpScript": "meet. 만나다라는 뜻입니다. Nice to meet you.  만나서 반갑습니다. 라는 의미네요."
   },
   {
     "lemma": "meeting",
@@ -825,7 +825,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meeting-v.mp3",
     "koGloss": "n. 회의",
     "koExample": "나는 오후 3시에 회의가 있다.",
-    "koChirpScript": "meeting. 회의 라는 뜻입니다. I have a meeting at 3 p.m. 나는 오후 3시에 회의가 있다."
+    "koChirpScript": "meeting. 회의라는 뜻입니다. I have a meeting at 3 p.m.  나는 오후 3시에 회의가 있다. 라는 의미네요."
   },
   {
     "lemma": "member",
@@ -837,7 +837,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/member-v.mp3",
     "koGloss": "n. 회원, 일원",
     "koExample": "그는 축구팀의 일원이다.",
-    "koChirpScript": "member. 회원 또는 일원 이라는 뜻입니다. He is a member of the football team. 그는 축구팀의 일원이다."
+    "koChirpScript": "member. 회원 또는 일원이라는 뜻입니다. He is a member of the football team.  그는 축구팀의 일원이다. 라는 의미네요."
   },
   {
     "lemma": "menu",
@@ -849,7 +849,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/menu-v.mp3",
     "koGloss": "n. 메뉴",
     "koExample": "메뉴판 좀 주시겠어요?",
-    "koChirpScript": "menu. 메뉴 라는 뜻입니다. Could we have the menu, please? 메뉴판 좀 주시겠어요?"
+    "koChirpScript": "menu. 메뉴라는 뜻입니다. Could we have the menu, please?  메뉴판 좀 주시겠어요? 라는 의미네요."
   },
   {
     "lemma": "message",
@@ -861,7 +861,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/message-v.mp3",
     "koGloss": "n. 메시지",
     "koExample": "그에게 메시지를 남기겠다.",
-    "koChirpScript": "message. 메시지 라는 뜻입니다. I'll leave a message for him. 그에게 메시지를 남기겠다."
+    "koChirpScript": "message. 메시지라는 뜻입니다. Ill leave a message for him.  그에게 메시지를 남기겠다. 라는 의미네요."
   },
   {
     "lemma": "meter",
@@ -873,7 +873,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/meter-v.mp3",
     "koGloss": "n. 미터",
     "koExample": "그 방은 길이가 5미터이다.",
-    "koChirpScript": "meter. 미터 라는 뜻의 길이 단위입니다. The room is five meters long. 그 방은 길이가 5미터이다."
+    "koChirpScript": "meter. 미터라는 뜻의 길이 단위입니다. The room is five meters long.  그 방은 길이가 5미터이다. 라는 의미네요."
   },
   {
     "lemma": "midnight",
@@ -885,7 +885,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/midnight-v.mp3",
     "koGloss": "n. 자정",
     "koExample": "나는 자정에 잠자리에 들었다.",
-    "koChirpScript": "midnight. 자정, 즉 밤 12시를 의미합니다. I went to bed at midnight. 나는 자정에 잠자리에 들었다."
+    "koChirpScript": "midnight. 자정, 즉 밤 12시를 의미합니다. I went to bed at midnight.  나는 자정에 잠자리에 들었다. 라는 의미네요."
   },
   {
     "lemma": "mile",
@@ -897,7 +897,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mile-v.mp3",
     "koGloss": "n. 마일",
     "koExample": "그 마을까지는 5마일을 걸어야 한다.",
-    "koChirpScript": "mile. 마일 이라는 뜻의 거리 단위입니다. It's a five-mile walk to the village. 그 마을까지는 5마일을 걸어야 한다."
+    "koChirpScript": "mile. 마일이라는 뜻의 거리 단위입니다. Its a five-mile walk to the village.  그 마을까지는 5마일을 걸어야 한다. 라는 의미네요."
   },
   {
     "lemma": "milk",
@@ -909,7 +909,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/milk-v.mp3",
     "koGloss": "n. 우유",
     "koExample": "나는 매일 우유 한 잔을 마신다.",
-    "koChirpScript": "milk. 우유 라는 뜻입니다. I drink a glass of milk every day. 나는 매일 우유 한 잔을 마신다."
+    "koChirpScript": "milk. 우유라는 뜻입니다. I drink a glass of milk every day.  나는 매일 우유 한 잔을 마신다. 라는 의미네요."
   },
   {
     "lemma": "million",
@@ -921,7 +921,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/million-v.mp3",
     "koGloss": "number. 백만",
     "koExample": "그 도시의 인구는 백만이 넘는다.",
-    "koChirpScript": "million. 숫자 백만을 의미합니다. The city has a population of over a million. 그 도시의 인구는 백만이 넘는다."
+    "koChirpScript": "million. 숫자 백만을 의미합니다. The city has a population of over a million.  그 도시의 인구는 백만이 넘는다. 라는 의미네요."
   },
   {
     "lemma": "minute",
@@ -933,7 +933,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/minute-v.mp3",
     "koGloss": "n. 분",
     "koExample": "잠깐만 기다려 주세요.",
-    "koChirpScript": "minute. 분 이라는 뜻의 시간 단위입니다. Wait a minute, please. 잠깐만 기다려 주세요."
+    "koChirpScript": "minute. 분이라는 뜻의 시간 단위입니다. Wait a minute, please.  잠깐만 기다려 주세요. 라는 의미네요."
   },
   {
     "lemma": "miss",
@@ -945,7 +945,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/miss-v.mp3",
     "koGloss": "v. 놓치다, 그리워하다",
     "koExample": "나는 오늘 아침 버스를 놓쳤다.",
-    "koChirpScript": "miss. 놓치다 또는 그리워하다 라는 뜻입니다. I missed the bus this morning. 나는 오늘 아침 버스를 놓쳤다."
+    "koChirpScript": "miss. 놓치다 또는 그리워하다라는 뜻입니다. I missed the bus this morning.  나는 오늘 아침 버스를 놓쳤다. 라는 의미네요."
   },
   {
     "lemma": "mistake",
@@ -957,7 +957,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mistake-v.mp3",
     "koGloss": "n. 실수",
     "koExample": "나는 시험에서 실수를 했다.",
-    "koChirpScript": "mistake. 실수 라는 뜻입니다. I made a mistake on the test. 나는 시험에서 실수를 했다."
+    "koChirpScript": "mistake. 실수라는 뜻입니다. I made a mistake on the test.  나는 시험에서 실수를 했다. 라는 의미네요."
   },
   {
     "lemma": "model",
@@ -969,7 +969,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/model-v.mp3",
     "koGloss": "n. 모델, 모형",
     "koExample": "그는 그 배의 모형을 만들었다.",
-    "koChirpScript": "model. 모델 또는 모형 이라는 뜻입니다. He built a model of the ship. 그는 그 배의 모형을 만들었다."
+    "koChirpScript": "model. 모델 또는 모형이라는 뜻입니다. He built a model of the ship.  그는 그 배의 모형을 만들었다. 라는 의미네요."
   },
   {
     "lemma": "modern",
@@ -981,7 +981,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/modern-v.mp3",
     "koGloss": "adj. 현대의",
     "koExample": "이것은 현대적인 건물이다.",
-    "koChirpScript": "modern. 현대의 라는 뜻입니다. This is a modern building. 이것은 현대적인 건물이다."
+    "koChirpScript": "modern. 현대의 라는 뜻입니다. This is a modern building.  이것은 현대적인 건물이다. 라는 의미네요."
   },
   {
     "lemma": "mom",
@@ -993,7 +993,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mom-v.mp3",
     "koGloss": "n. 엄마",
     "koExample": "우리 엄마는 최고의 요리사이다.",
-    "koChirpScript": "mom. 엄마 라는 뜻입니다. My mom is the best cook. 우리 엄마는 최고의 요리사이다."
+    "koChirpScript": "mom. 엄마라는 뜻입니다. My mom is the best cook.  우리 엄마는 최고의 요리사이다. 라는 의미네요."
   },
   {
     "lemma": "moment",
@@ -1005,7 +1005,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/moment-v.mp3",
     "koGloss": "n. 순간, 잠깐",
     "koExample": "잠깐만 기다려 주세요.",
-    "koChirpScript": "moment. 순간 또는 잠깐 이라는 뜻입니다. Please wait a moment. 잠깐만 기다려 주세요."
+    "koChirpScript": "moment. 순간 또는 잠깐이라는 뜻입니다. Please wait a moment.  잠깐만 기다려 주세요. 라는 의미네요."
   },
   {
     "lemma": "Monday",
@@ -1017,7 +1017,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/Monday-v.mp3",
     "koGloss": "n. 월요일",
     "koExample": "나는 월요일 아침에 회의가 있다.",
-    "koChirpScript": "Monday. 월요일 이라는 뜻입니다. I have a meeting on Monday morning. 나는 월요일 아침에 회의가 있다."
+    "koChirpScript": "Monday. 월요일이라는 뜻입니다. I have a meeting on Monday morning.  나는 월요일 아침에 회의가 있다. 라는 의미네요."
   },
   {
     "lemma": "money",
@@ -1029,7 +1029,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/money-v.mp3",
     "koGloss": "n. 돈",
     "koExample": "나는 돈을 더 모아야 한다.",
-    "koChirpScript": "money. 돈 이라는 뜻입니다. I need to save more money. 나는 돈을 더 모아야 한다."
+    "koChirpScript": "money. 돈이라는 뜻입니다. I need to save more money.  나는 돈을 더 모아야 한다. 라는 의미네요."
   },
   {
     "lemma": "month",
@@ -1041,7 +1041,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/month-v.mp3",
     "koGloss": "n. 달, 개월",
     "koExample": "1년은 12개월이다.",
-    "koChirpScript": "month. 달 또는 개월 이라는 뜻입니다. There are twelve months in a year. 1년은 12개월이다."
+    "koChirpScript": "month. 달 또는 개월이라는 뜻입니다. There are twelve months in a year.  1년은 12개월이다. 라는 의미네요."
   },
   {
     "lemma": "more",
@@ -1053,7 +1053,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/more-v.mp3",
     "koGloss": "det./pron., adv. 더 많은(많이)",
     "koExample": "커피 좀 더 드시겠어요?",
-    "koChirpScript": "more. 더 많은 또는 더 많이 라는 뜻입니다. Would you like some more coffee? 커피 좀 더 드시겠어요?"
+    "koChirpScript": "more. 더 많은 또는 더 많이 라는 뜻입니다. Would you like some more coffee?  커피 좀 더 드시겠어요? 라는 의미네요."
   },
   {
     "lemma": "morning",
@@ -1065,7 +1065,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/morning-v.mp3",
     "koGloss": "n. 아침, 오전",
     "koExample": "좋은 아침!",
-    "koChirpScript": "morning. 아침 또는 오전 이라는 뜻입니다. Good morning! 좋은 아침!"
+    "koChirpScript": "morning. 아침 또는 오전이라는 뜻입니다. Good morning!  좋은 아침! 이라는 의미네요."
   },
   {
     "lemma": "most",
@@ -1077,7 +1077,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/most-v.mp3",
     "koGloss": "det./pron., adv. 가장 많은(많이), 대부분의",
     "koExample": "대부분의 사람들은 초콜릿을 좋아한다.",
-    "koChirpScript": "most. 가장 많은 또는 대부분의 라는 뜻입니다. Most people like chocolate. 대부분의 사람들은 초콜릿을 좋아한다."
+    "koChirpScript": "most. 가장 많은 또는 대부분의 라는 뜻입니다. Most people like chocolate.  대부분의 사람들은 초콜릿을 좋아한다. 라는 의미네요."
   },
   {
     "lemma": "mother",
@@ -1089,7 +1089,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mother-v.mp3",
     "koGloss": "n. 어머니",
     "koExample": "나의 어머니는 간호사이다.",
-    "koChirpScript": "mother. 어머니 라는 뜻입니다. My mother is a nurse. 나의 어머니는 간호사이다."
+    "koChirpScript": "mother. 어머니라는 뜻입니다. My mother is a nurse.  나의 어머니는 간호사이다. 라는 의미네요."
   },
   {
     "lemma": "mountain",
@@ -1101,7 +1101,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mountain-v.mp3",
     "koGloss": "n. 산",
     "koExample": "우리는 어제 그 산을 올랐다.",
-    "koChirpScript": "mountain. 산 이라는 뜻입니다. We climbed the mountain yesterday. 우리는 어제 그 산을 올랐다."
+    "koChirpScript": "mountain. 산이라는 뜻입니다. We climbed the mountain yesterday.  우리는 어제 그 산을 올랐다. 라는 의미네요."
   },
   {
     "lemma": "mouse",
@@ -1113,7 +1113,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mouse-v.mp3",
     "koGloss": "n. 쥐",
     "koExample": "고양이가 쥐를 쫓고 있다.",
-    "koChirpScript": "mouse. 쥐 라는 뜻입니다. 복수형은 mice 입니다. The cat is chasing a mouse. 고양이가 쥐를 쫓고 있다."
+    "koChirpScript": "mouse. 쥐라는 뜻입니다. 복수형은 mice 입니다. The cat is chasing a mouse.  고양이가 쥐를 쫓고 있다. 라는 의미네요."
   },
   {
     "lemma": "mouth",
@@ -1125,7 +1125,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/mouth-v.mp3",
     "koGloss": "n. 입",
     "koExample": "입에 음식을 가득 넣고 말하지 마라.",
-    "koChirpScript": "mouth. 입 이라는 뜻입니다. Don't talk with your mouth full. 입에 음식을 가득 넣고 말하지 마라."
+    "koChirpScript": "mouth. 입이라는 뜻입니다. Dont talk with your mouth full.  입에 음식을 가득 넣고 말하지 마라. 라는 의미네요."
   },
   {
     "lemma": "move",
@@ -1137,7 +1137,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/move-v.mp3",
     "koGloss": "v. 움직이다, 이사하다",
     "koExample": "차를 좀 움직여 주세요.",
-    "koChirpScript": "move. 움직이다 또는 이사하다 라는 뜻입니다. Please move your car. 차를 좀 움직여 주세요."
+    "koChirpScript": "move. 움직이다 또는 이사하다라는 뜻입니다. Please move your car.  차를 좀 움직여 주세요. 라는 의미네요."
   },
   {
     "lemma": "movie",
@@ -1149,7 +1149,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/movie-v.mp3",
     "koGloss": "n. 영화",
     "koExample": "오늘 밤 영화 보자.",
-    "koChirpScript": "movie. 영화 라는 뜻입니다. Let's watch a movie tonight. 오늘 밤 영화 보자."
+    "koChirpScript": "movie. 영화라는 뜻입니다. Lets watch a movie tonight.  오늘 밤 영화 보자. 라는 의미네요."
   },
   {
     "lemma": "much",
@@ -1161,7 +1161,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/much-v.mp3",
     "koGloss": "det./pron., adv. 많은(많이)",
     "koExample": "나는 시간이 많지 않다.",
-    "koChirpScript": "much. 많은 또는 많이 라는 뜻으로, 셀 수 없는 명사와 함께 씁니다. I don't have much time. 나는 시간이 많지 않다."
+    "koChirpScript": "much. 많은 또는 많이 라는 뜻으로, 셀 수 없는 명사와 함께 씁니다. I dont have much time.  나는 시간이 많지 않다. 라는 의미네요."
   },
   {
     "lemma": "museum",
@@ -1173,7 +1173,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/museum-v.mp3",
     "koGloss": "n. 박물관",
     "koExample": "우리는 어제 미술관을 방문했다.",
-    "koChirpScript": "museum. 박물관 이라는 뜻입니다. We visited the art museum yesterday. 우리는 어제 미술관을 방문했다."
+    "koChirpScript": "museum. 박물관이라는 뜻입니다. We visited the art museum yesterday.  우리는 어제 미술관을 방문했다. 라는 의미네요."
   },
   {
     "lemma": "music",
@@ -1185,7 +1185,7 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/music-v.mp3",
     "koGloss": "n. 음악",
     "koExample": "어떤 종류의 음악을 좋아하세요?",
-    "koChirpScript": "music. 음악 이라는 뜻입니다. What kind of music do you like? 어떤 종류의 음악을 좋아하세요?"
+    "koChirpScript": "music. 음악이라는 뜻입니다. What kind of music do you like?  어떤 종류의 음악을 좋아하세요? 라는 의미네요."
   },
   {
     "lemma": "must",
@@ -1197,6 +1197,6 @@
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/must-v.mp3",
     "koGloss": "modal v. ~해야 한다",
     "koExample": "너는 숙제를 끝내야 한다.",
-    "koChirpScript": "must. 무엇무엇해야 한다 라는 뜻으로, 강한 의무나 필요를 나타냅니다. You must finish your homework. 너는 숙제를 끝내야 한다."
+    "koChirpScript": "must. 무엇무엇해야 한다 라는 뜻으로, 강한 의무나 필요를 나타냅니다. You must finish your homework.  너는 숙제를 끝내야 한다. 라는 의미네요."
   }
 ]

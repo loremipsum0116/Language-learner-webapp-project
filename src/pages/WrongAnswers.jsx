@@ -214,7 +214,10 @@ export default function WrongAnswers() {
   return (
     <main className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h2>📝 오답노트</h2>
+        <div>
+          <h2>📝 오답노트</h2>
+          <small className="text-muted">폴더별로 독립적으로 관리됩니다. 빨간 폴더 버튼(⚠️)은 해당 오답이 발생한 폴더입니다.</small>
+        </div>
         <Link to="/srs" className="btn btn-outline-secondary">
           ← SRS 대시보드
         </Link>
@@ -460,10 +463,11 @@ export default function WrongAnswers() {
                             {idx > 0 && <span className="text-muted">,</span>}
                             <Link 
                               to={folder.parentId ? `/srs/folder/${folder.id}` : `/srs/parent/${folder.id}`}
-                              className="btn btn-outline-primary btn-sm px-2 py-1"
+                              className={`btn ${folder.isWrongAnswerFolder ? 'btn-danger' : 'btn-outline-primary'} btn-sm px-2 py-1`}
                               style={{ fontSize: '0.75rem' }}
-                              title={`${folder.parentName ? `${folder.parentName} > ` : ''}${folder.name}으로 이동`}
+                              title={`${folder.isWrongAnswerFolder ? '[오답 폴더] ' : ''}${folder.parentName ? `${folder.parentName} > ` : ''}${folder.name}으로 이동`}
                             >
+                              {folder.isWrongAnswerFolder && <span className="text-warning">⚠️ </span>}
                               {folder.parentName && <span className="text-muted">{folder.parentName} &gt; </span>}
                               {folder.name}
                             </Link>
