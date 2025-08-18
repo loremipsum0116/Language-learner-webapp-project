@@ -169,7 +169,7 @@ export default function SrsDashboard() {
 
     return (
         <main className="container py-4">
-            <h2 className="mb-4">SRS 학습 🧠</h2>
+            <h2 className="mb-4">SRS 학습</h2>
 
             {/* Overdue 알림 배너 */}
             <OverdueAlertBanner />

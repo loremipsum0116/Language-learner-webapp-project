@@ -163,9 +163,12 @@ function SrsWidget() {
   }, []);
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">오늘의 SRS</h5>
+        <h5 className="card-title d-flex align-items-center gap-1">
+          <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
+          오늘의 SRS
+        </h5>
         {err && err.status === 401 ? (
           <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
         ) : count === null ? (
@@ -215,9 +218,9 @@ function DictQuickPanel() {
   };
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">사전 검색</h5>
+        <h5 className="card-title">📚 사전 검색</h5>
         <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="dictionary search">
           <input
             ref={inputRef}
@@ -228,15 +231,15 @@ function DictQuickPanel() {
             onChange={(e) => setQ(e.target.value)}
             aria-label="query"
           />
-          <button className="btn btn-outline-secondary" type="submit" disabled={loading}>
-            {loading ? "검색 중..." : "검색"}
+          <button className="btn btn-outline-primary" type="submit" disabled={loading}>
+            {loading ? "🔍 검색 중..." : "🔍 검색"}
           </button>
           <Link className="btn btn-link" to="/dict" aria-label="open dictionary page">
             상세 보기 →
           </Link>
         </form>
         {err && err.status === 401 && (
-          <div className="alert alert-warning mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
+          <div className="alert alert-danmoosae mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
         )}
         {lat !== null && (
           <div className="form-text mt-1">
@@ -311,9 +314,9 @@ function TutorQuickChat({ persona }) {
   };
 
   return (
-    <div className="card h-100">
+    <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">AI English Tutor (Preview)</h5>
+        <h5 className="card-title">🤖 AI English Tutor</h5>
         <form className="d-flex gap-2" onSubmit={send}>
           <input
             className="form-control"
@@ -326,10 +329,10 @@ function TutorQuickChat({ persona }) {
             {loading ? (
               <>
                 <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                전송
+                🤖 전송 중...
               </>
             ) : (
-              "전송"
+              "📨 전송"
             )}
           </button>
           <Link className="btn btn-link" to="/tutor" aria-label="open tutor page">
@@ -337,7 +340,7 @@ function TutorQuickChat({ persona }) {
           </Link>
         </form>
         {err && err.status === 401 && (
-          <div className="alert alert-warning mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
+          <div className="alert alert-danmoosae mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
         )}
         {resp && (
           <div className="mt-3">
@@ -391,9 +394,9 @@ function ReadingTeaser() {
     };
   }, []);
   return (
-    <div className="card h-100">
+    <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">리딩</h5>
+        <h5 className="card-title">📜 리딩</h5>
         {err && err.status === 401 ? (
           <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
         ) : (
@@ -472,27 +475,30 @@ export default function Home() {
   return (
     <main className="container py-4">
       <section className="mb-4 hero-section">
-        <div className="p-4 p-md-5 bg-light rounded-3">
-          <h1 className="display-6 mb-2">Efficient English Learning Platform</h1>
+        <div className="p-4 p-md-5 rounded-3">
+          <h1 className="display-6 mb-2 d-flex align-items-center gap-2">
+            <img src="/danmoosae.png" alt="" style={{ height: '48px', width: 'auto' }} />
+            단무새와 함께하는 영어 학습
+          </h1>
           <p className="mb-3">
-            SRS vocabulary, grammar practice, reading comprehension. Experience adaptive learning combined with{" "}
-            <strong>AI English Tutor</strong> and <strong>Dictionary API (with audio)</strong>.
+            SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
+            <strong>🤖 AI 영어 튜터</strong>와 <strong>🔊 음성 사전</strong>을 경험해보세요.
           </p>
-          <div className="d-flex gap-2">
+          <div className="d-flex flex-wrap gap-2">
             <Link className="btn btn-primary" to="/learn/vocab">
-              오늘 학습 시작
+              🎆 오늘 학습 시작
             </Link>
-            <Link className="btn btn-outline-secondary" to="/tutor">
-              튜터 열기
+            <Link className="btn btn-secondary" to="/tutor">
+              🤖 AI 튜터
             </Link>
-            <Link className="btn btn-outline-secondary" to="/dict">
-              사전 검색
+            <Link className="btn btn-outline-primary" to="/dict">
+              📚 사전 검색
             </Link>
             <Link className="btn btn-outline-secondary" to="/vocab">
-              전체 단어장
+              📁 단어장
             </Link>
-            <Link className="btn btn-outline-secondary" to="/learn/grammar">
-              문법 세트
+            <Link className="btn btn-cute" to="/learn/grammar">
+              📝 문법 연습
             </Link>
           </div>
         </div>
@@ -512,9 +518,9 @@ export default function Home() {
           <DictQuickPanel />
         </div>
         <div className="col-lg-4">
-          <div className="card h-100">
+          <div className="card h-100 vocabulary-card">
             <div className="card-body">
-              <h5 className="card-title">튜터 페르소나</h5>
+              <h5 className="card-title">⚙️ 튜터 설정</h5>
               <PersonaForm value={persona} onChange={setPersona} />
               <div className="d-flex align-items-center gap-2 mt-2">
                 <button className="btn btn-primary btn-sm" onClick={onSavePersona} disabled={saving}>
@@ -538,9 +544,9 @@ export default function Home() {
       </section>
 
       <section className="mt-4">
-        <div className="card">
+        <div className="card vocabulary-card">
           <div className="card-body">
-            <h5 className="card-title">빠른 이동</h5>
+            <h5 className="card-title">🚀 빠른 이동</h5>
             <div className="d-flex flex-wrap gap-2">
               <Link className="btn btn-outline-secondary btn-sm" to="/learn/vocab">
                 /learn/vocab

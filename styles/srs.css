@@ -1,3 +1,54 @@
+/* 단무새 SRS Theme Enhancements */
 .card.frozen {
-    background-color: blue;
+    background: linear-gradient(135deg, #d5e8c7 0%, #a8d0f0 100%);
+    border: 2px solid #7fb069;
+    color: #2c3e50;
+    position: relative;
+}
+
+.card.frozen::before {
+    content: '❄️';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 1.2rem;
+}
+
+/* SRS Study Mode - 단무새 Cute Styling */
+.srs-card {
+    background: linear-gradient(145deg, #fefefe 0%, #fcf3cf 100%);
+    border: 2px solid #f4d03f;
+    border-radius: 1rem;
+    box-shadow: 0 6px 16px rgba(244, 208, 63, 0.3), 0 2px 8px rgba(127, 176, 105, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.srs-card:hover {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 8px 20px rgba(244, 208, 63, 0.4), 0 4px 12px rgba(127, 176, 105, 0.2);
+}
+
+.srs-difficulty-buttons .btn {
+    margin: 0.25rem;
+    border-radius: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.srs-difficulty-easy {
+    background: linear-gradient(135deg, #7fb069 0%, #5d8a47 100%);
+    border: none;
+    color: white;
+}
+
+.srs-difficulty-medium {
+    background: linear-gradient(135deg, #f4d03f 0%, #f1c40f 100%);
+    border: none;
+    color: #2c3e50;
+}
+
+.srs-difficulty-hard {
+    background: linear-gradient(135deg, #ff9f43 0%, #e67e22 100%);
+    border: none;
+    color: white;
 }

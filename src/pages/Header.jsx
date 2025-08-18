@@ -3,22 +3,27 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext'; // 경로: src/pages/Header.jsx → src/context/AuthContext.jsx
 
 /**
- * 공통 네비게이션 바 (Vocabio)
- * - 왼쪽 : 로고 → 홈
+ * 공통 네비게이션 바 (단무새 - Dan-mu-sae)
+ * - 왼쪽 : 단무새 로고 → 홈
  * - 오른쪽(로그인) : 대시보드 · SRS 학습 · 오답노트 · 로그아웃
  * - 오른쪽(비로그인) : 로그인 · 가입
- * 부트스트랩 5 기반, 모바일 토글 지원
+ * 부트스트랩 5 기반, 모바일 토글 지원, 단무새 귀여운 테마
  */
 export default function Header() {
   const { user, logout } = useAuth();
   const isLoggedIn = !!user;
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom">
-      <div className="container">
+    <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom" style={{ height: '80px' }}>
+      <div className="container" style={{ height: '100%' }}>
         {/* 브랜드 로고 */}
-        <Link to="/" className="navbar-brand fw-bold fs-4 text-primary text-decoration-none">
-          Vocabio
+        <Link to="/" className="navbar-brand fw-bold fs-4 text-decoration-none d-flex align-items-center gap-1" style={{ height: '100%' }}>
+          <img 
+            src="/danmoosae.png"
+            alt="" 
+            style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
+          />
+          <span style={{ color: '#8b4513', fontWeight: '700', fontSize: '1.5rem' }}>단무새</span>
         </Link>
 
         {/* 모바일 토글 버튼 */}
@@ -44,13 +49,14 @@ export default function Header() {
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/srs" className="btn btn-sm btn-primary">
+                  <Link to="/srs" className="btn btn-sm btn-primary d-flex align-items-center gap-1">
+                    <img src="/danmoosae.png" alt="" style={{ height: '16px', width: 'auto' }} />
                     SRS 학습
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link to="/odat-note" className="btn btn-sm btn-outline-danger">
-                    오답노트
+                  <Link to="/odat-note" className="btn btn-sm btn-secondary">
+                    📝 오답노트
                   </Link>
                 </li>
                 <li className="nav-item">

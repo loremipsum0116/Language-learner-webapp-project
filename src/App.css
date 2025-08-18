@@ -1,146 +1,384 @@
 /* src/App.css */
-/* English Learning Platform Design System */
+/* 단무새 (Dan-mu-sae) Learning Platform Design System */
 :root {
-  --font-sans: 'Inter', sans-serif;
-  --color-primary: #2563eb;
-  /* Modern Blue - represents learning and knowledge */
-  --color-primary-dark: #1d4ed8;
-  --color-charcoal: #1f2937;
-  /* Dark Gray for text */
-  --color-slate: #6b7280;
-  /* Medium Gray for secondary text */
-  --color-light-gray: #f8fafc;
-  /* Light background for English learning theme */
-  --color-border: #e5e7eb;
-  --border-radius-sm: 0.375rem;
-  /* 6px */
-  --border-radius-md: 0.5rem;
-  /* 8px */
-  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  
+  /* 단무새 Color Palette - Yellow & Green Theme */
+  --color-primary: #f4d03f;
+  /* Warm Yellow - main brand color from parrot */
+  --color-primary-dark: #f1c40f;
+  /* Deeper yellow for hover states */
+  --color-primary-light: #fcf3cf;
+  /* Light yellow for backgrounds */
+  
+  --color-secondary: #7fb069;
+  /* Fresh Green - accent color from parrot's beak */
+  --color-secondary-dark: #5d8a47;
+  /* Darker green for emphasis */
+  --color-secondary-light: #d5e8c7;
+  /* Light green for subtle backgrounds */
+  
+  --color-accent: #ff9f43;
+  /* Warm orange for highlights and CTAs */
+  --color-accent-light: #ffeaa7;
+  
+  /* Neutral Colors */
+  --color-charcoal: #2c3e50;
+  /* Dark text - easier on eyes than pure black */
+  --color-brown: #8b4513;
+  /* Brown from parrot design for secondary text */
+  --color-slate: #7f8c8d;
+  /* Medium gray for secondary text */
+  --color-light-cream: #fefefe;
+  /* Warm white background */
+  --color-cream: #faf8f0;
+  /* Slightly warm background */
+  --color-border: #ecf0f1;
+  /* Soft border color */
+  
+  /* Border Radius - Cute & Rounded Design */
+  --border-radius-sm: 0.5rem;
+  /* 8px - more rounded for cute feel */
+  --border-radius-md: 0.75rem;
+  /* 12px */
+  --border-radius-lg: 1rem;
+  /* 16px - for cards and major elements */
+  --border-radius-xl: 1.5rem;
+  /* 24px - for hero sections */
+  
+  /* Shadows - Soft & Friendly */
+  --shadow-sm: 0 2px 8px rgba(244, 208, 63, 0.1), 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(244, 208, 63, 0.15), 0 2px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 20px rgba(244, 208, 63, 0.2), 0 4px 10px rgba(0, 0, 0, 0.1);
+  --shadow-cute: 0 6px 16px rgba(244, 208, 63, 0.3), 0 2px 8px rgba(127, 176, 105, 0.1);
 }
 
 /* 2. Body 및 전역 스타일 리셋 */
 body {
   font-family: var(--font-sans);
-  background-color: var(--color-light-gray);
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-light-cream) 100%);
   color: var(--color-charcoal);
+  min-height: 100vh;
 }
 
 /* 3. 부트스트랩 컴포넌트 스타일 오버라이드 */
 
-/* 버튼 */
+/* 버튼 - 단무새 Theme */
 .btn-primary {
-  background-color: var(--color-primary);
-  border-color: var(--color-primary);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border: none;
+  color: var(--color-charcoal);
   font-weight: 600;
-  border-radius: var(--border-radius-sm);
-  transition: all 0.2s ease-in-out;
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-sm);
+  text-transform: none;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: var(--color-primary-dark);
-  border-color: var(--color-primary-dark);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-accent) 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  color: var(--color-charcoal);
 }
 
 .btn-outline-primary {
-  color: var(--color-primary);
-  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+  border: 2px solid var(--color-primary);
+  background: transparent;
   font-weight: 600;
-  border-radius: var(--border-radius-sm);
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease-in-out;
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--color-primary);
-  color: white;
-}
-
-.btn-secondary,
-.btn-outline-secondary {
-  border-radius: var(--border-radius-sm);
-}
-
-/* 카드 */
-.card {
-  border-radius: var(--border-radius-md);
-  border: 1px solid var(--color-border);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+  border-color: var(--color-primary-dark);
+  color: var(--color-charcoal);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
-  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%);
+  border: none;
+  color: var(--color-light-cream);
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+  background: var(--color-secondary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  color: var(--color-light-cream);
+}
+
+.btn-outline-secondary {
+  color: var(--color-secondary-dark);
+  border: 2px solid var(--color-secondary);
+  background: transparent;
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+  background: var(--color-secondary);
+  color: var(--color-light-cream);
+  transform: translateY(-1px);
+}
+
+/* 카드 - 단무새 Cute Design */
+.card {
+  background: linear-gradient(145deg, var(--color-light-cream) 0%, var(--color-cream) 100%);
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--color-primary-light);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  box-shadow: var(--shadow-cute);
+  transform: translateY(-4px) scale(1.02);
+  border-color: var(--color-primary);
 }
 
-.card-header,
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
+}
+
+.card-header {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%);
+  border-bottom: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-md) var(--border-radius-md) 0 0;
+  font-weight: 600;
+  color: var(--color-charcoal);
+}
+
 .card-footer {
-  background-color: #fff;
-  border-color: var(--color-border);
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-primary-light) 100%);
+  border-top: 1px solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-md) var(--border-radius-md);
 }
 
-/* 네비게이션 바 (헤더) */
+/* 네비게이션 바 (헤더) - 단무새 Theme */
 .navbar {
-  box-shadow: var(--shadow-sm);
-  border-bottom-color: var(--color-border) !important;
+  background: linear-gradient(135deg, var(--color-light-cream) 0%, var(--color-primary-light) 100%) !important;
+  box-shadow: var(--shadow-md);
+  border-bottom: 3px solid var(--color-primary) !important;
+  backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
-  color: var(--color-primary) !important;
+  color: var(--color-charcoal) !important;
   font-weight: 700;
+  transition: all 0.3s ease-in-out;
 }
 
-/* 폼 컨트롤 */
+.navbar-brand:hover {
+  color: var(--color-primary-dark) !important;
+  transform: scale(1.05);
+}
+
+.navbar-nav .nav-link {
+  color: var(--color-charcoal) !important;
+  font-weight: 500;
+  transition: all 0.3s ease-in-out;
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 1rem;
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--color-primary-dark) !important;
+  background-color: var(--color-primary-light);
+  transform: translateY(-1px);
+}
+
+/* 폼 컨트롤 - 단무새 Cute Style */
 .form-control,
 .form-select {
-  border-radius: var(--border-radius-sm);
-  border-color: var(--color-border);
+  border-radius: var(--border-radius-md);
+  border: 2px solid var(--color-border);
+  background-color: var(--color-light-cream);
+  transition: all 0.3s ease-in-out;
+  font-weight: 500;
 }
 
 .form-control:focus,
 .form-select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.25);
+  background-color: var(--color-primary-light);
+  box-shadow: 0 0 0 4px rgba(244, 208, 63, 0.3);
+  transform: scale(1.02);
 }
 
-/* Hero Section for English Learning */
+.form-label {
+  color: var(--color-charcoal);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* Hero Section - 단무새 Cute Learning Theme */
 .hero-section {
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  border: 1px solid var(--color-border);
-  padding: 2.5rem;
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--shadow-sm);
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-secondary-light) 50%, var(--color-accent-light) 100%);
+  border: 3px solid var(--color-primary);
+  padding: 3rem;
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
 }
 
-/* Vocabulary and Word Lists */
-.list-group-item.active {
-  background-color: var(--color-primary);
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(244, 208, 63, 0.1) 0%, transparent 70%);
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Vocabulary and Word Lists - 단무새 Style */
+.list-group-item {
+  border-radius: var(--border-radius-md);
+  margin-bottom: 0.5rem;
+  border: 2px solid var(--color-border);
+  transition: all 0.3s ease-in-out;
+}
+
+.list-group-item:hover {
+  background-color: var(--color-primary-light);
+  transform: translateX(5px);
   border-color: var(--color-primary);
 }
 
-/* English Learning Theme Enhancements */
-.english-learning-accent {
-  border-left: 4px solid var(--color-primary);
-  padding-left: 1rem;
+.list-group-item.active {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-color: var(--color-primary-dark);
+  color: var(--color-charcoal);
+  font-weight: 600;
 }
 
-/* Quiz Modal Background Control */
+/* 단무새 Learning Theme Enhancements */
+.danmoosae-accent {
+  border-left: 5px solid var(--color-primary);
+  background: linear-gradient(90deg, var(--color-primary-light) 0%, transparent 100%);
+  padding: 1rem 1rem 1rem 1.5rem;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  position: relative;
+}
+
+.danmoosae-accent::before {
+  content: '🦜';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.2rem;
+  background: var(--color-primary);
+  padding: 0.25rem;
+  border-radius: 50%;
+}
+
+/* Quiz Modal Background Control - 단무새 Theme */
 body.quiz-modal-open {
-  background-image: none;
-  background-color: var(--color-light-gray);
+  background: linear-gradient(135deg, var(--color-cream) 0%, var(--color-primary-light) 100%);
 }
 
-/* Additional English Learning Theme Elements */
+.modal-content {
+  border-radius: var(--border-radius-lg);
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-lg);
+  background: var(--color-light-cream);
+}
+
+.modal-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  border-bottom: none;
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  color: var(--color-charcoal);
+}
+
+.modal-footer {
+  background: var(--color-cream);
+  border-top: 1px solid var(--color-border);
+  border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+}
+
+/* Additional 단무새 Learning Theme Elements */
 .vocabulary-card {
-  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
-  border: 1px solid var(--color-border);
-  border-radius: var(--border-radius-md);
+  background: linear-gradient(145deg, var(--color-light-cream) 0%, var(--color-primary-light) 100%);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--border-radius-lg);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vocabulary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-primary) 0%, var(--color-secondary) 50%, var(--color-accent) 100%);
 }
 
 .vocabulary-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: var(--shadow-cute);
+  border-color: var(--color-secondary);
+}
+
+/* Additional Cute Elements */
+.btn-cute {
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  border: none;
+  color: var(--color-charcoal);
+  font-weight: 600;
+  border-radius: var(--border-radius-lg);
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease-in-out;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-cute:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-primary) 100%);
+}
+
+.alert-danmoosae {
+  background: linear-gradient(135deg, var(--color-secondary-light) 0%, var(--color-primary-light) 100%);
+  border: 2px solid var(--color-secondary);
+  border-radius: var(--border-radius-lg);
+  color: var(--color-charcoal);
+  box-shadow: var(--shadow-sm);
+}
+
+.badge-danmoosae {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  color: var(--color-charcoal);
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  padding: 0.5rem 1rem;
 }
