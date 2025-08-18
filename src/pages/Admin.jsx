@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function SectionHeader({ title, desc }) {
     return (
@@ -69,7 +71,16 @@ function Preview({ file }) {
 }
 
 export default function Admin() {
+    const { user } = useAuth();
     const [tab, setTab] = useState("upload"); // upload | validate | reports | logs
+    
+    // super@root.com 계정인지 확인
+    const isSuperAdmin = user?.email === 'super@root.com';
+    
+    // 디버깅용 로그
+    console.log('Admin page - Current user:', user);
+    console.log('Admin page - User email:', user?.email);
+    console.log('Admin page - Is super admin:', isSuperAdmin);
 
     // 업로드 탭 상태(껍데기: 실제 업로드 호출 없음)
     const [vocabFile, setVocabFile] = useState(null);     // CSV
@@ -78,6 +89,21 @@ export default function Admin() {
 
     return (
         <main className="container py-4">
+            {/* 운영자 전용 대시보드 링크 */}
+            {isSuperAdmin && (
+                <div className="alert alert-info mb-4">
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div>
+                            <strong>🛠️ 운영자 권한 활성화</strong>
+                            <p className="mb-0">시간 가속 컨트롤러와 고급 관리 기능에 접근할 수 있습니다.</p>
+                        </div>
+                        <Link to="/admin/dashboard" className="btn btn-primary">
+                            운영자 대시보드
+                        </Link>
+                    </div>
+                </div>
+            )}
+            
             <div className="d-flex align-items-center justify-content-between mb-3">
                 <h3 className="m-0">관리 콘솔</h3>
                 <div className="btn-group" role="tablist" aria-label="admin tabs">

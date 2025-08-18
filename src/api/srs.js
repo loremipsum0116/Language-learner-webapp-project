@@ -11,7 +11,7 @@ export const SrsApi = {
     // 폴더 CRUD(단일 계층)
     async picker() {
         try {
-            const r = await fetchJSON("/srs/folders", { credentials: "include" });
+            const r = await fetchJSON("/srs/folders/picker", { credentials: "include" });
             const list = r?.data ?? r;
             if (Array.isArray(list) && list.length) return list;
         } catch (_) { }

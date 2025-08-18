@@ -2046,6 +2046,32 @@ router.get('/streak', async (req, res, next) => {
     }
 });
 
+// POST /srs/streak/reset — 오늘의 학습 카운트 초기화 (개발/테스트 용도)
+router.post('/streak/reset', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        
+        // 사용자의 오늘 학습 카운트만 리셋 (streak은 유지)
+        await prisma.user.update({
+            where: { id: userId },
+            data: {
+                dailyQuizCount: 0,
+                lastQuizDate: null // 오늘 학습 기록 초기화
+            }
+        });
+        
+        console.log(`[SRS] Reset daily quiz count for user ${userId}`);
+        
+        return ok(res, { 
+            message: '오늘의 학습 카운트가 초기화되었습니다.',
+            dailyQuizCount: 0
+        });
+    } catch (e) {
+        console.error('POST /srs/streak/reset failed:', e);
+        return fail(res, 500, 'Failed to reset daily quiz count');
+    }
+});
+
 // ────────────────────────────────────────────────────────────
 // 오답노트 API
 // ────────────────────────────────────────────────────────────
@@ -2431,6 +2457,109 @@ router.post('/folders/:folderId/accelerate-cards', auth, async (req, res, next) 
     } catch (e) {
         console.error('POST /srs/folders/:folderId/accelerate-cards failed:', e);
         return fail(res, 500, 'Failed to accelerate cards');
+    }
+});
+
+// GET /srs/study-log?date=YYYY-MM-DD — 특정 날짜의 학습 기록 조회
+router.get('/study-log', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const dateParam = req.query.date;
+        
+        if (!dateParam) {
+            return fail(res, 400, 'date parameter is required (YYYY-MM-DD format)');
+        }
+        
+        // KST 기준으로 해당 날짜의 시작과 끝 계산
+        const targetDate = dayjs.tz(dateParam, KST);
+        const startOfDay = targetDate.startOf('day').toDate();
+        const endOfDay = targetDate.endOf('day').toDate();
+        
+        // SRS 카드에서 해당 날짜에 실제로 SRS 학습한 기록 조회
+        // lastReviewedAt이 오늘 날짜인 카드들만 포함 (실제 SRS 학습한 카드들)
+        const studiedCards = await prisma.srscard.findMany({
+            where: {
+                userId: userId,
+                itemType: 'vocab',
+                lastReviewedAt: { 
+                    gte: startOfDay, 
+                    lte: endOfDay 
+                }
+            },
+            orderBy: {
+                lastReviewedAt: 'desc'
+            }
+        });
+
+        // vocab 정보를 별도로 조회
+        const vocabIds = studiedCards.map(card => card.itemId);
+        const vocabs = vocabIds.length > 0 ? await prisma.vocab.findMany({
+            where: {
+                id: { in: vocabIds }
+            },
+            select: {
+                id: true,
+                lemma: true,
+                pos: true
+            }
+        }) : [];
+
+        // vocab 정보와 매핑
+        const vocabMap = new Map(vocabs.map(v => [v.id, v]));
+        const enrichedCards = studiedCards.map(card => ({
+            ...card,
+            vocab: vocabMap.get(card.itemId)
+        }));
+        
+        // 학습 통계 계산
+        const totalStudied = enrichedCards.length;
+        const uniqueWords = new Set(enrichedCards.map(card => card.vocab?.lemma || 'unknown')).size;
+        
+        // 성공률 계산 (정답 비율 기반)
+        const successfulReviews = enrichedCards.filter(card => 
+            card.correctTotal > 0 && (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7
+        ).length;
+        const errorRate = totalStudied > 0 ? Math.round(((totalStudied - successfulReviews) / totalStudied) * 100) : 0;
+        
+        return ok(res, {
+            date: dateParam,
+            studies: enrichedCards,
+            stats: {
+                totalStudied,
+                uniqueWords,
+                errorRate,
+                successRate: 100 - errorRate
+            }
+        });
+        
+    } catch (e) {
+        console.error('GET /srs/study-log failed:', e);
+        return fail(res, 500, 'Failed to fetch study log');
+    }
+});
+
+// GET /srs/study-log/today — 오늘의 학습 기록 (편의 엔드포인트)
+router.get('/study-log/today', async (req, res, next) => {
+    try {
+        const today = dayjs().tz(KST).format('YYYY-MM-DD');
+        
+        // 오늘 날짜로 리다이렉트
+        req.query = { ...req.query, date: today };
+        req.url = `/study-log?date=${today}`;
+        
+        // study-log 핸들러 직접 호출
+        const studyLogHandler = router.stack.find(layer => 
+            layer.route && layer.route.path === '/study-log' && layer.route.methods.get
+        );
+        
+        if (studyLogHandler && studyLogHandler.route.stack[0]) {
+            return studyLogHandler.route.stack[0].handle(req, res, next);
+        } else {
+            return fail(res, 500, 'Study log handler not found');
+        }
+    } catch (e) {
+        console.error('GET /srs/study-log/today failed:', e);
+        return fail(res, 500, 'Failed to fetch today study log');
     }
 });
 

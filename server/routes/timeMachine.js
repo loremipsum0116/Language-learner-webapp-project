@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { ok, fail } = require('../lib/resp');
 const auth = require('../middleware/auth');
+const adminOnly = require('../middleware/adminOnly');
 const { prisma } = require('../lib/prismaClient');
 
 // 전역 시간 오프셋 저장 (메모리에 저장, 서버 재시작시 리셋됨)
@@ -129,8 +130,8 @@ router.post('/direct-fix', async (req, res) => {
     }
 });
 
-// POST /time-machine/emergency-fix - 긴급 모든 overdue 카드 24시간 리셋 (인증 불필요)
-router.post('/emergency-fix', auth, async (req, res) => {
+// POST /time-machine/emergency-fix - 긴급 모든 overdue 카드 24시간 리셋 (운영자만)
+router.post('/emergency-fix', auth, adminOnly, async (req, res) => {
     try {
         const { prisma } = require('../lib/prismaClient');
         const now = getOffsetDate();
@@ -172,8 +173,8 @@ router.get('/status', (req, res) => {
     }
 });
 
-// POST /time-machine/set - 시간 오프셋 설정 (인증 필요)
-router.post('/set', auth, async (req, res) => {
+// POST /time-machine/set - 시간 오프셋 설정 (운영자만)
+router.post('/set', auth, adminOnly, async (req, res) => {
     try {
         const { dayOffset } = req.body;
         
@@ -230,8 +231,8 @@ router.post('/set', auth, async (req, res) => {
     }
 });
 
-// POST /time-machine/force-reset-all - 모든 overdue 카드 강제 24시간 리셋 (인증 필요)
-router.post('/force-reset-all', auth, async (req, res) => {
+// POST /time-machine/force-reset-all - 모든 overdue 카드 강제 24시간 리셋 (운영자만)
+router.post('/force-reset-all', auth, adminOnly, async (req, res) => {
     try {
         const { prisma } = require('../lib/prismaClient');
         const now = getOffsetDate();
@@ -267,8 +268,8 @@ router.post('/force-reset-all', auth, async (req, res) => {
     }
 });
 
-// POST /time-machine/fix-deadlines - overdue 카드의 데드라인 강제 수정 (인증 필요)
-router.post('/fix-deadlines', auth, async (req, res) => {
+// POST /time-machine/fix-deadlines - overdue 카드의 데드라인 강제 수정 (운영자만)
+router.post('/fix-deadlines', auth, adminOnly, async (req, res) => {
     try {
         const { prisma } = require('../lib/prismaClient');
         const now = getOffsetDate();
@@ -312,8 +313,8 @@ router.post('/fix-deadlines', auth, async (req, res) => {
     }
 });
 
-// POST /time-machine/reset - 시간 오프셋 리셋 (인증 필요)
-router.post('/reset', auth, async (req, res) => {
+// POST /time-machine/reset - 시간 오프셋 리셋 (운영자만)
+router.post('/reset', auth, adminOnly, async (req, res) => {
     try {
         globalTimeOffset = 0;
         

@@ -31,6 +31,8 @@ export default function SrsDashboard() {
     const [streakInfo, setStreakInfo] = useState(null);
     const [wrongAnswersCount, setWrongAnswersCount] = useState(0);
     const [srsStatus, setSrsStatus] = useState(null);
+    const [todayStudyLog, setTodayStudyLog] = useState(null);
+    const [showStudyDetails, setShowStudyDetails] = useState(false);
 
     const reload = async () => {
         setLoading(true);
@@ -48,13 +50,32 @@ export default function SrsDashboard() {
             const streakRes = await fetchJSON("/srs/streak", withCreds());
             setStreakInfo(streakRes.data);
             
-            // 오답노트 개수 로드
-            const wrongRes = await fetchJSON("/srs/wrong-answers/count", withCreds());
-            setWrongAnswersCount(wrongRes.data.count);
+            // 오답노트 개수 로드 (전체 미완료 오답노트)
+            const wrongRes = await fetchJSON("/srs/wrong-answers?includeCompleted=false", withCreds());
+            setWrongAnswersCount(wrongRes.data.length);
             
             // SRS 상태 정보 로드 (overdue 알림용)
             const statusRes = await fetchJSON("/srs/status", withCreds());
             setSrsStatus(statusRes.data);
+            
+            // 오늘 학습 로그 로드 - 새로 구현된 API 사용
+            const today = dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
+            try {
+                const studyLogRes = await fetchJSON(`/srs/study-log?date=${today}`, withCreds());
+                setTodayStudyLog(studyLogRes.data || studyLogRes);
+            } catch (err) {
+                console.warn('Study log API failed:', err);
+                // API 실패시 기본값으로 설정
+                setTodayStudyLog({
+                    studies: [],
+                    stats: {
+                        totalStudied: 0,
+                        uniqueWords: 0,
+                        errorRate: 0,
+                        successRate: 0
+                    }
+                });
+            }
             
         } finally {
             setLoading(false);
@@ -62,6 +83,68 @@ export default function SrsDashboard() {
     };
 
     useEffect(() => { reload(); }, []);
+
+    // 오늘 학습한 단어들을 그룹화하고 통계 계산
+    const processTodayStudyData = () => {
+        // streakInfo에서 실제 학습 횟수를 우선 사용
+        const actualStudyCount = streakInfo?.dailyQuizCount || 0;
+        
+        if (!todayStudyLog || !todayStudyLog.studies) {
+            // API 데이터가 없으면 streakInfo를 기반으로 추정
+            return { 
+                wordCounts: {}, 
+                totalAttempts: actualStudyCount, 
+                wrongAttempts: 0, 
+                errorRate: 0,
+                isEstimated: actualStudyCount > 0 // 추정 데이터임을 표시
+            };
+        }
+
+        const wordCounts = {};
+        let totalAttempts = 0;
+        let wrongAttempts = 0;
+
+        (todayStudyLog.studies || []).forEach(card => {
+            const word = card.vocab?.lemma || card.lemma || '미상';
+            
+            // 정답/오답 여부 판단 - SRS 학습 결과 기반
+            const isCorrect = card.correctTotal > 0 && 
+                             (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7;
+            
+            // 단어별 정답/오답 카운트 저장
+            if (!wordCounts[word]) {
+                wordCounts[word] = { correct: 0, wrong: 0, total: 0 };
+            }
+            
+            wordCounts[word].total++;
+            if (isCorrect) {
+                wordCounts[word].correct++;
+            } else {
+                wordCounts[word].wrong++;
+                wrongAttempts++;
+            }
+            
+            totalAttempts++;
+        });
+        
+        // API에서 제공하는 통계 사용 (더 정확함)
+        if (todayStudyLog.stats) {
+            totalAttempts = todayStudyLog.stats.totalStudied;
+            wrongAttempts = Math.round((totalAttempts * todayStudyLog.stats.errorRate) / 100);
+        }
+
+        const errorRate = totalAttempts > 0 ? Math.round((wrongAttempts / totalAttempts) * 100) : 0;
+
+        return { 
+            wordCounts, 
+            totalAttempts: Math.max(totalAttempts, actualStudyCount), // 더 큰 값 사용
+            wrongAttempts, 
+            errorRate,
+            isEstimated: false
+        };
+    };
+
+    const { wordCounts, totalAttempts, wrongAttempts, errorRate, isEstimated } = processTodayStudyData();
 
     async function deleteFolderSafely(e, id, reload) {
         e.preventDefault();
@@ -221,7 +304,7 @@ export default function SrsDashboard() {
                                 </div>
                                 
                                 {/* 상태 메시지 */}
-                                <div className="d-flex justify-content-between align-items-center">
+                                <div className="d-flex justify-content-between align-items-center mb-3">
                                     <small className="text-muted">
                                         {streakInfo.isCompletedToday ? 
                                             '오늘 목표 달성! 🎉' : 
@@ -232,6 +315,75 @@ export default function SrsDashboard() {
                                             다음: {streakInfo.bonus.next.emoji} {streakInfo.bonus.next.title} 
                                             ({streakInfo.bonus.next.days - streakInfo.streak}일 남음)
                                         </small>
+                                    )}
+                                </div>
+
+                                {/* 오늘 학습 상세 정보 - 항상 표시 */}
+                                <div className="border-top pt-3">
+                                    <div className="d-flex justify-content-between align-items-center mb-2">
+                                        <small className="text-muted">
+                                            {totalAttempts > 0 ? (
+                                                <>📊 오늘 학습: {totalAttempts}회 | 오답율: <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
+                                                {isEstimated && <span className="text-info"> (추정)</span>}</>
+                                            ) : (
+                                                <>📊 오늘 학습: 0회 | 오답율: 0%</>
+                                            )}
+                                        </small>
+                                        <button 
+                                            className="btn btn-sm btn-outline-secondary"
+                                            onClick={() => setShowStudyDetails(!showStudyDetails)}
+                                            style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                                        >
+                                            {showStudyDetails ? '숨기기' : '상세보기'} {showStudyDetails ? '▲' : '▼'}
+                                        </button>
+                                    </div>
+                                    
+                                    {/* 드롭다운 상세 정보 */}
+                                    {showStudyDetails && (
+                                        <div className="card card-body bg-light" style={{ fontSize: '0.85rem' }}>
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <strong className="text-primary">오늘 학습한 단어들:</strong>
+                                                    <div className="mt-2">
+                                                        {Object.entries(wordCounts).length > 0 ? (
+                                                            <div className="d-flex flex-wrap gap-2">
+                                                                {Object.entries(wordCounts)
+                                                                    .sort((a, b) => b[1].total - a[1].total) // 총 횟수 순으로 정렬
+                                                                    .map(([word, counts]) => {
+                                                                        // 정답/오답 비율에 따라 색상 결정
+                                                                        const isOverallCorrect = counts.correct > counts.wrong;
+                                                                        const badgeClass = isOverallCorrect ? 'bg-success' : 'bg-danger';
+                                                                        
+                                                                        return (
+                                                                            <span key={word} className={`badge ${badgeClass} d-flex align-items-center gap-1`}>
+                                                                                {isOverallCorrect ? '✅' : '❌'} {word}
+                                                                                {counts.total > 1 && (
+                                                                                    <small className="ms-1 opacity-75">
+                                                                                        {counts.correct}✓/{counts.wrong}✗
+                                                                                    </small>
+                                                                                )}
+                                                                            </span>
+                                                                        );
+                                                                    })
+                                                                }
+                                                            </div>
+                                                        ) : totalAttempts > 0 && isEstimated ? (
+                                                            <div className="text-center py-3">
+                                                                <span className="text-info">📚 {totalAttempts}회 학습 완료!</span>
+                                                                <br />
+                                                                <small className="text-muted">상세 학습 기록을 불러올 수 없습니다.</small>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="text-center py-3">
+                                                                <span className="text-muted">🦜 아직 학습한 단어가 없습니다.</span>
+                                                                <br />
+                                                                <small className="text-muted">SRS 학습을 시작해보세요!</small>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     )}
                                 </div>
                             </div>
@@ -245,11 +397,6 @@ export default function SrsDashboard() {
                                 <Link to="/srs/wrong-answers" className="btn btn-outline-warning btn-sm">
                                     오답노트 보기
                                 </Link>
-                                {wrongAnswersCount > 0 && (
-                                    <Link to="/srs/wrong-answers/quiz" className="btn btn-warning btn-sm ms-2">
-                                        복습하기
-                                    </Link>
-                                )}
                             </div>
                         </div>
                     </div>

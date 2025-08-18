@@ -179,7 +179,7 @@ function SrsWidget() {
           <>
             <p className="card-text">대기 카드: <strong>{count}</strong> 개</p>
             {lat !== null && <div className="form-text">API {lat}ms</div>}
-            <Link className="btn btn-primary" to="/learn/vocab">
+            <Link className="btn btn-primary" to="/srs">
               학습 시작
             </Link>
           </>
@@ -425,6 +425,9 @@ export default function Home() {
   const { user, updateProfile } = useAuth();
   const [authErr, setAuthErr] = useState(null);
   const [persona, setPersona] = useState({ level: "A2", tone: "formal", address: "formal" });
+  
+  // 운영자 체크
+  const isAdmin = user?.email === 'super@root.com';
   useEffect(() => {
     if (user?.profile) {
       setPersona((prev) => ({
@@ -485,7 +488,7 @@ export default function Home() {
             <strong>🤖 AI 영어 튜터</strong>와 <strong>🔊 음성 사전</strong>을 경험해보세요.
           </p>
           <div className="d-flex flex-wrap gap-2">
-            <Link className="btn btn-primary" to="/learn/vocab">
+            <Link className="btn btn-primary" to="/srs">
               🎆 오늘 학습 시작
             </Link>
             <Link className="btn btn-secondary" to="/tutor">
@@ -508,6 +511,28 @@ export default function Home() {
           세션이 만료되었습니다(401). 15분 유휴 정책에 따라 재로그인이 필요할 수 있습니다.{" "}
           <Link to="/login">로그인</Link>
         </div>
+      )}
+
+      {/* 운영자 전용 섹션 */}
+      {isAdmin && (
+        <section className="mb-4">
+          <div className="alert alert-warning">
+            <div className="d-flex align-items-center justify-content-between">
+              <div>
+                <h5 className="alert-heading mb-1">🛠️ 운영자 패널</h5>
+                <p className="mb-0">시간 가속 컨트롤러와 고급 관리 기능에 접근할 수 있습니다.</p>
+              </div>
+              <div className="d-flex gap-2">
+                <Link to="/admin" className="btn btn-outline-dark btn-sm">
+                  관리자 콘솔
+                </Link>
+                <Link to="/admin/dashboard" className="btn btn-dark btn-sm">
+                  운영자 대시보드
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
       )}
 
       <section className="row g-3">

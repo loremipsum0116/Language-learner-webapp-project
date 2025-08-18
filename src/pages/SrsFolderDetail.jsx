@@ -6,6 +6,7 @@ import "dayjs/locale/ko";
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import { SrsApi } from "../api/srs";
+import { useAuth } from "../context/AuthContext";
 import Pron from "../components/Pron";
 import ReviewTimer from "../components/ReviewTimer";
 import RainbowStar from "../components/RainbowStar";
@@ -49,20 +50,67 @@ const isCardFrozen = (item) => {
 };
 
 const getCardBackgroundColor = (item) => {
-    // 동결 상태 체크 (최우선)
+    // 동결 상태 체크 (최우선) - 연한 파란색
     if (isCardFrozen(item)) {
-        return 'bg-info-subtle'; // 동결 - 파란색 (최우선)
+        return { 
+            className: 'text-dark border-info', 
+            style: { backgroundColor: '#cff4fc', color: '#055160' } // 연한 파란색
+        };
     }
     
-    if (item.isOverdue) return 'bg-warning-subtle'; // overdue - 노란색
-    if (item.learned) return 'bg-success-subtle'; // 정답 - 초록색
-    if (item.wrongCount > 0) return 'bg-danger-subtle'; // 틀림 - 빨간색
-    return ''; // 미학습 - 기본색
+    if (item.isOverdue) return { 
+        className: 'text-dark border-warning', 
+        style: { backgroundColor: '#fff3cd', color: '#664d03' } // 연한 노란색
+    };
+    
+    if (item.learned) return { 
+        className: 'text-dark border-success', 
+        style: { backgroundColor: '#d1e7dd', color: '#0f5132' } // 연한 초록색
+    };
+    
+    if (item.wrongCount > 0) return { 
+        className: 'text-dark border-danger', 
+        style: { backgroundColor: '#f8d7da', color: '#721c24' } // 연한 빨간색
+    };
+    
+    // 대기 중인 카드 체크 (nextReviewAt이 미래인 경우)
+    if (item.nextReviewAt) {
+        const now = new Date();
+        const reviewTime = new Date(item.nextReviewAt);
+        if (reviewTime > now) {
+            return { 
+                className: 'text-dark border-secondary', 
+                style: { backgroundColor: '#e2e3e5', color: '#41464b' } // 연한 회색
+            };
+        }
+    }
+    
+    // Stage별 색상 구분 (대기 중이 아닌 경우)
+    if (item.stage >= 7) return { 
+        className: 'text-dark border-primary', 
+        style: { backgroundColor: '#cfe2ff', color: '#084298' } // 연한 파란색 (고단계)
+    };
+    
+    if (item.stage >= 4) return { 
+        className: 'text-dark border-primary', 
+        style: { backgroundColor: '#e7f3ff', color: '#0a58ca' } // 매우 연한 파란색 (중단계)
+    };
+    
+    if (item.stage >= 1) return { 
+        className: 'text-dark border-secondary', 
+        style: { backgroundColor: '#f8f9fa', color: '#495057' } // 연한 회색 (저단계)
+    };
+    
+    return { className: 'border-light', style: {} }; // Stage 0 (미학습) - 기본색
 };
 
 export default function SrsFolderDetail() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { user } = useAuth();
+    
+    // 운영자 체크
+    const isAdmin = user?.email === 'super@root.com';
 
     const [loading, setLoading] = useState(true);
     const [folder, setFolder] = useState(null);
@@ -423,8 +471,8 @@ export default function SrsFolderDetail() {
             </div>
 
 
-            {/* 시간 가속 컨트롤 - 자율학습모드에서는 숨김 */}
-            {folder.learningCurveType !== 'free' && (
+            {/* 시간 가속 컨트롤 - 운영자만 표시, 자율학습모드에서는 숨김 */}
+            {isAdmin && folder.learningCurveType !== 'free' && (
                 <div className="mb-4">
                     <TimeAcceleratorControl />
                 </div>
@@ -727,12 +775,24 @@ export default function SrsFolderDetail() {
                         
                         const uniquePosList = pos ? [...new Set(pos.split(',').map(p => p.trim()))].filter(Boolean) : [];
                         const isSelected = selectedIds.has(itemId);
-                        const cardBgClass = getCardBackgroundColor(item);
+                        const cardBgInfo = getCardBackgroundColor(item);
                         
                         return (
                             <div key={itemId || cardId} className="col-md-6 col-lg-4 mb-3">
-                                <div className={`card h-100 ${isSelected ? 'border-primary' : ''} ${cardBgClass} ${item.isMastered ? 'border-purple-300 bg-gradient-to-br from-white to-purple-50' : ''}`}>
-                                    <div className="card-header d-flex justify-content-between align-items-center p-2">
+                                <div 
+                                    className={`card h-100 ${isSelected ? 'border-primary' : ''} ${cardBgInfo.className} ${item.isMastered ? 'border-purple-300' : ''}`}
+                                    style={item.isMastered ? 
+                                        { background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%)', ...cardBgInfo.style } : 
+                                        cardBgInfo.style
+                                    }
+                                >
+                                    <div 
+                                        className="card-header d-flex justify-content-between align-items-center p-2"
+                                        style={item.isMastered ? 
+                                            { background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%)', color: '#000' } : 
+                                            cardBgInfo.style
+                                        }
+                                    >
                                         <input
                                             className="form-check-input"
                                             type="checkbox"
@@ -773,7 +833,13 @@ export default function SrsFolderDetail() {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="card-body pt-2">
+                                    <div 
+                                        className="card-body pt-2"
+                                        style={item.isMastered ? 
+                                            { background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%)', color: '#000' } : 
+                                            cardBgInfo.style
+                                        }
+                                    >
                                         <div className="d-flex align-items-center mb-2">
                                             <h5 className="card-title mb-0 me-2" lang="en">{lemma}</h5>
                                             {/* 마스터 별을 제목 옆에 인라인 배치 */}

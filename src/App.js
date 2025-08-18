@@ -12,6 +12,7 @@ import Dict from "./pages/Dict";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/Logout";
 import Admin from "./pages/Admin";
+import AdminDashboard from "./pages/AdminDashboard";
 import AdminRoute from "./components/AdminRoute";
 import VocabList from "./pages/VocabList";
 import MyWordbook from "./pages/MyWordbook";
@@ -67,6 +68,7 @@ export default function App() {
           {/* 관리자 전용 */}
           <Route element={<AdminRoute />}>
             <Route path="/admin" element={<Admin />} />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
         </Route>
 
