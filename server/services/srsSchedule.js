@@ -48,11 +48,11 @@ function delayDaysFor(stage, learningCurveType = "long") {
   
   if (learningCurveType === "short") {
     const index = Math.min(stage - 1, SHORT_CURVE_DELAYS.length - 1);
-    console.log(`[SRS SCHEDULE] delayDaysFor (SHORT) stage ${stage} -> index ${index} -> ${SHORT_CURVE_DELAYS[index]} days`);
+    // Short curve delay calculation
     return SHORT_CURVE_DELAYS[index];
   } else {
     const index = Math.min(stage - 1, STAGE_DELAYS.length - 1);
-    console.log(`[SRS SCHEDULE] delayDaysFor (LONG) stage ${stage} -> index ${index} -> ${STAGE_DELAYS[index]} days`);
+    // Long curve delay calculation
     return STAGE_DELAYS[index];
   }
 }
@@ -75,7 +75,7 @@ function addDaysUTC(date, days) {
  */
 function computeNextReviewDate(baseDate, stage, learningCurveType = "long") {
   const delay = delayDaysFor(stage, learningCurveType);
-  console.log(`[SRS SCHEDULE] computeNextReviewDate (${learningCurveType}): stage ${stage} -> +${delay} days from ${baseDate.toISOString().split('T')[0]}`);
+  // Next review date calculation
   return addDaysUTC(baseDate, delay);
 }
 
@@ -85,17 +85,17 @@ function computeNextReviewDate(baseDate, stage, learningCurveType = "long") {
  * Stage 1: 48시간, Stage 2: 144시간, Stage 3: 14일, Stage 4: 30일, Stage 5: 60일, Stage 6: 120일
  */
 function computeWaitingPeriod(stage, learningCurveType = "long") {
-  console.log(`[SRS SCHEDULE] computeWaitingPeriod: stage=${stage}, curve=${learningCurveType}`);
+  // Waiting period calculation
   
   // 자율 모드는 대기 시간 없음
   if (learningCurveType === "free") {
-    console.log(`[SRS SCHEDULE] FREE mode -> immediate review (0 hours)`);
+    // Free mode - no waiting
     return 0;
   }
   
   // Stage 0은 즉시 복습 가능 (대기 시간 없음)
   if (stage === 0) {
-    console.log(`[SRS SCHEDULE] Stage 0 -> immediate review (0 hours)`);
+    // Stage 0 - no waiting
     return 0;
   }
   
@@ -103,23 +103,23 @@ function computeWaitingPeriod(stage, learningCurveType = "long") {
     // 단기 스퍼트 곡선: 모든 단계에서 3일(72시간) 대기
     if (stage >= 1 && stage <= SHORT_CURVE_WAITING_HOURS.length) {
       const waitingHours = SHORT_CURVE_WAITING_HOURS[stage - 1];
-      console.log(`[SRS SCHEDULE] SHORT Stage ${stage} -> ${waitingHours} hours waiting`);
+      // Short curve stage waiting
       return waitingHours;
     }
     // 범위를 벗어나면 마지막 단계 적용
     const waitingHours = SHORT_CURVE_WAITING_HOURS[SHORT_CURVE_WAITING_HOURS.length - 1];
-    console.log(`[SRS SCHEDULE] SHORT Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
+    // Short curve out of range
     return waitingHours;
   } else {
     // 기존 장기 학습 곡선
     if (stage >= 1 && stage <= STAGE_WAITING_HOURS.length) {
       const waitingHours = STAGE_WAITING_HOURS[stage - 1]; // stage 1은 인덱스 0
-      console.log(`[SRS SCHEDULE] LONG Stage ${stage} -> ${waitingHours} hours waiting`);
+      // Long curve stage waiting
       return waitingHours;
     }
     // 범위를 벗어나면 마지막 단계 적용
     const waitingHours = STAGE_WAITING_HOURS[STAGE_WAITING_HOURS.length - 1];
-    console.log(`[SRS SCHEDULE] LONG Stage ${stage} (out of range) -> ${waitingHours} hours waiting`);
+    // Long curve out of range
     return waitingHours;
   }
 }
@@ -136,17 +136,14 @@ function computeWaitingUntil(baseDate, stage, learningCurveType = "long") {
     const originalHours = computeWaitingPeriod(stage, learningCurveType);
     const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
     
-    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (ACCELERATED): stage ${stage}, curve=${learningCurveType}`);
-    console.log(`  Original: +${originalHours} hours`);
-    console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
-    console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    // Correct answer (accelerated)
     
     return result;
   } catch (e) {
     // 가속 시스템 실패 시 원본 로직 사용
     const waitingHours = computeWaitingPeriod(stage, learningCurveType);
     const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
-    console.log(`[SRS SCHEDULE] ✅ CORRECT ANSWER (FALLBACK): stage ${stage}, curve=${learningCurveType} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    // Correct answer (fallback)
     return result;
   }
 }
@@ -167,16 +164,13 @@ function computeWrongAnswerWaitingUntil(baseDate, currentStage = 0) {
     const result = new Date(baseDate.getTime() + acceleratedMs);
     const acceleratedMinutes = Math.round(acceleratedMs / (60 * 1000));
     
-    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (ACCELERATED): stage=${currentStage}`);
-    console.log(`  Original: +${waitingHours} hours`);
-    console.log(`  Accelerated: +${acceleratedMinutes} minutes`);
-    console.log(`  ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    // Wrong answer (accelerated)
     
     return result;
   } catch (e) {
     // 가속 시스템 실패 시 원본 로직 사용
     const result = new Date(baseDate.getTime() + waitingHours * 60 * 60 * 1000);
-    console.log(`[SRS SCHEDULE] ❌ WRONG ANSWER (FALLBACK): stage=${currentStage} -> +${waitingHours} hours from ${baseDate.toISOString()} -> ${result.toISOString()}`);
+    // Wrong answer (fallback)
     return result;
   }
 }

@@ -35,6 +35,7 @@ export default function SrsDashboard() {
     const [showStudyDetails, setShowStudyDetails] = useState(false);
 
     const reload = async () => {
+        console.log('[SRS DASHBOARD] Reloading data...');
         setLoading(true);
         try {
             const { data } = await fetchJSON("/srs/dashboard", withCreds());
@@ -62,6 +63,11 @@ export default function SrsDashboard() {
             const today = dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
             try {
                 const studyLogRes = await fetchJSON(`/srs/study-log?date=${today}`, withCreds());
+                console.log('=== SRS DASHBOARD STUDY LOG DEBUG ===');
+                console.log('Raw response:', studyLogRes);
+                console.log('Response data:', studyLogRes.data);
+                console.log('JSON stringified:', JSON.stringify(studyLogRes.data || studyLogRes, null, 2));
+                console.log('===============================');
                 setTodayStudyLog(studyLogRes.data || studyLogRes);
             } catch (err) {
                 console.warn('Study log API failed:', err);
@@ -137,7 +143,7 @@ export default function SrsDashboard() {
 
         return { 
             wordCounts, 
-            totalAttempts: Math.max(totalAttempts, actualStudyCount), // 더 큰 값 사용
+            totalAttempts, // API 데이터가 있을 때는 API 데이터만 사용
             wrongAttempts, 
             errorRate,
             isEstimated: false

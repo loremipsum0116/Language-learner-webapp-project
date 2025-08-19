@@ -71,20 +71,27 @@ export default function SrsQuiz() {
 
         try {
             setSubmitting(true);
-            // 백엔드에 답안 제출과 연속학습일 정보를 병렬로 가져오기
-            const [answerResponse, streakResponse] = await Promise.all([
-                fetchJSON('/quiz/answer', withCreds({
-                    method: 'POST',
-                    body: JSON.stringify({ folderId, cardId: current.cardId, correct })
-                })),
-                fetchJSON('/srs/streak', withCreds()) // 연속학습일 정보 업데이트
-            ]);
+            // 백엔드에 답안 제출
+            const answerResponse = await fetchJSON('/quiz/answer', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ folderId, cardId: current.cardId, correct })
+            }));
             
             const response = answerResponse;
             
-            // 연속학습일 정보 업데이트
-            if (streakResponse?.data) {
-                setStreakInfo(streakResponse.data);
+            // canUpdateCardState가 true일 때만 연속학습일 정보 갱신
+            if (response?.data?.canUpdateCardState) {
+                try {
+                    const streakResponse = await fetchJSON('/srs/streak', withCreds());
+                    if (streakResponse?.data) {
+                        setStreakInfo(streakResponse.data);
+                        console.log('[SRS QUIZ] Updated streak info after valid SRS learning');
+                    }
+                } catch (err) {
+                    console.warn('[SRS QUIZ] Failed to update streak info:', err);
+                }
+            } else {
+                console.log('[SRS QUIZ] Skipping streak update - canUpdateCardState=false (자율학습 상태)');
             }
 
             // 서버 응답에서 카드 정보 가져오기

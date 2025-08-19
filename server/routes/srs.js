@@ -2046,25 +2046,121 @@ router.get('/streak', async (req, res, next) => {
     }
 });
 
+// POST /srs/clean-invalid-reviews — 잘못된 대기 중 학습 기록 정리 (개발/테스트 용도)
+router.post('/clean-invalid-reviews', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        
+        // 오늘 날짜 범위 계산
+        const today = dayjs().tz(KST).startOf('day');
+        const startOfDay = today.toDate();
+        const endOfDay = today.endOf('day').toDate();
+        
+        // 오늘 날짜에 lastReviewedAt이 있는데, 해당 카드가 대기 중 상태인 아이템들 찾기
+        const invalidItems = await prisma.srsfolderitem.findMany({
+            where: {
+                srscard: {
+                    userId: userId,
+                    itemType: 'vocab'
+                },
+                lastReviewedAt: {
+                    gte: startOfDay,
+                    lte: endOfDay
+                }
+            },
+            include: {
+                srscard: {
+                    select: {
+                        id: true,
+                        stage: true,
+                        waitingUntil: true,
+                        isOverdue: true
+                    }
+                }
+            }
+        });
+        
+        // 현재 시간 기준으로 대기 중인 카드들 필터링
+        const now = new Date();
+        const toClean = invalidItems.filter(item => {
+            const card = item.srscard;
+            // 대기 중인 카드 (waitingUntil이 미래이고 overdue가 아닌 카드)
+            return card.waitingUntil && 
+                   new Date(card.waitingUntil) > now && 
+                   !card.isOverdue;
+        });
+        
+        console.log(`[CLEAN INVALID] Found ${toClean.length} invalid review records to clean:`,
+            toClean.map(item => ({
+                cardId: item.srscard.id,
+                lastReviewedAt: item.lastReviewedAt,
+                waitingUntil: item.srscard.waitingUntil
+            }))
+        );
+        
+        if (toClean.length > 0) {
+            // lastReviewedAt을 null로 설정
+            const cardIds = toClean.map(item => item.cardId);
+            await prisma.srsfolderitem.updateMany({
+                where: {
+                    cardId: { in: cardIds }
+                },
+                data: {
+                    lastReviewedAt: null
+                }
+            });
+        }
+        
+        return ok(res, {
+            message: `${toClean.length}개의 잘못된 학습 기록을 정리했습니다.`,
+            cleanedItems: toClean.length
+        });
+        
+    } catch (e) {
+        console.error('POST /srs/clean-invalid-reviews failed:', e);
+        return fail(res, 500, 'Failed to clean invalid reviews');
+    }
+});
+
 // POST /srs/streak/reset — 오늘의 학습 카운트 초기화 (개발/테스트 용도)
 router.post('/streak/reset', async (req, res, next) => {
     try {
         const userId = req.user.id;
         
-        // 사용자의 오늘 학습 카운트만 리셋 (streak은 유지)
+        // 사용자의 오늘 학습 카운트 리셋
         await prisma.user.update({
             where: { id: userId },
             data: {
                 dailyQuizCount: 0,
-                lastQuizDate: null // 오늘 학습 기록 초기화
+                lastQuizDate: null
             }
         });
         
-        console.log(`[SRS] Reset daily quiz count for user ${userId}`);
+        // 오늘 날짜의 잘못된 lastReviewedAt 기록들을 정리
+        const today = dayjs().tz(KST).startOf('day');
+        const startOfDay = today.toDate();
+        const endOfDay = today.endOf('day').toDate();
+        
+        // 오늘 날짜에 lastReviewedAt이 있는데 대기 중 상태인 카드들 찾아서 정리
+        const result = await prisma.$executeRaw`
+            UPDATE srsfolderitem 
+            SET lastReviewedAt = NULL 
+            WHERE lastReviewedAt >= ${startOfDay} 
+            AND lastReviewedAt <= ${endOfDay}
+            AND cardId IN (
+                SELECT id FROM srscard 
+                WHERE userId = ${userId} 
+                AND waitingUntil > NOW() 
+                AND isOverdue = false
+            )
+        `;
+        
+        console.log(`[STREAK RESET] Reset daily quiz count and cleaned ${result} invalid lastReviewedAt records for user ${userId}`);
         
         return ok(res, { 
-            message: '오늘의 학습 카운트가 초기화되었습니다.',
-            dailyQuizCount: 0
+            message: `오늘의 학습 카운트가 초기화되고 ${result}개의 잘못된 학습 기록을 정리했습니다.`,
+            dailyQuizCount: 0,
+            cleanedRecords: Number(result)
         });
     } catch (e) {
         console.error('POST /srs/streak/reset failed:', e);
@@ -2526,6 +2622,9 @@ router.get('/study-log', async (req, res, next) => {
         
         // SRS 폴더 아이템에서 해당 날짜에 실제로 SRS 학습한 기록 조회
         // lastReviewedAt이 오늘 날짜인 아이템들만 포함 (실제 SRS 학습한 카드들)
+        console.log(`[STUDY LOG] Querying study log for user ${userId} on ${dateParam}`);
+        console.log(`[STUDY LOG] Date range: ${startOfDay.toISOString()} to ${endOfDay.toISOString()}`);
+        
         const studiedItems = await prisma.srsfolderitem.findMany({
             where: {
                 srscard: {
@@ -2581,6 +2680,11 @@ router.get('/study-log', async (req, res, next) => {
         // 학습 통계 계산
         const totalStudied = enrichedCards.length;
         const uniqueWords = new Set(enrichedCards.map(card => card.vocab?.lemma || 'unknown')).size;
+        
+        console.log(`[STUDY LOG] Found ${totalStudied} studied items for user ${userId}:`);
+        enrichedCards.forEach(item => {
+            console.log(`  - ${item.vocab?.lemma}: lastReviewedAt=${item.lastReviewedAt?.toISOString()}, correct=${item.correctTotal}, wrong=${item.wrongTotal}`);
+        });
         
         // 성공률 계산 (정답 비율 기반)
         const successfulReviews = enrichedCards.filter(card => 

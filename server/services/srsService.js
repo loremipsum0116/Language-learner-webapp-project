@@ -23,8 +23,7 @@ async function createManualFolder(userId, folderName, vocabIds = [], learningCur
     const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
     const todayUtcDate = new Date(todayKst + 'T00:00:00.000Z'); // UTC 기준 자정으로 저장
     
-    console.log('[CREATE FOLDER] KST date string:', todayKst);
-    console.log('[CREATE FOLDER] UTC Date for storage:', todayUtcDate);
+    // 폴더 생성 날짜 로그 제거
     
     const folder = await prisma.srsfolder.create({
         data: {
@@ -274,7 +273,7 @@ async function ensureCardsForVocabs(userId, vocabIds, folderId = null) {
         }));
     
     if (toCreate.length) {
-        console.log(`[SRS DEBUG] Creating ${toCreate.length} new cards for folder ${folderId} with initial state:`, toCreate[0]);
+        // 카드 생성 로그 제거
         await prisma.srscard.createMany({ data: toCreate });
     }
     const all = await prisma.srscard.findMany({
@@ -462,7 +461,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     if (learningCurveType === 'free') {
         canUpdateCardState = true;
         statusMessage = '';
-        console.log(`[SRS SERVICE] Free learning mode - card state update always allowed`);
+        // Free learning mode
     } else {
         // SRS 엄격한 스케줄링 규칙: 카드 상태 변경은 다음 경우에만 허용
         // 1) 처음 학습할 때 (stage 0이고 nextReviewAt이 null이거나 과거)
@@ -485,27 +484,27 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                                   new Date() < new Date(card.overdueDeadline);
         
         if (isFrozen) {
-            console.log(`[SRS SERVICE] Card ${cardId} is frozen - no study allowed until ${card.frozenUntil}`);
+            // Card is frozen
             canUpdateCardState = false;
             statusMessage = '카드가 동결 상태입니다. 복습 시기가 지나 24시간 페널티가 적용되었습니다.';
         } else if (isFirstLearning) {
-            console.log(`[SRS SERVICE] Card ${cardId} - First learning allowed (stage 0, never studied before)`);
+            // First learning allowed
             canUpdateCardState = true;
             statusMessage = '';
         } else if (isInOverdueWindow) {
-            console.log(`[SRS SERVICE] Card ${cardId} - Overdue review allowed (within 24h window)`);
+            // Overdue review allowed
             canUpdateCardState = true;
             statusMessage = '';
         } else if (isWrongAnswerReady) {
-            console.log(`[SRS SERVICE] Card ${cardId} - Wrong answer card ready for review (waiting period ended)`);
+            // Wrong answer card ready
             canUpdateCardState = true;
             statusMessage = '';
         } else if (isCardInWaitingPeriod(card)) {
-            console.log(`[SRS SERVICE] Card ${cardId} is in waiting period - no card state change`);
+            // Card in waiting period
             canUpdateCardState = false;
             statusMessage = '아직 대기 시간입니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
         } else {
-            console.log(`[SRS SERVICE] Card ${cardId} is not in review window - no card state change`);
+            // Card not in review window
             canUpdateCardState = false;
             statusMessage = '복습 시기가 아닙니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
         }
@@ -518,7 +517,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     let calculatedStage = newStage;
     let calculatedWaitingUntil, calculatedNextReviewAt;
     
-    console.log(`[SRS SERVICE] Calculating next state: current stage=${card.stage}, correct=${correct}`);
+    // 다음 상태 계산
     
     if (correct) {
         // 정답 시 다음 상태 계산 (학습 곡선 타입에 따라 최대 스테이지가 다름)
@@ -527,7 +526,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             calculatedStage = Math.min(card.stage + 1, 999); // 자율모드는 제한 없음
             calculatedWaitingUntil = null;
             calculatedNextReviewAt = null;
-            console.log(`[SRS SERVICE] Free mode correct answer - stage ${card.stage} → ${calculatedStage}, no timers`);
+            // Free mode correct answer
         } else {
             const maxStage = learningCurveType === "short" ? 10 : 6;
             calculatedStage = Math.min(card.stage + 1, maxStage);
@@ -540,24 +539,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 calculatedStage = 0;
                 calculatedWaitingUntil = null;
                 calculatedNextReviewAt = null;
-                console.log(`[SRS SERVICE] Mastery achieved (${learningCurveType} curve) - resetting to stage 0`);
+                // Mastery achieved
             } else {
                 // Stage별 차별화된 대기 시간 적용
                 const waitingPeriod = require('./srsSchedule').computeWaitingPeriod(calculatedStage, learningCurveType);
-                console.log(`[SRS SERVICE] Correct answer waiting period calculation: stage ${card.stage} → ${calculatedStage}, waitingPeriod: ${waitingPeriod} hours (${learningCurveType} curve)`);
+                // Correct answer waiting period calculation
                 
                 if (waitingPeriod === 0) {
                     // Stage 0: 즉시 복습 가능
                     calculatedWaitingUntil = null;
                     calculatedNextReviewAt = null;
-                    console.log(`[SRS SERVICE] Stage 0 → immediate review available`);
+                    // Stage 0 immediate review
                 } else {
                     // Stage 1 이상: 망각곡선에 따른 대기 시간
                     calculatedWaitingUntil = computeWaitingUntil(now, calculatedStage, learningCurveType);
                     calculatedNextReviewAt = calculatedWaitingUntil; // 대기 완료 후 복습 가능
-                    console.log(`[SRS SERVICE] Stage ${calculatedStage} → waiting until: ${calculatedWaitingUntil?.toISOString()}`);
+                    // Stage waiting period
                 }
-                console.log(`[SRS SERVICE] Correct answer - stage ${card.stage} → ${calculatedStage}, waitingUntil: ${calculatedWaitingUntil}`);
+                // Correct answer stage transition
             }
         }
     } else {
@@ -571,7 +570,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             }
             calculatedWaitingUntil = null;
             calculatedNextReviewAt = null;
-            console.log(`[SRS SERVICE] Free mode wrong answer - stage ${card.stage} → ${calculatedStage}, no timers`);
+            // Free mode wrong answer
         } else {
             if (card.stage === 0) {
                 // stage 0에서 오답: 자동으로 stage 1로 올라가기
@@ -585,14 +584,14 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     calculatedWaitingUntil = computeWaitingUntil(new Date(), 1, learningCurveType);
                     calculatedNextReviewAt = calculatedWaitingUntil;
                 }
-                console.log(`[SRS SERVICE] Stage 0 wrong answer - auto upgrade to stage 1, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+                // Stage 0 wrong answer auto upgrade
             } else {
                 // stage 1 이상에서 오답: 기존 로직 (stage 0으로 리셋)
                 calculatedStage = 0;
                 // 실제 현재 시간 기준으로 오답 대기 시간 계산 (stage에 따라 1시간 또는 24시간)
                 calculatedWaitingUntil = computeWrongAnswerWaitingUntil(new Date(), card.stage);
                 calculatedNextReviewAt = calculatedWaitingUntil; // 오답 단어는 대기 시간 후 복습 가능
-                console.log(`[SRS SERVICE] Stage ${card.stage} wrong answer - reset to stage 0, waitingUntil: ${calculatedWaitingUntil?.toISOString()}`);
+                // Wrong answer stage reset
             }
         }
     }
@@ -908,24 +907,40 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             newLearnedState = currentItem?.learned ?? false;
         }
         
+        // SRS 학습 기록 업데이트를 위한 데이터 준비
+        const updateData = {
+            learned: newLearnedState,
+            // wrongCount는 SRS 상태 변경이 가능할 때만 증가 (자율 학습에서는 증가하지 않음)
+            wrongCount: { increment: (correct || !canUpdateCardState) ? 0 : 1 },
+        };
+        
+        // lastReviewedAt은 SRS 상태 변경이 가능할 때만 업데이트 (overdue 또는 미학습 상태에서만)
+        if (canUpdateCardState) {
+            updateData.lastReviewedAt = now;
+            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=true`);
+        } else {
+            console.log(`[SRS SERVICE] SKIPPING lastReviewedAt update for card ${cardId} - canUpdateCardState=false`);
+        }
+        
         await prisma.srsfolderitem.updateMany({
             where: { folderId: folderId, cardId: cardId },
-            data: {
-                lastReviewedAt: now,
-                learned: newLearnedState,
-                // wrongCount는 SRS 상태 변경이 가능할 때만 증가 (자율 학습에서는 증가하지 않음)
-                wrongCount: { increment: (correct || !canUpdateCardState) ? 0 : 1 },
-            }
+            data: updateData
         });
     }
 
-    // --- 연속 학습 일수 업데이트 ---
-    const { updateUserStreak } = require('./streakService');
-    const streakInfo = await updateUserStreak(userId);
+    // --- 연속 학습 일수 업데이트 (SRS 상태 변경이 가능할 때만) ---
+    let streakInfo = null;
+    if (canUpdateCardState) {
+        const { updateUserStreak } = require('./streakService');
+        streakInfo = await updateUserStreak(userId);
+        console.log(`[SRS SERVICE] Updated user streak: ${JSON.stringify(streakInfo)}`);
+    } else {
+        console.log(`[SRS SERVICE] Skipping streak update - canUpdateCardState=false (자율학습 상태)`);
+    }
 
     // --- 오답노트 처리 (실제 오답일 때만 추가) ---
-    // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있는 경우 (wrongTotal과 동기화)
-    const isActualWrongAnswer = correct === false && vocabId;
+    // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있고, SRS 상태 변경이 가능한 경우에만
+    const isActualWrongAnswer = correct === false && vocabId && canUpdateCardState;
     
     if (isActualWrongAnswer) {
         console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}, correct=${correct}, canUpdateCardState=${canUpdateCardState}`);
@@ -933,17 +948,33 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             const { addWrongAnswer } = require('./wrongAnswerService');
             await addWrongAnswer(userId, vocabId, folderId);
             console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
+            
+            // lastWrongAt 업데이트 (SRS 폴더에서만, 자율학습모드에는 해당 없음)
+            if (folderId) {
+                await prisma.srsfolderitem.updateMany({
+                    where: { folderId: folderId, cardId: cardId },
+                    data: { lastWrongAt: now }
+                });
+                console.log(`[SRS SERVICE] Updated lastWrongAt for SRS folder item`);
+            }
         } catch (error) {
             console.error(`[SRS SERVICE] Failed to add wrong answer note:`, error);
         }
     } else if (correct === false && !vocabId) {
         console.log(`[SRS SERVICE] Wrong answer but no vocabId - skipping wrong answer note`);
+    } else if (correct === false && !canUpdateCardState) {
+        console.log(`[SRS SERVICE] Wrong answer but canUpdateCardState=false (자율학습 상태) - skipping wrong answer note and lastWrongAt update`);
     } else {
-        console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}`);
+        console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}, canUpdateCardState=${canUpdateCardState}`);
     }
 
-    // --- 일일 학습 통계 업데이트 ---
-    await bumpDailyStat(userId, { srsSolvedInc: 1 });
+    // --- 일일 학습 통계 업데이트 (SRS 상태 변경이 가능할 때만) ---
+    if (canUpdateCardState) {
+        await bumpDailyStat(userId, { srsSolvedInc: 1 });
+        console.log(`[SRS SERVICE] Updated daily stat for user ${userId}`);
+    } else {
+        console.log(`[SRS SERVICE] Skipping daily stat update - canUpdateCardState=false (자율학습 상태)`);
+    }
     
     // --- 사용자 overdue 상태 업데이트 ---
     try {

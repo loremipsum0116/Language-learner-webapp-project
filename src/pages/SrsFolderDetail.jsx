@@ -118,11 +118,24 @@ export default function SrsFolderDetail() {
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [deleting, setDeleting] = useState(false);
     const [filterMode, setFilterMode] = useState('all'); // 'all', 'review', 'learning', 'frozen', 'stage', 'wrong'
+    const [flippedCards, setFlippedCards] = useState(new Set()); // 뒤집힌 카드들의 ID 저장
     
     // 필터 변경 시 선택 상태 초기화
     const handleFilterChange = (newFilter) => {
         setFilterMode(newFilter);
         setSelectedIds(new Set()); // 기존 선택 상태 모두 초기화
+    };
+
+    const handleCardFlip = (itemId) => {
+        setFlippedCards(prev => {
+            const newSet = new Set(prev);
+            if (newSet.has(itemId)) {
+                newSet.delete(itemId);
+            } else {
+                newSet.add(itemId);
+            }
+            return newSet;
+        });
     };
 
     const reload = async () => {
@@ -781,10 +794,14 @@ export default function SrsFolderDetail() {
                             <div key={itemId || cardId} className="col-md-6 col-lg-4 mb-3">
                                 <div 
                                     className={`card h-100 ${isSelected ? 'border-primary' : ''} ${cardBgInfo.className} ${item.isMastered ? 'border-purple-300' : ''}`}
-                                    style={item.isMastered ? 
-                                        { background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%)', ...cardBgInfo.style } : 
-                                        cardBgInfo.style
-                                    }
+                                    style={{
+                                        ...item.isMastered ? 
+                                            { background: 'linear-gradient(135deg, #ffffff 0%, #f3e8ff 100%)', ...cardBgInfo.style } : 
+                                            cardBgInfo.style,
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease'
+                                    }}
+                                    onClick={() => handleCardFlip(itemId)}
                                 >
                                     <div 
                                         className="card-header d-flex justify-content-between align-items-center p-2"
@@ -840,33 +857,117 @@ export default function SrsFolderDetail() {
                                             cardBgInfo.style
                                         }
                                     >
-                                        <div className="d-flex align-items-center mb-2">
-                                            <h5 className="card-title mb-0 me-2" lang="en">{lemma}</h5>
-                                            {/* 마스터 별을 제목 옆에 인라인 배치 */}
-                                            {item.isMastered && (
-                                                <RainbowStar 
-                                                    size="small" 
-                                                    cycles={item.masterCycles || 1} 
-                                                    animated={true}
-                                                    className="me-2"
-                                                />
-                                            )}
-                                            <div className="d-flex gap-1 flex-wrap">
-                                                {level && <span className={`badge ${getCefrBadgeColor(level)}`}>{level}</span>}
-                                                {uniquePosList.map(p => (
-                                                    p && p.toLowerCase() !== 'unk' && (
-                                                        <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
-                                                            {p}
-                                                        </span>
-                                                    )
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <Pron ipa={ipa} ipaKo={ipaKo} />
-                                        <div className="card-subtitle text-muted mt-2">{koGloss}</div>
+                                        {!flippedCards.has(itemId) ? (
+                                            // 앞면
+                                            <>
+                                                <div className="d-flex align-items-center mb-2">
+                                                    <h5 className="card-title mb-0 me-2" lang="en">{lemma}</h5>
+                                                    {/* 마스터 별을 제목 옆에 인라인 배치 */}
+                                                    {item.isMastered && (
+                                                        <RainbowStar 
+                                                            size="small" 
+                                                            cycles={item.masterCycles || 1} 
+                                                            animated={true}
+                                                            className="me-2"
+                                                        />
+                                                    )}
+                                                    <div className="d-flex gap-1 flex-wrap">
+                                                        {level && <span className={`badge ${getCefrBadgeColor(level)}`}>{level}</span>}
+                                                        {uniquePosList.map(p => (
+                                                            p && p.toLowerCase() !== 'unk' && (
+                                                                <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                                                    {p}
+                                                                </span>
+                                                            )
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                                <Pron ipa={ipa} ipaKo={ipaKo} />
+                                                <div className="card-subtitle text-muted mt-2">{koGloss}</div>
+                                            </>
+                                        ) : (
+                                            // 뒷면 - 예문과 마지막 학습일
+                                            <>
+                                                <div className="text-center mb-3">
+                                                    <h5 className="card-title mb-2" lang="en">{lemma}</h5>
+                                                </div>
+                                                
+                                                {/* 예문 표시 */}
+                                                <div className="mb-3">
+                                                    {(() => {
+                                                        try {
+                                                            // VocabDetailModal과 동일한 로직 사용
+                                                            const dictentry = v?.dictentry || {};
+                                                            const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                                            
+                                                            if (rawMeanings.length === 0) {
+                                                                return <div className="text-muted small">예문이 없습니다.</div>;
+                                                            }
+                                                            
+                                                            const examples = [];
+                                                            
+                                                            // VocabDetailModal처럼 meanings를 처리
+                                                            for (const meaning of rawMeanings) {
+                                                                if (meaning.definitions && Array.isArray(meaning.definitions)) {
+                                                                    for (const defItem of meaning.definitions) {
+                                                                        if (defItem.examples && Array.isArray(defItem.examples)) {
+                                                                            for (const ex of defItem.examples) {
+                                                                                if (ex.de && ex.ko) {
+                                                                                    examples.push({
+                                                                                        german: ex.de,
+                                                                                        korean: ex.ko
+                                                                                    });
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                            
+                                                            if (examples.length > 0) {
+                                                                return (
+                                                                    <div>
+                                                                        {examples.slice(0, 2).map((ex, idx) => (
+                                                                            <div key={idx} className="mb-2 p-2 bg-light rounded">
+                                                                                <div className="fw-bold text-dark" lang="de">{ex.german}</div>
+                                                                                <div className="text-muted small">— {ex.korean}</div>
+                                                                            </div>
+                                                                        ))}
+                                                                    </div>
+                                                                );
+                                                            } else {
+                                                                return <div className="text-muted small">예문이 없습니다.</div>;
+                                                            }
+                                                        } catch (e) {
+                                                            console.warn('Failed to parse examples for card flip:', e);
+                                                            return <div className="text-muted small">예문을 불러올 수 없습니다.</div>;
+                                                        }
+                                                    })()}
+                                                </div>
+                                                
+                                                {/* 마지막 학습일 표시 */}
+                                                <div>
+                                                    {item.lastReviewedAt ? (
+                                                        <div className="text-success small mb-1">
+                                                            ✅ 마지막 학습: {fmt(item.lastReviewedAt)}
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-muted small mb-1">
+                                                            아직 학습하지 않았습니다.
+                                                        </div>
+                                                    )}
+                                                    {item.lastWrongAt && (
+                                                        <div className="text-danger small mb-1">
+                                                            ❌ 마지막 오답: {fmt(item.lastWrongAt)}
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </>
+                                        )}
                                         
-                                        {/* SRS 정보 표시 */}
-                                        <div className="mt-3 pt-2 border-top">
+                                        {/* SRS 정보 표시 - 뒷면에서는 숨김 */}
+                                        {!flippedCards.has(itemId) && (
+                                            <div className="mt-3 pt-2 border-top">
                                             <div className="d-flex justify-content-between align-items-center small">
                                                 <div>
                                                     {item.isMastered ? (
@@ -953,6 +1054,7 @@ export default function SrsFolderDetail() {
                                                 </div>
                                             </div>
                                         </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
