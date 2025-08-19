@@ -29,7 +29,7 @@ Built on modern web technologies, Danmusae implements scientifically-proven spac
 - **AI-Powered Tutoring**: Integration with OpenAI GPT models for personalized learning experiences  
 - **CEFR Framework Alignment**: Structured content delivery from A1 (Beginner) to C1 (Advanced) proficiency levels
 - **Audio Integration**: Google Cloud Text-to-Speech API for pronunciation accuracy
-- **Enterprise Scalability**: Microservices architecture supporting 10,000+ concurrent users
+- **Scalable Architecture**: Designed for horizontal scaling to support growing user base
 - **Learning Analytics**: Comprehensive progress tracking and performance optimization
 
 ---
@@ -348,7 +348,7 @@ jobs:
 - **Database Query Performance**: Average query time < 50ms
 - **Memory Usage**: < 512MB per instance under normal load
 - **CPU Utilization**: < 70% under peak load conditions
-- **Concurrent User Support**: 10,000+ simultaneous connections
+- **Concurrent User Support**: 100-500 users (current), designed for horizontal scaling
 
 ### Learning Effectiveness Metrics
 - **Vocabulary Retention Rate**: 85% after 30-day interval
@@ -396,11 +396,11 @@ jobs:
 ## Deployment & Operations
 
 ### Production Environment
-- **Container Orchestration**: Docker with Kubernetes support
-- **Load Balancing**: NGINX reverse proxy with health checks
-- **Database Scaling**: MySQL read replicas and connection pooling
-- **CDN Integration**: Static asset delivery optimization
-- **Backup Strategy**: Automated daily backups with point-in-time recovery
+- **Containerization**: Docker support for consistent deployment
+- **Load Balancing**: Ready for NGINX reverse proxy implementation
+- **Database Optimization**: Connection pooling with potential for read replicas
+- **Static Asset Serving**: File system based with CDN integration capability
+- **Backup Strategy**: Database backup procedures with point-in-time recovery
 
 ### Monitoring & Alerting
 - **Uptime Monitoring**: 99.9% availability target
