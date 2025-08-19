@@ -40,7 +40,12 @@
       "Bash(find:*)",
       "Bash(net start:*)",
       "Bash(del check_vocab_counts.js)",
-      "Bash(del test_quiz_generation.js)"
+      "Bash(del test_quiz_generation.js)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\seed_all_ielts.js\")",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\test_connection.js\")",
+      "Bash(grep:*)",
+      "Bash(python:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

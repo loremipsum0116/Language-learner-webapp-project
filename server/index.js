@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
 
 // --- 라우터 임포트 ---
@@ -35,18 +36,50 @@ const authMiddleware = require('./middleware/auth');
 
 const app = express();
 
-// --- 글로벌 미들웨어 (순서 중요) ---
+// === 정적 파일 서빙 (최우선) ===
+console.log('Setting up A1 audio:', path.join(__dirname, 'A1', 'audio'));
+console.log('Setting up A2 audio:', path.join(__dirname, 'A2', 'audio'));
+app.use('/A1/audio', (req, res, next) => {
+  console.log('[STATIC] A1 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'A1', 'audio')));
+
+app.use('/A2/audio', (req, res, next) => {
+  console.log('[STATIC] A2 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'A2', 'audio')));
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000', credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
-
-app.use('/A1/audio', express.static(path.join(__dirname, 'A1', 'audio')));
-app.use('/public', express.static(path.join(__dirname, 'public')));  // 정적 파일 서빙
 
 // --- 인증 불필요 라우트 ---
 app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
+
+// 오디오 파일 목록 API (인증 불필요)
+app.get('/audio-files/:level', (req, res) => {
+  try {
+    const level = req.params.level; // A1, A2 등
+    const audioDir = path.join(__dirname, level, 'audio');
+    
+    if (!fs.existsSync(audioDir)) {
+      return res.status(404).json({ error: `Audio directory for ${level} not found` });
+    }
+    
+    const files = fs.readdirSync(audioDir)
+      .filter(file => file.endsWith('.mp3'))
+      .sort();
+    
+    res.json({ files });
+  } catch (error) {
+    console.error('Error reading audio files:', error);
+    res.status(500).json({ error: 'Failed to read audio files' });
+  }
+});
 
 // --- 이 지점부터 인증 필요 ---
 app.use(authMiddleware);

@@ -237,17 +237,19 @@ model uservocab {
 
 model vocab {
   id            Int             @id @default(autoincrement())
-  lemma         String          @unique(map: "Vocab_lemma_key")
+  lemma         String
   pos           String
   plural        String?
   levelCEFR     String
   freq          Int?
   source        String?
-  dictentry     dictentry?
-  srsfolderitem srsfolderitem[]
-  uservocab     uservocab[]
-  wronganswer   wronganswer[]
+  dictentry         dictentry?
+  srsfolderitem     srsfolderitem[]
+  uservocab         uservocab[]
+  wronganswer       wronganswer[]
+  vocabexamcategory vocabexamcategory[]
 
+  @@unique([lemma, pos], map: "Vocab_lemma_pos_key")
   @@index([lemma], map: "Vocab_lemma_idx")
   @@index([source], map: "Vocab_source_idx")
 }
@@ -272,4 +274,31 @@ model wronganswer {
   @@index([userId, isCompleted], map: "WrongAnswer_userId_isCompleted_idx")
   @@index([vocabId], map: "WrongAnswer_vocabId_fkey")
   @@index([folderId], map: "WrongAnswer_folderId_fkey")
+}
+
+model examcategory {
+  id          Int      @id @default(autoincrement()) @map("id")
+  name        String   @unique
+  description String?
+  totalWords  Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  vocabexamcategory vocabexamcategory[]
+
+  @@map("exam_categories")
+}
+
+model vocabexamcategory {
+  id             Int          @id @default(autoincrement())
+  vocabId        Int
+  examCategoryId Int
+  priority       Int          @default(0)
+  addedAt        DateTime     @default(now())
+  vocab          vocab        @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+  examCategory   examcategory @relation(fields: [examCategoryId], references: [id], onDelete: Cascade)
+
+  @@unique([vocabId, examCategoryId])
+  @@index([examCategoryId])
+  @@index([vocabId])
+  @@map("vocab_exam_categories")
 }

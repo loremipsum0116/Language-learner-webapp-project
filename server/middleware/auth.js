@@ -5,6 +5,12 @@ const jwt = require('jsonwebtoken');
 module.exports = function auth(req, res, next) {
   try {
     console.log('[AUTH] Checking request to:', req.path);
+    
+    // 오디오 파일 요청은 인증 제외
+    if (req.path.includes('/audio/') || req.path.includes('/audio-files/')) {
+      console.log('[AUTH] Skipping auth for audio file:', req.path);
+      return next();
+    }
     const bearer = req.headers.authorization;
     const token =
       (req.cookies && req.cookies.token) ||

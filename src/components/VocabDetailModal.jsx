@@ -1,13 +1,239 @@
 // src/components/VocabDetailModal.jsx
 import React, { useState } from 'react';
 import Pron from './Pron';
-// import { API_BASE } from '../api/client'; // not used here
+import { API_BASE } from '../api/client';
 // ❌ Do not import SrsFolderPickerModal / SrsApi here. The parent (VocabList) handles SRS.
 import { toast } from 'react-toastify';
 
 function safeFileName(str) {
   if (!str) return '';
   return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
+}
+
+function getAudioFileName(lemma, pos) {
+  if (!lemma) return '';
+  
+  // Handle special cases with parentheses
+  if (lemma.includes('(')) {
+    // Method 1: Try direct file name pattern: "lemma(pos).mp3"
+    const posAbbrev = {
+      'noun': 'n',
+      'verb': 'v', 
+      'adjective': 'adj',
+      'adverb': 'adv',
+      'preposition': 'prep'
+    };
+    
+    const cleanLemma = lemma.toLowerCase();
+    const shortPos = posAbbrev[pos?.toLowerCase()] || pos?.toLowerCase() || 'unknown';
+    return `${cleanLemma}(${shortPos})`;
+  }
+  
+  // Regular case - use existing safeFileName
+  return safeFileName(lemma);
+}
+
+// String similarity function (Levenshtein distance-based)
+function stringSimilarity(str1, str2) {
+  if (!str1 || !str2) return 0;
+  
+  const s1 = str1.toLowerCase();
+  const s2 = str2.toLowerCase();
+  
+  if (s1 === s2) return 1;
+  
+  const len1 = s1.length;
+  const len2 = s2.length;
+  
+  if (len1 === 0) return len2 === 0 ? 1 : 0;
+  if (len2 === 0) return 0;
+  
+  const matrix = Array(len2 + 1).fill(null).map(() => Array(len1 + 1).fill(null));
+  
+  for (let i = 0; i <= len1; i++) matrix[0][i] = i;
+  for (let j = 0; j <= len2; j++) matrix[j][0] = j;
+  
+  for (let j = 1; j <= len2; j++) {
+    for (let i = 1; i <= len1; i++) {
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+      matrix[j][i] = Math.min(
+        matrix[j - 1][i] + 1,
+        matrix[j][i - 1] + 1,
+        matrix[j - 1][i - 1] + cost
+      );
+    }
+  }
+  
+  const maxLen = Math.max(len1, len2);
+  return (maxLen - matrix[len2][len1]) / maxLen;
+}
+
+// Get best matching audio file name using similarity
+function getBestMatchingFileName(lemma, pos, availableFiles) {
+  if (!lemma) return '';
+  
+  const lemmaLower = lemma.toLowerCase();
+  
+  // For words without parentheses, use simple encoding
+  if (!lemma.includes('(')) {
+    return safeFileName(lemma);
+  }
+  
+  // Known mappings for parentheses words based on actual files
+  const knownMappings = {
+    'rock (music)': 'rock (music)',
+    'rock (stone)': 'rock (stone)(n)',
+    'light (not heavy)': 'light (not heavy)(adj)',
+    'light (from the sun/a lamp)': 'light (from the suna lamp)(v)',
+    'last (taking time)': 'last (taking time)(v)',
+    'last (final)': 'last (final)(unknown)',
+    'mine (belongs to me)': 'mine (belongs to me)(pron)',
+    'bank (money)': 'bank (money)',
+    'bear (animal)': 'bear (animal)',
+    'race (competition)': 'race (competition)(unknown)',
+    'rest (remaining part)': 'rest (remaining part)(n)',
+    'rest (sleep/relax)': 'rest (sleeprelax)(unknown)'
+  };
+  
+  // Check known mappings first
+  if (knownMappings[lemmaLower]) {
+    return knownMappings[lemmaLower];
+  }
+  
+  // If we have available files, find the best match
+  if (availableFiles && availableFiles.length > 0) {
+    let bestMatch = '';
+    let bestScore = 0;
+    
+    // Extract base names from files (remove .mp3 extension)
+    const fileNames = availableFiles.map(file => 
+      file.replace('.mp3', '').toLowerCase()
+    );
+    
+    // Try to find the best matching file
+    for (const fileName of fileNames) {
+      // Direct match
+      if (fileName === lemmaLower) {
+        return fileName;
+      }
+      
+      // Check if filename starts with the lemma base word
+      const baseWord = lemmaLower.split(' ')[0];
+      if (fileName.startsWith(baseWord)) {
+        const score = stringSimilarity(lemmaLower, fileName);
+        if (score > bestScore) {
+          bestScore = score;
+          bestMatch = fileName;
+        }
+      }
+    }
+    
+    // If we found a good match (>0.6 similarity), use it
+    if (bestMatch && bestScore > 0.6) {
+      return bestMatch;
+    }
+  }
+  
+  // Fallback: try with abbreviated pos
+  const posAbbrev = {
+    'noun': 'n',
+    'verb': 'v', 
+    'adjective': 'adj',
+    'adverb': 'adv',
+    'preposition': 'prep'
+  };
+  
+  const shortPos = posAbbrev[pos?.toLowerCase()] || pos?.toLowerCase() || 'unknown';
+  return `${lemmaLower}(${shortPos})`;
+}
+
+// 오디오 파일 목록을 서버에서 가져오는 함수
+const audioFilesCache = new Map();
+
+const fetchAudioFiles = async (level) => {
+  if (audioFilesCache.has(level)) {
+    return audioFilesCache.get(level);
+  }
+  
+  try {
+    const response = await fetch(`${API_BASE}/audio-files/${level}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch audio files for ${level}`);
+    }
+    const data = await response.json();
+    const files = data.files || [];
+    
+    // 캐시에 저장
+    audioFilesCache.set(level, files);
+    return files;
+  } catch (error) {
+    console.error(`Error fetching audio files for ${level}:`, error);
+    return [];
+  }
+};
+
+// Smart file name matching based on known patterns (synchronous version for VocabDetailModal)
+function getSmartAudioFileName(lemma, pos) {
+  if (!lemma) return '';
+  
+  const lemmaLower = lemma.toLowerCase();
+  
+  // For words without parentheses, use simple encoding
+  if (!lemma.includes('(')) {
+    return safeFileName(lemma);
+  }
+  
+  // Enhanced known mappings for parentheses words based on ACTUAL A2 files
+  const knownMappings = {
+    // Correct A2 file mappings
+    'rock (music)': 'rock (music)',
+    'rock (stone)': 'rock (stone)(n)',
+    'light (not heavy)': 'light (not heavy)(adj)',
+    'light (from the sun/a lamp)': 'light (from the sun)',
+    'last (taking time)': 'last (taking time)(v)',
+    'last (final)': 'last (final)',
+    'mine (belongs to me)': 'mine (belongs to me)',
+    'bear (animal)': 'bear (animal)',
+    'bank (money)': 'bank (money)', // A1에서도 매칭되도록 추가
+    'race (competition)': 'race (competition)',
+    'rest (remaining part)': 'rest (remaining part)',
+    'rest (sleep/relax)': 'rest (sleeprelax)(unkown)', // Note: actual file has typo "unkown"
+    'second (next after the first)': 'second (next after the first)',
+    
+    // Additional mappings for common patterns
+    'used to': 'used to',
+    'have': 'have',
+    'may': 'may',
+    'might': 'might',
+    'either': 'either',
+    'neither': 'neither'
+  };
+  
+  // Check known mappings first
+  if (knownMappings[lemmaLower]) {
+    return knownMappings[lemmaLower];
+  }
+  
+  // Handle slash-separated words in parentheses
+  if (lemmaLower.includes('/')) {
+    // Replace "/" with empty string for matching
+    const withoutSlash = lemmaLower.replace(/\//g, '');
+    if (knownMappings[withoutSlash]) {
+      return knownMappings[withoutSlash];
+    }
+  }
+  
+  // Fallback: try with abbreviated pos
+  const posAbbrev = {
+    'noun': 'n',
+    'verb': 'v', 
+    'adjective': 'adj',
+    'adverb': 'adv',
+    'preposition': 'prep'
+  };
+  
+  const shortPos = posAbbrev[pos?.toLowerCase()] || pos?.toLowerCase() || 'unknown';
+  return `${lemmaLower}(${shortPos})`;
 }
 
 const getCefrBadgeColor = (level) => {
@@ -142,12 +368,14 @@ export default function VocabDetailModal({
                           {defItem.examples.map((ex, exIndex) => {
                             const audioId = `${vocab.id}-${index}-${defIndex}-${exIndex}`;
                             const isExamplePlaying = playingAudio?.type === 'example' && playingAudio?.id === audioId;
-                            const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
+                            // 모든 CEFR 레벨에 대해 동일한 경로 패턴 사용
+                            const audioFileName = getSmartAudioFileName(vocab.lemma, vocab.pos);
+                            const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
                             return (
                               <li key={exIndex} className="d-flex justify-content-between align-items-center mb-2 p-2 rounded bg-light">
                                 <div className="me-2">
-                                  <span lang="en" className="d-block">{ex.de}</span>
-                                  <span className="text-muted small">— {ex.ko}</span>
+                                  <span lang="en" className="d-block">{ex.example || ex.de}</span>
+                                  <span className="text-muted small">— {ex.ko_example || ex.ko}</span>
                                 </div>
                                 <button
                                   className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"

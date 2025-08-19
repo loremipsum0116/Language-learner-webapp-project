@@ -179,6 +179,7 @@ export default function VocabList() {
     const audioRef = useRef(null);
     const [playingAudio, setPlayingAudio] = useState(null);
     const [selectedIds, setSelectedIds] = useState(new Set());
+    const [audioFilesCache, setAudioFilesCache] = useState(new Map()); // 레벨별 오디오 파일 캐시
     const [enrichingId, setEnrichingId] = useState(null);
     const [masteredCards, setMasteredCards] = useState([]);
     const [autoFolderModalOpen, setAutoFolderModalOpen] = useState(false);
@@ -397,20 +398,286 @@ export default function VocabList() {
         return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
     };
 
-    const playVocabAudio = (vocab) => {
-        // 목록에서는 vocab.audio, 상세에서는 vocab.dictentry.audioUrl 사용
+    // String similarity function (Levenshtein distance-based)
+    function stringSimilarity(str1, str2) {
+        if (!str1 || !str2) return 0;
+        
+        const s1 = str1.toLowerCase();
+        const s2 = str2.toLowerCase();
+        
+        if (s1 === s2) return 1;
+        
+        const len1 = s1.length;
+        const len2 = s2.length;
+        
+        if (len1 === 0) return len2 === 0 ? 1 : 0;
+        if (len2 === 0) return 0;
+        
+        const matrix = Array(len2 + 1).fill(null).map(() => Array(len1 + 1).fill(null));
+        
+        for (let i = 0; i <= len1; i++) matrix[0][i] = i;
+        for (let j = 0; j <= len2; j++) matrix[j][0] = j;
+        
+        for (let j = 1; j <= len2; j++) {
+            for (let i = 1; i <= len1; i++) {
+                const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+                matrix[j][i] = Math.min(
+                    matrix[j - 1][i] + 1,
+                    matrix[j][i - 1] + 1,
+                    matrix[j - 1][i - 1] + cost
+                );
+            }
+        }
+        
+        const maxLen = Math.max(len1, len2);
+        return (maxLen - matrix[len2][len1]) / maxLen;
+    }
+
+    // Get best matching audio file name using similarity
+    function getBestMatchingFileName(lemma, pos, availableFiles) {
+        console.log('🔍 getBestMatchingFileName called with:', { lemma, pos, availableFilesCount: availableFiles?.length });
+        
+        if (!lemma) return '';
+        
+        const lemmaLower = lemma.toLowerCase();
+        console.log('🔍 lemmaLower:', lemmaLower);
+        
+        // For words without parentheses, use simple encoding
+        if (!lemma.includes('(')) {
+            console.log('🔍 No parentheses, using safeFileName');
+            return safeFileName(lemma);
+        }
+        
+        console.log('🔍 Has parentheses, checking known mappings...');
+        
+        // Known mappings for parentheses words based on ACTUAL A2 files
+        const knownMappings = {
+            // Correct A2 file mappings
+            'rock (music)': 'rock (music)',
+            'rock (stone)': 'rock (stone)(n)',
+            'light (not heavy)': 'light (not heavy)(adj)',
+            'light (from the sun/a lamp)': 'light (from the sun)',
+            'last (taking time)': 'last (taking time)(v)',
+            'last (final)': 'last (final)',
+            'mine (belongs to me)': 'mine (belongs to me)',
+            'bear (animal)': 'bear (animal)',
+            'bank (money)': 'bank (money)', // A1에서도 매칭되도록 추가
+            'race (competition)': 'race (competition)',
+            'rest (remaining part)': 'rest (remaining part)',
+            'rest (sleep/relax)': 'rest (sleeprelax)(unkown)', // Note: actual file has typo "unkown"
+            'second (next after the first)': 'second (next after the first)',
+            
+            // Additional mappings for common patterns
+            'used to': 'used to',
+            'have': 'have',
+            'may': 'may',
+            'might': 'might',
+            'either': 'either',
+            'neither': 'neither'
+        };
+        
+        // Check known mappings first
+        if (knownMappings[lemmaLower]) {
+            console.log('🔍 Found in known mappings:', knownMappings[lemmaLower]);
+            return knownMappings[lemmaLower];
+        }
+        
+        // Handle slash-separated words in parentheses
+        if (lemmaLower.includes('/')) {
+            console.log('🔍 Contains slash, checking without slash...');
+            const withoutSlash = lemmaLower.replace(/\//g, '');
+            console.log('🔍 Without slash:', withoutSlash);
+            if (knownMappings[withoutSlash]) {
+                console.log('🔍 Found mapping without slash:', knownMappings[withoutSlash]);
+                return knownMappings[withoutSlash];
+            }
+        }
+        
+        console.log('🔍 Not in known mappings, checking available files...');
+        console.log('🔍 Available files:', availableFiles);
+        
+        // If we have available files, find the best match
+        if (availableFiles && availableFiles.length > 0) {
+            let bestMatch = '';
+            let bestScore = 0;
+            
+            // Extract base names from files (remove .mp3 extension)
+            const fileNames = availableFiles.map(file => 
+                file.replace('.mp3', '').toLowerCase()
+            );
+            
+            console.log('🔍 File names (without .mp3):', fileNames);
+            
+            // Try to find the best matching file
+            for (const fileName of fileNames) {
+                // Direct match
+                if (fileName === lemmaLower) {
+                    console.log('🔍 Direct match found:', fileName);
+                    return fileName;
+                }
+                
+                // Check if filename starts with the lemma base word
+                const baseWord = lemmaLower.split(' ')[0];
+                console.log('🔍 Checking base word:', baseWord, 'against file:', fileName);
+                
+                // More flexible matching for parenthetical words
+                if (fileName.startsWith(baseWord)) {
+                    const score = stringSimilarity(lemmaLower, fileName);
+                    console.log('🔍 Similarity score:', score, 'for file:', fileName);
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = fileName;
+                        console.log('🔍 New best match:', bestMatch, 'with score:', bestScore);
+                    }
+                }
+                
+                // Also check if the base word appears anywhere in the filename (for better matching)
+                else if (fileName.includes(baseWord)) {
+                    const score = stringSimilarity(lemmaLower, fileName) * 0.8; // Slightly lower priority
+                    console.log('🔍 Contains base word. Adjusted similarity score:', score, 'for file:', fileName);
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMatch = fileName;
+                        console.log('🔍 New best match (contains):', bestMatch, 'with score:', bestScore);
+                    }
+                }
+            }
+            
+            console.log('🔍 Final best match:', bestMatch, 'with score:', bestScore);
+            
+            // If we found a good match (>0.4 similarity), use it (lowered threshold)
+            if (bestMatch && bestScore > 0.4) {
+                console.log('🔍 Using best match (score > 0.4):', bestMatch);
+                return bestMatch;
+            }
+        }
+        
+        // Fallback: try with abbreviated pos
+        const posAbbrev = {
+            'noun': 'n',
+            'verb': 'v', 
+            'adjective': 'adj',
+            'adverb': 'adv',
+            'preposition': 'prep'
+        };
+        
+        const shortPos = posAbbrev[pos?.toLowerCase()] || pos?.toLowerCase() || 'unknown';
+        const fallback = `${lemmaLower}(${shortPos})`;
+        console.log('🔍 Using fallback:', fallback);
+        return fallback;
+    }
+
+    // 오디오 파일 목록을 서버에서 가져오는 함수
+    const fetchAudioFiles = async (level) => {
+        if (audioFilesCache.has(level)) {
+            return audioFilesCache.get(level);
+        }
+        
+        try {
+            const response = await fetch(`${API_BASE}/audio-files/${level}`);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch audio files for ${level}`);
+            }
+            const data = await response.json();
+            const files = data.files || [];
+            
+            // 캐시에 저장
+            setAudioFilesCache(prev => new Map(prev).set(level, files));
+            return files;
+        } catch (error) {
+            console.error(`Error fetching audio files for ${level}:`, error);
+            return [];
+        }
+    };
+
+    // Smart file name matching based on known patterns (same as VocabDetailModal)
+    async function getSmartAudioFileName(lemma, pos, level) {
+        // 실제 파일 목록을 가져와서 매칭 (API 실패시 하드코딩된 목록 사용)
+        let availableFiles = await fetchAudioFiles(level);
+        
+        // API 실패시 괄호 포함 단어들의 하드코딩된 목록 사용 (모든 레벨에서 동일한 매칭)
+        if (availableFiles.length === 0) {
+            console.log(`🔍 Using hardcoded file list for ${level}`);
+            availableFiles = [
+                // Light variations (ACTUAL A2 files - 모든 레벨에서 동일 매칭)
+                'light (from the sun).mp3',
+                'light (not heavy)(adj).mp3',
+                
+                // Rest variations (ACTUAL A2 files)
+                'rest (remaining part).mp3',
+                'rest (sleeprelax)(unkown).mp3', // Note: actual file has typo
+                
+                // Mine variations (ACTUAL A2 files)
+                'mine (belongs to me).mp3',
+                
+                // Rock variations (ACTUAL A2 files)
+                'rock (music).mp3',
+                'rock (stone)(n).mp3',
+                
+                // Last variations (ACTUAL A2 files)
+                'last (final).mp3',
+                'last (taking time)(v).mp3',
+                
+                // Other parenthetical words (ACTUAL A2 files - A1에서도 동일 매칭)
+                'bear (animal).mp3',
+                'race (competition).mp3',
+                'second (next after the first).mp3',
+                'bank (money).mp3', // A1에서도 매칭되도록 추가
+                
+                // Additional common words (ACTUAL A2 files)
+                'used to.mp3',
+                'have.mp3',
+                'may.mp3',
+                'might.mp3',
+                'either.mp3',
+                'neither.mp3',
+                
+                // Basic words (for testing)
+                'book.mp3',
+                'good.mp3',
+                'water.mp3',
+                'house.mp3'
+            ];
+        }
+        
+        return getBestMatchingFileName(lemma, pos, availableFiles);
+    }
+
+    const playVocabAudio = async (vocab) => {
+        // 단어 자체 발음: audioUrl 우선 사용 (ielts_a2_n.json의 audioUrl)
+        console.log('playVocabAudio called with vocab:', vocab.lemma);
+        console.log('vocab.audio:', vocab.audio);
+        console.log('vocab.dictentry?.audioUrl:', vocab.dictentry?.audioUrl);
+        
         const targetUrl = vocab.audio || vocab.dictentry?.audioUrl;
         if (targetUrl) {
+            console.log('✅ Playing WORD audio from audioUrl:', targetUrl);
             playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
         
-        // Use the same path pattern as examples
-        const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
+        // audioUrl이 없는 경우 로컬 오디오 사용 (단어 발음용)
+        const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+        const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
+        console.log('⚠️ Playing WORD audio from local path (no audioUrl found):', localAudioPath);
+        console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'vocab', vocab.id);
     };
 
+    // 예문 전용 오디오 재생 함수 추가
+    const playExampleOnlyAudio = async (vocab) => {
+        // 예문은 항상 로컬 오디오 사용
+        const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+        const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
+        console.log('Playing example audio from local path:', localAudioPath);
+        console.log('🎯 Matched audio file:', audioFileName);
+        playUrl(localAudioPath, 'example', vocab.id);
+    };
+
     const playExampleAudio = (url, type, id) => {
+        console.log('🎵 Playing EXAMPLE audio from URL:', url);
         playUrl(url, type, id);
     };
 
