@@ -17,6 +17,8 @@ const categoryRoutes = require('./routes/categories');
 const myWordbookRoutes = require('./routes/my-wordbook');
 const odatNoteRoutes = require('./routes/odat-note');
 const dictRoutes = require('./routes/dict');
+const examVocabRoutes = require('./routes/examVocab');
+const autoFolderRoutes = require('./routes/autoFolder');
 
 // (선택) 대시보드 오버라이드/Flat 확장 라우터
 const srsFlatExt = require('./routes/srs-flat-extensions');         // 제공 파일
@@ -65,6 +67,8 @@ app.use('/odat-note', odatNoteRoutes);
 // app.use('/dict', dictRoutes);  // 이미 인증 불필요 섹션에서 등록됨
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use('/admin', adminRoutes);  // 관리자 API
+app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API
+app.use('/auto-folder', autoFolderRoutes);  // 자동 폴더 생성 API
 app.use(userRoutes);
 
 // --- 크론 ---

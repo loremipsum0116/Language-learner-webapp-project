@@ -8,6 +8,7 @@ import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import { SrsApi } from '../api/srs';
 import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
 import RainbowStar from '../components/RainbowStar';
+import AutoFolderModal from '../components/AutoFolderModal';
 
 // Helper functions (no changes)
 const getCefrBadgeColor = (level) => {
@@ -161,6 +162,9 @@ function useDebounce(value, delay) {
 export default function VocabList() {
     const { user, srsIds, loading: authLoading, refreshSrsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
+    const [activeTab, setActiveTab] = useState('cefr'); // 'cefr' or 'exam'
+    const [activeExam, setActiveExam] = useState('TOEIC');
+    const [examCategories, setExamCategories] = useState([]);
     const [words, setWords] = useState([]);
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -175,12 +179,30 @@ export default function VocabList() {
     const [selectedIds, setSelectedIds] = useState(new Set());
     const [enrichingId, setEnrichingId] = useState(null);
     const [masteredCards, setMasteredCards] = useState([]);
+    const [autoFolderModalOpen, setAutoFolderModalOpen] = useState(false);
 
 
     const [pickerIds, setPickerIds] = useState([]); // 선택된 vocabIds 보관
 
     const debouncedSearchTerm = useDebounce(searchTerm, 400);
     const isAdmin = user?.role === 'admin';
+
+    // 시험 카테고리 로드
+    useEffect(() => {
+        if (authLoading) return;
+        const ac = new AbortController();
+        (async () => {
+            try {
+                const { data } = await fetchJSON('/exam-vocab/categories', withCreds({ signal: ac.signal }));
+                setExamCategories(Array.isArray(data) ? data : []);
+            } catch (e) {
+                if (!isAbortError(e)) {
+                    console.error('Failed to load exam categories:', e);
+                }
+            }
+        })();
+        return () => ac.abort();
+    }, [authLoading]);
 
     useEffect(() => {
         if (authLoading) return;
@@ -189,13 +211,25 @@ export default function VocabList() {
             try {
                 setLoading(true);
                 setErr(null);
-                let url = '/vocab/list?';
+                let url, data;
+                
                 if (debouncedSearchTerm) {
-                    url += `q=${encodeURIComponent(debouncedSearchTerm)}`;
+                    // 검색 모드
+                    url = `/vocab/list?q=${encodeURIComponent(debouncedSearchTerm)}`;
+                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                    data = response.data;
+                } else if (activeTab === 'cefr') {
+                    // CEFR 레벨별 조회
+                    url = `/vocab/list?level=${encodeURIComponent(activeLevel)}`;
+                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                    data = response.data;
                 } else {
-                    url += `level=${encodeURIComponent(activeLevel)}`;
+                    // 시험별 조회
+                    url = `/exam-vocab/${activeExam}?limit=100`;
+                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                    data = response.data?.vocabs || [];
                 }
-                const { data } = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                
                 setWords(Array.isArray(data) ? data : []);
             } catch (e) {
                 if (!isAbortError(e)) {
@@ -207,7 +241,7 @@ export default function VocabList() {
             }
         })();
         return () => ac.abort();
-    }, [activeLevel, debouncedSearchTerm, authLoading]);
+    }, [activeLevel, activeTab, activeExam, debouncedSearchTerm, authLoading]);
 
     useEffect(() => {
         if (!user) return;
@@ -419,13 +453,96 @@ export default function VocabList() {
     return (
         <main className="container py-4">
             <div className="d-flex justify-content-between align-items-center mb-3">
-                <h2 className="m-0">레벨별 단어</h2>
-                <div className="btn-group">
-                    {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
-                        <button key={l} className={`btn btn-sm ${activeLevel === l ? 'btn-primary' : 'btn-outline-primary'}`} onClick={() => { setSearchTerm(''); setActiveLevel(l); }}>{l}</button>
-                    ))}
-                </div>
+                <h2 className="m-0">단어 학습</h2>
+                
+                {/* 자동 폴더 생성 버튼 - 상시 노출 */}
+                <button 
+                    className={`btn btn-sm ${selectedIds.size > 0 ? 'btn-success' : 'btn-outline-secondary'}`}
+                    onClick={() => setAutoFolderModalOpen(true)}
+                    disabled={selectedIds.size === 0}
+                    title={selectedIds.size > 0 ? `선택된 단어들로 자동 폴더 생성 (${selectedIds.size}개)` : '단어를 선택한 후 자동 폴더 생성'}
+                >
+                    📁 자동 폴더 생성 {selectedIds.size > 0 && `(${selectedIds.size}개)`}
+                </button>
             </div>
+
+            {/* 탭 네비게이션 */}
+            <div className="mb-3">
+                <ul className="nav nav-tabs">
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'cefr' ? 'active' : ''}`}
+                            onClick={() => { 
+                                setActiveTab('cefr'); 
+                                setSearchTerm(''); 
+                                setSelectedIds(new Set()); // 선택된 단어 초기화
+                            }}
+                        >
+                            CEFR 레벨별
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'exam' ? 'active' : ''}`}
+                            onClick={() => { 
+                                setActiveTab('exam'); 
+                                setSearchTerm(''); 
+                                setSelectedIds(new Set()); // 선택된 단어 초기화
+                            }}
+                        >
+                            시험별 단어
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            {/* CEFR 레벨 탭 */}
+            {activeTab === 'cefr' && (
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="m-0">CEFR 레벨별 단어</h4>
+                    <div className="btn-group">
+                        {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
+                            <button 
+                                key={l} 
+                                className={`btn btn-sm ${activeLevel === l ? 'btn-primary' : 'btn-outline-primary'}`} 
+                                onClick={() => { 
+                                    setSearchTerm(''); 
+                                    setActiveLevel(l); 
+                                    setSelectedIds(new Set()); // 선택된 단어 초기화
+                                }}
+                            >
+                                {l}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* 시험별 탭 */}
+            {activeTab === 'exam' && (
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="m-0">시험별 필수 단어</h4>
+                    <div className="btn-group flex-wrap">
+                        {examCategories.map(exam => (
+                            <button 
+                                key={exam.name} 
+                                className={`btn btn-sm ${activeExam === exam.name ? 'btn-info' : 'btn-outline-info'}`} 
+                                onClick={() => { 
+                                    setSearchTerm(''); 
+                                    setActiveExam(exam.name); 
+                                    setSelectedIds(new Set()); // 선택된 단어 초기화
+                                }}
+                                title={`${exam.description} (${exam.actualWordCount || 0}개 단어)`}
+                            >
+                                {exam.displayName}
+                                {exam.actualWordCount > 0 && (
+                                    <span className="badge bg-secondary ms-1">{exam.actualWordCount}</span>
+                                )}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
 
 
             <div className="d-flex justify-content-between align-items-center mb-3 p-2 rounded bg-light">
@@ -534,6 +651,20 @@ export default function VocabList() {
                     }}
                 />
             )}
+            
+            {/* 자동 폴더 생성 모달 */}
+            <AutoFolderModal
+                isOpen={autoFolderModalOpen}
+                onClose={() => setAutoFolderModalOpen(false)}
+                selectedVocabIds={Array.from(selectedIds)}
+                examCategory={activeTab === 'exam' ? activeExam : null}
+                cefrLevel={activeTab === 'cefr' ? activeLevel : null}
+                examCategories={examCategories}
+                onSuccess={(result) => {
+                    console.log('Folders created:', result);
+                    setSelectedIds(new Set()); // 선택 해제
+                }}
+            />
         </main>
     );
 }

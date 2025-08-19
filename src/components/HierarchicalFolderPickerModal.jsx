@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchJSON, withCreds } from '../api/client';
 
-export default function HierarchicalFolderPickerModal({ show, onClose, onPick }) {
+export default function HierarchicalFolderPickerModal({ show, onClose, onPick, parentOnlyMode = false, customHeader = null }) {
   const [loading, setLoading] = useState(false);
   const [parentFolders, setParentFolders] = useState([]);
   const [selectedParentId, setSelectedParentId] = useState(null);
@@ -160,22 +160,29 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
       <div className="modal-dialog modal-dialog-centered modal-lg">
         <div className="modal-content">
           <div className="modal-header">
-            <h5 className="modal-title">SRS 폴더 선택 (3단계 구조)</h5>
+            <h5 className="modal-title">
+              {parentOnlyMode ? '상위폴더 선택' : 'SRS 폴더 선택 (3단계 구조)'}
+            </h5>
             <button type="button" className="btn-close" aria-label="Close" onClick={resetAndClose} />
           </div>
 
           <div className="modal-body">
-            {/* 안내 메시지 */}
-            <div className="alert alert-info mb-3">
-              <small>
-                <strong>📌 3단계 구조:</strong> 상위폴더 → 하위폴더 → 카드<br/>
-                단어는 하위폴더에만 추가할 수 있습니다.
-              </small>
-            </div>
+            {/* 커스텀 헤더 또는 기본 안내 메시지 */}
+            {customHeader || (
+              <div className="alert alert-info mb-3">
+                <small>
+                  <strong>📌 3단계 구조:</strong> 상위폴더 → 하위폴더 → 카드<br/>
+                  {parentOnlyMode 
+                    ? '상위폴더를 선택하세요.' 
+                    : '단어는 하위폴더에만 추가할 수 있습니다.'
+                  }
+                </small>
+              </div>
+            )}
 
             <div className="row">
               {/* 상위폴더 선택 */}
-              <div className="col-md-6">
+              <div className={parentOnlyMode ? "col-12" : "col-md-6"}>
                 <h6>1️⃣ 상위폴더 선택</h6>
                 
                 {/* 상위폴더 생성 */}
@@ -257,8 +264,9 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
                 </div>
               </div>
 
-              {/* 하위폴더 선택 */}
-              <div className="col-md-6">
+              {/* 하위폴더 선택 - parentOnlyMode에서는 숨김 */}
+              {!parentOnlyMode && (
+                <div className="col-md-6">
                 <h6>2️⃣ 하위폴더 선택</h6>
                 
                 {!selectedParentId ? (
@@ -322,7 +330,8 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
                     </div>
                   </>
                 )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
 
@@ -333,10 +342,24 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick })
             <button
               type="button"
               className="btn btn-primary"
-              onClick={confirmPick}
-              disabled={!selectedChildId}
+              onClick={() => {
+                if (parentOnlyMode) {
+                  // 상위폴더만 선택하는 모드: 상위폴더 선택 시 바로 완료
+                  const selectedParent = parentFolders.find(f => f.id === selectedParentId);
+                  if (selectedParent) {
+                    onPick(selectedParent);
+                  }
+                } else {
+                  // 기존 로직: 하위폴더까지 선택
+                  confirmPick();
+                }
+              }}
+              disabled={parentOnlyMode ? !selectedParentId : !selectedChildId}
             >
-              {selectedChildId ? '하위폴더에 추가' : '하위폴더를 선택하세요'}
+              {parentOnlyMode 
+                ? (selectedParentId ? '상위폴더 선택 완료' : '상위폴더를 선택하세요')
+                : (selectedChildId ? '하위폴더에 추가' : '하위폴더를 선택하세요')
+              }
             </button>
           </div>
         </div>
