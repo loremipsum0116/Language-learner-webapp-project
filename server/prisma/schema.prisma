@@ -105,6 +105,7 @@ model srscard {
   masteredAt        DateTime?
   overdueStartAt    DateTime?
   wrongStreakCount  Int             @default(0)
+  lastReviewedAt    DateTime?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
   folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
   user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
@@ -162,8 +163,8 @@ model srsfolderitem {
   learned        Boolean   @default(false)
   wrongCount     Int       @default(0)
   lastReviewedAt DateTime?
-  lastWrongAt    DateTime?
   vocabId        Int?
+  lastWrongAt    DateTime?
   srscard        srscard   @relation(fields: [cardId], references: [id], onDelete: Cascade, map: "SrsFolderItem_cardId_fkey")
   srsfolder      srsfolder @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SrsFolderItem_folderId_fkey")
   vocab          vocab?    @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "SrsFolderItem_vocabId_fkey")
