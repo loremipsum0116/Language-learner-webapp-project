@@ -4,6 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from "react-router-dom";
 import Header from "./pages/Header";
+import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -39,7 +40,8 @@ export default function App() {
     <>
       <Header />
       <ToastContainer /> {/* ToastContainer 추가 */}
-      <Routes>
+      <div className="main-content">
+        <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
@@ -76,7 +78,9 @@ export default function App() {
         <Route path="/read/:id" element={<Placeholder title="리딩(글로스)" />} />
         <Route path="/tutor" element={<Placeholder title="튜터" />} />
         <Route path="/dict" element={<Dict />} />
-      </Routes>
+        </Routes>
+      </div>
+      <Footer />
     </>
   );
 }

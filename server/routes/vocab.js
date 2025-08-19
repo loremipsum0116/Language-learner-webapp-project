@@ -44,11 +44,51 @@ router.get('/list', async (req, res) => {
 
     const items = vocabs.map(v => {
       const dictentry = dictMap.get(v.id);
-      const meanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      
+      // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
+      const posGroups = new Map();
+      for (const meaning of rawMeanings) {
+        const pos = (meaning.pos || 'unknown').toLowerCase().trim();
+        if (!posGroups.has(pos)) {
+          posGroups.set(pos, []);
+        }
+        posGroups.get(pos).push(meaning);
+      }
+      
+      const meanings = [];
+      for (const [pos, groupMeanings] of posGroups.entries()) {
+        if (groupMeanings.length === 1) {
+          meanings.push(groupMeanings[0]);
+        } else {
+          // 같은 pos를 가진 여러 meanings 중에서 최고 선택
+          const best = groupMeanings.reduce((prev, current) => {
+            const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
+            const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
+            
+            if (currentExampleCount > prevExampleCount) return current;
+            if (prevExampleCount > currentExampleCount) return prev;
+            
+            const prevKoDef = prev.definitions?.[0]?.ko_def || '';
+            const currentKoDef = current.definitions?.[0]?.ko_def || '';
+            
+            if (currentKoDef.length > prevKoDef.length) return current;
+            if (prevKoDef.length > currentKoDef.length) return prev;
+            
+            const prevDef = prev.definitions?.[0]?.def || '';
+            const currentDef = current.definitions?.[0]?.def || '';
+            
+            return currentDef.length > prevDef.length ? current : prev;
+          });
+          meanings.push(best);
+        }
+      }
+      
       let primaryGloss = null;
       if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
         primaryGloss = meanings[0].definitions[0].ko_def || null;
       }
+      
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,
         ko_gloss: primaryGloss, ipa: dictentry?.ipa ?? null,
@@ -97,11 +137,51 @@ router.get('/search', async (req, res) => {
     }
 
     const data = vocabs.map(v => {
-      const meanings = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
+      const rawMeanings = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
+      
+      // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
+      const posGroups = new Map();
+      for (const meaning of rawMeanings) {
+        const pos = (meaning.pos || 'unknown').toLowerCase().trim();
+        if (!posGroups.has(pos)) {
+          posGroups.set(pos, []);
+        }
+        posGroups.get(pos).push(meaning);
+      }
+      
+      const meanings = [];
+      for (const [pos, groupMeanings] of posGroups.entries()) {
+        if (groupMeanings.length === 1) {
+          meanings.push(groupMeanings[0]);
+        } else {
+          // 같은 pos를 가진 여러 meanings 중에서 최고 선택
+          const best = groupMeanings.reduce((prev, current) => {
+            const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
+            const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
+            
+            if (currentExampleCount > prevExampleCount) return current;
+            if (prevExampleCount > currentExampleCount) return prev;
+            
+            const prevKoDef = prev.definitions?.[0]?.ko_def || '';
+            const currentKoDef = current.definitions?.[0]?.ko_def || '';
+            
+            if (currentKoDef.length > prevKoDef.length) return current;
+            if (prevKoDef.length > currentKoDef.length) return prev;
+            
+            const prevDef = prev.definitions?.[0]?.def || '';
+            const currentDef = current.definitions?.[0]?.def || '';
+            
+            return currentDef.length > prevDef.length ? current : prev;
+          });
+          meanings.push(best);
+        }
+      }
+      
       let primaryGloss = null;
       if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
         primaryGloss = meanings[0].definitions[0].ko_def || null;
       }
+      
       return {
         id: v.id,
         lemma: v.lemma,

@@ -166,6 +166,8 @@ export default function VocabList() {
     const [activeExam, setActiveExam] = useState('TOEIC');
     const [examCategories, setExamCategories] = useState([]);
     const [words, setWords] = useState([]);
+    const [allWords, setAllWords] = useState([]); // 전체 단어 리스트
+    const [displayCount, setDisplayCount] = useState(100); // 현재 표시되는 단어 개수
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [pickerOpen, setPickerOpen] = useState(false);
     const [pendingVocabIds, setPendingVocabIds] = useState([]);
@@ -230,7 +232,10 @@ export default function VocabList() {
                     data = response.data?.vocabs || [];
                 }
                 
-                setWords(Array.isArray(data) ? data : []);
+                const wordsArray = Array.isArray(data) ? data : [];
+                setAllWords(wordsArray);
+                setWords(wordsArray.slice(0, displayCount));
+                setDisplayCount(100); // 새로운 데이터 로드 시 초기화
             } catch (e) {
                 if (!isAbortError(e)) {
                     console.error("Failed to fetch vocab list:", e);
@@ -242,6 +247,11 @@ export default function VocabList() {
         })();
         return () => ac.abort();
     }, [activeLevel, activeTab, activeExam, debouncedSearchTerm, authLoading]);
+
+    // displayCount 변경 시 words 업데이트
+    useEffect(() => {
+        setWords(allWords.slice(0, displayCount));
+    }, [allWords, displayCount]);
 
     useEffect(() => {
         if (!user) return;
@@ -321,15 +331,15 @@ export default function VocabList() {
     };
 
     const isAllSelected = useMemo(() => {
-        if (words.length === 0) return false;
-        return words.every(word => selectedIds.has(word.id));
-    }, [words, selectedIds]);
+        if (allWords.length === 0) return false;
+        return allWords.every(word => selectedIds.has(word.id));
+    }, [allWords, selectedIds]);
 
     const handleToggleSelectAll = () => {
         if (isAllSelected) {
             setSelectedIds(new Set());
         } else {
-            setSelectedIds(new Set(words.map(word => word.id)));
+            setSelectedIds(new Set(allWords.map(word => word.id)));
         }
     };
 
@@ -449,6 +459,11 @@ export default function VocabList() {
         return () => { if (audioRef.current) stopAudio(); };
     }, []);
 
+    // 더 보기 버튼 핸들러
+    const handleLoadMore = () => {
+        setDisplayCount(prev => prev + 100);
+    };
+
     // JSX rendering (no changes)
     return (
         <main className="container py-4">
@@ -476,6 +491,7 @@ export default function VocabList() {
                                 setActiveTab('cefr'); 
                                 setSearchTerm(''); 
                                 setSelectedIds(new Set()); // 선택된 단어 초기화
+                                setDisplayCount(100); // 표시 개수 초기화
                             }}
                         >
                             CEFR 레벨별
@@ -488,6 +504,7 @@ export default function VocabList() {
                                 setActiveTab('exam'); 
                                 setSearchTerm(''); 
                                 setSelectedIds(new Set()); // 선택된 단어 초기화
+                                setDisplayCount(100); // 표시 개수 초기화
                             }}
                         >
                             시험별 단어
@@ -509,6 +526,7 @@ export default function VocabList() {
                                     setSearchTerm(''); 
                                     setActiveLevel(l); 
                                     setSelectedIds(new Set()); // 선택된 단어 초기화
+                                    setDisplayCount(100); // 표시 개수 초기화
                                 }}
                             >
                                 {l}
@@ -531,6 +549,7 @@ export default function VocabList() {
                                     setSearchTerm(''); 
                                     setActiveExam(exam.name); 
                                     setSelectedIds(new Set()); // 선택된 단어 초기화
+                                    setDisplayCount(100); // 표시 개수 초기화
                                 }}
                                 title={`${exam.description} (${exam.actualWordCount || 0}개 단어)`}
                             >
@@ -553,10 +572,10 @@ export default function VocabList() {
                         id="selectAllCheck"
                         checked={isAllSelected}
                         onChange={handleToggleSelectAll}
-                        disabled={words.length === 0}
+                        disabled={allWords.length === 0}
                     />
                     <label className="form-check-label" htmlFor="selectAllCheck">
-                        {isAllSelected ? '전체 해제' : '전체 선택'} ({selectedIds.size} / {words.length})
+                        {isAllSelected ? '전체 해제' : '전체 선택'} ({selectedIds.size} / {allWords.length})
                     </label>
                 </div>
                 <div className="d-flex gap-2">
@@ -577,7 +596,10 @@ export default function VocabList() {
                     className="form-control"
                     placeholder="전체 레벨에서 단어 검색..."
                     value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onChange={(e) => {
+                        setSearchTerm(e.target.value);
+                        setDisplayCount(100); // 검색 시 표시 개수 초기화
+                    }}
                 />
             </div>
 
@@ -609,6 +631,18 @@ export default function VocabList() {
                     />
                 ))}
             </div>
+            
+            {/* 더 보기 버튼 */}
+            {!loading && !err && allWords.length > displayCount && (
+                <div className="text-center mt-4">
+                    <button 
+                        className="btn btn-outline-primary btn-lg"
+                        onClick={handleLoadMore}
+                    >
+                        더 보기 ({allWords.length - displayCount}개 더)
+                    </button>
+                </div>
+            )}
             {(detailLoading || detail) && (
                 <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
                     <div className="modal-dialog modal-dialog-centered">

@@ -86,6 +86,7 @@ export default function LearnVocab() {
     const [reviewQuiz, setReviewQuiz] = useState({ show: false, batch: [] });
     const [audioPlayCount, setAudioPlayCount] = useState(0);
     const audioPlayCountRef = useRef(0);
+    const isManualPlayRef = useRef(false); // 수동 재생인지 구분하는 플래그
     
     // 깜짝 퀴즈 상태
     const [surpriseQuiz, setSurpriseQuiz] = useState({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
@@ -341,7 +342,12 @@ export default function LearnVocab() {
                     // 플래시 모드에서 선택된 아이템들의 경우 allBatches도 설정
                     if (mode === 'flash' && folderIdParam && selectedItemsParam && fetched.length > 0) {
                         console.log('[BATCH DEBUG] Setting allBatches for selected items:', fetched);
-                        setAllBatches(_.chunk(fetched, 10));
+                        // 자동학습 모드에서는 모든 단어를 하나의 배치로 처리 (배치 분할 없음)
+                        if (auto) {
+                            setAllBatches([fetched]); // 전체 단어를 하나의 배치로
+                        } else {
+                            setAllBatches(_.chunk(fetched, 10)); // 일반 모드에서는 10개씩 분할
+                        }
                         setModeForBatch('flash');
                     }
                     setIdx(0);
@@ -404,9 +410,15 @@ export default function LearnVocab() {
             el.removeEventListener('ended', el._currentEndHandler);
             
             const handleAudioStart = () => {
-                audioPlayCountRef.current = audioPlayCountRef.current + 1;
-                setAudioPlayCount(audioPlayCountRef.current);
-                console.log('[AUDIO DEBUG] Play started, count increased to:', audioPlayCountRef.current);
+                // 수동 재생이 아닌 경우에만 카운트 증가
+                if (!isManualPlayRef.current) {
+                    audioPlayCountRef.current = audioPlayCountRef.current + 1;
+                    setAudioPlayCount(audioPlayCountRef.current);
+                    console.log('[AUDIO DEBUG] Play started, count increased to:', audioPlayCountRef.current);
+                } else {
+                    console.log('[AUDIO DEBUG] Manual play detected, count not increased');
+                    isManualPlayRef.current = false; // 플래그 리셋
+                }
             };
             
             const handleAudioEnd = () => {
@@ -442,10 +454,20 @@ export default function LearnVocab() {
                             handleQuizDone();
                             return currentIdx; // 인덱스 변경 없음
                         } else {
-                            // 다음 카드로 이동
-                            console.log('[AUDIO DEBUG] Advancing to next card');
+                            // 다음 카드로 이동 (범위 체크 추가)
+                            const nextIdx = currentIdx + 1;
+                            console.log('[AUDIO DEBUG] Advancing to next card, nextIdx:', nextIdx, 'totalLength:', totalLength);
                             setFlipped(false);
-                            return currentIdx + 1; // 다음 카드로
+                            
+                            // 범위를 벗어나지 않도록 체크
+                            if (nextIdx < totalLength) {
+                                return nextIdx;
+                            } else {
+                                // 범위 초과 시 학습 완료 처리
+                                console.log('[AUDIO DEBUG] Index overflow - triggering completion');
+                                handleQuizDone();
+                                return currentIdx; // 인덱스 변경 없음
+                            }
                         }
                     } else {
                         // 아직 최대 재생 횟수에 도달하지 않음 - 다시 재생
@@ -591,7 +613,13 @@ export default function LearnVocab() {
             });
         } else {
             setFlipped(false);
-            setIdx(nextIdx);
+            // 인덱스 범위 체크 추가
+            if (nextIdx < queue.length) {
+                setIdx(nextIdx);
+            } else {
+                // 마지막 카드인 경우 학습 완료 상태로 전환
+                setIdx(queue.length);
+            }
         }
     };
 
@@ -636,7 +664,14 @@ export default function LearnVocab() {
                 // 퀴즈 완료
                 setSurpriseQuiz({ show: false, questions: [], currentQ: 0, answers: [], showFeedback: false, selectedAnswer: null });
                 setFlipped(false);
-                setIdx(idx + 1); // 다음 카드로 이동
+                // 마지막 카드가 아닐 때만 다음 카드로 이동
+                const nextIdx = idx + 1;
+                if (nextIdx < queue.length) {
+                    setIdx(nextIdx);
+                } else {
+                    // 마지막 카드인 경우 학습 완료 상태로 전환
+                    setIdx(queue.length);
+                }
             }
         }, 1500);
     };
@@ -1512,6 +1547,9 @@ export default function LearnVocab() {
                                 // 자동재생 시작 - 현재 카드에서 이어서 진행
                                 console.log('[AUTO TOGGLE] Starting auto mode, current count:', audioPlayCountRef.current);
                                 
+                                // 수동 재생 플래그 설정
+                                isManualPlayRef.current = true;
+                                
                                 const el = audioRef.current;
                                 if (el && current) {
                                     // 재생횟수가 0인 상태는 유지 (첫 재생 시 증가됨)
@@ -1530,9 +1568,15 @@ export default function LearnVocab() {
                                     el.removeEventListener('ended', el._currentEndHandler);
                                     
                                     const handleResumeStart = () => {
-                                        audioPlayCountRef.current = audioPlayCountRef.current + 1;
-                                        setAudioPlayCount(audioPlayCountRef.current);
-                                        console.log('[AUTO RESUME] Play started, count increased to:', audioPlayCountRef.current);
+                                        // 수동 재생이 아닌 경우에만 카운트 증가
+                                        if (!isManualPlayRef.current) {
+                                            audioPlayCountRef.current = audioPlayCountRef.current + 1;
+                                            setAudioPlayCount(audioPlayCountRef.current);
+                                            console.log('[AUTO RESUME] Play started, count increased to:', audioPlayCountRef.current);
+                                        } else {
+                                            console.log('[AUTO RESUME] Manual play detected, count not increased');
+                                            isManualPlayRef.current = false; // 플래그 리셋
+                                        }
                                     };
                                     
                                     const handleResumeEnd = () => {
@@ -1565,10 +1609,20 @@ export default function LearnVocab() {
                                                     handleQuizDone();
                                                     return currentIdx; // 인덱스 변경 없음
                                                 } else {
-                                                    // 다음 카드로 이동
-                                                    console.log('[AUTO RESUME] Advancing to next card');
+                                                    // 다음 카드로 이동 (범위 체크 추가)
+                                                    const nextIdx = currentIdx + 1;
+                                                    console.log('[AUTO RESUME] Advancing to next card, nextIdx:', nextIdx, 'totalLength:', totalLength);
                                                     setFlipped(false);
-                                                    return currentIdx + 1; // 다음 카드로
+                                                    
+                                                    // 범위를 벗어나지 않도록 체크
+                                                    if (nextIdx < totalLength) {
+                                                        return nextIdx;
+                                                    } else {
+                                                        // 범위 초과 시 학습 완료 처리
+                                                        console.log('[AUTO RESUME] Index overflow - triggering completion');
+                                                        handleQuizDone();
+                                                        return currentIdx; // 인덱스 변경 없음
+                                                    }
                                                 }
                                             } else {
                                                 // 다시 재생 (count는 'play' 이벤트에서 증가됨)

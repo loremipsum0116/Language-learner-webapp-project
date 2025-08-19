@@ -43,7 +43,46 @@ export default function VocabDetailModal({
   onAddSRS,
 }) {
   const dictentry = vocab?.dictentry || {};
-  const meanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+  const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+  
+  // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
+  const posGroups = new Map();
+  for (const meaning of rawMeanings) {
+    const pos = (meaning.pos || 'unknown').toLowerCase().trim();
+    if (!posGroups.has(pos)) {
+      posGroups.set(pos, []);
+    }
+    posGroups.get(pos).push(meaning);
+  }
+  
+  const meanings = [];
+  for (const [pos, groupMeanings] of posGroups.entries()) {
+    if (groupMeanings.length === 1) {
+      meanings.push(groupMeanings[0]);
+    } else {
+      // 같은 pos를 가진 여러 meanings 중에서 최고 선택
+      const best = groupMeanings.reduce((prev, current) => {
+        const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
+        const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
+        
+        if (currentExampleCount > prevExampleCount) return current;
+        if (prevExampleCount > currentExampleCount) return prev;
+        
+        const prevKoDef = prev.definitions?.[0]?.ko_def || '';
+        const currentKoDef = current.definitions?.[0]?.ko_def || '';
+        
+        if (currentKoDef.length > prevKoDef.length) return current;
+        if (prevKoDef.length > currentKoDef.length) return prev;
+        
+        const prevDef = prev.definitions?.[0]?.def || '';
+        const currentDef = current.definitions?.[0]?.def || '';
+        
+        return currentDef.length > prevDef.length ? current : prev;
+      });
+      meanings.push(best);
+    }
+  }
+  
   const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
   const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
 

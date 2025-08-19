@@ -223,8 +223,10 @@ class ExamVocabSeeder {
         });
 
         if (existingEntry) {
-            // 기존 dictentry 업데이트 (추가 정보만)
+            // 기존 dictentry가 있으면 그대로 사용 (중복 방지)
+            // 발음 정보나 오디오 URL만 없는 경우에만 업데이트
             const updateData = {};
+            
             if (wordData.pronunciation && !existingEntry.ipa) {
                 updateData.ipa = wordData.pronunciation;
                 updateData.ipaKo = wordData.pronunciation;
@@ -232,10 +234,18 @@ class ExamVocabSeeder {
             if (wordData.audioUrl && !existingEntry.audioUrl) {
                 updateData.audioUrl = wordData.audioUrl;
             }
+            
+            // examples는 기존 것을 그대로 유지 (중복 추가 방지)
+            // 기존에 examples가 없거나 비어있는 경우에만 새로 추가
             if (examples.length > 0) {
                 const existingExamples = Array.isArray(existingEntry.examples) ? 
                     existingEntry.examples : [];
-                updateData.examples = [...existingExamples, ...examples];
+                
+                if (existingExamples.length === 0) {
+                    // 기존 examples가 없는 경우에만 새로 추가
+                    updateData.examples = examples;
+                }
+                // 기존 examples가 있으면 그대로 유지 (중복 방지)
             }
 
             if (Object.keys(updateData).length > 0) {

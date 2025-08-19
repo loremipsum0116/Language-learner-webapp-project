@@ -113,12 +113,61 @@ router.get('/:examName', async (req, res) => {
             `;
         }
 
-        // BigInt 변환
-        const vocabs = vocabsRaw.map(vocab => ({
-            ...vocab,
-            id: Number(vocab.id),
-            priority: Number(vocab.priority)
-        }));
+        // BigInt 변환 및 ko_gloss 추출
+        const vocabs = vocabsRaw.map(vocab => {
+            const rawExamples = Array.isArray(vocab.examples) ? vocab.examples : [];
+            
+            // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
+            const posGroups = new Map();
+            for (const example of rawExamples) {
+                const pos = (example.pos || 'unknown').toLowerCase().trim();
+                if (!posGroups.has(pos)) {
+                    posGroups.set(pos, []);
+                }
+                posGroups.get(pos).push(example);
+            }
+            
+            const examples = [];
+            for (const [pos, groupExamples] of posGroups.entries()) {
+                if (groupExamples.length === 1) {
+                    examples.push(groupExamples[0]);
+                } else {
+                    // 같은 pos를 가진 여러 examples 중에서 최고 선택
+                    const best = groupExamples.reduce((prev, current) => {
+                        const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
+                        const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
+                        
+                        if (currentExampleCount > prevExampleCount) return current;
+                        if (prevExampleCount > currentExampleCount) return prev;
+                        
+                        const prevKoDef = prev.definitions?.[0]?.ko_def || '';
+                        const currentKoDef = current.definitions?.[0]?.ko_def || '';
+                        
+                        if (currentKoDef.length > prevKoDef.length) return current;
+                        if (prevKoDef.length > currentKoDef.length) return prev;
+                        
+                        const prevDef = prev.definitions?.[0]?.def || '';
+                        const currentDef = current.definitions?.[0]?.def || '';
+                        
+                        return currentDef.length > prevDef.length ? current : prev;
+                    });
+                    examples.push(best);
+                }
+            }
+            
+            let primaryGloss = null;
+            if (examples.length > 0 && examples[0].definitions?.length > 0) {
+                primaryGloss = examples[0].definitions[0].ko_def || null;
+            }
+            
+            return {
+                ...vocab,
+                id: Number(vocab.id),
+                priority: Number(vocab.priority),
+                ko_gloss: primaryGloss,
+                examples: examples
+            };
+        });
 
         const totalCount = Number(totalCountResult[0].total);
         const totalPages = Math.ceil(totalCount / limit);
