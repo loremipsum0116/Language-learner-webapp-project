@@ -411,6 +411,9 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     // 현재 시간 사용 (가속 시스템은 타이머 계산에만 적용)
     const now = new Date();
     
+    console.log(`[MARK ANSWER START] Card ${cardId}: correct=${correct}, userId=${userId}, folderId=${folderId}`);
+    console.log(`[MARK ANSWER START] Current time: ${now.toISOString()}`);
+    
     // 카드 정보 조회 (새 필드들 포함) - 폴더별 독립성을 위해 folderId도 확인
     const whereCondition = { id: cardId, userId };
     if (folderId !== null && folderId !== undefined) {
@@ -431,11 +434,28 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             frozenUntil: true,
             itemType: true,
             itemId: true,
-            folderId: true  // 폴더 정보도 포함
+            folderId: true,  // 폴더 정보도 포함
+            isTodayStudy: true,
+            todayFirstResult: true,
+            todayStudyDate: true
         }
     });
     
     if (!card) throw new Error('카드를 찾을 수 없습니다.');
+    
+    // 카드 현재 상태 상세 로깅
+    console.log(`[CARD STATE DEBUG] Card ${cardId} current state:`, {
+        stage: card.stage,
+        isOverdue: card.isOverdue,
+        waitingUntil: card.waitingUntil?.toISOString(),
+        nextReviewAt: card.nextReviewAt?.toISOString(),
+        frozenUntil: card.frozenUntil?.toISOString(),
+        overdueDeadline: card.overdueDeadline?.toISOString(),
+        isFromWrongAnswer: card.isFromWrongAnswer,
+        isTodayStudy: card.isTodayStudy,
+        todayFirstResult: card.todayFirstResult,
+        todayStudyDate: card.todayStudyDate?.toISOString()
+    });
     
     // 폴더의 학습 곡선 타입 조회
     let learningCurveType = "long"; // 기본값
@@ -452,6 +472,33 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     // vocabId가 전달되지 않은 경우 카드에서 조회
     if (!vocabId && card.itemType === 'vocab') {
         vocabId = card.itemId;
+    }
+
+    // 오늘의 첫 학습인지 확인하고 결과 고정 (자율학습 모드에서만)
+    const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD 형식
+    const cardStudyDate = card.todayStudyDate ? card.todayStudyDate.toISOString().split('T')[0] : null;
+    
+    let isFirstStudyToday = false;
+    let shouldFixTodayResult = false;
+    
+    // 오늘 학습 추적 로직 (모든 모드에서 적용)
+    let isValidLearningToday = false;
+    
+    if (learningCurveType === 'free') {
+        // 자율학습 모드: 첫 시도 고정 로직 적용
+        if (!card.isTodayStudy || cardStudyDate !== today) {
+            // 오늘 첫 학습 또는 날짜가 바뀜
+            isFirstStudyToday = true;
+            isValidLearningToday = true;
+            console.log(`[TODAY STUDY FREE MODE] Card ${cardId}: First study today (isTodayStudy: ${card.isTodayStudy}, cardStudyDate: ${cardStudyDate}, today: ${today})`);
+        } else {
+            // 이미 오늘 학습한 카드 - 첫 시도 결과 고정
+            shouldFixTodayResult = true;
+            console.log(`[TODAY STUDY FREE MODE] Card ${cardId}: Already studied today, first result was: ${card.todayFirstResult ? 'CORRECT' : 'WRONG'}`);
+        }
+    } else {
+        // 장기/단기 학습 모드: overdue/미학습 상태에서의 학습만 유효 (canUpdateCardState 계산 후 설정)
+        console.log(`[REGULAR SRS MODE] Card ${cardId}: Regular SRS learning (curve: ${learningCurveType})`);
     }
 
     // 자율학습모드에서는 타이머 제약 없이 언제든 카드 상태 업데이트 허용
@@ -508,6 +555,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             canUpdateCardState = false;
             statusMessage = '복습 시기가 아닙니다. 자율 학습은 가능하지만 카드 상태는 변경되지 않습니다.';
         }
+        
+        // canUpdateCardState 결정 결과 로깅
+        console.log(`[CAN UPDATE STATE] Card ${cardId}: canUpdateCardState=${canUpdateCardState}`, {
+            isFirstLearning,
+            isInOverdueWindow,
+            isFrozen,
+            isWrongAnswerReady,
+            isInWaitingPeriod: isCardInWaitingPeriod ? isCardInWaitingPeriod(card) : 'unknown',
+            statusMessage
+        });
+    }
+    
+    // 장기/단기 모드에서 isTodayStudy 설정 (수정된 로직)
+    if (learningCurveType !== 'free') {
+        // overdue/미학습 상태에서 학습 → isTodayStudy = false (오답률에 반영)
+        // 대기중/동결중 상태에서 학습 → isTodayStudy = true (오답률에 반영 안됨)
+        isValidLearningToday = canUpdateCardState; // 정상 로직: overdue/미학습에서만 false
+        console.log(`[REGULAR SRS MODE] Card ${cardId}: Setting isTodayStudy=${isValidLearningToday} (canUpdateCardState=${canUpdateCardState})`);
     }
 
     let newStage = card.stage, waitingUntil, nextReviewAt;
@@ -528,7 +593,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             calculatedNextReviewAt = null;
             // Free mode correct answer
         } else {
-            const maxStage = learningCurveType === "short" ? 10 : 6;
+            const maxStage = learningCurveType === "short" ? 10 : 7;
             calculatedStage = Math.min(card.stage + 1, maxStage);
             
             // 마스터 완료 조건 확인 (학습 곡선 타입에 따라 다름)
@@ -619,6 +684,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
+                // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+                let todayStudyUpdate = {};
+                if (learningCurveType === 'free' && isFirstStudyToday) {
+                    todayStudyUpdate = {
+                        isTodayStudy: true,
+                        todayFirstResult: true, // 첫 시도 정답
+                        todayStudyDate: now
+                    };
+                } else if (learningCurveType !== 'free') {
+                    // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                    todayStudyUpdate = {
+                        isTodayStudy: !canUpdateCardState,
+                        todayFirstResult: true, // 정답 처리
+                        todayStudyDate: now
+                    };
+                    console.log(`[REGULAR SRS UPDATE] Card ${cardId}: Setting isTodayStudy=${!canUpdateCardState} with todayFirstResult=true (canUpdateCardState=${canUpdateCardState})`);
+                }
+                
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
@@ -633,7 +716,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isMastered: true, // 마스터 완료 표시
                         masteredAt: now, // 마스터 완료 시각
                         masterCycles: { increment: 1 }, // 마스터 사이클 증가
-                        correctTotal: { increment: 1 }
+                        correctTotal: { increment: 1 },
+                        ...todayStudyUpdate
                     }
                 });
                 
@@ -644,7 +728,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 
             } else {
                 // 오답 단어: 현재 stage + 1로 업그레이드하고 해당 stage의 대기시간 설정
-                const maxStage = learningCurveType === "short" ? 10 : 6;
+                const maxStage = learningCurveType === "short" ? 10 : 7;
                 const upgradedStage = Math.min(card.stage + 1, maxStage);
                 const { computeWaitingUntil, computeWaitingPeriod } = require('./srsSchedule');
                 
@@ -661,6 +745,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = newWaitingUntil;
                 }
                 
+                // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+                let todayStudyUpdate = {};
+                if (learningCurveType === 'free' && isFirstStudyToday) {
+                    todayStudyUpdate = {
+                        isTodayStudy: true,
+                        todayFirstResult: true, // 첫 시도 정답
+                        todayStudyDate: now
+                    };
+                } else if (learningCurveType !== 'free') {
+                    // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                    todayStudyUpdate = {
+                        isTodayStudy: !canUpdateCardState,
+                        todayFirstResult: true, // 정답 처리
+                        todayStudyDate: now
+                    };
+                    console.log(`[REGULAR SRS UPDATE] Card ${cardId}: Setting isTodayStudy=${!canUpdateCardState} with todayFirstResult=true (canUpdateCardState=${canUpdateCardState})`);
+                }
+                
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
@@ -672,7 +774,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         overdueStartAt: null,
                         isFromWrongAnswer: false, // 정답 처리로 일반 카드로 전환
                         wrongStreakCount: 0, // 연속 오답 리셋
-                        correctTotal: { increment: 1 }
+                        correctTotal: { increment: 1 },
+                        ...todayStudyUpdate
                     }
                 });
                 
@@ -693,6 +796,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             if (isFinalStageReached) {
                 isMasteryAchieved = true; // 마스터 달성 플래그 설정
                 
+                // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+                let todayStudyUpdate = {};
+                if (learningCurveType === 'free' && isFirstStudyToday) {
+                    todayStudyUpdate = {
+                        isTodayStudy: true,
+                        todayFirstResult: true, // 첫 시도 정답
+                        todayStudyDate: now
+                    };
+                } else if (learningCurveType !== 'free') {
+                    // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                    todayStudyUpdate = {
+                        isTodayStudy: !canUpdateCardState,
+                        todayFirstResult: true, // 정답 처리
+                        todayStudyDate: now
+                    };
+                    console.log(`[REGULAR SRS UPDATE] Card ${cardId}: Setting isTodayStudy=${!canUpdateCardState} with todayFirstResult=true (canUpdateCardState=${canUpdateCardState})`);
+                }
+                
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
@@ -705,7 +826,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isMastered: true, // 마스터 완료 표시
                         masteredAt: now, // 마스터 완료 시각
                         masterCycles: { increment: 1 }, // 마스터 사이클 증가
-                        correctTotal: { increment: 1 }
+                        correctTotal: { increment: 1 },
+                        ...todayStudyUpdate
                     }
                 });
                 
@@ -716,7 +838,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 
             } else {
                 // 일반 카드: 현재 stage + 1로 업그레이드하고 해당 stage의 대기시간 설정
-                const maxStage = learningCurveType === "short" ? 10 : 6;
+                const maxStage = learningCurveType === "short" ? 10 : 7;
                 const upgradedStage = Math.min(card.stage + 1, maxStage);
                 const { computeWaitingUntil, computeWaitingPeriod } = require('./srsSchedule');
                 
@@ -733,6 +855,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     newNextReviewAt = newWaitingUntil;
                 }
                 
+                // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+                let todayStudyUpdate = {};
+                if (learningCurveType === 'free' && isFirstStudyToday) {
+                    todayStudyUpdate = {
+                        isTodayStudy: true,
+                        todayFirstResult: true, // 첫 시도 정답
+                        todayStudyDate: now
+                    };
+                } else if (learningCurveType !== 'free') {
+                    // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                    todayStudyUpdate = {
+                        isTodayStudy: !canUpdateCardState,
+                        todayFirstResult: true, // 정답 처리
+                        todayStudyDate: now
+                    };
+                    console.log(`[REGULAR SRS UPDATE] Card ${cardId}: Setting isTodayStudy=${!canUpdateCardState} with todayFirstResult=true (canUpdateCardState=${canUpdateCardState})`);
+                }
+                
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
@@ -742,7 +882,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isOverdue: false,
                         overdueDeadline: null,
                         overdueStartAt: null,
-                        correctTotal: { increment: 1 }
+                        correctTotal: { increment: 1 },
+                        ...todayStudyUpdate
                     }
                 });
                 
@@ -765,6 +906,23 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             waitingUntil = null;
             nextReviewAt = null;
             
+            // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+            let todayStudyUpdate = {};
+            if (learningCurveType === 'free' && isFirstStudyToday) {
+                todayStudyUpdate = {
+                    isTodayStudy: true,
+                    todayFirstResult: false, // 첫 시도 오답
+                    todayStudyDate: now
+                };
+            } else if (learningCurveType !== 'free') {
+                // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                todayStudyUpdate = {
+                    isTodayStudy: !canUpdateCardState,
+                    todayFirstResult: false, // 오답 처리
+                    todayStudyDate: now
+                };
+            }
+            
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
@@ -776,7 +934,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     overdueStartAt: null,
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 }  // ✅ 자율모드에서도 wrongTotal 증가
+                    wrongTotal: { increment: 1 },  // ✅ 자율모드에서도 wrongTotal 증가
+                    ...todayStudyUpdate
                 }
             });
             
@@ -807,6 +966,23 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 console.log(`[SRS SERVICE] Stage ${card.stage} overdue wrong answer - stage preserved, waitingUntil: ${waitingUntil?.toISOString()}`);
             }
             
+            // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+            let todayStudyUpdate = {};
+            if (learningCurveType === 'free' && isFirstStudyToday) {
+                todayStudyUpdate = {
+                    isTodayStudy: true,
+                    todayFirstResult: false, // 첫 시도 오답
+                    todayStudyDate: now
+                };
+            } else if (learningCurveType !== 'free') {
+                // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                todayStudyUpdate = {
+                    isTodayStudy: !canUpdateCardState,
+                    todayFirstResult: false, // 오답 처리
+                    todayStudyDate: now
+                };
+            }
+            
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
@@ -818,7 +994,8 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     overdueStartAt: null, // 대기 중에는 overdue 시작 시점 없음  
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 }
+                    wrongTotal: { increment: 1 },
+                    ...todayStudyUpdate
                 }
             });
             
@@ -838,6 +1015,23 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 nextReviewAt = calculatedNextReviewAt;
             }
             
+            // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+            let todayStudyUpdate = {};
+            if (learningCurveType === 'free' && isFirstStudyToday) {
+                todayStudyUpdate = {
+                    isTodayStudy: true,
+                    todayFirstResult: false, // 첫 시도 오답
+                    todayStudyDate: now
+                };
+            } else if (learningCurveType !== 'free') {
+                // 장기/단기 모드: overdue/미학습에서 학습 시 isTodayStudy = false
+                todayStudyUpdate = {
+                    isTodayStudy: !canUpdateCardState,
+                    todayFirstResult: false, // 오답 처리
+                    todayStudyDate: now
+                };
+            }
+            
             await prisma.srscard.update({
                 where: { id: cardId },
                 data: {
@@ -849,45 +1043,94 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     overdueStartAt: learningCurveType === 'free' ? null : null, // 자율모드는 시작점 없음
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 }
+                    wrongTotal: { increment: 1 },
+                    ...todayStudyUpdate
                 }
             });
             
             console.log(`[SRS SERVICE] Wrong answer for card ${cardId} - stage ${card.stage} → ${newStage}`);
         }
     } else if (!canUpdateCardState && !correct) {
-        // 카드 상태는 업데이트할 수 없지만 오답 통계는 업데이트
+        // 카드 상태 업데이트 불가능 - 대기중 상태에서의 오답 (통계 업데이트 안함)
         // 계산된 값들을 반환용으로 설정
         newStage = calculatedStage;
         waitingUntil = calculatedWaitingUntil;
         nextReviewAt = calculatedNextReviewAt;
         
-        await prisma.srscard.update({
-            where: { id: cardId },
-            data: {
-                wrongTotal: { increment: 1 }
-            }
-        });
+        // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+        let todayStudyUpdate = {};
+        if (learningCurveType === 'free' && isFirstStudyToday) {
+            todayStudyUpdate = {
+                isTodayStudy: true,
+                todayFirstResult: false, // 첫 시도 오답
+                todayStudyDate: now
+            };
+            // 자율학습 모드에서는 wrongTotal 업데이트
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: {
+                    wrongTotal: { increment: 1 },
+                    ...todayStudyUpdate
+                }
+            });
+        } else if (learningCurveType !== 'free') {
+            // 장기/단기 모드: 대기중 상태에서는 통계 업데이트 안함
+            todayStudyUpdate = {
+                isTodayStudy: !canUpdateCardState, // true (대기중)
+                todayStudyDate: now
+            };
+            // wrongTotal 업데이트 안함 - 대기중 상태에서는 통계에 반영되지 않음
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: todayStudyUpdate
+            });
+            
+            console.log(`[ISTODAYSTUDY UPDATE] Card ${cardId}: Updated isTodayStudy=${todayStudyUpdate.isTodayStudy} (waiting period, no stats)`);
+        }
         
-        console.log(`[SRS SERVICE] Card ${cardId} - no state change but recorded wrong answer`);
+        console.log(`[SRS SERVICE] Card ${cardId} - no state change, wrong answer in waiting period (no stats update)`);
     } else if (!canUpdateCardState && correct) {
-        // 카드 상태는 업데이트할 수 없지만 정답 통계는 업데이트
+        // 카드 상태 업데이트 불가능 - 대기중 상태에서의 정답 (통계 업데이트 안함)
         // 계산된 값들을 반환용으로 설정
         newStage = calculatedStage;
         waitingUntil = calculatedWaitingUntil;
         nextReviewAt = calculatedNextReviewAt;
         
-        await prisma.srscard.update({
-            where: { id: cardId },
-            data: {
-                correctTotal: { increment: 1 }
-            }
-        });
+        // 오늘의 첫 학습 정보 구성 (자율학습 모드만)
+        let todayStudyUpdate = {};
+        if (learningCurveType === 'free' && isFirstStudyToday) {
+            todayStudyUpdate = {
+                isTodayStudy: true,
+                todayFirstResult: true, // 첫 시도 정답
+                todayStudyDate: now
+            };
+            // 자율학습 모드에서는 correctTotal 업데이트
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: {
+                    correctTotal: { increment: 1 },
+                    ...todayStudyUpdate
+                }
+            });
+        } else if (learningCurveType !== 'free') {
+            // 장기/단기 모드: 대기중 상태에서는 통계 업데이트 안함
+            todayStudyUpdate = {
+                isTodayStudy: !canUpdateCardState, // true (대기중)
+                todayStudyDate: now
+            };
+            // correctTotal 업데이트 안함 - 대기중 상태에서는 통계에 반영되지 않음
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: todayStudyUpdate
+            });
+        }
         
-        console.log(`[SRS SERVICE] Card ${cardId} - no state change but recorded correct answer`);
+        console.log(`[SRS SERVICE] Card ${cardId} - no state change, correct answer in waiting period (no stats update)`);
     } else {
         console.log(`[SRS SERVICE] Card ${cardId} - no state change (canUpdateCardState: ${canUpdateCardState}, correct: ${correct})`);
     }
+    
+    // 공통 업데이트 섹션 제거 - 각 케이스별로 이미 isTodayStudy가 적절히 설정됨
 
     // --- SrsFolderItem Update ---
     if (folderId) {
@@ -914,12 +1157,12 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             wrongCount: { increment: (correct || !canUpdateCardState) ? 0 : 1 },
         };
         
-        // lastReviewedAt은 SRS 상태 변경이 가능할 때만 업데이트 (overdue 또는 미학습 상태에서만)
+        // lastReviewedAt은 학습 기록 추적을 위해 항상 업데이트 (실제 답변했으므로)
+        updateData.lastReviewedAt = now;
         if (canUpdateCardState) {
-            updateData.lastReviewedAt = now;
-            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=true`);
+            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=true (SRS state will change)`);
         } else {
-            console.log(`[SRS SERVICE] SKIPPING lastReviewedAt update for card ${cardId} - canUpdateCardState=false`);
+            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=false (SRS state unchanged, but tracking study)`);
         }
         
         await prisma.srsfolderitem.updateMany({
@@ -1038,8 +1281,110 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     console.log(`  Calculated Stage: ${result.calculatedStage}`);
     console.log(`  Calculated WaitingUntil: ${result.calculatedWaitingUntil?.toISOString()}`);
 
+    // --- 폴더 마스터 완료 체크 ---
+    if (folderId && canUpdateCardState && isMasteryAchieved) {
+        try {
+            await checkAndUpdateFolderMasteryStatus(folderId, userId);
+        } catch (error) {
+            console.error(`[SRS SERVICE] Error checking folder mastery status:`, error);
+        }
+    }
+
     return result;
 }
+
+/**
+ * 폴더의 마스터 완료 상태를 체크하고 업데이트합니다
+ */
+async function checkAndUpdateFolderMasteryStatus(folderId, userId) {
+    // 폴더의 모든 카드가 마스터되었는지 확인
+    const folderStats = await prisma.srsfolderitem.findMany({
+        where: { folderId },
+        include: {
+            srscard: {
+                select: {
+                    isMastered: true,
+                    userId: true
+                }
+            }
+        }
+    });
+
+    // 해당 유저의 카드만 필터링
+    const userCards = folderStats.filter(item => item.srscard.userId === userId);
+    const totalCards = userCards.length;
+    const masteredCards = userCards.filter(item => item.srscard.isMastered).length;
+
+    console.log(`[FOLDER MASTERY CHECK] Folder ${folderId}: ${masteredCards}/${totalCards} cards mastered`);
+
+    // 모든 카드가 마스터되었다면 폴더 마스터 상태 업데이트
+    if (totalCards > 0 && masteredCards === totalCards) {
+        const folder = await prisma.srsfolder.findFirst({
+            where: { id: folderId, userId }
+        });
+
+        if (folder && !folder.isFolderMastered) {
+            await prisma.srsfolder.update({
+                where: { id: folderId },
+                data: {
+                    isFolderMastered: true,
+                    folderMasteredAt: new Date(),
+                    name: folder.name.includes('🏆') ? folder.name : `🏆 ${folder.name}` // 트로피 추가
+                }
+            });
+
+            console.log(`[FOLDER MASTERY] 🎉 Folder ${folderId} is now MASTERED! All ${totalCards} cards completed.`);
+
+            // 상위 폴더가 있다면 상위 폴더도 체크
+            if (folder.parentId) {
+                await checkAndUpdateParentFolderMasteryStatus(folder.parentId, userId);
+            }
+        }
+    }
+}
+
+/**
+ * 상위 폴더의 마스터 완료 상태를 체크하고 업데이트합니다
+ */
+async function checkAndUpdateParentFolderMasteryStatus(parentFolderId, userId) {
+    // 상위 폴더의 모든 하위 폴더 조회
+    const childFolders = await prisma.srsfolder.findMany({
+        where: { 
+            parentId: parentFolderId,
+            userId 
+        },
+        select: {
+            id: true,
+            isFolderMastered: true
+        }
+    });
+
+    const totalChildFolders = childFolders.length;
+    const masteredChildFolders = childFolders.filter(child => child.isFolderMastered).length;
+
+    console.log(`[PARENT FOLDER MASTERY CHECK] Parent folder ${parentFolderId}: ${masteredChildFolders}/${totalChildFolders} child folders mastered`);
+
+    // 모든 하위 폴더가 마스터되었다면 상위 폴더 마스터 상태 업데이트
+    if (totalChildFolders > 0 && masteredChildFolders === totalChildFolders) {
+        const parentFolder = await prisma.srsfolder.findFirst({
+            where: { id: parentFolderId, userId }
+        });
+
+        if (parentFolder && !parentFolder.isFolderMastered) {
+            await prisma.srsfolder.update({
+                where: { id: parentFolderId },
+                data: {
+                    isFolderMastered: true,
+                    folderMasteredAt: new Date(),
+                    name: parentFolder.name.includes('🌟') ? parentFolder.name : `🌟 ${parentFolder.name}` // 별 추가
+                }
+            });
+
+            console.log(`[PARENT FOLDER MASTERY] 🎉 Parent folder ${parentFolderId} is now MASTERED! All ${totalChildFolders} child folders completed.`);
+        }
+    }
+}
+
 /**
  * 마스터된 폴더를 다시 활성화합니다 (새로운 120일 사이클 시작)
  */
@@ -1190,5 +1535,7 @@ module.exports = {
     ensureCardsForVocabs,
     getAvailableCardsForReview,
     getWaitingCardsCount,
-    getSrsStatus
+    getSrsStatus,
+    checkAndUpdateFolderMasteryStatus,
+    checkAndUpdateParentFolderMasteryStatus
 };

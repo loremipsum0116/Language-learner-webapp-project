@@ -325,6 +325,7 @@ export default function SrsFolderDetail() {
         }
         return false;
     }).length;
+    const masteredCount = items.filter(item => item.isMastered).length;
     const stageWaitingCount = items.filter(item => item.stage > 0 && !item.isOverdue && !item.isMastered).length;
     
     // 디버깅 로그
@@ -343,22 +344,29 @@ export default function SrsFolderDetail() {
     return (
         <main className="container py-4">
             {/* 헤더 */}
-            <div className="d-flex justify-content-between align-items-center mb-3">
+            <div className={`d-flex justify-content-between align-items-center mb-3 ${
+                folder.isFolderMastered ? 'p-3 rounded' : ''
+            }`} style={folder.isFolderMastered ? {
+                background: 'linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%)',
+                boxShadow: '0 8px 16px rgba(255, 193, 7, 0.3)',
+                border: '3px solid #ffc107'
+            } : {}}>
                 <div>
-                    <h4 className="mb-1">
-                        {folder.learningCurveType === 'short' ? '🐰' : folder.learningCurveType === 'free' ? '🎯' : '🐢'} {folder.name}
+                    <h4 className={`mb-1 ${folder.isFolderMastered ? 'text-warning' : ''}`}>
+                        {folder.isFolderMastered ? '🏆' : (folder.learningCurveType === 'short' ? '🐰' : folder.learningCurveType === 'free' ? '🎯' : '🐢')} {folder.name}
+                        {folder.isFolderMastered && <span className="ms-2">🎉 완전 마스터! 🎉</span>}
                         <span className="badge ms-2" style={{
-                            backgroundColor: folder.learningCurveType === 'short' ? '#ff6b6b' : 
-                                           folder.learningCurveType === 'free' ? '#28a745' : '#4ecdc4',
+                            backgroundColor: folder.isFolderMastered ? '#ff9800' : (folder.learningCurveType === 'short' ? '#ff6b6b' : 
+                                           folder.learningCurveType === 'free' ? '#28a745' : '#4ecdc4'),
                             color: 'white',
                             fontSize: '0.7em'
                         }}>
-                            {folder.learningCurveType === 'short' 
+                            {folder.isFolderMastered ? '모든 단어 마스터 완료!' : (folder.learningCurveType === 'short' 
                                 ? '스퍼트 곡선 (10단계, 빠른 반복)' 
                                 : folder.learningCurveType === 'free'
                                 ? '자율 모드 (타이머 없음, 자유 학습)'
                                 : '장기 곡선 (7단계, 점진적 확장)'
-                            }
+                            )}
                         </span>
                     </h4>
                     <small className="text-muted">
@@ -402,6 +410,8 @@ export default function SrsFolderDetail() {
                                 오답 {wrongAnswerCount}개
                                 <span className="mx-2">|</span>
                                 동결 {frozenCount}개
+                                <span className="mx-2">|</span>
+                                마스터 <span className="text-warning">{masteredCount}개</span>
                             </>
                         )}
                 

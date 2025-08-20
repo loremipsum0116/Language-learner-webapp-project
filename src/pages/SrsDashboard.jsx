@@ -107,17 +107,57 @@ export default function SrsDashboard() {
         }
 
         const wordCounts = {};
+        const wordFirstAttempts = {}; // 단어별 최초 학습 시간 추적
         let totalAttempts = 0;
-        let wrongAttempts = 0;
+
+        // 현재 시간
+        const now = new Date();
 
         (todayStudyLog.studies || []).forEach(card => {
             const word = card.vocab?.lemma || card.lemma || '미상';
             
-            // 정답/오답 여부 판단 - SRS 학습 결과 기반
-            const isCorrect = card.correctTotal > 0 && 
-                             (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7;
+            // 자율 학습 모드는 항상 포함, 다른 모드에서는 대기상태/동결상태만 제외
+            const isExcludedFromStats = card.learningCurveType !== 'free' && 
+                ((card.waitingUntil && new Date(card.waitingUntil) > now) || 
+                 (card.frozenUntil && new Date(card.frozenUntil) > now));
             
-            // 단어별 정답/오답 카운트 저장
+            // 자율 학습 모드가 아닌 경우에만 대기상태/동결상태 자율복습 결과 제외
+            if (isExcludedFromStats) {
+                totalAttempts++; // 전체 학습 횟수에만 포함
+                return; // 단어 목록에는 추가하지 않음
+            }
+            
+            // 정답/오답 여부 판단 - 첫 시도 결과 우선 사용
+            let isCorrect;
+            if (card.isTodayStudy === false && card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                // 서버에서 제공하는 정확한 첫 시도 결과 사용 (overdue/미학습 상태에서 학습한 경우만)
+                isCorrect = card.todayFirstResult;
+            } else {
+                // 백업: 기존 로직 사용 (70% 정답률 기준)
+                isCorrect = card.correctTotal > 0 && 
+                           (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7;
+            }
+            
+            // 단어별 첫 시도 결과 추적 - 폴더별로 구분하여 모든 학습한 단어 처리
+            const reviewTime = new Date(card.lastReviewedAt);
+            const wordKey = `${word}_${card.folderId || 'unknown'}`; // 폴더별로 구분
+            
+            // 같은 단어라도 다른 폴더에서 학습한 것은 별도로 추가
+            if (!wordFirstAttempts[wordKey]) {
+                wordFirstAttempts[wordKey] = {
+                    word: word,
+                    time: reviewTime,
+                    isCorrect: isCorrect,
+                    card: card,
+                    isFirstStudyToday: true,
+                    // 상태 정보 추가
+                    isTodayStudy: card.isTodayStudy,
+                    studyType: card.isTodayStudy === false ? 'valid' : 'waiting', // valid: 오답률 반영, waiting: 대기중 학습
+                    folderId: card.folderId
+                };
+            }
+            
+            // 단어별 모든 학습 기록은 상세보기용으로 저장
             if (!wordCounts[word]) {
                 wordCounts[word] = { correct: 0, wrong: 0, total: 0 };
             }
@@ -127,30 +167,46 @@ export default function SrsDashboard() {
                 wordCounts[word].correct++;
             } else {
                 wordCounts[word].wrong++;
-                wrongAttempts++;
             }
             
             totalAttempts++;
         });
         
-        // API에서 제공하는 통계 사용 (더 정확함)
-        if (todayStudyLog.stats) {
-            totalAttempts = todayStudyLog.stats.totalStudied;
-            wrongAttempts = Math.round((totalAttempts * todayStudyLog.stats.errorRate) / 100);
-        }
+        // 디버깅: wordFirstAttempts 로그
+        console.log('=== WORD FIRST ATTEMPTS DEBUG ===');
+        console.log('wordFirstAttempts keys:', Object.keys(wordFirstAttempts));
+        console.log('wordFirstAttempts:', wordFirstAttempts);
+        console.log('wordCounts:', wordCounts);
+        console.log('todayStudyLog.studies length:', todayStudyLog.studies?.length);
+        console.log('===============================');
 
-        const errorRate = totalAttempts > 0 ? Math.round((wrongAttempts / totalAttempts) * 100) : 0;
+        // API에서 제공하는 통계 사용 (더 정확함)
+        let errorRate = 0;
+        if (todayStudyLog.stats) {
+            // 전체 학습 횟수는 totalStudied 사용
+            totalAttempts = todayStudyLog.stats.totalStudied;
+            // 오답률은 서버에서 계산된 값을 직접 사용 (단어별 첫 번째 학습만 반영)
+            errorRate = todayStudyLog.stats.errorRate;
+            const actualValidForStats = todayStudyLog.stats.actualValidStudiedForStats || todayStudyLog.stats.validStudiedForStats || totalAttempts;
+        } else {
+            // 백업: 프론트엔드에서 단어별 첫 번째 학습 결과로 계산
+            const firstAttempts = Object.values(wordFirstAttempts);
+            const uniqueAttempts = firstAttempts.length;
+            const uniqueWrongAttempts = firstAttempts.filter(attempt => !attempt.isCorrect).length;
+            
+            errorRate = uniqueAttempts > 0 ? Math.round((uniqueWrongAttempts / uniqueAttempts) * 100) : 0;
+        }
 
         return { 
             wordCounts, 
+            wordFirstAttempts, // 첫 시도 추적 데이터
             totalAttempts, // API 데이터가 있을 때는 API 데이터만 사용
-            wrongAttempts, 
             errorRate,
             isEstimated: false
         };
     };
 
-    const { wordCounts, totalAttempts, wrongAttempts, errorRate, isEstimated } = processTodayStudyData();
+    const { wordCounts, wordFirstAttempts, totalAttempts, errorRate, isEstimated } = processTodayStudyData();
 
     async function deleteFolderSafely(e, id, reload) {
         e.preventDefault();
@@ -301,20 +357,20 @@ export default function SrsDashboard() {
                                 <div className="progress mb-2" style={{height: '20px'}}>
                                     <div 
                                         className={`progress-bar ${
-                                            streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
+                                            totalAttempts >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
                                         }`}
-                                        style={{width: `${streakInfo.progressPercent}%`}}
+                                        style={{width: `${Math.min(100, (totalAttempts / streakInfo.requiredDaily) * 100)}%`}}
                                     >
-                                        {streakInfo.dailyQuizCount}/{streakInfo.requiredDaily}
+                                        {totalAttempts}/{streakInfo.requiredDaily}
                                     </div>
                                 </div>
                                 
                                 {/* 상태 메시지 */}
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <small className="text-muted">
-                                        {streakInfo.isCompletedToday ? 
+                                        {totalAttempts >= streakInfo.requiredDaily ? 
                                             '오늘 목표 달성! 🎉' : 
-                                            `오늘 ${streakInfo.remainingForStreak}개 더 필요`}
+                                            `오늘 ${streakInfo.requiredDaily - totalAttempts}개 더 필요`}
                                     </small>
                                     {streakInfo?.bonus?.next && (
                                         <small className="text-muted">
@@ -353,25 +409,40 @@ export default function SrsDashboard() {
                                                     <div className="mt-2">
                                                         {Object.entries(wordCounts).length > 0 ? (
                                                             <div className="d-flex flex-wrap gap-2">
-                                                                {Object.entries(wordCounts)
-                                                                    .sort((a, b) => b[1].total - a[1].total) // 총 횟수 순으로 정렬
-                                                                    .map(([word, counts]) => {
-                                                                        // 정답/오답 비율에 따라 색상 결정
-                                                                        const isOverallCorrect = counts.correct > counts.wrong;
-                                                                        const badgeClass = isOverallCorrect ? 'bg-success' : 'bg-danger';
+                                                                {/* 임시: 서버에서 받은 모든 데이터 직접 표시 */}
+                                                                {(todayStudyLog.studies || [])
+                                                                    .sort((a, b) => new Date(b.lastReviewedAt) - new Date(a.lastReviewedAt))
+                                                                    .map((card, index) => {
+                                                                        const word = card.vocab?.lemma || 'Unknown';
+                                                                        
+                                                                        // 최근 답변 결과에 따른 색상 결정
+                                                                        // todayFirstResult가 있으면 사용, 없으면 correctTotal/wrongTotal 비율로 판단
+                                                                        let isLastCorrect;
+                                                                        if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                                                                            isLastCorrect = card.todayFirstResult;
+                                                                        } else {
+                                                                            // correctTotal과 wrongTotal로 최근 성향 판단
+                                                                            const totalAttempts = (card.correctTotal || 0) + (card.wrongTotal || 0);
+                                                                            if (totalAttempts === 0) {
+                                                                                isLastCorrect = true; // 기본값
+                                                                            } else {
+                                                                                // 정답률이 50% 이상이면 성공으로 간주
+                                                                                isLastCorrect = (card.correctTotal / totalAttempts) >= 0.5;
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        // 최근 답변에 따른 스타일
+                                                                        const badgeClass = isLastCorrect ? 'bg-success' : 'bg-danger';
+                                                                        const icon = isLastCorrect ? '✅' : '❌';
                                                                         
                                                                         return (
-                                                                            <span key={word} className={`badge ${badgeClass} d-flex align-items-center gap-1`}>
-                                                                                {isOverallCorrect ? '✅' : '❌'} {word}
-                                                                                {counts.total > 1 && (
-                                                                                    <small className="ms-1 opacity-75">
-                                                                                        {counts.correct}✓/{counts.wrong}✗
-                                                                                    </small>
-                                                                                )}
+                                                                            <span key={`${card.id}_${index}`} className={`badge ${badgeClass} mb-1 me-1`} style={{fontSize: '0.75rem', display: 'inline-block', whiteSpace: 'nowrap'}}>
+                                                                                {icon} {word} [F{card.folderId}] <small className="opacity-75">{card.correctTotal}✓/{card.wrongTotal}✗</small>
                                                                             </span>
                                                                         );
                                                                     })
                                                                 }
+                                                                
                                                             </div>
                                                         ) : totalAttempts > 0 && isEstimated ? (
                                                             <div className="text-center py-3">

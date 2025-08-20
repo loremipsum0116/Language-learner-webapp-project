@@ -33,7 +33,7 @@ function isFinalStage(stage, learningCurveType = "long") {
   if (learningCurveType === "short") {
     return stage >= SHORT_CURVE_WAITING_HOURS.length - 1; // Stage 9 is final for short curve (10 stages total, 0-9)
   }
-  return stage > STAGE_WAITING_HOURS.length; // Stage 7 완료 후 마스터 (60 days)
+  return stage >= STAGE_WAITING_HOURS.length; // Stage 6 완료 후 Stage 7이 마스터 (Stage 7부터 마스터)
 }
 
 function delayDaysFor(stage, learningCurveType = "long") {

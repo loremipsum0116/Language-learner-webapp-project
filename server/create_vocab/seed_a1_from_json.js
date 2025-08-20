@@ -33,17 +33,13 @@ const toTitleCase = (s = '') => (s ? s[0].toUpperCase() + s.slice(1).toLowerCase
             const currentPos = (r.pos || 'unknown').trim();
 
             const vocab = await prisma.vocab.upsert({
-                where: { lemma: titleLemma },
+                where: { 
+                    lemma_pos: {
+                        lemma: titleLemma,
+                        pos: currentPos
+                    }
+                },
                 update: {
-                    pos: {
-                        set: await (async () => {
-                            const existing = await prisma.vocab.findUnique({ where: { lemma: titleLemma } });
-                            if (!existing?.pos || existing.pos === 'UNK') return currentPos;
-                            const posSet = new Set(existing.pos.split(',').map(p => p.trim()));
-                            posSet.add(currentPos);
-                            return Array.from(posSet).join(', ');
-                        })(),
-                    },
                     levelCEFR: r.levelCEFR || 'A1',
                 },
                 create: {

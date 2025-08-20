@@ -135,11 +135,25 @@ export default function SrsParentFolder() {
     return (
         <div className="container mt-4">
             {/* 헤더 */}
-            <div className="d-flex justify-content-between align-items-center mb-4">
+            <div className={`d-flex justify-content-between align-items-center mb-4 ${
+                parentFolder.isFolderMastered ? 'p-3 rounded' : ''
+            }`} style={parentFolder.isFolderMastered ? {
+                background: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)',
+                boxShadow: '0 8px 16px rgba(33, 150, 243, 0.3)',
+                border: '3px solid #2196f3'
+            } : {}}>
                 <div>
-                    <h1 className="h3">📁 {parentFolder.name}</h1>
-                    <small className="text-muted">
+                    <h1 className={`h3 ${parentFolder.isFolderMastered ? 'text-primary' : ''}`}>
+                        {parentFolder.isFolderMastered ? '🌟' : '📁'} {parentFolder.name}
+                        {parentFolder.isFolderMastered && <span className="ms-2">✨ 완전 정복! ✨</span>}
+                    </h1>
+                    <small className={parentFolder.isFolderMastered ? 'text-primary' : 'text-muted'}>
                         생성일: {fmt(parentFolder.createdDate)} | 하위 폴더 {children.length}개
+                        {parentFolder.isFolderMastered && parentFolder.folderMasteredAt && (
+                            <span className="ms-2 badge bg-primary">
+                                완료일: {fmt(parentFolder.folderMasteredAt)}
+                            </span>
+                        )}
                     </small>
                 </div>
                 <Link to="/srs" className="btn btn-outline-secondary">
@@ -194,7 +208,14 @@ export default function SrsParentFolder() {
                             {children.map(child => (
                                 <div
                                     key={child.id}
-                                    className="list-group-item d-flex justify-content-between align-items-center"
+                                    className={`list-group-item d-flex justify-content-between align-items-center ${
+                                        child.isFolderMastered ? 'border-warning bg-gradient' : ''
+                                    }`}
+                                    style={child.isFolderMastered ? {
+                                        background: 'linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%)',
+                                        boxShadow: '0 4px 8px rgba(255, 193, 7, 0.3)',
+                                        border: '2px solid #ffc107'
+                                    } : {}}
                                 >
                                     <div className="flex-grow-1">
                                         <Link
@@ -228,6 +249,8 @@ export default function SrsParentFolder() {
                                                         오답 <span className="text-danger">{child.wrongAnswers}개</span>
                                                         <span className="mx-2">|</span>
                                                         동결 <span className="text-secondary">{child.frozen}개</span>
+                                                        <span className="mx-2">|</span>
+                                                        마스터 <span className="text-warning">{child.mastered || 0}개</span>
                                                     </>
                                                 )}
                                             </small>

@@ -106,6 +106,9 @@ model srscard {
   overdueStartAt    DateTime?
   wrongStreakCount  Int             @default(0)
   lastReviewedAt    DateTime?
+  isTodayStudy      Boolean         @default(false)
+  todayFirstResult  Boolean?        
+  todayStudyDate    DateTime?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
   folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
   user              user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SRSCard_userId_fkey")
@@ -145,6 +148,8 @@ model srsfolder {
   updatedAt           DateTime
   reminderMask        Int             @default(0)
   learningCurveType   String          @default("long")
+  isFolderMastered    Boolean         @default(false)
+  folderMasteredAt    DateTime?
   srscard             srscard[]
   user                user            @relation(fields: [userId], references: [id], onDelete: Cascade, map: "SrsFolder_userId_fkey")
   srsfolderitem       srsfolderitem[]

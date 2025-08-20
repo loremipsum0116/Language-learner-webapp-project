@@ -58,10 +58,15 @@ router.post('/generate', async (req, res) => {
             sourceName = cefrLevel;
         }
 
-        // 상위 폴더 유효성 검사 (제공된 경우)
+        // 상위 폴더 유효성 검사 및 학습 곡선 타입 조회 (제공된 경우)
+        let parentFolder = null;
         if (parentFolderId) {
-            const parentFolder = await prisma.srsfolder.findFirst({
-                where: { id: parentFolderId, userId }
+            parentFolder = await prisma.srsfolder.findFirst({
+                where: { id: parentFolderId, userId },
+                select: {
+                    id: true,
+                    learningCurveType: true
+                }
             });
             if (!parentFolder) {
                 return fail(res, 404, 'Parent folder not found or access denied');
@@ -132,7 +137,7 @@ router.post('/generate', async (req, res) => {
             const createdFolders = [];
             
             for (let day = 1; day <= totalDays; day++) {
-                // 폴더 생성
+                // 폴더 생성 - 부모 폴더의 learningCurveType 상속
                 const folder = await tx.srsfolder.create({
                     data: {
                         userId,
@@ -143,7 +148,9 @@ router.post('/generate', async (req, res) => {
                         autoCreated: true,
                         date: new Date(),
                         cycleAnchorAt: new Date(),
-                        updatedAt: new Date()
+                        updatedAt: new Date(),
+                        // 부모 폴더가 있으면 부모의 learningCurveType 상속, 없으면 기본값 'long'
+                        learningCurveType: parentFolder?.learningCurveType || 'long'
                     }
                 });
 
@@ -243,6 +250,8 @@ router.post('/generate', async (req, res) => {
             success: true,
             sourceType,
             sourceName,
+            parentFolderId,
+            inheritedLearningCurveType: parentFolder?.learningCurveType || 'long',
             ...result,
             message: `Successfully created ${result.totalFolders} folders with ${result.totalWordsProcessed} words`
         };
