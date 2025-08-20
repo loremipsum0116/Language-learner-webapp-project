@@ -51,7 +51,7 @@ app.use('/A2/audio', (req, res, next) => {
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:3000', credentials: true }));
+app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 

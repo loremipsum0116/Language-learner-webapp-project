@@ -113,51 +113,44 @@ export default function SrsDashboard() {
         // 현재 시간
         const now = new Date();
 
+        // 수정된 로직: 서버와 일치하는 방식으로 처리
         (todayStudyLog.studies || []).forEach(card => {
             const word = card.vocab?.lemma || card.lemma || '미상';
             
-            // 자율 학습 모드는 항상 포함, 다른 모드에서는 대기상태/동결상태만 제외
-            const isExcludedFromStats = card.learningCurveType !== 'free' && 
-                ((card.waitingUntil && new Date(card.waitingUntil) > now) || 
-                 (card.frozenUntil && new Date(card.frozenUntil) > now));
+            console.log(`[DEBUG] Processing card: ${word}, isTodayStudy: ${card.isTodayStudy}, todayFirstResult: ${card.todayFirstResult}, learningCurveType: ${card.learningCurveType}`);
             
-            // 자율 학습 모드가 아닌 경우에만 대기상태/동결상태 자율복습 결과 제외
-            if (isExcludedFromStats) {
-                totalAttempts++; // 전체 학습 횟수에만 포함
-                return; // 단어 목록에는 추가하지 않음
-            }
+            // 모든 학습 기록을 totalAttempts에 포함 (서버와 동일)
+            totalAttempts++;
             
-            // 정답/오답 여부 판단 - 첫 시도 결과 우선 사용
+            // 정답/오답 여부 판단
             let isCorrect;
-            if (card.isTodayStudy === false && card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                // 서버에서 제공하는 정확한 첫 시도 결과 사용 (overdue/미학습 상태에서 학습한 경우만)
+            if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                // todayFirstResult 필드 사용 (가장 정확함)
                 isCorrect = card.todayFirstResult;
             } else {
-                // 백업: 기존 로직 사용 (70% 정답률 기준)
+                // 백업: 기존 로직 사용
                 isCorrect = card.correctTotal > 0 && 
                            (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7;
             }
             
-            // 단어별 첫 시도 결과 추적 - 폴더별로 구분하여 모든 학습한 단어 처리
+            // 모든 학습한 단어를 표시 (자율학습도 포함)
             const reviewTime = new Date(card.lastReviewedAt);
-            const wordKey = `${word}_${card.folderId || 'unknown'}`; // 폴더별로 구분
+            const wordKey = `${word}_${card.folderId || 'unknown'}_${reviewTime.getTime()}`; // 시간을 포함해서 중복 허용
             
-            // 같은 단어라도 다른 폴더에서 학습한 것은 별도로 추가
-            if (!wordFirstAttempts[wordKey]) {
-                wordFirstAttempts[wordKey] = {
-                    word: word,
-                    time: reviewTime,
-                    isCorrect: isCorrect,
-                    card: card,
-                    isFirstStudyToday: true,
-                    // 상태 정보 추가
-                    isTodayStudy: card.isTodayStudy,
-                    studyType: card.isTodayStudy === false ? 'valid' : 'waiting', // valid: 오답률 반영, waiting: 대기중 학습
-                    folderId: card.folderId
-                };
-            }
+            // 모든 학습 시도를 별도 항목으로 추가 (서버 로직과 일치)
+            wordFirstAttempts[wordKey] = {
+                word: word,
+                time: reviewTime,
+                isCorrect: isCorrect,
+                card: card,
+                isFirstStudyToday: true,
+                // 상태 정보 추가
+                isTodayStudy: card.isTodayStudy,
+                studyType: card.isTodayStudy === false ? 'valid' : 'waiting', // valid: 오답률 반영, waiting: 대기중 학습
+                folderId: card.folderId
+            };
             
-            // 단어별 모든 학습 기록은 상세보기용으로 저장
+            // 단어별 모든 학습 기록 저장 (상세보기용)
             if (!wordCounts[word]) {
                 wordCounts[word] = { correct: 0, wrong: 0, total: 0 };
             }
@@ -168,8 +161,6 @@ export default function SrsDashboard() {
             } else {
                 wordCounts[word].wrong++;
             }
-            
-            totalAttempts++;
         });
         
         // 디버깅: wordFirstAttempts 로그
@@ -180,27 +171,49 @@ export default function SrsDashboard() {
         console.log('todayStudyLog.studies length:', todayStudyLog.studies?.length);
         console.log('===============================');
 
-        // API에서 제공하는 통계 사용 (더 정확함)
+        // 서버 제공 통계를 우선 사용하되, 수학적 엄밀성 확보
         let errorRate = 0;
+        let finalTotalAttempts = totalAttempts;
+        
         if (todayStudyLog.stats) {
-            // 전체 학습 횟수는 totalStudied 사용
-            totalAttempts = todayStudyLog.stats.totalStudied;
-            // 오답률은 서버에서 계산된 값을 직접 사용 (단어별 첫 번째 학습만 반영)
-            errorRate = todayStudyLog.stats.errorRate;
-            const actualValidForStats = todayStudyLog.stats.actualValidStudiedForStats || todayStudyLog.stats.validStudiedForStats || totalAttempts;
-        } else {
-            // 백업: 프론트엔드에서 단어별 첫 번째 학습 결과로 계산
-            const firstAttempts = Object.values(wordFirstAttempts);
-            const uniqueAttempts = firstAttempts.length;
-            const uniqueWrongAttempts = firstAttempts.filter(attempt => !attempt.isCorrect).length;
+            // 서버에서 계산된 통계 사용 (수학적으로 정확함)
+            errorRate = todayStudyLog.stats.errorRate || 0;
             
-            errorRate = uniqueAttempts > 0 ? Math.round((uniqueWrongAttempts / uniqueAttempts) * 100) : 0;
+            // 서버에서 제공하는 todayTotalAttempts 사용 (정식 학습 시도 횟수만, 대기 중 학습 제외)
+            if (todayStudyLog.stats.todayTotalAttempts !== undefined) {
+                finalTotalAttempts = todayStudyLog.stats.todayTotalAttempts;
+                console.log(`[STATS DEBUG] Using server todayTotalAttempts: ${todayStudyLog.stats.todayTotalAttempts}`);
+            } else {
+                finalTotalAttempts = totalAttempts; // 클라이언트 계산 백업
+                console.log(`[STATS DEBUG] Server todayTotalAttempts not available, using client: ${totalAttempts}`);
+            }
+            
+            console.log(`[STATS DEBUG] Server stats - todayTotalAttempts: ${todayStudyLog.stats.todayTotalAttempts}, totalAttempts: ${todayStudyLog.stats.totalAttempts}, errorRate: ${todayStudyLog.stats.errorRate}%`);
+            console.log(`[STATS DEBUG] Client calculated - totalAttempts: ${totalAttempts}`);
+            
+            // 디버깅: 서버와 클라이언트 학습 횟수 비교
+            if (todayStudyLog.stats.todayTotalAttempts && totalAttempts !== todayStudyLog.stats.todayTotalAttempts) {
+                console.warn(`[STATS MISMATCH] Client: ${totalAttempts}, Server: ${todayStudyLog.stats.todayTotalAttempts}`);
+            }
+        } else {
+            // 백업: 수학적으로 엄밀한 프론트엔드 계산
+            // isTodayStudy=false인 학습만 오답률 계산에 포함 (서버 로직과 일치)
+            const validAttempts = Object.values(wordFirstAttempts).filter(attempt => 
+                attempt.studyType === 'valid' // isTodayStudy=false인 경우만
+            );
+            const validWrongAttempts = validAttempts.filter(attempt => !attempt.isCorrect);
+            
+            errorRate = validAttempts.length > 0 ? 
+                Math.round((validWrongAttempts.length / validAttempts.length) * 100) : 0;
+                
+            console.log(`[FALLBACK STATS] Valid attempts: ${validAttempts.length}, Wrong: ${validWrongAttempts.length}, Error rate: ${errorRate}%`);
+            console.log(`[FALLBACK STATS] Total attempts (including waiting): ${totalAttempts}`);
         }
 
         return { 
             wordCounts, 
             wordFirstAttempts, // 첫 시도 추적 데이터
-            totalAttempts, // API 데이터가 있을 때는 API 데이터만 사용
+            totalAttempts: finalTotalAttempts, // 서버 데이터 우선, 백업시 클라이언트 계산
             errorRate,
             isEstimated: false
         };

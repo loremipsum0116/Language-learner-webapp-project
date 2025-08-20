@@ -2635,7 +2635,8 @@ router.get('/study-log', async (req, res, next) => {
         console.log(`[STUDY LOG] Querying study log for user ${userId} on ${dateParam}`);
         console.log(`[STUDY LOG] Date range: ${startOfDay.toISOString()} to ${endOfDay.toISOString()}`);
         
-        const studiedItems = await prisma.srsfolderitem.findMany({
+        // 표시용: 모든 오늘 학습한 단어들 조회 (대기상태 포함)
+        const allStudiedItems = await prisma.srsfolderitem.findMany({
             where: {
                 srscard: {
                     userId: userId,
@@ -2676,7 +2677,7 @@ router.get('/study-log', async (req, res, next) => {
         });
 
         // vocab 정보를 별도로 조회
-        const vocabIds = studiedItems.map(item => item.srscard.itemId);
+        const vocabIds = allStudiedItems.map(item => item.srscard.itemId);
         const vocabs = vocabIds.length > 0 ? await prisma.vocab.findMany({
             where: {
                 id: { in: vocabIds }
@@ -2690,7 +2691,7 @@ router.get('/study-log', async (req, res, next) => {
 
         // vocab 정보와 매핑
         const vocabMap = new Map(vocabs.map(v => [v.id, v]));
-        const enrichedCards = studiedItems.map(item => ({
+        const allEnrichedCards = allStudiedItems.map(item => ({
             id: item.srscard.id,
             itemId: item.srscard.itemId,
             stage: item.srscard.stage,
@@ -2711,47 +2712,54 @@ router.get('/study-log', async (req, res, next) => {
         // 현재 시간
         const now = new Date();
         
-        // 모든 오늘 학습한 카드를 포함 (이전 기여값 고정 방식으로 처리)
-        const validCardsForStats = enrichedCards; // 모든 카드 포함
+        // 표시용: 모든 학습한 카드 (대기상태 포함)
+        const displayCards = allEnrichedCards;
         
-        console.log(`[STUDY LOG] Including all ${validCardsForStats.length} cards for error rate calculation (contribution locking method)`);
-        
-        // 학습 통계 계산 - 전체 학습 기록은 그대로 표시하되, 오답률은 유효한 카드들만 계산
-        const totalStudied = enrichedCards.length;
-        const validStudiedForStats = validCardsForStats.length;
-        const uniqueWords = new Set(enrichedCards.map(card => card.vocab?.lemma || 'unknown')).size;
-        
-        console.log(`[STUDY LOG] Raw query result: ${studiedItems.length} items`);
-        console.log(`[STUDY LOG] After enrichment: ${totalStudied} items`);
-        console.log(`[STUDY LOG] Valid for stats: ${validStudiedForStats} items`);
-        console.log(`[STUDY LOG] Found ${totalStudied} studied items for user ${userId} (${validStudiedForStats} valid for stats):`);
-        enrichedCards.forEach(item => {
-            console.log(`  - ${item.vocab?.lemma}: lastReviewedAt=${item.lastReviewedAt?.toISOString()}, learningCurveType=${item.learningCurveType}, correct=${item.correctTotal}, wrong=${item.wrongTotal}, waitingUntil=${item.waitingUntil?.toISOString()}, frozenUntil=${item.frozenUntil?.toISOString()}`);
-        });
-        
-        // 폴더별 단어별로 첫 번째 학습 결과만 오답률 계산에 사용 (꼼수 방지)
-        // 같은 단어라도 다른 폴더에서 학습한 것은 별개로 처리
-        const uniqueWordResults = new Map();
-        
-        validCardsForStats.forEach(card => {
-            const folderWordKey = `${card.folderId}_${card.itemId}`;
-            
-            // 같은 폴더의 같은 단어에서만 중복 제거 (다른 폴더는 별개)
-            if (uniqueWordResults.has(folderWordKey)) {
-                const existing = uniqueWordResults.get(folderWordKey);
-                if (new Date(card.lastReviewedAt) < new Date(existing.lastReviewedAt)) {
-                    uniqueWordResults.set(folderWordKey, card);
-                }
-            } else {
-                uniqueWordResults.set(folderWordKey, card);
+        // 통계용: 오늘 정식 학습한 카드들 (현재 정식 학습 + 정식 학습 후 대기상태 전환)
+        const statsCards = allEnrichedCards.filter(card => {
+            // 케이스 1: 현재 정식 학습 상태 (isTodayStudy=false)
+            if (!card.isTodayStudy) {
+                return true;
             }
+            
+            // 케이스 2: 대기상태이지만 오늘 정식 학습한 카드
+            // 판단 기준: correctTotal > 0 또는 wrongTotal > 0이고, todayFirstResult가 설정되어 있음
+            if (card.isTodayStudy && card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                const hasOfficialStudy = (card.correctTotal > 0) || (card.wrongTotal > 0);
+                if (hasOfficialStudy) {
+                    console.log(`  [STATS INCLUSION] ${card.vocab?.lemma}: isTodayStudy=true but has official study (${card.correctTotal}✓/${card.wrongTotal}✗) -> INCLUDED`);
+                    return true;
+                }
+            }
+            
+            return false;
         });
         
-        // 실제 오답률 계산에 사용할 유일한 단어들
-        const uniqueCardResults = Array.from(uniqueWordResults.values());
+        console.log(`[STUDY LOG] Display cards (all): ${displayCards.length}`);
+        console.log(`[STUDY LOG] Stats cards (official study): ${statsCards.length}`);
         
-        // 모든 오늘 학습한 카드를 오답률 계산에 포함 (제외하지 않음)
-        const validCardsForErrorRate = uniqueCardResults; // 모든 카드 포함
+        // 학습 통계 계산
+        const totalStudied = displayCards.length; // 표시용
+        const uniqueWords = new Set(displayCards.map(card => card.vocab?.lemma || 'unknown')).size;
+        
+        console.log(`[STUDY LOG] Raw query result: ${allStudiedItems.length} items`);
+        console.log(`[STUDY LOG] After enrichment: ${totalStudied} items for display`);
+        console.log(`[STUDY LOG] Valid for stats: ${statsCards.length} items`);
+        console.log(`[STUDY LOG] Found ${totalStudied} studied items for user ${userId} (${statsCards.length} valid for stats):`);
+        displayCards.forEach(item => {
+            console.log(`  - ${item.vocab?.lemma}: lastReviewedAt=${item.lastReviewedAt?.toISOString()}, learningCurveType=${item.learningCurveType}, correct=${item.correctTotal}, wrong=${item.wrongTotal}, isTodayStudy=${item.isTodayStudy}`);
+        });
+        
+        // 통계 계산은 statsCards만 사용
+        const validStudyAttempts = statsCards;
+        
+        console.log(`[STUDY LOG] Using ${validStudyAttempts.length} cards for statistics calculation (isTodayStudy=false only)`);
+        
+        // 실제 오답률 계산에 사용할 정식 학습 시도들
+        const uniqueCardResults = validStudyAttempts; // 모든 정식 학습 시도를 개별적으로 계산
+        
+        // 모든 정식 학습 시도를 오답률 계산에 포함
+        const validCardsForErrorRate = uniqueCardResults;
         
         console.log(`[ERROR RATE INCLUSION] All ${validCardsForErrorRate.length} cards included for error rate calculation`);
         
@@ -2762,92 +2770,50 @@ router.get('/study-log', async (req, res, next) => {
             console.log(`  ${index + 1}. ${card.vocab?.lemma}: correct=${card.correctTotal}, wrong=${card.wrongTotal}, total=${totalAttempts}, curve=${card.learningCurveType}, isTodayStudy=${card.isTodayStudy}, todayFirstResult=${card.todayFirstResult}`);
         });
         
-        // 학습 곡선 타입별 차별화된 오답률 계산 - 이전 기여값 고정 방식
-        const successfulReviews = validCardsForErrorRate.filter(card => {
-            if (card.learningCurveType === 'free') {
-                // 자율학습 모드: 기존 로직 유지
-                if (!card.isTodayStudy) {
-                    console.log(`  [FREE MODE - NOT TODAY STUDY] ${card.vocab?.lemma}: EXCLUDED`);
-                    return false;
-                }
-                
-                // todayFirstResult 필드가 있으면 이를 사용 (완벽한 첫 시도 결과)
-                if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                    const isSuccess = card.todayFirstResult === true;
-                    console.log(`  [FREE MODE - TODAY FIRST RESULT] ${card.vocab?.lemma}: ${isSuccess ? 'SUCCESS' : 'FAIL'} (fixed)`);
-                    return isSuccess;
-                }
-                
-                // 백업: todayFirstResult가 없는 경우 기존 로직 사용
-                const totalAttempts = (card.correctTotal || 0) + (card.wrongTotal || 0);
-                if (totalAttempts === 0) {
-                    console.log(`  [FREE MODE - NO ATTEMPTS] ${card.vocab?.lemma}: EXCLUDED`);
-                    return false;
-                } else if (totalAttempts === 1) {
-                    const isSuccess = card.correctTotal === 1;
-                    console.log(`  [FREE MODE - SINGLE ATTEMPT] ${card.vocab?.lemma}: ${isSuccess ? 'SUCCESS' : 'FAIL'}`);
-                    return isSuccess;
-                } else {
-                    // 여러 시도인 경우 불확실하므로 제외
-                    console.log(`  [FREE MODE - MULTIPLE ATTEMPTS] ${card.vocab?.lemma}: EXCLUDED (ambiguous)`);
-                    return false;
-                }
-            } else {
-                // 장기/단기 학습 모드: 이전 기여값 고정 방식
-                if (card.isTodayStudy === false) {
-                    // overdue/미학습 상태에서 학습: 현재 시도 결과 사용
-                    if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                        const isSuccess = card.todayFirstResult === true;
-                        console.log(`  [REGULAR SRS - CURRENT RESULT] ${card.vocab?.lemma}: ${isSuccess ? 'SUCCESS' : 'FAIL'} (todayFirstResult)`);
-                        return isSuccess;
-                    } else {
-                        // 백업: 총 성공률로 판단
-                        const totalAttempts = (card.correctTotal || 0) + (card.wrongTotal || 0);
-                        if (totalAttempts === 0) {
-                            console.log(`  [REGULAR SRS - NO ATTEMPTS] ${card.vocab?.lemma}: EXCLUDED`);
-                            return false;
-                        } else {
-                            const successRate = card.correctTotal / totalAttempts;
-                            const isSuccess = successRate >= 0.6;
-                            console.log(`  [REGULAR SRS - BACKUP] ${card.vocab?.lemma}: successRate=${(successRate*100).toFixed(1)}%, ${isSuccess ? 'SUCCESS' : 'FAIL'}`);
-                            return isSuccess;
-                        }
-                    }
-                } else {
-                    // 대기중 상태에서 학습: 이전 기여값 고정 (대기중 전 상태 유지)
-                    const totalAttempts = (card.correctTotal || 0) + (card.wrongTotal || 0);
-                    if (totalAttempts === 0) {
-                        console.log(`  [REGULAR SRS - WAITING PERIOD] ${card.vocab?.lemma}: NO PREVIOUS ATTEMPTS, excluded`);
-                        return false;
-                    } else {
-                        const successRate = card.correctTotal / totalAttempts;
-                        const isSuccess = successRate >= 0.6;
-                        console.log(`  [REGULAR SRS - WAITING PERIOD] ${card.vocab?.lemma}: FIXED previous result - successRate=${(successRate*100).toFixed(1)}%, ${isSuccess ? 'SUCCESS' : 'FAIL'} (contribution locked)`);
-                        return isSuccess;
-                    }
-                }
-            }
-        }).length;
+        // 오늘 학습 횟수 계산: 오늘 정식 학습한 카드의 개수 (각 카드당 1회)
+        const todayTotalAttempts = validCardsForErrorRate.length; // 카드 개수만 카운트
+        console.log(`[TODAY TOTAL ATTEMPTS] ${todayTotalAttempts} cards studied today (1 attempt per card)`);
+        
+        // 오답률 계산: 전체 누적 correctTotal/wrongTotal 사용
+        let totalCorrectAttempts = 0;
+        let totalWrongAttempts = 0;
+        
+        validCardsForErrorRate.forEach(card => {
+            const correct = card.correctTotal || 0;
+            const wrong = card.wrongTotal || 0;
+            totalCorrectAttempts += correct;
+            totalWrongAttempts += wrong;
+            
+            console.log(`  [ERROR RATE CALCULATION] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (curve: ${card.learningCurveType}, isTodayStudy: ${card.isTodayStudy})`);
+        });
+        
+        const totalAttempts = totalCorrectAttempts + totalWrongAttempts;
+        console.log(`[SIMPLE ERROR RATE] Total: ${totalCorrectAttempts}✓/${totalWrongAttempts}✗ = ${totalAttempts} attempts (for error rate calculation)`);
         
         const actualValidStudiedForStats = validCardsForErrorRate.length;
-        const errorRate = actualValidStudiedForStats > 0 ? Math.round(((actualValidStudiedForStats - successfulReviews) / actualValidStudiedForStats) * 100) : 0;
+        const errorRate = totalAttempts > 0 ? Math.round((totalWrongAttempts / totalAttempts) * 100) : 0;
         
         console.log(`[ERROR RATE CALCULATION]:`);
         console.log(`  - Total unique cards: ${uniqueCardResults.length}`);
         console.log(`  - Cards studied today: ${actualValidStudiedForStats}`);
-        console.log(`  - Successful first attempts today: ${successfulReviews}`);
-        console.log(`  - Failed first attempts today: ${actualValidStudiedForStats - successfulReviews}`);
+        console.log(`  - Total correct attempts: ${totalCorrectAttempts}`);
+        console.log(`  - Total wrong attempts: ${totalWrongAttempts}`);
+        console.log(`  - Total attempts: ${totalAttempts}`);
         console.log(`  - Calculated error rate: ${errorRate}%`);
-        console.log(`  - Formula: (${actualValidStudiedForStats} - ${successfulReviews}) / ${actualValidStudiedForStats} * 100 = ${errorRate}%`);
+        console.log(`  - Formula: ${totalWrongAttempts} / ${totalAttempts} * 100 = ${errorRate}%`);
         
         return ok(res, {
             date: dateParam,
-            studies: enrichedCards,
+            studies: displayCards, // 모든 학습한 단어 표시 (대기상태 포함)
             stats: {
-                totalStudied,
-                validStudiedForStats, // 필터링 후 유효한 카드 수
+                totalStudied: displayCards.length, // 표시용 전체 개수
+                validStudiedForStats: statsCards.length, // 통계용 카드 수
                 actualValidStudiedForStats, // 실제 오답률 계산에 사용된 단어 수
                 uniqueWords,
+                todayTotalAttempts, // 오늘 학습 횟수 (통계용만)
+                totalCorrectAttempts,
+                totalWrongAttempts, 
+                totalAttempts,
                 errorRate,
                 successRate: 100 - errorRate
             }

@@ -471,5 +471,5 @@ For licensing inquiries: [licensing@danmusae.com](mailto:licensing@danmusae.com)
 **[⬆ Back to Top](#단무새-danmusae---advanced-english-vocabulary-learning-platform)**
 
 Built with modern web technologies for scalable language education.
-
+ 
 </div>
