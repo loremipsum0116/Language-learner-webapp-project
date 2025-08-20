@@ -2722,7 +2722,19 @@ router.get('/study-log', async (req, res, next) => {
                 return true;
             }
             
-            // 케이스 2: 대기상태이지만 오늘 정식 학습한 카드
+            // 자율학습 모드의 경우: todayFirstResult가 설정되어 있으면 통계에 포함
+            // (재학습이어도 첫 학습 결과를 사용하여 통계에 포함)
+            if (card.learningCurveType === 'free') {
+                if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                    console.log(`  [FREE LEARNING INCLUSION] ${card.vocab?.lemma}: Free mode with todayFirstResult=${card.todayFirstResult} -> INCLUDED in stats (first result used)`);
+                    return true; // 자율학습에서 첫 학습 기록이 있으면 통계에 포함
+                } else {
+                    console.log(`  [FREE LEARNING EXCLUSION] ${card.vocab?.lemma}: Free mode without todayFirstResult -> EXCLUDED from stats`);
+                    return false; // 첫 학습 기록이 없으면 제외
+                }
+            }
+            
+            // 장기/단기 모드의 경우: 케이스 2 - 대기상태이지만 오늘 정식 학습한 카드
             // 판단 기준: correctTotal > 0 또는 wrongTotal > 0이고, todayFirstResult가 설정되어 있음
             if (card.isTodayStudy && card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
                 const hasOfficialStudy = (card.correctTotal > 0) || (card.wrongTotal > 0);
@@ -2774,17 +2786,35 @@ router.get('/study-log', async (req, res, next) => {
         const todayTotalAttempts = validCardsForErrorRate.length; // 카드 개수만 카운트
         console.log(`[TODAY TOTAL ATTEMPTS] ${todayTotalAttempts} cards studied today (1 attempt per card)`);
         
-        // 오답률 계산: 전체 누적 correctTotal/wrongTotal 사용
+        // 오답률 계산: 학습 모드별로 다른 계산 방식 적용
         let totalCorrectAttempts = 0;
         let totalWrongAttempts = 0;
         
         validCardsForErrorRate.forEach(card => {
-            const correct = card.correctTotal || 0;
-            const wrong = card.wrongTotal || 0;
+            let correct, wrong;
+            
+            if (card.learningCurveType === 'free') {
+                // 자율학습 모드: 당일 첫 학습 기록만 사용 (1회 고정)
+                if (card.todayFirstResult === true) {
+                    correct = 1;
+                    wrong = 0;
+                } else if (card.todayFirstResult === false) {
+                    correct = 0; 
+                    wrong = 1;
+                } else {
+                    correct = 0;
+                    wrong = 0;
+                }
+                console.log(`  [ERROR RATE - FREE] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (today first: ${card.todayFirstResult})`);
+            } else {
+                // 장기/단기 모드: 전체 누적 사용 (기존 로직 유지)
+                correct = card.correctTotal || 0;
+                wrong = card.wrongTotal || 0;
+                console.log(`  [ERROR RATE - SRS] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (accumulated)`);
+            }
+            
             totalCorrectAttempts += correct;
             totalWrongAttempts += wrong;
-            
-            console.log(`  [ERROR RATE CALCULATION] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (curve: ${card.learningCurveType}, isTodayStudy: ${card.isTodayStudy})`);
         });
         
         const totalAttempts = totalCorrectAttempts + totalWrongAttempts;

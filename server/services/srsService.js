@@ -482,13 +482,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     let shouldFixTodayResult = false;
     
     if (learningCurveType === 'free') {
-        // 자율학습 모드: 오늘 첫 학습 또는 날짜가 바뀐 후 첫 학습만 통계에 반영
-        if (!card.isTodayStudy || cardStudyDate !== today) {
+        // 자율학습 모드: todayFirstResult가 null이면 첫 학습, 아니면 재학습
+        if (card.todayFirstResult === null || card.todayFirstResult === undefined || cardStudyDate !== today) {
             // 오늘 첫 학습 또는 날짜가 바뀜 - 통계에 반영됨
             isFirstStudyToday = true;
-            console.log(`[TODAY STUDY FREE MODE] Card ${cardId}: First study today - WILL BE COUNTED (isTodayStudy: ${card.isTodayStudy}, cardStudyDate: ${cardStudyDate}, today: ${today})`);
+            console.log(`[TODAY STUDY FREE MODE] Card ${cardId}: First study today - WILL BE COUNTED (todayFirstResult: ${card.todayFirstResult}, cardStudyDate: ${cardStudyDate}, today: ${today})`);
         } else {
-            // 이미 오늘 학습한 카드 - 통계에 반영되지 않음
+            // 이미 오늘 학습한 카드 (todayFirstResult가 설정되어 있음) - 통계에 반영되지 않음
             shouldFixTodayResult = true;
             console.log(`[TODAY STUDY FREE MODE] Card ${cardId}: Already studied today - WILL NOT BE COUNTED, first result was: ${card.todayFirstResult ? 'CORRECT' : 'WRONG'}`);
         }
@@ -689,9 +689,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
                 let todayStudyUpdate = {
                     isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                    todayFirstResult: true, // 정답 처리
                     todayStudyDate: now
                 };
+                
+                // 첫 학습인 경우에만 todayFirstResult 설정
+                if (shouldCountInStats) {
+                    todayStudyUpdate.todayFirstResult = true; // 정답 처리
+                }
                 console.log(`[MASTERY CORRECT - WRONG ANSWER CARD] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
                 
                 await prisma.srscard.update({
@@ -708,7 +712,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isMastered: true, // 마스터 완료 표시
                         masteredAt: now, // 마스터 완료 시각
                         masterCycles: { increment: 1 }, // 마스터 사이클 증가
-                        correctTotal: { increment: 1 },
                         ...todayStudyUpdate
                     }
                 });
@@ -740,9 +743,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
                 let todayStudyUpdate = {
                     isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                    todayFirstResult: true, // 정답 처리
                     todayStudyDate: now
                 };
+                
+                // 첫 학습인 경우에만 todayFirstResult 설정
+                if (shouldCountInStats) {
+                    todayStudyUpdate.todayFirstResult = true; // 정답 처리
+                }
                 console.log(`[UPGRADE CORRECT - WRONG ANSWER CARD] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
                 
                 await prisma.srscard.update({
@@ -756,7 +763,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         overdueStartAt: null,
                         isFromWrongAnswer: false, // 정답 처리로 일반 카드로 전환
                         wrongStreakCount: 0, // 연속 오답 리셋
-                        correctTotal: { increment: 1 },
                         ...todayStudyUpdate
                     }
                 });
@@ -781,9 +787,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
                 let todayStudyUpdate = {
                     isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                    todayFirstResult: true, // 정답 처리
                     todayStudyDate: now
                 };
+                
+                // 첫 학습인 경우에만 todayFirstResult 설정
+                if (shouldCountInStats) {
+                    todayStudyUpdate.todayFirstResult = true; // 정답 처리
+                }
                 console.log(`[MASTERY CORRECT - NORMAL CARD] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
                 
                 await prisma.srscard.update({
@@ -798,7 +808,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isMastered: true, // 마스터 완료 표시
                         masteredAt: now, // 마스터 완료 시각
                         masterCycles: { increment: 1 }, // 마스터 사이클 증가
-                        correctTotal: { increment: 1 },
                         ...todayStudyUpdate
                     }
                 });
@@ -830,9 +839,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
                 let todayStudyUpdate = {
                     isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                    todayFirstResult: true, // 정답 처리
                     todayStudyDate: now
                 };
+                
+                // 첫 학습인 경우에만 todayFirstResult 설정
+                if (shouldCountInStats) {
+                    todayStudyUpdate.todayFirstResult = true; // 정답 처리
+                }
                 console.log(`[UPGRADE CORRECT - NORMAL CARD] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
                 
                 await prisma.srscard.update({
@@ -844,7 +857,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                         isOverdue: false,
                         overdueDeadline: null,
                         overdueStartAt: null,
-                        correctTotal: { increment: 1 },
                         ...todayStudyUpdate
                     }
                 });
@@ -871,24 +883,32 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
             let todayStudyUpdate = {
                 isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                todayFirstResult: false, // 오답 처리
                 todayStudyDate: now
             };
             
+            // 첫 학습인 경우에만 todayFirstResult 설정
+            if (shouldCountInStats) {
+                todayStudyUpdate.todayFirstResult = false; // 오답 처리
+            }
+            
+            // 업데이트 데이터 준비
+            let updateData = {
+                stage: newStage,
+                nextReviewAt: null,
+                waitingUntil: null,
+                isOverdue: false,
+                overdueDeadline: null,
+                overdueStartAt: null,
+                isFromWrongAnswer: true,
+                wrongStreakCount: { increment: 1 },
+                ...todayStudyUpdate
+            };
+            
+            // wrongTotal은 마지막에 통합 처리
+            
             await prisma.srscard.update({
                 where: { id: cardId },
-                data: {
-                    stage: newStage,
-                    nextReviewAt: null,
-                    waitingUntil: null,
-                    isOverdue: false,
-                    overdueDeadline: null,
-                    overdueStartAt: null,
-                    isFromWrongAnswer: true,
-                    wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 },  // ✅ 자율모드에서도 wrongTotal 증가
-                    ...todayStudyUpdate
-                }
+                data: updateData
             });
             
             console.log(`[SRS SERVICE] Free mode wrong answer - stage ${card.stage} → ${newStage}, no timers, wrongTotal incremented`);
@@ -921,9 +941,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
             let todayStudyUpdate = {
                 isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                todayFirstResult: false, // 오답 처리
                 todayStudyDate: now
             };
+            
+            // 첫 학습인 경우에만 todayFirstResult 설정
+            if (shouldCountInStats) {
+                todayStudyUpdate.todayFirstResult = false; // 오답 처리
+            }
             console.log(`[OVERDUE WRONG] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
             
             await prisma.srscard.update({
@@ -937,7 +961,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     overdueStartAt: null, // 대기 중에는 overdue 시작 시점 없음  
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 },
                     ...todayStudyUpdate
                 }
             });
@@ -961,9 +984,13 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // isTodayStudy 설정: 통계 반영 여부와 반대로 설정 (통계 반영=false, 미반영=true)
             let todayStudyUpdate = {
                 isTodayStudy: !shouldCountInStats, // 통계 반영하면 false, 안하면 true
-                todayFirstResult: false, // 오답 처리
                 todayStudyDate: now
             };
+            
+            // 첫 학습인 경우에만 todayFirstResult 설정
+            if (shouldCountInStats) {
+                todayStudyUpdate.todayFirstResult = false; // 오답 처리
+            }
             console.log(`[NORMAL WRONG] Card ${cardId}: Setting isTodayStudy=${!shouldCountInStats} (shouldCountInStats=${shouldCountInStats}) - ${shouldCountInStats ? 'COUNTED' : 'NOT COUNTED'} in stats`);
             
             await prisma.srscard.update({
@@ -977,7 +1004,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                     overdueStartAt: learningCurveType === 'free' ? null : null, // 자율모드는 시작점 없음
                     isFromWrongAnswer: true,
                     wrongStreakCount: { increment: 1 },
-                    wrongTotal: { increment: 1 },
                     ...todayStudyUpdate
                 }
             });
@@ -1006,8 +1032,7 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
-                        wrongTotal: { increment: 1 },
-                        ...todayStudyUpdate
+                            ...todayStudyUpdate
                     }
                 });
                 console.log(`[FREE MODE - FIRST STUDY WRONG] Card ${cardId}: First study today - COUNTED in stats, wrongTotal incremented`);
@@ -1062,7 +1087,6 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
                 await prisma.srscard.update({
                     where: { id: cardId },
                     data: {
-                        correctTotal: { increment: 1 },
                         ...todayStudyUpdate
                     }
                 });
@@ -1179,6 +1203,25 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         console.log(`[SRS SERVICE] Wrong answer but shouldCountInStats=false (통계 미반영 상태) - skipping wrong answer note and lastWrongAt update`);
     } else {
         console.log(`[SRS SERVICE] Correct answer or no wrong answer processing needed: correct=${correct}, vocabId=${vocabId}, shouldCountInStats=${shouldCountInStats}`);
+    }
+
+    // --- correctTotal/wrongTotal 업데이트 (통계에 반영되는 학습에서만) ---
+    if (shouldCountInStats) {
+        if (correct) {
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: { correctTotal: { increment: 1 } }
+            });
+            console.log(`[SRS SERVICE] Updated correctTotal for card ${cardId} (shouldCountInStats=true)`);
+        } else {
+            await prisma.srscard.update({
+                where: { id: cardId },
+                data: { wrongTotal: { increment: 1 } }
+            });
+            console.log(`[SRS SERVICE] Updated wrongTotal for card ${cardId} (shouldCountInStats=true)`);
+        }
+    } else {
+        console.log(`[SRS SERVICE] Skipping correctTotal/wrongTotal update - shouldCountInStats=false (통계 반영 안함)`);
     }
 
     // --- 일일 학습 통계 업데이트 (통계에 반영되는 학습에서만) ---
