@@ -5,18 +5,20 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 
-const API_KEY = process.env.GOOGLE_API_KEY; // 또는 GEMINI_API_KEY
+const API_KEY = process.env.GOOGLE_API_KEY;
 if (!API_KEY) throw new Error('GOOGLE_API_KEY 가 설정되지 않았습니다.');
 
 const MODEL = 'veo-3.0-generate-preview';
-const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta'; // 리전 없음
+const BASE_URL = 'https://generativelanguage.googleapis.com/v1beta';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, 'out');
 const FINAL_OUTPUT = path.join(OUT_DIR, 'danmusae_ad_concat.mp4');
+const SUBBED_OUTPUT = path.join(OUT_DIR, 'danmusae_ad_concat_sub_ko.mp4');
+const SRT_PATH = path.join(OUT_DIR, 'captions_ko.srt');
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-/** 단순 프로세스 실행 헬퍼 */
+/** 프로세스 실행(출력 캡처 X) */
 function run(cmd, args, opts = {}) {
   return new Promise((resolve, reject) => {
     const p = spawn(cmd, args, { stdio: 'inherit', ...opts });
@@ -24,12 +26,24 @@ function run(cmd, args, opts = {}) {
     p.on('close', code => (code === 0 ? resolve() : reject(new Error(`${cmd} exited ${code}`))));
   });
 }
+/** 프로세스 실행(표준출력 캡처) */
+function runCapture(cmd, args, opts = {}) {
+  return new Promise((resolve, reject) => {
+    const p = spawn(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], ...opts });
+    let out = '', err = '';
+    p.stdout.on('data', d => (out += d.toString()));
+    p.stderr.on('data', d => (err += d.toString()));
+    p.on('error', reject);
+    p.on('close', code => (code === 0 ? resolve(out.trim()) : reject(new Error(err || `${cmd} exited ${code}`))));
+  });
+}
 
 async function ensureFfmpeg() {
   try {
     await run('ffmpeg', ['-version']);
+    await run('ffprobe', ['-version']);
   } catch {
-    throw new Error('ffmpeg 이 설치되어 있지 않거나 PATH에 없습니다. 설치 후 재시도하세요.');
+    throw new Error('ffmpeg/ffprobe 가 설치되어 있지 않거나 PATH에 없습니다. 설치 후 재시도하세요.');
   }
 }
 
@@ -41,16 +55,16 @@ async function startJob(prompt) {
       'x-goog-api-key': API_KEY,
     },
     body: JSON.stringify({
-      // REST 스키마는 instances/parameters 사용
+      // REST 스키마: instances/parameters
       instances: [{ prompt }],
       parameters: {
         aspectRatio: '16:9',
-        // 필요 시 옵션 추가: personGeneration, safetySettings 등
+        // 필요 시: personGeneration, safetySettings 등 추가
       },
     }),
   });
   if (!res.ok) throw new Error(`[${res.status}] 작업 시작 실패: ${await res.text()}`);
-  return res.json(); // { name: "models/.../operations/...." }
+  return res.json();
 }
 
 async function poll(operationName) {
@@ -65,7 +79,6 @@ async function poll(operationName) {
   }
 }
 
-// 리다이렉트 수동 추적(헤더 유지)로 다운로드
 async function downloadWithRedirects(url, maxHops = 5) {
   let current = url;
   for (let i = 0; i < maxHops; i++) {
@@ -85,7 +98,6 @@ async function downloadWithRedirects(url, maxHops = 5) {
   throw new Error('리다이렉트 한도 초과');
 }
 
-/** 단일 프롬프트로 클립 생성 → 파일 저장 */
 async function generateClip(prompt, fileBase) {
   console.log(`\n[START] ${fileBase} 생성 요청`);
   const op = await startJob(prompt);
@@ -104,7 +116,7 @@ async function generateClip(prompt, fileBase) {
   await fs.writeFile(rawPath, rawBuf);
   console.log(`[OK] 원본 저장: ${rawPath}`);
 
-  // 코덱/FPS 통일(24fps, h264+aac, yuv420p)
+  // 정규화(24fps, H.264/AAC)
   const normPath = path.join(OUT_DIR, `${fileBase}.mp4`);
   await run('ffmpeg', [
     '-y',
@@ -119,7 +131,6 @@ async function generateClip(prompt, fileBase) {
   return normPath;
 }
 
-/** 세 클립을 필터로 연결(concat filter_complex) */
 async function concatClips(clips, outPath) {
   console.log(`\n[MERGE] ${clips.length}개 클립 결합 → ${outPath}`);
   const args = [
@@ -140,64 +151,134 @@ async function concatClips(clips, outPath) {
   console.log('[OK] 결합 완료');
 }
 
+async function getDurationSec(filePath) {
+  const out = await runCapture('ffprobe', [
+    '-v', 'error',
+    '-show_entries', 'format=duration',
+    '-of', 'default=noprint_wrappers=1:nokey=1',
+    filePath,
+  ]);
+  const n = parseFloat(out);
+  if (!isFinite(n)) throw new Error(`ffprobe duration 파싱 실패: ${filePath} (${out})`);
+  return n;
+}
+
+function toSrtTime(sec) {
+  const ms = Math.max(0, Math.round(sec * 1000));
+  const hh = String(Math.floor(ms / 3600000)).padStart(2, '0');
+  const mm = String(Math.floor((ms % 3600000) / 60000)).padStart(2, '0');
+  const ss = String(Math.floor((ms % 60000) / 1000)).padStart(2, '0');
+  const mmm = String(ms % 1000).padStart(3, '0');
+  return `${hh}:${mm}:${ss},${mmm}`;
+}
+
+async function writeKoreanSubtitles(d1, d2, d3) {
+  // 타이밍 여유(시작/끝 마진)
+  const m = 0.20;
+
+  // P1: 2개 cue
+  const p1aStart = 0 + m;
+  const p1aEnd   = Math.min(d1 - m, d1 * 0.60);
+  const p1bStart = p1aEnd + 0.05;
+  const p1bEnd   = d1 - m;
+
+  // P2: 1개 cue
+  const off2 = d1;
+  const p2Start = off2 + m;
+  const p2End   = off2 + d2 - m;
+
+  // P3: 2개 cue
+  const off3 = d1 + d2;
+  const p3aStart = off3 + m;
+  const p3aEnd   = off3 + Math.min(d3 - m, d3 * 0.55);
+  const p3bStart = p3aEnd + 0.05;
+  const p3bEnd   = off3 + d3 - m;
+
+  const cues = [
+    // P1 A (Korean subtitles for English speech)
+    [1, p1aStart, p1aEnd,
+     '이봐, 요즘 수능 공부 중인데 영단어가 도무지 머리에 안 들어와.'],
+    [2, p1bStart, p1bEnd,
+     '어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어.'],
+
+    // P2 B
+    [3, p2Start, p2End,
+     '‘단무새’라는 앱을 써봐. 망각곡선 스케줄로 단기간에 많은 단어를 효율적으로 익힐 수 있어.'],
+
+    // P3 A, B
+    [4, p3aStart, p3aEnd,
+     '정말? 한 달에 3,300원이라니—내 지갑이 살찌겠는데!'],
+    [5, p3bStart, p3bEnd,
+     '귀여운 단무새가 네 머리를 영어사전으로 만들어 줄 거야, 친구!'],
+  ];
+
+  let srt = '';
+  for (const [idx, s, e, text] of cues) {
+    srt += `${idx}\n${toSrtTime(s)} --> ${toSrtTime(e)}\n${text}\n\n`;
+  }
+  await fs.writeFile(SRT_PATH, srt, 'utf8');
+  console.log(`[OK] SRT 저장: ${SRT_PATH}`);
+}
+
+async function burnSubtitles(input, srt, output) {
+  // Windows 한글 글꼴 가정(맑은 고딕). 없으면 기본 폰트로 렌더링됩니다.
+  const vf = `subtitles='${srt.replace(/\\/g, '\\\\').replace(/:/g, '\\:').replace(/'/g, "\\'")}':force_style='FontName=Malgun Gothic,Fontsize=28,Outline=1,BorderStyle=3,Alignment=2'`;
+  await run('ffmpeg', ['-y', '-i', input, '-vf', vf, '-c:v', 'libx264', '-c:a', 'aac', '-movflags', '+faststart', output]);
+  console.log(`[OK] 자막 번인 완료: ${output}`);
+}
+
 async function main() {
   await fs.mkdir(OUT_DIR, { recursive: true });
   await ensureFfmpeg();
 
-  // ===== 분할 프롬프트 3개 =====
-// === 추가: 공통 캐릭터 고정 규칙 ===
-const CONSISTENCY = `
-# 캐릭터 고정(모든 클립 공통, 강제)
-- 장면에는 흑인 남성 두 명만 주연으로 등장한다. 인종/피부색/얼굴형/체형/헤어스타일이 바뀌지 않는다.
-- 인물 A: 흑인 남성, 체격 풍만(뚱뚱한 편), 스킨헤드(민 머리), 턱수염 없음.
-  의상: 검은색 후디 + 회색 조거팬츠. 소품: 왼손에 치즈버거(노란 포장지).
-- 인물 B: 흑인 남성, 보통 체형, 짧은 곱슬머리.
-  의상: 청재킷 + 흰 티셔츠 + 진청 바지. 소품 없음.
-- 위 두 인물의 외형·의상·소품·피부톤·얼굴 비율은 모든 클립에서 동일하게 유지된다.
-- 아시아인/백인/히스패닉 등 다른 인종 캐스팅으로의 변경은 금지한다.
-- 배경 인물(엑스트라)은 있어도 되지만, 얼굴이 식별되지 않도록 후방 실루엣/보케 수준으로 제한한다.
-- 조명 톤, 시간대(해질녘), 렌즈/색감은 씬1과 동일하게 유지한다.
-- 화면비 16:9, 사실적 톤, 자연광 느낌의 컬러.
-- 카메라 고정 기준: 카메라 높이 **눈높이±10cm**, 시선 방향 **전진 15°**, 초점거리 **35mm 상당**, 셔터 **1/50s**, ISO/화이트밸런스는 씬1과 동일.
+  // ===== 공통 캐릭터 고정 =====
+  const CONSISTENCY = `
+# Character consistency (apply to ALL clips, strong)
+- Only TWO Black male leads appear; do NOT change race/skin tone/face/body shape/hairstyle.
+- A: Black male, heavyset, clean-shaven, shaved head. Outfit: black hoodie + gray joggers. Prop: left hand holding a cheeseburger (yellow wrapper).
+- B: Black male, average build, short curly hair. Outfit: denim jacket + white T-shirt + dark jeans.
+- Keep identical looks, outfits, props, and skin tones across all clips.
+- Extras are allowed only as unfocused silhouettes; no identifiable faces.
+- Time of day: dusk. Natural, realistic color grade. 16:9.
+- Camera baseline: eye level ±10cm, forward 15°, ~35mm eq., 1/50s; WB/ISO same across clips.
+- IMPORTANT: All dialogue MUST be in natural ENGLISH. Do NOT add on-screen text, captions, signs, or subtitles. Voices should sound natural.
 `;
 
-const P1 = `
+  // ===== 분할 프롬프트 3개 (영어 대사 + 한국어 자막은 후처리) =====
+  const P1 = `
 ${CONSISTENCY}
-# 씬 1/3 — 도입(약 7–8초)
-해질녘 도시 인도. 두 명의 흑인 남성이 나란히 걷는다. 네온 간판이 켜지고, 도시 앰비언스가 은은하다.
-A: (설정 고정) 스킨헤드, 체격 풍만, 검은 후디+회색 조거팬츠, 왼손에 치즈버거.
-B: (설정 고정) 짧은 곱슬머리, 청재킷+흰 티셔츠.
-A(투덜이며, 한국어 대사): "이봐 친구, 요즘 말야. 수능을 공부하고 있는데, 도대체가 영단어를 암기하려 해도 머릿속에 들어오질 않는거야! 어제도 노트에다가 수백 번을 끄적였는데, 결국 아까운 볼펜 잉크만 낭비했지 뭐야."
-# 연출: 와이드 투샷 → A 미디엄으로 천천히 팬. A는 햄버거를 한 손에 든 채 자연스럽게 씹고(입 모양 과장 금지), 다른 손으로 가볍게 제스처.
-# 사운드: 대사는 한국어. 아주 약한 씹는 Foley(-20dB 이하), 도로 소음/사람들 웅성 약하게. BGM은 낮은 볼륨.
-※ 인물의 인종·피부색·의상·소품은 절대로 변경하지 말 것.
+# Scene 1/3 — Opening (~7–8s)
+A city sidewalk at dusk. Two Black men walk side by side; neon signs start to glow, urban ambience in the background.
+A (fixed look): shaved head, heavyset, black hoodie + gray joggers, holding a cheeseburger in his left hand.
+B (fixed look): short curly hair, denim jacket + white T-shirt.
+A (speaks in ENGLISH, slightly frustrated):
+"Man, I've been cramming for the exam, but English vocabulary just won't stick. I wrote them hundreds of times last night and ended up just wasting ink."
+# Direction: start on a wide two-shot → slow pan into a medium on A. Subtle handheld. Natural chewing motion, not exaggerated. No on-screen text of any kind.
+# Audio: dialogue in ENGLISH; gentle street ambience; low BGM.
 `;
 
-const P2 = `
+  const P2 = `
 ${CONSISTENCY}
-# 씬 2/3 — 제안(약 7–8초)
-[룩 앵커] P1 마지막 프레임과 동일 **구도/카메라 높이/초점거리/화이트밸런스/노출값**에서 시작. (카메라 위치·피사계 심도·WB·노출값 동일)
-[연속성 고정] 씬1과 동일 인물/의상/피부톤/조명/색감. 캐스팅 변경 금지(아시아인 등장 금지).
-A는 여전히 햄버거를 손에 든 상태(한두 번만 가볍게 베어 먹음). B가 아이디어가 떠오른 듯 제스처.
-B(설명, 한국어 대사): "음… 좋은 방법이 있었는데… 그래! 생각났어! 내가 현재 사용하고 있는 '단무새'라는 앱이 있다고. 망각 학습 곡선을 활용해서, 너처럼 시험 준비할 땐 단기간에 엄청나게 많은 단어를 효과적으로 학습할 수 있어!"
-# 연출: B 클로즈업. 손짓 강조, 배경 보케. A는 프레임 가장자리에서 햄버거를 들고 고개 끄덕이며 경청.
-# 사운드: 한국어 대사, 거리 앰비언스 유지. A의 씹는 소리는 최소화(대사 방해 금지). BGM 일관성.
-※ 인물의 인종·피부색·의상·소품은 절대로 변경하지 말 것.
+# Scene 2/3 — Suggestion (~7–8s)
+[Look anchor] Start with the SAME framing/light/exposure as the last frame of Scene 1. Keep characters, outfits, and tones IDENTICAL.
+A still holds the burger; B gestures as an idea clicks.
+B (speaks in ENGLISH, friendly, concise):
+"Try an app called Danmusae. It uses a scientifically proven forgetting-curve schedule so you can learn a huge number of words efficiently in a short time."
+# Direction: close-up on B; soft background bokeh. A nods at frame edge. NO captions or text overlays.
+# Audio: ENGLISH dialogue; ambience continuity; keep A’s chewing sounds minimal.
 `;
 
-const P3 = `
+  const P3 = `
 ${CONSISTENCY}
-# 씬 3/3 — 해소/마무리(약 7–8초)
-[룩 앵커] P1 마지막 프레임과 동일 **구도/카메라 높이/초점거리/화이트밸런스/노출값**에서 시작. (카메라 위치·피사계 심도·WB·노출값 동일)
-[연속성 고정] 씬1·씬2와 동일 인물/의상/피부톤/조명/색감. 캐스팅 변경 금지(아시아인 등장 금지).
-A의 표정이 밝아진다. 햄버거를 잠시 내리고(또는 한 손에 편하게 들고) 둘이 나란히 걸으며 결론부 대사.
-A(휴대폰을 들여다보며 기쁜 표정, 한국어 대사): "하느님 맙소사, 한달에 3300원? 내 지갑이 살찌겠군!"
-B(미소, 한국어 대사): "귀여운 단무새가 자네 머리를 영어사전으로 만들어줄걸세, 친구!"
-# 연출: A 클로즈업(햄버거 과도한 클로즈업 금지) → 투샷으로 마무리, 햇살 플레어 살짝. 마지막 프레임 자연스런 페이드아웃.
-# 사운드: 한국어 대사 선명, 긍정적 짧은 엔딩 큐. 앰비언스 일관성 유지.
-※ 인물의 인종·피부색·의상·소품은 절대로 변경하지 말 것.
+# Scene 3/3 — Resolution (~7–8s)
+[Look anchor] Start with the SAME framing/light/exposure as Scene 1’s last frame. No changes to race/looks/outfits.
+A (checks his phone; delighted) speaks in ENGLISH:
+"Oh my God—3,300 won per month? My wallet’s going to get fat!"
+B (smiles, in ENGLISH):
+"Danmusae will give you wings, my friend!"
+# Direction: close-up on A → finish on a two-shot with a subtle sun flare; natural fade out. NO on-screen text.
+# Audio: clear ENGLISH dialogue; short positive end sting; ambience continuity.
 `;
-
 
   // ===== 생성 파이프라인 =====
   const clip1 = await generateClip(P1, 'clip1');
@@ -206,6 +287,15 @@ B(미소, 한국어 대사): "귀여운 단무새가 자네 머리를 영어사�
 
   await concatClips([clip1, clip2, clip3], FINAL_OUTPUT);
   console.log(`\n완료: ${FINAL_OUTPUT}`);
+
+  // ===== 각 클립 길이 측정 → SRT 작성 → 자막 번인 =====
+  const d1 = await getDurationSec(clip1);
+  const d2 = await getDurationSec(clip2);
+  const d3 = await getDurationSec(clip3);
+  await writeKoreanSubtitles(d1, d2, d3);
+  await burnSubtitles(FINAL_OUTPUT, SRT_PATH, SUBBED_OUTPUT);
+
+  console.log(`\n자막 버전 출력: ${SUBBED_OUTPUT}`);
 }
 
 main().catch(err => {
