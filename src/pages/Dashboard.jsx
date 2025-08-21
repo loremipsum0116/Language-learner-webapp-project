@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError } from '../api/client';
 import { SrsApi } from '../api/srs';
+import RainbowStar from '../components/RainbowStar';
 
 // dayjs(KST 라벨용)
 import dayjs from 'dayjs';
@@ -13,7 +14,7 @@ import tz from 'dayjs/plugin/timezone';
 dayjs.extend(utc); dayjs.extend(tz);
 const todayKst = () => dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
 
-function StatCard({ title, value, icon, link, linkText, loading }) {
+function StatCard({ title, value, icon, link, linkText, loading, showDetails, onDetailsClick, detailsButtonRef }) {
     return (
         <div className="card h-100">
             <div className="card-body text-center">
@@ -28,7 +29,19 @@ function StatCard({ title, value, icon, link, linkText, loading }) {
                 ) : (
                     <p className="display-4 fw-bold mb-1">{value}</p>
                 )}
-                {link && <Link to={link}>{linkText}</Link>}
+                <div className="d-flex justify-content-center gap-2 align-items-center">
+                    {link && <Link to={link}>{linkText}</Link>}
+                    {showDetails && (
+                        <button 
+                            ref={detailsButtonRef}
+                            className="btn btn-sm btn-outline-secondary"
+                            onClick={onDetailsClick}
+                            style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                        >
+                            상세보기 ▼
+                        </button>
+                    )}
+                </div>
             </div>
         </div>
     );
@@ -37,12 +50,15 @@ function StatCard({ title, value, icon, link, linkText, loading }) {
 export default function Dashboard() {
     const { user } = useAuth();
     const [stats, setStats] = useState({ srsQueue: 0, odatNote: 0, masteredWords: 0 });
+    const [masteredCards, setMasteredCards] = useState([]);
     const [loading, setLoading] = useState(true);
     const [srsStatus, setSrsStatus] = useState(null);
     const [streakInfo, setStreakInfo] = useState(null);
     const [todayStudyLog, setTodayStudyLog] = useState(null);
     const [showStudyDetails, setShowStudyDetails] = useState(false);
+    const [showMasteredDetails, setShowMasteredDetails] = useState(false);
     const dropdownButtonRef = useRef(null);
+    const masteredButtonRef = useRef(null);
 
     // 🔔 오늘(KST) 루트 폴더의 미학습 합계 + 가장 이른 알림시각
     const [alarm, setAlarm] = useState({ totalDue: 0, nextAlarmAtKst: null });
@@ -63,16 +79,21 @@ export default function Dashboard() {
 
                 if (!ac.signal.aborted) {
                     // VocabList와 동일한 방식으로 마스터된 카드 카운트
-                    const masteredCount = Array.isArray(masteredCardsRes.data) ? masteredCardsRes.data.length : 0;
+                    const masteredData = Array.isArray(masteredCardsRes.data) ? masteredCardsRes.data : [];
+                    const masteredCount = masteredData.length;
                     
-                    console.log('[Dashboard] Mastered cards API response:', masteredCardsRes.data);
+                    console.log('[Dashboard] Mastered cards API response:', masteredData);
                     console.log('[Dashboard] Mastered count from /srs/mastered-cards:', masteredCount);
+                    console.log('[Dashboard] Sample mastered card structure:', masteredData[0]);
                     
                     setStats({
                         srsQueue: Array.isArray(srsQueueRes.data) ? srsQueueRes.data.length : 0,
                         odatNote: Array.isArray(odatNoteRes.data) ? odatNoteRes.data.length : 0,
                         masteredWords: masteredCount,
                     });
+                    
+                    // 마스터된 카드 데이터 저장
+                    setMasteredCards(masteredData);
                 }
 
                 // 2) 오늘 루트(id) 찾고 → 하위 폴더 children-lite로 dueCount/nextAlarmAt 수집
@@ -314,6 +335,9 @@ export default function Dashboard() {
                         value={stats.masteredWords}
                         loading={loading}
                         icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-award" viewBox="0 0 16 16"><path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/><path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/></svg>}
+                        showDetails={stats.masteredWords > 0}
+                        onDetailsClick={() => setShowMasteredDetails(!showMasteredDetails)}
+                        detailsButtonRef={masteredButtonRef}
                     />
                 </div>
                 <div className="col-md-6 col-lg-3" style={{ overflow: 'visible' }}>
@@ -459,7 +483,128 @@ export default function Dashboard() {
                 </div>
             </section>
 
-            {/* 모달 포털 - 페이지 중앙에 표시 */}
+            {/* 마스터된 단어 모달 */}
+            {showMasteredDetails && createPortal(
+                <div 
+                    style={{ 
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 999999,
+                        padding: '20px'
+                    }}
+                    onClick={() => setShowMasteredDetails(false)}
+                >
+                    <div 
+                        style={{ 
+                            backgroundColor: '#ffffff',
+                            border: '2px solid #ffc107',
+                            borderRadius: '0.5rem',
+                            boxShadow: '0 1rem 3rem rgba(255, 193, 7, 0.3)',
+                            fontSize: '0.9rem',
+                            maxHeight: '80vh',
+                            overflowY: 'auto',
+                            width: '100%',
+                            maxWidth: '700px',
+                            position: 'relative'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* 모달 헤더 */}
+                        <div className="d-flex justify-content-between align-items-center p-3 border-bottom bg-warning bg-opacity-10">
+                            <h5 className="mb-0 text-warning">🏆 마스터한 단어들</h5>
+                            <button 
+                                className="btn-close" 
+                                onClick={() => setShowMasteredDetails(false)}
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        
+                        {/* 모달 바디 */}
+                        <div className="p-3">
+                            {masteredCards.length > 0 ? (
+                                <>
+                                    <div className="mb-3 text-center">
+                                        <small className="text-muted">
+                                            총 {masteredCards.length}개의 단어를 마스터했습니다! 🎉
+                                        </small>
+                                    </div>
+                                    <div className="row g-2">
+                                        {masteredCards
+                                            .sort((a, b) => new Date(b.masteredAt) - new Date(a.masteredAt))
+                                            .map((card, index) => {
+                                                const vocab = card.vocab || {};
+                                                const masterCycles = card.masterCycles || 1;
+                                                
+                                                return (
+                                                    <div key={card.id || index} className="col-sm-6 col-md-4">
+                                                        <div className="card h-100 border-warning bg-light position-relative">
+                                                            {/* 무지개 별 */}
+                                                            <RainbowStar 
+                                                                size="small" 
+                                                                cycles={masterCycles} 
+                                                                className="position-absolute top-0 end-0 m-2"
+                                                            />
+                                                            
+                                                            <div className="card-body p-2">
+                                                                <h6 className="card-title mb-1" style={{ marginRight: '30px' }}>
+                                                                    {vocab.lemma || 'Unknown'}
+                                                                </h6>
+                                                                {vocab.pos && (
+                                                                    <small className="text-muted">{vocab.pos}</small>
+                                                                )}
+                                                                {vocab.ko_gloss && (
+                                                                    <p className="card-text small mb-1">
+                                                                        {vocab.ko_gloss.slice(0, 50)}
+                                                                        {vocab.ko_gloss.length > 50 ? '...' : ''}
+                                                                    </p>
+                                                                )}
+                                                                <div className="text-warning small">
+                                                                    🏆 {dayjs(card.masteredAt).format('MM/DD')} 마스터
+                                                                </div>
+                                                                {masterCycles > 1 && (
+                                                                    <div className="text-success small">
+                                                                        ⭐ {masterCycles}회 마스터
+                                                                    </div>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="text-center py-4">
+                                    <span className="text-muted h5">🌟 아직 마스터한 단어가 없습니다.</span>
+                                    <br />
+                                    <small className="text-muted">꾸준히 학습해서 첫 마스터를 달성해보세요!</small>
+                                </div>
+                            )}
+                        </div>
+                        
+                        {/* 모달 푸터 */}
+                        <div className="p-3 border-top text-center bg-warning bg-opacity-10">
+                            <button 
+                                className="btn btn-warning btn-sm"
+                                onClick={() => setShowMasteredDetails(false)}
+                            >
+                                닫기
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+
+            {/* 오늘 학습 단어 모달 */}
             {showStudyDetails && createPortal(
                 <div 
                     style={{ 
