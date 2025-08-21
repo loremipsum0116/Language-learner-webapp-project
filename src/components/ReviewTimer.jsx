@@ -10,7 +10,7 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
 
-const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, frozenUntil, isMastered, className = "" }) => {
+const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, frozenUntil, isMastered, stage, className = "" }) => {
     const [timeLeft, setTimeLeft] = useState(null);
     const [isReviewable, setIsReviewable] = useState(false);
     const [accelerationFactor, setAccelerationFactor] = useState(1); // 시간 가속 팩터
@@ -38,8 +38,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
     }, []);
 
     useEffect(() => {
-        // nextReviewAt이 없어도 overdue, frozen 등의 상태는 확인해야 함
-        if (!nextReviewAt && !isOverdue && !frozenUntil && !waitingUntil) {
+        // stage 1 이상의 카드들도 타이머 표시가 되도록 조건을 완화
+        // nextReviewAt, waitingUntil, overdue, frozen 상태 중 하나라도 있으면 타이머 표시
+        if (!nextReviewAt && !isOverdue && !frozenUntil && !waitingUntil && !isMastered) {
             return;
         }
 
@@ -110,9 +111,10 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
             
             // 2. overdue 상태인 경우 처리
             if (isOverdue) {
-                // 자동학습으로 설정된 overdue 카드 (nextReviewAt이 null이고 오답카드가 아닌 경우)
-                if (!nextReviewAt && !isFromWrongAnswer) {
-                    // 타이머 없는 overdue 상태 - 아무것도 표시하지 않음
+                // 자동학습으로 설정된 overdue 카드만 타이머 없이 표시 (stage 0이고 nextReviewAt이 null이고 오답카드가 아닌 경우)
+                // stage 1+ 카드들은 정상적인 overdue 처리를 해야 함
+                if (!nextReviewAt && !isFromWrongAnswer && (typeof stage === 'undefined' || stage === 0)) {
+                    // 타이머 없는 overdue 상태 - 아무것도 표시하지 않음 (stage 0 자동학습 카드만)
                     setTimeLeft("");
                     setIsReviewable(true);
                     return;
@@ -127,9 +129,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         
                         if (diff <= 0) {
                             // overdue 데드라인 지남 - 즉시 동결 상태로 전환
-                            setTimeLeft("❄️ 동결됨 (시간 초과)");
+                            setTimeLeft("❄️ 복습 시간 초과 (곧 동결됩니다)");
                             setIsReviewable(false);
-                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - immediately frozen');
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - will be frozen by cron job');
                             return;
                         }
                         
@@ -169,9 +171,9 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
                         
                         if (deadlineDiff <= 0) {
                             // overdue 데드라인 지남 - 즉시 동결 상태로 전환
-                            setTimeLeft("❄️ 동결됨 (시간 초과)");
+                            setTimeLeft("❄️ 복습 시간 초과 (곧 동결됩니다)");
                             setIsReviewable(false);
-                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - immediately frozen');
+                            console.log('[ReviewTimer DEBUG] Overdue deadline exceeded - will be frozen by cron job');
                             return;
                         }
                         
@@ -334,7 +336,7 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
         const interval = setInterval(updateTimer, 1000);
 
         return () => clearInterval(interval);
-    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, accelerationFactor]);
+    }, [nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, stage, accelerationFactor]);
 
     // 마스터된 카드는 별도 표시
     if (isMastered) {

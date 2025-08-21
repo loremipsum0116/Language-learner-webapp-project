@@ -15,6 +15,13 @@ const LandingPage = () => {
     }
   }, []);
 
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.play().catch(console.error);
+    }
+  };
+
   const handleGetStarted = () => {
     if (user) {
       navigate('/home');
@@ -72,7 +79,8 @@ const LandingPage = () => {
                         autoPlay
                         muted
                         playsInline
-                        style={{maxHeight: '600px', objectFit: 'contain'}}
+                        onClick={handleVideoClick}
+                        style={{maxHeight: '600px', objectFit: 'contain', cursor: 'pointer'}}
                         onLoadStart={() => console.log('비디오 로딩 시작')}
                         onCanPlay={() => console.log('비디오 재생 가능')}
                         onError={() => console.log('비디오 로드 실패')}

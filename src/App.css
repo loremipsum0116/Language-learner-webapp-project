@@ -82,15 +82,16 @@ body {
   color: var(--color-charcoal);
   font-weight: 600;
   border-radius: var(--border-radius-md);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-shadow: var(--shadow-sm);
   text-transform: none;
+  cursor: pointer;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
   background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-accent) 100%);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
   box-shadow: var(--shadow-md);
   color: var(--color-charcoal);
 }
@@ -252,6 +253,11 @@ body {
   overflow: hidden;
 }
 
+.hero-section > * {
+  position: relative;
+  z-index: 2;
+}
+
 .hero-section::before {
   content: '';
   position: absolute;
@@ -261,6 +267,8 @@ body {
   height: 200%;
   background: radial-gradient(circle, rgba(244, 208, 63, 0.1) 0%, transparent 70%);
   animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
 }
 
 @keyframes float {
@@ -369,14 +377,16 @@ body.quiz-modal-open {
   font-weight: 600;
   border-radius: var(--border-radius-lg);
   padding: 0.75rem 1.5rem;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   box-shadow: var(--shadow-sm);
+  cursor: pointer;
 }
 
 .btn-cute:hover {
-  transform: translateY(-2px) scale(1.05);
+  transform: translateY(-1px) scale(1.02);
   box-shadow: var(--shadow-md);
   background: linear-gradient(135deg, var(--color-accent-light) 0%, var(--color-primary) 100%);
+  color: var(--color-charcoal);
 }
 
 .alert-danmoosae {
@@ -393,4 +403,32 @@ body.quiz-modal-open {
   font-weight: 600;
   border-radius: var(--border-radius-md);
   padding: 0.5rem 1rem;
+}
+
+/* 버튼 클릭성 개선 */
+.btn, a.btn {
+  cursor: pointer;
+  user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  position: relative;
+  z-index: 10;
+}
+
+.btn:hover, a.btn:hover {
+  text-decoration: none;
+}
+
+/* 모바일에서 터치 반응성 개선 */
+@media (hover: none) and (pointer: coarse) {
+  .btn-cute:hover {
+    transform: none;
+    background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
+  }
+  
+  .btn-primary:hover {
+    transform: none;
+  }
 }

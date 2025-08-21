@@ -72,7 +72,7 @@ export default function Dashboard() {
 
                 // 1) 카드/오답/마스터 통계 병렬 로딩
                 const [srsQueueRes, odatNoteRes, masteredCardsRes] = await Promise.all([
-                    fetchJSON('/srs/queue?limit=500', withCreds({ signal: ac.signal })),
+                    fetchJSON('/srs/available', withCreds({ signal: ac.signal })),
                     fetchJSON('/srs/wrong-answers?includeCompleted=false', withCreds({ signal: ac.signal })),
                     fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal })),
                 ]);
@@ -94,6 +94,7 @@ export default function Dashboard() {
                     
                     // 마스터된 카드 데이터 저장
                     setMasteredCards(masteredData);
+                    console.log('[Dashboard] Sample mastered card with vocab:', masteredData[0]);
                 }
 
                 // 2) 오늘 루트(id) 찾고 → 하위 폴더 children-lite로 dueCount/nextAlarmAt 수집
@@ -449,7 +450,36 @@ export default function Dashboard() {
                             <div className="card-body">
                                 <h5 className="card-title">SRS 학습</h5>
                                 <p className="card-text text-muted">오늘 복습할 단어들을 Leitner 시스템으로 학습합니다.</p>
-                                <Link to="/learn/vocab" className="btn btn-primary">학습 시작</Link>
+                                <button 
+                                    className="btn btn-primary"
+                                    onClick={async () => {
+                                        try {
+                                            // 모든 overdue 카드의 vocabId 조회
+                                            const availableData = await fetchJSON(`/srs/available`, withCreds());
+                                            
+                                            if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
+                                                // overdue 카드들의 vocabId 추출
+                                                const vocabIds = availableData.data
+                                                    .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+                                                    .filter(Boolean);
+                                                
+                                                if (vocabIds.length > 0) {
+                                                    // learn/vocab 시스템으로 리다이렉트 (전체 overdue 모드)
+                                                    window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
+                                                } else {
+                                                    alert('복습할 단어가 없습니다.');
+                                                }
+                                            } else {
+                                                alert('복습할 단어가 없습니다.');
+                                            }
+                                        } catch (error) {
+                                            console.error('Failed to start SRS learning:', error);
+                                            alert('학습을 시작할 수 없습니다.');
+                                        }
+                                    }}
+                                >
+                                    학습 시작
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -539,7 +569,7 @@ export default function Dashboard() {
                                         {masteredCards
                                             .sort((a, b) => new Date(b.masteredAt) - new Date(a.masteredAt))
                                             .map((card, index) => {
-                                                const vocab = card.vocab || {};
+                                                const vocab = card.srsfolderitem?.[0]?.vocab || {};
                                                 const masterCycles = card.masterCycles || 1;
                                                 
                                                 return (

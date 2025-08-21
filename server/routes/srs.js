@@ -102,12 +102,16 @@ router.get('/mastered-cards', async (req, res, next) => {
                 userId: userId,
                 isMastered: true
             },
-            select: {
-                id: true,
-                itemType: true,
-                itemId: true,
-                masterCycles: true,
-                masteredAt: true
+            include: {
+                srsfolderitem: {
+                    include: {
+                        vocab: {
+                            include: {
+                                dictentry: true
+                            }
+                        }
+                    }
+                }
             }
         });
         
@@ -2615,7 +2619,7 @@ router.post('/folders/:folderId/accelerate-cards', auth, async (req, res, next) 
         const now = new Date();
         const cardsToUpdate = [];
 
-        // 선택된 모든 카드를 처리하되, mastered가 아닌 카드는 모두 overdue로 변경
+        // 선택된 모든 카드를 처리하되, mastered가 아닌 stage 0 카드만 overdue로 변경
         let processedCount = 0;
         let acceleratedCount = 0;
         

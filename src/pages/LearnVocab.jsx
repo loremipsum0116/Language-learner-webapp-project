@@ -463,6 +463,63 @@ export default function LearnVocab() {
                             console.log('[AUDIO DEBUG] Advancing to next card, nextIdx:', nextIdx, 'totalLength:', totalLength);
                             setFlipped(false);
                             
+                            // 현재 카드를 학습완료 목록에 추가
+                            const current = (mode === 'batch' && currentBatch.length > 0) ? currentBatch[currentIdx] : queue[currentIdx];
+                            if (current && !studiedCards.some(card => card.vocabId === current.vocabId)) {
+                                setStudiedCards(prev => [...prev, current]);
+                            }
+                            
+                            // 깜짝퀴즈 트리거 조건 확인 (자동 진행 시)
+                            const isFlashLike = (mode === 'flash' || mode === 'batch');
+                            const shouldTriggerSurpriseQuiz = isFlashLike && totalLength >= 11 && nextIdx % 10 === 0 && nextIdx < totalLength;
+                            
+                            // 깜짝퀴즈 트리거 조건 디버그 (자동 진행용)
+                            console.log('[SURPRISE QUIZ DEBUG - AUTO]', {
+                                mode,
+                                isFlashLike,
+                                totalLength,
+                                nextIdx,
+                                nextIdxMod10: nextIdx % 10,
+                                shouldTriggerSurpriseQuiz,
+                                studiedCardsLength: studiedCards.length
+                            });
+                            
+                            if (shouldTriggerSurpriseQuiz) {
+                                // 방금 학습한 10개 카드에서 랜덤으로 3개 선택
+                                const allStudiedCards = [...studiedCards, current];
+                                const lastTenCards = allStudiedCards.slice(-10);
+                                const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
+                                
+                                // 깜짝 퀴즈 문제 생성
+                                const quizQuestions = selectedCards.map(card => {
+                                    // 오답 선택지를 전체 큐/배치에서 생성
+                                    const sourceArray = (mode === 'batch' && currentBatch.length > 0) ? currentBatch : queue;
+                                    const otherAnswers = sourceArray
+                                        .filter(q => q.vocabId !== card.vocabId)
+                                        .map(q => q.answer);
+                                    
+                                    // 오답 선택지 3개를 랜덤으로 선택
+                                    const wrongAnswers = _.sampleSize(otherAnswers, 3);
+                                    const allOptions = [card.answer, ...wrongAnswers];
+                                    
+                                    return {
+                                        question: card.question,
+                                        correctAnswer: card.answer,
+                                        options: _.shuffle(allOptions)
+                                    };
+                                });
+                                
+                                setSurpriseQuiz({
+                                    show: true,
+                                    questions: quizQuestions,
+                                    currentQ: 0,
+                                    answers: [],
+                                    showFeedback: false,
+                                    selectedAnswer: null
+                                });
+                                return currentIdx; // 깜짝퀴즈 표시하고 카드 진행은 중단
+                            }
+                            
                             // 범위를 벗어나지 않도록 체크
                             if (nextIdx < totalLength) {
                                 return nextIdx;
@@ -578,6 +635,18 @@ export default function LearnVocab() {
         const isFlashLike = (mode === 'flash' || !!idsParam);
         const shouldTriggerSurpriseQuiz = isFlashLike && queue.length >= 11 && nextIdx % 10 === 0 && nextIdx < queue.length;
         
+        // 깜짝퀴즈 트리거 조건 디버그
+        console.log('[SURPRISE QUIZ DEBUG]', {
+            mode,
+            idsParam,
+            isFlashLike,
+            queueLength: queue.length,
+            nextIdx,
+            nextIdxMod10: nextIdx % 10,
+            shouldTriggerSurpriseQuiz,
+            studiedCardsLength: studiedCards.length
+        });
+        
         if (shouldTriggerSurpriseQuiz) {
             // 방금 학습한 10개 카드에서 랜덤으로 3개 선택 (새로 추가될 현재 카드 포함)
             const allStudiedCards = [...studiedCards, current];
@@ -686,9 +755,67 @@ export default function LearnVocab() {
         const currentBatch = allBatches[batchIndex] || [];
         console.log('[NEXT FLASH DEBUG] idx:', idx, 'currentBatch.length:', currentBatch.length);
         
+        // 현재 카드를 학습완료 목록에 추가
+        const current = currentBatch[idx];
+        if (current && !studiedCards.some(card => card.vocabId === current.vocabId)) {
+            setStudiedCards(prev => [...prev, current]);
+        }
+        
         if (idx < currentBatch.length - 1) {
+            const nextIdx = idx + 1;
             setAudioPlayCount(0); // Reset play count when advancing to next card
-            setIdx((i) => i + 1);
+            
+            // 깜짝퀴즈 트리거 조건 확인 (flash 모드용)
+            const isFlashLike = true; // handleNextFlash는 flash 모드에서만 호출됨
+            const shouldTriggerSurpriseQuiz = isFlashLike && currentBatch.length >= 11 && nextIdx % 10 === 0 && nextIdx < currentBatch.length;
+            
+            // 깜짝퀴즈 트리거 조건 디버그 (flash용)
+            console.log('[SURPRISE QUIZ DEBUG - FLASH]', {
+                mode: 'flash',
+                isFlashLike,
+                batchLength: currentBatch.length,
+                nextIdx,
+                nextIdxMod10: nextIdx % 10,
+                shouldTriggerSurpriseQuiz,
+                studiedCardsLength: studiedCards.length
+            });
+            
+            if (shouldTriggerSurpriseQuiz) {
+                // 방금 학습한 10개 카드에서 랜덤으로 3개 선택 (새로 추가될 현재 카드 포함)
+                const allStudiedCards = [...studiedCards, current];
+                const lastTenCards = allStudiedCards.slice(-10);
+                const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
+                
+                // 깜짝 퀴즈 문제 생성
+                const quizQuestions = selectedCards.map(card => {
+                    // 오답 선택지를 전체 배치에서 생성
+                    const otherAnswers = currentBatch
+                        .filter(q => q.vocabId !== card.vocabId)
+                        .map(q => q.answer);
+                    
+                    // 오답 선택지 3개를 랜덤으로 선택
+                    const wrongAnswers = _.sampleSize(otherAnswers, 3);
+                    const allOptions = [card.answer, ...wrongAnswers];
+                    
+                    return {
+                        question: card.question,
+                        correctAnswer: card.answer,
+                        options: _.shuffle(allOptions)
+                    };
+                });
+                
+                setSurpriseQuiz({
+                    show: true,
+                    questions: quizQuestions,
+                    currentQ: 0,
+                    answers: [],
+                    showFeedback: false,
+                    selectedAnswer: null
+                });
+                return; // 깜짝퀴즈 표시하고 카드 진행은 중단
+            }
+            
+            setIdx(nextIdx);
             setFlipped(false);
         } else {
             // 마지막 카드인 경우 재생횟수 초기화하지 않음
@@ -1625,6 +1752,63 @@ export default function LearnVocab() {
                                                     const nextIdx = currentIdx + 1;
                                                     console.log('[AUTO RESUME] Advancing to next card, nextIdx:', nextIdx, 'totalLength:', totalLength);
                                                     setFlipped(false);
+                                                    
+                                                    // 현재 카드를 학습완료 목록에 추가
+                                                    const current = (mode === 'batch' && currentBatch.length > 0) ? currentBatch[currentIdx] : queue[currentIdx];
+                                                    if (current && !studiedCards.some(card => card.vocabId === current.vocabId)) {
+                                                        setStudiedCards(prev => [...prev, current]);
+                                                    }
+                                                    
+                                                    // 깜짝퀴즈 트리거 조건 확인 (재개 후 진행 시)
+                                                    const isFlashLike = (mode === 'flash' || mode === 'batch');
+                                                    const shouldTriggerSurpriseQuiz = isFlashLike && totalLength >= 11 && nextIdx % 10 === 0 && nextIdx < totalLength;
+                                                    
+                                                    // 깜짝퀴즈 트리거 조건 디버그 (재개용)
+                                                    console.log('[SURPRISE QUIZ DEBUG - RESUME]', {
+                                                        mode,
+                                                        isFlashLike,
+                                                        totalLength,
+                                                        nextIdx,
+                                                        nextIdxMod10: nextIdx % 10,
+                                                        shouldTriggerSurpriseQuiz,
+                                                        studiedCardsLength: studiedCards.length
+                                                    });
+                                                    
+                                                    if (shouldTriggerSurpriseQuiz) {
+                                                        // 방금 학습한 10개 카드에서 랜덤으로 3개 선택
+                                                        const allStudiedCards = [...studiedCards, current];
+                                                        const lastTenCards = allStudiedCards.slice(-10);
+                                                        const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
+                                                        
+                                                        // 깜짝 퀴즈 문제 생성
+                                                        const quizQuestions = selectedCards.map(card => {
+                                                            // 오답 선택지를 전체 큐/배치에서 생성
+                                                            const sourceArray = (mode === 'batch' && currentBatch.length > 0) ? currentBatch : queue;
+                                                            const otherAnswers = sourceArray
+                                                                .filter(q => q.vocabId !== card.vocabId)
+                                                                .map(q => q.answer);
+                                                            
+                                                            // 오답 선택지 3개를 랜덤으로 선택
+                                                            const wrongAnswers = _.sampleSize(otherAnswers, 3);
+                                                            const allOptions = [card.answer, ...wrongAnswers];
+                                                            
+                                                            return {
+                                                                question: card.question,
+                                                                correctAnswer: card.answer,
+                                                                options: _.shuffle(allOptions)
+                                                            };
+                                                        });
+                                                        
+                                                        setSurpriseQuiz({
+                                                            show: true,
+                                                            questions: quizQuestions,
+                                                            currentQ: 0,
+                                                            answers: [],
+                                                            showFeedback: false,
+                                                            selectedAnswer: null
+                                                        });
+                                                        return currentIdx; // 깜짝퀴즈 표시하고 카드 진행은 중단
+                                                    }
                                                     
                                                     // 범위를 벗어나지 않도록 체크
                                                     if (nextIdx < totalLength) {

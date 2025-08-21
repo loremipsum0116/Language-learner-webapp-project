@@ -39,6 +39,10 @@ const app = express();
 // === 정적 파일 서빙 (최우선) ===
 console.log('Setting up A1 audio:', path.join(__dirname, 'A1', 'audio'));
 console.log('Setting up A2 audio:', path.join(__dirname, 'A2', 'audio'));
+console.log('Setting up B1 audio:', path.join(__dirname, 'B1', 'audio'));
+console.log('Setting up B2 audio:', path.join(__dirname, 'B2', 'audio'));
+console.log('Setting up C1 audio:', path.join(__dirname, 'C1', 'audio'));
+console.log('Setting up C2 audio:', path.join(__dirname, 'C2', 'audio'));
 app.use('/A1/audio', (req, res, next) => {
   console.log('[STATIC] A1 audio request:', req.path);
   next();
@@ -48,6 +52,26 @@ app.use('/A2/audio', (req, res, next) => {
   console.log('[STATIC] A2 audio request:', req.path);
   next();
 }, express.static(path.join(__dirname, 'A2', 'audio')));
+
+app.use('/B1/audio', (req, res, next) => {
+  console.log('[STATIC] B1 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'B1', 'audio')));
+
+app.use('/B2/audio', (req, res, next) => {
+  console.log('[STATIC] B2 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'B2', 'audio')));
+
+app.use('/C1/audio', (req, res, next) => {
+  console.log('[STATIC] C1 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'C1', 'audio')));
+
+app.use('/C2/audio', (req, res, next) => {
+  console.log('[STATIC] C2 audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'C2', 'audio')));
 
 // 비디오 파일 서빙
 app.use('/api/video', express.static(path.join(__dirname, 'out')));

@@ -1156,6 +1156,7 @@ export default function SrsFolderDetail() {
                                                                     isFromWrongAnswer={item.isFromWrongAnswer}
                                                                     frozenUntil={item.frozenUntil}
                                                                     isMastered={item.isMastered}
+                                                                    stage={item.stage}
                                                                     className="small"
                                                                 />
                                                             </div>

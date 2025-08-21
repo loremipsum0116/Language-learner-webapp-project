@@ -217,11 +217,12 @@ async function manageOverdueCards(logger = console) {
         // 자동학습 카드와 자율학습모드 카드 제외
         NOT: {
           OR: [
-            // 자동학습 카드 (nextReviewAt: null, isFromWrongAnswer: false)
+            // 자동학습 카드 (stage 0이고 nextReviewAt: null이고 isFromWrongAnswer: false)
             {
               AND: [
                 { nextReviewAt: null },
-                { isFromWrongAnswer: false }
+                { isFromWrongAnswer: false },
+                { stage: 0 }
               ]
             },
             // 자율학습모드 폴더의 카드들
