@@ -321,6 +321,10 @@ export default function LearnVocab() {
                             selectedItemsParam ? `&selectedItems=${selectedItemsParam}` : ''
                         }${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
                         ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
+                    } else if (mode === 'all_overdue' && selectedItemsParam) {
+                        // 전체 overdue 카드 퀴즈 - SRS 시스템과 연동
+                        const queueUrl = `/srs/queue?all=true&selectedItems=${selectedItemsParam}${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
+                        ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (mode === 'odat') {
                         const queueUrl = `/odat-note/queue?limit=100${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
                         ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
@@ -1154,7 +1158,7 @@ export default function LearnVocab() {
     if (err) return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
 
     // SRS 모드에서 퀴즈 유형이 선택되지 않은 경우 유형 선택 화면 표시
-    if ((mode === 'srs_folder' || (!mode && !idsParam)) && !quizTypeParam) {
+    if ((mode === 'srs_folder' || mode === 'all_overdue' || (!mode && !idsParam)) && !quizTypeParam) {
         const currentUrl = new URL(window.location);
         
         const handleQuizTypeSelect = (type) => {
@@ -1334,6 +1338,8 @@ export default function LearnVocab() {
                             <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam}`}>
                                 폴더로 돌아가기
                             </Link>
+                        ) : mode === 'all_overdue' ? (
+                            <Link className="btn btn-primary" to="/">홈으로 돌아가기</Link>
                         ) : (
                             <button className="btn btn-primary" onClick={() => navigate('/srs')}>SRS 학습하기</button>
                         )}
@@ -1490,19 +1496,25 @@ export default function LearnVocab() {
                                 </Link>
                             )}
 
-                            {(!mode || mode === 'srs' || mode === 'srs_folder') && (
+                            {(!mode || mode === 'srs' || mode === 'srs_folder' || mode === 'all_overdue') && (
                                 <>
-                                    
-                                    {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
-                                    {(folderIdParam || queue[0]?.folderId) ? (
-                                        <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam || queue[0]?.folderId}`}>
-                                            폴더로 돌아가기
-                                        </Link>
+                                    {/* all_overdue 모드: 홈으로 돌아가기 */}
+                                    {mode === 'all_overdue' ? (
+                                        <Link className="btn btn-primary" to="/">홈으로 돌아가기</Link>
                                     ) : (
                                         <>
-                                            <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
-                                            <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
-                                            <Link className="btn btn-outline-primary" to="/srs">SRS 대시보드</Link>
+                                            {/* SRS 폴더에서 온 학습인 경우 폴더로 돌아가기 버튼 추가 */}
+                                            {(folderIdParam || queue[0]?.folderId) ? (
+                                                <Link className="btn btn-primary" to={`/srs/folder/${folderIdParam || queue[0]?.folderId}`}>
+                                                    폴더로 돌아가기
+                                                </Link>
+                                            ) : (
+                                                <>
+                                                    <Link className="btn btn-outline-secondary" to="/learn/srs-manager">문제 편집</Link>
+                                                    <Link className="btn btn-primary" to="/odat-note">오답 문제 풀이</Link>
+                                                    <Link className="btn btn-outline-primary" to="/srs">SRS 대시보드</Link>
+                                                </>
+                                            )}
                                         </>
                                     )}
                                 </>

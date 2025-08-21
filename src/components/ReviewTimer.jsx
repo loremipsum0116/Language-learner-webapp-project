@@ -110,6 +110,14 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
             
             // 2. overdue 상태인 경우 처리
             if (isOverdue) {
+                // 자동학습으로 설정된 overdue 카드 (nextReviewAt이 null이고 오답카드가 아닌 경우)
+                if (!nextReviewAt && !isFromWrongAnswer) {
+                    // 타이머 없는 overdue 상태 - 아무것도 표시하지 않음
+                    setTimeLeft("");
+                    setIsReviewable(true);
+                    return;
+                }
+                
                 if (isFromWrongAnswer) {
                     // 오답 카드: overdue 상태에서 복습 가능하지만 24시간 데드라인까지 타이머 표시
                     if (overdueDeadline) {
@@ -340,6 +348,11 @@ const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, i
 
     if (timeLeft === null) {
         return <span className={`text-muted ${className}`}>계산 중...</span>;
+    }
+
+    // 빈 문자열인 경우 아무것도 렌더링하지 않음 (자동학습 overdue 카드)
+    if (timeLeft === "") {
+        return null;
     }
 
     return (

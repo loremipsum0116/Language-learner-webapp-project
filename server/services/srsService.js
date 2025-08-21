@@ -1437,7 +1437,7 @@ async function restartMasteredFolder(folderId, userId) {
 
 /**
  * 사용자의 현재 학습 가능한 카드들을 조회합니다.
- * overdue 상태이면서 데드라인이 지나지 않은 카드들만 반환합니다.
+ * 모든 overdue 상태 카드들을 반환합니다 (자동학습 카드 포함).
  */
 async function getAvailableCardsForReview(userId) {
     const now = new Date();
@@ -1446,10 +1446,14 @@ async function getAvailableCardsForReview(userId) {
         where: {
             userId: userId,
             isOverdue: true,
-            overdueDeadline: { gt: now }
+            OR: [
+                { overdueDeadline: { gt: now } }, // 데드라인이 지나지 않은 카드
+                { overdueDeadline: null } // 자동학습 카드 (데드라인 없음)
+            ],
+            frozenUntil: null // 동결되지 않은 카드만
         },
         include: {
-            folderItems: {
+            srsfolderitem: {
                 include: {
                     vocab: true
                 }

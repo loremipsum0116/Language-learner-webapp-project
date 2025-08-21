@@ -919,6 +919,13 @@ router.get('/folders/:id/items', async (req, res, next) => {
             };
         });
 
+        // 디버깅: overdue 카드들 로그
+        const overdueCards = quizItems.filter(item => item.isOverdue);
+        console.log(`[SRS DEBUG] Folder ${id} - Found ${overdueCards.length} overdue cards out of ${quizItems.length} total:`);
+        overdueCards.forEach(card => {
+            console.log(`  - ${card.vocab?.lemma || 'Unknown'} (cardId: ${card.cardId}, isOverdue: ${card.isOverdue}, stage: ${card.stage})`);
+        });
+        
         console.log('[DEBUG API RESPONSE] Sample quizItem:', JSON.stringify(quizItems[0], null, 2));
         return ok(res, { folder, quizItems });
     } catch (e) {
@@ -1696,6 +1703,51 @@ router.get('/queue', async (req, res) => {
         const userId = req.user.id;
         const folderId = req.query.folderId ? Number(req.query.folderId) : null;
         const selectedItems = req.query.selectedItems ? req.query.selectedItems.split(',').map(Number).filter(Boolean) : null;
+        const allOverdue = req.query.all === 'true';
+
+        if (allOverdue && selectedItems) {
+            // 전체 overdue 카드 퀴즈 - 선택된 vocabId들로 가상 폴더 아이템 생성
+            const vocabIds = selectedItems;
+            
+            // 각 vocabId에 대한 SRS 카드와 폴더 아이템 정보 조회
+            const overdueCards = await getAvailableCardsForReview(userId);
+            
+            // 선택된 vocabId에 해당하는 카드들만 필터링
+            const filteredCards = overdueCards.filter(card => {
+                const cardVocabId = card.srsfolderitem[0]?.vocabId || card.srsfolderitem[0]?.vocab?.id;
+                return vocabIds.includes(cardVocabId);
+            });
+            
+            if (!filteredCards.length) return ok(res, []);
+            
+            // Generate quiz items
+            const queue = await generateMcqQuizItems(prisma, userId, vocabIds);
+            
+            // Inject card information for frontend (SRS 폴더와 동일한 구조)
+            const queueWithCardInfo = queue.map(q => {
+                const card = filteredCards.find(c => 
+                    (c.srsfolderitem[0]?.vocabId || c.srsfolderitem[0]?.vocab?.id) === q.vocabId
+                );
+                const folderItem = card?.srsfolderitem[0];
+                
+                return { 
+                    ...q, 
+                    folderId: folderItem?.folderId || null,
+                    cardId: card?.id || null,
+                    isLearned: folderItem?.learned || false,
+                    wrongCount: folderItem?.wrongCount || 0,
+                    stage: card?.stage || 0,
+                    nextReviewAt: card?.nextReviewAt,
+                    hasBeenAnswered: (card?.correctTotal || 0) + (card?.wrongTotal || 0) > 0,
+                    isOverdue: card?.isOverdue || false,
+                    overdueDeadline: card?.overdueDeadline,
+                    waitingUntil: card?.waitingUntil,
+                    isFromWrongAnswer: card?.isFromWrongAnswer || false
+                };
+            });
+            
+            return ok(res, queueWithCardInfo);
+        }
 
         if (folderId) {
             // 선택된 아이템이 있으면 해당 아이템만, 없으면 모든 아이템
@@ -2563,48 +2615,58 @@ router.post('/folders/:folderId/accelerate-cards', auth, async (req, res, next) 
         const now = new Date();
         const cardsToUpdate = [];
 
-        // 업데이트할 카드들 필터링 (overdue가 아니고 mastered가 아닌 카드들만)
+        // 선택된 모든 카드를 처리하되, mastered가 아닌 카드는 모두 overdue로 변경
+        let processedCount = 0;
+        let acceleratedCount = 0;
+        
         for (const item of folderItems) {
             const card = item.srscard;
+            processedCount++;
             
-            // 이미 overdue거나 mastered인 카드는 제외
-            if (card.isOverdue || card.isMastered) {
-                continue;
-            }
-            
-            // 동결 카드인지 확인
-            const isFrozen = card.frozenUntil && new Date(card.frozenUntil) > now;
-            
-            // 일반 카드이거나 동결 카드 모두 포함
-            if (card.nextReviewAt || isFrozen) {
+            // stage 0 (미학습) 카드만 overdue 상태로 변경
+            if (!card.isMastered && (card.stage === 0 || card.stage === null)) {
                 cardsToUpdate.push(card.id);
+                acceleratedCount++;
+                console.log(`[ACCELERATE] Including unlearned card ${card.id} (stage: ${card.stage}) -> will be set to overdue`);
+            } else {
+                console.log(`[ACCELERATE] Skipping card ${card.id} (stage: ${card.stage}, mastered: ${card.isMastered}) -> not unlearned`);
             }
         }
 
-        if (cardsToUpdate.length === 0) {
-            return fail(res, 400, 'No cards are eligible for acceleration');
+        // 선택된 카드가 없으면 오류
+        if (processedCount === 0) {
+            return fail(res, 400, 'No cards found in selection');
         }
 
-        // 카드들의 nextReviewAt과 waitingUntil을 현재 시간으로 설정
-        const updateResult = await prisma.srscard.updateMany({
-            where: {
-                id: { in: cardsToUpdate }
-            },
-            data: {
-                nextReviewAt: now,
-                waitingUntil: now,
-                isOverdue: true, // 즉시 복습 가능하도록 overdue로 설정
-                overdueStartAt: now,
-                overdueDeadline: new Date(now.getTime() + (24 * 60 * 60 * 1000)), // 24시간 후 데드라인
-                frozenUntil: null // 동결 상태 해제
-            }
-        });
+        // stage 0 (미학습) 카드들만 overdue 상태로 변경
+        let actualAcceleratedCount = 0;
+        if (cardsToUpdate.length > 0) {
+            const updateResult = await prisma.srscard.updateMany({
+                where: {
+                    id: { in: cardsToUpdate }
+                },
+                data: {
+                    nextReviewAt: null, // 타이머 없는 overdue 상태
+                    waitingUntil: null,
+                    isOverdue: true, // 즉시 복습 가능하도록 overdue로 설정
+                    isFromWrongAnswer: false, // 자동학습으로 설정된 overdue (오답카드가 아님)
+                    overdueStartAt: now,
+                    overdueDeadline: new Date(now.getTime() + (24 * 60 * 60 * 1000)), // 24시간 후 데드라인
+                    frozenUntil: null // 동결 상태 해제
+                }
+            });
+            actualAcceleratedCount = updateResult.count;
+            console.log(`[SRS] Accelerated ${updateResult.count} unlearned cards to immediate review in folder ${folderId}`);
+        }
 
-        console.log(`[SRS] Accelerated ${updateResult.count} cards to immediate review in folder ${folderId}`);
+        const message = actualAcceleratedCount > 0 
+            ? `선택한 ${processedCount}개 카드 중 ${actualAcceleratedCount}개 단어가 복습 대기 상태로 설정되었습니다.`
+            : `선택한 ${processedCount}개 카드를 처리했습니다. (마스터된 단어들은 변경되지 않았습니다)`;
 
         return ok(res, {
-            message: `${updateResult.count}개 카드가 즉시 학습 가능하게 설정되었습니다.`,
-            acceleratedCount: updateResult.count,
+            message,
+            acceleratedCount: actualAcceleratedCount,
+            processedCount: processedCount,
             requestedCount: cardIds.length
         });
 
@@ -2715,40 +2777,46 @@ router.get('/study-log', async (req, res, next) => {
         // 표시용: 모든 학습한 카드 (대기상태 포함)
         const displayCards = allEnrichedCards;
         
-        // 통계용: 오늘 정식 학습한 카드들 (현재 정식 학습 + 정식 학습 후 대기상태 전환)
-        const statsCards = allEnrichedCards.filter(card => {
-            // 케이스 1: 현재 정식 학습 상태 (isTodayStudy=false)
-            if (!card.isTodayStudy) {
+        // 통계용: 오늘 첫 학습한 단어들만 (lemma 기준으로 중복 제거)
+        // 동일한 lemma에 대해서는 첫 학습만 카운트 (폴더 상관없이)
+        const firstStudyByLemma = new Map(); // key: lemma, value: card
+        
+        allEnrichedCards.forEach(card => {
+            const lemma = card.vocab?.lemma;
+            if (!lemma) return; // lemma가 없으면 스킵
+            
+            // 이미 해당 lemma가 있는지 확인
+            if (firstStudyByLemma.has(lemma)) {
+                // 더 이른 시간의 학습 기록이 있으면 그것을 유지
+                const existingCard = firstStudyByLemma.get(lemma);
+                if (new Date(card.lastReviewedAt) < new Date(existingCard.lastReviewedAt)) {
+                    firstStudyByLemma.set(lemma, card);
+                }
+            } else {
+                firstStudyByLemma.set(lemma, card);
+            }
+        });
+        
+        // 첫 학습 카드들 중에서 유효한 학습만 필터링
+        const statsCards = Array.from(firstStudyByLemma.values()).filter(card => {
+            // 모든 학습 곡선에서 동일한 기준 적용: todayFirstResult가 있으면 포함
+            if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                console.log(`  [FIRST STUDY INCLUSION] ${card.vocab?.lemma}: todayFirstResult=${card.todayFirstResult} -> INCLUDED (first study of the day)`);
                 return true;
             }
             
-            // 자율학습 모드의 경우: todayFirstResult가 설정되어 있으면 통계에 포함
-            // (재학습이어도 첫 학습 결과를 사용하여 통계에 포함)
-            if (card.learningCurveType === 'free') {
-                if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                    console.log(`  [FREE LEARNING INCLUSION] ${card.vocab?.lemma}: Free mode with todayFirstResult=${card.todayFirstResult} -> INCLUDED in stats (first result used)`);
-                    return true; // 자율학습에서 첫 학습 기록이 있으면 통계에 포함
-                } else {
-                    console.log(`  [FREE LEARNING EXCLUSION] ${card.vocab?.lemma}: Free mode without todayFirstResult -> EXCLUDED from stats`);
-                    return false; // 첫 학습 기록이 없으면 제외
-                }
+            // 백업: 정식 학습 상태인 카드도 포함 (isTodayStudy=false)
+            if (!card.isTodayStudy) {
+                console.log(`  [OFFICIAL STUDY INCLUSION] ${card.vocab?.lemma}: isTodayStudy=false -> INCLUDED (official study state)`);
+                return true;
             }
             
-            // 장기/단기 모드의 경우: 케이스 2 - 대기상태이지만 오늘 정식 학습한 카드
-            // 판단 기준: correctTotal > 0 또는 wrongTotal > 0이고, todayFirstResult가 설정되어 있음
-            if (card.isTodayStudy && card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                const hasOfficialStudy = (card.correctTotal > 0) || (card.wrongTotal > 0);
-                if (hasOfficialStudy) {
-                    console.log(`  [STATS INCLUSION] ${card.vocab?.lemma}: isTodayStudy=true but has official study (${card.correctTotal}✓/${card.wrongTotal}✗) -> INCLUDED`);
-                    return true;
-                }
-            }
-            
+            console.log(`  [STUDY EXCLUSION] ${card.vocab?.lemma}: No valid first study record -> EXCLUDED`);
             return false;
         });
         
         console.log(`[STUDY LOG] Display cards (all): ${displayCards.length}`);
-        console.log(`[STUDY LOG] Stats cards (official study): ${statsCards.length}`);
+        console.log(`[STUDY LOG] Stats cards (first studies only): ${statsCards.length}`);
         
         // 학습 통계 계산
         const totalStudied = displayCards.length; // 표시용
@@ -2782,36 +2850,36 @@ router.get('/study-log', async (req, res, next) => {
             console.log(`  ${index + 1}. ${card.vocab?.lemma}: correct=${card.correctTotal}, wrong=${card.wrongTotal}, total=${totalAttempts}, curve=${card.learningCurveType}, isTodayStudy=${card.isTodayStudy}, todayFirstResult=${card.todayFirstResult}`);
         });
         
-        // 오늘 학습 횟수 계산: 오늘 정식 학습한 카드의 개수 (각 카드당 1회)
-        const todayTotalAttempts = validCardsForErrorRate.length; // 카드 개수만 카운트
-        console.log(`[TODAY TOTAL ATTEMPTS] ${todayTotalAttempts} cards studied today (1 attempt per card)`);
+        // 오늘 학습 횟수 계산: 오늘 첫 학습한 단어의 개수 (lemma별 1회)
+        const todayTotalAttempts = validCardsForErrorRate.length; // lemma별 첫 학습 카드 개수만 카운트
+        console.log(`[TODAY TOTAL ATTEMPTS] ${todayTotalAttempts} first studies today (1 per unique lemma)`);
         
-        // 오답률 계산: 학습 모드별로 다른 계산 방식 적용
+        // 오답률 계산: 모든 학습 곡선에서 동일한 방식 적용 (당일 첫 학습 결과만 사용)
         let totalCorrectAttempts = 0;
         let totalWrongAttempts = 0;
         
         validCardsForErrorRate.forEach(card => {
             let correct, wrong;
             
-            if (card.learningCurveType === 'free') {
-                // 자율학습 모드: 당일 첫 학습 기록만 사용 (1회 고정)
-                if (card.todayFirstResult === true) {
-                    correct = 1;
+            // 모든 학습 곡선에서 동일한 로직: 당일 첫 학습 결과만 사용 (1회 고정)
+            if (card.todayFirstResult === true) {
+                correct = 1;
+                wrong = 0;
+            } else if (card.todayFirstResult === false) {
+                correct = 0; 
+                wrong = 1;
+            } else {
+                // todayFirstResult가 없는 경우 백업 로직 (정식 학습 상태면 성공으로 간주)
+                if (!card.isTodayStudy) {
+                    correct = 1; // 정식 학습 완료 상태면 성공으로 간주
                     wrong = 0;
-                } else if (card.todayFirstResult === false) {
-                    correct = 0; 
-                    wrong = 1;
                 } else {
                     correct = 0;
                     wrong = 0;
                 }
-                console.log(`  [ERROR RATE - FREE] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (today first: ${card.todayFirstResult})`);
-            } else {
-                // 장기/단기 모드: 전체 누적 사용 (기존 로직 유지)
-                correct = card.correctTotal || 0;
-                wrong = card.wrongTotal || 0;
-                console.log(`  [ERROR RATE - SRS] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (accumulated)`);
             }
+            
+            console.log(`  [ERROR RATE] ${card.vocab?.lemma}: ${correct}✓/${wrong}✗ (today first: ${card.todayFirstResult}, curve: ${card.learningCurveType})`);
             
             totalCorrectAttempts += correct;
             totalWrongAttempts += wrong;
@@ -2879,5 +2947,6 @@ router.get('/study-log/today', async (req, res, next) => {
         return fail(res, 500, 'Failed to fetch today study log');
     }
 });
+
 
 module.exports = router;

@@ -140,19 +140,18 @@ function SrsWidget() {
     let mounted = true;
     (async () => {
         try {
-            // 사용자가 직접 생성한 SRS 폴더만 사용 (자동 생성 제거)
-            // 레거시 SRS 큐만 조회
-            const queueData = await fetchJSON(`/srs/queue?limit=100`, withCreds());
+            // overdue 상태인 모든 카드 조회
+            const availableData = await fetchJSON(`/srs/available`, withCreds());
             if (!mounted) return;
             
-            // 레거시 SRS: 전체 카운트
+            // overdue 카드 수 카운트
             let count = 0;
-            if (Array.isArray(queueData?.data)) {
-                count = queueData.data.length;
+            if (Array.isArray(availableData?.data)) {
+                count = availableData.data.length;
             }
             
             setCount(count);
-            setLat(queueData._latencyMs);
+            setLat(availableData._latencyMs);
         } catch (e) {
             if (mounted) setErr(e);
         }
@@ -177,11 +176,38 @@ function SrsWidget() {
           </div>
         ) : (
           <>
-            <p className="card-text">대기 카드: <strong>{count}</strong> 개</p>
+            <p className="card-text">복습 대기: <strong>{count}</strong> 개</p>
             {lat !== null && <div className="form-text">API {lat}ms</div>}
-            <Link className="btn btn-primary" to="/srs">
-              학습 시작
-            </Link>
+            <button 
+              className="btn btn-primary" 
+              onClick={async () => {
+                try {
+                  // 모든 overdue 카드의 vocabId 조회
+                  const availableData = await fetchJSON(`/srs/available`, withCreds());
+                  
+                  if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
+                    // overdue 카드들의 vocabId 추출
+                    const vocabIds = availableData.data
+                      .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+                      .filter(Boolean);
+                    
+                    if (vocabIds.length > 0) {
+                      // learn/vocab 시스템으로 리다이렉트 (전체 overdue 모드)
+                      window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
+                    } else {
+                      alert('복습할 단어가 없습니다.');
+                    }
+                  } else {
+                    alert('복습할 카드가 없습니다.');
+                  }
+                } catch (error) {
+                  console.error('Failed to fetch overdue cards:', error);
+                  alert('복습 카드를 불러오는 중 오류가 발생했습니다.');
+                }
+              }}
+            >
+              복습 시작
+            </button>
           </>
         )}
       </div>

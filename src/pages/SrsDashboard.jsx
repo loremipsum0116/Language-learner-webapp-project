@@ -107,59 +107,77 @@ export default function SrsDashboard() {
         }
 
         const wordCounts = {};
-        const wordFirstAttempts = {}; // 단어별 최초 학습 시간 추적
-        let totalAttempts = 0;
+        const wordFirstAttempts = {}; // lemma별 첫 학습 추적
+        const firstStudyByLemma = new Map(); // lemma별 첫 학습 추적
 
         // 현재 시간
         const now = new Date();
 
-        // 수정된 로직: 서버와 일치하는 방식으로 처리
+        // lemma별 첫 학습 카드 식별 (서버 로직과 일치)
         (todayStudyLog.studies || []).forEach(card => {
+            const lemma = card.vocab?.lemma || card.lemma;
+            if (!lemma) return; // lemma가 없으면 스킵
+            
+            // 이미 해당 lemma가 있는지 확인
+            if (firstStudyByLemma.has(lemma)) {
+                // 더 이른 시간의 학습 기록이 있으면 그것을 유지
+                const existingCard = firstStudyByLemma.get(lemma);
+                if (new Date(card.lastReviewedAt) < new Date(existingCard.lastReviewedAt)) {
+                    firstStudyByLemma.set(lemma, card);
+                }
+            } else {
+                firstStudyByLemma.set(lemma, card);
+            }
+        });
+
+        // 첫 학습 카드들만 처리 (lemma별)
+        let totalAttempts = 0;
+        Array.from(firstStudyByLemma.values()).forEach(card => {
             const word = card.vocab?.lemma || card.lemma || '미상';
             
-            console.log(`[DEBUG] Processing card: ${word}, isTodayStudy: ${card.isTodayStudy}, todayFirstResult: ${card.todayFirstResult}, learningCurveType: ${card.learningCurveType}`);
+            console.log(`[DEBUG] Processing first study card: ${word}, isTodayStudy: ${card.isTodayStudy}, todayFirstResult: ${card.todayFirstResult}, learningCurveType: ${card.learningCurveType}`);
             
-            // 모든 학습 기록을 totalAttempts에 포함 (서버와 동일)
-            totalAttempts++;
-            
-            // 정답/오답 여부 판단
-            let isCorrect;
-            if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                // todayFirstResult 필드 사용 (가장 정확함)
-                isCorrect = card.todayFirstResult;
-            } else {
-                // 백업: 기존 로직 사용
-                isCorrect = card.correctTotal > 0 && 
-                           (card.correctTotal / (card.correctTotal + card.wrongTotal)) >= 0.7;
-            }
-            
-            // 모든 학습한 단어를 표시 (자율학습도 포함)
-            const reviewTime = new Date(card.lastReviewedAt);
-            const wordKey = `${word}_${card.folderId || 'unknown'}_${reviewTime.getTime()}`; // 시간을 포함해서 중복 허용
-            
-            // 모든 학습 시도를 별도 항목으로 추가 (서버 로직과 일치)
-            wordFirstAttempts[wordKey] = {
-                word: word,
-                time: reviewTime,
-                isCorrect: isCorrect,
-                card: card,
-                isFirstStudyToday: true,
-                // 상태 정보 추가
-                isTodayStudy: card.isTodayStudy,
-                studyType: card.isTodayStudy === false ? 'valid' : 'waiting', // valid: 오답률 반영, waiting: 대기중 학습
-                folderId: card.folderId
-            };
-            
-            // 단어별 모든 학습 기록 저장 (상세보기용)
-            if (!wordCounts[word]) {
-                wordCounts[word] = { correct: 0, wrong: 0, total: 0 };
-            }
-            
-            wordCounts[word].total++;
-            if (isCorrect) {
-                wordCounts[word].correct++;
-            } else {
-                wordCounts[word].wrong++;
+            // 유효한 첫 학습만 카운트
+            if (card.todayFirstResult !== null && card.todayFirstResult !== undefined || !card.isTodayStudy) {
+                totalAttempts++;
+                
+                // 정답/오답 여부 판단
+                let isCorrect;
+                if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                    // todayFirstResult 필드 사용 (가장 정확함)
+                    isCorrect = card.todayFirstResult;
+                } else {
+                    // 백업: 정식 학습 상태면 성공으로 간주
+                    isCorrect = !card.isTodayStudy;
+                }
+                
+                // lemma별 첫 학습 추적
+                const reviewTime = new Date(card.lastReviewedAt);
+                const wordKey = `${word}_first`; // lemma만으로 키 생성
+                
+                wordFirstAttempts[wordKey] = {
+                    word: word,
+                    time: reviewTime,
+                    isCorrect: isCorrect,
+                    card: card,
+                    isFirstStudyToday: true,
+                    // 상태 정보 추가
+                    isTodayStudy: card.isTodayStudy,
+                    studyType: 'valid', // 첫 학습만 유효한 것으로 처리
+                    folderId: card.folderId
+                };
+                
+                // 단어별 학습 기록 저장 (상세보기용)
+                if (!wordCounts[word]) {
+                    wordCounts[word] = { correct: 0, wrong: 0, total: 0 };
+                }
+                
+                wordCounts[word].total++;
+                if (isCorrect) {
+                    wordCounts[word].correct++;
+                } else {
+                    wordCounts[word].wrong++;
+                }
             }
         });
         
@@ -197,17 +215,15 @@ export default function SrsDashboard() {
             }
         } else {
             // 백업: 수학적으로 엄밀한 프론트엔드 계산
-            // isTodayStudy=false인 학습만 오답률 계산에 포함 (서버 로직과 일치)
-            const validAttempts = Object.values(wordFirstAttempts).filter(attempt => 
-                attempt.studyType === 'valid' // isTodayStudy=false인 경우만
-            );
+            // 첫 학습만 오답률 계산에 포함 (서버 로직과 일치)
+            const validAttempts = Object.values(wordFirstAttempts); // 모든 첫 학습 시도
             const validWrongAttempts = validAttempts.filter(attempt => !attempt.isCorrect);
             
             errorRate = validAttempts.length > 0 ? 
                 Math.round((validWrongAttempts.length / validAttempts.length) * 100) : 0;
                 
-            console.log(`[FALLBACK STATS] Valid attempts: ${validAttempts.length}, Wrong: ${validWrongAttempts.length}, Error rate: ${errorRate}%`);
-            console.log(`[FALLBACK STATS] Total attempts (including waiting): ${totalAttempts}`);
+            console.log(`[FALLBACK STATS] Unique lemma first studies: ${validAttempts.length}, Wrong: ${validWrongAttempts.length}, Error rate: ${errorRate}%`);
+            console.log(`[FALLBACK STATS] Total unique lemmas studied: ${totalAttempts}`);
         }
 
         return { 
@@ -420,37 +436,19 @@ export default function SrsDashboard() {
                                                 <div className="col-12">
                                                     <strong className="text-primary">오늘 학습한 단어들:</strong>
                                                     <div className="mt-2">
-                                                        {Object.entries(wordCounts).length > 0 ? (
+                                                        {Object.keys(wordFirstAttempts).length > 0 ? (
                                                             <div className="d-flex flex-wrap gap-2">
-                                                                {/* 임시: 서버에서 받은 모든 데이터 직접 표시 */}
-                                                                {(todayStudyLog.studies || [])
-                                                                    .sort((a, b) => new Date(b.lastReviewedAt) - new Date(a.lastReviewedAt))
-                                                                    .map((card, index) => {
-                                                                        const word = card.vocab?.lemma || 'Unknown';
-                                                                        
-                                                                        // 최근 답변 결과에 따른 색상 결정
-                                                                        // todayFirstResult가 있으면 사용, 없으면 correctTotal/wrongTotal 비율로 판단
-                                                                        let isLastCorrect;
-                                                                        if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
-                                                                            isLastCorrect = card.todayFirstResult;
-                                                                        } else {
-                                                                            // correctTotal과 wrongTotal로 최근 성향 판단
-                                                                            const totalAttempts = (card.correctTotal || 0) + (card.wrongTotal || 0);
-                                                                            if (totalAttempts === 0) {
-                                                                                isLastCorrect = true; // 기본값
-                                                                            } else {
-                                                                                // 정답률이 50% 이상이면 성공으로 간주
-                                                                                isLastCorrect = (card.correctTotal / totalAttempts) >= 0.5;
-                                                                            }
-                                                                        }
-                                                                        
-                                                                        // 최근 답변에 따른 스타일
-                                                                        const badgeClass = isLastCorrect ? 'bg-success' : 'bg-danger';
-                                                                        const icon = isLastCorrect ? '✅' : '❌';
+                                                                {/* lemma별 첫 학습만 표시 */}
+                                                                {Object.values(wordFirstAttempts)
+                                                                    .sort((a, b) => new Date(b.time) - new Date(a.time))
+                                                                    .map((attempt, index) => {
+                                                                        // 첫 학습 결과에 따른 스타일
+                                                                        const badgeClass = attempt.isCorrect ? 'bg-success' : 'bg-danger';
+                                                                        const icon = attempt.isCorrect ? '✅' : '❌';
                                                                         
                                                                         return (
-                                                                            <span key={`${card.id}_${index}`} className={`badge ${badgeClass} mb-1 me-1`} style={{fontSize: '0.75rem', display: 'inline-block', whiteSpace: 'nowrap'}}>
-                                                                                {icon} {word} [F{card.folderId}] <small className="opacity-75">{card.correctTotal}✓/{card.wrongTotal}✗</small>
+                                                                            <span key={`${attempt.word}_${index}`} className={`badge ${badgeClass} mb-1 me-1`} style={{fontSize: '0.75rem', display: 'inline-block', whiteSpace: 'nowrap'}}>
+                                                                                {icon} {attempt.word} [F{attempt.folderId}] <small className="opacity-75">첫학습</small>
                                                                             </span>
                                                                         );
                                                                     })

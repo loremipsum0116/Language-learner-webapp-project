@@ -209,10 +209,17 @@ async function manageOverdueCards(logger = console) {
     }
 
     // 2. overdue 데드라인이 지난 카드들을 24시간 동결 상태로 전환
+    // 단, 자동학습 카드들(nextReviewAt: null, isFromWrongAnswer: false)은 제외
     const cardsToFreeze = await prisma.srscard.findMany({
       where: {
         isOverdue: true,
-        overdueDeadline: { lte: now }
+        overdueDeadline: { lte: now },
+        NOT: {
+          AND: [
+            { nextReviewAt: null },
+            { isFromWrongAnswer: false }
+          ]
+        }
       },
       select: { id: true, userId: true, overdueDeadline: true, isFromWrongAnswer: true, wrongStreakCount: true, stage: true }
     });

@@ -238,7 +238,96 @@ export default function SrsFolderDetail() {
         }
     };
 
-    useEffect(() => { reload(); /* eslint-disable-next-line */ }, [id]);
+    const handleAccelerateCards = async () => {
+        if (selectedIds.size === 0) {
+            alert('자동학습할 단어를 선택해주세요.');
+            return;
+        }
+        
+        try {
+            // 선택된 카드 ID들을 미리 준비하고 localStorage에 저장
+            const selectedItems = items.filter(item => selectedIds.has(item.folderItemId ?? item.id));
+            const cardIds = selectedItems.map(item => item.cardId).filter(cardId => cardId);
+            
+            console.log('[ACCELERATION SETUP] Selected items:', selectedItems.length);
+            console.log('[ACCELERATION SETUP] Card IDs:', cardIds);
+            console.log('[ACCELERATION SETUP] Folder ID:', folder.id);
+            
+            // 학습 완료 후 처리할 정보를 localStorage에 저장
+            const accelerationData = {
+                folderId: folder.id,
+                cardIds: cardIds,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('pendingAcceleration', JSON.stringify(accelerationData));
+            console.log('[ACCELERATION SETUP] Saved to localStorage:', accelerationData);
+            
+            // 기존 자동학습 모드로 이동
+            const selectedItemIds = Array.from(selectedIds).join(',');
+            const learnUrl = `/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${selectedItemIds}`;
+            
+            navigate(learnUrl);
+            
+        } catch (e) {
+            console.error('자동학습 시작 실패:', e);
+            alert(`자동학습 시작 실패: ${e?.message || "서버 오류"}`);
+        }
+    };
+
+    useEffect(() => { 
+        reload(); 
+        
+        // 학습 완료 후 돌아온 경우 대기 중인 가속화 처리
+        const checkPendingAcceleration = async () => {
+            const pending = localStorage.getItem('pendingAcceleration');
+            console.log('[ACCELERATION CHECK] Checking localStorage:', pending);
+            
+            if (pending) {
+                try {
+                    const data = JSON.parse(pending);
+                    console.log('[ACCELERATION CHECK] Parsed data:', data);
+                    console.log('[ACCELERATION CHECK] Current folderId:', id, 'Data folderId:', data.folderId);
+                    console.log('[ACCELERATION CHECK] Time check:', Date.now() - data.timestamp, 'ms ago');
+                    
+                    // 24시간 이내의 요청만 처리
+                    if (Date.now() - data.timestamp < 24 * 60 * 60 * 1000 && 
+                        data.folderId === parseInt(id) && 
+                        data.cardIds.length > 0) {
+                        
+                        console.log('[ACCELERATION] Processing pending acceleration for', data.cardIds.length, 'cards:', data.cardIds);
+                        const result = await SrsApi.accelerateCards(data.folderId, { cardIds: data.cardIds });
+                        console.log('[ACCELERATION] Result:', result);
+                        
+                        // 상태 변경 후 페이지 새로고침하여 업데이트된 카드 상태 반영
+                        console.log('[ACCELERATION] Reloading page to reflect changes');
+                        await reload();
+                        
+                        // 추가: 강제 페이지 새로고침으로 확실한 상태 업데이트
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 500);
+                        
+                        // alert 제거 - 자동학습 후 조용히 상태 변경
+                    } else {
+                        console.log('[ACCELERATION CHECK] Conditions not met - skipping');
+                    }
+                } catch (e) {
+                    console.error('[ACCELERATION ERROR] Failed to process pending acceleration:', e);
+                } finally {
+                    console.log('[ACCELERATION] Removing localStorage item');
+                    localStorage.removeItem('pendingAcceleration');
+                }
+            } else {
+                console.log('[ACCELERATION CHECK] No pending acceleration found');
+            }
+        };
+        
+        // 페이지 로드 후 잠시 후에 처리 (reload 완료 후)
+        setTimeout(checkPendingAcceleration, 1000);
+        
+        /* eslint-disable-next-line */ 
+    }, [id]);
 
     if (loading) return <main className="container py-5 text-center"><div className="spinner-border" /></main>;
     if (!folder) {
@@ -474,12 +563,12 @@ export default function SrsFolderDetail() {
                                 선택 자동학습 ({selectedIds.size}개) - 100개 초과
                             </button>
                         ) : (
-                            <Link 
+                            <button 
                                 className="btn btn-success btn-sm" 
-                                to={`/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${Array.from(selectedIds).join(',')}`}
+                                onClick={handleAccelerateCards}
                             >
                                 선택 자동학습 ({selectedIds.size}개)
-                            </Link>
+                            </button>
                         )
                     ) : (
                         <button 
@@ -811,7 +900,23 @@ export default function SrsFolderDetail() {
                                         cursor: 'pointer',
                                         transition: 'transform 0.3s ease'
                                     }}
-                                    onClick={() => handleCardFlip(itemId)}
+                                    onClick={(e) => {
+                                        // Ctrl 클릭시 디버그 정보 출력, 일반 클릭시 카드 뒤집기
+                                        if (e.ctrlKey || e.metaKey) {
+                                            console.log(`[CARD CLICKED] ${lemma} Debug Info:`, {
+                                                lemma,
+                                                isOverdue: item.isOverdue,
+                                                isMastered: item.isMastered,
+                                                learned: item.learned,
+                                                wrongCount: item.wrongCount,
+                                                stage: item.stage,
+                                                cardId: item.cardId,
+                                                fullItem: item
+                                            });
+                                        } else {
+                                            handleCardFlip(itemId);
+                                        }
+                                    }}
                                 >
                                     <div 
                                         className="card-header d-flex justify-content-between align-items-center p-2"
@@ -834,7 +939,9 @@ export default function SrsFolderDetail() {
                                             {!item.isMastered && folder?.learningCurveType === 'free' ? (
                                                 // 자율학습모드 - 간단한 정답/오답 표시
                                                 <div className="d-flex gap-1">
-                                                    {(item.correctTotal > 0 || item.wrongTotal > 0) ? (
+                                                    {item.isOverdue ? (
+                                                        <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
+                                                    ) : (item.correctTotal > 0 || item.wrongTotal > 0) ? (
                                                         <>
                                                             <span className="text-success">✓ {item.correctTotal || 0}</span>
                                                             <span className="text-danger">✗ {item.wrongTotal || 0}</span>
@@ -846,14 +953,18 @@ export default function SrsFolderDetail() {
                                             ) : (
                                                 // 일반 SRS 모드
                                                 <>
-                                                    {!item.isMastered && item.isOverdue && (
+                                                    {/* 디버깅용 로그 */}
+                                                    {console.log(`[CARD DEBUG] ${item.vocab?.lemma || 'Unknown'}: isMastered=${item.isMastered}, isOverdue=${item.isOverdue}, learned=${item.learned}, wrongCount=${item.wrongCount}, stage=${item.stage}`)}
+                                                    
+                                                    {item.isOverdue ? (
                                                         <span className="text-warning fw-bold">⚠️ 복습 대기중</span>
-                                                    )}
-                                                    {!item.isMastered && !item.isOverdue && item.learned && <span className="text-success">✓ 학습완료</span>}
-                                                    {!item.isMastered && !item.isOverdue && !item.learned && item.wrongCount > 0 && (
+                                                    ) : item.isMastered ? (
+                                                        <span className="text-primary fw-bold">★ 마스터</span>
+                                                    ) : item.learned ? (
+                                                        <span className="text-success">✓ 학습완료</span>
+                                                    ) : item.wrongCount > 0 ? (
                                                         <span className="text-danger">✗ 오답 {item.wrongCount}회</span>
-                                                    )}
-                                                    {!item.isMastered && !item.isOverdue && !item.learned && (!item.wrongCount || item.wrongCount === 0) && (
+                                                    ) : (
                                                         <span className="text-muted">미학습</span>
                                                     )}
                                                 </>
@@ -1022,11 +1133,21 @@ export default function SrsFolderDetail() {
                                                         <div>
                                                             <span className="badge bg-info">Stage {item.stage ?? 0}</span>
                                                             <div className="ms-2 mt-1">
-                                                                {item.nextReviewAt && (
+                                                                {item.nextReviewAt && !item.isOverdue && (
                                                                     <div className="text-muted small">
                                                                         다음 복습: {fmt(item.nextReviewAt)}
                                                                     </div>
                                                                 )}
+                                                                {/* ReviewTimer props 디버깅 */}
+                                                                {item.vocab?.lemma === 'Achieve' && console.log('[ReviewTimer Props]', {
+                                                                    nextReviewAt: item.nextReviewAt,
+                                                                    waitingUntil: item.waitingUntil,
+                                                                    isOverdue: item.isOverdue,
+                                                                    overdueDeadline: item.overdueDeadline,
+                                                                    isFromWrongAnswer: item.isFromWrongAnswer,
+                                                                    frozenUntil: item.frozenUntil,
+                                                                    isMastered: item.isMastered
+                                                                })}
                                                                 <ReviewTimer 
                                                                     nextReviewAt={item.nextReviewAt}
                                                                     waitingUntil={item.waitingUntil}

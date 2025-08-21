@@ -9,6 +9,7 @@ export default function SrsQuiz() {
     const navigate = useNavigate();
     const [params] = useSearchParams();
     const folderId = Number(params.get('folder'));
+    const allOverdue = params.get('all') === 'true';
 
     const [loading, setLoading] = useState(true);
     const [queue, setQueue] = useState([]);
@@ -20,7 +21,9 @@ export default function SrsQuiz() {
     // 폴더 ID가 변경될 때마다 퀴즈 큐를 가져옵니다.
     useEffect(() => {
         const ac = new AbortController();
-        if (!folderId || isNaN(folderId)) {
+        
+        // allOverdue가 true이거나 유효한 folderId가 있어야 함
+        if (!allOverdue && (!folderId || isNaN(folderId))) {
             setErr(new Error('폴더가 지정되지 않았습니다.'));
             setLoading(false);
             return;
@@ -32,8 +35,15 @@ export default function SrsQuiz() {
                 setErr(null);
                 
                 // 퀴즈 큐와 연속학습일 정보를 병렬로 가져오기
+                let queueUrl;
+                if (allOverdue) {
+                    queueUrl = '/srs/queue?all=true';
+                } else {
+                    queueUrl = `/srs/queue?folderId=${folderId}`;
+                }
+                
                 const [queueRes, streakRes] = await Promise.all([
-                    fetchJSON(`/srs/folders/${folderId}/queue`, withCreds({ signal: ac.signal })),
+                    fetchJSON(queueUrl, withCreds({ signal: ac.signal })),
                     fetchJSON('/srs/streak', withCreds({ signal: ac.signal }))
                 ]);
                 
@@ -53,7 +63,7 @@ export default function SrsQuiz() {
         })();
 
         return () => ac.abort();
-    }, [folderId]);
+    }, [folderId, allOverdue]);
 
     const current = queue[idx];
 
