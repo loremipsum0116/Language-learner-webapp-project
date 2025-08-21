@@ -1,5 +1,5 @@
 // src/components/RainbowStar.jsx
-// 120일 마스터 완료 단어에 표시할 무지개 별 컴포넌트
+// 60일 마스터 완료 단어에 표시할 무지개 별 컴포넌트
 
 import React from 'react';
 import './RainbowStar.css';
@@ -30,7 +30,7 @@ const RainbowStar = ({
 
   const getTooltipText = () => {
     if (cycles === 1) {
-      return '🌟 120일 마스터 완료!';
+      return '🌟 마스터 완료!';
     } else {
       return `🌟 ${cycles}회 마스터 완료!`;
     }

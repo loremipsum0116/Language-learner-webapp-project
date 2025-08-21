@@ -976,7 +976,7 @@ export default function LearnVocab() {
                 
                 // 마스터 달성 축하 메시지 표시
                 if (data?.isMasteryAchieved) {
-                    toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                    toast.success('🎉🌟 마스터 완료! 축하합니다! 🌟🎉', {
                         duration: 5000,
                         style: {
                             background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -1095,7 +1095,7 @@ export default function LearnVocab() {
             
             // 마스터 달성 축하 메시지 표시
             if (data?.isMasteryAchieved) {
-                toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                toast.success('🎉🌟 마스터 완료! 축하합니다! 🌟🎉', {
                     duration: 5000,
                     style: {
                         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',

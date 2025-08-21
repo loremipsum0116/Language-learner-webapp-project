@@ -133,7 +133,7 @@ export default function SrsQuiz() {
 
             // 마스터 달성 축하 메시지 표시
             if (isMasteryAchieved) {
-                toast.success('🎉🌟 120일 마스터 완료! 축하합니다! 🌟🎉', {
+                toast.success('🎉🌟 마스터 완료! 축하합니다! 🌟🎉', {
                     duration: 5000, // 5초간 표시
                     style: {
                         background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
