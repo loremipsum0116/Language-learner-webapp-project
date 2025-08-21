@@ -209,15 +209,31 @@ async function manageOverdueCards(logger = console) {
     }
 
     // 2. overdue 데드라인이 지난 카드들을 24시간 동결 상태로 전환
-    // 단, 자동학습 카드들(nextReviewAt: null, isFromWrongAnswer: false)은 제외
+    // 단, 자동학습 카드들과 자율학습모드 카드들은 제외
     const cardsToFreeze = await prisma.srscard.findMany({
       where: {
         isOverdue: true,
         overdueDeadline: { lte: now },
+        // 자동학습 카드와 자율학습모드 카드 제외
         NOT: {
-          AND: [
-            { nextReviewAt: null },
-            { isFromWrongAnswer: false }
+          OR: [
+            // 자동학습 카드 (nextReviewAt: null, isFromWrongAnswer: false)
+            {
+              AND: [
+                { nextReviewAt: null },
+                { isFromWrongAnswer: false }
+              ]
+            },
+            // 자율학습모드 폴더의 카드들
+            {
+              srsfolderitem: {
+                some: {
+                  srsfolder: {
+                    learningCurveType: 'free'
+                  }
+                }
+              }
+            }
           ]
         }
       },

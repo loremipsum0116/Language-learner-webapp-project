@@ -127,44 +127,12 @@ async function completeFolderAndScheduleNext(folderId, userId) {
         };
     }
     
-    // 일반적인 다음 단계 진행
-    const nextReviewDate = computeNextReviewDate(folder.cycleAnchorAt, nextStage, folder.learningCurveType);
-    
-    // 다음 복습 폴더 생성
-    const nextFolder = await prisma.srsfolder.create({
-        data: {
-            userId,
-            name: `${folder.name.replace(/ - 복습 \d+단계/g, '')} - 복습 ${nextStage}단계`,
-            createdDate: dayjs(nextReviewDate).startOf('day').toDate(),
-            nextReviewDate: nextReviewDate,
-            cycleAnchorAt: folder.cycleAnchorAt, // 기준점은 원본 폴더와 동일
-            kind: 'review',
-            stage: nextStage,
-            autoCreated: true,
-            alarmActive: true,
-            completionCount: folder.completionCount || 0,
-            updatedAt: new Date()
-        }
-    });
-    
-    // 학습한 단어들을 다음 복습 폴더로 복사
-    const nextFolderItems = folder.items
-        .filter(item => item.learned)
-        .map(item => ({
-            folderId: nextFolder.id,
-            vocabId: item.vocabId,
-            learned: false // 복습에서는 다시 미학습 상태로
-        }));
-    
-    await prisma.srsfolderitem.createMany({
-        data: nextFolderItems
-    });
-    
+    // 폴더 완료 처리만 수행 (다음 복습 폴더는 생성하지 않음)
     return {
         completedFolder: folder,
-        nextFolder: nextFolder,
-        nextReviewDate: nextReviewDate,
-        message: `다음 복습 단계(${nextStage}) 생성 완료`
+        nextFolder: null,
+        nextReviewDate: null,
+        message: `폴더 학습 완료!`
     };
 }
 
