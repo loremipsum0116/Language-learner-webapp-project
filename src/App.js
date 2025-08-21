@@ -27,6 +27,7 @@ import SrsFolderDetail from './pages/SrsFolderDetail';
 import SrsParentFolder from './pages/SrsParentFolder';
 import WrongAnswers from "./pages/WrongAnswers";
 import WrongAnswerQuiz from "./pages/WrongAnswerQuiz";
+import LandingPage from "./pages/LandingPage";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -38,49 +39,301 @@ const Placeholder = ({ title }) => (
 export default function App() {
   return (
     <>
-      <Header />
       <ToastContainer /> {/* ToastContainer 추가 */}
-      <div className="main-content">
+      <div className="app-wrapper">
         <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
-        <Route path="/odat-note" element={<WrongAnswers />} />
-        <Route path="/vocab" element={<VocabList />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route 
+          path="/home" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Home />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/login" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Login />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/register" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Register />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/logout" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Logout />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/odat-note" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <WrongAnswers />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/vocab" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <VocabList />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
 
         {/* 보호 라우트: 로그인 필요 */}
         <Route element={<ProtectedRoute />}>
-          <Route path="/learn" element={<LearnStart />} />
-          <Route path="/learn/vocab" element={<LearnVocab />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/my-wordbook" element={<MyWordbook />} />
-          <Route path="/srs/folder/:id" element={<SrsFolderDetail />} />
-          <Route path="/srs/parent/:id" element={<SrsParentFolder />} />
+          <Route 
+            path="/learn" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <LearnStart />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/learn/vocab" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <LearnVocab />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/dashboard" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <Dashboard />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/my-wordbook" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <MyWordbook />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/srs/folder/:id" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <SrsFolderDetail />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/srs/parent/:id" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <SrsParentFolder />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
           {/* SRS 관련 라우트 추가 */}
-          <Route path="/srs" element={<SrsDashboard />} />
-          <Route path="/srs/quiz" element={<SrsQuiz />} />
-          <Route path="/srs/wrong-answers" element={<WrongAnswers />} />
-          <Route path="/srs/wrong-answers/quiz" element={<WrongAnswerQuiz />} />
+          <Route 
+            path="/srs" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <SrsDashboard />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/srs/quiz" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <SrsQuiz />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/srs/wrong-answers" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <WrongAnswers />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/srs/wrong-answers/quiz" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <WrongAnswerQuiz />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
           
           {/* Grammar 관련 라우트 */}
-          <Route path="/learn/grammar" element={<GrammarHub />} />
-          <Route path="/learn/grammar/:topicId" element={<GrammarQuiz />} />
+          <Route 
+            path="/learn/grammar" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <GrammarHub />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/learn/grammar/:topicId" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <GrammarQuiz />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
 
           {/* 관리자 전용 */}
           <Route element={<AdminRoute />}>
-            <Route path="/admin" element={<Admin />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route 
+              path="/admin" 
+              element={
+                <>
+                  <Header />
+                  <div className="main-content">
+                    <Admin />
+                  </div>
+                  <Footer />
+                </>
+              } 
+            />
+            <Route 
+              path="/admin/dashboard" 
+              element={
+                <>
+                  <Header />
+                  <div className="main-content">
+                    <AdminDashboard />
+                  </div>
+                  <Footer />
+                </>
+              } 
+            />
           </Route>
         </Route>
 
         {/* 공개 라우트 */}
-        <Route path="/read/:id" element={<Placeholder title="리딩(글로스)" />} />
-        <Route path="/tutor" element={<Placeholder title="튜터" />} />
-        <Route path="/dict" element={<Dict />} />
+        <Route 
+          path="/read/:id" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Placeholder title="리딩(글로스)" />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/tutor" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Placeholder title="튜터" />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/dict" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Dict />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
         </Routes>
       </div>
-      <Footer />
     </>
   );
 }

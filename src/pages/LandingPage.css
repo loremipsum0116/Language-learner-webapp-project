@@ -1,0 +1,252 @@
+.landing-container {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  height: 100vh !important;
+  width: 100vw !important;
+  overflow: hidden !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: white !important;
+  z-index: 9999 !important;
+  background: #000 !important;
+}
+
+.video-background {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -2 !important;
+}
+
+.background-video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  filter: brightness(0.4) !important;
+}
+
+.content-overlay {
+  position: relative !important;
+  z-index: 10 !important;
+  text-align: center !important;
+  max-width: 1200px !important;
+  padding: 3rem !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  border-radius: 25px !important;
+  backdrop-filter: blur(15px) !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+  border: 2px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.hero-content {
+  margin-bottom: 3rem;
+}
+
+.brand-logo {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 1rem !important;
+}
+
+.hero-title {
+  font-size: 3rem !important;
+  font-weight: 800 !important;
+  margin-bottom: 1rem !important;
+  background: linear-gradient(135deg, #FFD700, #FFA500, #FF6B6B) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8) !important;
+  line-height: 1.2 !important;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem !important;
+  margin-bottom: 2.5rem !important;
+  opacity: 0.95 !important;
+  line-height: 1.8 !important;
+  font-weight: 300 !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7) !important;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.landing-container .btn-primary, 
+.landing-container .btn-secondary {
+  padding: 1.2rem 2.5rem !important;
+  border: none !important;
+  border-radius: 50px !important;
+  font-size: 1.2rem !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: 180px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.landing-container .btn-primary {
+  background: linear-gradient(135deg, #FF6B6B, #FF8E3C, #FFA500) !important;
+  color: white !important;
+  box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5) !important;
+  border: 2px solid transparent !important;
+}
+
+.landing-container .btn-primary:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 12px 40px rgba(255, 107, 107, 0.8) !important;
+  background: linear-gradient(135deg, #FF8E3C, #FFA500, #FFD700) !important;
+}
+
+.landing-container .btn-secondary {
+  background: transparent !important;
+  color: white !important;
+  border: 3px solid rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(10px) !important;
+}
+
+.landing-container .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3) !important;
+}
+
+.features-preview {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+  gap: 2.5rem !important;
+  margin-top: 3rem !important;
+}
+
+.feature-item {
+  text-align: center !important;
+  padding: 2rem !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 20px !important;
+  backdrop-filter: blur(10px) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.feature-item:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3) !important;
+}
+
+.feature-item i {
+  font-size: 3rem !important;
+  margin-bottom: 1.5rem !important;
+  background: linear-gradient(135deg, #FFD700, #FF6B6B) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.feature-item h3 {
+  font-size: 1.4rem !important;
+  margin-bottom: 1rem !important;
+  font-weight: 700 !important;
+  color: white !important;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+.feature-item p {
+  font-size: 1rem !important;
+  opacity: 0.9 !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+.feature-item p small {
+  font-size: 0.85rem !important;
+  opacity: 0.7 !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.skip-intro {
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.skip-intro:hover {
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.skip-intro i {
+  transition: transform 0.3s ease;
+}
+
+.skip-intro:hover i {
+  transform: translateX(3px);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .content-overlay {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .features-preview {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .skip-intro {
+    bottom: 1rem;
+    right: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    max-width: 250px;
+  }
+}

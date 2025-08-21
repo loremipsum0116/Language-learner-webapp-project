@@ -17,7 +17,7 @@ export default function Header() {
     <nav className="navbar navbar-expand-lg bg-body-tertiary border-bottom" style={{ height: '80px' }}>
       <div className="container" style={{ height: '100%' }}>
         {/* 브랜드 로고 */}
-        <Link to="/" className="navbar-brand fw-bold fs-4 text-decoration-none d-flex align-items-center gap-1" style={{ height: '100%' }}>
+        <Link to="/home" className="navbar-brand fw-bold fs-4 text-decoration-none d-flex align-items-center gap-1" style={{ height: '100%' }}>
           <img 
             src="/danmoosae.png"
             alt="" 

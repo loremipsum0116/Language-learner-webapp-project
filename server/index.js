@@ -49,6 +49,9 @@ app.use('/A2/audio', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'A2', 'audio')));
 
+// 비디오 파일 서빙
+app.use('/api/video', express.static(path.join(__dirname, 'out')));
+
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
