@@ -16,10 +16,12 @@ router.get('/', async (req, res) => {
             where.categoryId = parseInt(categoryId);
         }
 
+        // 중복 제거를 위해 DISTINCT vocabId 사용
         const items = await prisma.uservocab.findMany({
             where,
             include: { vocab: { include: { dictentry: true } } },
-            orderBy: { createdAt: 'desc' }
+            orderBy: { createdAt: 'desc' },
+            distinct: ['vocabId'] // 같은 vocabId는 하나만 가져오기
         });
 
         // SRS 카드 정보를 별도로 조회

@@ -1,5 +1,6 @@
 // src/pages/Dashboard.jsx
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError } from '../api/client';
@@ -35,10 +36,13 @@ function StatCard({ title, value, icon, link, linkText, loading }) {
 
 export default function Dashboard() {
     const { user } = useAuth();
-    const [stats, setStats] = useState({ srsQueue: 0, odatNote: 0, totalWords: 0 });
+    const [stats, setStats] = useState({ srsQueue: 0, odatNote: 0, masteredWords: 0 });
     const [loading, setLoading] = useState(true);
     const [srsStatus, setSrsStatus] = useState(null);
     const [streakInfo, setStreakInfo] = useState(null);
+    const [todayStudyLog, setTodayStudyLog] = useState(null);
+    const [showStudyDetails, setShowStudyDetails] = useState(false);
+    const dropdownButtonRef = useRef(null);
 
     // 🔔 오늘(KST) 루트 폴더의 미학습 합계 + 가장 이른 알림시각
     const [alarm, setAlarm] = useState({ totalDue: 0, nextAlarmAtKst: null });
@@ -50,18 +54,24 @@ export default function Dashboard() {
             try {
                 setLoading(true);
 
-                // 1) 카드/오답/전체 통계 병렬 로딩(기존 엔드포인트 유지)
-                const [srsQueueRes, odatNoteRes, allCardsRes] = await Promise.all([
+                // 1) 카드/오답/마스터 통계 병렬 로딩
+                const [srsQueueRes, odatNoteRes, masteredCardsRes] = await Promise.all([
                     fetchJSON('/srs/queue?limit=500', withCreds({ signal: ac.signal })),
-                    fetchJSON('/odat-note/list', withCreds({ signal: ac.signal })),
-                    fetchJSON('/srs/all-cards', withCreds({ signal: ac.signal })),
+                    fetchJSON('/srs/wrong-answers?includeCompleted=false', withCreds({ signal: ac.signal })),
+                    fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal })),
                 ]);
 
                 if (!ac.signal.aborted) {
+                    // VocabList와 동일한 방식으로 마스터된 카드 카운트
+                    const masteredCount = Array.isArray(masteredCardsRes.data) ? masteredCardsRes.data.length : 0;
+                    
+                    console.log('[Dashboard] Mastered cards API response:', masteredCardsRes.data);
+                    console.log('[Dashboard] Mastered count from /srs/mastered-cards:', masteredCount);
+                    
                     setStats({
                         srsQueue: Array.isArray(srsQueueRes.data) ? srsQueueRes.data.length : 0,
                         odatNote: Array.isArray(odatNoteRes.data) ? odatNoteRes.data.length : 0,
-                        totalWords: Array.isArray(allCardsRes.data) ? allCardsRes.data.length : 0,
+                        masteredWords: masteredCount,
                     });
                 }
 
@@ -113,6 +123,29 @@ export default function Dashboard() {
                     if (!isAbortError(e)) console.warn('연속학습일 로딩 실패:', e);
                 }
                 
+                // 5) 오늘 학습 로그 로드 (SRS 대시보드와 동일한 방식)
+                const today = dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
+                try {
+                    const studyLogRes = await fetchJSON(`/srs/study-log?date=${today}`, withCreds({ signal: ac.signal }));
+                    if (!ac.signal.aborted) {
+                        setTodayStudyLog(studyLogRes.data || studyLogRes);
+                    }
+                } catch (err) {
+                    if (!isAbortError(err)) {
+                        console.warn('Study log API failed:', err);
+                        // API 실패시 기본값으로 설정
+                        setTodayStudyLog({
+                            studies: [],
+                            stats: {
+                                totalStudied: 0,
+                                uniqueWords: 0,
+                                errorRate: 0,
+                                successRate: 0
+                            }
+                        });
+                    }
+                }
+                
             } catch (e) {
                 if (!isAbortError(e)) console.error('대시보드 데이터 로딩 실패:', e);
             } finally {
@@ -123,7 +156,65 @@ export default function Dashboard() {
         return () => ac.abort();
     }, []);
 
+
     const cefrLevel = user?.profile?.level || 'A1';
+
+    // 오늘 학습한 단어들을 그룹화하고 통계 계산 (SRS 대시보드와 동일한 로직)
+    const processTodayStudyData = () => {
+        // streakInfo에서 실제 학습 횟수를 우선 사용
+        const actualStudyCount = streakInfo?.dailyQuizCount || 0;
+        
+        if (!todayStudyLog || !todayStudyLog.studies) {
+            // API 데이터가 없으면 streakInfo를 기반으로 추정
+            return { 
+                wordCounts: {}, 
+                wordFirstAttempts: {},
+                totalAttempts: actualStudyCount, 
+                wrongAttempts: 0, 
+                errorRate: 0,
+                isEstimated: actualStudyCount > 0 // 추정 데이터임을 표시
+            };
+        }
+
+        const wordFirstAttempts = {}; // lemma별 첫 시도 추적
+        
+        // 학습 데이터가 있으면 첫 시도만 처리
+        todayStudyLog.studies.forEach(card => {
+            const lemma = card.vocab?.lemma || card.lemma || '미상';
+            
+            // lemma별 첫 학습만 기록
+            if (!wordFirstAttempts[lemma]) {
+                // 정답/오답 여부 판단
+                let isCorrect = false;
+                if (card.todayFirstResult !== null && card.todayFirstResult !== undefined) {
+                    isCorrect = card.todayFirstResult === true;
+                } else if (card.isTodayStudy && card.stage !== undefined) {
+                    // 오늘 처음 학습한 카드는 stage > 0이면 정답
+                    isCorrect = card.stage > 0;
+                }
+                
+                wordFirstAttempts[lemma] = {
+                    word: lemma,
+                    isCorrect,
+                    folderId: card.folderId,
+                    time: card.studiedAt || new Date().toISOString()
+                };
+            }
+        });
+
+        // 서버 제공 통계를 사용 (가장 정확함)
+        const totalAttempts = todayStudyLog.stats?.todayTotalAttempts || actualStudyCount;
+        const errorRate = todayStudyLog.stats?.errorRate || 0;
+
+        return { 
+            wordFirstAttempts,
+            totalAttempts, 
+            errorRate,
+            isEstimated: false
+        };
+    };
+
+    const { wordFirstAttempts, totalAttempts, errorRate, isEstimated } = processTodayStudyData();
 
     // 🔔 기존 알림 문구 (폴더 시스템용)
     const alarmText = useMemo(() => {
@@ -177,10 +268,10 @@ export default function Dashboard() {
     };
 
     return (
-        <main className="container py-4">
+        <main className="container py-4" style={{ overflow: 'visible' }}>
             {/* 환영 섹션 */}
             <section className="mb-4 p-4 rounded" style={{ backgroundColor: 'var(--bs-light)' }}>
-                <h2 className="mb-1">Willkommen, {user?.email}!</h2>
+                <h2 className="mb-1">Welcome, {user?.email}!</h2>
                 <p className="text-muted">
                     현재 설정된 학습 레벨은 <strong>{cefrLevel}</strong> 입니다. 오늘도 꾸준히 학습해 보세요!
                 </p>
@@ -200,7 +291,7 @@ export default function Dashboard() {
             )}
 
             {/* 핵심 지표 */}
-            <section className="row g-3 mb-4">
+            <section className="row g-3 mb-4" style={{ overflow: 'visible' }}>
                 <div className="col-md-6 col-lg-3">
                     <StatCard
                         title="오늘 학습할 카드"
@@ -219,80 +310,106 @@ export default function Dashboard() {
                 </div>
                 <div className="col-md-6 col-lg-3">
                     <StatCard
-                        title="총 학습 단어"
-                        value={stats.totalWords}
+                        title="마스터 한 단어"
+                        value={stats.masteredWords}
                         loading={loading}
-                        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-body-text" viewBox="0 0 16 16"><path fillRule="evenodd" d="M0 .5A.5.5 0 0 1 .5 0h4a.5.5 0 0 1 0 1h-4A.5.5 0 0 1 0 .5Zm0 2A.5.5 0 0 1 .5 2h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm9 0a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Zm-9 2A.5.5 0 0 1 .5 4h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Zm5 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm-5 2A.5.5 0 0 1 .5 6h1a.5.5 0 0 1 0 1h-1A.5.5 0 0 1 0 6.5Zm3 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Zm-3 2A.5.5 0 0 1 .5 8h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Zm9 0a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Zm-9 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5Zm3 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5Zm-3 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5Zm5 0a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5Z" /></svg>}
+                        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-award" viewBox="0 0 16 16"><path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/><path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/></svg>}
                     />
                 </div>
-                <div className="col-md-6 col-lg-3">
-                    {/* 연속학습일 카드 (개선된 버전) */}
-                    <div className="card h-100">
-                        <div className="card-body text-center">
-                            <div className="d-flex justify-content-center align-items-center mb-2">
-                                <span className="me-2" style={{ fontSize: '24px' }}>
-                                    {loading ? '📚' : (streakInfo?.status?.icon || '🔥')}
-                                </span>
-                                <h5 className="card-title mb-0">연속 학습일</h5>
-                            </div>
+                <div className="col-md-6 col-lg-3" style={{ overflow: 'visible' }}>
+                    {/* 연속학습 카드 (SRS 대시보드와 동일한 스타일) */}
+                    <div className="card h-100" style={{ overflow: 'visible' }}>
+                        <div className="card-body">
                             {loading ? (
-                                <div className="spinner-border spinner-border-sm" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="mb-2">
-                                        <p className="display-4 fw-bold mb-1" style={{ 
-                                            color: streakInfo?.status?.color === 'gray' ? '#6c757d' :
-                                                   streakInfo?.status?.color === 'blue' ? '#0d6efd' :
-                                                   streakInfo?.status?.color === 'green' ? '#198754' :
-                                                   streakInfo?.status?.color === 'orange' ? '#fd7e14' :
-                                                   streakInfo?.status?.color === 'purple' ? '#6f42c1' : '#6c757d'
-                                        }}>
-                                            {streakInfo?.streak || 0}
-                                        </p>
-                                        <small className={`text-${
-                                            streakInfo?.status?.color === 'purple' ? 'primary' : 'muted'
-                                        }`}>
-                                            {streakInfo?.status?.message || ''}
-                                        </small>
+                                <div className="text-center">
+                                    <div className="spinner-border spinner-border-sm" role="status">
+                                        <span className="visually-hidden">Loading...</span>
                                     </div>
-                                    
-                                    {/* 오늘의 진행률 */}
-                                    {streakInfo && (
-                                        <div className="mb-2">
-                                            <div className="progress mb-1" style={{ height: '8px' }}>
-                                                <div 
-                                                    className={`progress-bar ${
-                                                        streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
-                                                    }`}
-                                                    style={{ width: `${streakInfo.progressPercent}%` }}
-                                                ></div>
-                                            </div>
-                                            <small className="text-muted">
-                                                오늘 {streakInfo.dailyQuizCount}/{streakInfo.requiredDaily}
-                                                {streakInfo.isCompletedToday ? ' ✅ 완료!' : 
-                                                 streakInfo.remainingForStreak > 0 ? ` (${streakInfo.remainingForStreak}개 더 필요)` : ''}
+                                </div>
+                            ) : streakInfo ? (
+                                <>
+                                    <div className="d-flex justify-content-between align-items-start mb-3">
+                                        <div>
+                                            <h5 className="card-title">
+                                                {streakInfo?.status?.icon || '🔥'} 연속 학습
+                                            </h5>
+                                            <h2 className="mb-1" style={{ 
+                                                color: streakInfo?.status?.color === 'gray' ? '#6c757d' :
+                                                       streakInfo?.status?.color === 'blue' ? '#0d6efd' :
+                                                       streakInfo?.status?.color === 'green' ? '#198754' :
+                                                       streakInfo?.status?.color === 'orange' ? '#fd7e14' :
+                                                       streakInfo?.status?.color === 'purple' ? '#6f42c1' : '#0d6efd'
+                                            }}>
+                                                {streakInfo.streak}일
+                                            </h2>
+                                            <small className={`text-${
+                                                streakInfo?.status?.color === 'purple' ? 'primary' : 'muted'
+                                            }`}>
+                                                {streakInfo?.status?.message || ''}
                                             </small>
                                         </div>
-                                    )}
-                                    
-                                    {/* 보너스 표시 */}
-                                    {streakInfo?.bonus?.current && (
-                                        <div className="mb-2">
-                                            <span className="badge bg-warning text-dark">
+                                        {/* 보너스 뱃지 */}
+                                        {streakInfo?.bonus?.current && (
+                                            <span className="badge bg-warning text-dark fs-6">
                                                 {streakInfo.bonus.current.emoji} {streakInfo.bonus.current.title}
                                             </span>
-                                        </div>
-                                    )}
+                                        )}
+                                    </div>
                                     
-                                    {/* 다음 목표 */}
-                                    {streakInfo?.bonus?.next && (
+                                    {/* 진행률 바 */}
+                                    <div className="progress mb-2" style={{height: '20px'}}>
+                                        <div 
+                                            className={`progress-bar ${
+                                                totalAttempts >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
+                                            }`}
+                                            style={{width: `${Math.min(100, (totalAttempts / streakInfo.requiredDaily) * 100)}%`}}
+                                        >
+                                            {totalAttempts}/{streakInfo.requiredDaily}
+                                        </div>
+                                    </div>
+                                    
+                                    {/* 상태 메시지 */}
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
                                         <small className="text-muted">
-                                            다음 목표: {streakInfo.bonus.next.title} ({streakInfo.bonus.next.days - streakInfo.streak}일 남음)
+                                            {totalAttempts >= streakInfo.requiredDaily ? 
+                                                '오늘 목표 달성! 🎉' : 
+                                                `오늘 ${streakInfo.requiredDaily - totalAttempts}개 더 필요`}
                                         </small>
-                                    )}
+                                        {streakInfo?.bonus?.next && (
+                                            <small className="text-muted">
+                                                다음: {streakInfo.bonus.next.emoji} {streakInfo.bonus.next.title} 
+                                                ({streakInfo.bonus.next.days - streakInfo.streak}일 남음)
+                                            </small>
+                                        )}
+                                    </div>
+
+                                    {/* 오늘 학습 상세 정보 - 항상 표시 */}
+                                    <div className="border-top pt-3 position-relative">
+                                        <div className="d-flex justify-content-between align-items-center mb-2">
+                                            <small className="text-muted">
+                                                {totalAttempts > 0 ? (
+                                                    <>📊 오늘 학습: {totalAttempts}회 | 오답율: <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
+                                                    {isEstimated && <span className="text-info"> (추정)</span>}</>
+                                                ) : (
+                                                    <>📊 오늘 학습: 0회 | 오답율: 0%</>
+                                                )}
+                                            </small>
+                                            <button 
+                                                ref={dropdownButtonRef}
+                                                className="btn btn-sm btn-outline-secondary"
+                                                onClick={() => setShowStudyDetails(!showStudyDetails)}
+                                                style={{ fontSize: '0.75rem', padding: '0.25rem 0.5rem' }}
+                                            >
+                                                {showStudyDetails ? '숨기기' : '상세보기'} {showStudyDetails ? '▲' : '▼'}
+                                            </button>
+                                        </div>
+                                        
+                                    </div>
                                 </>
+                            ) : (
+                                <div className="text-center">
+                                    <span className="text-muted">연속학습 정보를 불러올 수 없습니다.</span>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -300,9 +417,9 @@ export default function Dashboard() {
             </section>
 
             {/* 빠른 시작 */}
-            <section>
+            <section style={{ overflow: 'visible' }}>
                 <h4 className="mb-3">빠른 시작</h4>
-                <div className="row g-3">
+                <div className="row g-3" style={{ overflow: 'visible' }}>
                     <div className="col-md-6">
                         <div className="card">
                             <div className="card-body">
@@ -341,6 +458,107 @@ export default function Dashboard() {
                     </div>
                 </div>
             </section>
+
+            {/* 모달 포털 - 페이지 중앙에 표시 */}
+            {showStudyDetails && createPortal(
+                <div 
+                    style={{ 
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 999999,
+                        padding: '20px'
+                    }}
+                    onClick={() => setShowStudyDetails(false)}
+                >
+                    <div 
+                        style={{ 
+                            backgroundColor: '#ffffff',
+                            border: '2px solid #dee2e6',
+                            borderRadius: '0.5rem',
+                            boxShadow: '0 1rem 3rem rgba(0, 0, 0, 0.175)',
+                            fontSize: '0.9rem',
+                            maxHeight: '80vh',
+                            overflowY: 'auto',
+                            width: '100%',
+                            maxWidth: '500px',
+                            position: 'relative'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        {/* 모달 헤더 */}
+                        <div className="d-flex justify-content-between align-items-center p-3 border-bottom">
+                            <h5 className="mb-0 text-primary">📊 오늘 학습한 단어들</h5>
+                            <button 
+                                className="btn-close" 
+                                onClick={() => setShowStudyDetails(false)}
+                                aria-label="Close"
+                            ></button>
+                        </div>
+                        
+                        {/* 모달 바디 */}
+                        <div className="p-3">
+                            {Object.keys(wordFirstAttempts || {}).length > 0 ? (
+                                <>
+                                    <div className="mb-3">
+                                        <small className="text-muted">
+                                            총 {Object.keys(wordFirstAttempts || {}).length}개 단어 | 
+                                            정답: {Object.values(wordFirstAttempts || {}).filter(a => a.isCorrect).length}개 | 
+                                            오답: {Object.values(wordFirstAttempts || {}).filter(a => !a.isCorrect).length}개
+                                        </small>
+                                    </div>
+                                    <div className="d-flex flex-wrap gap-2">
+                                        {/* lemma별 첫 학습만 표시 */}
+                                        {Object.values(wordFirstAttempts)
+                                            .sort((a, b) => new Date(b.time) - new Date(a.time))
+                                            .map((attempt, index) => {
+                                                // 첫 학습 결과에 따른 스타일
+                                                const badgeClass = attempt.isCorrect ? 'bg-success' : 'bg-danger';
+                                                const icon = attempt.isCorrect ? '✅' : '❌';
+                                                
+                                                return (
+                                                    <span key={`${attempt.word}_${index}`} className={`badge ${badgeClass} mb-2 me-1`} style={{fontSize: '0.8rem', display: 'inline-block', whiteSpace: 'nowrap', padding: '0.5rem 0.75rem'}}>
+                                                        {icon} {attempt.word} <small className="opacity-75">[F{attempt.folderId}]</small>
+                                                    </span>
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                </>
+                            ) : totalAttempts > 0 && isEstimated ? (
+                                <div className="text-center py-4">
+                                    <span className="text-info h5">📚 {totalAttempts}회 학습 완료!</span>
+                                    <br />
+                                    <small className="text-muted">상세 학습 기록을 불러올 수 없습니다.</small>
+                                </div>
+                            ) : (
+                                <div className="text-center py-4">
+                                    <span className="text-muted h5">🦜 아직 학습한 단어가 없습니다.</span>
+                                    <br />
+                                    <small className="text-muted">SRS 학습을 시작해보세요!</small>
+                                </div>
+                            )}
+                        </div>
+                        
+                        {/* 모달 푸터 */}
+                        <div className="p-3 border-top text-center">
+                            <button 
+                                className="btn btn-secondary btn-sm"
+                                onClick={() => setShowStudyDetails(false)}
+                            >
+                                닫기
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
         </main>
     );
 }

@@ -11,14 +11,23 @@ router.get('/', async (req, res) => {
             orderBy: { createdAt: 'asc' }
         });
 
-        const totals = await prisma.uservocab.groupBy({
-            by: ['categoryId'],
-            where: { userId: req.user.id },
-            _count: { _all: true }
-        });
+        // 중복 제거하여 카운트 (DISTINCT vocabId 사용)
+        const totals = await prisma.$queryRaw`
+            SELECT categoryId, COUNT(DISTINCT vocabId) as count
+            FROM uservocab 
+            WHERE userId = ${req.user.id}
+            GROUP BY categoryId
+        `;
 
-        const countMap = new Map(totals.map(t => [t.categoryId, t._count._all]));
-        const uncategorized = (await prisma.uservocab.count({ where: { userId: req.user.id, categoryId: null }}));
+        const countMap = new Map(totals.map(t => [t.categoryId, Number(t.count)]));
+        
+        // 미분류 카테고리도 중복 제거하여 카운트
+        const uncategorizedResult = await prisma.$queryRaw`
+            SELECT COUNT(DISTINCT vocabId) as count
+            FROM uservocab 
+            WHERE userId = ${req.user.id} AND categoryId IS NULL
+        `;
+        const uncategorized = Number(uncategorizedResult[0]?.count || 0);
 
         const data = cats.map(c => ({ ...c, count: countMap.get(c.id) || 0 }));
 

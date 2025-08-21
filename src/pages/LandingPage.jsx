@@ -1,11 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import Header from './Header';
 import Footer from '../components/Footer';
 
 const LandingPage = () => {
   const videoRef = useRef(null);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   useEffect(() => {
     if (videoRef.current) {
@@ -14,7 +16,11 @@ const LandingPage = () => {
   }, []);
 
   const handleGetStarted = () => {
-    navigate('/login');
+    if (user) {
+      navigate('/home');
+    } else {
+      navigate('/login');
+    }
   };
 
   const handleSkip = () => {
@@ -71,6 +77,7 @@ const LandingPage = () => {
                         onCanPlay={() => console.log('비디오 재생 가능')}
                         onError={() => console.log('비디오 로드 실패')}
                       >
+                        <source src="http://localhost:4000/api/video/final_23sec_video.mp4" type="video/mp4" />
                         <source src="/final_23sec_video.mp4" type="video/mp4" />
                         Your browser does not support video playback.
                       </video>

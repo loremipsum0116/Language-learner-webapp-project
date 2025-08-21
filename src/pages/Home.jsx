@@ -526,6 +526,9 @@ export default function Home() {
             <Link className="btn btn-outline-secondary" to="/vocab">
               📁 단어장
             </Link>
+            <Link className="btn btn-success" to="/my-wordbook">
+              📖 내 단어장
+            </Link>
             <Link className="btn btn-cute" to="/learn/grammar">
               📝 문법 연습
             </Link>

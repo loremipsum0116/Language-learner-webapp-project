@@ -163,7 +163,7 @@ export default function VocabList() {
     const { user, srsIds, loading: authLoading, refreshSrsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
     const [activeTab, setActiveTab] = useState('cefr'); // 'cefr' or 'exam'
-    const [activeExam, setActiveExam] = useState('TOEIC');
+    const [activeExam, setActiveExam] = useState('');
     const [examCategories, setExamCategories] = useState([]);
     const [words, setWords] = useState([]);
     const [allWords, setAllWords] = useState([]); // 전체 단어 리스트
@@ -197,10 +197,16 @@ export default function VocabList() {
         (async () => {
             try {
                 const { data } = await fetchJSON('/exam-vocab/categories', withCreds({ signal: ac.signal }));
-                setExamCategories(Array.isArray(data) ? data : []);
+                const categories = Array.isArray(data) ? data : [];
+                setExamCategories(categories);
+                // 첫 번째 카테고리를 기본으로 설정
+                if (categories.length > 0 && !activeExam) {
+                    setActiveExam(categories[0].name);
+                }
             } catch (e) {
                 if (!isAbortError(e)) {
                     console.error('Failed to load exam categories:', e);
+                    setExamCategories([]);
                 }
             }
         })();
@@ -228,9 +234,13 @@ export default function VocabList() {
                     data = response.data;
                 } else {
                     // 시험별 조회
-                    url = `/exam-vocab/${activeExam}?limit=100`;
-                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
-                    data = response.data?.vocabs || [];
+                    if (!activeExam) {
+                        data = []; // 선택된 시험이 없으면 빈 배열
+                    } else {
+                        url = `/exam-vocab/${activeExam}?limit=100`;
+                        const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                        data = response.data?.vocabs || [];
+                    }
                 }
                 
                 const wordsArray = Array.isArray(data) ? data : [];
@@ -808,24 +818,31 @@ export default function VocabList() {
                 <div className="d-flex justify-content-between align-items-center mb-3">
                     <h4 className="m-0">시험별 필수 단어</h4>
                     <div className="btn-group flex-wrap">
-                        {examCategories.map(exam => (
-                            <button 
-                                key={exam.name} 
-                                className={`btn btn-sm ${activeExam === exam.name ? 'btn-info' : 'btn-outline-info'}`} 
-                                onClick={() => { 
-                                    setSearchTerm(''); 
-                                    setActiveExam(exam.name); 
-                                    setSelectedIds(new Set()); // 선택된 단어 초기화
-                                    setDisplayCount(100); // 표시 개수 초기화
-                                }}
-                                title={`${exam.description} (${exam.actualWordCount || 0}개 단어)`}
-                            >
-                                {exam.displayName}
-                                {exam.actualWordCount > 0 && (
+                        {examCategories.length > 0 ? (
+                            examCategories.map(exam => (
+                                <button 
+                                    key={exam.name} 
+                                    className={`btn btn-sm ${activeExam === exam.name ? 'btn-info' : 'btn-outline-info'}`} 
+                                    onClick={() => { 
+                                        setSearchTerm(''); 
+                                        setActiveExam(exam.name); 
+                                        setSelectedIds(new Set()); // 선택된 단어 초기화
+                                        setDisplayCount(100); // 표시 개수 초기화
+                                    }}
+                                    title={`${exam.description} (${exam.actualWordCount || 0}개 단어)`}
+                                >
+                                    {exam.name}
+                                    {exam.actualWordCount > 0 && (
                                     <span className="badge bg-secondary ms-1">{exam.actualWordCount}</span>
                                 )}
                             </button>
-                        ))}
+                        ))
+                        ) : (
+                            <div className="alert alert-info mb-0">
+                                <i className="bi bi-info-circle me-2"></i>
+                                시험 카테고리가 설정되지 않았습니다. CEFR 레벨별 단어를 이용해주세요.
+                            </div>
+                        )}
                     </div>
                 </div>
             )}

@@ -6,6 +6,7 @@ import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import { useAuth } from '../context/AuthContext'; // ★ AuthContext에서 useAuth 임포트
 import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
+import AutoFolderModal from '../components/AutoFolderModal';
 import * as SrsApi from '../api/srs';
 import RainbowStar from '../components/RainbowStar';
 
@@ -91,6 +92,9 @@ export default function MyWordbook() {
     const [playingAudio, setPlayingAudio] = useState(null);
     const [enrichingId, setEnrichingId] = useState(null);
     const [masteredCards, setMasteredCards] = useState([]);
+    const [autoFolderModalOpen, setAutoFolderModalOpen] = useState(false);
+    const [displayCount, setDisplayCount] = useState(100);
+    const [allWords, setAllWords] = useState([]);
 
     // SRS 폴더 선택 모달 관련 state
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -134,7 +138,10 @@ export default function MyWordbook() {
             if (f === 'none') url += '?categoryId=none';
             else if (typeof f === 'number') url += `?categoryId=${f}`;
             const { data } = await fetchJSON(url, withCreds({ signal }));
-            setWords(Array.isArray(data) ? data : []);
+            const wordsArray = Array.isArray(data) ? data : [];
+            setAllWords(wordsArray);
+            setWords(wordsArray.slice(0, displayCount));
+            setDisplayCount(100); // 새로운 데이터 로드 시 초기화
         } finally {
             setLoading(false);
         }
@@ -249,6 +256,7 @@ export default function MyWordbook() {
         setSelectedIds(new Set());
         const params = f === 'all' ? {} : { cat: String(f) };
         setSearchParams(params);
+        setDisplayCount(100); // 폴더 변경 시 표시 개수 초기화
         await loadWordbook(f);
     };
 
@@ -260,8 +268,63 @@ export default function MyWordbook() {
         });
     };
 
-    const selectAll = () => setSelectedIds(new Set(filteredWords.map(w => w.vocabId)));
+    // 전체 선택/해제 (현재 카테고리의 모든 단어)
+    const selectAll = () => setSelectedIds(new Set(allWords.map(w => w.vocabId)));
     const unselectAll = () => setSelectedIds(new Set());
+    
+    // 현재 보이는 단어만 선택/해제
+    const selectVisible = () => setSelectedIds(new Set(filteredWords.map(w => w.vocabId)));
+    
+    // 전체 선택 상태 (현재 카테고리의 모든 단어 기준)
+    const isAllSelected = useMemo(() => {
+        if (allWords.length === 0) return false;
+        return allWords.every(w => selectedIds.has(w.vocabId));
+    }, [allWords, selectedIds]);
+
+    // 현재 보이는 단어 선택 상태
+    const isVisibleSelected = useMemo(() => {
+        if (filteredWords.length === 0) return false;
+        return filteredWords.every(w => selectedIds.has(w.vocabId));
+    }, [filteredWords, selectedIds]);
+
+    const handleToggleSelectAll = () => {
+        if (isAllSelected) {
+            unselectAll();
+        } else {
+            selectAll();
+        }
+    };
+
+    const handleToggleSelectVisible = () => {
+        if (isVisibleSelected) {
+            // 현재 보이는 단어들만 선택 해제
+            const visibleIds = new Set(filteredWords.map(w => w.vocabId));
+            setSelectedIds(prev => {
+                const newSet = new Set(prev);
+                visibleIds.forEach(id => newSet.delete(id));
+                return newSet;
+            });
+        } else {
+            // 현재 보이는 단어들을 기존 선택에 추가
+            setSelectedIds(prev => {
+                const newSet = new Set(prev);
+                filteredWords.forEach(w => newSet.add(w.vocabId));
+                return newSet;
+            });
+        }
+    };
+
+    // displayCount 변경 시 words 업데이트
+    useEffect(() => {
+        setWords(allWords.slice(0, displayCount));
+        // 디버깅용 로그
+        console.log('MyWordbook - allWords:', allWords.length, 'displayCount:', displayCount, 'filteredWords:', filteredWords.length);
+    }, [allWords, displayCount, filteredWords.length]);
+
+    // 더 보기 버튼 핸들러
+    const handleLoadMore = () => {
+        setDisplayCount(prev => prev + 100);
+    };
 
     const onMoveClick = async () => {
         const ids = Array.from(selectedIds);
@@ -352,6 +415,15 @@ export default function MyWordbook() {
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">
+                    <button 
+                        className="btn btn-outline-info"
+                        onClick={() => setAutoFolderModalOpen(true)}
+                        disabled={selectedIds.size === 0}
+                        title="선택된 단어로 자동 폴더 생성"
+                    >
+                        <i className="bi bi-folder-plus me-1"></i>
+                        자동 폴더 생성
+                    </button>
                     <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
                         선택 자동학습
                     </button>
@@ -399,6 +471,31 @@ export default function MyWordbook() {
                     <div className="mb-3">
                         <input type="search" className="form-control" placeholder="내 단어장에서 검색 (단어 또는 뜻)" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
                     </div>
+
+                    {/* 선택 버튼들 */}
+                    {allWords.length > 0 && (
+                        <div className="d-flex justify-content-between align-items-center mb-3">
+                            <div className="text-muted small">
+                                총 {allWords.length}개 단어 (현재 {filteredWords.length}개 표시) {selectedIds.size > 0 && `• ${selectedIds.size}개 선택`}
+                            </div>
+                            <div className="btn-group">
+                                <button 
+                                    className="btn btn-sm btn-outline-secondary"
+                                    onClick={handleToggleSelectVisible}
+                                    title="현재 화면에 보이는 단어들만 선택/해제"
+                                >
+                                    {isVisibleSelected ? '현재 보이는 단어 선택 해제' : '현재 보이는 단어 전체 선택' }
+                                </button>
+                                <button 
+                                    className="btn btn-sm btn-outline-primary"
+                                    onClick={handleToggleSelectAll}
+                                    title="현재 카테고리의 모든 단어 선택/해제"
+                                >
+                                    {isAllSelected ? '전체 해제' : '전체 선택'}
+                                </button>
+                            </div>
+                        </div>
+                    )}
 
                     <div className="list-group">
                         {filteredWords.map((v) => {
@@ -456,9 +553,13 @@ export default function MyWordbook() {
                                             {enrichingId === v.vocabId ? (
                                                 <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                             ) : playingAudio?.type === 'vocab' && playingAudio?.id === v.vocabId ? (
-                                                <i className="fas fa-pause" style={{ fontSize: '12px' }}></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
+                                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                                </svg>
                                             ) : (
-                                                <i className="fas fa-play" style={{ fontSize: '10px', marginLeft: '1px' }}></i>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
+                                                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                                                </svg>
                                             )}
                                         </button>
                                         <button type="button" className="btn btn-sm btn-outline-secondary" onClick={(e) => openDetail(v.vocabId, e)}>상세</button>
@@ -482,6 +583,18 @@ export default function MyWordbook() {
                     </div>
                 </section>
             </div>
+
+            {/* 더 보기 버튼 */}
+            {!loading && allWords.length > displayCount && (
+                <div className="text-center mt-4">
+                    <button 
+                        className="btn btn-outline-primary btn-lg"
+                        onClick={handleLoadMore}
+                    >
+                        더 보기 ({allWords.length - displayCount}개 더)
+                    </button>
+                </div>
+            )}
 
             {(detailLoading || detail) && (
                 <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }}>
@@ -526,6 +639,24 @@ export default function MyWordbook() {
                     }}
                 />
             )}
+
+            {/* 자동 폴더 생성 모달 */}
+            <AutoFolderModal
+                isOpen={autoFolderModalOpen}
+                onClose={() => setAutoFolderModalOpen(false)}
+                selectedVocabIds={Array.from(selectedIds)}
+                examCategory="mywordbook"
+                cefrLevel={null}
+                examCategories={[]}
+                onSuccess={(result) => {
+                    console.log('자동 폴더 생성 성공:', result);
+                    setAutoFolderModalOpen(false);
+                    // 카테고리 목록 새로고침
+                    loadCategories();
+                    // 선택 해제
+                    setSelectedIds(new Set());
+                }}
+            />
         </main>
     );
 }

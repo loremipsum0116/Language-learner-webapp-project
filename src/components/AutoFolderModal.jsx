@@ -39,8 +39,19 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
             dailyWordCount
         });
         
-        if (!isOpen || step !== 'auto-folder-config' || (!examCategory && !cefrLevel)) {
+        if (!isOpen || step !== 'auto-folder-config') {
             console.log('[AutoFolder] Preview conditions not met, returning');
+            return;
+        }
+
+        // 내 단어장에서는 selectedVocabIds가 있어야 하고, 다른 경우에는 examCategory나 cefrLevel이 있어야 함
+        if (examCategory === 'mywordbook' && selectedVocabIds.length === 0) {
+            console.log('[AutoFolder] MyWordbook but no selected vocab IDs');
+            return;
+        }
+        
+        if (!examCategory && !cefrLevel && selectedVocabIds.length === 0) {
+            console.log('[AutoFolder] No exam category, CEFR level, or selected vocab IDs');
             return;
         }
         
@@ -49,10 +60,13 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
                 setLoading(true);
                 
                 let url = `/auto-folder/preview?dailyWordCount=${dailyWordCount}`;
-                if (examCategory) {
+                if (examCategory && examCategory !== 'mywordbook') {
                     url += `&examCategory=${examCategory}`;
                 } else if (cefrLevel) {
                     url += `&cefrLevel=${cefrLevel}`;
+                } else if (selectedVocabIds.length > 0) {
+                    // 내 단어장에서 선택된 단어들로 자동 폴더 생성
+                    url += `&selectedVocabIds=${selectedVocabIds.join(',')}`;
                 }
                 
                 console.log('[AutoFolder] Making preview API call to:', url);
@@ -69,7 +83,7 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
         
         const debounceTimer = setTimeout(loadPreview, 300);
         return () => clearTimeout(debounceTimer);
-    }, [isOpen, step, examCategory, cefrLevel, dailyWordCount]);
+    }, [isOpen, step, examCategory, cefrLevel, dailyWordCount, selectedVocabIds]);
 
     const handleFolderSelected = (folder) => {
         setSelectedFolder(folder);
@@ -87,11 +101,23 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
                 includeOnlyNew: false
             };
 
-            if (examCategory) {
+            console.log('[AutoFolder] Creating folders with params:', {
+                examCategory,
+                cefrLevel,
+                selectedVocabIds: selectedVocabIds.length,
+                selectedVocabIdsArray: selectedVocabIds
+            });
+
+            if (examCategory && examCategory !== 'mywordbook') {
                 requestData.examCategory = examCategory;
-            } else if (cefrLevel) {
+            } else if (cefrLevel && examCategory !== 'mywordbook') {
                 requestData.cefrLevel = cefrLevel;
+            } else if (selectedVocabIds.length > 0) {
+                // 내 단어장에서 선택된 단어들로 자동 폴더 생성
+                requestData.selectedVocabIds = selectedVocabIds;
             }
+
+            console.log('[AutoFolder] Final request data:', requestData);
             
             const response = await fetchJSON('/auto-folder/generate', withCreds({
                 method: 'POST',
@@ -116,10 +142,14 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
 
     if (!isOpen) return null;
 
-    const hasSourceData = examCategory || cefrLevel;
-    const sourceDisplayName = examCategory 
+    const hasSourceData = examCategory || cefrLevel || selectedVocabIds.length > 0;
+    const sourceDisplayName = examCategory && examCategory !== 'mywordbook'
         ? (examCategories.find(e => e.name === examCategory)?.displayName || examCategory)
-        : cefrLevel;
+        : cefrLevel 
+        ? cefrLevel
+        : selectedVocabIds.length > 0 
+        ? `선택된 ${selectedVocabIds.length}개 단어`
+        : null;
 
     return (
         <>

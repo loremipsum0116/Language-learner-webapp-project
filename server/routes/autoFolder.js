@@ -15,6 +15,7 @@ router.post('/generate', async (req, res) => {
         const {
             examCategory,      // 'TOEIC', 'IELTS_GENERAL' 등 (시험별인 경우)
             cefrLevel,         // 'A1', 'A2', 'B1', 'B2', 'C1' (CEFR별인 경우)
+            selectedVocabIds,  // 내 단어장에서 선택된 단어 ID들 배열
             dailyWordCount,    // 하루 학습할 단어 수
             parentFolderId,    // 상위 폴더 ID (HierarchicalFolderPickerModal에서 선택됨)
             folderNamePrefix = 'DAY',  // 폴더 이름 접두사
@@ -22,8 +23,12 @@ router.post('/generate', async (req, res) => {
         } = req.body;
 
         // 입력 유효성 검사
-        if ((!examCategory && !cefrLevel) || !dailyWordCount || dailyWordCount < 1 || dailyWordCount > 500) {
-            return fail(res, 400, 'Invalid parameters: either examCategory or cefrLevel must be provided');
+        if (!selectedVocabIds && !examCategory && !cefrLevel) {
+            return fail(res, 400, 'Either selectedVocabIds, examCategory, or cefrLevel must be provided');
+        }
+
+        if (!dailyWordCount || dailyWordCount < 1 || dailyWordCount > 500) {
+            return fail(res, 400, 'Invalid dailyWordCount: must be between 1 and 500');
         }
 
         if (examCategory && cefrLevel) {
@@ -34,7 +39,11 @@ router.post('/generate', async (req, res) => {
         let sourceType = '';
         let sourceName = '';
 
-        if (examCategory) {
+        if (selectedVocabIds && Array.isArray(selectedVocabIds)) {
+            // 내 단어장에서 선택된 단어들
+            sourceType = 'selected';
+            sourceName = `${selectedVocabIds.length} selected words`;
+        } else if (examCategory) {
             // 시험 카테고리 조회
             const category = await prisma.$queryRaw`
                 SELECT * FROM exam_categories WHERE name = ${examCategory}
@@ -47,7 +56,7 @@ router.post('/generate', async (req, res) => {
             categoryId = category[0].id;
             sourceType = 'exam';
             sourceName = examCategory;
-        } else {
+        } else if (cefrLevel) {
             // CEFR 레벨 유효성 검사
             const validCefrLevels = ['A1', 'A2', 'B1', 'B2', 'C1'];
             if (!validCefrLevels.includes(cefrLevel)) {
@@ -73,10 +82,27 @@ router.post('/generate', async (req, res) => {
             }
         }
 
-        // 단어들 조회 (시험별 또는 CEFR별)
+        // 단어들 조회 (선택된 단어, 시험별 또는 CEFR별)
         let vocabs = [];
 
-        if (sourceType === 'exam') {
+        if (sourceType === 'selected') {
+            // 내 단어장에서 선택된 단어들로 폴더 생성
+            const validIds = selectedVocabIds.filter(id => Number.isInteger(id) && id > 0);
+            if (validIds.length === 0) {
+                return fail(res, 400, 'No valid vocab IDs provided');
+            }
+
+            vocabs = await prisma.vocab.findMany({
+                where: {
+                    id: {
+                        in: validIds
+                    }
+                },
+                orderBy: {
+                    lemma: 'asc'
+                }
+            });
+        } else if (sourceType === 'exam') {
             // 시험별 단어 조회
             if (includeOnlyNew) {
                 vocabs = await prisma.$queryRaw`
@@ -276,15 +302,48 @@ router.post('/generate', async (req, res) => {
 router.get('/preview', async (req, res) => {
     try {
         const userId = req.user.id;
-        const { examCategory, cefrLevel, dailyWordCount, includeOnlyNew = false } = req.query;
+        const { examCategory, cefrLevel, dailyWordCount, includeOnlyNew = false, selectedVocabIds } = req.query;
         
         console.log('[AutoFolder Preview] Request params:', {
             userId,
             examCategory,
             cefrLevel,
             dailyWordCount,
-            includeOnlyNew
+            includeOnlyNew,
+            selectedVocabIds
         });
+
+        // 내 단어장에서 선택된 단어들인 경우
+        if (selectedVocabIds) {
+            const vocabIdsArray = selectedVocabIds.split(',').map(id => parseInt(id)).filter(id => !isNaN(id));
+            
+            if (vocabIdsArray.length === 0) {
+                return fail(res, 400, 'No valid vocab IDs provided');
+            }
+
+            if (!dailyWordCount) {
+                return fail(res, 400, 'dailyWordCount is required');
+            }
+
+            const totalWords = vocabIdsArray.length;
+            const dailyCount = parseInt(dailyWordCount);
+            const estimatedFolders = Math.ceil(totalWords / dailyCount);
+
+            const responseData = {
+                totalWords,
+                dailyWordCount: dailyCount,
+                estimatedFolders,
+                includeOnlyNew: false,
+                selectedVocabIds: vocabIdsArray,
+                preview: {
+                    firstFolderName: `DAY1`,
+                    lastFolderName: `DAY${estimatedFolders}`,
+                    lastFolderWordCount: totalWords % dailyCount || dailyCount
+                }
+            };
+
+            return ok(res, responseData);
+        }
 
         if ((!examCategory && !cefrLevel) || !dailyWordCount) {
             return fail(res, 400, 'Either examCategory or cefrLevel, and dailyWordCount are required');
