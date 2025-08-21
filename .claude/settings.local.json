@@ -45,7 +45,9 @@
       "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\test_connection.js\")",
       "Bash(grep:*)",
       "Bash(python:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(ffprobe:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
