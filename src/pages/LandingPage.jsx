@@ -56,7 +56,7 @@ const LandingPage = () => {
               </div>
 
               <div className="row justify-content-center mb-5">
-                <div className="col-md-8 col-lg-6">
+                <div className="col-md-10 col-lg-8">
                   <div className="card shadow-sm">
                     <div className="card-body p-0">
                       <video
@@ -65,9 +65,8 @@ const LandingPage = () => {
                         controls
                         autoPlay
                         muted
-                        loop
                         playsInline
-                        style={{maxHeight: '400px', objectFit: 'contain'}}
+                        style={{maxHeight: '600px', objectFit: 'contain'}}
                         onLoadStart={() => console.log('비디오 로딩 시작')}
                         onCanPlay={() => console.log('비디오 재생 가능')}
                         onError={() => console.log('비디오 로드 실패')}

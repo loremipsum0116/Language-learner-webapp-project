@@ -16,7 +16,7 @@ export default function Login() {
     const { login } = useAuth();
     const nav = useNavigate();
     const loc = useLocation();
-    const redirect = loc.state?.from?.pathname || "/";
+    const redirect = loc.state?.from?.pathname || "/home";
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
