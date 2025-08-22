@@ -2783,16 +2783,16 @@
     },
     {
         "id": 215,
-        "passage": "The Dunning-Kruger effect is a cognitive bias whereby people with low ability at a task overestimate their ability. It is related to the metacognitive inability of the unskilled to recognize their own ineptitude. In essence, their incompetence robs them of the skills needed to realize how poorly they are performing. Conversely, highly competent individuals may underestimate their own relative competence, erroneously assuming that tasks which are easy for them are also easy for others. This bias underscores the importance of seeking external feedback to gain an accurate assessment of one's own skills.",
-        "question": "According to the Dunning-Kruger effect, why do people with low ability overestimate their skill?",
+        "passage": "The practice of 'sound healing' uses vibrations from instruments like singing bowls, gongs, and tuning forks for therapeutic purposes. While ancient cultures have long used sound in healing rituals, modern research is investigating its mechanisms. Studies show that certain frequencies can alter brainwave patterns, reduce cortisol levels, and improve sleep quality. Hospitals increasingly offer sound therapy for pain management and anxiety reduction. However, the field lacks standardization, with practitioners making varied claims about 'healing frequencies.' Scientists distinguish between proven physiological effects of sound and unsubstantiated claims about curing diseases.",
+        "question": "What has modern research revealed about sound healing?",
         "options": {
-            "A": "Because they are intentionally trying to deceive others.",
-            "B": "Because they lack the very skills needed to recognize their own incompetence.",
-            "C": "Because they believe that confidence is more important than actual skill.",
-            "D": "Because they compare themselves only to other low-skilled individuals."
+            "A": "It can cure all diseases.",
+            "B": "It has no measurable effects.",
+            "C": "Certain frequencies can alter brainwaves and reduce stress hormones.",
+            "D": "It only works as a placebo."
         },
-        "answer": "B",
-        "explanation_ko": "지문은 이 효과가 'the metacognitive inability of the unskilled to recognize their own ineptitude' (비숙련자가 자신의 무능함을 인식하지 못하는 메타인지적 무능력) 때문이라고 설명합니다."
+        "answer": "C",
+        "explanation_ko": "지문은 특정 주파수가 뇌파 패턴을 변경하고 코티솔 수준을 감소시킬 수 있다고 설명합니다."
     },
     {
         "id": 216,
@@ -2822,16 +2822,16 @@
     },
     {
         "id": 218,
-        "passage": "The Silk Road was not a single thoroughfare but an extensive network of trade routes that were central to cultural interaction through regions of Asia, connecting the West and East. While silk was a major trade item, the network also facilitated the exchange of other goods, ideas, technologies, and religions. For instance, technologies like papermaking and gunpowder traveled from China to the West, while Buddhism spread from India to East Asia. The Silk Road's legacy is not just in commerce, but in its profound role in shaping the cultures and histories of the civilizations it connected.",
-        "question": "Beyond trade in goods, what was a significant impact of the Silk Road?",
+        "passage": "The concept of 'bioprinting' uses 3D printing technology to create living tissue and organs. Scientists layer living cells, growth factors, and biomaterials to build complex structures. In 2019, researchers printed a small-scale human heart with blood vessels. While full organ transplants remain years away, bioprinted skin is already used for burn victims, and cartilage for joint repairs. The technology could address organ shortage crises—over 100,000 Americans await transplants. Challenges include keeping cells alive during printing, creating vascular networks, and ensuring printed organs integrate with the body's systems.",
+        "question": "What is the current medical application of bioprinting?",
         "options": {
-            "A": "It was primarily a route for military conquest.",
-            "B": "It led to the isolation of Eastern and Western cultures.",
-            "C": "It was a major conduit for the spread of ideas and technologies.",
-            "D": "It was only used for the transportation of silk."
+            "A": "Full heart transplants are routine.",
+            "B": "Bioprinted skin is used for burn treatment.",
+            "C": "It's only used for research purposes.",
+            "D": "Complex organ transplants are common."
         },
-        "answer": "C",
-        "explanation_ko": "지문은 실크로드가 상품 교역 외에도 'the exchange of other goods, ideas, technologies, and religions'를 촉진했다고 강조하며, 아이디어와 기술 전파의 중요한 통로였음을 설명합니다."
+        "answer": "B",
+        "explanation_ko": "지문은 바이오프린팅된 피부가 이미 화상 환자에게 사용되고 있다고 명시합니다."
     },
     {
         "id": 219,
@@ -2848,42 +2848,42 @@
     },
     {
         "id": 220,
-        "passage": "The concept of 'net neutrality' is the principle that internet service providers (ISPs) must treat all data on the internet the same, and not discriminate or charge differently based on user, content, website, or platform. Proponents argue this ensures a level playing field, preventing ISPs from blocking or slowing down certain websites or creating paid 'fast lanes' for companies that can afford to pay more. Opponents of net neutrality regulations argue that they stifle innovation and that a free market approach would lead to better infrastructure and more consumer choice. The debate centers on the fundamental question of whether the internet should be regulated as a public utility.",
-        "question": "What would be a potential consequence of the absence of net neutrality?",
+        "passage": "The phenomenon of 'virtual tourism' gained prominence during pandemic lockdowns but continues growing as technology improves. Using VR headsets or 360-degree videos, people can 'visit' destinations worldwide from home. Museums offer virtual tours with details impossible in person—examining brushstrokes on paintings or walking through ancient ruins in their original state via AR reconstruction. While critics argue it lacks authentic travel's sensory richness and cultural exchange, virtual tourism offers accessibility for those with mobility issues or financial constraints. It may also reduce tourism's environmental impact while preserving cultural sites from overcrowding damage.",
+        "question": "What advantage does virtual tourism offer over physical travel?",
         "options": {
-            "A": "All internet users would experience faster speeds.",
-            "B": "ISPs would be required to lower their prices.",
-            "C": "ISPs could charge some websites for faster access, creating a two-tiered internet.",
-            "D": "All websites would be treated equally, regardless of their content."
+            "A": "It's more expensive than real travel.",
+            "B": "It provides better cultural exchange.",
+            "C": "It offers accessibility for those who cannot travel physically.",
+            "D": "It replaces the need for preserving real sites."
         },
         "answer": "C",
-        "explanation_ko": "지문은 망 중립성 지지자들이 ISP가 'creating paid 'fast lanes''를 만드는 것을 우려한다고 설명합니다. 이는 망 중립성이 없다면 ISP가 특정 웹사이트에 추가 요금을 부과해 속도를 차별화할 수 있음을 의미합니다."
+        "explanation_ko": "지문은 가상 관광이 이동 문제나 재정적 제약이 있는 사람들에게 접근성을 제공한다고 설명합니다."
     },
     {
         "id": 221,
-        "passage": "The Great Pacific Garbage Patch is a collection of marine debris in the North Pacific Ocean. It's not a visible island of trash, as is often imagined, but a vast, diffuse area with exceptionally high concentrations of suspended plastics, chemical sludge, and other debris. The majority of this debris consists of microplastics, which are small plastic particles that are often invisible to the naked eye. These particles are particularly harmful as they are ingested by marine life, entering the food chain and posing a significant threat to both marine ecosystems and potentially human health.",
-        "question": "What is a common misconception about the Great Pacific Garbage Patch?",
+        "passage": "The practice of 'moon gardening' aligns planting and harvesting with lunar phases, a technique used for millennia but now gaining scientific interest. Proponents claim the moon's gravitational pull affects soil moisture, making certain phases optimal for different tasks. Some studies suggest root vegetables grow better when planted during waning moons, while leafy crops thrive when planted during waxing phases. Critics dismiss it as pseudoscience, but research shows lunar cycles do influence some plant behaviors—tree diameter fluctuates with moon phases. Whether these effects significantly impact crop yields remains debated, but many organic farmers swear by the practice.",
+        "question": "What scientific observation supports some aspects of moon gardening?",
         "options": {
-            "A": "It is located in the Atlantic Ocean.",
-            "B": "It is a solid, contiguous island of trash.",
-            "C": "It is primarily composed of biodegradable materials.",
-            "D": "It poses no real threat to marine animals."
+            "A": "The moon has no effect on Earth.",
+            "B": "Plants only grow during full moons.",
+            "C": "Tree diameter fluctuates with moon phases.",
+            "D": "All scientists fully endorse the practice."
         },
-        "answer": "B",
-        "explanation_ko": "지문은 쓰레기 섬이 'not a visible island of trash, as is often imagined, but a vast, diffuse area'라고 설명하며, 눈에 보이는 고체 섬이 아니라는 오해를 바로잡습니다."
+        "answer": "C",
+        "explanation_ko": "지문은 연구에서 나무 직경이 달의 위상에 따라 변동한다는 것을 보여준다고 명시합니다."
     },
     {
         "id": 222,
-        "passage": "The concept of 'emotional intelligence' (EQ) refers to the ability to perceive, control, and evaluate emotions—in oneself and others. It includes skills like self-awareness, self-regulation, empathy, and social skills. While traditional intelligence (IQ) is seen as a measure of cognitive abilities, EQ is considered crucial for success in personal and professional relationships. Unlike IQ, which is thought to be relatively stable, proponents argue that emotional intelligence can be learned and strengthened over time. Individuals with high EQ are often more effective leaders and collaborators.",
-        "question": "According to the passage, how does EQ differ from IQ?",
+        "passage": "The emergence of 'chronobiology' studies how biological rhythms affect health and performance. Research shows that adolescents' circadian rhythms naturally shift later, making early school starts problematic. Seattle schools that moved start times from 7:50 to 8:45 AM saw students gain 34 minutes of sleep nightly and improve grades. Similar patterns affect adults—'night owls' forced into early schedules show higher rates of depression and metabolic disorders. Some companies now offer 'chronotype-based scheduling,' allowing employees to work during their peak performance hours. This challenges the one-size-fits-all approach to work and education schedules.",
+        "question": "What happened when Seattle schools started later?",
         "options": {
-            "A": "EQ is a measure of academic ability, while IQ is about social skills.",
-            "B": "EQ is considered a fixed trait, while IQ can be improved.",
-            "C": "EQ is primarily concerned with cognitive abilities.",
-            "D": "EQ can be developed, whereas IQ is considered relatively fixed."
+            "A": "Students slept less.",
+            "B": "Academic performance declined.",
+            "C": "Students gained sleep and improved grades.",
+            "D": "Attendance rates dropped."
         },
-        "answer": "D",
-        "explanation_ko": "지문은 IQ가 'relatively stable'하다고 여겨지는 반면, 감성 지능(EQ)은 'can be learned and strengthened over time'이라고 주장하며 둘의 차이점을 설명합니다."
+        "answer": "C",
+        "explanation_ko": "지문은 시애틀 학교가 등교 시간을 늦춘 후 학생들이 매일 34분 더 자고 성적이 향상되었다고 명시합니다."
     },
     {
         "id": 223,
@@ -2900,16 +2900,16 @@
     },
     {
         "id": 224,
-        "passage": "The concept of 'rewilding' involves restoring an area of land to its natural, uncultivated state. A key strategy in rewilding is often the reintroduction of apex predators or keystone species that were previously driven from the ecosystem. A classic example is the reintroduction of wolves to Yellowstone National Park. Their return led to a 'trophic cascade' of ecological changes: the wolves preyed on elk, which led to the recovery of willow trees, which in turn stabilized riverbanks and provided habitat for beavers. This illustrates how restoring a single species can rejuvenate an entire ecosystem.",
-        "question": "What is a 'trophic cascade' as illustrated by the Yellowstone example?",
+        "passage": "The concept of 'inclusive design' creates products usable by people with the widest range of abilities. Microsoft's Xbox Adaptive Controller, designed for gamers with disabilities, became a mainstream success, benefiting players with temporary injuries or different preferences. Closed captions, originally for deaf viewers, are now used by 80% of Netflix viewers aged 18-25. OXO's Good Grips kitchen tools, designed for arthritis sufferers, became bestsellers among all demographics. This 'curb-cut effect'—where accommodations for disabilities benefit everyone—challenges the notion that accessibility is a niche concern. Inclusive design drives innovation while expanding market reach.",
+        "question": "What is the 'curb-cut effect' in design?",
         "options": {
-            "A": "A decline in the overall health of an ecosystem.",
-            "B": "A series of ecological changes triggered by the removal of a top predator.",
-            "C": "A chain reaction of positive environmental changes initiated by the reintroduction of a key species.",
-            "D": "A process where rivers change their course due to geological activity."
+            "A": "Designs that only work for disabled people.",
+            "B": "Making products more expensive.",
+            "C": "Accommodations for disabilities that end up benefiting everyone.",
+            "D": "Cutting costs by reducing features."
         },
         "answer": "C",
-        "explanation_ko": "지문은 늑대의 재도입이 엘크 개체 수 조절, 버드나무 회복, 강둑 안정화 등 'a 'trophic cascade' of ecological changes'를 일으켰다고 설명하며, 핵심종의 복원이 생태계 전반에 긍정적인 연쇄 반응을 일으키는 것을 보여줍니다."
+        "explanation_ko": "지문은 장애인을 위한 편의시설이 모든 사람에게 혜택을 주는 현상을 '컬브컷 효과'라고 설명합니다."
     },
     {
         "id": 225,
@@ -2952,16 +2952,16 @@
     },
     {
         "id": 228,
-        "passage": "The concept of 'growth mindset', developed by psychologist Carol Dweck, posits that individuals' beliefs about their own abilities can profoundly impact their success. A 'fixed mindset' is the belief that intelligence and talent are static traits that cannot be changed. In contrast, a 'growth mindset' is the belief that abilities can be developed through dedication, effort, and learning from mistakes. Research shows that people with a growth mindset are more resilient in the face of challenges and are more likely to achieve their full potential, as they see failure not as a sign of inability but as an opportunity to grow.",
-        "question": "How would a person with a growth mindset view failure?",
+        "passage": "The rise of 'ghost forests' along coastlines signals climate change's advance. These stands of dead trees, killed by saltwater intrusion from rising seas and stronger storms, are expanding rapidly. North Carolina's Alligator River National Wildlife Refuge lost 11% of its forest to salt in just 35 years. While depressing to observe, ghost forests serve important ecological functions—providing habitat for birds and buffering storm surges. They're also natural carbon storage, as salt-pickled wood decomposes slowly. Scientists study these forests as early warning systems for coastal change, helping communities prepare for future sea-level rise.",
+        "question": "What causes the formation of ghost forests?",
         "options": {
-            "A": "As proof that they are not intelligent or talented.",
-            "B": "As a reason to give up on a difficult task.",
-            "C": "As an experience to be avoided at all costs.",
-            "D": "As an opportunity to learn and improve their abilities."
+            "A": "Forest fires.",
+            "B": "Saltwater intrusion from rising seas.",
+            "C": "Logging activities.",
+            "D": "Disease outbreaks."
         },
-        "answer": "D",
-        "explanation_ko": "지문은 성장형 사고방식을 가진 사람들이 실패를 'not as a sign of inability but as an opportunity to grow'라고 본다고 설명합니다."
+        "answer": "B",
+        "explanation_ko": "지문은 유령 숲이 해수면 상승과 강한 폭풍으로 인한 염수 침입으로 나무가 죽어 형성된다고 설명합니다."
     },
     {
         "id": 229,
@@ -3004,16 +3004,16 @@
     },
     {
         "id": 232,
-        "passage": "The concept of 'confirmation bias' is the human tendency to search for, interpret, and recall information in a way that confirms one's preexisting beliefs. This bias causes people to selectively notice information that supports their views while ignoring or downplaying contradictory evidence. For example, a person who believes a particular investment is a good idea will primarily seek out articles and opinions that support that conclusion. This mental shortcut can be a significant barrier to objective thinking and can lead to poor decision-making, as it prevents a balanced consideration of all available information.",
-        "question": "How does confirmation bias affect a person's judgment?",
+        "passage": "The phenomenon of 'algorithmic bias' in AI systems perpetuates and amplifies human prejudices. Facial recognition systems have higher error rates for people with darker skin. Resume-screening algorithms favor male candidates for technical roles. These biases arise from training data that reflects historical inequalities and from teams lacking diversity. Amazon scrapped its hiring algorithm after discovering it penalized resumes containing the word 'women's.' Solutions include diverse development teams, bias testing, and 'algorithmic auditing.' As AI increasingly makes decisions affecting lives—from loan approvals to criminal sentencing—addressing bias becomes crucial for justice.",
+        "question": "What caused Amazon to abandon its hiring algorithm?",
         "options": {
-            "A": "It encourages them to seek out information that challenges their beliefs.",
-            "B": "It helps them to make objective and well-rounded decisions.",
-            "C": "It causes them to favor information that supports what they already believe.",
-            "D": "It makes them more likely to change their mind when presented with new evidence."
+            "A": "It was too expensive to maintain.",
+            "B": "It worked perfectly without issues.",
+            "C": "It penalized resumes mentioning 'women's'.",
+            "D": "It hired too many people."
         },
         "answer": "C",
-        "explanation_ko": "지문은 확증 편향이 'to search for, interpret, and recall information in a way that confirms one's preexisting beliefs'하는 경향이라고 정의하며, 기존 신념을 지지하는 정보를 선호하게 만든다고 설명합니다."
+        "explanation_ko": "지문은 아마존이 알고리즘이 'women's'라는 단어가 포함된 이력서를 불리하게 평가한다는 것을 발견한 후 폐기했다고 명시합니다."
     },
     {
         "id": 233,
@@ -3121,29 +3121,29 @@
     },
     {
         "id": 241,
-        "passage": "The bystander effect is a social psychological phenomenon where individuals are less likely to offer help to a victim when other people are present. The greater the number of bystanders, the less likely it is that any one of them will help. This is attributed to a 'diffusion of responsibility,' where each person feels less personal obligation to act because they assume someone else will. The presence of others can also lead to a misinterpretation of the situation; if no one else is reacting, individuals may conclude that no emergency is taking place. This effect highlights the powerful influence of social context on individual behavior.",
-        "question": "According to the bystander effect, why are people less likely to help in a crowd?",
+        "passage": "The concept of 'space archaeology' uses satellite imagery to discover ancient sites from orbit. Sarah Parcak's team has identified over 3,000 potential archaeological sites in Egypt alone, including 17 pyramids. The technology detects subtle differences in vegetation and soil that indicate buried structures. During the pandemic, with travel restricted, archaeologists made more discoveries from space than from ground excavations. This democratizes archaeology—anyone can search satellite images for sites. However, it also enables looting, as criminals use the same technology to find valuable artifacts. The race is on between preservation and destruction.",
+        "question": "What ethical concern does space archaeology raise?",
         "options": {
-            "A": "Because crowds make people more aggressive and selfish.",
-            "B": "Because individuals feel less personal responsibility to intervene.",
-            "C": "Because people in crowds are generally less observant.",
-            "D": "Because helping in a crowd is against the law."
+            "A": "Satellites are too expensive.",
+            "B": "It makes archaeology less scientific.",
+            "C": "Criminals can use the technology to locate sites for looting.",
+            "D": "It violates countries' airspace."
         },
-        "answer": "B",
-        "explanation_ko": "지문은 이 현상이 'diffusion of responsibility' (책임감 분산) 때문이라고 설명하며, 각 개인이 다른 사람이 행동할 것이라고 가정하기 때문에 개인적인 책임감을 덜 느낀다고 말합니다."
+        "answer": "C",
+        "explanation_ko": "지문은 범죄자들이 같은 기술을 사용하여 귀중한 유물을 찾을 수 있다는 우려를 제기합니다."
     },
     {
         "id": 242,
-        "passage": "The concept of 'carbon capture and storage' (CCS) refers to a range of technologies designed to trap carbon dioxide (CO2) emissions from sources like power plants and industrial facilities. The captured CO2 is then compressed and transported to a storage site, typically an underground geological formation, where it is injected and stored long-term. The goal of CCS is to prevent large quantities of CO2 from being released into the atmosphere and contributing to climate change. However, the technology faces significant challenges, including high costs, large energy requirements, and concerns about the long-term security of the storage sites.",
-        "question": "What is a major challenge for carbon capture and storage technology?",
+        "passage": "The practice of 'precision fermentation' produces animal proteins without animals. Companies use genetically modified microorganisms to brew milk proteins, egg whites, and even leather. Perfect Day makes ice cream using lab-grown dairy proteins that are molecularly identical to cow's milk but lactose-free. The process uses 99% less water and produces 97% fewer emissions than traditional dairy. While products are entering markets, challenges include consumer acceptance of 'GMO' foods and resistance from traditional agriculture. The technology could revolutionize food production, but raises questions about the future of farming communities.",
+        "question": "What is the main environmental advantage of precision fermentation?",
         "options": {
-            "A": "A lack of CO2 to capture.",
-            "B": "The captured CO2 is not useful for any other purpose.",
-            "C": "The high cost and energy consumption of the process.",
-            "D": "There are no known methods for storing CO2."
+            "A": "It uses more land than traditional farming.",
+            "B": "It requires more water.",
+            "C": "It uses 99% less water and produces 97% fewer emissions.",
+            "D": "It increases pesticide use."
         },
         "answer": "C",
-        "explanation_ko": "지문은 CCS 기술이 'high costs, large energy requirements'와 같은 'significant challenges'에 직면해 있다고 명시합니다."
+        "explanation_ko": "지문은 정밀 발효가 전통적인 낙농업보다 99% 적은 물을 사용하고 97% 적은 배출가스를 생산한다고 명시합니다."
     },
     {
         "id": 243,
@@ -3173,29 +3173,29 @@
     },
     {
         "id": 245,
-        "passage": "The 'sunk cost fallacy' is a cognitive bias that describes our tendency to continue with an endeavor because we have already invested time, money, or effort into it—even when it is clear that abandoning it would be more beneficial. The past investment becomes a 'sunk cost' that cannot be recovered. For example, a person might finish a terrible movie just because they paid for the ticket. The rational decision would be to leave and use the time for something more enjoyable, as the ticket price is gone regardless. This bias can lead to poor decision-making in everything from business investments to personal relationships.",
-        "question": "Which scenario best describes the sunk cost fallacy?",
+        "passage": "The emergence of 'climate refugees' represents a growing humanitarian crisis. The World Bank estimates 216 million people may be displaced by climate change by 2050. Small island nations like Tuvalu are planning complete relocations as rising seas swallow their land. However, 'climate refugee' has no legal status under international law—the 1951 Refugee Convention doesn't cover environmental displacement. Some countries offer 'climate visas,' but most displaced people move within their own countries, straining resources in safer regions. This gap between climate reality and legal frameworks challenges traditional concepts of sovereignty and human rights.",
+        "question": "Why are climate refugees in a particularly difficult legal position?",
         "options": {
-            "A": "Selling a stock that is performing poorly to cut your losses.",
-            "B": "Deciding not to start a project because the initial investment is too high.",
-            "C": "Continuing to eat a meal you don't enjoy because you've already paid for it.",
-            "D": "Choosing a movie based on positive reviews from critics."
+            "A": "They refuse to leave their homes.",
+            "B": "There are too few of them to matter.",
+            "C": "Climate refugee status doesn't exist under international law.",
+            "D": "All countries welcome them openly."
         },
         "answer": "C",
-        "explanation_ko": "지문은 매몰 비용 오류를 이미 투자했다는 이유만으로 비합리적인 행동을 계속하는 경향이라고 설명합니다. 맛없는 음식을 이미 돈을 냈다는 이유만으로 계속 먹는 것이 전형적인 예입니다."
+        "explanation_ko": "지문은 '기후 난민'이 국제법상 법적 지위가 없으며, 1951년 난민 협약이 환경적 이주를 다루지 않는다고 설명합니다."
     },
     {
         "id": 246,
-        "passage": "The concept of 'slow travel' is an approach to tourism that emphasizes connection to local people, culture, food, and music. It is a reaction against traditional mass tourism, which often involves trying to see as many things as possible in a short period. Slow travel is about intentionally taking more time, often staying in one place for longer and experiencing it at a more leisurely pace. The goal is to gain a deeper understanding and appreciation of a destination, rather than just ticking items off a checklist. This approach often involves using more sustainable modes of transport and supporting local businesses.",
-        "question": "What is the main philosophy behind 'slow travel'?",
+        "passage": "The phenomenon of 'acoustic ecology' studies soundscapes and their impact on ecosystems and human well-being. Natural soundscapes are disappearing—70% of the US experiences noise pollution that masks natural sounds. This affects wildlife: birds sing louder and at different frequencies near roads, disrupting mating. 'Quiet Parks International' certifies places with pristine soundscapes; only 48 exist worldwide. Studies show that natural sounds reduce stress and improve cognitive performance. Urban planners now design 'sonic parks' with water features and vegetation to mask city noise, recognizing sound as essential to environmental quality.",
+        "question": "How does noise pollution affect bird behavior?",
         "options": {
-            "A": "To visit as many countries as possible in a single trip.",
-            "B": "To prioritize luxury hotels and exclusive resorts.",
-            "C": "To travel as quickly as possible using airplanes.",
-            "D": "To experience a destination deeply and at a relaxed pace."
+            "A": "Birds stop singing entirely.",
+            "B": "Birds migrate to cities.",
+            "C": "Birds sing louder and at different frequencies.",
+            "D": "It has no effect on birds."
         },
-        "answer": "D",
-        "explanation_ko": "지문은 느린 여행이 'intentionally taking more time'하고 'experiencing it at a more leisurely pace'를 강조하며, 목적지를 깊이 있게 경험하는 것을 목표로 한다고 설명합니다."
+        "answer": "C",
+        "explanation_ko": "지문은 새들이 도로 근처에서 더 크게, 다른 주파수로 노래하여 짝짓기를 방해한다고 명시합니다."
     },
     {
         "id": 247,
@@ -3485,42 +3485,42 @@
     },
     {
         "id": 269,
-        "passage": "The 'imposter syndrome' is a psychological pattern in which an individual doubts their accomplishments and has a persistent fear of being exposed as a 'fraud'. Despite external evidence of their competence, such as academic degrees or professional success, those experiencing imposter syndrome feel they are undeserving. They often attribute their achievements to luck, timing, or deceiving others into thinking they are more intelligent and competent than they believe themselves to be. This feeling is common among high-achievers and can lead to anxiety and self-sabotage.",
-        "question": "How do people with imposter syndrome typically explain their success?",
+        "passage": "The rise of 'cellular agriculture' grows animal products from cells rather than raising animals. Singapore approved cell-cultured chicken in 2020, the first country to allow commercial sale. Companies culture cells in bioreactors, feeding them nutrients to grow into meat without the animal. This could reduce agriculture's land use by 95% and emissions by 96%. Current challenges include scaling production and reducing costs—the first lab burger cost $330,000 in 2013, now down to $10. Consumer acceptance varies by culture and generation, with younger people more open to 'clean meat.'",
+        "question": "What was Singapore's groundbreaking decision in 2020?",
         "options": {
-            "A": "They see it as a direct result of their superior talent and hard work.",
-            "B": "They attribute it to external factors like luck or deceiving others.",
-            "C": "They believe their success is entirely expected and deserved.",
-            "D": "They rarely achieve success, so they do not need to explain it."
+            "A": "Banning all meat consumption.",
+            "B": "First country to approve commercial sale of cell-cultured meat.",
+            "C": "Requiring all meat to be imported.",
+            "D": "Outlawing traditional farming."
         },
         "answer": "B",
-        "explanation_ko": "지문은 가면 증후군을 겪는 사람들이 자신의 성공을 'to luck, timing, or deceiving others'의 탓으로 돌린다고 명시합니다."
+        "explanation_ko": "지문은 싱가포르가 2020년 세포 배양 치킨을 승인한 첫 번째 국가라고 명시합니다."
     },
     {
         "id": 270,
-        "passage": "The Library of Alexandria was one of the largest and most significant libraries of the ancient world. Founded in Egypt during the 3rd century BCE, it was more than just a collection of books; it was a major center of scholarship and learning. The library's goal was to collect all of the world's knowledge. Scholars from across the ancient world came to study and work there. Its destruction, which occurred over several centuries, is considered a monumental loss for humanity, as countless unique texts on history, science, and literature were lost forever, leaving huge gaps in our understanding of the ancient world.",
-        "question": "Why is the destruction of the Library of Alexandria considered such a great loss?",
+        "passage": "The concept of 'energy democracy' advocates for community control over energy production and distribution. In Germany, over 1,000 energy cooperatives allow citizens to collectively own renewable energy projects. Members invest in solar panels or wind turbines, sharing profits and decisions. This model has installed more renewable capacity than major utilities. In Detroit, community solar gardens provide clean energy to neighborhoods unable to install rooftop panels. Beyond environmental benefits, energy democracy addresses inequality—low-income communities typically pay higher percentages of income for energy while having least say in energy decisions.",
+        "question": "How does energy democracy address inequality?",
         "options": {
-            "A": "Because the building was an architectural wonder.",
-            "B": "Because it led to the immediate collapse of the Egyptian kingdom.",
-            "C": "Because it caused the irreversible loss of a vast amount of ancient knowledge.",
-            "D": "Because it was the only library in the world at the time."
+            "A": "By making energy more expensive for everyone.",
+            "B": "By eliminating all energy use.",
+            "C": "By giving communities control over their energy decisions.",
+            "D": "By preventing renewable energy development."
         },
         "answer": "C",
-        "explanation_ko": "지문은 도서관의 파괴가 'a monumental loss for humanity, as countless unique texts... were lost forever'라고 설명하며, 방대한 고대 지식의 영구적인 손실을 초래했기 때문이라고 말합니다."
+        "explanation_ko": "지문은 에너지 민주주의가 지역사회에 에너지 생산과 분배에 대한 통제권을 주어 불평등을 해결한다고 설명합니다."
     },
     {
         "id": 271,
-        "passage": "The concept of 'dark patterns' in user interface design refers to tricks used in websites and apps that make you do things you didn't mean to, like buying or signing up for something. For example, a website might make it very easy to sign up for a service but extremely difficult to find the cancellation option. Another common dark pattern is 'confirmshaming,' where the option to decline an offer is worded in a way to make the user feel guilty. These designs exploit knowledge of human psychology to benefit the company, often at the user's expense.",
-        "question": "What is the purpose of a 'dark pattern' in user interface design?",
+        "passage": "The phenomenon of 'doomscrolling'—compulsively consuming negative news online—surged during the pandemic but persists as a widespread behavior. Studies show that negative content receives 63% more clicks than positive stories, feeding algorithms that prioritize engagement over well-being. This creates a feedback loop: anxiety drives checking for threats, which increases anxiety. Physical effects include disrupted sleep, weakened immune function, and chronic stress. 'Digital wellness' apps now limit news consumption, while some countries consider 'right to disconnect' laws. Psychologists recommend 'news snacking'—brief, scheduled check-ins rather than continuous monitoring.",
+        "question": "Why do social media algorithms promote negative content?",
         "options": {
-            "A": "To make the user interface more visually appealing.",
-            "B": "To improve the user's overall experience and satisfaction.",
-            "C": "To trick the user into taking an action that benefits the business.",
-            "D": "To protect the user's privacy and data."
+            "A": "Positive stories are too expensive to produce.",
+            "B": "Negative content receives 63% more clicks.",
+            "C": "Users specifically request negative news.",
+            "D": "Algorithms prefer truthful content."
         },
-        "answer": "C",
-        "explanation_ko": "지문은 다크 패턴을 'tricks used in websites and apps that make you do things you didn't mean to'라고 정의하며, 사용자를 속여 비즈니스에 이익이 되는 행동을 하도록 유도하는 것이 목적이라고 설명합니다."
+        "answer": "B",
+        "explanation_ko": "지문은 부정적인 콘텐츠가 긍정적인 이야기보다 63% 더 많은 클릭을 받는다고 명시합니다."
     },
     {
         "id": 272,
@@ -3589,16 +3589,16 @@
     },
     {
         "id": 277,
-        "passage": "The concept of 'circular fashion' is an alternative to the traditional linear model of 'take, make, dispose'. It is a system where clothes are designed to be durable, recyclable, and produced in a way that is mindful of the environment and the people who make them. The goal is to keep garments and materials in use for as long as possible. This includes practices like renting clothes, buying second-hand, and designing garments that can be easily disassembled and recycled into new fibers at the end of their life. It is a key part of the broader movement towards a more sustainable fashion industry.",
-        "question": "What is the primary goal of circular fashion?",
+        "passage": "The practice of 'harvest sharing' addresses food waste and hunger simultaneously. Apps like OLIO connect neighbors to share surplus food—from garden produce to restaurant leftovers. In Denmark, WeFood supermarkets sell expired but safe food at 50% discounts. France requires supermarkets to donate unsold food rather than destroy it. These initiatives tackle the paradox of 1.3 billion tons of annual food waste while 828 million people face hunger. Beyond charity, harvest sharing builds community connections and challenges consumer prejudices about 'perfect' produce. The movement reframes waste as resource, making sustainability socially engaging.",
+        "question": "What paradox does harvest sharing address?",
         "options": {
-            "A": "To encourage consumers to buy new clothes every week.",
-            "B": "To make clothes as cheaply as possible, regardless of quality.",
-            "C": "To keep clothing and materials in use for as long as possible, minimizing waste.",
-            "D": "To design clothes that can only be worn once."
+            "A": "Too much food production and too few farmers.",
+            "B": "High food prices despite abundance.",
+            "C": "Massive food waste while millions face hunger.",
+            "D": "People preferring processed over fresh food."
         },
         "answer": "C",
-        "explanation_ko": "지문은 순환 패션의 목표가 'to keep garments and materials in use for as long as possible'이라고 명시하며, 의류와 소재를 최대한 오래 사용하여 폐기물을 최소화하는 것임을 설명합니다."
+        "explanation_ko": "지문은 연간 13억 톤의 음식물 쓰레기가 발생하는 동시에 8억 2,800만 명이 기아에 직면한 역설을 다룬다고 설명합니다."
     },
     {
         "id": 278,
@@ -3667,16 +3667,16 @@
     },
     {
         "id": 283,
-        "passage": "The concept of 'greenwashing' is a form of marketing spin in which a company deceptively promotes its products or policies as environmentally friendly. An organization might spend more money on advertising its green credentials than on actually minimizing its environmental impact. For example, a company might promote a single 'eco-friendly' product line while the rest of its operations remain highly polluting. Greenwashing misleads consumers who want to make environmentally conscious purchasing decisions and can create cynicism about all green claims, harming genuinely sustainable businesses.",
-        "question": "What is the primary purpose of greenwashing?",
+        "passage": "The emergence of 'living materials' combines biology with construction. Self-healing concrete contains bacteria that produce limestone when cracks form, extending building lifespans from 50 to 200 years. Mycelium-based materials grow from fungal roots, creating biodegradable alternatives to plastic and styrofoam. These materials can be programmed—researchers created bricks that reproduce, making three generations from one original. While still experimental, living materials could revolutionize construction, reducing the industry's 39% share of global emissions. Challenges include regulation, standardization, and overcoming the 'yuck factor' of buildings made from bacteria and fungi.",
+        "question": "How does self-healing concrete work?",
         "options": {
-            "A": "To genuinely reduce a company's environmental footprint.",
-            "B": "To provide consumers with accurate information about product sustainability.",
-            "C": "To make a company appear more environmentally friendly than it actually is.",
-            "D": "To lobby for stronger environmental regulations."
+            "A": "It contains metal reinforcements.",
+            "B": "Workers manually repair it daily.",
+            "C": "Bacteria produce limestone when cracks form.",
+            "D": "It never develops cracks."
         },
         "answer": "C",
-        "explanation_ko": "지문은 그린워싱을 회사가 'deceptively promotes its products or policies as environmentally friendly'하는 행위라고 정의하며, 실제보다 더 환경 친화적인 것처럼 보이게 만드는 것이 목적이라고 설명합니다."
+        "explanation_ko": "지문은 자가 치유 콘크리트가 균열이 생길 때 석회석을 생산하는 박테리아를 포함한다고 설명합니다."
     },
     {
         "id": 284,
@@ -3784,16 +3784,16 @@
     },
     {
         "id": 292,
-        "passage": "The concept of 'biophilic cities' is an urban planning approach that aims to integrate nature into the urban fabric. It goes beyond simply adding parks and trees. Biophilic cities are designed to create abundant opportunities for residents to connect with the natural world in their daily lives. This can include features like green rooftops, vertical gardens, urban wildlife corridors, and naturalized waterways. The goal is to create cities that are not only more sustainable and resilient but also healthier and more fulfilling places to live, based on the idea that humans have an innate need for a connection with nature.",
-        "question": "How does the concept of 'biophilic cities' differ from traditional urban greening?",
+        "passage": "The concept of 'blue carbon' recognizes coastal ecosystems as powerful carbon sinks. Mangroves, seagrasses, and salt marshes store carbon 10 times more efficiently than terrestrial forests. They cover only 0.2% of ocean surface but account for 50% of carbon buried in marine sediments. Indonesia's mangroves alone sequester 3.14 billion tons of carbon. However, coastal development destroys 2-7% of blue carbon ecosystems annually, releasing stored carbon. Protection and restoration of these areas offers cost-effective climate mitigation—mangrove restoration costs $1,000 per hectare versus $100,000 for technological carbon capture.",
+        "question": "Why are coastal ecosystems particularly valuable for carbon storage?",
         "options": {
-            "A": "It focuses exclusively on creating large, isolated parks.",
-            "B": "It is a more comprehensive approach that aims to integrate nature throughout the city.",
-            "C": "It prioritizes man-made structures over natural elements.",
-            "D": "It is only concerned with the aesthetic benefits of plants."
+            "A": "They cover most of the ocean surface.",
+            "B": "They store carbon 10 times more efficiently than land forests.",
+            "C": "They produce oxygen for cities.",
+            "D": "They grow faster than any other ecosystem."
         },
         "answer": "B",
-        "explanation_ko": "지문은 바이오필릭 도시가 'goes beyond simply adding parks and trees'하며 'to integrate nature into the urban fabric'을 목표로 한다고 설명하며, 도시 전체에 자연을 통합하는 보다 포괄적인 접근 방식임을 강조합니다."
+        "explanation_ko": "지문은 해안 생태계가 육상 숲보다 10배 더 효율적으로 탄소를 저장한다고 명시합니다."
     },
     {
         "id": 293,
