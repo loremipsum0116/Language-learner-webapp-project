@@ -9,6 +9,7 @@ import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPicke
 import AutoFolderModal from '../components/AutoFolderModal';
 import * as SrsApi from '../api/srs';
 import RainbowStar from '../components/RainbowStar';
+import './MyWordbook.css';
 
 // 헬퍼 함수
 const getCefrBadgeColor = (level) => {
@@ -95,6 +96,7 @@ export default function MyWordbook() {
     const [autoFolderModalOpen, setAutoFolderModalOpen] = useState(false);
     const [displayCount, setDisplayCount] = useState(100);
     const [allWords, setAllWords] = useState([]);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     // SRS 폴더 선택 모달 관련 state
     const [pickerOpen, setPickerOpen] = useState(false);
@@ -416,13 +418,12 @@ export default function MyWordbook() {
                 <h2 className="m-0">내 단어장</h2>
                 <div className="d-flex gap-2">
                     <button 
-                        className="btn btn-outline-info"
+                        className={`btn btn-sm ${selectedIds.size > 0 ? 'btn-success' : 'btn-outline-secondary'}`}
                         onClick={() => setAutoFolderModalOpen(true)}
                         disabled={selectedIds.size === 0}
-                        title="선택된 단어로 자동 폴더 생성"
+                        title={selectedIds.size > 0 ? `선택된 단어들로 자동 폴더 생성 (${selectedIds.size}개)` : '단어를 선택한 후 자동 폴더 생성'}
                     >
-                        <i className="bi bi-folder-plus me-1"></i>
-                        자동 폴더 생성
+                        📁 자동 폴더 생성 {selectedIds.size > 0 && `(${selectedIds.size}개)`}
                     </button>
                     <button type="button" className="btn btn-success" onClick={handleFlashSelected}>
                         선택 자동학습
@@ -456,15 +457,46 @@ export default function MyWordbook() {
                             {selectedIds.size > 0 ? ` / 선택됨 ${selectedIds.size}` : ''}
                         </div>
                         <div className="d-flex gap-2 align-items-center">
-                            <button className="btn btn-sm btn-outline-secondary" onClick={selectAll} disabled={loading || filteredWords.length === 0}>전체 선택</button>
-                            <button className="btn btn-sm btn-outline-secondary" onClick={unselectAll} disabled={selectedIds.size === 0}>선택 해제</button>
-                            <select className="form-select form-select-sm" style={{ width: 150 }} value={String(moveTarget)} onChange={(e) => setMoveTarget(e.target.value === 'none' ? 'none' : Number(e.target.value))}>
-                                <option value="none">미분류로 이동</option>
-                                {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-                            </select>
-                            <button className="btn btn-sm btn-primary" onClick={onMoveClick} disabled={selectedIds.size === 0}>이동</button>
-                            <button className="btn btn-sm btn-success" onClick={() => addVocabToSRS(Array.from(selectedIds))} disabled={selectedIds.size === 0}>SRS에 추가</button>
-                            <button className="btn btn-sm btn-danger" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>삭제</button>
+                            <button 
+                                className="btn btn-sm btn-primary wordbook-btn"
+                                onClick={() => setDropdownOpen(!dropdownOpen)}
+                                disabled={selectedIds.size === 0}
+                            >
+                                이동 {dropdownOpen ? '▲' : '▼'}
+                            </button>
+                            {dropdownOpen && (
+                                <div className="position-absolute bg-white border rounded shadow-lg p-2" style={{ 
+                                    zIndex: 1000, 
+                                    marginTop: '2rem',
+                                    minWidth: '200px'
+                                }}>
+                                    <button 
+                                        className="btn btn-sm btn-outline-secondary w-100 mb-1"
+                                        onClick={() => {
+                                            setMoveTarget('none');
+                                            setDropdownOpen(false);
+                                            setTimeout(() => onMoveClick(), 0);
+                                        }}
+                                    >
+                                        📂 미분류로 이동
+                                    </button>
+                                    {categories.map((c) => (
+                                        <button 
+                                            key={c.id}
+                                            className="btn btn-sm btn-outline-primary w-100 mb-1"
+                                            onClick={() => {
+                                                setMoveTarget(c.id);
+                                                setDropdownOpen(false);
+                                                setTimeout(() => onMoveClick(), 0);
+                                            }}
+                                        >
+                                            📁 {c.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                            <button className="btn btn-sm btn-success wordbook-btn" onClick={() => addVocabToSRS(Array.from(selectedIds))} disabled={selectedIds.size === 0}>SRS에 추가</button>
+                            <button className="btn btn-sm btn-danger wordbook-btn" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>삭제</button>
                         </div>
                     </div>
 

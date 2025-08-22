@@ -146,6 +146,9 @@ export default function AdminDashboard() {
                         <div className="card-body text-center">
                             <h5 className="card-title">📚 SRS 카드</h5>
                             <h2 className="text-success">{dashboardData?.stats.srsCardCount || 0}</h2>
+                            <small className="text-muted">
+                                활성 / 전체: {dashboardData?.stats.totalSrsCardCount || 0}
+                            </small>
                         </div>
                     </div>
                 </div>
@@ -154,6 +157,9 @@ export default function AdminDashboard() {
                         <div className="card-body text-center">
                             <h5 className="card-title">❌ 오답노트</h5>
                             <h2 className="text-warning">{dashboardData?.stats.wrongAnswerCount || 0}</h2>
+                            <small className="text-muted">
+                                복습가능 / 전체: {dashboardData?.stats.totalWrongAnswerCount || 0}
+                            </small>
                         </div>
                     </div>
                 </div>

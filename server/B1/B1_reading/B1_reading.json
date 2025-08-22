@@ -1,0 +1,1302 @@
+[
+    {
+        "id": 1,
+        "passage": "Dear Mr. Harrison, I am writing to express my interest in the Marketing Assistant position advertised on your company's website. I have recently graduated with a degree in Marketing and have six months of internship experience at a digital marketing agency. I am confident that my skills in social media management and content creation would be a valuable asset to your team. My resume is attached for your review. Thank you for your time and consideration. Sincerely, Jane Doe.",
+        "question": "What is the main purpose of this email?",
+        "options": {
+            "A": "To ask for information about the company.",
+            "B": "To apply for a job.",
+            "C": "To complain about a product.",
+            "D": "To offer a marketing service."
+        },
+        "answer": "B",
+        "explanation_ko": "이메일은 'Marketing Assistant position'에 대한 관심을 표현하고 이력서를 첨부하는 등 명백히 일자리에 지원하기 위한 것입니다."
+    },
+    {
+        "id": 2,
+        "passage": "I've just returned from a week-long hiking trip in the Andes. The scenery was absolutely breathtaking, but it was physically challenging. The high altitude made it difficult to breathe, and we had to walk for several hours each day. Despite the difficulties, reaching the mountain peak was one of the most rewarding experiences of my life. I would recommend it to anyone who is physically fit and loves adventure.",
+        "question": "What was the writer's biggest challenge during the trip?",
+        "options": {
+            "A": "The bad weather.",
+            "B": "The high altitude.",
+            "C": "Getting lost.",
+            "D": "The length of the walk."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'The high altitude made it difficult to breathe'라고 언급하며 고도가 높은 것이 가장 큰 어려움이었음을 암시합니다."
+    },
+    {
+        "id": 3,
+        "passage": "Our local community center is organizing a fundraising event to build a new playground for children. The event will take place next Saturday and will include a bake sale, live music, and games. All profits will go directly to the playground fund. We are also looking for volunteers to help on the day of the event. Please contact us if you are interested.",
+        "question": "What is the money from the event going to be used for?",
+        "options": {
+            "A": "To pay for live music.",
+            "B": "To build a new playground.",
+            "C": "To support local volunteers.",
+            "D": "To repair the community center."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'All profits will go directly to the playground fund.'라고 모든 수익금이 놀이터 기금으로 직접 갈 것이라고 명시되어 있습니다."
+    },
+    {
+        "id": 4,
+        "passage": "I recently read a fascinating book about the history of chocolate. I learned that it was first used as a bitter drink by the Mayans and Aztecs, not as a sweet treat. It was only after it was brought to Europe and mixed with sugar that it became the popular sweet we know today. The book was full of such interesting facts.",
+        "question": "According to the text, how was chocolate first consumed?",
+        "options": {
+            "A": "As a sweet bar.",
+            "B": "As a hot, sweet drink.",
+            "C": "As a bitter drink.",
+            "D": "As a type of medicine."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'it was first used as a bitter drink by the Mayans and Aztecs'라고 초콜릿이 처음에는 쓴 음료로 사용되었다고 설명합니다."
+    },
+    {
+        "id": 5,
+        "passage": "Many cities around the world are encouraging citizens to use public transportation instead of private cars. This is to reduce traffic congestion and air pollution. Some cities offer cheaper fares, while others are improving the comfort and frequency of buses and trains. It is hoped that these measures will make public transport a more attractive option.",
+        "question": "What is the main reason cities are promoting public transportation?",
+        "options": {
+            "A": "To make travel cheaper for everyone.",
+            "B": "To reduce traffic and pollution.",
+            "C": "To create jobs for bus and train drivers.",
+            "D": "To make cities look more modern."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'This is to reduce traffic congestion and air pollution.'이라고 교통 체증과 대기 오염을 줄이기 위한 것이라고 명확히 밝히고 있습니다."
+    },
+    {
+        "id": 6,
+        "passage": "I have decided to adopt a healthier lifestyle. I've started by cutting down on fast food and sugary drinks. I am also trying to cook my own meals more often, using fresh ingredients. Furthermore, I've joined a local gym and I plan to go at least three times a week. It's not easy, but I already feel more energetic.",
+        "question": "Which of the following is NOT part of his new healthy lifestyle?",
+        "options": {
+            "A": "Eating less fast food.",
+            "B": "Going to a gym.",
+            "C": "Following a strict diet plan.",
+            "D": "Cooking with fresh ingredients."
+        },
+        "answer": "C",
+        "explanation_ko": "지문은 패스트푸드를 줄이고, 헬스장에 가고, 직접 요리하는 것을 언급했지만, 엄격한 다이어트 계획을 따른다는 내용은 없습니다."
+    },
+    {
+        "id": 7,
+        "passage": "The museum has a new exhibition on ancient Egypt. It features over 200 artifacts, including jewelry, pottery, and a real mummy sarcophagus. The exhibition explains the ancient Egyptians' beliefs about life after death. It is a very popular exhibition, so it is recommended to book tickets online in advance to avoid long queues.",
+        "question": "What advice is given to people who want to visit the exhibition?",
+        "options": {
+            "A": "To go early in the morning.",
+            "B": "To avoid touching the artifacts.",
+            "C": "To book tickets online beforehand.",
+            "D": "To hire a personal guide."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'it is recommended to book tickets online in advance to avoid long queues.'라고 긴 줄을 피하기 위해 미리 온라인으로 티켓을 예매할 것을 권장하고 있습니다."
+    },
+    {
+        "id": 8,
+        "passage": "My friend and I are starting a small online business. We are going to sell handmade jewelry. I am responsible for designing and making the jewelry, while my friend will manage the website and social media. We are both excited and a little nervous about this new venture.",
+        "question": "What is the writer's role in the business?",
+        "options": {
+            "A": "To manage the website.",
+            "B": "To design and make the products.",
+            "C": "To handle customer service.",
+            "D": "To manage social media."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I am responsible for designing and making the jewelry'라고 자신이 주얼리를 디자인하고 만드는 책임을 맡고 있다고 말합니다."
+    },
+    {
+        "id": 9,
+        "passage": "Due to unforeseen maintenance work, the main library will be closed to the public this weekend, from Saturday to Sunday. We apologize for any inconvenience this may cause. The library will reopen as usual on Monday morning at 9 a.m. Any books due for return this weekend can be returned by next Wednesday without any penalty.",
+        "question": "What should people do if their library books are due this weekend?",
+        "options": {
+            "A": "They must return them on Friday.",
+            "B": "They will have to pay a fine.",
+            "C": "They can return them by next Wednesday.",
+            "D": "They should renew them online."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'Any books due... can be returned by next Wednesday without any penalty.'라고 이번 주말이 반납일인 책은 다음 주 수요일까지 벌금 없이 반납할 수 있다고 안내하고 있습니다."
+    },
+    {
+        "id": 10,
+        "passage": "Learning to play a musical instrument as an adult can be challenging, but it is definitely possible. The key is to be patient and consistent. It's better to practice for 15 minutes every day than for two hours once a week. Finding a good teacher can also make a big difference. Don't be afraid to make mistakes; they are part of the learning process.",
+        "question": "What is the writer's main advice for learning an instrument as an adult?",
+        "options": {
+            "A": "To practice for many hours once a week.",
+            "B": "To avoid making any mistakes.",
+            "C": "To be patient and practice regularly.",
+            "D": "To learn without a teacher."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'The key is to be patient and consistent.'라고 인내심을 갖고 꾸준히 하는 것이 핵심이라고 조언하며, 매일 짧게 연습하는 것이 더 낫다고 말합니다."
+    },
+    {
+        "id": 11,
+        "passage": "I recently watched a documentary about the effects of plastic pollution on our oceans. It was shocking to see how much plastic waste ends up in the sea, harming marine animals. The film encouraged viewers to take action by reducing their own plastic use. Since watching it, I have been making a conscious effort to use less plastic in my daily life.",
+        "question": "What was the main message of the documentary?",
+        "options": {
+            "A": "Marine animals are dangerous.",
+            "B": "People should reduce their use of plastic.",
+            "C": "Oceans are becoming smaller.",
+            "D": "Recycling is not effective."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'The film encouraged viewers to take action by reducing their own plastic use.'라고 영화가 시청자들에게 플라스틱 사용을 줄임으로써 행동에 나설 것을 장려했다고 언급합니다."
+    },
+    {
+        "id": 12,
+        "passage": "My company has a flexible working policy. This means I can choose my own start and finish times, as long as I work a total of eight hours a day. I usually start early, at 7:30 a.m., so I can finish early and avoid the evening traffic jam. This policy has greatly improved my work-life balance.",
+        "question": "Why does the writer choose to start work early?",
+        "options": {
+            "A": "Because his boss told him to.",
+            "B": "To get more work done.",
+            "C": "To avoid heavy traffic in the evening.",
+            "D": "Because he is a morning person."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'so I can finish early and avoid the evening traffic jam.'이라고 일찍 끝내고 저녁 교통 체증을 피하기 위해 일찍 시작한다고 설명합니다."
+    },
+    {
+        "id": 13,
+        "passage": "I'm not a big fan of modern art. I often find it difficult to understand what the artist is trying to say. I prefer more traditional art, like realistic portraits and landscape paintings. I can appreciate the skill and detail that goes into that kind of work.",
+        "question": "What kind of art does the writer prefer?",
+        "options": {
+            "A": "Abstract sculptures.",
+            "B": "Modern, conceptual art.",
+            "C": "Realistic paintings.",
+            "D": "Street art and graffiti."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I prefer more traditional art, like realistic portraits and landscape paintings.'라고 사실적인 초상화나 풍경화 같은 전통적인 미술을 더 선호한다고 말합니다."
+    },
+    {
+        "id": 14,
+        "passage": "Our city is hosting an international food festival this weekend. There will be stalls from over 30 different countries, offering traditional dishes. It's a great opportunity to taste food from around the world without having to travel. There will also be live music and dance performances from various cultures.",
+        "question": "What is the main attraction of the food festival?",
+        "options": {
+            "A": "A cooking competition.",
+            "B": "Food from many different countries.",
+            "C": "Lessons on how to cook international dishes.",
+            "D": "A famous chef's demonstration."
+        },
+        "answer": "B",
+        "explanation_ko": "지문의 핵심은 'stalls from over 30 different countries, offering traditional dishes'와 'taste food from around the world'라는 부분으로, 다양한 나라의 음식을 맛볼 수 있다는 점이 주된 매력입니다."
+    },
+    {
+        "id": 15,
+        "passage": "I've been trying to improve my English speaking skills. I found a language exchange partner online. She is a native English speaker who wants to learn my language. We have a video call once a week. We speak in English for half an hour, and then in my language for half an hour. It's been very helpful.",
+        "question": "How does the writer practice speaking English?",
+        "options": {
+            "A": "By watching English movies.",
+            "B": "By talking with a language exchange partner.",
+            "C": "By attending a formal English class.",
+            "D": "By using a language learning app."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I found a language exchange partner online.'와 'We have a video call once a week.'를 통해 온라인 언어 교환 파트너와 대화하며 말하기를 연습한다는 것을 알 수 있습니다."
+    },
+    {
+        "id": 16,
+        "passage": "The new city library is an amazing building. It's not just a place for books; it's a community hub. It has a café, a children's play area, and free computer access for everyone. They also host workshops and events, like author talks and coding classes for teenagers. It's a wonderful resource for the whole community.",
+        "question": "What does the text suggest about the new library?",
+        "options": {
+            "A": "It is only for reading books.",
+            "B": "It offers more than just books.",
+            "C": "It is mainly for children.",
+            "D": "It is expensive to use the computers."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 도서관이 'not just a place for books'라고 말하며 카페, 놀이 공간, 컴퓨터, 워크숍 등 책 이외의 다양한 시설과 활동을 제공한다고 설명합니다."
+    },
+    {
+        "id": 17,
+        "passage": "I used to be afraid of dogs because I was bitten by one when I was a small child. For years, I would get nervous whenever a dog came near me. However, my friend got a puppy last year, and spending time with it has helped me overcome my fear. Now, I find dogs to be friendly and loyal companions.",
+        "question": "What helped the writer overcome his fear of dogs?",
+        "options": {
+            "A": "Reading a book about dogs.",
+            "B": "Watching a movie about dogs.",
+            "C": "Spending time with his friend's puppy.",
+            "D": "Getting a dog of his own."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'spending time with it has helped me overcome my fear.'라고 친구의 강아지와 시간을 보낸 것이 두려움을 극복하는 데 도움이 되었다고 말합니다."
+    },
+    {
+        "id": 18,
+        "passage": "This is a reminder to all employees that the company's annual charity run is next Sunday. The run is 5km long and will take place in the city park. Even if you are not a runner, you can participate by walking or by volunteering to help at the event. All money raised will be donated to the local children's hospital.",
+        "question": "Who is this announcement for?",
+        "options": {
+            "A": "Professional runners.",
+            "B": "Hospital staff.",
+            "C": "Company employees.",
+            "D": "People living near the park."
+        },
+        "answer": "C",
+        "explanation_ko": "공지 첫 부분에 'This is a reminder to all employees'라고 명시되어 있어, 이 공지가 모든 직원을 대상으로 한 것임을 알 수 있습니다."
+    },
+    {
+        "id": 19,
+        "passage": "I decided to take up photography as a hobby. I bought a second-hand camera and started taking pictures of things I find interesting in my daily life, like street art, old buildings, and people's expressions. It has taught me to pay more attention to the world around me and to see beauty in small details.",
+        "question": "What has photography taught the writer?",
+        "options": {
+            "A": "How to sell pictures online.",
+            "B": "How to use a new camera.",
+            "C": "To notice more details in his surroundings.",
+            "D": "To become a professional photographer."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It has taught me to pay more attention to the world around me and to see beauty in small details.'라고 사진이 주변 세계에 더 주의를 기울이고 작은 디테일에서 아름다움을 보게 가르쳐주었다고 말합니다."
+    },
+    {
+        "id": 20,
+        "passage": "My city has a great bike-sharing system. You can rent a bike from hundreds of stations around the city and return it to any other station. It's cheap and a great way to get some exercise while you travel. It's especially useful for short trips where a bus or train might be inconvenient.",
+        "question": "According to the text, when is the bike-sharing system particularly useful?",
+        "options": {
+            "A": "For long-distance travel.",
+            "B": "For exercising in the gym.",
+            "C": "For short trips around the city.",
+            "D": "For traveling in bad weather."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It's especially useful for short trips'라고 특히 단거리 이동에 유용하다고 언급하고 있습니다."
+    },
+    {
+        "id": 21,
+        "passage": "I'm a volunteer guide at the local art gallery. On weekends, I give tours and explain the history and meaning behind some of the artworks. I enjoy it because I get to share my passion for art with others. It's also a great way to keep learning, as I always have to research the artists and their works.",
+        "question": "Why does the writer enjoy being a volunteer guide?",
+        "options": {
+            "A": "Because she gets paid well.",
+            "B": "Because she can share her love for art.",
+            "C": "Because she gets to meet famous artists.",
+            "D": "Because the gallery is close to her house."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I enjoy it because I get to share my passion for art with others.'라고 예술에 대한 열정을 다른 사람들과 나눌 수 있어서 즐겁다고 말합니다."
+    },
+    {
+        "id": 22,
+        "passage": "I've been trying meditation for the past month. I do it for ten minutes every morning before I start my day. I use an app that guides me through the process. It helps me to feel calmer and more focused. I find that my days are less stressful when I start them with meditation.",
+        "question": "What is a benefit of meditation that the writer mentions?",
+        "options": {
+            "A": "It helps him sleep better.",
+            "B": "It makes him feel more calm and focused.",
+            "C": "It is a good form of physical exercise.",
+            "D": "It helps him make new friends."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'It helps me to feel calmer and more focused.'라고 명상이 더 차분하고 집중된 느낌을 갖도록 도와준다고 말합니다."
+    },
+    {
+        "id": 23,
+        "passage": "My brother is a terrible driver. He drives too fast and often doesn't pay attention to other cars. I feel very nervous whenever I am in the car with him. I have told him he needs to be more careful, but he doesn't seem to listen.",
+        "question": "How does the writer feel when her brother is driving?",
+        "options": {
+            "A": "Relaxed",
+            "B": "Nervous",
+            "C": "Excited",
+            "D": "Safe"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I feel very nervous whenever I am in the car with him.'라고 오빠가 운전하는 차에 탈 때마다 매우 긴장된다고 명확하게 말하고 있습니다."
+    },
+    {
+        "id": 24,
+        "passage": "Our school cafeteria has changed its menu. They are now offering healthier options, such as salads, whole-wheat sandwiches, and fresh fruit. They have also removed sugary drinks and fried food. I think it's a great change, although some of my friends miss the old menu.",
+        "question": "What is the main change in the school cafeteria's menu?",
+        "options": {
+            "A": "The food is now cheaper.",
+            "B": "They are offering healthier food choices.",
+            "C": "They have hired a new chef.",
+            "D": "The cafeteria is open longer."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 샐러드, 통밀 샌드위치, 신선한 과일과 같은 'healthier options'을 제공하고 설탕이 든 음료와 튀긴 음식을 없앴다고 설명합니다."
+    },
+    {
+        "id": 25,
+        "passage": "I work as a journalist. My job involves researching stories, interviewing people, and writing articles. It can be a stressful job with tight deadlines, but it's also very exciting. I get to learn about new things every day and meet many interesting people. No two days are ever the same.",
+        "question": "What does the writer find exciting about his job?",
+        "options": {
+            "A": "The long holidays.",
+            "B": "The high salary.",
+            "C": "Learning new things and meeting people.",
+            "D": "Working with a big team."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I get to learn about new things every day and meet many interesting people.'라고 매일 새로운 것을 배우고 많은 흥미로운 사람들을 만날 수 있다는 점을 흥미롭게 여깁니다."
+    },
+    {
+        "id": 26,
+        "passage": "I am not a fan of reality TV shows. I find them to be unrealistic and often quite silly. The people on them seem to argue all the time. I prefer watching well-written dramas or interesting documentaries instead.",
+        "question": "Why does the writer dislike reality TV shows?",
+        "options": {
+            "A": "They are too serious.",
+            "B": "They are unrealistic and silly.",
+            "C": "They are too expensive to watch.",
+            "D": "They are difficult to understand."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I find them to be unrealistic and often quite silly.'라고 리얼리티 TV 쇼가 비현실적이고 종종 꽤 어리석다고 생각한다고 말합니다."
+    },
+    {
+        "id": 27,
+        "passage": "I recently took a train journey across my country. The journey lasted three days. I had a small sleeping cabin on the train. It was wonderful to watch the landscape change outside my window, from mountains to forests and finally to the coast. It was a much more interesting way to travel than flying.",
+        "question": "What did the writer enjoy most about the train journey?",
+        "options": {
+            "A": "The food on the train.",
+            "B": "Meeting other passengers.",
+            "C": "Watching the changing landscape.",
+            "D": "The speed of the train."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It was wonderful to watch the landscape change outside my window'라고 창밖으로 풍경이 변하는 것을 보는 것이 멋졌다고 말하며, 이것이 그가 가장 즐긴 부분임을 암시합니다."
+    },
+    {
+        "id": 28,
+        "passage": "My local cinema is very old and beautiful. It's not a modern multiplex; it's a single-screen cinema that has been open for over 80 years. It has comfortable velvet seats and shows a mix of classic films and new independent movies. I love the atmosphere there.",
+        "question": "What is special about the writer's local cinema?",
+        "options": {
+            "A": "It only shows the latest blockbuster movies.",
+            "B": "It is a very old, single-screen cinema.",
+            "C": "It has the most advanced technology.",
+            "D": "The tickets are free."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 영화관이 'not a modern multiplex'이며 'a single-screen cinema that has been open for over 80 years'라고 설명하며, 오래된 단관 극장이라는 점이 특별하다고 말합니다."
+    },
+    {
+        "id": 29,
+        "passage": "I have a terrible memory for names. When I meet someone new, I often forget their name just a few minutes later. It can be quite embarrassing. I have tried different techniques, like repeating the name out loud, but nothing seems to work very well.",
+        "question": "What problem does the writer have?",
+        "options": {
+            "A": "He has trouble remembering faces.",
+            "B": "He has difficulty remembering names.",
+            "C": "He is often late for appointments.",
+            "D": "He has a fear of meeting new people."
+        },
+        "answer": "B",
+        "explanation_ko": "지문 첫 문장에서 'I have a terrible memory for names.'라고 이름에 대한 기억력이 끔찍하다고 명확하게 밝히고 있습니다."
+    },
+    {
+        "id": 30,
+        "passage": "To celebrate my parents' 30th wedding anniversary, my brother and I are planning a special dinner for them. We have booked a table at their favorite restaurant. We have also secretly invited some of their close friends and family to join us. We hope it will be a wonderful surprise for them.",
+        "question": "What is the secret part of the plan?",
+        "options": {
+            "A": "The location of the restaurant.",
+            "B": "The date of the dinner.",
+            "C": "That other friends and family will be there.",
+            "D": "The gift they have prepared."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'We have also secretly invited some of their close friends and family to join us.'라고 가까운 친구와 가족을 몰래 초대했다고 말하며, 이것이 비밀스러운 부분임을 나타냅니다."
+    },
+    {
+        "id": 31,
+        "passage": "I've started a small vegetable garden on my balcony. It's not very big, but I've managed to grow some tomatoes, herbs, and lettuce. It's very satisfying to cook with ingredients that I've grown myself. It requires daily watering and care, but it's a relaxing activity after a long day at work. My friends are always impressed when I serve them a salad with my own fresh lettuce.",
+        "question": "What does the writer find most rewarding about gardening?",
+        "options": {
+            "A": "Saving money on groceries.",
+            "B": "Having a beautiful balcony.",
+            "C": "Using his own homegrown ingredients in meals.",
+            "D": "Selling his vegetables to friends."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It's very satisfying to cook with ingredients that I've grown myself.'라고 직접 키운 재료로 요리하는 것이 매우 만족스럽다고 언급했습니다."
+    },
+    {
+        "id": 32,
+        "passage": "Last week, my manager asked me to lead a project for the first time. I was nervous because it was a big responsibility, and I had to coordinate with colleagues from different departments. There were a few challenges, especially with communication, but we managed to complete the project successfully. My manager was very pleased with the result, and I feel much more confident in my abilities now.",
+        "question": "What was the writer's main challenge in the project?",
+        "options": {
+            "A": "The project was not interesting.",
+            "B": "He did not have enough time.",
+            "C": "He had problems communicating with colleagues.",
+            "D": "His manager was not supportive."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'There were a few challenges, especially with communication'이라고 의사소통에 특히 어려움이 있었다고 명시하고 있습니다."
+    },
+    {
+        "id": 33,
+        "passage": "I recently signed up for a cookery course that focuses on Italian cuisine. Every Tuesday evening, we learn to make a different dish, from fresh pasta to tiramisu. The instructor is from Rome and she shares a lot of interesting stories about Italian food culture. I've met some nice people in the class, and we often practice the recipes at home. It's a fun and delicious way to spend an evening.",
+        "question": "What does the writer do in the cookery course?",
+        "options": {
+            "A": "She learns about Italian history.",
+            "B": "She learns to cook a new Italian dish each week.",
+            "C": "She works in an Italian restaurant.",
+            "D": "She teaches others how to make pasta."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'Every Tuesday evening, we learn to make a different dish'라고 매주 화요일 저녁마다 다른 요리를 배운다고 설명합니다."
+    },
+    {
+        "id": 34,
+        "passage": "My city has recently introduced electric scooters as a new form of public transport. You can find them on almost every street corner and rent them using a smartphone app. They are convenient for short distances and are better for the environment than cars. However, some people are concerned about safety, as riders often don't wear helmets and ride on the pavement.",
+        "question": "What is the main concern about the new electric scooters?",
+        "options": {
+            "A": "They are too expensive to rent.",
+            "B": "They are bad for the environment.",
+            "C": "They are difficult to find.",
+            "D": "There are safety issues with how they are used."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'some people are concerned about safety'라고 안전에 대한 우려가 있다고 언급하며, 헬멧 미착용과 보도 주행을 예로 들고 있습니다."
+    },
+    {
+        "id": 35,
+        "passage": "I'm trying to reduce the amount of waste I produce. I've started carrying a reusable coffee cup and a water bottle with me everywhere. I also try to buy products with less plastic packaging. It's a small change, but if everyone did it, it could make a big difference to our planet. My next step is to try composting my food waste.",
+        "question": "Which of the following is NOT mentioned as a way the writer reduces waste?",
+        "options": {
+            "A": "Using a reusable coffee cup.",
+            "B": "Avoiding products with plastic packaging.",
+            "C": "Organizing community clean-up events.",
+            "D": "Carrying a reusable water bottle."
+        },
+        "answer": "C",
+        "explanation_ko": "지문은 재사용 가능한 컵과 물병 사용, 플라스틱 포장재 피하기를 언급했지만, 지역 사회 정화 활동을 조직한다는 내용은 없습니다."
+    },
+    {
+        "id": 36,
+        "passage": "My friend is moving to another country for a new job. We decided to throw a surprise farewell party for her. We invited all her close friends and cooked her favorite dishes. When she walked in and saw everyone, she was so surprised and happy that she started to cry. It was a very emotional evening, but we were all glad to have a chance to say goodbye properly.",
+        "question": "How did the friend react to the surprise party?",
+        "options": {
+            "A": "She was angry that they didn't tell her.",
+            "B": "She was too busy to enjoy it.",
+            "C": "She was very surprised and happy.",
+            "D": "She already knew about the party."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'she was so surprised and happy that she started to cry'라고 그녀가 매우 놀라고 기뻐서 울기 시작했다고 묘사합니다."
+    },
+    {
+        "id": 37,
+        "passage": "I work from home two days a week. At first, I found it difficult to concentrate with all the distractions at home. But now I have a dedicated workspace in a quiet room, and I stick to a regular schedule, just like in the office. The best part is that I save an hour on commuting, which gives me more time for my hobbies.",
+        "question": "What helped the writer to concentrate while working from home?",
+        "options": {
+            "A": "Working longer hours.",
+            "B": "Having a specific workspace and a regular schedule.",
+            "C": "Taking frequent breaks to watch TV.",
+            "D": "Communicating more with colleagues."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I have a dedicated workspace in a quiet room, and I stick to a regular schedule'라고 조용한 방에 전용 업무 공간을 마련하고 규칙적인 일정을 지킨 것이 도움이 되었다고 말합니다."
+    },
+    {
+        "id": 38,
+        "passage": "I've been using a new fitness app on my phone. It tracks my daily steps, calories burned, and even my sleep patterns. It also suggests different exercises and healthy recipes. Seeing my progress every day is very motivating. It feels like having a personal trainer in my pocket. I've definitely become more active since I started using it.",
+        "question": "What is the main benefit of the fitness app for the writer?",
+        "options": {
+            "A": "It allows him to chat with friends.",
+            "B": "It is a free app.",
+            "C": "It motivates him by showing his daily progress.",
+            "D": "It replaces his need to see a doctor."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'Seeing my progress every day is very motivating.'라고 매일 자신의 진행 상황을 보는 것이 매우 동기 부여가 된다고 언급했습니다."
+    },
+    {
+        "id": 39,
+        "passage": "Our flight was delayed by four hours due to bad weather. The airline gave us vouchers for food and drinks at the airport café, which was nice of them. However, it was very boring waiting at the gate with nothing to do. I tried to read a book, but it was too noisy to concentrate. We were all very relieved when we were finally able to board the plane.",
+        "question": "What did the airline provide because of the delay?",
+        "options": {
+            "A": "A full refund for the tickets.",
+            "B": "A hotel room for the night.",
+            "C": "Vouchers for food and drinks.",
+            "D": "Free Wi-Fi access."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'The airline gave us vouchers for food and drinks at the airport café'라고 항공사가 공항 카페에서 사용할 수 있는 음식 및 음료 쿠폰을 주었다고 명시되어 있습니다."
+    },
+    {
+        "id": 40,
+        "passage": "I prefer shopping for clothes in physical stores rather than online. I like to be able to touch the fabric and try things on to see how they fit. Online, the colors can look different from the real product, and it's always a hassle to return items that don't fit. For me, the experience of walking around a shop is also more enjoyable.",
+        "question": "Why does the writer prefer shopping in physical stores?",
+        "options": {
+            "A": "Because it is cheaper.",
+            "B": "Because they have a wider selection.",
+            "C": "Because she can try on the clothes and see the real product.",
+            "D": "Because online shopping is not secure."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I like to be able to touch the fabric and try things on'이라고 옷감을 만져보고 입어볼 수 있는 것을 선호한다고 말하며, 온라인 쇼핑의 단점을 언급합니다."
+    },
+    {
+        "id": 41,
+        "passage": "Last weekend, I visited a castle in the countryside. It was built in the 15th century and has a very rich history. We took a guided tour and the guide told us fascinating stories about the kings and queens who lived there. The view from the top of the main tower was incredible. It was like stepping back in time for a day.",
+        "question": "What did the writer find most interesting about the castle visit?",
+        "options": {
+            "A": "The modern cafe inside the castle.",
+            "B": "The stories about the people who lived there.",
+            "C": "The gift shop at the entrance.",
+            "D": "The journey to the countryside."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'the guide told us fascinating stories about the kings and queens who lived there'라고 그곳에 살았던 왕과 여왕에 대한 매혹적인 이야기가 흥미로웠다고 암시합니다."
+    },
+    {
+        "id": 42,
+        "passage": "I have a part-time job as a waiter in a busy restaurant. It's a physically demanding job as I'm on my feet for hours. I also have to deal with difficult customers sometimes. However, my colleagues are very friendly and supportive, and we work well as a team. The tips are also a nice bonus. It's taught me a lot about patience and communication.",
+        "question": "What is the most positive aspect of the writer's job?",
+        "options": {
+            "A": "It is not physically demanding.",
+            "B": "All the customers are polite.",
+            "C": "He has a good relationship with his colleagues.",
+            "D": "He can eat for free at the restaurant."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'my colleagues are very friendly and supportive, and we work well as a team'이라고 동료들이 매우 친절하고 협조적이어서 팀으로서 잘 일한다고 긍정적인 측면을 언급했습니다."
+    },
+    {
+        "id": 43,
+        "passage": "I'm thinking of redecorating my living room. The walls are a boring white color, and the furniture is old. I want to paint the walls a warm, light blue color and buy a new, more comfortable sofa. I've been looking for ideas in interior design magazines and websites. I want to create a cozy and relaxing space.",
+        "question": "What is the writer's main goal for redecorating his living room?",
+        "options": {
+            "A": "To make the room look bigger.",
+            "B": "To sell the apartment at a higher price.",
+            "C": "To create a comfortable and relaxing atmosphere.",
+            "D": "To have more space for parties."
+        },
+        "answer": "C",
+        "explanation_ko": "지문 마지막 문장에서 'I want to create a cozy and relaxing space.'라고 아늑하고 편안한 공간을 만들고 싶다고 명확히 말하고 있습니다."
+    },
+    {
+        "id": 44,
+        "passage": "Every year, my town holds a winter festival. The main attraction is the outdoor ice-skating rink in the town square. There are also stalls selling hot chocolate and local crafts. This year, they added a small concert stage with live music in the evenings. It brings the whole community together and creates a wonderful, festive atmosphere.",
+        "question": "What is new at the winter festival this year?",
+        "options": {
+            "A": "An ice-skating rink.",
+            "B": "Stalls selling hot chocolate.",
+            "C": "A live music stage.",
+            "D": "A craft market."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'This year, they added a small concert stage with live music in the evenings.'라고 올해 저녁에 라이브 음악이 있는 작은 콘서트 무대를 추가했다고 언급했습니다."
+    },
+    {
+        "id": 45,
+        "passage": "I've decided to learn Spanish. I think it's a beautiful language, and it will be useful for my travels in the future. I'm using a language app to learn vocabulary and grammar, and I watch Spanish movies with subtitles to improve my listening skills. My goal is to be able to have a simple conversation by the end of the year.",
+        "question": "How is the writer improving his Spanish listening skills?",
+        "options": {
+            "A": "By talking to native speakers.",
+            "B": "By using a language app.",
+            "C": "By watching movies in Spanish.",
+            "D": "By reading Spanish books."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I watch Spanish movies with subtitles to improve my listening skills.'라고 듣기 실력을 향상시키기 위해 자막과 함께 스페인 영화를 본다고 말합니다."
+    },
+    {
+        "id": 46,
+        "passage": "I'm not very good at saving money. I tend to spend too much on things I don't really need, like clothes and eating out. I've decided to make a monthly budget to track my income and expenses. I hope this will help me to see where my money is going and to start saving for a holiday next year.",
+        "question": "What is the writer's plan to save more money?",
+        "options": {
+            "A": "To ask for a higher salary.",
+            "B": "To stop eating out completely.",
+            "C": "To create a monthly budget to track his spending.",
+            "D": "To sell his old clothes."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I've decided to make a monthly budget to track my income and expenses.'라고 수입과 지출을 추적하기 위해 월간 예산을 세우기로 결정했다고 말합니다."
+    },
+    {
+        "id": 47,
+        "passage": "My sister and I look very different. She has dark, curly hair and brown eyes, while I have straight, blond hair and blue eyes. People are often surprised to find out that we are sisters. However, we have very similar personalities. We are both outgoing and love to laugh.",
+        "question": "In what way are the writer and her sister similar?",
+        "options": {
+            "A": "Their physical appearance.",
+            "B": "Their taste in clothes.",
+            "C": "Their personalities.",
+            "D": "Their hairstyles."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'However, we have very similar personalities.'라고 하지만, 우리는 매우 비슷한 성격을 가지고 있다고 명시하고 있습니다."
+    },
+    {
+        "id": 48,
+        "passage": "The city council has decided to make the main shopping street a pedestrian-only zone. This means no cars will be allowed on this street from 10 a.m. to 8 p.m. The aim is to make the area safer and more pleasant for shoppers. Some shop owners are worried it might reduce the number of customers, but most residents support the idea.",
+        "question": "What is the main purpose of the new rule for the shopping street?",
+        "options": {
+            "A": "To allow for more car parking.",
+            "B": "To make the area safer and more pleasant.",
+            "C": "To help shop owners sell more products.",
+            "D": "To allow for faster car traffic."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'The aim is to make the area safer and more pleasant for shoppers.'라고 그 목적이 쇼핑객들에게 더 안전하고 쾌적한 공간을 만들기 위한 것이라고 설명합니다."
+    },
+    {
+        "id": 49,
+        "passage": "I find it very difficult to wake up early in the morning. I'm definitely not a morning person. I usually press the snooze button on my alarm clock several times. By the time I finally get out of bed, I often have to rush to get ready for work. I wish I could be one of those people who wake up early and go for a run.",
+        "question": "What is the writer's main problem in the morning?",
+        "options": {
+            "A": "He doesn't have an alarm clock.",
+            "B": "He has trouble getting out of bed early.",
+            "C": "He doesn't have time for breakfast.",
+            "D": "His work starts too early."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 작가가 'not a morning person'이라고 말하며 알람의 스누즈 버튼을 여러 번 누르고 침대에서 나오기 힘들어한다는 점을 묘사합니다."
+    },
+    {
+        "id": 50,
+        "passage": "I went to a concert last night to see my favorite band. The music was fantastic and the band had so much energy. The atmosphere in the crowd was amazing; everyone was singing and dancing together. It was so loud that my ears were ringing afterwards, but it was totally worth it. It was one of the best live shows I've ever seen.",
+        "question": "What did the writer enjoy most about the concert?",
+        "options": {
+            "A": "The comfortable seating.",
+            "B": "The cheap ticket price.",
+            "C": "The energetic music and atmosphere.",
+            "D": "The quiet and relaxing environment."
+        },
+        "answer": "C",
+        "explanation_ko": "지문은 'The music was fantastic', 'the band had so much energy', 'The atmosphere in the crowd was amazing' 등 음악과 에너지, 그리고 분위기를 즐겼다고 묘사합니다."
+    },
+    {
+        "id": 51,
+        "passage": "My new apartment has a small gym in the basement, which is free for all residents. I've started going there after work. It's much more convenient than traveling to a separate gym, and it saves me money on a membership fee. It's not very big, but it has all the basic equipment I need for a good workout.",
+        "question": "What is the main advantage of the gym in the writer's apartment building?",
+        "options": {
+            "A": "It has a swimming pool.",
+            "B": "It is very large and has many machines.",
+            "C": "It is convenient and free for residents.",
+            "D": "It has personal trainers available."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It's much more convenient' 그리고 'it saves me money' 라고 언급하며, 모든 거주자에게 무료('free for all residents')라고 설명합니다."
+    },
+    {
+        "id": 52,
+        "passage": "I'm taking a short course on digital photography. I've learned about things like aperture, shutter speed, and composition. Before, I just used to point my camera and shoot in automatic mode. Now, I have more control over my pictures, and I think their quality has improved a lot. The course has made me see the world in a more creative way.",
+        "question": "How has the photography course changed the way the writer takes pictures?",
+        "options": {
+            "A": "He bought a more expensive camera.",
+            "B": "He only takes pictures in automatic mode now.",
+            "C": "He has more technical control and creativity.",
+            "D": "He decided to become a professional photographer."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'Now, I have more control over my pictures'라고 언급하며, 자동 모드 대신 조리개, 셔터 속도 등을 배우면서 사진의 질이 향상되었다고 말합니다."
+    },
+    {
+        "id": 53,
+        "passage": "I tried to bake a cake for my friend's birthday, but it was a complete disaster. I think I used salt instead of sugar by mistake. The cake didn't rise properly, and it tasted terrible. We all had a good laugh about it, and we ended up eating ice cream instead. Next time, I think I'll just buy a cake from the bakery.",
+        "question": "What went wrong with the cake?",
+        "options": {
+            "A": "The writer forgot to turn on the oven.",
+            "B": "The writer used the wrong ingredient by mistake.",
+            "C": "The writer dropped the cake on the floor.",
+            "D": "The writer didn't have a recipe."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I think I used salt instead of sugar by mistake.'라고 실수로 설탕 대신 소금을 사용한 것 같다고 명확하게 언급합니다."
+    },
+    {
+        "id": 54,
+        "passage": "For our team-building day at work, we went to an escape room. We were locked in a themed room and had to solve a series of puzzles and find clues to get out within an hour. It was quite challenging and required a lot of teamwork and communication. We managed to escape with just a few minutes to spare. It was a really fun and different way to bond with colleagues.",
+        "question": "What was the main purpose of the escape room activity?",
+        "options": {
+            "A": "To test their physical strength.",
+            "B": "To encourage teamwork among colleagues.",
+            "C": "To learn about the history of the company.",
+            "D": "To have a relaxing and quiet day."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 이 활동이 'team-building day'의 일부였으며, 'required a lot of teamwork and communication'이라고 언급하며, 동료들과의 유대를 위한 재미있는 방법이었다고 결론짓습니다."
+    },
+    {
+        "id": 55,
+        "passage": "I volunteer at an animal shelter on Saturdays. My main job is to walk the dogs and clean their living areas. Sometimes I also help with feeding. It's sad to see so many animals without a home, but it's rewarding to give them some care and attention. My favorite part is seeing a dog get adopted and go to a loving new family.",
+        "question": "What does the writer find most rewarding about his volunteer work?",
+        "options": {
+            "A": "Cleaning the living areas.",
+            "B": "Getting paid for his work.",
+            "C": "Walking the dogs in the park.",
+            "D": "Seeing an animal get adopted."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'My favorite part is seeing a dog get adopted and go to a loving new family.'라고 가장 좋아하는 부분은 개가 입양되어 새로운 가족에게 가는 것을 보는 것이라고 말합니다."
+    },
+    {
+        "id": 56,
+        "passage": "I recently took up cycling as a way to stay fit. I bought a second-hand bike and started with short rides around my neighborhood. Now, I can cycle for over an hour without getting too tired. On weekends, I like to explore the cycling paths along the river. It's a great way to get some exercise and enjoy the fresh air at the same time.",
+        "question": "Why did the writer start cycling?",
+        "options": {
+            "A": "To save money on transport.",
+            "B": "To compete in a race.",
+            "C": "To find a way to stay in good physical shape.",
+            "D": "Because all his friends are cyclists."
+        },
+        "answer": "C",
+        "explanation_ko": "지문 첫 문장에서 'I recently took up cycling as a way to stay fit.'라고 건강을 유지하기 위한 방법으로 자전거를 타기 시작했다고 명확히 밝히고 있습니다."
+    },
+    {
+        "id": 57,
+        "passage": "My local library is running a 'book blind date' event. You choose a book that is wrapped in brown paper, so you can't see the cover or title. There are only a few words written on the front to give you a hint, like 'a magical adventure' or 'a thrilling mystery'. I picked one up today. It's an exciting way to discover new authors and genres that I wouldn't normally choose.",
+        "question": "What is the main idea of the 'book blind date' event?",
+        "options": {
+            "A": "To meet other single readers at the library.",
+            "B": "To get free books from the library.",
+            "C": "To choose a book without knowing its title or cover.",
+            "D": "To wrap books as gifts for friends."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'you can't see the cover or title'이라고 책의 표지나 제목을 볼 수 없게 포장된 책을 고르는 것이라고 설명하며, 이것이 이벤트의 핵심 아이디어입니다."
+    },
+    {
+        "id": 58,
+        "passage": "I'm not a very patient person, so I find waiting in long queues very annoying. Whether it's at the supermarket, the bank, or the post office, I always get frustrated. I usually try to listen to music or a podcast on my phone to make the time pass more quickly, but I still wish things could be more efficient.",
+        "question": "How does the writer try to cope with waiting in long queues?",
+        "options": {
+            "A": "By complaining to the staff.",
+            "B": "By leaving and coming back later.",
+            "C": "By reading a newspaper.",
+            "D": "By listening to music or a podcast."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'I usually try to listen to music or a podcast on my phone to make the time pass more quickly'라고 시간을 더 빨리 보내기 위해 보통 휴대폰으로 음악이나 팟캐스트를 듣는다고 말합니다."
+    },
+    {
+        "id": 59,
+        "passage": "My parents own a small café in our town. I often help them out on weekends. I take orders, serve customers, and sometimes help with washing the dishes. It's hard work, but I enjoy the busy atmosphere and talking to the regular customers. It has taught me the importance of good customer service.",
+        "question": "What has the writer learned from helping at the café?",
+        "options": {
+            "A": "How to cook professional dishes.",
+            "B": "How to manage a business.",
+            "C": "The value of providing good service to customers.",
+            "D": "How to bake cakes and pastries."
+        },
+        "answer": "C",
+        "explanation_ko": "지문 마지막 문장에서 'It has taught me the importance of good customer service.'라고 좋은 고객 서비스의 중요성을 배웠다고 명시하고 있습니다."
+    },
+    {
+        "id": 60,
+        "passage": "I've always wanted to see the Northern Lights. I've seen so many beautiful photos and videos of them. This year, I'm finally planning a trip to Norway in the winter, which is one of the best places to see them. I know there's no guarantee, as it depends on the weather and solar activity, but I'm keeping my fingers crossed. It would be a dream come true.",
+        "question": "Why is the writer planning a trip to Norway?",
+        "options": {
+            "A": "To go skiing in the mountains.",
+            "B": "To visit relatives who live there.",
+            "C": "To experience the Northern Lights.",
+            "D": "To learn about Norwegian culture."
+        },
+        "answer": "C",
+        "explanation_ko": "지문은 작가가 항상 북극광(Northern Lights)을 보고 싶어했고, 그것을 보기 위해 노르웨이 여행을 계획하고 있다고 명확하게 설명합니다."
+    },
+    {
+        "id": 61,
+        "passage": "I had to give a presentation at a conference last month. I was extremely nervous beforehand because I'm not comfortable with public speaking. I practiced my speech many times in front of a mirror and with my family. On the day, my hands were shaking, but once I started talking, I felt more relaxed. The audience asked some interesting questions at the end, and I received positive feedback. It was a great experience for my confidence.",
+        "question": "What was the result of the writer's presentation?",
+        "options": {
+            "A": "It was cancelled at the last minute.",
+            "B": "Nobody was interested in it.",
+            "C": "It went well and boosted his confidence.",
+            "D": "He forgot his speech and couldn't finish."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I received positive feedback'와 'It was a great experience for my confidence'라고 긍정적인 피드백을 받았고 자신감에 좋은 경험이었다고 언급했습니다."
+    },
+    {
+        "id": 62,
+        "passage": "My friend is very adventurous with food. He loves trying new and unusual dishes from different countries. Last night, he took me to a restaurant that serves traditional Ethiopian food. We ate with our hands, using a special type of bread to pick up the food. I was hesitant at first, but it was surprisingly delicious. I'm glad I tried something new.",
+        "question": "What was the writer's initial feeling about the Ethiopian restaurant?",
+        "options": {
+            "A": "Very excited.",
+            "B": "A little unwilling or doubtful.",
+            "C": "Not interested at all.",
+            "D": "Angry at his friend."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I was hesitant at first'라고 처음에 망설였다고 말하며, 이는 약간 꺼려하거나 의심스러워하는 감정을 나타냅니다."
+    },
+    {
+        "id": 63,
+        "passage": "I commute to work by train every day, and the journey takes about 45 minutes. I used to find it boring, but now I use the time productively. I listen to educational podcasts or read books on my e-reader. Sometimes, I just look out the window and relax. It has become a part of my day that I actually enjoy, a time for myself before the busy workday begins.",
+        "question": "How has the writer's attitude towards his commute changed?",
+        "options": {
+            "A": "He still finds it very boring.",
+            "B": "He has started to find it a useful and enjoyable time.",
+            "C": "He now thinks the journey is too long.",
+            "D": "He has decided to drive to work instead."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I used to find it boring, but now I use the time productively'와 'It has become a part of my day that I actually enjoy'라고 언급하며, 그의 태도가 긍정적으로 변했음을 보여줍니다."
+    },
+    {
+        "id": 64,
+        "passage": "I'm becoming more careful about my privacy online. I recently reviewed the privacy settings on my social media accounts and made my profile visible only to my friends. I also try to avoid using public Wi-Fi for sensitive transactions like online banking. It's important to be aware of how much personal information we share online.",
+        "question": "What is one step the writer has taken to protect his online privacy?",
+        "options": {
+            "A": "He deleted all his social media accounts.",
+            "B": "He stopped using the internet completely.",
+            "C": "He changed his password to something simple.",
+            "D": "He limited who can see his social media profile."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'made my profile visible only to my friends'라고 자신의 소셜 미디어 프로필을 친구들에게만 보이도록 설정했다고 명시하고 있습니다."
+    },
+    {
+        "id": 65,
+        "passage": "After months of consideration, my family decided to adopt a cat from a local shelter. We chose a quiet, two-year-old cat named Luna. The first few days, she was very shy and hid under the sofa. We gave her space and spoke to her gently. Slowly, she started to trust us. Now, she is a playful and affectionate member of our family. Adopting her was one of the best decisions we've made.",
+        "question": "How did the cat behave when it first arrived?",
+        "options": {
+            "A": "It was very playful and energetic.",
+            "B": "It was aggressive and unfriendly.",
+            "C": "It was shy and hid from the family.",
+            "D": "It ate a lot of food immediately."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'The first few days, she was very shy and hid under the sofa.'라고 처음 며칠 동안 매우 수줍어하며 소파 밑에 숨었다고 설명합니다."
+    },
+    {
+        "id": 66,
+        "passage": "My new neighbor plays loud music late at night, which makes it difficult for me to sleep. I didn't want to cause any trouble, so I tried to ignore it at first. But after a few sleepless nights, I decided I had to do something. I went over yesterday and politely explained the situation. He was very apologetic and said he didn't realize how loud it was. He promised to be more considerate in the future.",
+        "question": "How did the writer solve the problem with his noisy neighbor?",
+        "options": {
+            "A": "He called the police.",
+            "B": "He started playing his own music loudly.",
+            "C": "He spoke to the neighbor in a polite way.",
+            "D": "He decided to move to a new apartment."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I went over yesterday and politely explained the situation.'라고 어제 찾아가서 정중하게 상황을 설명했다고 말합니다."
+    },
+    {
+        "id": 67,
+        "passage": "I'm learning to drive. I'm taking lessons with an instructor twice a week. I've mastered the basics, but I still get nervous in heavy traffic. My instructor says that confidence comes with practice. My driving test is next month, and I'm studying the traffic rules every evening. I'm both excited and scared about the test.",
+        "question": "What part of driving does the writer find most difficult?",
+        "options": {
+            "A": "Starting the car.",
+            "B": "Driving in heavy traffic.",
+            "C": "Parking the car.",
+            "D": "Understanding the traffic rules."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I still get nervous in heavy traffic.'라고 교통 체증이 심할 때 여전히 긴장된다고 언급했습니다."
+    },
+    {
+        "id": 68,
+        "passage": "I love visiting the street market in my city on Saturday mornings. It's full of life and color. You can buy fresh, local vegetables, handmade cheeses, and beautiful flowers. I enjoy talking to the farmers and producers. The prices are often better than in the supermarket, and the quality is excellent. It's a great way to support local businesses.",
+        "question": "According to the writer, what is one advantage of the street market over the supermarket?",
+        "options": {
+            "A": "It is open 24 hours a day.",
+            "B": "It sells more international products.",
+            "C": "The prices and quality are often better.",
+            "D": "It is less crowded."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'The prices are often better than in the supermarket, and the quality is excellent.'라고 가격이 종종 더 좋고 품질도 훌륭하다고 말합니다."
+    },
+    {
+        "id": 69,
+        "passage": "Reading is more than just a hobby for me; it's a way to relax and learn. When I read a good novel, I can escape to a different world and forget about my daily stress. When I read non-fiction, I learn new facts and broaden my understanding of the world. A good book is like a good friend.",
+        "question": "What are the two main benefits of reading for the writer?",
+        "options": {
+            "A": "It helps her to sleep and make friends.",
+            "B": "It is a way to relax and to learn.",
+            "C": "It is a cheap and easy hobby.",
+            "D": "It improves her writing and speaking skills."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'it's a way to relax and learn'이라고 언급하며, 소설을 읽을 때는 스트레스를 잊고, 논픽션을 읽을 때는 새로운 것을 배운다고 설명합니다."
+    },
+    {
+        "id": 70,
+        "passage": "I forgot the password for my online banking account. I tried a few different combinations that I thought were correct, but none of them worked. After three failed attempts, my account was locked for security reasons. I had to call the bank's customer service helpline. They asked me some security questions to verify my identity and then helped me to reset my password. It was a bit of a hassle, but I'm glad their security is so thorough.",
+        "question": "What happened after the writer tried the wrong password several times?",
+        "options": {
+            "A": "The website suggested a new password.",
+            "B": "His computer shut down automatically.",
+            "C": "His account was locked for security.",
+            "D": "He received an email with the correct password."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'After three failed attempts, my account was locked for security reasons.'라고 세 번의 실패 후 보안상의 이유로 계정이 잠겼다고 명시되어 있습니다."
+    },
+    {
+        "id": 71,
+        "passage": "My brother's 30th birthday is next month, and I'm planning a surprise party for him. I've created a secret group chat with his friends to coordinate everything. I've booked his favorite restaurant and I'm going to order a special cake. The hardest part is keeping it a secret from him, as we live together. I have to be very careful not to say anything by mistake.",
+        "question": "What does the writer think is the most difficult part of the plan?",
+        "options": {
+            "A": "Booking the restaurant.",
+            "B": "Inviting all the friends.",
+            "C": "Keeping the party a secret from her brother.",
+            "D": "Choosing a birthday cake."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'The hardest part is keeping it a secret from him'이라고 가장 어려운 부분은 그에게 비밀을 지키는 것이라고 명확하게 말합니다."
+    },
+    {
+        "id": 72,
+        "passage": "We had a power cut in our neighborhood last night. It happened suddenly around 8 p.m. All the lights went out, and the TV and Wi-Fi stopped working. It was strange to have the house in complete darkness and silence. My family and I lit some candles and sat in the living room, just talking. It was actually quite nice to be disconnected from technology and spend some quality time together. The power came back on after about two hours.",
+        "question": "What was an unexpected positive outcome of the power cut?",
+        "options": {
+            "A": "They could watch a movie they had downloaded.",
+            "B": "They went to bed earlier than usual.",
+            "C": "They spent quality time talking as a family.",
+            "D": "They finished their work on their laptops."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'It was actually quite nice to be disconnected from technology and spend some quality time together.'라고 기술과 단절되어 함께 좋은 시간을 보낸 것이 꽤 좋았다고 언급합니다."
+    },
+    {
+        "id": 73,
+        "passage": "I decided to do a 'digital detox' last weekend. This meant no smartphone, no laptop, and no social media for two whole days. On Saturday, I went for a long walk in the park and read a book. On Sunday, I cooked a nice meal and met up with a friend for coffee. I realized how much time I usually spend staring at screens. I felt much more relaxed and present in the moment. I'm going to try to do it once a month.",
+        "question": "What did the writer avoid during his 'digital detox'?",
+        "options": {
+            "A": "Talking to other people.",
+            "B": "Going outside.",
+            "C": "Using electronic devices like his phone and laptop.",
+            "D": "Eating cooked meals."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'This meant no smartphone, no laptop, and no social media'라고 스마트폰, 노트북, 소셜 미디어를 사용하지 않는 것을 의미한다고 명확히 설명합니다."
+    },
+    {
+        "id": 74,
+        "passage": "I had a dental check-up yesterday. I'm always a bit nervous about going to the dentist, but I know it's important for my health. The dentist was very friendly and explained everything she was doing. Luckily, everything was fine, and I just needed a routine cleaning. She reminded me about the importance of flossing daily. I felt relieved when I left.",
+        "question": "What was the result of the writer's dental visit?",
+        "options": {
+            "A": "He needed to have a tooth removed.",
+            "B": "He had to make another appointment for a filling.",
+            "C": "He only needed a regular cleaning.",
+            "D": "The dentist told him to stop brushing his teeth."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'Luckily, everything was fine, and I just needed a routine cleaning.'이라고 다행히 모든 것이 괜찮았고 정기적인 스케일링만 필요했다고 말합니다."
+    },
+    {
+        "id": 75,
+        "passage": "I used to think that sleeping was a waste of time, so I would often stay up late to study or watch movies. As a result, I was always tired during the day and found it hard to concentrate. I've recently started making sure I get at least seven hours of sleep per night. The difference is amazing. I have more energy, I can focus better at work, and I'm in a much better mood.",
+        "question": "What has the writer learned about the importance of sleep?",
+        "options": {
+            "A": "Sleeping less helps him to be more productive.",
+            "B": "Getting enough sleep has improved his energy and concentration.",
+            "C": "Watching movies is a good way to relax before bed.",
+            "D": "Five hours of sleep is enough for most people."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 충분한 수면을 취하기 시작한 후 'I have more energy, I can focus better at work, and I'm in a much better mood.'라고 에너지, 집중력, 기분이 좋아졌다고 설명합니다."
+    },
+    {
+        "id": 76,
+        "passage": "I lost my wallet yesterday while I was out shopping. I didn't realize it was gone until I got home. I was very worried because it had my credit cards and ID in it. I went back to all the shops I had visited, but no one had seen it. This morning, I got a call from a woman who had found it on the street. Nothing was missing. I was so grateful and relieved. It restored my faith in the kindness of strangers.",
+        "question": "How did the writer get his wallet back?",
+        "options": {
+            "A": "He found it in one of the shops.",
+            "B": "The police contacted him.",
+            "C": "A person who found it on the street called him.",
+            "D": "He remembered he had left it at home."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I got a call from a woman who had found it on the street.'라고 길에서 지갑을 주운 여성에게서 전화를 받았다고 명시되어 있습니다."
+    },
+    {
+        "id": 77,
+        "passage": "Moving to a new city for my job was a big change. For the first few months, I felt quite lonely as I didn't know anyone. I decided to make an effort to be more social. I joined a local hiking club and a language class. It was a great way to meet people who share similar interests. I've made some good friends now, and the city is starting to feel like home.",
+        "question": "What did the writer do to stop feeling lonely in the new city?",
+        "options": {
+            "A": "He spent more time working.",
+            "B": "He moved back to his old town.",
+            "C": "He frequently called his old friends.",
+            "D": "He joined some local clubs and classes to meet people."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'I joined a local hiking club and a language class.'라고 지역 하이킹 클럽과 어학 수업에 참여하여 비슷한 관심사를 가진 사람들을 만났다고 설명합니다."
+    },
+    {
+        "id": 78,
+        "passage": "I had a job interview this morning for a position I'm really excited about. I spent the last few days researching the company and preparing answers to common interview questions. I think the interview went quite well. The interviewers were friendly, and I felt I was able to communicate my skills and experience effectively. They said they would let me know their decision by the end of the week. Now, all I can do is wait and hope for the best.",
+        "question": "How does the writer feel about his job interview?",
+        "options": {
+            "A": "He thinks he performed poorly.",
+            "B": "He is not interested in the job anymore.",
+            "C": "He feels that it went well and is hopeful.",
+            "D": "He is certain that he will get the job."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I think the interview went quite well.'이라고 인터뷰가 꽤 잘 진행되었다고 생각하며, 좋은 결과를 기다리고 희망하고 있다고 말합니다."
+    },
+    {
+        "id": 79,
+        "passage": "My friends and I went to see a new superhero movie that everyone has been talking about. We were all very excited. However, I found it quite disappointing. The plot was very predictable, and the special effects weren't as impressive as I had expected. My friends seemed to enjoy it, but I thought it was just another generic action movie.",
+        "question": "What was the writer's opinion of the movie?",
+        "options": {
+            "A": "He thought it was the best movie of the year.",
+            "B": "He found it predictable and not very impressive.",
+            "C": "He enjoyed it as much as his friends did.",
+            "D": "He thought the plot was very original."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I found it quite disappointing.'라고 말하며, 'The plot was very predictable'하고 특수 효과도 기대에 미치지 못했다고 구체적으로 설명합니다."
+    },
+    {
+        "id": 80,
+        "passage": "I've started a new morning routine, and it has made a big difference to my day. I wake up 30 minutes earlier than before. I spend about 15 minutes doing some light stretching and meditation, and then I enjoy a cup of coffee while reading the news. This quiet time helps me to start the day feeling calm and prepared, instead of rushing out the door in a panic.",
+        "question": "What is the main benefit of the writer's new morning routine?",
+        "options": {
+            "A": "It allows him to sleep more.",
+            "B": "It helps him start the day in a calm and prepared way.",
+            "C": "It gives him more time to watch TV.",
+            "D": "It helps him to get to work earlier."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'This quiet time helps me to start the day feeling calm and prepared'라고 이 조용한 시간이 차분하고 준비된 상태로 하루를 시작하는 데 도움이 된다고 말합니다."
+    },
+    {
+        "id": 81,
+        "passage": "Yesterday, I visited the city's botanical garden for the first time. I was amazed by the variety of plants and flowers from all over the world. There was a huge glasshouse with tropical plants and a beautiful Japanese garden with a pond. It was so peaceful to walk around and enjoy the nature. It's a perfect place to escape the noise and stress of the city.",
+        "question": "What did the writer like most about the botanical garden?",
+        "options": {
+            "A": "The crowded and lively atmosphere.",
+            "B": "The modern architecture of the buildings.",
+            "C": "The opportunity to buy rare plants.",
+            "D": "The peaceful atmosphere and variety of plants."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'I was amazed by the variety of plants and flowers'와 'It was so peaceful to walk around'라고 언급하며, 식물의 다양성과 평화로운 분위기를 즐겼음을 알 수 있습니다."
+    },
+    {
+        "id": 82,
+        "passage": "I have a colleague at work who is often very negative. He complains about everything - the company, the managers, the coffee. It can be very draining to be around that kind of energy. I try to be polite but I also try to limit my interactions with him. I prefer to focus on the positive aspects of my job and stay motivated.",
+        "question": "What is the writer's main problem with his colleague?",
+        "options": {
+            "A": "The colleague is too competitive.",
+            "B": "The colleague has a very negative attitude.",
+            "C": "The colleague doesn't do his share of the work.",
+            "D": "The colleague talks too loudly on the phone."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I have a colleague at work who is often very negative. He complains about everything'이라고 동료가 매우 부정적이며 모든 것에 대해 불평한다고 설명합니다."
+    },
+    {
+        "id": 83,
+        "passage": "I'm trying to learn how to play the guitar. I bought one a few months ago and I've been watching online tutorials. It's much harder than I thought. My fingers hurt from pressing the strings, and it's difficult to switch between chords smoothly. But when I manage to play a short piece of a song correctly, it feels amazing. I know I just need to be patient and keep practicing.",
+        "question": "What is one of the challenges the writer is facing while learning the guitar?",
+        "options": {
+            "A": "The guitar was too expensive.",
+            "B": "He can't find any good online tutorials.",
+            "C": "His fingers hurt and changing chords is difficult.",
+            "D": "He doesn't have time to practice."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'My fingers hurt from pressing the strings, and it's difficult to switch between chords smoothly.'라고 손가락이 아프고 코드 전환이 어렵다고 명시하고 있습니다."
+    },
+    {
+        "id": 84,
+        "passage": "My neighborhood has an annual street fair in the summer. The main road is closed to traffic, and it's filled with food stalls, craft vendors, and games for kids. There's a real sense of community as everyone comes out to enjoy the day. My favorite part is the dog show, where local residents show off their pets. It's a simple, happy event that I look forward to every year.",
+        "question": "What happens on the main road during the street fair?",
+        "options": {
+            "A": "There is a big sports competition.",
+            "B": "It is closed to cars and filled with stalls and activities.",
+            "C": "There is a parade with professional performers.",
+            "D": "It is used for extra parking space."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'The main road is closed to traffic, and it's filled with food stalls, craft vendors, and games for kids.'라고 주요 도로가 차량 통제되고 음식 가판대 등으로 채워진다고 설명합니다."
+    },
+    {
+        "id": 85,
+        "passage": "I have a complicated relationship with social media. On one hand, it's a great way to stay in touch with friends and family who live far away. On the other hand, I find that I spend too much time scrolling through feeds, and it can sometimes make me feel like my own life is not as exciting as others'. I'm trying to find a healthier balance and use it more mindfully.",
+        "question": "What is one negative effect of social media that the writer mentions?",
+        "options": {
+            "A": "It is very expensive to use.",
+            "B": "It can make him feel that his life is less exciting than others'.",
+            "C": "It is difficult to connect with friends.",
+            "D": "It doesn't have enough interesting content."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'it can sometimes make me feel like my own life is not as exciting as others'.'라고 때때로 자신의 삶이 다른 사람들만큼 흥미롭지 않다고 느끼게 만들 수 있다고 말합니다."
+    },
+    {
+        "id": 86,
+        "passage": "For my last birthday, my grandmother gave me a very special gift. It was a photo album that she had made herself. It was filled with pictures of me from when I was a baby until now. She had written little notes next to each photo, sharing memories. It's not an expensive gift, but it's the most thoughtful and meaningful present I have ever received.",
+        "question": "Why was the gift from the writer's grandmother so special?",
+        "options": {
+            "A": "Because it was very expensive.",
+            "B": "Because it was a brand new camera.",
+            "C": "Because it was a personal and thoughtful collection of memories.",
+            "D": "Because it was a surprise trip to another country."
+        },
+        "answer": "C",
+        "explanation_ko": "지문은 그 선물이 할머니가 직접 만든 사진 앨범이며, 사진 옆에 추억이 담긴 메모가 적혀 있어 'thoughtful and meaningful'하다고 설명합니다."
+    },
+    {
+        "id": 87,
+        "passage": "My partner and I decided to paint our kitchen ourselves to save money. We thought it would be an easy weekend job. We were wrong. Preparing the walls took much longer than we expected, and we accidentally spilled some paint on the floor. It was a stressful experience, and the final result is not perfect, but we feel proud that we did it ourselves. Next time, however, we might hire a professional.",
+        "question": "What was the writer's experience of painting the kitchen?",
+        "options": {
+            "A": "It was quick, easy, and perfectly done.",
+            "B": "They hired a professional who did a great job.",
+            "C": "It was more difficult and stressful than they had expected.",
+            "D": "They decided not to paint the kitchen after all."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'We thought it would be an easy weekend job. We were wrong.'라고 말하며, 예상보다 오래 걸리고 스트레스가 많은 경험이었다고 묘사합니다."
+    },
+    {
+        "id": 88,
+        "passage": "I've been going to a yoga class for about six months. It's not just about physical exercise; it's also about calming the mind. The breathing exercises help me to feel less stressed. Physically, I feel much more flexible and my back pain has improved. It's a great way to take care of both my body and mind.",
+        "question": "Besides the physical benefits, what else does the writer gain from yoga?",
+        "options": {
+            "A": "He has lost a lot of weight.",
+            "B": "He has made many new friends.",
+            "C": "It helps him to feel calmer and less stressed.",
+            "D": "He is now qualified to be a yoga teacher."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'it's also about calming the mind'와 'The breathing exercises help me to feel less stressed.'라고 언급하며, 요가가 스트레스를 줄이고 마음을 진정시키는 데 도움이 된다고 말합니다."
+    },
+    {
+        "id": 89,
+        "passage": "I was in a cafe yesterday and I saw a man who looked exactly like a famous actor. I was too shy to go and talk to him, so I discreetly took a photo to show my friends. Later, I looked at the actor's social media and saw that he was in a different country that day. It was just someone who looked very similar. I felt a bit silly, but it was a funny story to tell my friends.",
+        "question": "Why did the writer feel silly?",
+        "options": {
+            "A": "Because her phone's camera didn't work.",
+            "B": "Because the man she saw was not the famous actor.",
+            "C": "Because the actor was rude to her.",
+            "D": "Because her friends didn't believe her story."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 배우가 다른 나라에 있었다는 것을 알게 된 후, 그 남자가 매우 닮은 사람이었을 뿐이라는 것을 깨달았다고 설명합니다. 이로 인해 그녀는 'a bit silly'하다고 느꼈습니다."
+    },
+    {
+        "id": 90,
+        "passage": "Last summer, my friends and I rented a small cabin in the mountains for a week. We spent our days hiking and exploring the beautiful scenery. In the evenings, we cooked together and played board games. There was no Wi-Fi or phone signal, which was strange at first, but it was great to disconnect and just enjoy each other's company. It was one of the most relaxing holidays I've ever had.",
+        "question": "What was a key feature of the holiday cabin?",
+        "options": {
+            "A": "It was in the center of a busy town.",
+            "B": "It had a very fast internet connection.",
+            "C": "It was a luxury hotel with a swimming pool.",
+            "D": "It had no internet or phone service."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'There was no Wi-Fi or phone signal'이라고 와이파이나 전화 신호가 없었다고 명시하고 있습니다."
+    },
+    {
+        "id": 91,
+        "passage": "I was supposed to fly to Berlin for a business meeting tomorrow. However, this morning my boss called me to say the meeting has been postponed for two weeks. I had already packed my suitcase and arranged for a taxi to the airport. It's a bit inconvenient to change all my plans, but on the bright side, it gives me more time to prepare for the meeting.",
+        "question": "Why did the writer's travel plans change?",
+        "options": {
+            "A": "He missed his flight.",
+            "B": "The airline cancelled the flight.",
+            "C": "His business meeting was moved to a later date.",
+            "D": "He decided he didn't want to go anymore."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'my boss called me to say the meeting has been postponed for two weeks.'라고 상사가 회의가 2주 연기되었다고 말했다고 설명합니다."
+    },
+    {
+        "id": 92,
+        "passage": "My first job was working in a bookshop during the summer holidays when I was 17. I was responsible for putting books on the shelves and helping customers. I was very nervous at first, but my manager was very kind and patient. I learned a lot about responsibility and how to talk to different kinds of people. It wasn't well-paid, but it was a valuable experience.",
+        "question": "What did the writer learn from his first job?",
+        "options": {
+            "A": "How to manage a shop's finances.",
+            "B": "How to be responsible and communicate with people.",
+            "C": "That he wanted to own a bookshop one day.",
+            "D": "That working is not enjoyable."
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 'I learned a lot about responsibility and how to talk to different kinds of people.'라고 책임감과 다양한 종류의 사람들과 대화하는 법에 대해 많이 배웠다고 말합니다."
+    },
+    {
+        "id": 93,
+        "passage": "Our family went to the science museum last weekend. It was much more fun than I expected. There were lots of interactive exhibits where you could press buttons and conduct small experiments. My kids particularly enjoyed the section about space, with a model of the solar system. It was a great way to learn about science in a hands-on way, for both children and adults.",
+        "question": "What made the science museum fun for the writer's family?",
+        "options": {
+            "A": "It was very quiet and peaceful.",
+            "B": "The tickets were free.",
+            "C": "There were many interactive, hands-on exhibits.",
+            "D": "They saw a famous scientist there."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'There were lots of interactive exhibits'와 'a great way to learn about science in a hands-on way'라고 언급하며, 상호작용적인 체험 전시가 재미있었다고 설명합니다."
+    },
+    {
+        "id": 94,
+        "passage": "I'm taking an online course in graphic design. The main advantage is the flexibility; I can study whenever I have free time. However, I sometimes miss the experience of a real classroom. It's harder to ask the teacher a quick question, and I don't have the chance to discuss ideas with other students. It requires a lot of self-discipline to stay on track.",
+        "question": "What is one disadvantage of the online course for the writer?",
+        "options": {
+            "A": "It is more expensive than a traditional course.",
+            "B": "The course material is not very good.",
+            "C": "It is difficult to get a qualification.",
+            "D": "There is a lack of interaction with the teacher and students."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 'I sometimes miss the experience of a real classroom'이라고 말하며, 선생님에게 질문하거나 다른 학생들과 토론할 기회가 없는 것을 단점으로 꼽습니다."
+    },
+    {
+        "id": 95,
+        "passage": "I still remember my high school history teacher, Mr. Evans. He didn't just make us memorize dates and names. He told history like a series of fascinating stories, which made the subject come alive. He encouraged us to ask questions and think critically about the past. He had a real passion for his subject, and that passion was infectious. He is the reason I decided to study history at university.",
+        "question": "What made Mr. Evans a memorable teacher?",
+        "options": {
+            "A": "He gave very easy exams.",
+            "B": "He had a passionate and engaging way of teaching.",
+            "C": "He often cancelled his classes.",
+            "D": "He only taught about recent history."
+        },
+        "answer": "B",
+        "explanation_ko": "지문은 그가 역사를 'fascinating stories'처럼 가르쳤고, 'real passion for his subject'를 가지고 있었다고 설명하며, 그의 가르치는 방식이 열정적이고 매력적이었음을 보여줍니다."
+    },
+    {
+        "id": 96,
+        "passage": "My best friend moved to Australia two years ago. It's been hard being so far apart. We try to have a video call every week, but the time difference makes it difficult to schedule. We send each other messages and photos, but it's not the same as meeting for a coffee and a chat. Despite the distance, we are still very close, but it requires effort from both of us.",
+        "question": "What is the main challenge in the writer's long-distance friendship?",
+        "options": {
+            "A": "The cost of international phone calls.",
+            "B": "They have nothing to talk about anymore.",
+            "C": "The time difference makes it hard to communicate.",
+            "D": "They don't like using technology."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'the time difference makes it difficult to schedule'라고 시차 때문에 (영상 통화) 일정을 잡기 어렵다고 명확하게 언급합니다."
+    },
+    {
+        "id": 97,
+        "passage": "On my last holiday, the airline lost my luggage. I arrived in Rome, but my suitcase didn't. I had to spend the first two days of my trip wearing the same clothes and buying essential things like a toothbrush. The airline staff were helpful, and they finally delivered my suitcase to my hotel on the third day. It was a stressful start to the holiday, but I didn't let it ruin my trip.",
+        "question": "What problem did the writer have at the beginning of his holiday?",
+        "options": {
+            "A": "He lost his passport.",
+            "B": "His luggage was lost by the airline.",
+            "C": "His hotel reservation was cancelled.",
+            "D": "He missed his flight to Rome."
+        },
+        "answer": "B",
+        "explanation_ko": "지문 첫 문장에서 'the airline lost my luggage.'라고 항공사가 그의 짐을 분실했다고 명시하고 있습니다."
+    },
+    {
+        "id": 98,
+        "passage": "I've recently discovered the joy of birdwatching. I bought a pair of binoculars and a guidebook. I just sit in my local park and try to identify the different birds I see. It's a very calm and peaceful hobby. It has taught me to be more patient and observant. I get genuinely excited when I spot a bird that I haven't seen before.",
+        "question": "What does the writer need for his new hobby?",
+        "options": {
+            "A": "A camera and a large lens.",
+            "B": "A special permit for the park.",
+            "C": "Binoculars and a guidebook.",
+            "D": "A pet bird of his own."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'I bought a pair of binoculars and a guidebook.'라고 쌍안경과 안내서를 샀다고 명확하게 말합니다."
+    },
+    {
+        "id": 99,
+        "passage": "I was having a really bad day yesterday. I missed my bus, I was late for work, and I had a headache. In the afternoon, I went to a coffee shop. When I went to pay, the person in front of me in the queue had already paid for my coffee. He just smiled and said, 'Pass it on.' This small act of kindness from a stranger completely changed my mood. It was a lovely reminder that there is a lot of good in the world.",
+        "question": "What happened at the coffee shop?",
+        "options": {
+            "A": "The writer spilled his coffee.",
+            "B": "The coffee shop gave him the wrong order.",
+            "C": "A stranger paid for his coffee.",
+            "D": "The writer forgot his wallet."
+        },
+        "answer": "C",
+        "explanation_ko": "지문에서 'the person in front of me in the queue had already paid for my coffee.'라고 줄에서 앞에 있던 사람이 이미 그의 커피 값을 지불했다고 설명합니다."
+    },
+    {
+        "id": 100,
+        "passage": "I recently found an old certificate from a swimming competition I won when I was ten. I remember being so proud of that achievement. I had practiced for months, getting up early before school to go to the pool. It wasn't just about winning; it was about setting a goal and working hard to achieve it. Looking at the certificate reminded me that with dedication, I can achieve things that seem difficult at first.",
+        "question": "What did the old certificate remind the writer of?",
+        "options": {
+            "A": "That he used to be a professional swimmer.",
+            "B": "A funny memory with his school friends.",
+            "C": "That he doesn't enjoy swimming anymore.",
+            "D": "The value of hard work and dedication to achieve a goal."
+        },
+        "answer": "D",
+        "explanation_ko": "지문에서 그것이 'about setting a goal and working hard to achieve it'에 관한 것이었으며, 헌신을 통해 어려운 일을 성취할 수 있다는 것을 상기시켜 주었다고 말합니다."
+    }
+]

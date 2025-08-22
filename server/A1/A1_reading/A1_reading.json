@@ -1,0 +1,1202 @@
+[
+  {
+    "id": 1,
+    "passage": "My name is John. I am a student. I have a cat. My cat's name is Tom. Tom is black and white. He likes to play with a ball.",
+    "question": "What is the cat's name?",
+    "options": {
+      "A": "John",
+      "B": "Tom",
+      "C": "A ball"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My cat's name is Tom.'이라고 명시되어 있으므로, 고양이의 이름은 Tom입니다."
+  },
+  {
+    "id": 2,
+    "passage": "This is my family. My father is a doctor. My mother is a teacher. I have one sister. Her name is Lisa. We live in a big house.",
+    "question": "What is the mother's job?",
+    "options": {
+      "A": "Doctor",
+      "B": "Student",
+      "C": "Teacher"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My mother is a teacher.'라고 엄마의 직업이 선생님이라고 나와 있습니다."
+  },
+  {
+    "id": 3,
+    "passage": "I like apples. Apples are red. I eat an apple every day. My friend, Jane, likes bananas. Bananas are yellow.",
+    "question": "What color are bananas?",
+    "options": {
+      "A": "Red",
+      "B": "Yellow",
+      "C": "Green"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'Bananas are yellow.'에서 바나나는 노란색이라고 말하고 있습니다."
+  },
+  {
+    "id": 4,
+    "passage": "Today is Monday. I go to school from Monday to Friday. I don't go to school on Saturday and Sunday. I play with my friends on the weekend.",
+    "question": "When does he go to school?",
+    "options": {
+      "A": "Every day",
+      "B": "On the weekend",
+      "C": "From Monday to Friday"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I go to school from Monday to Friday.'라고 월요일부터 금요일까지 학교에 간다고 했습니다."
+  },
+  {
+    "id": 5,
+    "passage": "I have a blue bag. In my bag, I have three books, a pencil, and an eraser. The books are for my English class.",
+    "question": "How many books are in the bag?",
+    "options": {
+      "A": "One",
+      "B": "Two",
+      "C": "Three"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I have three books'라고 가방 안에 책이 세 권 있다고 명시되어 있습니다."
+  },
+  {
+    "id": 6,
+    "passage": "My favorite season is summer. It is hot and sunny. I go to the beach with my family. We swim in the sea.",
+    "question": "What does he do in the summer?",
+    "options": {
+      "A": "Go to the mountains",
+      "B": "Go to the beach",
+      "C": "Play in the snow"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I go to the beach with my family.'라고 여름에 가족과 함께 해변에 간다고 했습니다."
+  },
+  {
+    "id": 7,
+    "passage": "This is a picture of my room. There is a bed, a desk, and a chair. My computer is on the desk. My clothes are in the closet.",
+    "question": "Where is the computer?",
+    "options": {
+      "A": "On the bed",
+      "B": "In the closet",
+      "C": "On the desk"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My computer is on the desk.'라고 컴퓨터가 책상 위에 있다고 나와 있습니다."
+  },
+  {
+    "id": 8,
+    "passage": "I can play the piano. I practice every day after school. My sister can sing very well. We like music.",
+    "question": "What can his sister do?",
+    "options": {
+      "A": "Play the piano",
+      "B": "Sing",
+      "C": "Draw pictures"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My sister can sing very well.'이라고 여동생은 노래를 매우 잘한다고 했습니다."
+  },
+  {
+    "id": 9,
+    "passage": "I am hungry. I want to eat a sandwich and a salad for lunch. For a drink, I want some orange juice.",
+    "question": "What does he want to drink?",
+    "options": {
+      "A": "Water",
+      "B": "Orange juice",
+      "C": "Milk"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I want some orange juice.'라고 마실 것으로 오렌지 주스를 원한다고 했습니다."
+  },
+  {
+    "id": 10,
+    "passage": "My birthday is in May. I will have a party. My friends will come to my house. We will eat cake and play games.",
+    "question": "When is his birthday?",
+    "options": {
+      "A": "In April",
+      "B": "In May",
+      "C": "In June"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'My birthday is in May.'에서 생일이 5월이라고 말하고 있습니다."
+  },
+  {
+    "id": 11,
+    "passage": "I live in London. London is a big city. There are many buses and cars. I go to work by bus.",
+    "question": "How does he go to work?",
+    "options": {
+      "A": "By car",
+      "B": "By train",
+      "C": "By bus"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 마지막 문장 'I go to work by bus.'에서 버스를 타고 출근한다고 했습니다."
+  },
+  {
+    "id": 12,
+    "passage": "This is my dog, Max. He is small and brown. He has long ears. He likes to run in the park.",
+    "question": "What color is the dog?",
+    "options": {
+      "A": "Black",
+      "B": "White",
+      "C": "Brown"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'He is small and brown.'이라고 개가 갈색이라고 묘사하고 있습니다."
+  },
+  {
+    "id": 13,
+    "passage": "I get up at 7 o'clock every morning. I wash my face and brush my teeth. Then, I have breakfast. I eat bread and drink milk.",
+    "question": "What time does he get up?",
+    "options": {
+      "A": "6 o'clock",
+      "B": "7 o'clock",
+      "C": "8 o'clock"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'I get up at 7 o'clock every morning.'에서 매일 아침 7시에 일어난다고 했습니다."
+  },
+  {
+    "id": 14,
+    "passage": "My favorite color is green. I have a green shirt and a green hat. My room is also painted green.",
+    "question": "What is his favorite color?",
+    "options": {
+      "A": "Blue",
+      "B": "Red",
+      "C": "Green"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장 'My favorite color is green.'에서 가장 좋아하는 색이 초록색이라고 말하고 있습니다."
+  },
+  {
+    "id": 15,
+    "passage": "I am wearing a red T-shirt and blue jeans today. It is sunny, so I am also wearing sunglasses.",
+    "question": "What is he wearing on his legs?",
+    "options": {
+      "A": "A red T-shirt",
+      "B": "Blue jeans",
+      "C": "Sunglasses"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am wearing a red T-shirt and blue jeans today.'라고 파란색 청바지를 입고 있다고 했습니다."
+  },
+  {
+    "id": 16,
+    "passage": "There is a supermarket near my house. I go there to buy food. I buy milk, eggs, and vegetables.",
+    "question": "What does he buy at the supermarket?",
+    "options": {
+      "A": "Clothes",
+      "B": "Books",
+      "C": "Food"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I go there to buy food.'라고 음식을 사러 슈퍼마켓에 간다고 했습니다."
+  },
+  {
+    "id": 17,
+    "passage": "I can speak two languages: English and Spanish. I am from Spain. I am learning French now.",
+    "question": "Where is he from?",
+    "options": {
+      "A": "England",
+      "B": "Spain",
+      "C": "France"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am from Spain.'이라고 스페인 출신이라고 말하고 있습니다."
+  },
+  {
+    "id": 18,
+    "passage": "I like watching movies. My favorite movie is 'Toy Story'. It's a movie about toys. It is very fun.",
+    "question": "What is his favorite movie?",
+    "options": {
+      "A": "A book about toys",
+      "B": "Toy Story",
+      "C": "A fun game"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My favorite movie is 'Toy Story'.'라고 가장 좋아하는 영화가 '토이 스토리'라고 했습니다."
+  },
+  {
+    "id": 19,
+    "passage": "The weather is cold today. It is winter. I am wearing a warm coat, a scarf, and gloves. I like winter because I can play in the snow.",
+    "question": "What season is it?",
+    "options": {
+      "A": "Summer",
+      "B": "Autumn",
+      "C": "Winter"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'It is winter.'라고 현재 계절이 겨울이라고 명시하고 있습니다."
+  },
+  {
+    "id": 20,
+    "passage": "I go to the library on Saturdays. I read many books there. The library is very quiet. I like to read storybooks.",
+    "question": "Where does he go on Saturdays?",
+    "options": {
+      "A": "To the park",
+      "B": "To the library",
+      "C": "To the cinema"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'I go to the library on Saturdays.'에서 토요일마다 도서관에 간다고 했습니다."
+  },
+  {
+    "id": 21,
+    "passage": "My name is Maria. I am 10 years old. I am a student at a primary school. My favorite subject is art.",
+    "question": "How old is Maria?",
+    "options": {
+      "A": "9 years old",
+      "B": "10 years old",
+      "C": "11 years old"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am 10 years old.'라고 마리아가 10살이라고 말하고 있습니다."
+  },
+  {
+    "id": 22,
+    "passage": "This is a photo of my pet rabbit. His name is Fluffy. He is white and has long ears. He likes to eat carrots.",
+    "question": "What does the rabbit like to eat?",
+    "options": {
+      "A": "Apples",
+      "B": "Carrots",
+      "C": "Lettuce"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'He likes to eat carrots.'에서 토끼가 당근을 좋아한다고 했습니다."
+  },
+  {
+    "id": 23,
+    "passage": "I have a new bicycle. It is red. My father gave it to me for my birthday. I ride it to the park every day.",
+    "question": "Who gave him the bicycle?",
+    "options": {
+      "A": "His mother",
+      "B": "His friend",
+      "C": "His father"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My father gave it to me for my birthday.'라고 아빠가 생일 선물로 주셨다고 했습니다."
+  },
+  {
+    "id": 24,
+    "passage": "We are at the zoo. I can see a lion, a monkey, and an elephant. The monkey is eating a banana. The lion is sleeping.",
+    "question": "What is the lion doing?",
+    "options": {
+      "A": "Eating",
+      "B": "Sleeping",
+      "C": "Playing"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'The lion is sleeping.'에서 사자가 잠을 자고 있다고 나와 있습니다."
+  },
+  {
+    "id": 25,
+    "passage": "My school is big. There is a library, a playground, and a music room. I play soccer with my friends on the playground.",
+    "question": "Where does he play soccer?",
+    "options": {
+      "A": "In the library",
+      "B": "On the playground",
+      "C": "In the music room"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'I play soccer with my friends on the playground.'에서 운동장에서 친구들과 축구를 한다고 했습니다."
+  },
+  {
+    "id": 26,
+    "passage": "I help my mother in the kitchen. We make pizza for dinner. I put cheese on the pizza. It is delicious.",
+    "question": "What do they make for dinner?",
+    "options": {
+      "A": "Pasta",
+      "B": "Salad",
+      "C": "Pizza"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'We make pizza for dinner.'라고 저녁으로 피자를 만든다고 했습니다."
+  },
+  {
+    "id": 27,
+    "passage": "It is raining outside. I cannot go to the park. I am at home. I am drawing a picture with my crayons.",
+    "question": "Why can't he go to the park?",
+    "options": {
+      "A": "Because it is sunny.",
+      "B": "Because it is raining.",
+      "C": "Because he is tired."
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'It is raining outside.'와 'I cannot go to the park.'를 통해 비가 와서 공원에 갈 수 없다는 것을 알 수 있습니다."
+  },
+  {
+    "id": 28,
+    "passage": "My grandfather lives on a farm. There are many animals, like cows, chickens, and sheep. I like to feed the chickens.",
+    "question": "Where does his grandfather live?",
+    "options": {
+      "A": "In a city",
+      "B": "On a farm",
+      "C": "By the sea"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'My grandfather lives on a farm.'에서 할아버지가 농장에 사신다고 했습니다."
+  },
+  {
+    "id": 29,
+    "passage": "I am writing an email to my friend, Tom. He lives in Australia. I tell him about my school and my family.",
+    "question": "Who is he writing an email to?",
+    "options": {
+      "A": "His teacher",
+      "B": "His brother",
+      "C": "His friend"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am writing an email to my friend, Tom.'이라고 친구 Tom에게 이메일을 쓰고 있다고 했습니다."
+  },
+  {
+    "id": 30,
+    "passage": "The train station is next to the post office. The bank is opposite the train station. I need to go to the bank to get some money.",
+    "question": "Where is the bank?",
+    "options": {
+      "A": "Next to the post office",
+      "B": "Opposite the train station",
+      "C": "Next to the bank"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'The bank is opposite the train station.'이라고 은행이 기차역 맞은편에 있다고 했습니다."
+  },
+  {
+    "id": 31,
+    "passage": "I have a small garden. I grow flowers and vegetables. I have red roses and yellow sunflowers. I also grow tomatoes.",
+    "question": "What color are the roses?",
+    "options": {
+      "A": "Yellow",
+      "B": "White",
+      "C": "Red"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I have red roses'라고 장미가 빨간색이라고 말하고 있습니다."
+  },
+  {
+    "id": 32,
+    "passage": "My favorite sport is swimming. I go to the swimming pool every Sunday. I can swim very fast. It is good exercise.",
+    "question": "When does he go swimming?",
+    "options": {
+      "A": "Every Saturday",
+      "B": "Every Sunday",
+      "C": "Every day"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I go to the swimming pool every Sunday.'라고 일요일마다 수영장에 간다고 했습니다."
+  },
+  {
+    "id": 33,
+    "passage": "I am at a birthday party. There are many balloons. We are eating birthday cake. The cake has chocolate and strawberries.",
+    "question": "What is on the cake?",
+    "options": {
+      "A": "Bananas and apples",
+      "B": "Chocolate and strawberries",
+      "C": "Cheese and tomatoes"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'The cake has chocolate and strawberries.'에서 케이크에 초콜릿과 딸기가 있다고 했습니다."
+  },
+  {
+    "id": 34,
+    "passage": "This is my teacher, Mrs. Davis. She is very kind. She teaches us English. We read books and play games in her class.",
+    "question": "What subject does Mrs. Davis teach?",
+    "options": {
+      "A": "Math",
+      "B": "English",
+      "C": "Art"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'She teaches us English.'라고 Davis 선생님이 영어를 가르친다고 나와 있습니다."
+  },
+  {
+    "id": 35,
+    "passage": "I am going on holiday to Italy. I will fly in an airplane. I am very excited. I want to eat pasta and pizza in Italy.",
+    "question": "How will he travel to Italy?",
+    "options": {
+      "A": "By train",
+      "B": "By car",
+      "C": "By airplane"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I will fly in an airplane.'이라고 비행기를 타고 갈 것이라고 했습니다."
+  },
+  {
+    "id": 36,
+    "passage": "I have a new phone. It is black. I can use it to call my friends and play games. I like my new phone.",
+    "question": "What can he do with his phone?",
+    "options": {
+      "A": "Read books",
+      "B": "Call friends",
+      "C": "Cook food"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I can use it to call my friends and play games.'라고 친구에게 전화하고 게임을 할 수 있다고 했습니다."
+  },
+  {
+    "id": 37,
+    "passage": "I have a brother. His name is Peter. He is 15 years old. He is taller than me. He likes to play basketball.",
+    "question": "How old is his brother?",
+    "options": {
+      "A": "14 years old",
+      "B": "15 years old",
+      "C": "16 years old"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'He is 15 years old.'라고 그의 형제가 15살이라고 말하고 있습니다."
+  },
+  {
+    "id": 38,
+    "passage": "I am at the market. There are many people. I am buying some fruit. I buy three oranges and five apples.",
+    "question": "How many oranges does he buy?",
+    "options": {
+      "A": "Three",
+      "B": "Four",
+      "C": "Five"
+    },
+    "answer": "A",
+    "explanation_ko": "지문 마지막 문장 'I buy three oranges and five apples.'에서 오렌지를 세 개 산다고 했습니다."
+  },
+  {
+    "id": 39,
+    "passage": "My cat is sleeping on the sofa. She is very cute. Her fur is soft and grey. She likes to sleep all day.",
+    "question": "Where is the cat sleeping?",
+    "options": {
+      "A": "On the bed",
+      "B": "On the floor",
+      "C": "On the sofa"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장 'My cat is sleeping on the sofa.'에서 고양이가 소파에서 자고 있다고 했습니다."
+  },
+  {
+    "id": 40,
+    "passage": "I am watching television. There is a cartoon on TV. It is about a funny mouse and a cat. I laugh a lot.",
+    "question": "What is he watching on TV?",
+    "options": {
+      "A": "The news",
+      "B": "A cartoon",
+      "C": "A sports game"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'There is a cartoon on TV.'라고 TV에서 만화를 보고 있다고 했습니다."
+  },
+  {
+    "id": 41,
+    "passage": "I have a headache. I feel sick. My mother says I should rest in bed. I will not go to school today.",
+    "question": "Why is he not going to school?",
+    "options": {
+      "A": "Because it is a holiday.",
+      "B": "Because he is sick.",
+      "C": "Because he is on vacation."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I have a headache. I feel sick.'라고 아파서 학교에 가지 않을 것이라고 말하고 있습니다."
+  },
+  {
+    "id": 42,
+    "passage": "My favorite animal is a horse. Horses are big and strong. They can run very fast. I want to learn to ride a horse.",
+    "question": "What is his favorite animal?",
+    "options": {
+      "A": "A dog",
+      "B": "A cat",
+      "C": "A horse"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장 'My favorite animal is a horse.'에서 가장 좋아하는 동물이 말이라고 했습니다."
+  },
+  {
+    "id": 43,
+    "passage": "I am at a restaurant with my family. I am eating spaghetti. My father is eating fish. The food is very good.",
+    "question": "What is his father eating?",
+    "options": {
+      "A": "Spaghetti",
+      "B": "Fish",
+      "C": "Pizza"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My father is eating fish.'라고 아빠가 생선을 먹고 있다고 했습니다."
+  },
+  {
+    "id": 44,
+    "passage": "I am cleaning my room. I put my books on the shelf. I put my toys in the box. Now my room is clean.",
+    "question": "Where does he put his toys?",
+    "options": {
+      "A": "On the shelf",
+      "B": "In the box",
+      "C": "Under the bed"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I put my toys in the box.'라고 장난감을 상자 안에 넣는다고 했습니다."
+  },
+  {
+    "id": 45,
+    "passage": "The bus is late. I am waiting at the bus stop. It is cold. I want to go home.",
+    "question": "Where is he waiting?",
+    "options": {
+      "A": "At the train station",
+      "B": "At the bus stop",
+      "C": "At school"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am waiting at the bus stop.'이라고 버스 정류장에서 기다리고 있다고 했습니다."
+  },
+  {
+    "id": 46,
+    "passage": "I am learning to cook. Today, I am making a cake with my grandmother. We need flour, sugar, eggs, and milk.",
+    "question": "What is he making?",
+    "options": {
+      "A": "A salad",
+      "B": "A cake",
+      "C": "A sandwich"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'Today, I am making a cake'라고 케이크를 만들고 있다고 했습니다."
+  },
+  {
+    "id": 47,
+    "passage": "This is a hospital. Doctors and nurses work here. They help sick people. My aunt is a nurse.",
+    "question": "Who works at the hospital?",
+    "options": {
+      "A": "Teachers and students",
+      "B": "Doctors and nurses",
+      "C": "Farmers and animals"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'Doctors and nurses work here.'라고 의사와 간호사가 이곳에서 일한다고 했습니다."
+  },
+  {
+    "id": 48,
+    "passage": "I am on a farm. I can see a big red barn. Inside the barn, there are three cows. The cows are eating hay.",
+    "question": "What is inside the barn?",
+    "options": {
+      "A": "Three horses",
+      "B": "Three sheep",
+      "C": "Three cows"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'Inside the barn, there are three cows.'라고 헛간 안에 소 세 마리가 있다고 했습니다."
+  },
+  {
+    "id": 49,
+    "passage": "I am listening to music. I like pop music. My favorite singer is Taylor Swift. Her songs are great.",
+    "question": "What kind of music does he like?",
+    "options": {
+      "A": "Rock music",
+      "B": "Pop music",
+      "C": "Classical music"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I like pop music.'이라고 팝 음악을 좋아한다고 말하고 있습니다."
+  },
+  {
+    "id": 50,
+    "passage": "I am at the airport. I am going to Paris. My flight is at 10 o'clock. I am with my parents.",
+    "question": "Where is he going?",
+    "options": {
+      "A": "To London",
+      "B": "To Paris",
+      "C": "To Rome"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am going to Paris.'라고 파리에 갈 것이라고 했습니다."
+  },
+  {
+    "id": 51,
+    "passage": "I have a pet fish. Its name is Goldie. It is orange. It lives in a small fishbowl on my desk.",
+    "question": "What is the pet's name?",
+    "options": {
+      "A": "Nemo",
+      "B": "Goldie",
+      "C": "Dory"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'Its name is Goldie.'라고 물고기 이름이 Goldie라고 나와 있습니다."
+  },
+  {
+    "id": 52,
+    "passage": "I am in the park. I am flying a kite. The kite is red and yellow. The wind is strong today.",
+    "question": "What is he doing in the park?",
+    "options": {
+      "A": "Riding a bike",
+      "B": "Flying a kite",
+      "C": "Playing soccer"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am flying a kite.'라고 연을 날리고 있다고 했습니다."
+  },
+  {
+    "id": 53,
+    "passage": "My dad is a firefighter. He wears a big yellow coat and a helmet. He drives a red fire truck. His job is very important.",
+    "question": "What color is the fire truck?",
+    "options": {
+      "A": "Yellow",
+      "B": "Red",
+      "C": "Black"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'He drives a red fire truck.'이라고 빨간 소방차를 운전한다고 했습니다."
+  },
+  {
+    "id": 54,
+    "passage": "I am thirsty. I want to drink a glass of cold water. There is a bottle of water in the fridge.",
+    "question": "What does he want to drink?",
+    "options": {
+      "A": "Hot tea",
+      "B": "Cold water",
+      "C": "Warm milk"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I want to drink a glass of cold water.'라고 차가운 물 한 잔을 마시고 싶다고 했습니다."
+  },
+  {
+    "id": 55,
+    "passage": "I am at a concert. A band is playing music on the stage. Many people are singing and dancing. It is very loud.",
+    "question": "What is the band doing?",
+    "options": {
+      "A": "Talking",
+      "B": "Playing music",
+      "C": "Eating"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'A band is playing music on the stage.'라고 밴드가 무대에서 음악을 연주하고 있다고 했습니다."
+  },
+  {
+    "id": 56,
+    "passage": "I am planting a tree in the garden. I dig a hole. I put the small tree in the hole. Then, I give it water.",
+    "question": "What is he doing in the garden?",
+    "options": {
+      "A": "Playing with a ball",
+      "B": "Reading a book",
+      "C": "Planting a tree"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장 'I am planting a tree in the garden.'에서 정원에 나무를 심고 있다고 했습니다."
+  },
+  {
+    "id": 57,
+    "passage": "My favorite food is ice cream. I like chocolate ice cream the best. I eat it in the summer when it is hot.",
+    "question": "What is his favorite kind of ice cream?",
+    "options": {
+      "A": "Vanilla",
+      "B": "Strawberry",
+      "C": "Chocolate"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I like chocolate ice cream the best.'라고 초콜릿 아이스크림을 가장 좋아한다고 했습니다."
+  },
+  {
+    "id": 58,
+    "passage": "The post office is open from 9 am to 5 pm. I need to send a letter to my grandmother. She lives in another city.",
+    "question": "What time does the post office close?",
+    "options": {
+      "A": "4 pm",
+      "B": "5 pm",
+      "C": "6 pm"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'The post office is open from 9 am to 5 pm.'이라고 우체국이 오후 5시에 문을 닫는다고 나와 있습니다."
+  },
+  {
+    "id": 59,
+    "passage": "I am looking at the stars. It is night. The moon is big and bright. I can see many stars in the sky.",
+    "question": "What is big and bright in the sky?",
+    "options": {
+      "A": "The sun",
+      "B": "A cloud",
+      "C": "The moon"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The moon is big and bright.'라고 달이 크고 밝다고 묘사하고 있습니다."
+  },
+  {
+    "id": 60,
+    "passage": "I am at a museum. There are many old things here. I can see paintings and statues. It is very interesting.",
+    "question": "What can he see at the museum?",
+    "options": {
+      "A": "Animals",
+      "B": "Paintings and statues",
+      "C": "Cars and buses"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I can see paintings and statues.'라고 박물관에서 그림과 조각상을 볼 수 있다고 했습니다."
+  },
+  {
+    "id": 61,
+    "passage": "I am taking a photo of my family. My father is tall. My mother has short hair. My sister is smiling.",
+    "question": "Who has short hair?",
+    "options": {
+      "A": "His father",
+      "B": "His mother",
+      "C": "His sister"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My mother has short hair.'라고 엄마가 짧은 머리를 가지고 있다고 했습니다."
+  },
+  {
+    "id": 62,
+    "passage": "I am on a bus. I am going to the city center. I am sitting next to the window. I can see many buildings.",
+    "question": "Where is he sitting on the bus?",
+    "options": {
+      "A": "Next to the driver",
+      "B": "Next to the window",
+      "C": "At the back"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am sitting next to the window.'라고 창가에 앉아 있다고 했습니다."
+  },
+  {
+    "id": 63,
+    "passage": "I am in a shoe store. I want to buy new shoes for school. I like the black shoes. They are my size.",
+    "question": "What color shoes does he like?",
+    "options": {
+      "A": "White",
+      "B": "Brown",
+      "C": "Black"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I like the black shoes.'라고 검은색 신발이 마음에 든다고 했습니다."
+  },
+  {
+    "id": 64,
+    "passage": "I am making a snowman. It is snowing outside. The snowman has a carrot for a nose. He is wearing my old hat.",
+    "question": "What is the snowman's nose made of?",
+    "options": {
+      "A": "A stone",
+      "B": "A carrot",
+      "C": "A button"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'The snowman has a carrot for a nose.'라고 눈사람 코가 당근으로 만들어졌다고 했습니다."
+  },
+  {
+    "id": 65,
+    "passage": "I am at the beach. I am building a sandcastle. The sand is warm. I can hear the sea.",
+    "question": "What is he building?",
+    "options": {
+      "A": "A house",
+      "B": "A sandcastle",
+      "C": "A boat"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am building a sandcastle.'라고 모래성을 만들고 있다고 했습니다."
+  },
+  {
+    "id": 66,
+    "passage": "I am at the doctor's office. I have a cold. The doctor is checking my ears. He says I need to drink a lot of water.",
+    "question": "What does the doctor say he needs to do?",
+    "options": {
+      "A": "Eat a lot of candy",
+      "B": "Play outside",
+      "C": "Drink a lot of water"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 마지막 문장 'He says I need to drink a lot of water.'에서 의사가 물을 많이 마셔야 한다고 말했습니다."
+  },
+  {
+    "id": 67,
+    "passage": "I am brushing my teeth. I use a toothbrush and toothpaste. I brush my teeth in the morning and at night.",
+    "question": "When does he brush his teeth?",
+    "options": {
+      "A": "Only in the morning",
+      "B": "Only at night",
+      "C": "In the morning and at night"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 마지막 문장 'I brush my teeth in the morning and at night.'에서 아침과 밤에 이를 닦는다고 했습니다."
+  },
+  {
+    "id": 68,
+    "passage": "I am in a taxi. The driver is taking me to the hotel. The taxi is yellow. The hotel is in the city center.",
+    "question": "Where is the taxi driver taking him?",
+    "options": {
+      "A": "To the airport",
+      "B": "To the hotel",
+      "C": "To the train station"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'The driver is taking me to the hotel.'이라고 기사가 호텔로 데려다주고 있다고 했습니다."
+  },
+  {
+    "id": 69,
+    "passage": "I am at a farm. I am milking a cow. The milk is warm. I will drink the fresh milk for breakfast.",
+    "question": "What is he doing at the farm?",
+    "options": {
+      "A": "Feeding a horse",
+      "B": "Milking a cow",
+      "C": "Collecting eggs"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am milking a cow.'라고 소의 젖을 짜고 있다고 했습니다."
+  },
+  {
+    "id": 70,
+    "passage": "I am at a party. It is my friend's birthday. I gave her a present. It is a book. She likes to read.",
+    "question": "What present did he give his friend?",
+    "options": {
+      "A": "A toy",
+      "B": "A book",
+      "C": "A cake"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I gave her a present. It is a book.'라고 선물로 책을 주었다고 했습니다."
+  },
+  {
+    "id": 71,
+    "passage": "I am in the kitchen. I am hungry. I am making a sandwich. I use bread, cheese, and ham.",
+    "question": "What is in his sandwich?",
+    "options": {
+      "A": "Bread, cheese, and ham",
+      "B": "Bread, jam, and butter",
+      "C": "Bread, egg, and tomato"
+    },
+    "answer": "A",
+    "explanation_ko": "지문 마지막 문장 'I use bread, cheese, and ham.'에서 샌드위치에 빵, 치즈, 햄을 사용한다고 했습니다."
+  },
+  {
+    "id": 72,
+    "passage": "I am walking in the forest. There are many tall trees. I can hear birds singing. The air is fresh.",
+    "question": "Where is he walking?",
+    "options": {
+      "A": "In the city",
+      "B": "On the beach",
+      "C": "In the forest"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장 'I am walking in the forest.'에서 숲속을 걷고 있다고 했습니다."
+  },
+  {
+    "id": 73,
+    "passage": "I am at a flower shop. I am buying flowers for my mother. I choose the red roses. They are beautiful.",
+    "question": "Who are the flowers for?",
+    "options": {
+      "A": "His sister",
+      "B": "His grandmother",
+      "C": "His mother"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am buying flowers for my mother.'라고 엄마를 위해 꽃을 사고 있다고 했습니다."
+  },
+  {
+    "id": 74,
+    "passage": "I am at the cinema. I am watching a movie with my friend. We are eating popcorn. The movie is about superheroes.",
+    "question": "What are they eating?",
+    "options": {
+      "A": "Ice cream",
+      "B": "Popcorn",
+      "C": "Chocolate"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'We are eating popcorn.'이라고 팝콘을 먹고 있다고 했습니다."
+  },
+  {
+    "id": 75,
+    "passage": "I am in my bedroom. I am doing my homework. My homework is for my math class. It is difficult.",
+    "question": "What kind of homework is he doing?",
+    "options": {
+      "A": "English homework",
+      "B": "Math homework",
+      "C": "Science homework"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My homework is for my math class.'라고 수학 숙제를 하고 있다고 했습니다."
+  },
+  {
+    "id": 76,
+    "passage": "I am at a cafe. I am drinking a cup of hot chocolate. It is sweet. I am also eating a piece of cake.",
+    "question": "What is he drinking?",
+    "options": {
+      "A": "Coffee",
+      "B": "Hot chocolate",
+      "C": "Tea"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am drinking a cup of hot chocolate.'라고 핫초코 한 잔을 마시고 있다고 했습니다."
+  },
+  {
+    "id": 77,
+    "passage": "I am on a train. I am going to visit my grandparents. They live in a small town. I am looking out the window.",
+    "question": "Who is he going to visit?",
+    "options": {
+      "A": "His friends",
+      "B": "His grandparents",
+      "C": "His aunt and uncle"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am going to visit my grandparents.'라고 조부모님을 뵈러 간다고 했습니다."
+  },
+  {
+    "id": 78,
+    "passage": "I am at the playground. I am on the swing. I am going high up in the air. My friend is on the slide.",
+    "question": "What is his friend on?",
+    "options": {
+      "A": "The swing",
+      "B": "The slide",
+      "C": "The seesaw"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'My friend is on the slide.'에서 친구가 미끄럼틀을 타고 있다고 했습니다."
+  },
+  {
+    "id": 79,
+    "passage": "I am in a music class. I am playing the guitar. The teacher is showing me how to play. I like the sound of the guitar.",
+    "question": "What instrument is he playing?",
+    "options": {
+      "A": "The piano",
+      "B": "The violin",
+      "C": "The guitar"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am playing the guitar.'라고 기타를 연주하고 있다고 했습니다."
+  },
+  {
+    "id": 80,
+    "passage": "I am at a bakery. I can smell fresh bread. I am buying a loaf of bread and two croissants. They are for breakfast.",
+    "question": "What is he buying at the bakery?",
+    "options": {
+      "A": "A cake and cookies",
+      "B": "A loaf of bread and two croissants",
+      "C": "A pie and donuts"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am buying a loaf of bread and two croissants.'라고 빵 한 덩이와 크루아상 두 개를 사고 있다고 했습니다."
+  },
+  {
+    "id": 81,
+    "passage": "I am at home. It is evening. I am having dinner with my family. We are eating rice and chicken.",
+    "question": "What are they eating for dinner?",
+    "options": {
+      "A": "Fish and chips",
+      "B": "Rice and chicken",
+      "C": "Pasta and salad"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'We are eating rice and chicken.'에서 밥과 닭고기를 먹고 있다고 했습니다."
+  },
+  {
+    "id": 82,
+    "passage": "I am at a clothing store. I am trying on a new jacket. It is blue. It fits me well. I will buy it.",
+    "question": "What is he trying on?",
+    "options": {
+      "A": "A new shirt",
+      "B": "New pants",
+      "C": "A new jacket"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am trying on a new jacket.'라고 새 재킷을 입어보고 있다고 했습니다."
+  },
+  {
+    "id": 83,
+    "passage": "I am at a pet shop. There are many animals. I can see puppies, kittens, and birds. I want to buy a kitten.",
+    "question": "What animal does he want to buy?",
+    "options": {
+      "A": "A puppy",
+      "B": "A kitten",
+      "C": "A bird"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'I want to buy a kitten.'에서 새끼 고양이를 사고 싶다고 했습니다."
+  },
+  {
+    "id": 84,
+    "passage": "I am in an art class. I am painting a picture of a house. I am using blue, red, and yellow paint. My teacher likes my picture.",
+    "question": "What is he painting a picture of?",
+    "options": {
+      "A": "A flower",
+      "B": "A house",
+      "C": "A tree"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am painting a picture of a house.'라고 집 그림을 그리고 있다고 했습니다."
+  },
+  {
+    "id": 85,
+    "passage": "I am on a boat. The boat is on a big lake. I can see fish in the water. The weather is sunny and warm.",
+    "question": "Where is the boat?",
+    "options": {
+      "A": "On the river",
+      "B": "On the sea",
+      "C": "On a big lake"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The boat is on a big lake.'라고 보트가 큰 호수 위에 있다고 했습니다."
+  },
+  {
+    "id": 86,
+    "passage": "I am at a sports center. I am playing tennis with my brother. It is a fun game. We play every Saturday.",
+    "question": "What sport is he playing?",
+    "options": {
+      "A": "Basketball",
+      "B": "Tennis",
+      "C": "Soccer"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am playing tennis with my brother.'라고 형과 테니스를 치고 있다고 했습니다."
+  },
+  {
+    "id": 87,
+    "passage": "I am in the living room. I am watching a movie on my laptop. My dog is sleeping next to me. It is a quiet evening.",
+    "question": "What is he watching the movie on?",
+    "options": {
+      "A": "On the TV",
+      "B": "On his laptop",
+      "C": "On his phone"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am watching a movie on my laptop.'이라고 노트북으로 영화를 보고 있다고 했습니다."
+  },
+  {
+    "id": 88,
+    "passage": "I am at a fruit stand. I am buying some strawberries. They are red and sweet. I will eat them for dessert.",
+    "question": "What fruit is he buying?",
+    "options": {
+      "A": "Apples",
+      "B": "Bananas",
+      "C": "Strawberries"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am buying some strawberries.'라고 딸기를 사고 있다고 했습니다."
+  },
+  {
+    "id": 89,
+    "passage": "I am at the train station. I am waiting for the 3 o'clock train to Manchester. The train is on platform 2.",
+    "question": "What time is the train?",
+    "options": {
+      "A": "2 o'clock",
+      "B": "3 o'clock",
+      "C": "4 o'clock"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am waiting for the 3 o'clock train'이라고 3시 기차를 기다리고 있다고 했습니다."
+  },
+  {
+    "id": 90,
+    "passage": "I am in the garden. I am watering the plants. The flowers need water to grow. I have many beautiful flowers.",
+    "question": "What is he doing in the garden?",
+    "options": {
+      "A": "Reading a book",
+      "B": "Watering the plants",
+      "C": "Playing with his dog"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am watering the plants.'라고 식물에 물을 주고 있다고 했습니다."
+  },
+  {
+    "id": 91,
+    "passage": "I am at the dentist. The dentist is checking my teeth. He says my teeth are clean and healthy. I am happy.",
+    "question": "Where is he?",
+    "options": {
+      "A": "At the doctor's",
+      "B": "At the dentist's",
+      "C": "At the hospital"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장 'I am at the dentist.'에서 치과에 있다고 했습니다."
+  },
+  {
+    "id": 92,
+    "passage": "I am at a campsite. I am sitting by a fire. It is warm. I am roasting marshmallows with my friends.",
+    "question": "What is he doing by the fire?",
+    "options": {
+      "A": "Reading a story",
+      "B": "Singing a song",
+      "C": "Roasting marshmallows"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 마지막 문장 'I am roasting marshmallows with my friends.'에서 친구들과 마시멜로를 굽고 있다고 했습니다."
+  },
+  {
+    "id": 93,
+    "passage": "I am in a taxi. I am going to the airport. My flight is in two hours. I have a big suitcase with me.",
+    "question": "How much time does he have before his flight?",
+    "options": {
+      "A": "One hour",
+      "B": "Two hours",
+      "C": "Three hours"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My flight is in two hours.'라고 비행기 출발까지 2시간 남았다고 했습니다."
+  },
+  {
+    "id": 94,
+    "passage": "I am at a party. There is a lot of food. I am eating a slice of pizza. It has cheese and pepperoni on it.",
+    "question": "What is on his pizza?",
+    "options": {
+      "A": "Mushrooms and onions",
+      "B": "Cheese and pepperoni",
+      "C": "Pineapple and ham"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 마지막 문장 'It has cheese and pepperoni on it.'에서 피자에 치즈와 페퍼로니가 있다고 했습니다."
+  },
+  {
+    "id": 95,
+    "passage": "I am on the phone. I am talking to my mother. She is asking about my day. I tell her I am fine.",
+    "question": "Who is he talking to on the phone?",
+    "options": {
+      "A": "His father",
+      "B": "His mother",
+      "C": "His friend"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am talking to my mother.'라고 엄마와 통화하고 있다고 했습니다."
+  },
+  {
+    "id": 96,
+    "passage": "I am at a swimming pool. I am learning how to swim. The water is a little cold. My teacher is helping me.",
+    "question": "What is he learning to do?",
+    "options": {
+      "A": "How to dive",
+      "B": "How to swim",
+      "C": "How to float"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I am learning how to swim.'이라고 수영을 배우고 있다고 했습니다."
+  },
+  {
+    "id": 97,
+    "passage": "I am at a bus stop. The bus is coming. It is the number 5 bus. This bus goes to my school.",
+    "question": "Which bus is he waiting for?",
+    "options": {
+      "A": "The number 4 bus",
+      "B": "The number 5 bus",
+      "C": "The number 6 bus"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'It is the number 5 bus.'라고 5번 버스라고 나와 있습니다."
+  },
+  {
+    "id": 98,
+    "passage": "I am in the library. I am choosing a book to read. I like adventure stories. I found a book about pirates.",
+    "question": "What kind of stories does he like?",
+    "options": {
+      "A": "Funny stories",
+      "B": "Scary stories",
+      "C": "Adventure stories"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I like adventure stories.'라고 모험 이야기를 좋아한다고 했습니다."
+  },
+  {
+    "id": 99,
+    "passage": "I am at a train station. I am buying a ticket. The ticket is for a trip to Oxford. The train leaves in ten minutes.",
+    "question": "Where is the train going?",
+    "options": {
+      "A": "To Cambridge",
+      "B": "To Oxford",
+      "C": "To London"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'The ticket is for a trip to Oxford.'라고 옥스퍼드행 기차표라고 했습니다."
+  },
+  {
+    "id": 100,
+    "passage": "I am at home. I am watching the birds in my garden. There is a small red bird on the tree. It is singing a beautiful song.",
+    "question": "What color is the small bird?",
+    "options": {
+      "A": "Blue",
+      "B": "Yellow",
+      "C": "Red"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'There is a small red bird on the tree.'라고 나무 위에 작은 빨간 새가 있다고 했습니다."
+  }
+]

@@ -28,6 +28,9 @@ import SrsParentFolder from './pages/SrsParentFolder';
 import WrongAnswers from "./pages/WrongAnswers";
 import WrongAnswerQuiz from "./pages/WrongAnswerQuiz";
 import LandingPage from "./pages/LandingPage";
+import Reading from "./pages/Reading";
+import ReadingList from "./pages/ReadingList";
+import ReadingReview from "./pages/ReadingReview";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -260,6 +263,58 @@ export default function App() {
                 <Header />
                 <div className="main-content">
                   <GrammarQuiz />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          
+          {/* Reading 관련 라우트 */}
+          <Route 
+            path="/reading" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <ReadingList />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/reading/practice" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <Reading />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/reading/review" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <ReadingReview />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          
+          {/* Listening 관련 라우트 */}
+          <Route 
+            path="/listening" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <Placeholder title="리스닝 연습" />
                 </div>
                 <Footer />
               </>

@@ -1,0 +1,181 @@
+/* MyWordbook Button Consistency Styles */
+
+/* Auto Folder Button - Match VocabList styling */
+.btn.btn-sm.btn-success,
+.btn.btn-sm.btn-outline-secondary {
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: var(--shadow-sm) !important;
+  text-transform: none !important;
+  position: relative;
+  z-index: 1;
+}
+
+.btn.btn-sm.btn-success:hover,
+.btn.btn-sm.btn-outline-secondary:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.btn.btn-sm.btn-success {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%) !important;
+  border: none !important;
+  color: var(--color-light-cream) !important;
+}
+
+.btn.btn-sm.btn-success:hover {
+  background: var(--color-secondary-dark) !important;
+  color: var(--color-light-cream) !important;
+}
+
+.btn.btn-sm.btn-outline-secondary {
+  color: var(--color-slate) !important;
+  border: 2px solid var(--color-border) !important;
+  background: transparent !important;
+}
+
+.btn.btn-sm.btn-outline-secondary:hover {
+  background: var(--color-secondary-light) !important;
+  border-color: var(--color-secondary) !important;
+  color: var(--color-charcoal) !important;
+}
+
+/* Dropdown Button Styling */
+.btn-group .dropdown-toggle {
+  border-radius: var(--border-radius-md) !important;
+}
+
+.dropdown-menu {
+  border-radius: var(--border-radius-md) !important;
+  border: 2px solid var(--color-primary-light) !important;
+  box-shadow: var(--shadow-lg) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(10px) !important;
+  padding: 0.5rem 0 !important;
+  min-width: 200px;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem !important;
+  font-weight: 500 !important;
+  color: var(--color-charcoal) !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  background: none !important;
+  width: 100% !important;
+  text-align: left !important;
+}
+
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-secondary-light) 100%) !important;
+  color: var(--color-charcoal) !important;
+  transform: translateX(2px) !important;
+}
+
+.dropdown-item:active {
+  background: var(--color-primary) !important;
+  color: var(--color-charcoal) !important;
+}
+
+.dropdown-divider {
+  border-top: 1px solid var(--color-primary-light) !important;
+  margin: 0.25rem 0 !important;
+}
+
+.wordbook-btn {
+  border-radius: var(--border-radius-md) !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+  box-shadow: var(--shadow-sm) !important;
+  text-transform: none !important;
+  min-width: 80px;
+  position: relative;
+  z-index: 1;
+}
+
+.wordbook-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.wordbook-btn:active {
+  transform: translateY(0) !important;
+}
+
+.wordbook-btn.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%) !important;
+  border: none !important;
+  color: var(--color-charcoal) !important;
+}
+
+.wordbook-btn.btn-primary:hover {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-accent) 100%) !important;
+  color: var(--color-charcoal) !important;
+}
+
+.wordbook-btn.btn-success {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-secondary-dark) 100%) !important;
+  border: none !important;
+  color: var(--color-light-cream) !important;
+}
+
+.wordbook-btn.btn-success:hover {
+  background: var(--color-secondary-dark) !important;
+  color: var(--color-light-cream) !important;
+}
+
+.wordbook-btn.btn-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+  border: none !important;
+  color: white !important;
+}
+
+.wordbook-btn.btn-danger:hover {
+  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%) !important;
+  color: white !important;
+}
+
+.wordbook-btn:disabled {
+  opacity: 0.6 !important;
+  transform: none !important;
+  box-shadow: none !important;
+  cursor: not-allowed !important;
+}
+
+/* 버튼 그룹 간격 조정 */
+.d-flex.gap-2.align-items-center {
+  gap: 0.75rem !important;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+  .wordbook-select {
+    min-width: 120px;
+    font-size: 0.875rem;
+  }
+  
+  .wordbook-btn {
+    min-width: 70px;
+    font-size: 0.875rem;
+    padding: 0.375rem 0.75rem;
+  }
+  
+  .d-flex.gap-2.align-items-center {
+    flex-wrap: wrap;
+    gap: 0.5rem !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .d-flex.gap-2.align-items-center {
+    justify-content: center;
+  }
+  
+  .wordbook-select,
+  .wordbook-btn {
+    flex: 1;
+    min-width: auto;
+  }
+}

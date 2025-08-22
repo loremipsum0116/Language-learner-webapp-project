@@ -1,0 +1,1202 @@
+[
+  {
+    "id": 1,
+    "passage": "Yesterday, I went to the city museum with my friend, Sarah. We saw many interesting things, like old paintings and statues from ancient Rome. After we left the museum, we were hungry, so we found a small café and had some sandwiches and coffee. It was a great day.",
+    "question": "Why did they go to a café?",
+    "options": {
+      "A": "Because they were tired.",
+      "B": "Because they were hungry.",
+      "C": "Because they wanted to see paintings."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'we were hungry, so we found a small café'라고 배가 고파서 카페에 갔다고 명시되어 있습니다."
+  },
+  {
+    "id": 2,
+    "passage": "Next summer, my family and I are planning a trip to Japan. We want to visit Tokyo to see the busy city life and then go to Kyoto to see the beautiful temples. I am most excited about trying real Japanese sushi. I have been saving my money for this trip.",
+    "question": "What is the main reason he is excited about the trip?",
+    "options": {
+      "A": "To see busy city life.",
+      "B": "To visit beautiful temples.",
+      "C": "To try Japanese sushi."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I am most excited about trying real Japanese sushi.'라고 일본 스시를 먹어보는 것에 가장 기대가 된다고 말하고 있습니다."
+  },
+  {
+    "id": 3,
+    "passage": "Maria works as a graphic designer. She creates logos and websites for different companies. She usually works from home, which she likes because she can manage her own time. In her free time, she enjoys painting and hiking in the mountains.",
+    "question": "What is a benefit of Maria's job mentioned in the text?",
+    "options": {
+      "A": "She travels to different companies.",
+      "B": "She can manage her own time.",
+      "C": "She gets to go hiking often."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'she likes because she can manage her own time'이라고 자신의 시간을 관리할 수 있는 점을 좋아한다고 언급했습니다."
+  },
+  {
+    "id": 4,
+    "passage": "Last weekend, Tom decided to clean his garage. It was very messy. He found his old bicycle, some books he forgot about, and a box of his childhood toys. He spent the whole Saturday organizing everything. Now, the garage looks clean and tidy.",
+    "question": "What did Tom do last Saturday?",
+    "options": {
+      "A": "He rode his old bicycle.",
+      "B": "He read some books.",
+      "C": "He organized his garage."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'He spent the whole Saturday organizing everything.'이라고 토요일 내내 모든 것을 정리했다고 나와 있습니다."
+  },
+  {
+    "id": 5,
+    "passage": "I am trying to learn how to cook. I watch cooking videos online and follow the recipes. My first dish was spaghetti, and it was quite good. My next challenge is to bake a chocolate cake for my mother's birthday.",
+    "question": "What is he planning to do for his mother's birthday?",
+    "options": {
+      "A": "Make spaghetti for her.",
+      "B": "Buy her a present.",
+      "C": "Bake a chocolate cake."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My next challenge is to bake a chocolate cake for my mother's birthday.'라고 엄마 생신을 위해 초콜릿 케이크를 구울 것이라고 했습니다."
+  },
+  {
+    "id": 6,
+    "passage": "The local library is asking for volunteers. Volunteers will help organize books on the shelves and read stories to young children. You need to be available for at least three hours a week. It's a great way to help the community.",
+    "question": "What is one of the tasks for volunteers at the library?",
+    "options": {
+      "A": "To borrow new books.",
+      "B": "To clean the library.",
+      "C": "To read stories to children."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'volunteers will help... read stories to young children.'이라고 자원봉사자들이 아이들에게 책을 읽어주는 일을 한다고 했습니다."
+  },
+  {
+    "id": 7,
+    "passage": "My apartment is on the third floor. It has a small balcony where I grow some plants. From the balcony, I can see a park. I enjoy sitting there in the evening, drinking tea and reading a book.",
+    "question": "What can he see from his balcony?",
+    "options": {
+      "A": "The city center.",
+      "B": "A park.",
+      "C": "The sea."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'From the balcony, I can see a park.'라고 발코니에서 공원이 보인다고 말하고 있습니다."
+  },
+  {
+    "id": 8,
+    "passage": "Every morning, I take my dog, Buddy, for a walk in the park. He loves running and playing with other dogs. After the walk, I give him his breakfast. It's a nice way to start the day for both of us.",
+    "question": "What does the dog do in the park?",
+    "options": {
+      "A": "He sleeps under a tree.",
+      "B": "He runs and plays.",
+      "C": "He eats his breakfast."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'He loves running and playing with other dogs.'라고 개가 공원에서 달리고 노는 것을 좋아한다고 했습니다."
+  },
+  {
+    "id": 9,
+    "passage": "I received a letter from my cousin who lives in Canada. She told me about the cold weather and the snow. She sent me a photo of her building a huge snowman. I hope I can visit her next winter.",
+    "question": "What was the photo about?",
+    "options": {
+      "A": "Her house in Canada.",
+      "B": "A huge snowman.",
+      "C": "The cold weather."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'She sent me a photo of her building a huge snowman.'이라고 그녀가 거대한 눈사람을 만드는 사진을 보냈다고 했습니다."
+  },
+  {
+    "id": 10,
+    "passage": "Our school is having a music festival next Friday. Many students will perform. My friend, Leo, is going to play the guitar, and I am going to sing a song. We have been practicing every day after school.",
+    "question": "What is Leo going to do at the festival?",
+    "options": {
+      "A": "Sing a song.",
+      "B": "Play the piano.",
+      "C": "Play the guitar."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My friend, Leo, is going to play the guitar'라고 친구 레오가 기타를 연주할 것이라고 나와 있습니다."
+  },
+  {
+    "id": 11,
+    "passage": "Last year, I traveled to Thailand. The weather was very hot and humid, but I enjoyed it. The food was amazing, especially the spicy soup. I also visited some beautiful beaches and went swimming in the clear blue water.",
+    "question": "What did he think about the food in Thailand?",
+    "options": {
+      "A": "It was not very good.",
+      "B": "It was too spicy.",
+      "C": "It was amazing."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The food was amazing'이라고 태국 음식이 훌륭했다고 말하고 있습니다."
+  },
+  {
+    "id": 12,
+    "passage": "To stay healthy, I try to exercise three times a week. I usually go for a run in the morning. I also try to eat a lot of fruits and vegetables and drink plenty of water. I think having a balanced diet is very important.",
+    "question": "How often does he exercise?",
+    "options": {
+      "A": "Every day.",
+      "B": "Three times a week.",
+      "C": "Once a month."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I try to exercise three times a week.'라고 일주일에 세 번 운동하려고 노력한다고 했습니다."
+  },
+  {
+    "id": 13,
+    "passage": "I bought a new smartphone yesterday. It has a bigger screen and a better camera than my old one. I spent the evening setting it up and downloading my favorite apps. I'm excited to take some great photos with it.",
+    "question": "What is better about the new smartphone compared to the old one?",
+    "options": {
+      "A": "It is smaller.",
+      "B": "It has a better camera.",
+      "C": "It has fewer apps."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'It has a bigger screen and a better camera than my old one.'이라고 새 스마트폰이 더 나은 카메라를 가지고 있다고 했습니다."
+  },
+  {
+    "id": 14,
+    "passage": "My favorite hobby is reading. I love getting lost in a good story. I prefer fantasy books about magic and dragons. I have a small library in my room with over a hundred books.",
+    "question": "What kind of books does he prefer?",
+    "options": {
+      "A": "Science fiction books.",
+      "B": "History books.",
+      "C": "Fantasy books."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I prefer fantasy books about magic and dragons.'라고 판타지 책을 선호한다고 말하고 있습니다."
+  },
+  {
+    "id": 15,
+    "passage": "When I was a child, I wanted to be an astronaut. I was fascinated by the stars and planets. I used to have a telescope and would look at the moon every night. Now I work in an office, but I still love astronomy.",
+    "question": "What did he want to be when he was a child?",
+    "options": {
+      "A": "A scientist.",
+      "B": "An astronaut.",
+      "C": "An office worker."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'When I was a child, I wanted to be an astronaut.'라고 어렸을 때 우주비행사가 되고 싶었다고 했습니다."
+  },
+  {
+    "id": 16,
+    "passage": "There is a new Italian restaurant in my town. I went there with my family last night. The restaurant was beautiful, and the staff were very friendly. I ordered lasagna, and it was the best I have ever tasted.",
+    "question": "What did he think of the lasagna?",
+    "options": {
+      "A": "It was okay.",
+      "B": "It was the best he's ever had.",
+      "C": "It was too salty."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'it was the best I have ever tasted.'라고 그가 먹어본 것 중 최고였다고 말하고 있습니다."
+  },
+  {
+    "id": 17,
+    "passage": "I am a member of a local football team. We practice twice a week, on Tuesdays and Thursdays. This Saturday, we have an important match against a team from another town. I hope we can win.",
+    "question": "When does the football team practice?",
+    "options": {
+      "A": "On weekends.",
+      "B": "Once a week.",
+      "C": "On Tuesdays and Thursdays."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'We practice twice a week, on Tuesdays and Thursdays.'라고 화요일과 목요일에 연습한다고 했습니다."
+  },
+  {
+    "id": 18,
+    "passage": "My sister is studying at a university in a different city. We don't see each other very often, but we talk on the phone every weekend. She is studying to become a doctor. I am very proud of her.",
+    "question": "How do they keep in touch?",
+    "options": {
+      "A": "They write letters.",
+      "B": "They talk on the phone.",
+      "C": "They visit each other often."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'we talk on the phone every weekend.'라고 주말마다 전화 통화를 한다고 했습니다."
+  },
+  {
+    "id": 19,
+    "passage": "I love watching documentary films about nature. It's amazing to see wild animals in their natural habitats. Last night, I watched a documentary about penguins in Antarctica. It was both educational and entertaining.",
+    "question": "What was the documentary he watched last night about?",
+    "options": {
+      "A": "Lions in Africa.",
+      "B": "Penguins in Antarctica.",
+      "C": "Bears in North America."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I watched a documentary about penguins in Antarctica.'라고 남극 펭귄에 관한 다큐멘터리를 봤다고 했습니다."
+  },
+  {
+    "id": 20,
+    "passage": "Our city is trying to be more environmentally friendly. There are now more bicycle lanes, and the city has provided more bins for recycling paper, plastic, and glass. I think these changes are very positive.",
+    "question": "What is one thing the city has done to be more environmentally friendly?",
+    "options": {
+      "A": "Planted more trees.",
+      "B": "Provided more recycling bins.",
+      "C": "Built a new park."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'the city has provided more bins for recycling'이라고 도시가 더 많은 재활용 쓰레기통을 제공했다고 했습니다."
+  },
+  {
+    "id": 21,
+    "passage": "I work in a bookshop. I enjoy my job because I love books and I like helping people find the perfect book to read. The bookshop is usually quiet, but it gets very busy on weekends.",
+    "question": "When is the bookshop very busy?",
+    "options": {
+      "A": "On weekday mornings.",
+      "B": "On weekends.",
+      "C": "During the holidays."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'it gets very busy on weekends.'라고 주말에 매우 바빠진다고 말하고 있습니다."
+  },
+  {
+    "id": 22,
+    "passage": "My best friend's name is Alex. We have known each other since we were five years old. We have similar interests, like playing video games and watching science fiction movies. He is a very kind and funny person.",
+    "question": "What is an interest they both share?",
+    "options": {
+      "A": "Playing sports.",
+      "B": "Playing video games.",
+      "C": "Cooking."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'We have similar interests, like playing video games'라고 비디오 게임을 하는 것과 같은 비슷한 관심사를 가지고 있다고 했습니다."
+  },
+  {
+    "id": 23,
+    "passage": "I am saving money to buy a new guitar. My old one is broken. I am doing small jobs for my neighbors, like washing their cars and walking their dogs. I hope to have enough money by the end of the month.",
+    "question": "Why does he need a new guitar?",
+    "options": {
+      "A": "He wants a different color.",
+      "B": "His old one is broken.",
+      "C": "He lost his old one."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My old one is broken.'이라고 그의 낡은 기타가 고장났다고 말하고 있습니다."
+  },
+  {
+    "id": 24,
+    "passage": "Last month, our English class went on a trip to a theater. We watched a play by William Shakespeare. It was a bit difficult to understand the old language, but the actors were amazing, and the story was exciting.",
+    "question": "What was difficult about the play?",
+    "options": {
+      "A": "The story was boring.",
+      "B": "The actors were not good.",
+      "C": "The old language."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'It was a bit difficult to understand the old language'라고 옛날 언어를 이해하는 것이 조금 어려웠다고 했습니다."
+  },
+  {
+    "id": 25,
+    "passage": "I have a part-time job at a coffee shop. I work on Saturday and Sunday mornings. My main task is to take customers' orders and make coffee. I enjoy talking to different people every day.",
+    "question": "What is his main task at the coffee shop?",
+    "options": {
+      "A": "To clean the tables.",
+      "B": "To take orders and make coffee.",
+      "C": "To bake cakes."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My main task is to take customers' orders and make coffee.'라고 그의 주된 업무가 주문을 받고 커피를 만드는 것이라고 했습니다."
+  },
+  {
+    "id": 26,
+    "passage": "My grandmother is a great cook. When I visit her, she always makes my favorite dish, which is chicken soup. Her secret is using fresh vegetables from her own garden. It's the most delicious soup in the world.",
+    "question": "What is his grandmother's secret to her delicious soup?",
+    "options": {
+      "A": "Using a special pot.",
+      "B": "Cooking for a long time.",
+      "C": "Using fresh vegetables from her garden."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'Her secret is using fresh vegetables from her own garden.'이라고 그녀의 비법이 자신의 텃밭에서 나는 신선한 채소를 사용하는 것이라고 했습니다."
+  },
+  {
+    "id": 27,
+    "passage": "I am not a morning person. I find it very difficult to wake up early. I usually press the snooze button on my alarm clock several times. I feel much more energetic in the afternoon and evening.",
+    "question": "When does he feel most energetic?",
+    "options": {
+      "A": "In the morning.",
+      "B": "In the afternoon and evening.",
+      "C": "After drinking coffee."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I feel much more energetic in the afternoon and evening.'라고 오후와 저녁에 훨씬 더 활기차다고 말하고 있습니다."
+  },
+  {
+    "id": 28,
+    "passage": "Our family has a tradition. Every New Year's Eve, we go to my grandparents' house. We have a big dinner together, and then we watch fireworks at midnight. It's a special time for our family to be together.",
+    "question": "What do they do at midnight on New Year's Eve?",
+    "options": {
+      "A": "They have a big dinner.",
+      "B": "They exchange gifts.",
+      "C": "They watch fireworks."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'we watch fireworks at midnight.'라고 자정에 불꽃놀이를 본다고 했습니다."
+  },
+  {
+    "id": 29,
+    "passage": "I am learning a new language, German. I take a class twice a week. I also use an app on my phone to practice vocabulary. It is challenging, but I think it's important to learn about other cultures.",
+    "question": "How does he practice German vocabulary?",
+    "options": {
+      "A": "By reading German books.",
+      "B": "By using an app on his phone.",
+      "C": "By talking to German people."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I also use an app on my phone to practice vocabulary.'라고 어휘 연습을 위해 휴대폰 앱을 사용한다고 했습니다."
+  },
+  {
+    "id": 30,
+    "passage": "The weather forecast for tomorrow is not good. It says it will be rainy and windy all day. I was planning to go for a picnic, but I think I will have to cancel it. Maybe I will just stay home and watch a movie.",
+    "question": "Why did he probably cancel his picnic?",
+    "options": {
+      "A": "Because his friend is busy.",
+      "B": "Because of the bad weather forecast.",
+      "C": "Because he wants to watch a movie."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 내일 날씨 예보가 좋지 않아서(비가 오고 바람이 불어서) 소풍을 취소해야 할 것 같다고 말하고 있습니다."
+  },
+  {
+    "id": 31,
+    "passage": "I recently joined a gym because I want to get fitter. I go there after work. My favorite machine is the treadmill because I enjoy running. There is also a swimming pool, which I plan to use on weekends.",
+    "question": "When does he plan to use the swimming pool?",
+    "options": {
+      "A": "After work.",
+      "B": "In the mornings.",
+      "C": "On weekends."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'which I plan to use on weekends.'라고 주말에 수영장을 이용할 계획이라고 했습니다."
+  },
+  {
+    "id": 32,
+    "passage": "My city is famous for its annual flower festival in the spring. The city parks are filled with colorful tulips and daffodils. Many tourists come to see the flowers and enjoy the parades and music. It's a beautiful time of the year.",
+    "question": "What is his city famous for?",
+    "options": {
+      "A": "A summer music festival.",
+      "B": "An annual flower festival.",
+      "C": "A winter food market."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My city is famous for its annual flower festival'이라고 그의 도시가 매년 열리는 꽃 축제로 유명하다고 했습니다."
+  },
+  {
+    "id": 33,
+    "passage": "I have a cat named Leo. He is very playful. His favorite toy is a small red ball. However, he is afraid of loud noises. When there is a thunderstorm, he always hides under my bed.",
+    "question": "What is Leo afraid of?",
+    "options": {
+      "A": "Other cats.",
+      "B": "Small red balls.",
+      "C": "Loud noises."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'he is afraid of loud noises.'라고 레오가 시끄러운 소리를 무서워한다고 했습니다."
+  },
+  {
+    "id": 34,
+    "passage": "I am taking a photography course. I am learning how to use a professional camera and how to take better pictures. This weekend, our class is going to the zoo to practice taking photos of animals.",
+    "question": "Where is the class going to practice photography?",
+    "options": {
+      "A": "To a museum.",
+      "B": "To the zoo.",
+      "C": "To a park."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'our class is going to the zoo to practice taking photos of animals.'라고 동물 사진 찍는 연습을 하러 동물원에 갈 것이라고 했습니다."
+  },
+  {
+    "id": 35,
+    "passage": "I live in a small town. It's very quiet and peaceful. There aren't many shops or restaurants, but there is a beautiful river where I often go fishing. I prefer the quiet life here to the busy life in a big city.",
+    "question": "What does he like to do by the river?",
+    "options": {
+      "A": "Go swimming.",
+      "B": "Go fishing.",
+      "C": "Have a picnic."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'there is a beautiful river where I often go fishing.'이라고 강에서 종종 낚시를 한다고 했습니다."
+  },
+  {
+    "id": 36,
+    "passage": "Last night, I couldn't sleep well because my neighbors were having a loud party. The music was playing until 2 a.m. I feel very tired today and I have an important exam at school.",
+    "question": "Why does he feel tired today?",
+    "options": {
+      "A": "He studied late for his exam.",
+      "B": "He went to a party.",
+      "C": "His neighbors were very loud."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I couldn't sleep well because my neighbors were having a loud party.'라고 이웃이 시끄러운 파티를 해서 잠을 잘 못 잤다고 했습니다."
+  },
+  {
+    "id": 37,
+    "passage": "My brother is a chef. He works in a famous hotel restaurant. He often creates new dishes. When he comes home, he sometimes cooks a special dinner for our family, which is always a wonderful treat.",
+    "question": "Where does his brother work?",
+    "options": {
+      "A": "In a small cafe.",
+      "B": "In a hotel restaurant.",
+      "C": "In a school kitchen."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'He works in a famous hotel restaurant.'라고 그의 형이 유명한 호텔 레스토랑에서 일한다고 했습니다."
+  },
+  {
+    "id": 38,
+    "passage": "I am looking for a new apartment. I want a place that is close to a train station because I don't have a car. I also hope to find an apartment with two bedrooms and a modern kitchen.",
+    "question": "Why does he want an apartment near a train station?",
+    "options": {
+      "A": "Because he likes trains.",
+      "B": "Because he doesn't have a car.",
+      "C": "Because it's quieter."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I want a place that is close to a train station because I don't have a car.'라고 차가 없기 때문에 기차역과 가까운 곳을 원한다고 했습니다."
+  },
+  {
+    "id": 39,
+    "passage": "I enjoy gardening. It's relaxing to work with plants. This year, I am growing my own vegetables for the first time. I have planted tomatoes, cucumbers, and lettuce. I can't wait to make a salad with them.",
+    "question": "What is he growing for the first time?",
+    "options": {
+      "A": "Flowers.",
+      "B": "Vegetables.",
+      "C": "Fruits."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'This year, I am growing my own vegetables for the first time.'이라고 올해 처음으로 자신의 채소를 키우고 있다고 했습니다."
+  },
+  {
+    "id": 40,
+    "passage": "I have a pen pal in South Korea. Her name is Min-jun. We write emails to each other every month. We write about our daily lives, hobbies, and culture. I am learning a lot about her country.",
+    "question": "How often do they write to each other?",
+    "options": {
+      "A": "Every week.",
+      "B": "Every month.",
+      "C": "Every year."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'We write emails to each other every month.'라고 매달 서로에게 이메일을 쓴다고 했습니다."
+  },
+  {
+    "id": 41,
+    "passage": "My favorite type of movie is comedy. I love to laugh, and comedies always make me feel happy and relaxed. I don't really like scary movies because they give me bad dreams.",
+    "question": "Why does he dislike scary movies?",
+    "options": {
+      "A": "He thinks they are boring.",
+      "B": "They are too loud.",
+      "C": "They give him bad dreams."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I don't really like scary movies because they give me bad dreams.'라고 무서운 영화가 악몽을 꾸게 해서 별로 좋아하지 않는다고 했습니다."
+  },
+  {
+    "id": 42,
+    "passage": "I'm going to the supermarket. I have a shopping list. I need to buy milk, bread, cheese, and some apples. I should also remember to buy some cat food for my cat, Whiskers.",
+    "question": "What does he need to buy for his pet?",
+    "options": {
+      "A": "Dog food.",
+      "B": "Milk.",
+      "C": "Cat food."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I should also remember to buy some cat food for my cat'이라고 고양이를 위해 고양이 사료를 사야 한다고 했습니다."
+  },
+  {
+    "id": 43,
+    "passage": "I started a new job last week. I work as a receptionist in a hotel. My job is to welcome guests and answer their questions. I was a little nervous at first, but everyone is very friendly and helpful.",
+    "question": "How did he feel when he started his new job?",
+    "options": {
+      "A": "Excited.",
+      "B": "Nervous.",
+      "C": "Bored."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I was a little nervous at first'라고 처음에는 조금 긴장했다고 말하고 있습니다."
+  },
+  {
+    "id": 44,
+    "passage": "On my last vacation, I went hiking in the mountains. The air was fresh and the views were spectacular. I walked for about five hours. It was tiring, but I felt great afterwards. I took many photos of the beautiful scenery.",
+    "question": "How did he feel after the long walk?",
+    "options": {
+      "A": "He felt sick.",
+      "B": "He felt great.",
+      "C": "He felt bored."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'It was tiring, but I felt great afterwards.'라고 피곤했지만 그 후에는 기분이 아주 좋았다고 했습니다."
+  },
+  {
+    "id": 45,
+    "passage": "My mobile phone is very important to me. I use it for many things, not just for making calls. I use it to check my emails, read the news, and listen to music. I can't imagine my life without it.",
+    "question": "Which of these is NOT mentioned as a use for his phone?",
+    "options": {
+      "A": "Reading the news.",
+      "B": "Watching movies.",
+      "C": "Listening to music."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서는 이메일 확인, 뉴스 읽기, 음악 감상을 언급했지만 영화 감상에 대한 언급은 없습니다."
+  },
+  {
+    "id": 46,
+    "passage": "I am trying to reduce the amount of plastic I use. I always take a reusable bag when I go shopping. I also bought a reusable water bottle instead of buying bottled water every day. It's a small change, but I think it helps the environment.",
+    "question": "What does he use instead of buying bottled water?",
+    "options": {
+      "A": "A glass cup.",
+      "B": "A reusable water bottle.",
+      "C": "A plastic bag."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I also bought a reusable water bottle instead of buying bottled water'라고 물병을 사는 대신 재사용 가능한 물병을 샀다고 했습니다."
+  },
+  {
+    "id": 47,
+    "passage": "My favorite season is autumn. I love the cool weather and the beautiful colors of the leaves. Red, orange, and yellow leaves are everywhere. I also enjoy wearing warm sweaters and drinking hot chocolate.",
+    "question": "What does he enjoy drinking in autumn?",
+    "options": {
+      "A": "Iced coffee.",
+      "B": "Hot chocolate.",
+      "C": "Lemonade."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I also enjoy... drinking hot chocolate.'라고 핫초코 마시는 것을 즐긴다고 했습니다."
+  },
+  {
+    "id": 48,
+    "passage": "Every Saturday morning, I go to the local market with my mom. It's an outdoor market where local farmers sell fresh fruits, vegetables, and flowers. The prices are better than in the supermarket, and the food is fresher.",
+    "question": "Why does he like the local market?",
+    "options": {
+      "A": "It is open 24 hours.",
+      "B": "It sells clothes and books.",
+      "C": "The food is fresher and cheaper."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The prices are better... and the food is fresher.'라고 가격이 더 좋고 음식이 더 신선하다고 했습니다. 이는 더 싸고 신선하다는 의미입니다."
+  },
+  {
+    "id": 49,
+    "passage": "I am redecorating my bedroom. I painted the walls light blue. Yesterday, I bought a new desk and a comfortable chair. Next, I want to buy a new lamp and some posters to put on the wall.",
+    "question": "What does he want to buy next for his room?",
+    "options": {
+      "A": "A new bed.",
+      "B": "A new lamp and posters.",
+      "C": "A new carpet."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'Next, I want to buy a new lamp and some posters'라고 다음에 새 램프와 포스터를 사고 싶다고 했습니다."
+  },
+  {
+    "id": 50,
+    "passage": "I have an exam tomorrow, so I need to study tonight. I will go to the library because it's quiet there. I will turn off my phone so I can concentrate. I hope I do well on the exam.",
+    "question": "Why is he going to the library?",
+    "options": {
+      "A": "To meet his friends.",
+      "B": "To borrow a book.",
+      "C": "To study in a quiet place."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I will go to the library because it's quiet there.'라고 도서관이 조용하기 때문에 그곳에 갈 것이라고 했습니다."
+  },
+  {
+    "id": 51,
+    "passage": "My friend Clara is from Brazil. She moved here last year. She is learning English and speaks it very well, but sometimes she misses speaking Portuguese. She taught me how to say a few words in her language.",
+    "question": "What is Clara's native language?",
+    "options": {
+      "A": "English",
+      "B": "Spanish",
+      "C": "Portuguese"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 클라라가 브라질 출신이고 포르투갈어 하는 것을 그리워한다고 했으므로, 그녀의 모국어는 포르투갈어입니다."
+  },
+  {
+    "id": 52,
+    "passage": "I love winter sports. My favorite is snowboarding. I learned how to do it a few years ago. Every winter, my friends and I go to a ski resort in the mountains for a weekend. It's so much fun to speed down the snowy slopes.",
+    "question": "What is his favorite winter sport?",
+    "options": {
+      "A": "Skiing",
+      "B": "Ice skating",
+      "C": "Snowboarding"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My favorite is snowboarding.'라고 가장 좋아하는 겨울 스포츠가 스노보드라고 명시했습니다."
+  },
+  {
+    "id": 53,
+    "passage": "I am not very good at remembering birthdays. Last week, I forgot my best friend's birthday. I felt terrible. To apologize, I bought him a nice present and took him out for dinner. He forgave me.",
+    "question": "How did he apologize to his friend?",
+    "options": {
+      "A": "He sent him a text message.",
+      "B": "He bought him a present and took him to dinner.",
+      "C": "He wrote him a letter."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I bought him a nice present and took him out for dinner.'라고 사과하기 위해 선물을 사고 저녁 식사에 데려갔다고 했습니다."
+  },
+  {
+    "id": 54,
+    "passage": "The internet is very useful for my studies. I can find information for my projects easily. I also use it to watch educational videos. However, my parents say I spend too much time online.",
+    "question": "What do his parents think?",
+    "options": {
+      "A": "The internet is not useful.",
+      "B": "He should use the internet more.",
+      "C": "He spends too much time online."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'my parents say I spend too much time online.'라고 부모님께서 그가 온라인에서 너무 많은 시간을 보낸다고 말씀하셨습니다."
+  },
+  {
+    "id": 55,
+    "passage": "I have a terrible sense of direction. I get lost easily, even in my own town. That's why I always use a map app on my phone when I go to a new place. It helps me find my way.",
+    "question": "What does he use to avoid getting lost?",
+    "options": {
+      "A": "A paper map",
+      "B": "He asks people for directions.",
+      "C": "A map app on his phone."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I always use a map app on my phone'이라고 길을 잃지 않기 위해 항상 휴대폰의 지도 앱을 사용한다고 했습니다."
+  },
+  {
+    "id": 56,
+    "passage": "My dad loves old cars. He has a vintage red sports car that he bought many years ago. He doesn't drive it every day, only on sunny weekends. He spends a lot of time cleaning and taking care of it.",
+    "question": "When does his dad drive the red sports car?",
+    "options": {
+      "A": "Every day to work.",
+      "B": "Only on sunny weekends.",
+      "C": "When it is raining."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'he doesn't drive it every day, only on sunny weekends.'라고 화창한 주말에만 운전한다고 했습니다."
+  },
+  {
+    "id": 57,
+    "passage": "I'm thinking about my future career. I enjoy helping people, so I am considering becoming a nurse or a teacher. Both jobs are challenging but also very rewarding. I need to get good grades in science and English.",
+    "question": "Why is he considering becoming a nurse or a teacher?",
+    "options": {
+      "A": "Because the jobs are easy.",
+      "B": "Because he wants to make a lot of money.",
+      "C": "Because he enjoys helping people."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I enjoy helping people, so I am considering becoming a nurse or a teacher.'라고 사람들을 돕는 것을 즐기기 때문에 간호사나 교사가 되는 것을 고려하고 있다고 했습니다."
+  },
+  {
+    "id": 58,
+    "passage": "I went to a wedding last Saturday. It was my cousin's wedding. The bride looked beautiful in her white dress. There was a big party after the ceremony with lots of food and dancing. I had a great time.",
+    "question": "Whose wedding did he go to?",
+    "options": {
+      "A": "His friend's",
+      "B": "His brother's",
+      "C": "His cousin's"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'It was my cousin's wedding.'라고 사촌의 결혼식이었다고 말하고 있습니다."
+  },
+  {
+    "id": 59,
+    "passage": "I prefer to travel by train rather than by plane. On a train, I can look out the window and see the countryside. The seats are also more comfortable, and I can walk around. It's a more relaxing way to travel.",
+    "question": "Why does he prefer traveling by train?",
+    "options": {
+      "A": "Because it's faster than a plane.",
+      "B": "Because it's cheaper.",
+      "C": "Because it's more relaxing."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'It's a more relaxing way to travel.'이라고 기차 여행이 더 편안한 방법이라고 말하고 있습니다."
+  },
+  {
+    "id": 60,
+    "passage": "I am allergic to cats. When I am near a cat, my eyes get red and I start sneezing. It's a shame because I think cats are very cute. That's why my family has a dog instead of a cat.",
+    "question": "What happens when he is near a cat?",
+    "options": {
+      "A": "He starts laughing.",
+      "B": "His eyes get red and he sneezes.",
+      "C": "He feels very happy."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'my eyes get red and I start sneezing.'라고 고양이 근처에 있으면 눈이 빨개지고 재채기를 시작한다고 했습니다."
+  },
+  {
+    "id": 61,
+    "passage": "My favorite holiday is Halloween. I love dressing up in costumes. Last year, I was a pirate. This year, I'm going to be a vampire. My friends and I go 'trick-or-treating' around the neighborhood.",
+    "question": "What was his costume last year?",
+    "options": {
+      "A": "A vampire",
+      "B": "A ghost",
+      "C": "A pirate"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'Last year, I was a pirate.'라고 작년에 해적 복장을 했다고 말하고 있습니다."
+  },
+  {
+    "id": 62,
+    "passage": "I'm trying to drink less sugary soda. Instead, I'm drinking more water and herbal tea. It was difficult at first because I love soda, but now I feel healthier and have more energy.",
+    "question": "What is a positive result of drinking less soda?",
+    "options": {
+      "A": "He saves more money.",
+      "B": "He feels healthier and has more energy.",
+      "C": "He has more free time."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'now I feel healthier and have more energy.'라고 이제 더 건강하고 활력이 넘친다고 말하고 있습니다."
+  },
+  {
+    "id": 63,
+    "passage": "I went to the dentist for a check-up yesterday. He told me I have one small cavity. So, I have to go back next week to get it filled. He also reminded me to floss my teeth every day.",
+    "question": "What did the dentist remind him to do?",
+    "options": {
+      "A": "To brush his teeth more often.",
+      "B": "To eat less sugar.",
+      "C": "To floss his teeth every day."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'He also reminded me to floss my teeth every day.'라고 치실을 매일 사용하라고 상기시켜 주었다고 했습니다."
+  },
+  {
+    "id": 64,
+    "passage": "My apartment building has a small gym on the ground floor. It's very convenient because I don't have to travel to exercise. It has a few running machines and some weights. I use it about three times a week.",
+    "question": "Why is the gym convenient for him?",
+    "options": {
+      "A": "Because it is free.",
+      "B": "Because it is in his building.",
+      "C": "Because it has a swimming pool."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'It's very convenient because I don't have to travel to exercise.'라고 운동하러 이동할 필요가 없어서 매우 편리하다고 했습니다. 이는 체육관이 그의 건물에 있기 때문입니다."
+  },
+  {
+    "id": 65,
+    "passage": "I am a big fan of science fiction movies. I love stories about space travel, aliens, and the future. My all-time favorite movie is 'Star Wars'. I have watched it more than ten times.",
+    "question": "What is his all-time favorite movie?",
+    "options": {
+      "A": "A comedy movie",
+      "B": "Star Wars",
+      "C": "A movie about aliens"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My all-time favorite movie is 'Star Wars'.'라고 그의 인생 최고의 영화가 '스타워즈'라고 명시했습니다."
+  },
+  {
+    "id": 66,
+    "passage": "I lost my house keys yesterday. I think I might have dropped them in the park. I looked everywhere, but I couldn't find them. I had to call a locksmith to open my door. It was an expensive mistake.",
+    "question": "What did he have to do because he lost his keys?",
+    "options": {
+      "A": "Sleep at a friend's house.",
+      "B": "Call a locksmith.",
+      "C": "Break the window."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I had to call a locksmith to open my door.'라고 문을 열기 위해 열쇠공을 불러야 했다고 했습니다."
+  },
+  {
+    "id": 67,
+    "passage": "My company sent me to a conference in Berlin last month. It was my first time in Germany. I attended many interesting talks and met people from all over the world. In the evening, I explored the city and tried some German food.",
+    "question": "Why did he go to Berlin?",
+    "options": {
+      "A": "For a vacation.",
+      "B": "To visit his family.",
+      "C": "For a work conference."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'My company sent me to a conference in Berlin'이라고 회사가 그를 베를린에서 열리는 회의에 보냈다고 했습니다."
+  },
+  {
+    "id": 68,
+    "passage": "I have a collection of stamps from different countries. My grandfather gave me my first stamp album when I was ten. I have stamps from Japan, Australia, and Brazil. I think they are like tiny pieces of art.",
+    "question": "Who started his stamp collection?",
+    "options": {
+      "A": "His father",
+      "B": "His grandfather",
+      "C": "His teacher"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My grandfather gave me my first stamp album'이라고 할아버지가 그의 첫 우표 앨범을 주셨다고 했습니다. 이는 할아버지가 그의 수집을 시작하게 했다는 것을 의미합니다."
+  },
+  {
+    "id": 69,
+    "passage": "I'm not a very patient person. I don't like waiting in long lines or being stuck in traffic. I prefer things to be fast and efficient. My friends say I need to learn to relax more.",
+    "question": "What does he dislike?",
+    "options": {
+      "A": "Being fast and efficient.",
+      "B": "Relaxing with friends.",
+      "C": "Waiting in long lines."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I don't like waiting in long lines'라고 긴 줄을 서서 기다리는 것을 좋아하지 않는다고 명시했습니다."
+  },
+  {
+    "id": 70,
+    "passage": "I am volunteering at an animal shelter on weekends. I help clean the cages, feed the animals, and take the dogs for walks. It's hard work, but it feels good to help animals that don't have a home.",
+    "question": "What is one of his tasks at the animal shelter?",
+    "options": {
+      "A": "To give medicine to the animals.",
+      "B": "To take the dogs for walks.",
+      "C": "To find new homes for the animals."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '...and take the dogs for walks.'라고 그의 임무 중 하나가 개를 산책시키는 것이라고 했습니다."
+  },
+  {
+    "id": 71,
+    "passage": "My parents own a small bakery. They wake up very early every morning to bake fresh bread, cakes, and pastries. I sometimes help them on weekends. My favorite thing to eat is their warm apple pie.",
+    "question": "What do his parents do?",
+    "options": {
+      "A": "They own a restaurant.",
+      "B": "They own a bakery.",
+      "C": "They are farmers."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My parents own a small bakery.'라고 그의 부모님이 작은 빵집을 운영한다고 했습니다."
+  },
+  {
+    "id": 72,
+    "passage": "I'm planning a surprise party for my sister's 18th birthday. I have invited all her close friends. My mom is going to bake the cake, and I'm in charge of the decorations. I hope she will be surprised.",
+    "question": "What is he responsible for?",
+    "options": {
+      "A": "Baking the cake.",
+      "B": "Inviting the guests.",
+      "C": "The decorations."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I'm in charge of the decorations.'라고 그가 장식을 담당하고 있다고 했습니다."
+  },
+  {
+    "id": 73,
+    "passage": "I decided to take a break from social media for a month. At first, it was strange, but then I found I had more time for other things. I read more books and spent more time with my family. It was a positive experience.",
+    "question": "What was a positive result of his break from social media?",
+    "options": {
+      "A": "He missed his online friends.",
+      "B": "He had more time for other things.",
+      "C": "He felt bored."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I found I had more time for other things.'라고 다른 일을 할 시간이 더 많아졌다는 것을 알게 되었다고 했습니다."
+  },
+  {
+    "id": 74,
+    "passage": "My car broke down on the highway yesterday. The engine started making a strange noise and then it just stopped. I had to call for a tow truck to take it to a garage. It was a stressful situation.",
+    "question": "What happened to his car?",
+    "options": {
+      "A": "It ran out of gas.",
+      "B": "It had a flat tire.",
+      "C": "The engine stopped working."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The engine started making a strange noise and then it just stopped.'라고 엔진이 멈췄다고 했습니다."
+  },
+  {
+    "id": 75,
+    "passage": "I love going to concerts. The feeling of being in a crowd and listening to live music is incredible. Last month, I saw my favorite band play. The energy was amazing, and everyone was singing along.",
+    "question": "What does he love about concerts?",
+    "options": {
+      "A": "The comfortable seats.",
+      "B": "The cheap tickets.",
+      "C": "Listening to live music in a crowd."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'The feeling of being in a crowd and listening to live music is incredible.'라고 군중 속에서 라이브 음악을 듣는 느낌이 놀랍다고 했습니다."
+  },
+  {
+    "id": 76,
+    "passage": "I have a fear of flying. I get very nervous during takeoff and landing. I try to distract myself by listening to music or reading a book, but it doesn't always help. I prefer to travel by land if possible.",
+    "question": "How does he try to distract himself on a plane?",
+    "options": {
+      "A": "By talking to other passengers.",
+      "B": "By sleeping.",
+      "C": "By listening to music or reading."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I try to distract myself by listening to music or reading a book'이라고 음악을 듣거나 책을 읽어서 주의를 돌리려고 노력한다고 했습니다."
+  },
+  {
+    "id": 77,
+    "passage": "My local library has started a book club. We meet once a month to discuss a book that we have all read. It's a great way to discover new authors and to hear different opinions about the same story.",
+    "question": "How often does the book club meet?",
+    "options": {
+      "A": "Once a week.",
+      "B": "Once a month.",
+      "C": "Twice a month."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'We meet once a month'라고 한 달에 한 번 만난다고 했습니다."
+  },
+  {
+    "id": 78,
+    "passage": "I moved to a new city for my job. It was difficult at first because I didn't know anyone. I decided to join a local hiking club to meet new people. I have made some good friends there and I'm starting to feel more at home.",
+    "question": "How did he meet new people in the city?",
+    "options": {
+      "A": "Through his work colleagues.",
+      "B": "By joining a hiking club.",
+      "C": "By going to cafes."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I decided to join a local hiking club to meet new people.'라고 새로운 사람들을 만나기 위해 지역 하이킹 클럽에 가입하기로 결정했다고 했습니다."
+  },
+  {
+    "id": 79,
+    "passage": "I am trying to eat a healthier breakfast. I used to eat sugary cereals, but now I eat oatmeal with fruits and nuts. It gives me more energy to start the day, and I don't feel hungry until lunchtime.",
+    "question": "What does he eat for breakfast now?",
+    "options": {
+      "A": "Sugary cereals.",
+      "B": "Toast and jam.",
+      "C": "Oatmeal with fruits and nuts."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'now I eat oatmeal with fruits and nuts.'라고 이제는 과일과 견과류를 곁들인 오트밀을 먹는다고 했습니다."
+  },
+  {
+    "id": 80,
+    "passage": "My favorite place in my city is the botanical garden. It's a large, beautiful park with plants from all over the world. There is a huge glasshouse with tropical plants. It's a peaceful place to walk around and relax.",
+    "question": "What can you find in the glasshouse?",
+    "options": {
+      "A": "Animals from the desert.",
+      "B": "Tropical plants.",
+      "C": "Plants that grow in cold climates."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'There is a huge glasshouse with tropical plants.'라고 거대한 온실에 열대 식물이 있다고 했습니다."
+  },
+  {
+    "id": 81,
+    "passage": "I have to give a presentation in my history class tomorrow. I'm a bit nervous because I don't like public speaking. I have practiced it many times in front of a mirror. I hope it goes well.",
+    "question": "Why is he nervous about the presentation?",
+    "options": {
+      "A": "He is not prepared.",
+      "B": "He doesn't like his history class.",
+      "C": "He doesn't like public speaking."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I'm a bit nervous because I don't like public speaking.'라고 대중 연설을 좋아하지 않아서 조금 긴장된다고 했습니다."
+  },
+  {
+    "id": 82,
+    "passage": "Last summer, my friends and I went camping by a lake. We slept in tents, cooked our food over a fire, and went swimming in the lake. At night, we sat by the fire and told stories. It was a memorable experience.",
+    "question": "Where did they cook their food?",
+    "options": {
+      "A": "In a kitchen.",
+      "B": "Over a fire.",
+      "C": "In a restaurant."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'cooked our food over a fire'라고 불 위에서 음식을 요리했다고 했습니다."
+  },
+  {
+    "id": 83,
+    "passage": "I am taking an online course to learn how to code. The course has video lessons and exercises. I can study whenever I have free time. I want to learn how to build my own website someday.",
+    "question": "What is his goal for taking the course?",
+    "options": {
+      "A": "To get a new job.",
+      "B": "To build his own website.",
+      "C": "To teach others how to code."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I want to learn how to build my own website someday.'라고 언젠가 자신의 웹사이트를 만드는 법을 배우고 싶다고 했습니다."
+  },
+  {
+    "id": 84,
+    "passage": "My sister is an artist. She has a small studio in her house where she paints. Her paintings are very colorful and abstract. She is having her first exhibition at a local gallery next month.",
+    "question": "What is happening next month?",
+    "options": {
+      "A": "She is moving to a new studio.",
+      "B": "She is having her first exhibition.",
+      "C": "She is selling her paintings online."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'She is having her first exhibition at a local gallery next month.'라고 다음 달에 지역 갤러리에서 첫 전시회를 연다고 했습니다."
+  },
+  {
+    "id": 85,
+    "passage": "I don't like shopping for clothes in crowded stores. I find it stressful. I prefer to shop online where I can take my time to look at different items and compare prices. It's much more convenient for me.",
+    "question": "Why does he prefer to shop online?",
+    "options": {
+      "A": "Because the clothes are cheaper.",
+      "B": "Because it is more convenient and less stressful.",
+      "C": "Because he can get the clothes immediately."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 그는 붐비는 가게에서 쇼핑하는 것을 스트레스로 여기고, 온라인 쇼핑이 'much more convenient'하다고 말했습니다."
+  },
+  {
+    "id": 86,
+    "passage": "I have a part-time job as a dog walker. I walk three different dogs in my neighborhood. It's a great job for me because I love dogs and I enjoy being outdoors. The dogs are always so happy to see me.",
+    "question": "Why is being a dog walker a great job for him?",
+    "options": {
+      "A": "Because it pays very well.",
+      "B": "Because he can work from home.",
+      "C": "Because he loves dogs and being outdoors."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'It's a great job for me because I love dogs and I enjoy being outdoors.'라고 개를 사랑하고 야외에 있는 것을 즐기기 때문에 훌륭한 직업이라고 했습니다."
+  },
+  {
+    "id": 87,
+    "passage": "I am going to a job interview this afternoon. I have chosen a smart suit to wear. I have also printed my resume and prepared answers to some common questions. I feel prepared, but I am still a little nervous.",
+    "question": "What has he done to prepare for the interview?",
+    "options": {
+      "A": "He bought a new suit.",
+      "B": "He printed his resume.",
+      "C": "He called the company."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I have also printed my resume'라고 이력서를 인쇄했다고 언급했습니다."
+  },
+  {
+    "id": 88,
+    "passage": "Every Sunday, my family has a movie night. We take turns choosing a movie. We make popcorn and watch the movie together in the living room. It's a simple but special family tradition.",
+    "question": "What do they do on movie night?",
+    "options": {
+      "A": "They go to the cinema.",
+      "B": "They watch a movie at home with popcorn.",
+      "C": "They order pizza and watch TV."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'We make popcorn and watch the movie together in the living room.'라고 팝콘을 만들고 거실에서 함께 영화를 본다고 했습니다."
+  },
+  {
+    "id": 89,
+    "passage": "I am trying to save water. I take shorter showers now. I also make sure to turn off the tap while I am brushing my teeth. Every little bit helps to protect our planet's resources.",
+    "question": "What is one way he is saving water?",
+    "options": {
+      "A": "By drinking less water.",
+      "B": "By taking shorter showers.",
+      "C": "By washing his car less often."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I take shorter showers now.'라고 이제 더 짧게 샤워를 한다고 말하고 있습니다."
+  },
+  {
+    "id": 90,
+    "passage": "I visited a castle last weekend. It was very old and big. There was a guide who told us stories about the kings and queens who lived there. I learned a lot about the history of the region.",
+    "question": "What did he learn about at the castle?",
+    "options": {
+      "A": "How to build a castle.",
+      "B": "The history of the region.",
+      "C": "The names of the guides."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I learned a lot about the history of the region.'이라고 그 지역의 역사에 대해 많이 배웠다고 했습니다."
+  },
+  {
+    "id": 91,
+    "passage": "I have a new neighbor. His name is David. He moved in yesterday. He is a musician and plays the violin. I introduced myself this morning, and he seems very friendly.",
+    "question": "What does his new neighbor do?",
+    "options": {
+      "A": "He is a teacher.",
+      "B": "He is a musician.",
+      "C": "He is a student."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'He is a musician and plays the violin.'이라고 그가 음악가이며 바이올린을 연주한다고 했습니다."
+  },
+  {
+    "id": 92,
+    "passage": "I am running a marathon next month. I have been training for it for the last three months. I run four times a week. It is the longest distance I have ever tried to run. I am both excited and nervous.",
+    "question": "How long has he been training for the marathon?",
+    "options": {
+      "A": "For one month.",
+      "B": "For three months.",
+      "C": "For a year."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I have been training for it for the last three months.'라고 지난 3개월 동안 훈련해왔다고 했습니다."
+  },
+  {
+    "id": 93,
+    "passage": "I found an old black-and-white photograph in my grandmother's house. It was a photo of her when she was a young girl. She looked very different, but she had the same warm smile. It was lovely to see.",
+    "question": "What was the photograph of?",
+    "options": {
+      "A": "His grandmother as a young girl.",
+      "B": "An old house.",
+      "C": "His parents' wedding."
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 'It was a photo of her when she was a young girl.'라고 할머니의 어린 시절 사진이었다고 했습니다."
+  },
+  {
+    "id": 94,
+    "passage": "My flight was delayed for three hours due to bad weather. I had to wait at the airport. I read a book and had some coffee. It was boring, but I was happy when we could finally take off.",
+    "question": "Why was his flight delayed?",
+    "options": {
+      "A": "Because of a technical problem.",
+      "B": "Because of bad weather.",
+      "C": "Because the pilot was late."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'My flight was delayed for three hours due to bad weather.'라고 악천후로 인해 비행기가 3시간 지연되었다고 했습니다."
+  },
+  {
+    "id": 95,
+    "passage": "I am not a fan of big, crowded cities. I prefer the countryside, where life is slower and more peaceful. I love being surrounded by nature, like forests and fields. I hope to live in a small cottage in the countryside one day.",
+    "question": "What kind of place does he hope to live in?",
+    "options": {
+      "A": "A large apartment in a city.",
+      "B": "A house by the beach.",
+      "C": "A small cottage in the countryside."
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'I hope to live in a small cottage in the countryside one day.'라고 언젠가 시골의 작은 오두막에서 살고 싶다고 했습니다."
+  },
+  {
+    "id": 96,
+    "passage": "I am trying to learn a new skill: juggling. I bought three juggling balls. I practice in my garden every day. It is much harder than it looks! I can only juggle for a few seconds before I drop the balls.",
+    "question": "What does he think about juggling?",
+    "options": {
+      "A": "It is very easy.",
+      "B": "It is harder than it looks.",
+      "C": "It is a boring skill."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'It is much harder than it looks!'라고 보기보다 훨씬 어렵다고 말하고 있습니다."
+  },
+  {
+    "id": 97,
+    "passage": "I went to a farmers' market and bought some local honey. The beekeeper told me how he looks after his bees. It was very interesting. The honey tastes much better than the honey from the supermarket.",
+    "question": "What did he buy at the market?",
+    "options": {
+      "A": "Fresh vegetables.",
+      "B": "Local honey.",
+      "C": "Homemade bread."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I went to a farmers' market and bought some local honey.'라고 파머스 마켓에 가서 지역 꿀을 샀다고 했습니다."
+  },
+  {
+    "id": 98,
+    "passage": "My computer is running very slowly. I think it might have a virus. I am going to take it to a computer repair shop tomorrow. I hope they can fix it quickly because I need it for my work.",
+    "question": "Why does he need his computer to be fixed quickly?",
+    "options": {
+      "A": "He wants to play games on it.",
+      "B": "He needs it for his work.",
+      "C": "He wants to sell it."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I hope they can fix it quickly because I need it for my work.'라고 업무에 필요하기 때문에 빨리 고쳐지기를 바란다고 했습니다."
+  },
+  {
+    "id": 99,
+    "passage": "I love the smell of rain after a hot day. It's called 'petrichor'. It's a very fresh and earthy smell. I like to open my window after it rains to let the smell fill my room.",
+    "question": "What does he like to do after it rains?",
+    "options": {
+      "A": "Go for a walk.",
+      "B": "Open his window.",
+      "C": "Take a nap."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I like to open my window after it rains'라고 비가 온 뒤에 창문을 여는 것을 좋아한다고 했습니다."
+  },
+  {
+    "id": 100,
+    "passage": "I am taking a first aid course. I am learning what to do in an emergency, like if someone is choking or has a cut. I think it is a very important and useful skill for everyone to have.",
+    "question": "Why does he think the first aid course is important?",
+    "options": {
+      "A": "Because it is easy to learn.",
+      "B": "Because it is a useful skill in an emergency.",
+      "C": "Because he wants to be a doctor."
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'I think it is a very important and useful skill for everyone to have.'라고 응급 상황에서 유용한 기술이라고 생각하기 때문에 중요하다고 말하고 있습니다."
+  }
+]

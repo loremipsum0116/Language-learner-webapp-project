@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-// 다른 페이지들과 동일하게 중앙 API 클라이언트를 import 합니다.
 import { fetchJSON, withCreds } from "../api/client";
+import "./Home.css";
 
 /**
  * English special characters virtual keypad (common symbols)
@@ -445,6 +445,123 @@ function ReadingTeaser() {
 }
 
 /**
+ * 대시보드 위젯: 실제 백엔드 데이터를 사용한 학습 통계
+ */
+function DashboardWidget() {
+  const [stats, setStats] = useState({
+    srsQueue: 0,
+    masteredWords: 0,
+    streakDays: 0,
+    studiedToday: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [err, setErr] = useState(null);
+
+  useEffect(() => {
+    const ac = new AbortController();
+    
+    (async () => {
+      try {
+        setLoading(true);
+
+        // Dashboard.jsx와 동일한 API 호출
+        const [srsQueueRes, masteredCardsRes, streakRes] = await Promise.all([
+          fetchJSON('/srs/available', withCreds({ signal: ac.signal })),
+          fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal })),
+          fetchJSON('/srs/streak', withCreds({ signal: ac.signal }))
+        ]);
+
+        if (!ac.signal.aborted) {
+          const masteredData = Array.isArray(masteredCardsRes.data) ? masteredCardsRes.data : [];
+          const streakData = streakRes.data || {};
+          
+          setStats({
+            srsQueue: Array.isArray(srsQueueRes.data) ? srsQueueRes.data.length : 0,
+            masteredWords: masteredData.length,
+            streakDays: streakData.streak || 0,
+            studiedToday: streakData.dailyQuizCount || 0
+          });
+        }
+      } catch (e) {
+        if (!ac.signal.aborted) {
+          console.error('Dashboard widget data loading failed:', e);
+          setErr(e);
+        }
+      } finally {
+        if (!ac.signal.aborted) setLoading(false);
+      }
+    })();
+
+    return () => ac.abort();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="dashboard-loading-compact">
+        <div className="spinner-compact"></div>
+        <span>로딩 중...</span>
+      </div>
+    );
+  }
+
+  if (err) {
+    return (
+      <div className="dashboard-error-compact">
+        <span>📊</span>
+        <p>통계를 불러올 수 없습니다</p>
+        {err.status === 401 && (
+          <Link to="/login" className="dashboard-login-link">다시 로그인</Link>
+        )}
+      </div>
+    );
+  }
+
+  return (
+    <div className="dashboard-content-compact">
+      <div className="dashboard-stats-compact">
+        <div className="stat-item-compact">
+          <div className="stat-icon-compact">📚</div>
+          <div className="stat-details-compact">
+            <div className="stat-number-compact">{stats.srsQueue}</div>
+            <div className="stat-label-compact">복습 대기</div>
+          </div>
+        </div>
+        
+        <div className="stat-item-compact">
+          <div className="stat-icon-compact">🏆</div>
+          <div className="stat-details-compact">
+            <div className="stat-number-compact">{stats.masteredWords}</div>
+            <div className="stat-label-compact">마스터</div>
+          </div>
+        </div>
+        
+        <div className="stat-item-compact">
+          <div className="stat-icon-compact">🔥</div>
+          <div className="stat-details-compact">
+            <div className="stat-number-compact">{stats.streakDays}</div>
+            <div className="stat-label-compact">연속일</div>
+          </div>
+        </div>
+
+        <div className="stat-item-compact">
+          <div className="stat-icon-compact">✨</div>
+          <div className="stat-details-compact">
+            <div className="stat-number-compact">{stats.studiedToday}</div>
+            <div className="stat-label-compact">오늘</div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="dashboard-actions-compact">
+        <Link to="/dashboard" className="dashboard-btn-compact primary">
+          📊 상세 대시보드
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+/**
  * 홈(메인) 페이지
  */
 export default function Home() {
@@ -502,37 +619,33 @@ export default function Home() {
   }, [persona]);
 
   return (
-    <main className="container py-4">
-      <section className="mb-4 hero-section">
-        <div className="p-4 p-md-5 rounded-3">
-          <h1 className="display-6 mb-2 d-flex align-items-center gap-2">
-            <img src="/danmoosae.png" alt="" style={{ height: '48px', width: 'auto' }} />
-            단무새와 함께하는 영어 학습
-          </h1>
-          <p className="mb-3">
-            SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
-            <strong>🤖 AI 영어 튜터</strong>와 <strong>🔊 음성 사전</strong>을 경험해보세요.
-          </p>
-          <div className="d-flex flex-wrap gap-2">
-            <Link className="btn btn-primary" to="/srs">
-              🎆 오늘 학습 시작
-            </Link>
-            <Link className="btn btn-secondary" to="/tutor">
-              🤖 AI 튜터
-            </Link>
-            <Link className="btn btn-outline-primary" to="/dict">
-              📚 사전 검색
-            </Link>
-            <Link className="btn btn-outline-secondary" to="/vocab">
-              📁 단어장
-            </Link>
-            <Link className="btn btn-success" to="/my-wordbook">
-              📖 내 단어장
-            </Link>
-            <Link className="btn btn-cute" to="/learn/grammar">
-              📝 문법 연습
-            </Link>
-          </div>
+    <div className="home-container">
+      {/* Hero Section */}
+      <section className="hero-modern">
+        <h1 className="hero-title">
+          <img src="/danmoosae.png" alt="" style={{ height: '48px', width: 'auto', marginRight: '0.5rem' }} />
+          단무새와 함께하는 영어 학습
+        </h1>
+        <p className="hero-subtitle">
+          SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
+          <strong>🤖 AI 영어 튜터</strong>와 <strong>🔊 음성 사전</strong>을 경험해보세요.
+        </p>
+        <div className="hero-actions">
+          <Link className="hero-btn hero-btn-primary" to="/srs">
+            🎆 오늘 학습 시작
+          </Link>
+          <Link className="hero-btn hero-btn-secondary" to="/tutor">
+            🤖 AI 튜터
+          </Link>
+          <Link className="hero-btn hero-btn-outline" to="/dict">
+            📚 사전 검색
+          </Link>
+          <Link className="hero-btn hero-btn-outline" to="/vocab">
+            📁 단어장
+          </Link>
+          <Link className="hero-btn hero-btn-outline" to="/my-wordbook">
+            📖 내 단어장
+          </Link>
         </div>
       </section>
       {authErr && authErr.status === 401 && (
@@ -544,93 +657,199 @@ export default function Home() {
 
       {/* 운영자 전용 섹션 */}
       {isAdmin && (
-        <section className="mb-4">
-          <div className="alert alert-warning">
-            <div className="d-flex align-items-center justify-content-between">
-              <div>
-                <h5 className="alert-heading mb-1">🛠️ 운영자 패널</h5>
-                <p className="mb-0">시간 가속 컨트롤러와 고급 관리 기능에 접근할 수 있습니다.</p>
-              </div>
-              <div className="d-flex gap-2">
-                <Link to="/admin" className="btn btn-outline-dark btn-sm">
-                  관리자 콘솔
-                </Link>
-                <Link to="/admin/dashboard" className="btn btn-dark btn-sm">
-                  운영자 대시보드
-                </Link>
-              </div>
+        <div className="admin-panel">
+          <div className="admin-content">
+            <div className="admin-info">
+              <h5>🛠️ 운영자 패널</h5>
+              <p>시간 가속 컨트롤러와 고급 관리 기능에 접근할 수 있습니다.</p>
+            </div>
+            <div className="admin-actions">
+              <Link to="/admin" className="admin-btn admin-btn-outline">
+                관리자 콘솔
+              </Link>
+              <Link to="/admin/dashboard" className="admin-btn admin-btn-solid">
+                운영자 대시보드
+              </Link>
             </div>
           </div>
-        </section>
+        </div>
       )}
 
-      <section className="row g-3">
-        <div className="col-md-6 col-lg-4">
-          <SrsWidget />
+      {/* Widget Section */}
+      <section className="widgets-section">
+        <div className="widget-card">
+          <div className="widget-title">
+            <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
+            오늘의 SRS
+          </div>
+          <div className="widget-content">
+            <SrsWidget />
+          </div>
         </div>
-        <div className="col-md-6 col-lg-4">
-          <DictQuickPanel />
+        
+        <div className="widget-card">
+          <div className="widget-title">📚 사전 검색</div>
+          <div className="widget-content">
+            <DictQuickPanel />
+          </div>
         </div>
-        <div className="col-lg-4">
-          <div className="card h-100 vocabulary-card">
-            <div className="card-body">
-              <h5 className="card-title">⚙️ 튜터 설정</h5>
-              <PersonaForm value={persona} onChange={setPersona} />
-              <div className="d-flex align-items-center gap-2 mt-2">
-                <button className="btn btn-primary btn-sm" onClick={onSavePersona} disabled={saving}>
-                  {saving ? "저장 중…" : "프로필 저장"}
-                </button>
-                {saveMsg && <span className="text-success small">{saveMsg}</span>}
-              </div>
-              <div className="form-text mt-2">
-                이 설정은 로컬에 저장됩니다. (백엔드 프로필 저장은 추후 PATCH /me 추가 권장)
-              </div>
+        
+        <div className="widget-card">
+          <div className="widget-title">⚙️ 튜터 설정</div>
+          <div className="widget-content">
+            <PersonaForm value={persona} onChange={setPersona} />
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
+              <button 
+                className="hero-btn hero-btn-primary" 
+                onClick={onSavePersona} 
+                disabled={saving}
+                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
+              >
+                {saving ? "저장 중…" : "프로필 저장"}
+              </button>
+              {saveMsg && <span style={{ color: 'green', fontSize: '0.9rem' }}>{saveMsg}</span>}
+            </div>
+            <div style={{ fontSize: '0.8rem', color: 'var(--color-slate)', marginTop: '0.5rem' }}>
+              이 설정은 로컬에 저장됩니다.
             </div>
           </div>
         </div>
 
-        <div className="col-lg-8">
-          <TutorQuickChat persona={persona} />
+        <div className="widget-card" style={{ gridColumn: 'span 2' }}>
+          <div className="widget-title">🤖 AI English Tutor</div>
+          <div className="widget-content">
+            <TutorQuickChat persona={persona} />
+          </div>
         </div>
-        <div className="col-lg-4">
-          <ReadingTeaser />
-        </div>
-      </section>
-
-      <section className="mt-4">
-        <div className="card vocabulary-card">
-          <div className="card-body">
-            <h5 className="card-title">🚀 빠른 이동</h5>
-            <div className="d-flex flex-wrap gap-2">
-              <Link className="btn btn-outline-secondary btn-sm" to="/learn/vocab">
-                /learn/vocab
-              </Link>
-              <Link className="btn btn-outline-secondary btn-sm" to="/learn/grammar">
-                /learn/grammar
-              </Link>
-              <Link className="btn btn-outline-secondary btn-sm" to="/read/1">
-                /read/:id
-              </Link>
-              <Link className="btn btn-outline-secondary btn-sm" to="/tutor">
-                /tutor
-              </Link>
-              <Link className="btn btn-outline-secondary btn-sm" to="/dict">
-                /dict
-              </Link>
-              <Link className="btn btn-outline-secondary btn-sm" to="/admin">
-                /admin
-              </Link>
-            </div>
-            <hr />
-            <ul className="mb-0 small">
-              <li>접근성: 모든 입력에 라벨/aria 제공, 가상 키보드(ä/ö/ü/ß) 제공.</li>
-              <li>보안: 모든 API 호출은 JWT HttpOnly 쿠키 포함(`credentials: "include"`).</li>
-              <li>에러: 401 수신 시 로그인 안내. 다른 상태코드는 메시지 표시(개선 여지).</li>
-              <li>성능: 주요 패널에 API 지연(ms) 표기. 캐시/ETag/Redis는 백엔드에서 구현.</li>
-            </ul>
+        
+        <div className="widget-card">
+          <div className="widget-title">📊 학습 대시보드</div>
+          <div className="widget-content">
+            <DashboardWidget />
           </div>
         </div>
       </section>
-    </main>
+
+      {/* Learning Areas Section */}
+      <section className="learning-section">
+        <h2 className="learning-title">📚 학습 영역</h2>
+        
+        <div className="learning-grid">
+          {/* 문법 섹션 */}
+          <div className="learning-card grammar">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">📝 문법 연습</h3>
+              <span className="learning-badge grammar">Grammar</span>
+            </div>
+            <p className="learning-description">
+              체계적인 영어 문법 학습으로 정확한 영어 구사력을 키워보세요.
+            </p>
+            
+            <div className="level-buttons">
+              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+                <Link 
+                  key={level}
+                  to={`/learn/grammar?level=${level}`} 
+                  className="level-btn grammar"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+            
+            <Link to="/learn/grammar" className="learning-main-btn grammar">
+              전체 문법 목록 보기 →
+            </Link>
+          </div>
+
+          {/* 리딩 섹션 */}
+          <div className="learning-card reading">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">📖 리딩 연습</h3>
+              <span className="learning-badge reading">Reading</span>
+            </div>
+            <p className="learning-description">
+              다양한 주제의 텍스트를 읽고 독해력을 향상시켜보세요.
+            </p>
+            
+            <div className="level-buttons">
+              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+                <Link 
+                  key={level}
+                  to={`/reading?level=${level}`} 
+                  className="level-btn reading"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+            
+            <Link to="/reading" className="learning-main-btn reading">
+              전체 리딩 목록 보기 →
+            </Link>
+          </div>
+
+          {/* 리스닝 섹션 */}
+          <div className="learning-card listening">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">🎧 리스닝 연습</h3>
+              <span className="learning-badge listening">Listening</span>
+            </div>
+            <p className="learning-description">
+              원어민 음성을 듣고 청취력을 기르며 발음을 익혀보세요.
+            </p>
+            
+            <div className="level-buttons">
+              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+                <Link 
+                  key={level}
+                  to={`/listening?level=${level}`} 
+                  className="level-btn listening"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+            
+            <Link to="/listening" className="learning-main-btn listening">
+              전체 리스닝 목록 보기 →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Tools Section */}
+      <section className="tools-section">
+        <h3 className="tools-title">🚀 빠른 이동</h3>
+        <div className="quick-links">
+          <Link className="quick-link" to="/learn/vocab">
+            /learn/vocab
+          </Link>
+          <Link className="quick-link" to="/learn/grammar">
+            /learn/grammar
+          </Link>
+          <Link className="quick-link" to="/read/1">
+            /read/:id
+          </Link>
+          <Link className="quick-link" to="/tutor">
+            /tutor
+          </Link>
+          <Link className="quick-link" to="/dict">
+            /dict
+          </Link>
+          <Link className="quick-link" to="/admin">
+            /admin
+          </Link>
+        </div>
+        <div className="tools-info">
+          <ul>
+            <li>접근성: 모든 입력에 라벨/aria 제공, 가상 키보드(ä/ö/ü/ß) 제공.</li>
+            <li>보안: 모든 API 호출은 JWT HttpOnly 쿠키 포함(`credentials: "include"`).</li>
+            <li>에러: 401 수신 시 로그인 안내. 다른 상태코드는 메시지 표시(개선 여지).</li>
+            <li>성능: 주요 패널에 API 지연(ms) 표기. 캐시/ETag/Redis는 백엔드에서 구현.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
   );
 }

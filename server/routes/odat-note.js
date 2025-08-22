@@ -69,53 +69,89 @@ router.post('/quiz', async (req, res) => {
 });
 
 /**
- * GET /odat-note/list
- * 새로운 WrongAnswer 모델 기반 오답노트 목록
+ * GET /odat-note/list?type=vocab|grammar|reading|listening
+ * 카테고리별 오답노트 목록
  * 프론트에서 테이블/리스트로 보여줄 때 사용
  */
 router.get('/list', async (req, res) => {
   try {
-    // 새로운 WrongAnswer 모델에서 미완료 오답들을 조회
-    const wrongAnswers = await prisma.wronganswer.findMany({
-      where: {
-        userId: req.user.id,
-        isCompleted: false
-      },
-      orderBy: [
-        { attempts: 'desc' }, // 시도 횟수 많은 것 우선
-        { wrongAt: 'desc' }   // 최근에 틀린 것 우선
-      ],
-      include: {
-        vocab: {
-          include: {
-            dictentry: true
-          }
-        }
-      },
-      take: 200,
-    });
+    const { type = 'vocab' } = req.query;
+    
+    // 지원되는 타입 체크
+    const validTypes = ['vocab', 'grammar', 'reading', 'listening'];
+    if (!validTypes.includes(type)) {
+      return res.status(400).json({ error: 'Invalid type. Must be one of: vocab, grammar, reading, listening' });
+    }
+    
+    // 새로운 WrongAnswer 모델에서 미완료 오답들을 카테고리별로 조회
+    const baseWhere = {
+      userId: req.user.id,
+      isCompleted: false,
+      itemType: type
+    };
+    
+    const wrongAnswers = await prisma.$queryRaw`
+      SELECT wa.*, v.lemma, v.pos, v.levelCEFR, 
+             de.ipa, de.ipaKo, de.examples
+      FROM wronganswer wa
+      LEFT JOIN vocab v ON wa.vocabId = v.id
+      LEFT JOIN dictentry de ON v.id = de.vocabId
+      WHERE wa.userId = ${req.user.id}
+        AND wa.isCompleted = false 
+        AND wa.itemType = ${type}
+      ORDER BY wa.attempts DESC, wa.wrongAt DESC
+      LIMIT 200
+    `;
 
     const data = wrongAnswers.map((wa) => {
-      const v = wa.vocab;
       // gloss 찾기(있으면)
       let gloss = null;
-      const ex = Array.isArray(v?.dictentry?.examples) ? v.dictentry.examples : [];
-      const g = ex.find((e) => e && e.kind === 'gloss');
-      if (g && typeof g.ko === 'string') gloss = g.ko;
+      if (wa.examples) {
+        try {
+          const ex = Array.isArray(wa.examples) ? wa.examples : JSON.parse(wa.examples || '[]');
+          const g = ex.find((e) => e && e.kind === 'gloss');
+          if (g && typeof g.ko === 'string') gloss = g.ko;
+        } catch (e) {
+          // JSON 파싱 에러 무시
+        }
+      }
 
-      return {
+      const result = {
         wrongAnswerId: wa.id,
-        vocabId: wa.vocabId,
-        lemma: v?.lemma ?? '',
-        ipa: v?.dictentry?.ipa ?? null,
-        ipaKo: v?.dictentry?.ipaKo ?? null,
-        ko_gloss: gloss,
+        itemType: wa.itemType,
+        itemId: wa.itemId,
         attempts: wa.attempts,
         wrongAt: wa.wrongAt,
         reviewWindowStart: wa.reviewWindowStart,
         reviewWindowEnd: wa.reviewWindowEnd,
-        canReview: new Date() >= wa.reviewWindowStart && new Date() <= wa.reviewWindowEnd
+        canReview: new Date() >= wa.reviewWindowStart && new Date() <= wa.reviewWindowEnd,
+        wrongData: wa.wrongData
       };
+
+      // 타입별 추가 정보
+      if (wa.itemType === 'vocab') {
+        result.vocabId = wa.vocabId;
+        result.lemma = wa.lemma ?? '';
+        result.pos = wa.pos ?? '';
+        result.levelCEFR = wa.levelCEFR ?? '';
+        result.ipa = wa.ipa ?? null;
+        result.ipaKo = wa.ipaKo ?? null;
+        result.ko_gloss = gloss;
+      } else if (wa.itemType === 'grammar') {
+        result.grammarId = wa.itemId;
+        result.topic = wa.wrongData?.topic || 'Unknown Topic';
+        result.rule = wa.wrongData?.rule || '';
+      } else if (wa.itemType === 'reading') {
+        result.readingId = wa.itemId;
+        result.title = wa.wrongData?.title || 'Unknown Title';
+        result.passage = wa.wrongData?.passage || '';
+      } else if (wa.itemType === 'listening') {
+        result.listeningId = wa.itemId;
+        result.title = wa.wrongData?.title || 'Unknown Title';
+        result.audioUrl = wa.wrongData?.audioUrl || '';
+      }
+
+      return result;
     });
 
     return res.json({ data });
@@ -159,6 +195,162 @@ router.get('/queue', async (req, res) => {
   } catch (e) {
     console.error('GET /odat-note/queue failed:', e);
     return res.status(500).json({ error: 'Failed to create quiz for incorrect notes' });
+  }
+});
+
+/**
+ * GET /odat-note/categories
+ * 카테고리별 오답 수량 정보
+ */
+router.get('/categories', async (req, res) => {
+  try {
+    const categories = await prisma.$queryRaw`
+      SELECT 
+        itemType,
+        COUNT(*) as totalCount,
+        SUM(CASE 
+          WHEN isCompleted = false 
+            AND reviewWindowStart <= NOW() 
+            AND reviewWindowEnd >= NOW() 
+          THEN 1 ELSE 0 
+        END) as activeCount
+      FROM wronganswer 
+      WHERE userId = ${req.user.id}
+      GROUP BY itemType
+      ORDER BY itemType
+    `;
+    
+    const data = {
+      vocab: { total: 0, active: 0 },
+      grammar: { total: 0, active: 0 },
+      reading: { total: 0, active: 0 },
+      listening: { total: 0, active: 0 }
+    };
+    
+    categories.forEach(cat => {
+      if (data[cat.itemType]) {
+        data[cat.itemType] = {
+          total: Number(cat.totalCount),
+          active: Number(cat.activeCount)
+        };
+      }
+    });
+    
+    return res.json({ data });
+  } catch (e) {
+    console.error('GET /odat-note/categories failed:', e);
+    return res.status(500).json({ error: 'Failed to load category statistics' });
+  }
+});
+
+/**
+ * POST /odat-note/create
+ * 오답노트에 새로운 항목 추가 (리딩, 문법, 리스닝 등)
+ * body: { itemType, itemId, wrongData }
+ */
+router.post('/create', async (req, res) => {
+  try {
+    const { itemType, itemId, wrongData } = req.body;
+    
+    if (!itemType || !itemId) {
+      return res.status(400).json({ error: 'itemType and itemId are required' });
+    }
+    
+    // 지원되는 타입 체크
+    const validTypes = ['vocab', 'grammar', 'reading', 'listening'];
+    if (!validTypes.includes(itemType)) {
+      return res.status(400).json({ error: 'Invalid itemType. Must be one of: vocab, grammar, reading, listening' });
+    }
+    
+    // 기존 오답 항목이 있는지 확인
+    const existingWrongAnswer = await prisma.wronganswer.findFirst({
+      where: {
+        userId: req.user.id,
+        itemType: itemType,
+        itemId: String(itemId),
+        isCompleted: false
+      }
+    });
+    
+    let wrongAnswer;
+    
+    if (existingWrongAnswer) {
+      // 기존 항목이 있으면 카운트 증가
+      wrongAnswer = await prisma.wronganswer.update({
+        where: { id: existingWrongAnswer.id },
+        data: {
+          attempts: existingWrongAnswer.attempts + 1,
+          wrongAt: new Date(),
+          wrongData: wrongData || existingWrongAnswer.wrongData,
+          // 복습 창을 다시 연장 (24시간)
+          reviewWindowStart: new Date(),
+          reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        }
+      });
+    } else {
+      // 새로운 오답 항목 생성
+      wrongAnswer = await prisma.wronganswer.create({
+        data: {
+          userId: req.user.id,
+          itemType: itemType,
+          itemId: String(itemId),
+          attempts: 1,
+          wrongAt: new Date(),
+          wrongData: wrongData || {},
+          isCompleted: false,
+          // 24시간 복습 창 설정
+          reviewWindowStart: new Date(),
+          reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        }
+      });
+    }
+    
+    return res.json({ 
+      data: wrongAnswer,
+      message: existingWrongAnswer ? 'Wrong answer count updated' : 'Wrong answer recorded'
+    });
+  } catch (e) {
+    console.error('POST /odat-note/create failed:', e);
+    return res.status(500).json({ error: 'Failed to record wrong answer' });
+  }
+});
+
+/**
+ * POST /odat-note/:id/resolve
+ * 오답 항목을 완료 처리
+ */
+router.post('/:id/resolve', async (req, res) => {
+  try {
+    const wrongAnswerId = parseInt(req.params.id);
+    
+    if (!wrongAnswerId) {
+      return res.status(400).json({ error: 'Valid wrong answer ID required' });
+    }
+    
+    // 해당 오답 항목이 사용자 것인지 확인하고 완료 처리
+    const wrongAnswer = await prisma.wronganswer.updateMany({
+      where: {
+        id: wrongAnswerId,
+        userId: req.user.id,
+        isCompleted: false
+      },
+      data: {
+        isCompleted: true,
+        completedAt: new Date()
+      }
+    });
+    
+    if (wrongAnswer.count === 0) {
+      return res.status(404).json({ error: 'Wrong answer not found or already completed' });
+    }
+    
+    return res.json({ 
+      message: 'Wrong answer resolved successfully',
+      data: { resolved: true }
+    });
+  } catch (e) {
+    console.error('POST /odat-note/:id/resolve failed:', e);
+    return res.status(500).json({ error: 'Failed to resolve wrong answer' });
   }
 });
 

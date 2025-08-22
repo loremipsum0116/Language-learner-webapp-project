@@ -22,9 +22,16 @@ module.exports = function auth(req, res, next) {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { id: payload.id, role: payload.role || 'USER' };
+    req.user = { 
+      id: payload.id, 
+      email: payload.email,
+      role: payload.role || 'USER' 
+    };
+    console.log('[AUTH] User authenticated:', req.user);
     return next();
   } catch (err) {
+    console.error('[AUTH] Token verification failed:', err.message);
+    console.error('[AUTH] Request path:', req.path);
     return res.status(401).json({ ok: false, error: 'Invalid token' });
   }
 };

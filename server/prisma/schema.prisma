@@ -262,7 +262,9 @@ model vocab {
 model wronganswer {
   id                Int        @id @default(autoincrement())
   userId            Int
-  vocabId           Int
+  itemType          String     @default("vocab") // "vocab", "grammar", "reading", "listening"
+  itemId            Int
+  vocabId           Int?       // 기존 호환성을 위해 nullable로 변경
   wrongAt           DateTime   @default(now())
   reviewWindowStart DateTime
   reviewWindowEnd   DateTime
@@ -270,13 +272,15 @@ model wronganswer {
   isCompleted       Boolean    @default(false)
   attempts          Int        @default(0)
   folderId          Int?
+  wrongData         Json?      // 오답 상세 정보 (문제 내용, 선택한 답 등)
   folder            srsfolder? @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
   user              user       @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
-  vocab             vocab      @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
+  vocab             vocab?     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
 
-  @@unique([userId, vocabId, folderId, wrongAt], map: "WrongAnswer_userId_vocabId_folderId_wrongAt_key")
+  @@unique([userId, itemType, itemId, folderId, wrongAt], map: "WrongAnswer_userId_itemType_itemId_folderId_wrongAt_key")
   @@index([reviewWindowStart, reviewWindowEnd], map: "WrongAnswer_reviewWindowStart_reviewWindowEnd_idx")
   @@index([userId, isCompleted], map: "WrongAnswer_userId_isCompleted_idx")
+  @@index([userId, itemType], map: "WrongAnswer_userId_itemType_idx")
   @@index([vocabId], map: "WrongAnswer_vocabId_fkey")
   @@index([folderId], map: "WrongAnswer_folderId_fkey")
 }
