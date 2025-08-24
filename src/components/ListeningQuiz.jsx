@@ -106,9 +106,19 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
             }
           })
         }));
-        console.log(`[리스닝 오답 기록 완료] ${level} - ${currentQuestion.topic}`);
+        console.log(`✅ [리스닝 오답 기록 완료] ${level} - ${currentQuestion.topic}`);
+        // 사용자에게 알림 (선택적)
+        // toast.info(`오답이 오답노트에 저장되었습니다. (리스닝: ${currentQuestion.topic})`);
       } catch (error) {
-        console.error('리스닝 오답 기록 실패:', error);
+        console.error('❌ 리스닝 오답 기록 실패:', error);
+        // 사용자에게 오답 기록 실패 알림
+        if (error.message.includes('Unauthorized')) {
+          console.warn('⚠️ 로그인이 필요합니다. 오답노트 기록을 위해 로그인해주세요.');
+          toast.warn('로그인이 필요합니다. 오답노트에 기록하려면 로그인해주세요.');
+        } else {
+          console.warn('⚠️ 오답노트 저장에 실패했습니다. 네트워크 연결을 확인해주세요.');
+          toast.error('오답노트 저장에 실패했습니다.');
+        }
       }
     }
   };

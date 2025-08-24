@@ -270,43 +270,6 @@ export default function App() {
             } 
           />
           
-          {/* Reading 관련 라우트 */}
-          <Route 
-            path="/reading" 
-            element={
-              <>
-                <Header />
-                <div className="main-content">
-                  <ReadingList />
-                </div>
-                <Footer />
-              </>
-            } 
-          />
-          <Route 
-            path="/reading/practice" 
-            element={
-              <>
-                <Header />
-                <div className="main-content">
-                  <Reading />
-                </div>
-                <Footer />
-              </>
-            } 
-          />
-          <Route 
-            path="/reading/review" 
-            element={
-              <>
-                <Header />
-                <div className="main-content">
-                  <ReadingReview />
-                </div>
-                <Footer />
-              </>
-            } 
-          />
           
           {/* Listening 관련 라우트 */}
           <Route 
@@ -350,6 +313,44 @@ export default function App() {
             />
           </Route>
         </Route>
+
+        {/* Reading 관련 라우트 (공개 접근) */}
+        <Route 
+          path="/reading" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <ReadingList />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/reading/practice" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <Reading />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/reading/review" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <ReadingReview />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
 
         {/* 공개 라우트 */}
         <Route 

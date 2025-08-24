@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import './ReadingList.css';
 
 export default function ReadingList() {
+    const [searchParams] = useSearchParams();
+    const selectedLevel = searchParams.get('level');
+    
     const [levelData, setLevelData] = useState({});
+    const [questions, setQuestions] = useState([]);
+    const [studyHistory, setStudyHistory] = useState({});
     const [loading, setLoading] = useState(true);
+    const [questionsLoading, setQuestionsLoading] = useState(false);
 
     const levels = [
         { 
@@ -46,7 +52,10 @@ export default function ReadingList() {
 
     useEffect(() => {
         loadLevelData();
-    }, []);
+        if (selectedLevel) {
+            loadQuestionsForLevel(selectedLevel);
+        }
+    }, [selectedLevel]);
 
     const loadLevelData = async () => {
         setLoading(true);
@@ -78,6 +87,44 @@ export default function ReadingList() {
         setLoading(false);
     };
 
+    const loadQuestionsForLevel = async (level) => {
+        setQuestionsLoading(true);
+        try {
+            // 문제 목록 로드
+            const questionsResponse = await fetch(`http://localhost:4000/api/reading/practice/${level}`);
+            if (questionsResponse.ok) {
+                const questionsResult = await questionsResponse.json();
+                setQuestions(questionsResult.data || []);
+            } else {
+                console.error(`Failed to load questions for ${level}`);
+                setQuestions([]);
+            }
+
+            // 학습 기록 로드 (로그인된 경우만)
+            try {
+                const historyResponse = await fetch(`http://localhost:4000/api/reading/history/${level}`, {
+                    credentials: 'include'
+                });
+                if (historyResponse.ok) {
+                    const historyResult = await historyResponse.json();
+                    setStudyHistory(historyResult.data || {});
+                } else if (historyResponse.status !== 401) {
+                    console.error(`Failed to load history for ${level}`);
+                }
+            } catch (historyErr) {
+                console.log('History loading failed (user might not be logged in):', historyErr);
+                setStudyHistory({});
+            }
+            
+        } catch (err) {
+            console.error(`Error loading questions for ${level}:`, err);
+            setQuestions([]);
+            setStudyHistory({});
+        } finally {
+            setQuestionsLoading(false);
+        }
+    };
+
     const getDifficultyInfo = (levelCode) => {
         switch (levelCode) {
             case 'A1': return { icon: '🌱', difficulty: '매우 쉬움' };
@@ -89,6 +136,25 @@ export default function ReadingList() {
         }
     };
 
+    // UTC를 KST로 변환하는 함수
+    const formatKSTDate = (utcDateString) => {
+        const date = new Date(utcDateString);
+        const kstDate = new Date(date.getTime() + (9 * 60 * 60 * 1000)); // UTC + 9시간
+        return kstDate.toLocaleString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        }) + ' (KST)';
+    };
+
+    // 문제별 학습 기록 가져오기
+    const getStudyRecord = (questionId) => {
+        return studyHistory[questionId];
+    };
+
     if (loading) {
         return (
             <main className="container py-4">
@@ -97,6 +163,157 @@ export default function ReadingList() {
                         <span className="visually-hidden">Loading...</span>
                     </div>
                     <p className="mt-2">리딩 레벨 정보를 불러오는 중...</p>
+                </div>
+            </main>
+        );
+    }
+
+    // 선택된 레벨이 있으면 해당 레벨의 문제 목록을 보여줌
+    if (selectedLevel) {
+        const currentLevelInfo = levels.find(l => l.code === selectedLevel);
+        const difficultyInfo = getDifficultyInfo(selectedLevel);
+        
+        return (
+            <main className="container py-4">
+                <div className="reading-level-detail">
+                    {/* Header */}
+                    <div className="level-detail-header">
+                        <div className="level-info-header">
+                            <Link to="/reading" className="back-link">← 레벨 선택으로 돌아가기</Link>
+                            <div className="level-badge" style={{ backgroundColor: currentLevelInfo?.color || '#666' }}>
+                                {difficultyInfo.icon} {selectedLevel}
+                            </div>
+                        </div>
+                        <h1 className="level-title">{selectedLevel} 레벨 리딩 문제</h1>
+                        <p className="level-subtitle">
+                            {currentLevelInfo?.description || '리딩 문제를 풀어보세요.'}
+                        </p>
+                    </div>
+
+                    {/* Questions List */}
+                    {questionsLoading ? (
+                        <div className="text-center py-5">
+                            <div className="spinner-border text-primary" role="status">
+                                <span className="visually-hidden">문제를 불러오는 중...</span>
+                            </div>
+                            <p className="mt-2">문제를 불러오는 중...</p>
+                        </div>
+                    ) : questions.length === 0 ? (
+                        <div className="alert alert-warning text-center">
+                            <h4>📭 문제가 없습니다</h4>
+                            <p>{selectedLevel} 레벨의 문제를 찾을 수 없습니다.</p>
+                            <Link to="/reading" className="btn btn-primary">다른 레벨 선택하기</Link>
+                        </div>
+                    ) : (
+                        <div className="questions-container">
+                            <div className="questions-summary mb-4">
+                                <div className="row text-center">
+                                    <div className="col-md-4">
+                                        <div className="summary-card">
+                                            <h3>{questions.length}</h3>
+                                            <p>총 문제 수</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="summary-card">
+                                            <h3>약 {Math.ceil(questions.length * 1.5)}분</h3>
+                                            <p>예상 소요시간</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-4">
+                                        <div className="summary-card">
+                                            <h3>{difficultyInfo.difficulty}</h3>
+                                            <p>난이도</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="questions-grid">
+                                {questions.map((question, index) => {
+                                    const studyRecord = getStudyRecord(question.id);
+                                    const hasStudied = !!studyRecord;
+                                    const isCorrect = studyRecord?.wrongData?.isCorrect;
+                                    
+                                    return (
+                                        <div 
+                                            key={question.id || index} 
+                                            className={`question-card ${
+                                                hasStudied 
+                                                    ? isCorrect ? 'studied-correct' : 'studied-incorrect'
+                                                    : ''
+                                            }`}
+                                        >
+                                            <div className="question-header">
+                                                <span className="question-number">#{index + 1}</span>
+                                                <div className="question-actions">
+                                                    <Link 
+                                                        to={`/reading/practice?level=${selectedLevel}&start=${index}`}
+                                                        className="btn btn-primary btn-sm"
+                                                    >
+                                                        풀어보기
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            
+                                            {hasStudied && (
+                                                <div className="study-status">
+                                                    <div className="status-badge">
+                                                        {isCorrect ? '✅ 정답' : '❌ 오답'}
+                                                    </div>
+                                                    <div className="last-study-date">
+                                                        마지막 학습: {formatKSTDate(studyRecord.wrongAt)}
+                                                    </div>
+                                                </div>
+                                            )}
+                                        
+                                        <div className="question-content">
+                                            <div className="passage-preview">
+                                                <strong>지문:</strong>
+                                                <p>{question.passage?.substring(0, 100)}...</p>
+                                            </div>
+                                            <div className="question-preview">
+                                                <strong>문제:</strong>
+                                                <p>{question.question}</p>
+                                            </div>
+                                            <div className="options-preview">
+                                                <strong>선택지:</strong>
+                                                <div className="options-mini">
+                                                    {Object.entries(question.options || {}).map(([key, value]) => (
+                                                        <span key={key} className="option-mini">
+                                                            {key}: {value.substring(0, 20)}...
+                                                        </span>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    );
+                                })}
+                            </div>
+
+                            <div className="level-actions-footer mt-4">
+                                <div className="row">
+                                    <div className="col-md-6">
+                                        <Link 
+                                            to={`/reading/practice?level=${selectedLevel}`}
+                                            className="btn btn-success btn-lg w-100"
+                                        >
+                                            🚀 처음부터 시작하기
+                                        </Link>
+                                    </div>
+                                    <div className="col-md-6">
+                                        <Link 
+                                            to="/reading"
+                                            className="btn btn-outline-secondary btn-lg w-100"
+                                        >
+                                            📚 다른 레벨 선택
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </main>
         );

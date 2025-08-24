@@ -79,9 +79,17 @@ export default function GrammarQuiz() {
                         }
                     })
                 }));
-                console.log(`[문법 오답 기록 완료] ${topic.title} - 문제 ${currentIndex + 1}`);
+                console.log(`✅ [문법 오답 기록 완료] ${topic.title} - 문제 ${currentIndex + 1}`);
+                // 사용자에게 알림 (선택적)
+                // alert(`오답이 오답노트에 저장되었습니다. (문법: ${topic.title})`);
             } catch (error) {
-                console.error('문법 오답 기록 실패:', error);
+                console.error('❌ 문법 오답 기록 실패:', error);
+                // 사용자에게 오답 기록 실패 알림
+                if (error.message.includes('Unauthorized')) {
+                    console.warn('⚠️ 로그인이 필요합니다. 오답노트 기록을 위해 로그인해주세요.');
+                } else {
+                    console.warn('⚠️ 오답노트 저장에 실패했습니다. 네트워크 연결을 확인해주세요.');
+                }
             }
         }
     };
@@ -154,6 +162,11 @@ export default function GrammarQuiz() {
                     {incorrectAnswers.length > 0 && (
                         <div className="alert alert-warning mt-3">
                             <strong>부족한 부분:</strong> {incorrectAnswers.length}개의 틀린 문제가 있습니다.
+                            <div className="mt-2">
+                                <Link to="/wrong-answers?tab=grammar" className="btn btn-sm btn-outline-primary">
+                                    📝 문법 오답노트에서 복습하기
+                                </Link>
+                            </div>
                         </div>
                     )}
                     <div className="d-flex justify-content-center gap-3 mt-4">

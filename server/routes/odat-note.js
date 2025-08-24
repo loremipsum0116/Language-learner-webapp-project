@@ -256,15 +256,16 @@ router.post('/create', async (req, res) => {
     // type 필드가 있으면 itemType으로 변환하고 itemId 생성
     if (type && !itemType) {
       itemType = type;
-      // wrongData에서 고유 ID 생성
-      if (type === 'reading' && wrongData?.level && wrongData?.questionIndex !== undefined) {
-        itemId = `${wrongData.level}_${wrongData.questionIndex}`;
-      } else if (type === 'grammar' && wrongData?.topicId && wrongData?.questionIndex !== undefined) {
-        itemId = `${wrongData.topicId}_${wrongData.questionIndex}`;
+      // wrongData에서 고유 ID 생성 (정수)
+      if (type === 'reading' && wrongData?.questionIndex !== undefined) {
+        itemId = wrongData.questionIndex + 1000; // 리딩: 1000번대
+      } else if (type === 'grammar' && wrongData?.questionIndex !== undefined) {
+        itemId = wrongData.questionIndex + 2000; // 문법: 2000번대
       } else if (type === 'listening' && wrongData?.questionId) {
-        itemId = wrongData.questionId;
+        // listening의 questionId가 이미 숫자라면 그대로 사용
+        itemId = parseInt(wrongData.questionId) || (wrongData.questionIndex + 3000);
       } else {
-        itemId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        itemId = Date.now() % 1000000; // 타임스탬프의 마지막 6자리
       }
     }
     
@@ -286,7 +287,7 @@ router.post('/create', async (req, res) => {
       where: {
         userId: req.user.id,
         itemType: finalItemType,
-        itemId: String(finalItemId),
+        itemId: finalItemId,
         isCompleted: false
       }
     });
@@ -312,7 +313,7 @@ router.post('/create', async (req, res) => {
         data: {
           userId: req.user.id,
           itemType: finalItemType,
-          itemId: String(finalItemId),
+          itemId: finalItemId,
           attempts: 1,
           wrongAt: new Date(),
           wrongData: wrongData || {},
@@ -392,20 +393,32 @@ router.post('/', async (req, res) => {
       body: { type, wrongData }
     };
     
-    // /create 엔드포인트의 로직을 직접 호출
-    const { itemType, itemId } = req.body;
+    // /create 엔드포인트의 로직을 직접 호출 (type, wrongData만 사용)
     let finalItemType = type;
     let finalItemId;
     
-    // wrongData에서 고유 ID 생성
-    if (type === 'reading' && wrongData?.level && wrongData?.questionIndex !== undefined) {
-      finalItemId = `${wrongData.level}_${wrongData.questionIndex}`;
-    } else if (type === 'grammar' && wrongData?.topicId && wrongData?.questionIndex !== undefined) {
-      finalItemId = `${wrongData.topicId}_${wrongData.questionIndex}`;
+    // wrongData에서 고유 ID 생성 (정수)
+    if (type === 'reading' && wrongData?.questionIndex !== undefined) {
+      finalItemId = wrongData.questionIndex + 1000; // 리딩: 1000번대
+    } else if (type === 'grammar' && wrongData?.questionIndex !== undefined) {
+      finalItemId = wrongData.questionIndex + 2000; // 문법: 2000번대
     } else if (type === 'listening' && wrongData?.questionId) {
-      finalItemId = wrongData.questionId;
+      // listening의 questionId가 문자열이면 해시로 변환
+      const questionId = wrongData.questionId;
+      if (typeof questionId === 'string') {
+        // 문자열 ID를 숫자로 변환 (해시 기반)
+        let hash = 0;
+        for (let i = 0; i < questionId.length; i++) {
+          const char = questionId.charCodeAt(i);
+          hash = ((hash << 5) - hash) + char;
+          hash = hash & hash; // 32bit로 변환
+        }
+        finalItemId = Math.abs(hash) + 3000; // 리스닝: 3000번대
+      } else {
+        finalItemId = parseInt(questionId) + 3000;
+      }
     } else {
-      finalItemId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      finalItemId = Date.now() % 1000000; // 타임스탬프의 마지막 6자리
     }
     
     // 지원되는 타입 체크
@@ -419,7 +432,7 @@ router.post('/', async (req, res) => {
       where: {
         userId: req.user.id,
         itemType: finalItemType,
-        itemId: String(finalItemId),
+        itemId: finalItemId,
         isCompleted: false
       }
     });
@@ -444,7 +457,7 @@ router.post('/', async (req, res) => {
         data: {
           userId: req.user.id,
           itemType: finalItemType,
-          itemId: String(finalItemId),
+          itemId: finalItemId,
           attempts: 1,
           wrongAt: new Date(),
           wrongData: wrongData || {},

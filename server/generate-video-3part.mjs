@@ -1,5 +1,6 @@
-// server/generate-video-3part.mjs
-// Node 18+ (global fetch), ffmpeg/ffprobe 필요
+// server/mona-6sec.mjs
+// 요구: ffmpeg/ffprobe 설치, npm i @google/genai @google-cloud/text-to-speech
+// 환경변수: GOOGLE_API_KEY, GOOGLE_APPLICATION_CREDENTIALS
 
 import 'dotenv/config';
 import { promises as fs } from 'fs';
@@ -7,25 +8,24 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { spawn } from 'child_process';
 import { GoogleGenAI } from '@google/genai';
+import textToSpeech from '@google-cloud/text-to-speech';
 
 const API_KEY = process.env.GOOGLE_API_KEY;
 if (!API_KEY) throw new Error('GOOGLE_API_KEY 가 설정되지 않았습니다.');
 
-const MODEL_VEO = 'veo-3.0-generate-preview';    // Veo 3 비디오 (8s, 16:9)
-const MODEL_IMG = 'imagen-3.0-generate-002';     // 앵커 이미지 생성
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT_DIR = path.join(__dirname, 'out');
-const FINAL_OUTPUT = path.join(OUT_DIR, 'danmusae_ad_concat.mp4');
-const SUBBED_OUTPUT = path.join(OUT_DIR, 'danmusae_ad_concat_sub_ko.mp4');
-const SRT_PATH = path.join(OUT_DIR, 'captions_ko.srt');
-const ANCHOR_IMG_PATH = path.join(OUT_DIR, 'look_anchor.png');
-const REGEN_ANCHOR = process.env.REGEN_ANCHOR === '1';
+const ANCHOR_IMG_PATH = path.join(OUT_DIR, 'look_anchor.png'); // 모나리자 이미지(이미 존재)
+const RAW_VIDEO = path.join(OUT_DIR, 'mona_raw.mp4');
+const NORM_VIDEO = path.join(OUT_DIR, 'mona_norm.mp4');
+const FINAL_AUDIO = path.join(OUT_DIR, 'mona_voice_6s.wav');
+const FINAL_OUTPUT = path.join(OUT_DIR, 'mona_6s.mp4');
+
+const TARGET_SEC = 6.0;
 
 const ai = new GoogleGenAI({ apiKey: API_KEY });
+const ttsClient = new textToSpeech.TextToSpeechClient();
 const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-const TARGET_CLIP_SEC = 8.0;   // Veo preview 목표 길이
-const MIN_CLIP_SEC = 7.8;      // 이보다 짧으면 패딩으로 보정
 
 /* ---------- 공용 유틸 ---------- */
 function run(cmd, args, opts = {}) {
@@ -35,7 +35,7 @@ function run(cmd, args, opts = {}) {
     p.on('close', code => (code === 0 ? resolve() : reject(new Error(`${cmd} exited ${code}`))));
   });
 }
-function runCapture(cmd, args, opts = {}) {
+async function runCapture(cmd, args, opts = {}) {
   return new Promise((resolve, reject) => {
     const p = spawn(cmd, args, { stdio: ['ignore', 'pipe', 'pipe'], ...opts });
     let out = '', err = '';
@@ -50,25 +50,33 @@ async function ensureFfmpeg() {
     await run('ffmpeg', ['-version']);
     await run('ffprobe', ['-version']);
   } catch {
-    throw new Error('ffmpeg/ffprobe 가 설치되어 있지 않거나 PATH에 없습니다. 설치 후 재시도하세요.');
+    throw new Error('ffmpeg/ffprobe 가 필요합니다. 설치 후 재시도하세요.');
   }
 }
 async function ensureOutDir() { await fs.mkdir(OUT_DIR, { recursive: true }); }
 async function fileExists(p) { try { await fs.access(p); return true; } catch { return false; } }
+async function readFileBase64(p) { const b = await fs.readFile(p); return b.toString('base64'); }
+async function getDurationSec(filePath) {
+  const out = await runCapture('ffprobe', [
+    '-v', 'error', '-show_entries', 'format=duration',
+    '-of', 'default=noprint_wrappers=1:nokey=1', filePath,
+  ]);
+  const n = parseFloat(out);
+  if (!isFinite(n)) throw new Error(`ffprobe duration 파싱 실패: ${filePath} (${out})`);
+  return n;
+}
 
-/* ---------- MP4 유효성 검사 & 안전 다운로드 ---------- */
+/* ---------- 안전 다운로드 유틸 (files/… 또는 URI 모두 지원) ---------- */
 async function isLikelyMp4(filePath) {
   try {
     const stat = await fs.stat(filePath);
-    if (!stat || stat.size < 100 * 1024) return false; // 100KB 미만은 비정상으로 간주
+    if (!stat || stat.size < 100 * 1024) return false;
     const head = await fs.readFile(filePath);
     return head.indexOf(Buffer.from('ftyp')) !== -1;
   } catch {
     return false;
   }
 }
-
-// URI 직접 다운로드(리다이렉트/헤더 포함)
 async function downloadByUri(uri, outPath, maxHops = 5) {
   let current = uri;
   for (let i = 0; i < maxHops; i++) {
@@ -89,8 +97,6 @@ async function downloadByUri(uri, outPath, maxHops = 5) {
   }
   throw new Error('리다이렉트 한도 초과');
 }
-
-// fileRef가 object(name/uri) 또는 string 모두 처리
 async function safeDownloadVideo({ fileRef, downloadPath, maxRetries = 3 }) {
   const tmp = downloadPath + '.part';
   let lastErr = null;
@@ -128,302 +134,168 @@ async function safeDownloadVideo({ fileRef, downloadPath, maxRetries = 3 }) {
   }
   throw lastErr || new Error('Failed to download valid MP4');
 }
-function assertVideoInOperation(operation, tag = 'op') {
-  const videoFile = operation?.response?.generatedVideos?.[0]?.video;
-  if (!videoFile) {
-    console.error(`[${tag}] No generated video. Full operation:`, JSON.stringify(operation, null, 2));
-    throw new Error('Veo returned no video (blocked/safety/quota?).');
-  }
-  return videoFile;
-}
 
-/* ---------- 길이 보정(필요 시 패딩) ---------- */
-async function getDurationSec(filePath) {
-  const out = await runCapture('ffprobe', [
-    '-v', 'error', '-show_entries', 'format=duration',
-    '-of', 'default=noprint_wrappers=1:nokey=1', filePath,
-  ]);
-  const n = parseFloat(out);
-  if (!isFinite(n)) throw new Error(`ffprobe duration 파싱 실패: ${filePath} (${out})`);
-  return n;
-}
-async function hasAudio(filePath) {
-  try {
-    const out = await runCapture('ffprobe', [
-      '-v', 'error', '-select_streams', 'a:0',
-      '-show_entries', 'stream=codec_type',
-      '-of', 'csv=s=x:p=0', filePath,
-    ]);
-    return /audio/.test(out);
-  } catch {
-    return false;
-  }
-}
-async function ensureMinDuration(filePath, minSec = MIN_CLIP_SEC, targetSec = TARGET_CLIP_SEC) {
-  const d = await getDurationSec(filePath);
-  if (d >= minSec) return filePath;
-  const pad = Math.max(0, targetSec - d);
-  const tmp = filePath.replace(/\.mp4$/, '-pad.mp4');
-  const audio = await hasAudio(filePath);
-  if (audio) {
-    // 비디오 클론 패드 + 오디오 무음 패드
-    await run('ffmpeg', [
-      '-y', '-i', filePath,
-      '-filter_complex', `[0:v]tpad=stop_mode=clone:stop_duration=${pad}[v];[0:a]apad=pad_dur=${pad}[a]`,
-      '-map', '[v]', '-map', '[a]',
-      '-c:v', 'libx264', '-c:a', 'aac', '-shortest', tmp,
-    ]);
-  } else {
-    // 오디오 없는 경우: 영상만 패드
-    await run('ffmpeg', [
-      '-y', '-i', filePath,
-      '-vf', `tpad=stop_mode=clone:stop_duration=${pad}`,
-      '-c:v', 'libx264', '-an', tmp,
-    ]);
-  }
-  await fs.rename(tmp, filePath);
-  console.log(`[LENGTH] ${path.basename(filePath)}: ${d.toFixed(2)}s → >= ${targetSec}s (padded ${pad.toFixed(2)}s)`);
-  return filePath;
-}
+/* ---------- Veo 3 비디오 생성 ---------- */
+async function generateMonaVideo(anchorB64) {
+  const MODEL_VEO = 'veo-3.0-generate-preview';
 
-/* ---------- 앵커 이미지 생성(파일) ---------- */
-async function generateAnchorImagePNG(outPath) {
-  console.log('[ANCHOR] 이미지 생성 시작');
   const prompt = `
-High-resolution photorealistic **reference still photo** for a video shoot.
-LOCATION: outdoor **city sidewalk/street**, **5 PM (17:00)**, same block for all shots. Natural color grade, eye-level ~35mm, soft bokeh, no text/captions.
-CAST (LOCK ACROSS ALL CLIPS):
-- A: Black male, **extremely heavyset / obese** (large protruding belly, thick neck and arms), **shaved head**, **completely clean-shaven** (**no moustache, no beard, no stubble**); outfit: black hoodie + gray joggers; **cheeseburger in left hand (white wrapper)**.
-- B: Black male, average build, short curly hair, **very light five o'clock shadow**; outfit: denim jacket + white T-shirt + dark jeans.
-FRAMING: two-shot, head-to-mid-thigh, walking toward camera; storefronts/trees/signs visible for background lock. Use as a **look anchor** for later video generation.
+# GOAL
+A 6-second single shot video. Use the given anchor image (Mona Lisa) as the subject.
+No text on screen. One continuous take, locked framing (bust/shoulders-up). Natural museum-like lighting.
+Subtle micro head/eye movements. **Mouth articulates as if speaking the Korean line**.
+Keep the original painting's style respectful and realistic.
+
+# CAMERA
+- Framing: bust/shoulders-up, straight-on, eye-level.
+- Duration: **about 6 seconds** (single shot).
+- No cuts, no transitions, no zooms.
+
+# AUDIO (model-side)
+- If your model generates audio, **Korean female voice** only, speaking the line below. No music/SFX.
+- Otherwise, keep silent; external TTS will be muxed.
+
+# DIALOGUE (KOREAN — EXACT)
+"영단어를 노트에 수백 번 써 봤지만, 아까운 잉크만 낭비했다구요?"
+
+# BANS
+- No on-screen text/captions/subtitles/signage/numbers/logos.
+- No extra characters.
+- No flicker, no heavy distortions, no mouth sync drift spikes.
 `.trim();
 
-  const resp = await ai.models.generateImages({
-    model: MODEL_IMG,
-    prompt,
-    negativePrompt: 'full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns, text overlay, subtitle, signage, watermark, logo'
-  });
-
-  const image = resp.generatedImages?.[0]?.image;
-  const b64 = image?.imageBytes;
-  if (!b64) throw new Error('앵커 이미지 생성 실패(빈 응답).');
-  await fs.writeFile(outPath, Buffer.from(b64, 'base64'));
-  console.log('[ANCHOR] 저장 완료:', outPath);
-  return outPath;
-}
-async function readFileBase64(p) {
-  const buf = await fs.readFile(p);
-  return buf.toString('base64');
-}
-
-/* ---------- Veo 3 생성 & 폴링 ---------- */
-// clip4에서만 negativePrompt 오버라이드(미소 허용)
-async function startVeoJobAndWait({ prompt, imageBase64, negativeOverride }) {
-  const defaultNegative =
-    'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns, smile, smiling, grin, laughter, laugh';
-
-  const negativePrompt = typeof negativeOverride === 'string' ? negativeOverride : defaultNegative;
+  const negativePrompt =
+    'text overlays, captions, subtitle, subs, CC, signage, logo, numbers, extra person, shaky cam, whip pan, jump cut, heavy distortion';
 
   let op = await ai.models.generateVideos({
     model: MODEL_VEO,
     prompt,
-    image: imageBase64 ? { imageBytes: imageBase64, mimeType: 'image/png' } : undefined,
+    image: anchorB64 ? { imageBytes: anchorB64, mimeType: 'image/png' } : undefined,
     config: {
       aspectRatio: '16:9',
       negativePrompt,
       personGeneration: 'allow_adult',
     },
   });
+
   while (!op.done) {
-    await sleep(10_000);
+    await sleep(8000);
     op = await ai.operations.getVideosOperation({ operation: op });
   }
-  return op;
-}
-async function downloadVideoOp(operation, rawPath) {
-  const fileRef = assertVideoInOperation(operation, 'download');
-  await safeDownloadVideo({ fileRef, downloadPath: rawPath, maxRetries: 3 });
-  return rawPath;
-}
 
-/* ---------- 클립 생성(정규화 + 길이보정) ---------- */
-async function generateClip(prompt, fileBase, imageBase64, opts = {}) {
-  console.log(`
-[START] ${fileBase} 생성 요청`);
-  const op = await startVeoJobAndWait({
-    prompt,
-    imageBase64,
-    negativeOverride: opts.negativeOverride,
-  });
+  const fileRef = op?.response?.generatedVideos?.[0]?.video;
+  if (!fileRef) {
+    console.error('Veo 응답:', JSON.stringify(op, null, 2));
+    throw new Error('Veo가 비디오를 반환하지 않았습니다.');
+  }
 
-  const rawPath = path.join(OUT_DIR, `${fileBase}-raw.mp4`);
-  await downloadVideoOp(op, rawPath);
-  console.log(`[OK] 원본 저장: ${rawPath}`);
+  // ★ 리소스/URI 모두 대응
+  await safeDownloadVideo({ fileRef, downloadPath: RAW_VIDEO, maxRetries: 3 });
 
-  const normPath = path.join(OUT_DIR, `${fileBase}.mp4`);
+  // 정규화(24fps, 픽셀포맷), 오디오 제거(외부 TTS로 대체)
   await run('ffmpeg', [
-    '-y', '-i', rawPath,
+    '-y', '-i', RAW_VIDEO,
     '-r', '24', '-pix_fmt', 'yuv420p',
-    '-c:v', 'libx264', '-c:a', 'aac',
-    normPath,
+    '-an',
+    '-c:v', 'libx264',
+    NORM_VIDEO,
   ]);
-  console.log(`[OK] 정규화 저장: ${normPath}`);
 
-  await ensureMinDuration(normPath, MIN_CLIP_SEC, TARGET_CLIP_SEC);
-  return normPath;
+  // 길이 보정: 부족 시 클론패드, 초과 시 트림
+  const d = await getDurationSec(NORM_VIDEO);
+  if (Math.abs(d - TARGET_SEC) < 0.05) return NORM_VIDEO;
+
+  const tmpOut = NORM_VIDEO.replace(/\.mp4$/, '-lenfix.mp4');
+  if (d < TARGET_SEC) {
+    const pad = (TARGET_SEC - d).toFixed(3);
+    await run('ffmpeg', [
+      '-y', '-i', NORM_VIDEO,
+      '-vf', `tpad=stop_mode=clone:stop_duration=${pad}`,
+      '-c:v', 'libx264', '-an', tmpOut,
+    ]);
+  } else {
+    await run('ffmpeg', [
+      '-y', '-i', NORM_VIDEO,
+      '-t', TARGET_SEC.toString(),
+      '-c:v', 'libx264', '-an', tmpOut,
+    ]);
+  }
+  await fs.rename(tmpOut, NORM_VIDEO);
+  return NORM_VIDEO;
 }
 
-/* ---------- 결합/메타 ---------- */
-async function concatClips(clips, outPath) {
-  console.log(`
-[MERGE] ${clips.length}개 클립 결합 → ${outPath}`);
-  const args = ['-y'];
-  for (const c of clips) args.push('-i', c);
-  const inputs = clips.map((_, i) => `[${i}:v][${i}:a]`).join('');
-  const filter = `${inputs}concat=n=${clips.length}:v=1:a=1[v][a]`;
-  args.push(
-    '-filter_complex', filter,
-    '-map', '[v]', '-map', '[a]',
-    '-c:v', 'libx264', '-c:a', 'aac', '-movflags', '+faststart',
+/* ---------- TTS(ko-KR, 여성) + 6초 길이 강제 ---------- */
+async function synthesizeKoreanFemale(line) {
+  const req = {
+    input: { text: line },
+    voice: {
+      languageCode: 'ko-KR',
+      name: 'ko-KR-Neural2-A',
+      ssmlGender: 'FEMALE',
+    },
+    audioConfig: {
+      audioEncoding: 'LINEAR16',
+      speakingRate: 1.0,
+      pitch: 0.0,
+      sampleRateHertz: 48000,
+    },
+  };
+  const [resp] = await ttsClient.synthesizeSpeech(req);
+  const wavPath = path.join(OUT_DIR, 'mona_voice_raw.wav');
+  await fs.writeFile(wavPath, resp.audioContent);
+
+  // 6초로 패딩/트림
+  const fixed = FINAL_AUDIO;
+  await run('ffmpeg', [
+    '-y', '-i', wavPath,
+    '-af', `apad=pad_dur=10,atrim=0:${TARGET_SEC}`,
+    '-ac', '2', '-ar', '48000',
+    fixed,
+  ]);
+  return fixed;
+}
+
+/* ---------- 비디오+오디오 믹싱 ---------- */
+async function muxVideoAudio(videoPath, audioPath, outPath) {
+  await run('ffmpeg', [
+    '-y',
+    '-i', videoPath,
+    '-i', audioPath,
+    '-map', '0:v:0',
+    '-map', '1:a:0',
+    '-c:v', 'libx264',
+    '-c:a', 'aac',
+    '-shortest',
+    '-movflags', '+faststart',
     outPath,
-  );
-  await run('ffmpeg', args);
-  console.log('[OK] 결합 완료');
-}
-function toSrtTime(sec) {
-  const ms = Math.max(0, Math.round(sec * 1000));
-  const hh = String(Math.floor(ms / 3600000)).padStart(2, '0');
-  const mm = String(Math.floor((ms % 3600000) / 60000)).padStart(2, '0');
-  const ss = String(Math.floor((ms % 60000) / 1000)).padStart(2, '0');
-  const mmm = String(ms % 1000).padStart(3, '0');
-  return `${hh}:${mm}:${ss},${mmm}`;
+  ]);
 }
 
-/* ---------- SRT(clip1 + clip3만) ---------- */
-async function writeKoreanSubtitles(d1, d3) {
-  const m = 0.20;
-  const p1aStart = 0 + m;
-  const p1aEnd = Math.min(d1 - m, 3.0);
-  const p1bStart = p1aEnd + 0.05;
-  const p1bEnd = Math.min(d1 - m, 6.6);
-  const off3 = d1;
-  const p3Start = off3 + m;
-  const p3End = off3 + d3 - m;
-
-  const cues = [
-    [1, p1aStart, p1aEnd, '요즘 수능 준비하는데, 영단어가 도무지 머리에 안 들어와.'],
-    [2, p1bStart, p1bEnd, '어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어.'],
-    [3, p3Start, p3End, '레벨별로 세분화된 카테고리와 각종 시험 필수 어휘, 거기에 데일리 리딩, 리스닝, 문법 문제까지! 완전 대박인데!'],
-  ];
-
-  let srt = '';
-  for (const [idx, s, e, text] of cues) {
-    srt += `${idx}
-${toSrtTime(s)} --> ${toSrtTime(e)}
-${text}
-
-`;
-  }
-  await fs.writeFile(SRT_PATH, srt, 'utf8');
-  console.log(`[OK] SRT 저장: ${SRT_PATH}`);
-}
-async function burnSubtitles(input, srt, output) {
-  function escapeForSubtitlesFilter(p) {
-    const abs = path.resolve(p).replace(/\\/g, '/');
-    return abs
-      .replace(/:/g, '\\:')
-      .replace(/\[/g, '\\[')
-      .replace(/\]/g, '\\]')
-      .replace(/'/g, "\\'");
-  }
-  const subPath = escapeForSubtitlesFilter(srt);
-  const forceStyle = 'FontName=Malgun Gothic,Fontsize=28,Outline=1,BorderStyle=3,Alignment=2';
-  const vf = `subtitles='${subPath}':force_style='${forceStyle}'`;
-  await run('ffmpeg', ['-y', '-i', input, '-vf', vf, '-c:v', 'libx264', '-c:a', 'aac', '-movflags', '+faststart', output]);
-  console.log(`[OK] 자막 번인 완료: ${output}`);
-}
-
-
-/* ---------- 프롬프트 빌더 ---------- */
-function buildConsistencyBlock() {
-  return `
-# CONSISTENCY (apply to ALL clips, strong)
-- Only TWO Black male leads appear; no extra faces; silhouettes only in background. **No third person.**
-- TIME: **5 PM (17:00)**. LOCATION: **outdoor city sidewalk/street** only. **NO INTERIORS**.
-- **A is EXTREMELY HEAVYSET/OBESE** and **ABSOLUTELY CLEAN-SHAVEN**; shaved head; cheeseburger in **left** hand (white wrapper).
-- **B** has short curly hair with **very light** five o'clock shadow.
-- Keep identical looks/outfits/props; lock background composition.
-- Camera baseline: eye-level; natural color; **24fps ~180° shutter**.
-- **Bans:** on-screen text/captions/signage/numbers; black frames; jump cuts; whip pans; rack-focus whiplash; **smile/laughter** (may be overridden per-scene).
-`.trim();
-}
-
-// 기존 P1/P3 빌더는 유지(사용하지 않음)
-function buildP1(){ return buildConsistencyBlock(); }
-function buildP3(){ return buildConsistencyBlock(); }
-
-/* ---------- clip4 빌더 (B 클로즈업 시작 → 3초 뒤 와이드, 마지막 B 미소) ---------- */
-function buildP4() {
-  const CONS = buildConsistencyBlock();
-  return `
-${CONS}
-# Scene — clip4 (target ~8s, **single continuous shot**)
-
-## START FRAME (HARD)
-- **Frame 0:** Tight **close-up (CU) on B** at eye level. **B는 첫 프레임부터 아래 한국어 대사를 "그대로" 말하고 있음.** 
-  - **절대 의역/추가/삭제 금지.** (문장/어휘/쉼표/억양 지시 포함 원문을 그대로 재현)
-  - A는 프레임 밖.
-
-## CAMERA CHOREOGRAPHY
-- **0.0–3.0s:** CU on **B** 고정.
-- **3.0s부터:** **매우 부드러운 dolly-out(또는 gentle zoom-out)**으로 **A와 B가 함께 보이는 투샷**을 형성.
-- **3.0–8.0s:** 안정적 와이드로 전환하면서 두 사람의 시선이 말미에 서로를 잠깐 바라보도록 블로킹.
-
-## PERFORMANCE
-- **전 구간 "B만" 발화.** A는 침묵.
-- **오버라이드:** 마지막 **약 0.5s**에만 **B의 자연스러운 작은 미소** 허용(그 외 구간 미소 금지).
-
-## DIALOGUE (KOREAN — EXACT, NO PARAPHRASE)
-B: "영어 학습이 어렵다고? 단무새와 함께라면, 네 머리는 영어사전이 될 거야."
-
-## DURATION
-- 총 길이 **~8.0s**. 5초 컷 금지. 마지막 프레임까지 동작 유지.
-
-## BANS
-- 화면 텍스트/자막/사인/숫자 금지. 블랙 프레임/점프컷/휘핑팬 금지. 제3인물 금지.
-`.trim();
-}
-
-/* ---------- 엔트리 포인트 (clip4만 생성) ---------- */
+/* ---------- 메인 ---------- */
 async function main() {
   await ensureOutDir();
   await ensureFfmpeg();
 
-  // 1) 앵커 이미지 생성/재사용
-  const hasAnchor = await fileExists(ANCHOR_IMG_PATH);
-  if (!hasAnchor || REGEN_ANCHOR) {
-    await generateAnchorImagePNG(ANCHOR_IMG_PATH);
-  } else {
-    console.log('[ANCHOR] 기존 파일 재사용:', ANCHOR_IMG_PATH);
+  if (!(await fileExists(ANCHOR_IMG_PATH))) {
+    throw new Error(`앵커 이미지가 없습니다: ${ANCHOR_IMG_PATH}`);
   }
   const anchorB64 = await readFileBase64(ANCHOR_IMG_PATH);
 
-  // clip4 전용: 미소 허용을 위해 smile 금지어 제거
-  const NEG_ALLOW_SMILE =
-    'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns';
+  // 1) 비디오(6초)
+  const video = await generateMonaVideo(anchorB64);
 
-  // 2) clip4 프롬프트 준비 및 생성 (clip4 only)
-  const P4 = buildP4();
-  const clip4 = await generateClip(P4, 'clip4', anchorB64, { negativeOverride: NEG_ALLOW_SMILE });
+  // 2) 한국어 여성 음성 합성(정확 대사)
+  const LINE = '영단어를 노트에 수백 번 써 봤지만, 아까운 잉크만 낭비했다구요?';
+  const audio = await synthesizeKoreanFemale(LINE);
 
-  // 필요 시 최종 산출물 이름과 동기화
-  await fs.copyFile(clip4, FINAL_OUTPUT);
+  // 3) Mux
+  await muxVideoAudio(video, audio, FINAL_OUTPUT);
 
-  const d4 = await getDurationSec(clip4);
-  console.log(`\n완료: clip4=${clip4} (${d4.toFixed(2)}s)\n`);
+  const finalDur = await getDurationSec(FINAL_OUTPUT);
+  console.log(`\n[완료] ${FINAL_OUTPUT} (${finalDur.toFixed(2)}s)\n`);
 }
 
 main().catch(err => {
-  console.error('파이프라인 오류:', err);
+  console.error('오류:', err);
   process.exit(1);
 });

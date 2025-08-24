@@ -6,9 +6,10 @@ import './Reading.css';
 export default function Reading() {
     const [searchParams] = useSearchParams();
     const level = searchParams.get('level') || 'A1';
+    const startIndex = parseInt(searchParams.get('start')) || 0;
     
     const [readingData, setReadingData] = useState([]);
-    const [currentQuestion, setCurrentQuestion] = useState(0);
+    const [currentQuestion, setCurrentQuestion] = useState(startIndex);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [showExplanation, setShowExplanation] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
@@ -19,7 +20,7 @@ export default function Reading() {
 
     useEffect(() => {
         loadReadingData();
-    }, [level]);
+    }, [level, startIndex]);
 
     const loadReadingData = async () => {
         try {
@@ -40,7 +41,7 @@ export default function Reading() {
                 setError(`${level} 레벨 리딩 데이터가 없습니다.`);
             }
             
-            setCurrentQuestion(0);
+            setCurrentQuestion(startIndex);
             setSelectedAnswer(null);
             setShowExplanation(false);
             setIsCorrect(false);
@@ -63,7 +64,7 @@ export default function Reading() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     itemType: 'reading',
-                    itemId: `${level}_${currentQuestion}`,
+                    itemId: currentQuestion + 1000, // 간단한 정수 ID 생성
                     wrongData: {
                         level: level,
                         questionIndex: currentQuestion,
@@ -76,10 +77,17 @@ export default function Reading() {
                     }
                 })
             }));
-            console.log(`[리딩 오답 기록 완료] ${level} - 문제 ${currentQuestion + 1}`);
+            console.log(`✅ [리딩 오답 기록 완료] ${level} - 문제 ${currentQuestion + 1}`);
+            // 사용자에게 알림 (선택적)
+            // alert(`오답이 오답노트에 저장되었습니다. (리딩: ${level} 레벨)`);
         } catch (error) {
-            console.error('리딩 오답 기록 실패:', error);
-            throw error;
+            if (error.message.includes('Unauthorized')) {
+                console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');
+            } else {
+                console.error('❌ 리딩 오답 기록 실패:', error);
+                console.warn('⚠️ 오답노트 저장에 실패했습니다. 네트워크 연결을 확인해주세요.');
+            }
+            // 오답 기록 실패해도 게임은 계속 진행
         }
     };
 
@@ -103,13 +111,35 @@ export default function Reading() {
         console.log('Debug - completedQuestions has question:', completedQuestions.has(currentQuestion));
         console.log('Debug - Will increase score?', correct && !completedQuestions.has(currentQuestion));
         
+        // 정답/오답 모두 기록 저장 (로그인된 사용자만)
+        try {
+            await fetchJSON('/api/reading/record', withCreds({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    questionId: current.id,
+                    level: level,
+                    isCorrect: correct,
+                    userAnswer: selectedAnswer,
+                    correctAnswer: current.correctAnswer
+                })
+            }));
+            console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
+        } catch (error) {
+            if (error.message === 'Unauthorized') {
+                console.log('📝 [비로그인 사용자] 리딩 기록은 로그인 후 저장됩니다.');
+            } else {
+                console.error('❌ 리딩 기록 저장 실패:', error);
+            }
+        }
+
         if (correct && !completedQuestions.has(currentQuestion)) {
             console.log('Debug - Increasing score');
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
         } else if (!correct) {
             console.log('Debug - Recording wrong answer');
-            // 틀린 경우 오답노트에 기록
+            // 틀린 경우 추가로 오답노트에도 기록
             try {
                 await recordWrongAnswer(current, selectedAnswer);
             } catch (error) {
