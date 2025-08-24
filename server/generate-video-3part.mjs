@@ -217,16 +217,20 @@ async function readFileBase64(p) {
 }
 
 /* ---------- Veo 3 생성 & 폴링 ---------- */
-async function startVeoJobAndWait({ prompt, imageBase64 }) {
+// clip4에서만 negativePrompt 오버라이드(미소 허용)
+async function startVeoJobAndWait({ prompt, imageBase64, negativeOverride }) {
+  const defaultNegative =
+    'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns, smile, smiling, grin, laughter, laugh';
+
+  const negativePrompt = typeof negativeOverride === 'string' ? negativeOverride : defaultNegative;
+
   let op = await ai.models.generateVideos({
     model: MODEL_VEO,
     prompt,
-    image: imageBase64 ? { imageBytes: imageBase64, mimeType: 'image/png' } : undefined, // Image-to-Video
+    image: imageBase64 ? { imageBytes: imageBase64, mimeType: 'image/png' } : undefined,
     config: {
       aspectRatio: '16:9',
-      // 텍스트/자막 전면 금지 + 수염(전반) 억제 + 웃음 억제
-      negativePrompt:
-        'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns, smile, smiling, grin, laughter, laugh',
+      negativePrompt,
       personGeneration: 'allow_adult',
     },
   });
@@ -243,10 +247,14 @@ async function downloadVideoOp(operation, rawPath) {
 }
 
 /* ---------- 클립 생성(정규화 + 길이보정) ---------- */
-async function generateClip(prompt, fileBase, imageBase64) {
+async function generateClip(prompt, fileBase, imageBase64, opts = {}) {
   console.log(`
 [START] ${fileBase} 생성 요청`);
-  const op = await startVeoJobAndWait({ prompt, imageBase64 });
+  const op = await startVeoJobAndWait({
+    prompt,
+    imageBase64,
+    negativeOverride: opts.negativeOverride,
+  });
 
   const rawPath = path.join(OUT_DIR, `${fileBase}-raw.mp4`);
   await downloadVideoOp(op, rawPath);
@@ -261,7 +269,6 @@ async function generateClip(prompt, fileBase, imageBase64) {
   ]);
   console.log(`[OK] 정규화 저장: ${normPath}`);
 
-  // 길이 보정(5초로 잘리는 문제 대응)
   await ensureMinDuration(normPath, MIN_CLIP_SEC, TARGET_CLIP_SEC);
   return normPath;
 }
@@ -294,15 +301,11 @@ function toSrtTime(sec) {
 
 /* ---------- SRT(clip1 + clip3만) ---------- */
 async function writeKoreanSubtitles(d1, d3) {
-  const m = 0.20; // 안전 마진
-
-  // clip1: 두 줄 (A)
+  const m = 0.20;
   const p1aStart = 0 + m;
   const p1aEnd = Math.min(d1 - m, 3.0);
   const p1bStart = p1aEnd + 0.05;
   const p1bEnd = Math.min(d1 - m, 6.6);
-
-  // clip3: 한 줄 (A 기능 나열)
   const off3 = d1;
   const p3Start = off3 + m;
   const p3End = off3 + d3 - m;
@@ -325,14 +328,13 @@ ${text}
   console.log(`[OK] SRT 저장: ${SRT_PATH}`);
 }
 async function burnSubtitles(input, srt, output) {
-  // ffmpeg subtitles 필터는 경로 내 특수문자(\, :, [, ], ') 이스케이프가 필요
   function escapeForSubtitlesFilter(p) {
-    const abs = path.resolve(p).replace(/\\/g, '/'); // Windows도 forward-slash로 통일
+    const abs = path.resolve(p).replace(/\\/g, '/');
     return abs
-      .replace(/:/g, '\\:')   // colon
-      .replace(/\[/g, '\\[')  // left bracket
-      .replace(/\]/g, '\\]')  // right bracket
-      .replace(/'/g, "\\'");  // single quote
+      .replace(/:/g, '\\:')
+      .replace(/\[/g, '\\[')
+      .replace(/\]/g, '\\]')
+      .replace(/'/g, "\\'");
   }
   const subPath = escapeForSubtitlesFilter(srt);
   const forceStyle = 'FontName=Malgun Gothic,Fontsize=28,Outline=1,BorderStyle=3,Alignment=2';
@@ -348,74 +350,51 @@ function buildConsistencyBlock() {
 # CONSISTENCY (apply to ALL clips, strong)
 - Only TWO Black male leads appear; no extra faces; silhouettes only in background. **No third person.**
 - TIME: **5 PM (17:00)**. LOCATION: **outdoor city sidewalk/street** only. **NO INTERIORS**.
-- **A is EXTREMELY HEAVYSET/OBESE** (large protruding belly, wide torso, thick neck/arms) and **ABSOLUTELY CLEAN-SHAVEN** (**no moustache, no beard, no stubble**). **Shaved head.** Always holds a cheeseburger in the **left** hand (white wrapper).
-- **B** has short curly hair with **very light** five o'clock shadow (not a moustache/beard).
-- Keep identical looks, outfits, props, skin tones across clips. Lock background composition (storefronts/signs/trees).
-- Camera baseline: eye-level ±10cm; natural color; **24fps with ~180° shutter (≈1/48s)** for cinematic motion cadence.
-- **Movement polish (ad-style):** gimbal-stabilized dolly; micro-bob <1% frame height; gentle parallax; natural body inertia.
-- **Hard bans:** on-screen text/captions/signage/numbers; black frames; jump cuts; whip pans; rack-focus whiplash; **smile/laughter**; beard/moustache on A; heavy facial hair on B.
+- **A is EXTREMELY HEAVYSET/OBESE** and **ABSOLUTELY CLEAN-SHAVEN**; shaved head; cheeseburger in **left** hand (white wrapper).
+- **B** has short curly hair with **very light** five o'clock shadow.
+- Keep identical looks/outfits/props; lock background composition.
+- Camera baseline: eye-level; natural color; **24fps ~180° shutter**.
+- **Bans:** on-screen text/captions/signage/numbers; black frames; jump cuts; whip pans; rack-focus whiplash; **smile/laughter** (may be overridden per-scene).
 `.trim();
 }
 
-function buildP1() {
+// 기존 P1/P3 빌더는 유지(사용하지 않음)
+function buildP1(){ return buildConsistencyBlock(); }
+function buildP3(){ return buildConsistencyBlock(); }
+
+/* ---------- clip4 빌더 (B 클로즈업 시작 → 3초 뒤 와이드, 마지막 B 미소) ---------- */
+function buildP4() {
   const CONS = buildConsistencyBlock();
   return `
 ${CONS}
-# Scene 1/2 — Opening (target 8s, **single continuous shot**)
-Two Black men walk side by side on the same sidewalk block at 5 PM.
-
-# DURATION (HARD INTENT)
-- **Play for a full ~8.0 seconds. Do NOT cut at 5s.** Maintain motion until the last frame.
-
-# CAST
-- A: **extremely heavyset/obese**, shaved head, **completely clean-shaven**; black hoodie + gray joggers; cheeseburger in **left** hand.
-- B: average build; short curly hair; **very light** five o'clock shadow; denim jacket + white tee + dark jeans.
-
-# PERFORMANCE
-- **Only A speaks (KOREAN).** B is silent; lips closed; small nods/eye contact only. **No smiling** for both.
-
-# CAMERA CHOREOGRAPHY
-- 0–1s: ease-in to smooth **backwards tracking** on gimbal (stabilized), micro-bob <1% allowed.
-- **1–8s: continuous, steady backward dolly at constant speed. No stop/lock-off.**
-- Keep both characters on the **same lane** (shoulder-to-shoulder); no splitting/turning; horizon level; eye-level height.
-
-# DIALOGUE (KOREAN):
-A: "요즘 수능 준비하는데, 영단어가 도무지 머리에 안 들어와. 어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어."
-
-# Audio: natural street ambience; subtle BGM; natural chewing (not exaggerated).
-`.trim();
-}
-
-// 유지 요청: clip3 = A가 스마트폰을 들여다보며 놀란 표정으로 기능 나열 + 미소 금지, 톤 자연화
-function buildP3() {
-  const CONS = buildConsistencyBlock();
-  return `
-${CONS}
-# Scene 2/2 — Feature Burst (target ~8s, **A + smartphone**) 
-Same street; match exposure/white balance. **Single continuous shot**.
+# Scene — clip4 (target ~8s, **single continuous shot**)
 
 ## START FRAME (HARD)
-- **Frame 0:** **A holds a smartphone in the RIGHT hand at eye level** and looks at it with **surprised/delighted eyes** (mouth neutral; **no smile**). **Begin speaking at 00:00:00** with visible lip articulation.
-- **Left hand:** cheeseburger (white wrapper). Do not swap hands.
+- **Frame 0:** Tight **close-up (CU) on B** at eye level. **B는 첫 프레임부터 아래 한국어 대사를 "그대로" 말하고 있음.** 
+  - **절대 의역/추가/삭제 금지.** (문장/어휘/쉼표/억양 지시 포함 원문을 그대로 재현)
+  - A는 프레임 밖.
 
-## DELIVERY (KOREAN PROSODY — NATURAL, NOT ANNOUNCER)
-- Conversational enumerative tone; **pace ≈ 3.0–3.6 syll/sec**; micro-pauses **0.18–0.25s** at commas.
-- Clause-final **falling intonation**; avoid robotic equal spacing / over-articulation.
-- Mild emphasis only on: "레벨별로", "시험 필수 어휘", "리딩·리스닝·문법".
-- **No smiling or laughter at any time, including the final second.**
+## CAMERA CHOREOGRAPHY
+- **0.0–3.0s:** CU on **B** 고정.
+- **3.0s부터:** **매우 부드러운 dolly-out(또는 gentle zoom-out)**으로 **A와 B가 함께 보이는 투샷**을 형성.
+- **3.0–8.0s:** 안정적 와이드로 전환하면서 두 사람의 시선이 말미에 서로를 잠깐 바라보도록 블로킹.
 
-## CAMERA / BLOCKING
-- **0.0–3.2s:** Tight **CU on A (head–shoulders)**; maintain eye-level; subtle rack to eyes once.
-- **3.2–8.0s:** Stay on A (optionally widen slightly), but **keep B offscreen** to avoid mixed eyelines. No transitions/black frames.
+## PERFORMANCE
+- **전 구간 "B만" 발화.** A는 침묵.
+- **오버라이드:** 마지막 **약 0.5s**에만 **B의 자연스러운 작은 미소** 허용(그 외 구간 미소 금지).
 
-# DIALOGUE (KOREAN) — A enumerates while looking at phone:
-A: "레벨별로 세분화된 카테고리와 각종 시험 필수 어휘, 거기에 리딩, 리스닝, 문법 문제까지? 완전 대박인데!"
+## DIALOGUE (KOREAN — EXACT, NO PARAPHRASE)
+B: "영어 학습이 어렵다고? 단무새와 함께라면, 네 머리는 영어사전이 될 거야."
 
-# HARD BAN: any on-screen text/captions/signage. Smartphone UI remains unreadable.
+## DURATION
+- 총 길이 **~8.0s**. 5초 컷 금지. 마지막 프레임까지 동작 유지.
+
+## BANS
+- 화면 텍스트/자막/사인/숫자 금지. 블랙 프레임/점프컷/휘핑팬 금지. 제3인물 금지.
 `.trim();
 }
 
-/* ---------- 엔트리 포인트 (clip1 & clip3만 생성) ---------- */
+/* ---------- 엔트리 포인트 (clip4만 생성) ---------- */
 async function main() {
   await ensureOutDir();
   await ensureFfmpeg();
@@ -429,15 +408,19 @@ async function main() {
   }
   const anchorB64 = await readFileBase64(ANCHOR_IMG_PATH);
 
-  // 2) clip3 프롬프트 준비 및 생성 (clip3 only)
-  const P3 = buildP3();
-  const clip3 = await generateClip(P3, 'clip3', anchorB64);
+  // clip4 전용: 미소 허용을 위해 smile 금지어 제거
+  const NEG_ALLOW_SMILE =
+    'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns';
 
-  // (선택) 기존 파이프라인 파일명과 맞춰야 한다면 아래 주석 해제
-  // await fs.copyFile(clip3, FINAL_OUTPUT);
+  // 2) clip4 프롬프트 준비 및 생성 (clip4 only)
+  const P4 = buildP4();
+  const clip4 = await generateClip(P4, 'clip4', anchorB64, { negativeOverride: NEG_ALLOW_SMILE });
 
-  const d3 = await getDurationSec(clip3);
-  console.log(`\n완료: clip3=${clip3} (${d3.toFixed(2)}s)\n`);
+  // 필요 시 최종 산출물 이름과 동기화
+  await fs.copyFile(clip4, FINAL_OUTPUT);
+
+  const d4 = await getDurationSec(clip4);
+  console.log(`\n완료: clip4=${clip4} (${d4.toFixed(2)}s)\n`);
 }
 
 main().catch(err => {
