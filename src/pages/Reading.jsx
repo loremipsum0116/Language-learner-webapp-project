@@ -11,6 +11,7 @@ export default function Reading() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
     const [showExplanation, setShowExplanation] = useState(false);
+    const [isCorrect, setIsCorrect] = useState(false);
     const [score, setScore] = useState(0);
     const [completedQuestions, setCompletedQuestions] = useState(new Set());
     const [loading, setLoading] = useState(true);
@@ -25,23 +26,24 @@ export default function Reading() {
             setLoading(true);
             setError(null);
             
-            // A1, A2, B1 레벨 데이터 로드
-            if (level === 'A1' || level === 'A2' || level === 'B1') {
-                const response = await fetch(`/${level}/${level}_reading/${level}_reading.json`);
-                if (!response.ok) {
-                    throw new Error(`Failed to load ${level} reading data`);
-                }
-                const data = await response.json();
-                setReadingData(data);
+            // API를 통해 모든 레벨 데이터 로드
+            const response = await fetch(`http://localhost:4000/api/reading/practice/${level}`);
+            if (!response.ok) {
+                throw new Error(`Failed to load ${level} reading data`);
+            }
+            const result = await response.json();
+            
+            if (result.data && result.data.length > 0) {
+                setReadingData(result.data);
             } else {
-                // 다른 레벨은 아직 구현되지 않음
                 setReadingData([]);
-                setError(`${level} 레벨 리딩 데이터는 아직 준비되지 않았습니다.`);
+                setError(`${level} 레벨 리딩 데이터가 없습니다.`);
             }
             
             setCurrentQuestion(0);
             setSelectedAnswer(null);
             setShowExplanation(false);
+            setIsCorrect(false);
             setScore(0);
             setCompletedQuestions(new Set());
         } catch (err) {
@@ -55,27 +57,28 @@ export default function Reading() {
 
     const recordWrongAnswer = async (questionData, userAnswer) => {
         try {
-            // 오답노트에 리딩 문제 기록
+            // 오답노트에 리딩 문제 기록 (기존 API 형식 사용)
             await fetchJSON('/odat-note/create', withCreds({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     itemType: 'reading',
-                    itemId: `${level}_${currentQuestion}`, // 레벨과 문제 번호로 고유 ID 생성
+                    itemId: `${level}_${currentQuestion}`,
                     wrongData: {
                         level: level,
                         questionIndex: currentQuestion,
                         passage: questionData.passage,
                         question: questionData.question,
                         options: questionData.options,
-                        correctAnswer: questionData.answer,
+                        correctAnswer: questionData.correctAnswer,
                         userAnswer: userAnswer,
-                        explanation: questionData.explanation_ko
+                        explanation: questionData.explanation
                     }
                 })
             }));
+            console.log(`[리딩 오답 기록 완료] ${level} - 문제 ${currentQuestion + 1}`);
         } catch (error) {
-            console.error('Failed to record reading wrong answer:', error);
+            console.error('리딩 오답 기록 실패:', error);
             throw error;
         }
     };
@@ -89,12 +92,23 @@ export default function Reading() {
         if (!selectedAnswer) return;
         
         const current = readingData[currentQuestion];
-        const isCorrect = selectedAnswer === current.answer;
+        console.log('Debug - Selected Answer:', selectedAnswer, 'Type:', typeof selectedAnswer);
+        console.log('Debug - Correct Answer:', current.correctAnswer, 'Type:', typeof current.correctAnswer);
+        console.log('Debug - Comparison Result:', selectedAnswer === current.correctAnswer);
         
-        if (isCorrect && !completedQuestions.has(currentQuestion)) {
+        const correct = String(selectedAnswer).trim() === String(current.correctAnswer).trim();
+        setIsCorrect(correct);
+        
+        console.log('Debug - isCorrect:', correct);
+        console.log('Debug - completedQuestions has question:', completedQuestions.has(currentQuestion));
+        console.log('Debug - Will increase score?', correct && !completedQuestions.has(currentQuestion));
+        
+        if (correct && !completedQuestions.has(currentQuestion)) {
+            console.log('Debug - Increasing score');
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
-        } else if (!isCorrect) {
+        } else if (!correct) {
+            console.log('Debug - Recording wrong answer');
             // 틀린 경우 오답노트에 기록
             try {
                 await recordWrongAnswer(current, selectedAnswer);
@@ -112,6 +126,7 @@ export default function Reading() {
             setCurrentQuestion(currentQuestion + 1);
             setSelectedAnswer(null);
             setShowExplanation(false);
+            setIsCorrect(false);
         }
     };
 
@@ -120,6 +135,7 @@ export default function Reading() {
             setCurrentQuestion(currentQuestion - 1);
             setSelectedAnswer(null);
             setShowExplanation(false);
+            setIsCorrect(false);
         }
     };
 
@@ -127,6 +143,7 @@ export default function Reading() {
         setCurrentQuestion(0);
         setSelectedAnswer(null);
         setShowExplanation(false);
+        setIsCorrect(false);
         setScore(0);
         setCompletedQuestions(new Set());
     };
@@ -169,7 +186,6 @@ export default function Reading() {
 
     const current = readingData[currentQuestion];
     const progress = ((currentQuestion + 1) / readingData.length) * 100;
-    const isCorrect = selectedAnswer === current.answer;
 
     return (
         <main className="container py-4">
@@ -216,7 +232,7 @@ export default function Reading() {
                                         selectedAnswer === key ? 'selected' : ''
                                     } ${
                                         showExplanation 
-                                            ? key === current.answer 
+                                            ? key === current.correctAnswer 
                                                 ? 'correct' 
                                                 : selectedAnswer === key 
                                                     ? 'incorrect' 
@@ -240,9 +256,9 @@ export default function Reading() {
                                     ) : (
                                         <span className="result-icon incorrect">❌ 틀렸습니다</span>
                                     )}
-                                    <span className="correct-answer">정답: {current.answer}</span>
+                                    <span className="correct-answer">정답: {current.correctAnswer}</span>
                                 </div>
-                                <p className="explanation-text">{current.explanation_ko}</p>
+                                <p className="explanation-text">{current.explanation}</p>
                             </div>
                         )}
                     </div>

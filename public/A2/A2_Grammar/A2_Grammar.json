@@ -1,0 +1,702 @@
+[
+  {
+    "id": "A2_G_001",
+    "topic": "Present Continuous",
+    "level": "A2",
+    "question": "I ___ watching TV right now.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "A",
+    "explanation": "현재진행형은 be + -ing 형태이며, I와 함께 쓸 때는 'am'을 사용합니다.",
+    "grammar_point": "Present Continuous"
+  },
+  {
+    "id": "A2_G_002",
+    "topic": "Present Continuous",
+    "level": "A2",
+    "question": "She ___ cooking dinner.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수와 함께 쓸 때는 'is'를 사용합니다.",
+    "grammar_point": "Present Continuous"
+  },
+  {
+    "id": "A2_G_003",
+    "topic": "Past Simple - Regular Verbs",
+    "level": "A2",
+    "question": "Yesterday, I ___ to the park.",
+    "options": {
+      "A": "walk",
+      "B": "walked",
+      "C": "walking"
+    },
+    "answer": "B",
+    "explanation": "규칙동사의 과거형은 -ed를 붙입니다.",
+    "grammar_point": "Past Simple"
+  },
+  {
+    "id": "A2_G_004",
+    "topic": "Past Simple - Irregular Verbs",
+    "level": "A2",
+    "question": "She ___ to London last week.",
+    "options": {
+      "A": "go",
+      "B": "goed",
+      "C": "went"
+    },
+    "answer": "C",
+    "explanation": "'go'의 과거형은 불규칙동사 'went'입니다.",
+    "grammar_point": "Past Simple"
+  },
+  {
+    "id": "A2_G_005",
+    "topic": "Past Simple - Negative",
+    "level": "A2",
+    "question": "I ___ watch TV yesterday.",
+    "options": {
+      "A": "don't",
+      "B": "didn't",
+      "C": "wasn't"
+    },
+    "answer": "B",
+    "explanation": "과거시제 일반동사 부정문은 'didn't + 동사원형'입니다.",
+    "grammar_point": "Past Simple"
+  },
+  {
+    "id": "A2_G_006",
+    "topic": "Future - Will",
+    "level": "A2",
+    "question": "I ___ call you tomorrow.",
+    "options": {
+      "A": "will",
+      "B": "would",
+      "C": "want"
+    },
+    "answer": "A",
+    "explanation": "미래를 나타낼 때 'will + 동사원형'을 사용합니다.",
+    "grammar_point": "Future Tense"
+  },
+  {
+    "id": "A2_G_007",
+    "topic": "Future - Going to",
+    "level": "A2",
+    "question": "She ___ going to study English.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "B",
+    "explanation": "'be going to' 구문에서 she와 함께 쓸 때는 'is'를 사용합니다.",
+    "grammar_point": "Future Tense"
+  },
+  {
+    "id": "A2_G_008",
+    "topic": "Comparative Adjectives",
+    "level": "A2",
+    "question": "This book is ___ than that one.",
+    "options": {
+      "A": "interesting",
+      "B": "more interesting",
+      "C": "most interesting"
+    },
+    "answer": "B",
+    "explanation": "긴 형용사의 비교급은 'more + 형용사' 형태입니다.",
+    "grammar_point": "Comparatives"
+  },
+  {
+    "id": "A2_G_009",
+    "topic": "Comparative Adjectives",
+    "level": "A2",
+    "question": "He is ___ than his brother.",
+    "options": {
+      "A": "tall",
+      "B": "taller",
+      "C": "tallest"
+    },
+    "answer": "B",
+    "explanation": "짧은 형용사의 비교급은 '-er'을 붙입니다.",
+    "grammar_point": "Comparatives"
+  },
+  {
+    "id": "A2_G_010",
+    "topic": "Superlative Adjectives",
+    "level": "A2",
+    "question": "This is the ___ movie I've ever seen.",
+    "options": {
+      "A": "good",
+      "B": "better",
+      "C": "best"
+    },
+    "answer": "C",
+    "explanation": "'good'의 최상급은 불규칙형인 'best'입니다.",
+    "grammar_point": "Superlatives"
+  },
+  {
+    "id": "A2_G_011",
+    "topic": "Present Perfect - Have/Has",
+    "level": "A2",
+    "question": "I ___ been to Paris.",
+    "options": {
+      "A": "have",
+      "B": "has",
+      "C": "had"
+    },
+    "answer": "A",
+    "explanation": "현재완료형은 have/has + 과거분사이며, I와 함께 쓸 때는 'have'를 사용합니다.",
+    "grammar_point": "Present Perfect"
+  },
+  {
+    "id": "A2_G_012",
+    "topic": "Present Perfect - Past Participle",
+    "level": "A2",
+    "question": "She has ___ her homework.",
+    "options": {
+      "A": "finish",
+      "B": "finished",
+      "C": "finishing"
+    },
+    "answer": "B",
+    "explanation": "현재완료형에서는 과거분사를 사용합니다.",
+    "grammar_point": "Present Perfect"
+  },
+  {
+    "id": "A2_G_013",
+    "topic": "Modal Verbs - Should",
+    "level": "A2",
+    "question": "You ___ eat more vegetables.",
+    "options": {
+      "A": "should",
+      "B": "shoulds",
+      "C": "should to"
+    },
+    "answer": "A",
+    "explanation": "조언을 나타낼 때 'should + 동사원형'을 사용합니다.",
+    "grammar_point": "Modal Verbs"
+  },
+  {
+    "id": "A2_G_014",
+    "topic": "Modal Verbs - Must",
+    "level": "A2",
+    "question": "Students ___ wear uniforms.",
+    "options": {
+      "A": "must",
+      "B": "musts",
+      "C": "must to"
+    },
+    "answer": "A",
+    "explanation": "의무를 나타낼 때 'must + 동사원형'을 사용합니다.",
+    "grammar_point": "Modal Verbs"
+  },
+  {
+    "id": "A2_G_015",
+    "topic": "Question Words",
+    "level": "A2",
+    "question": "___ did you go yesterday?",
+    "options": {
+      "A": "What",
+      "B": "Where",
+      "C": "When"
+    },
+    "answer": "B",
+    "explanation": "장소를 묻는 의문사는 'Where'입니다.",
+    "grammar_point": "Wh-Questions"
+  },
+  {
+    "id": "A2_G_016",
+    "topic": "Question Words",
+    "level": "A2",
+    "question": "___ does this cost?",
+    "options": {
+      "A": "How many",
+      "B": "How much",
+      "C": "How long"
+    },
+    "answer": "B",
+    "explanation": "가격을 묻을 때는 'How much'를 사용합니다.",
+    "grammar_point": "Wh-Questions"
+  },
+  {
+    "id": "A2_G_017",
+    "topic": "Countable vs Uncountable",
+    "level": "A2",
+    "question": "There isn't ___ milk in the fridge.",
+    "options": {
+      "A": "many",
+      "B": "much",
+      "C": "some"
+    },
+    "answer": "B",
+    "explanation": "셀 수 없는 명사의 부정문에서는 'much'를 사용합니다.",
+    "grammar_point": "Quantifiers"
+  },
+  {
+    "id": "A2_G_018",
+    "topic": "Countable vs Uncountable",
+    "level": "A2",
+    "question": "How ___ apples do you want?",
+    "options": {
+      "A": "many",
+      "B": "much",
+      "C": "some"
+    },
+    "answer": "A",
+    "explanation": "셀 수 있는 명사의 개수를 물을 때는 'How many'를 사용합니다.",
+    "grammar_point": "Quantifiers"
+  },
+  {
+    "id": "A2_G_019",
+    "topic": "Some/Any",
+    "level": "A2",
+    "question": "I need ___ help with my homework.",
+    "options": {
+      "A": "some",
+      "B": "any",
+      "C": "many"
+    },
+    "answer": "A",
+    "explanation": "긍정문에서는 'some'을 사용합니다.",
+    "grammar_point": "Some/Any"
+  },
+  {
+    "id": "A2_G_020",
+    "topic": "Some/Any",
+    "level": "A2",
+    "question": "Do you have ___ questions?",
+    "options": {
+      "A": "some",
+      "B": "any",
+      "C": "much"
+    },
+    "answer": "B",
+    "explanation": "의문문에서는 'any'를 사용합니다.",
+    "grammar_point": "Some/Any"
+  },
+  {
+    "id": "A2_G_021",
+    "topic": "Adverbs of Frequency",
+    "level": "A2",
+    "question": "She ___ arrives late to work.",
+    "options": {
+      "A": "never",
+      "B": "ever",
+      "C": "always"
+    },
+    "answer": "A",
+    "explanation": "'never'는 '전혀 ~하지 않다'는 의미의 빈도부사입니다.",
+    "grammar_point": "Adverbs of Frequency"
+  },
+  {
+    "id": "A2_G_022",
+    "topic": "Possessive Pronouns",
+    "level": "A2",
+    "question": "This book is ___.",
+    "options": {
+      "A": "my",
+      "B": "mine",
+      "C": "me"
+    },
+    "answer": "B",
+    "explanation": "명사 없이 단독으로 쓸 때는 소유대명사 'mine'을 사용합니다.",
+    "grammar_point": "Possessive Pronouns"
+  },
+  {
+    "id": "A2_G_023",
+    "topic": "Reflexive Pronouns",
+    "level": "A2",
+    "question": "I taught ___ to play guitar.",
+    "options": {
+      "A": "me",
+      "B": "myself",
+      "C": "mine"
+    },
+    "answer": "B",
+    "explanation": "주어와 목적어가 같은 사람일 때 재귀대명사를 사용합니다.",
+    "grammar_point": "Reflexive Pronouns"
+  },
+  {
+    "id": "A2_G_024",
+    "topic": "Prepositions of Time",
+    "level": "A2",
+    "question": "I was born ___ 1995.",
+    "options": {
+      "A": "in",
+      "B": "on",
+      "C": "at"
+    },
+    "answer": "A",
+    "explanation": "연도 앞에는 전치사 'in'을 사용합니다.",
+    "grammar_point": "Prepositions of Time"
+  },
+  {
+    "id": "A2_G_025",
+    "topic": "Prepositions of Time",
+    "level": "A2",
+    "question": "The meeting is ___ 3 PM.",
+    "options": {
+      "A": "in",
+      "B": "on",
+      "C": "at"
+    },
+    "answer": "C",
+    "explanation": "정확한 시간 앞에는 전치사 'at'을 사용합니다.",
+    "grammar_point": "Prepositions of Time"
+  },
+  {
+    "id": "A2_G_026",
+    "topic": "First Conditional",
+    "level": "A2",
+    "question": "If it rains, I ___ stay home.",
+    "options": {
+      "A": "will",
+      "B": "would",
+      "C": "am"
+    },
+    "answer": "A",
+    "explanation": "1조건문에서 결과절은 'will + 동사원형'을 사용합니다.",
+    "grammar_point": "First Conditional"
+  },
+  {
+    "id": "A2_G_027",
+    "topic": "First Conditional",
+    "level": "A2",
+    "question": "If she ___ hard, she will pass the exam.",
+    "options": {
+      "A": "study",
+      "B": "studies",
+      "C": "will study"
+    },
+    "answer": "B",
+    "explanation": "1조건문의 조건절에서는 현재시제를 사용합니다.",
+    "grammar_point": "First Conditional"
+  },
+  {
+    "id": "A2_G_028",
+    "topic": "Past Continuous",
+    "level": "A2",
+    "question": "I ___ sleeping when you called.",
+    "options": {
+      "A": "am",
+      "B": "was",
+      "C": "were"
+    },
+    "answer": "B",
+    "explanation": "과거진행형은 'was/were + -ing' 형태이며, I와 함께 쓸 때는 'was'를 사용합니다.",
+    "grammar_point": "Past Continuous"
+  },
+  {
+    "id": "A2_G_029",
+    "topic": "Too/Enough",
+    "level": "A2",
+    "question": "This coffee is ___ hot to drink.",
+    "options": {
+      "A": "too",
+      "B": "enough",
+      "C": "very"
+    },
+    "answer": "A",
+    "explanation": "'too + 형용사'는 '너무 ~해서'라는 의미입니다.",
+    "grammar_point": "Too/Enough"
+  },
+  {
+    "id": "A2_G_030",
+    "topic": "Too/Enough",
+    "level": "A2",
+    "question": "She is old ___ to drive.",
+    "options": {
+      "A": "too",
+      "B": "enough",
+      "C": "very"
+    },
+    "answer": "B",
+    "explanation": "'형용사 + enough'는 '충분히 ~한'이라는 의미입니다.",
+    "grammar_point": "Too/Enough"
+  },
+  {
+    "id": "A2_G_031",
+    "topic": "Like/Would like",
+    "level": "A2",
+    "question": "I ___ some coffee, please.",
+    "options": {
+      "A": "like",
+      "B": "would like",
+      "C": "am liking"
+    },
+    "answer": "B",
+    "explanation": "정중한 요청을 할 때는 'would like'를 사용합니다.",
+    "grammar_point": "Like/Would like"
+  },
+  {
+    "id": "A2_G_032",
+    "topic": "Gerunds and Infinitives",
+    "level": "A2",
+    "question": "I enjoy ___ books.",
+    "options": {
+      "A": "read",
+      "B": "reading",
+      "C": "to read"
+    },
+    "answer": "B",
+    "explanation": "'enjoy' 뒤에는 동명사(-ing)가 옵니다.",
+    "grammar_point": "Gerunds and Infinitives"
+  },
+  {
+    "id": "A2_G_033",
+    "topic": "Gerunds and Infinitives",
+    "level": "A2",
+    "question": "She wants ___ a doctor.",
+    "options": {
+      "A": "become",
+      "B": "becoming",
+      "C": "to become"
+    },
+    "answer": "C",
+    "explanation": "'want' 뒤에는 to 부정사가 옵니다.",
+    "grammar_point": "Gerunds and Infinitives"
+  },
+  {
+    "id": "A2_G_034",
+    "topic": "Phrasal Verbs",
+    "level": "A2",
+    "question": "Please ___ the lights.",
+    "options": {
+      "A": "turn on",
+      "B": "turn up",
+      "C": "turn over"
+    },
+    "answer": "A",
+    "explanation": "'turn on'은 '켜다'라는 의미의 구동사입니다.",
+    "grammar_point": "Phrasal Verbs"
+  },
+  {
+    "id": "A2_G_035",
+    "topic": "Phrasal Verbs",
+    "level": "A2",
+    "question": "I need to ___ this word in the dictionary.",
+    "options": {
+      "A": "look at",
+      "B": "look for",
+      "C": "look up"
+    },
+    "answer": "C",
+    "explanation": "'look up'은 '(사전에서) 찾아보다'라는 의미입니다.",
+    "grammar_point": "Phrasal Verbs"
+  },
+  {
+    "id": "A2_G_036",
+    "topic": "Present Perfect vs Past Simple",
+    "level": "A2",
+    "question": "I ___ to London three times.",
+    "options": {
+      "A": "went",
+      "B": "have been",
+      "C": "go"
+    },
+    "answer": "B",
+    "explanation": "경험을 나타낼 때는 현재완료형을 사용합니다.",
+    "grammar_point": "Present Perfect vs Past Simple"
+  },
+  {
+    "id": "A2_G_037",
+    "topic": "Present Perfect vs Past Simple",
+    "level": "A2",
+    "question": "I ___ him yesterday.",
+    "options": {
+      "A": "saw",
+      "B": "have seen",
+      "C": "see"
+    },
+    "answer": "A",
+    "explanation": "구체적인 과거 시점(yesterday)이 있을 때는 과거시제를 사용합니다.",
+    "grammar_point": "Present Perfect vs Past Simple"
+  },
+  {
+    "id": "A2_G_038",
+    "topic": "Making Requests",
+    "level": "A2",
+    "question": "___ you help me?",
+    "options": {
+      "A": "Can",
+      "B": "Do",
+      "C": "Are"
+    },
+    "answer": "A",
+    "explanation": "정중한 요청을 할 때 'Can you ~?'를 사용합니다.",
+    "grammar_point": "Making Requests"
+  },
+  {
+    "id": "A2_G_039",
+    "topic": "Giving Advice",
+    "level": "A2",
+    "question": "You ___ see a doctor.",
+    "options": {
+      "A": "should",
+      "B": "must",
+      "C": "can"
+    },
+    "answer": "A",
+    "explanation": "조언을 할 때는 'should'를 사용합니다.",
+    "grammar_point": "Giving Advice"
+  },
+  {
+    "id": "A2_G_040",
+    "topic": "Expressing Opinions",
+    "level": "A2",
+    "question": "I think this movie is ___.",
+    "options": {
+      "A": "boring",
+      "B": "bored",
+      "C": "bore"
+    },
+    "answer": "A",
+    "explanation": "사물의 성질을 나타낼 때는 -ing 형용사를 사용합니다.",
+    "grammar_point": "Expressing Opinions"
+  },
+  {
+    "id": "A2_G_041",
+    "topic": "Expressing Feelings",
+    "level": "A2",
+    "question": "I am ___ in this book.",
+    "options": {
+      "A": "interesting",
+      "B": "interested",
+      "C": "interest"
+    },
+    "answer": "B",
+    "explanation": "사람의 감정을 나타낼 때는 -ed 형용사를 사용합니다.",
+    "grammar_point": "Expressing Feelings"
+  },
+  {
+    "id": "A2_G_042",
+    "topic": "Making Suggestions",
+    "level": "A2",
+    "question": "___ we go to the cinema?",
+    "options": {
+      "A": "Shall",
+      "B": "Will",
+      "C": "Should"
+    },
+    "answer": "A",
+    "explanation": "제안을 할 때 'Shall we ~?'를 사용합니다.",
+    "grammar_point": "Making Suggestions"
+  },
+  {
+    "id": "A2_G_043",
+    "topic": "Expressing Preferences",
+    "level": "A2",
+    "question": "I prefer coffee ___ tea.",
+    "options": {
+      "A": "than",
+      "B": "to",
+      "C": "from"
+    },
+    "answer": "B",
+    "explanation": "'prefer A to B' 구문을 사용합니다.",
+    "grammar_point": "Expressing Preferences"
+  },
+  {
+    "id": "A2_G_044",
+    "topic": "Describing Appearance",
+    "level": "A2",
+    "question": "She has ___ hair.",
+    "options": {
+      "A": "long beautiful",
+      "B": "beautiful long",
+      "C": "beautifully long"
+    },
+    "answer": "B",
+    "explanation": "영어에서 형용사 순서는 의견 + 크기/길이 순입니다.",
+    "grammar_point": "Describing Appearance"
+  },
+  {
+    "id": "A2_G_045",
+    "topic": "Describing Personality",
+    "level": "A2",
+    "question": "He is a very ___ person.",
+    "options": {
+      "A": "friend",
+      "B": "friendly",
+      "C": "friendship"
+    },
+    "answer": "B",
+    "explanation": "명사를 수식하는 형용사 'friendly'를 사용합니다.",
+    "grammar_point": "Describing Personality"
+  },
+  {
+    "id": "A2_G_046",
+    "topic": "Talking about Plans",
+    "level": "A2",
+    "question": "I'm ___ visit my grandmother next week.",
+    "options": {
+      "A": "will",
+      "B": "going to",
+      "C": "want to"
+    },
+    "answer": "B",
+    "explanation": "계획된 미래를 나타낼 때 'be going to'를 사용합니다.",
+    "grammar_point": "Talking about Plans"
+  },
+  {
+    "id": "A2_G_047",
+    "topic": "Asking for Permission",
+    "level": "A2",
+    "question": "___ I use your phone?",
+    "options": {
+      "A": "Can",
+      "B": "Must",
+      "C": "Should"
+    },
+    "answer": "A",
+    "explanation": "허가를 요청할 때 'Can I ~?'를 사용합니다.",
+    "grammar_point": "Asking for Permission"
+  },
+  {
+    "id": "A2_G_048",
+    "topic": "Expressing Ability",
+    "level": "A2",
+    "question": "When I was young, I ___ run very fast.",
+    "options": {
+      "A": "can",
+      "B": "could",
+      "C": "am able to"
+    },
+    "answer": "B",
+    "explanation": "과거의 능력을 나타낼 때 'could'를 사용합니다.",
+    "grammar_point": "Expressing Ability"
+  },
+  {
+    "id": "A2_G_049",
+    "topic": "Expressing Necessity",
+    "level": "A2",
+    "question": "You ___ bring your passport.",
+    "options": {
+      "A": "can",
+      "B": "might",
+      "C": "need to"
+    },
+    "answer": "C",
+    "explanation": "필요성을 나타낼 때 'need to'를 사용합니다.",
+    "grammar_point": "Expressing Necessity"
+  },
+  {
+    "id": "A2_G_050",
+    "topic": "Used to",
+    "level": "A2",
+    "question": "I ___ live in Paris when I was a child.",
+    "options": {
+      "A": "used to",
+      "B": "use to",
+      "C": "am used to"
+    },
+    "answer": "A",
+    "explanation": "과거의 습관을 나타낼 때 'used to + 동사원형'을 사용합니다.",
+    "grammar_point": "Used to"
+  }
+]

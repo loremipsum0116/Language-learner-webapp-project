@@ -1,0 +1,2402 @@
+[
+    {
+        "id": "A2_L_001",
+        "topic": "Past Weekend",
+        "script": "A: What did you do last weekend? B: I went to the mountains with my family. We had a picnic and went hiking. It was great.",
+        "question": "What did person B do in the mountains?",
+        "options": {
+            "A": "They went swimming.",
+            "B": "They had a picnic and went hiking.",
+            "C": "They visited a museum."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_002",
+        "topic": "Making Plans",
+        "script": "A: Are you free on Friday evening? B: I think so. Why? A: I have two tickets for a concert. Would you like to go with me?",
+        "question": "What is person A inviting person B to do?",
+        "options": {
+            "A": "Go to the cinema",
+            "B": "Go to a concert",
+            "C": "Go to a restaurant"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_003",
+        "topic": "At a Restaurant",
+        "script": "Waiter: Are you ready to order? Customer: Yes, I'll have the grilled chicken with vegetables, please. And a glass of lemonade.",
+        "question": "What did the customer order to drink?",
+        "options": {
+            "A": "Water",
+            "B": "Grilled chicken",
+            "C": "Lemonade"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_004",
+        "topic": "Giving Directions",
+        "script": "A: Excuse me, how can I get to the library? B: Go down this street for two blocks, then turn right. The library is on your left, next to the bank.",
+        "question": "Where is the library located?",
+        "options": {
+            "A": "Next to the post office",
+            "B": "On the right",
+            "C": "Next to the bank"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_005",
+        "topic": "Shopping for Clothes",
+        "script": "A: I'm looking for a jacket for the winter. B: We have some nice wool jackets over here. What size are you? A: I'm a medium.",
+        "question": "What size jacket is the customer looking for?",
+        "options": {
+            "A": "Small",
+            "B": "Medium",
+            "C": "Large"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_006",
+        "topic": "Talking about a Film",
+        "script": "A: Did you see the new action movie? B: Yes, I saw it yesterday. The special effects were amazing, but the story was a bit boring.",
+        "question": "What did person B think about the movie's story?",
+        "options": {
+            "A": "It was amazing.",
+            "B": "It was exciting.",
+            "C": "It was a bit boring."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_007",
+        "topic": "Future Plans",
+        "script": "I'm going to travel to Italy next summer. I've already booked my flight and hotel. I'm so excited!",
+        "question": "What has the speaker already done for the trip?",
+        "options": {
+            "A": "Learned Italian",
+            "B": "Booked the flight and hotel",
+            "C": "Packed the suitcase"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_008",
+        "topic": "Describing a Person",
+        "script": "My best friend is very friendly and funny. He has short, dark hair and always wears a smile.",
+        "question": "What is the speaker's best friend like?",
+        "options": {
+            "A": "Shy and serious",
+            "B": "Friendly and funny",
+            "C": "Tall with long hair"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_009",
+        "topic": "At the Doctor's Office",
+        "script": "Doctor: You have a fever and a sore throat. You should stay in bed for a few days and drink lots of water.",
+        "question": "What advice did the doctor give?",
+        "options": {
+            "A": "Go to work",
+            "B": "Eat a lot of food",
+            "C": "Stay in bed and drink water"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_010",
+        "topic": "A Phone Conversation",
+        "script": "A: Hello, can I speak to Jane? B: I'm sorry, she's not here right now. Can I take a message? A: Yes, please tell her that Mike called.",
+        "question": "Why did Mike call?",
+        "options": {
+            "A": "To speak with the person who answered",
+            "B": "To leave a message for Jane",
+            "C": "To ask for Jane's number"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_011",
+        "topic": "Daily Routine",
+        "script": "I usually get home from work at about 6:30 PM. The first thing I do is make dinner. After that, I relax and watch some TV.",
+        "question": "What does the speaker do first after getting home?",
+        "options": {
+            "A": "Watch TV",
+            "B": "Relax",
+            "C": "Make dinner"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_012",
+        "topic": "Weather Report",
+        "script": "Tomorrow morning will be sunny, but in the afternoon, it will become cloudy and there's a high chance of rain in the evening.",
+        "question": "What will the weather be like tomorrow evening?",
+        "options": {
+            "A": "Sunny",
+            "B": "Cloudy and rainy",
+            "C": "Snowy"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_013",
+        "topic": "Hobbies and Interests",
+        "script": "I started learning photography last year. I really enjoy taking pictures of nature, especially flowers and animals.",
+        "question": "What does the speaker enjoy photographing?",
+        "options": {
+            "A": "Buildings and cities",
+            "B": "People's portraits",
+            "C": "Nature, like flowers and animals"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_014",
+        "topic": "At the Airport",
+        "script": "Your flight to Paris is boarding at Gate 15. Please have your passport and boarding pass ready.",
+        "question": "What do passengers need to have ready?",
+        "options": {
+            "A": "Their luggage",
+            "B": "Their passport and boarding pass",
+            "C": "Their ticket and money"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_015",
+        "topic": "A Past Holiday",
+        "script": "Last year we went to Spain for our holiday. The weather was beautiful and the food was delicious. We spent most of our time on the beach.",
+        "question": "How was the food in Spain?",
+        "options": {
+            "A": "It was terrible.",
+            "B": "It was okay.",
+            "C": "It was delicious."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_016",
+        "topic": "Renting an Apartment",
+        "script": "The apartment has two bedrooms, a large living room, and a small kitchen. The rent is 800 dollars a month, not including bills.",
+        "question": "Does the rent include bills?",
+        "options": {
+            "A": "Yes, it includes all bills.",
+            "B": "No, it does not include bills.",
+            "C": "It only includes the water bill."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_017",
+        "topic": "At the Supermarket",
+        "script": "A: Excuse me, where can I find the pasta? B: It's in aisle 4, next to the rice and sauces.",
+        "question": "What is next to the pasta?",
+        "options": {
+            "A": "Bread and cakes",
+            "B": "Fruit and vegetables",
+            "C": "Rice and sauces"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_018",
+        "topic": "Talking about a Job",
+        "script": "I work as a web designer. I enjoy my job because I can be creative, but sometimes the deadlines are very stressful.",
+        "question": "What is a stressful part of the speaker's job?",
+        "options": {
+            "A": "Being creative",
+            "B": "The deadlines",
+            "C": "Working with computers"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_019",
+        "topic": "Giving an Opinion",
+        "script": "In my opinion, learning a new language is difficult, but it's very useful for traveling and for your career.",
+        "question": "Why does the speaker think learning a language is useful?",
+        "options": {
+            "A": "Because it's easy.",
+            "B": "For traveling and career.",
+            "C": "Because it's fun."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_020",
+        "topic": "At the Train Station",
+        "script": "The 10:45 train to Manchester has been cancelled due to bad weather. We apologize for the inconvenience.",
+        "question": "Why was the train to Manchester cancelled?",
+        "options": {
+            "A": "Because of a technical problem.",
+            "B": "Because of bad weather.",
+            "C": "Because there were no passengers."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_021",
+        "topic": "Describing a Town",
+        "script": "I live in a small town. There isn't a cinema or a shopping center, but there is a beautiful park and a few nice cafes.",
+        "question": "What is there in the speaker's town?",
+        "options": {
+            "A": "A cinema",
+            "B": "A shopping center",
+            "C": "A park"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_022",
+        "topic": "Making a Complaint",
+        "script": "I bought this camera here yesterday, but it doesn't work. I would like to get a refund.",
+        "question": "What is the problem with the camera?",
+        "options": {
+            "A": "It's the wrong color.",
+            "B": "It's too expensive.",
+            "C": "It doesn't work."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_023",
+        "topic": "Education",
+        "script": "I'm studying history at university. I find it really interesting to learn about the past. My favorite period is Ancient Rome.",
+        "question": "What is the speaker's favorite historical period?",
+        "options": {
+            "A": "Ancient Greece",
+            "B": "Ancient Rome",
+            "C": "The Middle Ages"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_024",
+        "topic": "Invitations",
+        "script": "We're having a barbecue at our house on Saturday. Would you and your family like to come? It starts at 2 PM.",
+        "question": "What time does the barbecue start?",
+        "options": {
+            "A": "1 PM",
+            "B": "2 PM",
+            "C": "3 PM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_025",
+        "topic": "Pets",
+        "script": "We have a dog named Max. He's very playful. We have to take him for a walk twice a day, in the morning and in the evening.",
+        "question": "How often do they walk their dog?",
+        "options": {
+            "A": "Once a day",
+            "B": "Twice a day",
+            "C": "Three times a day"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_026",
+        "topic": "Public Transport",
+        "script": "To get to the city center, you can take the number 12 bus. You need to buy a ticket from the driver. A single ticket costs two pounds.",
+        "question": "Where do you buy the bus ticket?",
+        "options": {
+            "A": "At a machine",
+            "B": "From the driver",
+            "C": "Online"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_027",
+        "topic": "Food and Cooking",
+        "script": "My favorite dish to cook is spaghetti bolognese. It's easy to make and everyone loves it. The secret is to cook the sauce for a long time.",
+        "question": "What is the secret to the speaker's spaghetti bolognese?",
+        "options": {
+            "A": "Using fresh pasta",
+            "B": "Adding a lot of cheese",
+            "C": "Cooking the sauce for a long time"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_028",
+        "topic": "Health and Fitness",
+        "script": "I try to eat healthy food. I eat a lot of fruit and vegetables, and I don't eat much sugar. I also go running three times a week.",
+        "question": "What does the speaker do to stay fit?",
+        "options": {
+            "A": "Goes to the gym",
+            "B": "Goes running",
+            "C": "Goes swimming"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_029",
+        "topic": "A Message on an Answering Machine",
+        "script": "Hi, you've reached Sarah. I can't come to the phone right now. Please leave your name and number, and I'll call you back as soon as I can. Thanks.",
+        "question": "What should the caller do?",
+        "options": {
+            "A": "Call again later",
+            "B": "Send a text message",
+            "C": "Leave their name and number"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_030",
+        "topic": "At a Hotel",
+        "script": "A: Good morning. I'd like to check out, please. Room 305. B: Certainly. Here is your bill. How would you like to pay?",
+        "question": "What does the guest want to do?",
+        "options": {
+            "A": "Check in",
+            "B": "Order room service",
+            "C": "Check out"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_031",
+        "topic": "Comparing two things",
+        "script": "I think living in the city is more exciting than living in the countryside. There are more things to do, like going to museums and theatres.",
+        "question": "Why does the speaker prefer the city?",
+        "options": {
+            "A": "It is quieter.",
+            "B": "There are more things to do.",
+            "C": "The air is cleaner."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_032",
+        "topic": "Lost Property",
+        "script": "I've lost my umbrella. It's a large, black umbrella with a wooden handle. I think I left it on the bus this morning.",
+        "question": "What does the lost umbrella look like?",
+        "options": {
+            "A": "Small and blue",
+            "B": "Large and black",
+            "C": "Small with a plastic handle"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_033",
+        "topic": "Asking for information",
+        "script": "A: Excuse me, what time does the museum close? B: We close at 5:30 PM, but the last entry is at 5:00 PM.",
+        "question": "What is the latest time you can enter the museum?",
+        "options": {
+            "A": "4:30 PM",
+            "B": "5:00 PM",
+            "C": "5:30 PM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_034",
+        "topic": "Technology",
+        "script": "I bought a new smartphone last week. It has a much better camera than my old one, and the battery lasts for two days.",
+        "question": "What is better about the new smartphone's battery?",
+        "options": {
+            "A": "It charges faster.",
+            "B": "It is bigger.",
+            "C": "It lasts longer."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_035",
+        "topic": "Travel Plans",
+        "script": "This year, we're not going abroad for our holiday. Instead, we're going to explore our own country and visit the national parks.",
+        "question": "Where is the speaker going for holiday this year?",
+        "options": {
+            "A": "To another country",
+            "B": "They are staying in their own country.",
+            "C": "They are not going on holiday."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_036",
+        "topic": "In a coffee shop",
+        "script": "A: Can I get a large latte to go, please? B: Sure. Would you like any sugar with that? A: No, thank you.",
+        "question": "Does the customer want sugar in their latte?",
+        "options": {
+            "A": "Yes, one sugar.",
+            "B": "Yes, two sugars.",
+            "C": "No, they don't want sugar."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_037",
+        "topic": "Describing a recent purchase",
+        "script": "I bought a new bicycle last weekend. It's red and it's much lighter than my old one, so it's easier to ride up hills.",
+        "question": "Why is the new bicycle easier to ride up hills?",
+        "options": {
+            "A": "Because it is red.",
+            "B": "Because it is new.",
+            "C": "Because it is lighter."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_038",
+        "topic": "Giving advice",
+        "script": "If you want to improve your English, you should try to read something every day. It doesn't have to be a book; a news article online is also good.",
+        "question": "What does the speaker suggest for improving English?",
+        "options": {
+            "A": "Watching movies",
+            "B": "Reading every day",
+            "C": "Talking to native speakers"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_039",
+        "topic": "At the cinema",
+        "script": "A: Which film do you want to see? The comedy or the horror film? B: I don't really like horror films. They're too scary for me. Let's watch the comedy.",
+        "question": "Which film do they decide to watch?",
+        "options": {
+            "A": "The horror film",
+            "B": "The comedy",
+            "C": "They don't decide."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_040",
+        "topic": "Answering a survey",
+        "script": "A: How do you usually travel to work? B: I used to drive, but now I take the train because it's faster and I can read during the journey.",
+        "question": "Why does person B take the train to work now?",
+        "options": {
+            "A": "It's cheaper.",
+            "B": "It's faster.",
+            "C": "It's more comfortable."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_041",
+        "topic": "At the post office",
+        "script": "I need to send this package to Australia. How much will it cost for airmail?",
+        "question": "How does the person want to send the package?",
+        "options": {
+            "A": "By sea mail",
+            "B": "By airmail",
+            "C": "By courier"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_042",
+        "topic": "Talking about family",
+        "script": "I have an older sister and a younger brother. My sister is a lawyer and my brother is still at school.",
+        "question": "What does the speaker's sister do?",
+        "options": {
+            "A": "She is a student.",
+            "B": "She is a doctor.",
+            "C": "She is a lawyer."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_043",
+        "topic": "Booking a flight",
+        "script": "I'd like to book a return flight to Rome, leaving next Tuesday and coming back on Friday.",
+        "question": "When does the person want to return from Rome?",
+        "options": {
+            "A": "On Tuesday",
+            "B": "On Friday",
+            "C": "Next week"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_044",
+        "topic": "A party",
+        "script": "The party was fantastic. There was a lot of good music and the food was amazing. I met some really interesting people there.",
+        "question": "What did the speaker think of the people at the party?",
+        "options": {
+            "A": "They were boring.",
+            "B": "They were interesting.",
+            "C": "They were unfriendly."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_045",
+        "topic": "Work schedule",
+        "script": "I work from 9 AM to 5 PM, Monday to Friday. I have an hour for lunch at 1 PM. I'm usually free in the evenings.",
+        "question": "When is the speaker's lunch break?",
+        "options": {
+            "A": "12 PM",
+            "B": "1 PM",
+            "C": "2 PM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_046",
+        "topic": "At the library",
+        "script": "A: I'd like to return these books. B: Okay. Oh, this one is two days late. There's a small fine to pay.",
+        "question": "Why does the person have to pay a fine?",
+        "options": {
+            "A": "Because the book is damaged.",
+            "B": "Because the book is late.",
+            "C": "Because they lost a book."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_047",
+        "topic": "Sports",
+        "script": "I'm not very good at sports, but I enjoy watching tennis. My favorite player is Roger Federer.",
+        "question": "Does the speaker play a lot of sports?",
+        "options": {
+            "A": "Yes, they are very good.",
+            "B": "No, they are not very good.",
+            "C": "They only play tennis."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_048",
+        "topic": "Recycling",
+        "script": "In our city, we have to separate our rubbish. We put paper, plastic, and glass in different bins for recycling.",
+        "question": "What do people have to do with their rubbish?",
+        "options": {
+            "A": "Put it all in one bin.",
+            "B": "Take it to a special center.",
+            "C": "Separate it for recycling."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_049",
+        "topic": "Music preferences",
+        "script": "I like most kinds of music, but I'm not a big fan of heavy metal. I find it a bit too loud.",
+        "question": "Why doesn't the speaker like heavy metal music?",
+        "options": {
+            "A": "It's too slow.",
+            "B": "It's too quiet.",
+            "C": "It's too loud."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_050",
+        "topic": "At the bank",
+        "script": "I'd like to open a new bank account, please. What kind of information do you need?",
+        "question": "What does the customer want to do?",
+        "options": {
+            "A": "Close an account",
+            "B": "Open a new account",
+            "C": "Exchange money"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_051",
+        "topic": "Describing a photo",
+        "script": "This is a photo of my family on holiday. That's me on the left, next to my brother. We were in front of a famous castle.",
+        "question": "Where was the photo taken?",
+        "options": {
+            "A": "In front of a museum",
+            "B": "In front of a castle",
+            "C": "On a beach"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_052",
+        "topic": "Leaving a tip",
+        "script": "The service in this restaurant was excellent. I think we should leave a good tip for the waiter.",
+        "question": "Why does the speaker want to leave a tip?",
+        "options": {
+            "A": "The food was cheap.",
+            "B": "The service was excellent.",
+            "C": "The restaurant was beautiful."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_053",
+        "topic": "A new recipe",
+        "script": "I tried a new recipe for chicken soup yesterday. It was delicious, but I think I added a little too much salt.",
+        "question": "What was the problem with the soup?",
+        "options": {
+            "A": "It was too spicy.",
+            "B": "It was too salty.",
+            "C": "It wasn't cooked enough."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_054",
+        "topic": "At the gym",
+        "script": "A: Excuse me, how do I use this machine? B: You need to sit down and then push the handles forward. You can adjust the weight here.",
+        "question": "What does person B explain?",
+        "options": {
+            "A": "The gym opening times",
+            "B": "How to use a machine",
+            "C": "The price of membership"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_055",
+        "topic": "A traffic announcement",
+        "script": "There is a traffic jam on the M25 motorway due to an accident. Drivers are advised to use a different route if possible.",
+        "question": "What is causing the traffic jam?",
+        "options": {
+            "A": "Bad weather",
+            "B": "Road works",
+            "C": "An accident"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_056",
+        "topic": "A birthday celebration",
+        "script": "For my birthday this year, I'm not having a big party. I'm just going to have a quiet dinner with my close friends.",
+        "question": "How is the speaker celebrating their birthday?",
+        "options": {
+            "A": "With a big party",
+            "B": "With a quiet dinner",
+            "C": "By going on a trip"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_057",
+        "topic": "Using a computer",
+        "script": "To save the document, you need to click on the 'File' menu and then choose 'Save'. Don't forget to give it a name.",
+        "question": "What do you need to do to save the document?",
+        "options": {
+            "A": "Click on 'Edit' and then 'Save'",
+            "B": "Click on 'File' and then 'Save'",
+            "C": "Click on 'File' and then 'Print'"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_058",
+        "topic": "A visit to the dentist",
+        "script": "A: Your teeth are fine, but you should floss more often. B: Okay, I will. Do I need to make another appointment? A: Yes, let's see you again in six months.",
+        "question": "When should the patient come back?",
+        "options": {
+            "A": "In three months",
+            "B": "In six months",
+            "C": "In one year"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_059",
+        "topic": "A book review",
+        "script": "I've just finished reading a great book. It's a detective story set in London. The ending was a complete surprise!",
+        "question": "What did the speaker think of the book's ending?",
+        "options": {
+            "A": "It was predictable.",
+            "B": "It was surprising.",
+            "C": "It was disappointing."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_060",
+        "topic": "At the mechanic's",
+        "script": "A: What seems to be the problem with the car? B: There's a strange noise coming from the engine. It started this morning.",
+        "question": "What is wrong with the car?",
+        "options": {
+            "A": "The brakes don't work.",
+            "B": "It has a flat tire.",
+            "C": "There's a strange noise from the engine."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_061",
+        "topic": "Gardening",
+        "script": "My tomatoes are growing really well this year. I think it's because we've had a lot of sunshine. I should be able to make some nice salads soon.",
+        "question": "Why are the tomatoes growing well?",
+        "options": {
+            "A": "Because of the rain",
+            "B": "Because of the sunshine",
+            "C": "Because of new soil"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_062",
+        "topic": "A new hobby",
+        "script": "I decided to take up painting. I bought some brushes and paints yesterday. I'm not very good yet, but it's very relaxing.",
+        "question": "How does the speaker feel about their new hobby?",
+        "options": {
+            "A": "It's stressful.",
+            "B": "It's difficult.",
+            "C": "It's relaxing."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_063",
+        "topic": "A phone app",
+        "script": "I use a great app for learning languages. It has fun games and you can listen to native speakers. It really helps with my pronunciation.",
+        "question": "What does the app help the speaker with?",
+        "options": {
+            "A": "Grammar",
+            "B": "Pronunciation",
+            "C": "Writing"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_064",
+        "topic": "Volunteering",
+        "script": "Every Saturday morning, I volunteer at the local animal shelter. I help to clean the cages and play with the cats.",
+        "question": "What does the speaker do at the animal shelter?",
+        "options": {
+            "A": "Walk the dogs",
+            "B": "Feed the animals",
+            "C": "Clean cages and play with cats"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_065",
+        "topic": "A change of plans",
+        "script": "I'm sorry, but I can't come to the cinema tonight. I have to work late. Maybe we can go another time?",
+        "question": "Why can't the speaker go to the cinema?",
+        "options": {
+            "A": "They are not feeling well.",
+            "B": "They have to work late.",
+            "C": "They don't want to go."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_066",
+        "topic": "At a hotel (breakfast)",
+        "script": "Breakfast is served in the dining room from 7 AM until 10 AM. It's a buffet, so you can help yourself.",
+        "question": "When does breakfast finish?",
+        "options": {
+            "A": "7 AM",
+            "B": "9 AM",
+            "C": "10 AM"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_067",
+        "topic": "Describing a journey",
+        "script": "The train journey was very comfortable. I had a window seat and the view of the countryside was beautiful.",
+        "question": "What did the speaker like about the journey?",
+        "options": {
+            "A": "The food on the train",
+            "B": "The view from the window",
+            "C": "The other passengers"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_068",
+        "topic": "A TV show",
+        "script": "My favorite TV show is a cooking competition. It's on every Tuesday evening. I love seeing the amazing dishes the chefs create.",
+        "question": "What kind of TV show is it?",
+        "options": {
+            "A": "A documentary",
+            "B": "A comedy",
+            "C": "A cooking competition"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_069",
+        "topic": "An online order",
+        "script": "I ordered a book online a week ago, but it hasn't arrived yet. I'm going to call customer service to ask about it.",
+        "question": "What is the problem with the online order?",
+        "options": {
+            "A": "The wrong item arrived.",
+            "B": "It hasn't arrived yet.",
+            "C": "It was damaged."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_070",
+        "topic": "At the museum",
+        "script": "The museum has a special exhibition about dinosaurs at the moment. It's very popular with children.",
+        "question": "What is the special exhibition about?",
+        "options": {
+            "A": "Ancient Egypt",
+            "B": "Dinosaurs",
+            "C": "Space travel"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_071",
+        "topic": "Giving a reason",
+        "script": "I'm learning to drive because I want to buy a car. It will be much easier to visit my parents who live in the countryside.",
+        "question": "Why is the speaker learning to drive?",
+        "options": {
+            "A": "For their job",
+            "B": "To visit their parents",
+            "C": "To go on holiday"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_072",
+        "topic": "A new cafe",
+        "script": "A new cafe opened in my street. I went there yesterday. The coffee was excellent and they have delicious homemade cakes.",
+        "question": "What was excellent at the new cafe?",
+        "options": {
+            "A": "The music",
+            "B": "The service",
+            "C": "The coffee"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_073",
+        "topic": "An invitation to a wedding",
+        "script": "We would be delighted if you could come to our wedding on the 10th of June. The ceremony will be at the town hall.",
+        "question": "Where will the wedding ceremony be?",
+        "options": {
+            "A": "In a church",
+            "B": "At the town hall",
+            "C": "In a hotel"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_074",
+        "topic": "A good friend",
+        "script": "A good friend is someone you can trust and who helps you when you have a problem. I'm lucky to have a few good friends.",
+        "question": "According to the speaker, what is a good friend?",
+        "options": {
+            "A": "Someone who is funny",
+            "B": "Someone you can trust",
+            "C": "Someone who lives near you"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_075",
+        "topic": "A problem at home",
+        "script": "The heating isn't working in my flat and it's really cold. I've called the landlord, and he's sending someone to fix it this afternoon.",
+        "question": "When is someone coming to fix the heating?",
+        "options": {
+            "A": "Tomorrow morning",
+            "B": "This afternoon",
+            "C": "Next week"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_076",
+        "topic": "A public announcement",
+        "script": "This is a platform alteration. The 11:30 service to Brighton will now depart from platform 7, not platform 5.",
+        "question": "Which platform will the Brighton train leave from?",
+        "options": {
+            "A": "Platform 5",
+            "B": "Platform 7",
+            "C": "Platform 11"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_077",
+        "topic": "A visit to a city",
+        "script": "We visited Amsterdam last spring. We rented bicycles and explored the city. The canals are so beautiful.",
+        "question": "How did they explore Amsterdam?",
+        "options": {
+            "A": "By boat",
+            "B": "On foot",
+            "C": "By bicycle"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_078",
+        "topic": "A job interview",
+        "script": "My job interview is at 10 AM tomorrow. I'm a little nervous, but I've prepared a lot. I need to remember to bring a copy of my CV.",
+        "question": "What does the speaker need to remember to bring?",
+        "options": {
+            "A": "Their passport",
+            "B": "A copy of their CV",
+            "C": "A pen"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_079",
+        "topic": "A new sport",
+        "script": "I started playing badminton recently. It's a really fast game and it's great exercise. I play with my friend every Thursday.",
+        "question": "When does the speaker play badminton?",
+        "options": {
+            "A": "Every Tuesday",
+            "B": "Every Thursday",
+            "C": "Every weekend"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_080",
+        "topic": "A recipe instruction",
+        "script": "First, you chop the onions. Then, you heat some oil in a pan and cook the onions for about five minutes until they are soft.",
+        "question": "What should you do after chopping the onions?",
+        "options": {
+            "A": "Add the tomatoes.",
+            "B": "Heat oil and cook the onions.",
+            "C": "Boil some water."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_081",
+        "topic": "At the shoe shop",
+        "script": "These shoes are very comfortable, but I'm not sure about the color. Do you have them in black?",
+        "question": "What is the problem with the shoes?",
+        "options": {
+            "A": "They are not comfortable.",
+            "B": "They are the wrong size.",
+            "C": "The speaker doesn't like the color."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_082",
+        "topic": "A weekend trip",
+        "script": "We're going to the coast for the weekend. We've booked a small hotel by the sea. I hope the weather is good so we can go for long walks on the beach.",
+        "question": "What does the speaker hope for?",
+        "options": {
+            "A": "Good food",
+            "B": "A comfortable hotel",
+            "C": "Good weather"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_083",
+        "topic": "An evening class",
+        "script": "I go to a Spanish class every Wednesday evening. It's a small class, so we get a lot of opportunities to speak.",
+        "question": "What is good about the Spanish class?",
+        "options": {
+            "A": "It's a big class.",
+            "B": "It's a small class.",
+            "C": "The teacher is famous."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_084",
+        "topic": "A computer problem",
+        "script": "My laptop is running very slowly. I think I need to delete some old files to make more space.",
+        "question": "What is the speaker going to do to fix their laptop?",
+        "options": {
+            "A": "Buy a new one",
+            "B": "Take it to a shop",
+            "C": "Delete some old files"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_085",
+        "topic": "A concert review",
+        "script": "The band was amazing live. They played all their famous songs and the singer had a fantastic voice. It was a great night.",
+        "question": "What did the speaker think of the singer?",
+        "options": {
+            "A": "Their voice was average.",
+            "B": "Their voice was fantastic.",
+            "C": "They didn't sing well."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_086",
+        "topic": "At the butcher's",
+        "script": "I'd like four chicken breasts and about 500 grams of minced beef, please.",
+        "question": "What two types of meat does the customer want?",
+        "options": {
+            "A": "Pork and lamb",
+            "B": "Chicken and beef",
+            "C": "Sausages and bacon"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_087",
+        "topic": "A film preference",
+        "script": "I prefer watching films at home rather than at the cinema. It's more comfortable and I can pause the film if I want to make a cup of tea.",
+        "question": "Why does the speaker prefer watching films at home?",
+        "options": {
+            "A": "The screen is bigger.",
+            "B": "It's cheaper.",
+            "C": "It's more comfortable."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_088",
+        "topic": "A traffic report",
+        "script": "Traffic is moving very slowly on the A40 road into the city this morning because of roadworks. Expect long delays.",
+        "question": "Why is the traffic slow?",
+        "options": {
+            "A": "Because of an accident",
+            "B": "Because of roadworks",
+            "C": "Because of the bad weather"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_089",
+        "topic": "A new restaurant",
+        "script": "We tried that new Italian restaurant last night. The pasta was handmade and it was the best I've ever tasted.",
+        "question": "What was special about the pasta?",
+        "options": {
+            "A": "It was very cheap.",
+            "B": "It was handmade.",
+            "C": "It came with a lot of sauce."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_090",
+        "topic": "A request at work",
+        "script": "A: Could you help me with this report? I don't understand these numbers. B: Of course. Let me have a look.",
+        "question": "What does person A need help with?",
+        "options": {
+            "A": "Sending an email",
+            "B": "A report",
+            "C": "Making coffee"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_091",
+        "topic": "A house viewing",
+        "script": "This is the living room. As you can see, it gets a lot of natural light from the large windows. The kitchen is through this door.",
+        "question": "Why is the living room bright?",
+        "options": {
+            "A": "It has many lamps.",
+            "B": "It has large windows.",
+            "C": "The walls are painted white."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_092",
+        "topic": "A daily commute",
+        "script": "My journey to work is quite long. I take a bus and then a train. It usually takes me about an hour and a half.",
+        "question": "How long does the speaker's journey to work take?",
+        "options": {
+            "A": "Half an hour",
+            "B": "One hour",
+            "C": "An hour and a half"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_093",
+        "topic": "A language exchange",
+        "script": "I meet my language exchange partner once a week. We speak in English for half an hour, and then we speak in Japanese for half an hour.",
+        "question": "What languages do they practice?",
+        "options": {
+            "A": "English and Spanish",
+            "B": "English and Japanese",
+            "C": "Japanese and French"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_094",
+        "topic": "A weather warning",
+        "script": "There will be strong winds and heavy rain later today. Please be careful if you are driving and avoid parking under trees.",
+        "question": "What are people advised to avoid?",
+        "options": {
+            "A": "Driving",
+            "B": "Going outside",
+            "C": "Parking under trees"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_095",
+        "topic": "A museum tour",
+        "script": "This painting is from the 18th century. The artist is famous for his use of light and shadow. Please don't use flash photography.",
+        "question": "What is the artist famous for?",
+        "options": {
+            "A": "His use of bright colors",
+            "B": "His use of light and shadow",
+            "C": "Painting portraits"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_096",
+        "topic": "A fitness class",
+        "script": "The yoga class starts at 6 PM. Please try to arrive ten minutes early to find a space and get your mat ready.",
+        "question": "What should people do before the class?",
+        "options": {
+            "A": "Pay for the class",
+            "B": "Arrive ten minutes early",
+            "C": "Bring their own water"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_097",
+        "topic": "A difficult decision",
+        "script": "I've been offered a new job. The salary is better, but I would have to move to a different city. I'm not sure what to do.",
+        "question": "What is the disadvantage of the new job?",
+        "options": {
+            "A": "The salary is lower.",
+            "B": "The work is boring.",
+            "C": "The speaker would have to move."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_098",
+        "topic": "At the tourist information office",
+        "script": "A: Can you recommend a good place to eat traditional food? B: Yes, there's a great restaurant called 'The Old Mill'. It's very popular, so you might need to book a table.",
+        "question": "What might the person need to do for the restaurant?",
+        "options": {
+            "A": "Pay in cash",
+            "B": "Book a table",
+            "C": "Dress formally"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_099",
+        "topic": "A short story",
+        "script": "Yesterday, I saw a cat stuck in a tree. I called the fire brigade, and they came with a long ladder to rescue it. The cat was fine.",
+        "question": "Who rescued the cat?",
+        "options": {
+            "A": "The speaker",
+            "B": "A police officer",
+            "C": "The fire brigade"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_100",
+        "topic": "An apology",
+        "script": "I'm really sorry for breaking your cup. It was an accident. I'll buy you a new one tomorrow.",
+        "question": "What is the speaker going to do?",
+        "options": {
+            "A": "Fix the cup",
+            "B": "Buy a new cup",
+            "C": "Forget about it"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_101",
+        "topic": "Childhood memory",
+        "script": "When I was a child, my favourite toy was a small, blue teddy bear. I took it everywhere with me.",
+        "question": "What was the speaker's favourite toy?",
+        "options": {
+            "A": "A toy car",
+            "B": "A doll",
+            "C": "A teddy bear"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_102",
+        "topic": "At the florist's",
+        "script": "I'd like to buy a bouquet of flowers for my mother's birthday. Something with roses and lilies, please.",
+        "question": "Which flowers does the customer want?",
+        "options": {
+            "A": "Tulips and daisies",
+            "B": "Roses and lilies",
+            "C": "Sunflowers and carnations"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_103",
+        "topic": "An exam",
+        "script": "I have a big exam tomorrow, so I need to study all evening. I'm feeling a bit stressed about it.",
+        "question": "How is the speaker feeling about the exam?",
+        "options": {
+            "A": "Confident",
+            "B": "Relaxed",
+            "C": "Stressed"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_104",
+        "topic": "A new pet",
+        "script": "We got a new kitten last week. She's very small and playful, but she sleeps a lot.",
+        "question": "What does the new kitten do a lot?",
+        "options": {
+            "A": "Eats",
+            "B": "Sleeps",
+            "C": "Cries"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_105",
+        "topic": "A DIY project",
+        "script": "This weekend I'm going to paint my bedroom. I've chosen a light blue colour. I think it will make the room look bigger.",
+        "question": "Why did the speaker choose a light blue colour?",
+        "options": {
+            "A": "It's their favourite colour.",
+            "B": "It will make the room look bigger.",
+            "C": "It was on sale."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_106",
+        "topic": "At the car rental",
+        "script": "A: I'd like to rent a car for the weekend. B: Do you have your driving licence with you? And I'll also need to see a credit card.",
+        "question": "What two things does the customer need to show?",
+        "options": {
+            "A": "Passport and cash",
+            "B": "Driving licence and credit card",
+            "C": "ID card and driving licence"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_107",
+        "topic": "A favourite season",
+        "script": "My favourite season is autumn. I love the colours of the leaves on the trees, and the weather is cool but not too cold.",
+        "question": "What does the speaker love about autumn?",
+        "options": {
+            "A": "The hot weather",
+            "B": "The colours of the leaves",
+            "C": "The long days"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_108",
+        "topic": "A problem with a delivery",
+        "script": "The package arrived this morning, but when I opened it, the item inside was broken. I've sent an email to the company with a photo.",
+        "question": "What was wrong with the item?",
+        "options": {
+            "A": "It was the wrong item.",
+            "B": "It was broken.",
+            "C": "It was the wrong size."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_109",
+        "topic": "A TV documentary",
+        "script": "I watched a documentary about penguins last night. It was fascinating. I didn't know they could swim so fast.",
+        "question": "What did the speaker learn about penguins?",
+        "options": {
+            "A": "They can fly.",
+            "B": "They live in hot places.",
+            "C": "They can swim fast."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_110",
+        "topic": "A city break",
+        "script": "We're going to Prague for a long weekend. We want to see the castle, walk across the Charles Bridge, and try the local food.",
+        "question": "Which famous landmark do they want to see?",
+        "options": {
+            "A": "The Eiffel Tower",
+            "B": "The Colosseum",
+            "C": "The Charles Bridge"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_111",
+        "topic": "A new job",
+        "script": "I started a new job last month. I'm a receptionist in a hotel. I like meeting people from all over the world.",
+        "question": "What does the speaker like about their new job?",
+        "options": {
+            "A": "The salary",
+            "B": "The working hours",
+            "C": "Meeting people"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_112",
+        "topic": "A mobile phone feature",
+        "script": "My new phone has facial recognition, so I can unlock it just by looking at it. It's very convenient.",
+        "question": "How does the speaker unlock their phone?",
+        "options": {
+            "A": "With a password",
+            "B": "With their fingerprint",
+            "C": "With their face"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_113",
+        "topic": "A food market",
+        "script": "I love going to the food market on Saturdays. You can buy fresh, local vegetables and there's always a great atmosphere.",
+        "question": "What can you buy at the market?",
+        "options": {
+            "A": "Clothes",
+            "B": "Electronics",
+            "C": "Fresh vegetables"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_114",
+        "topic": "A power cut",
+        "script": "Suddenly, all the lights went out. We had a power cut. I had to find some candles so I could see.",
+        "question": "What did the speaker use to see?",
+        "options": {
+            "A": "A torch",
+            "B": "Their phone",
+            "C": "Candles"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_115",
+        "topic": "A visit to the art gallery",
+        "script": "I went to the art gallery to see the Impressionist exhibition. My favourite paintings were the ones by Monet.",
+        "question": "Which artist's paintings did the speaker like the most?",
+        "options": {
+            "A": "Van Gogh",
+            "B": "Monet",
+            "C": "Picasso"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_116",
+        "topic": "A long-distance friendship",
+        "script": "My best friend lives in Australia. We don't see each other very often, but we talk on a video call every week.",
+        "question": "How does the speaker keep in touch with their best friend?",
+        "options": {
+            "A": "By writing letters",
+            "B": "By video call",
+            "C": "By sending emails"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_117",
+        "topic": "A traffic rule",
+        "script": "In the UK, you have to drive on the left side of the road. It can be difficult for tourists who are used to driving on the right.",
+        "question": "Which side of the road do you drive on in the UK?",
+        "options": {
+            "A": "The right",
+            "B": "The left",
+            "C": "The middle"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_118",
+        "topic": "A favourite cafe",
+        "script": "There's a small cafe near my office that I go to for lunch. They make the best sandwiches and the staff are always so friendly.",
+        "question": "What does the speaker say about the staff at the cafe?",
+        "options": {
+            "A": "They are slow.",
+            "B": "They are friendly.",
+            "C": "They are not very helpful."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_119",
+        "topic": "A new language",
+        "script": "I want to learn Portuguese because I'm planning a trip to Brazil next year. I think it's a beautiful language.",
+        "question": "Why does the speaker want to learn Portuguese?",
+        "options": {
+            "A": "For their job",
+            "B": "For a trip to Brazil",
+            "C": "Because their partner is from Portugal"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_120",
+        "topic": "A forgotten appointment",
+        "script": "Oh no, I completely forgot I had a dentist's appointment this morning. I'll have to call them to apologize and reschedule.",
+        "question": "What did the speaker forget?",
+        "options": {
+            "A": "A meeting at work",
+            "B": "A friend's birthday",
+            "C": "A dentist's appointment"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_121",
+        "topic": "A neighbour's party",
+        "script": "My neighbours had a party last night and the music was very loud until 3 AM. I couldn't sleep at all.",
+        "question": "Why couldn't the speaker sleep?",
+        "options": {
+            "A": "They were feeling unwell.",
+            "B": "The music from a party was too loud.",
+            "C": "They had to work late."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_122",
+        "topic": "A picnic in the park",
+        "script": "We were going to have a picnic in the park, but it started to rain, so we went to a cafe instead.",
+        "question": "Why did they change their plan?",
+        "options": {
+            "A": "The park was closed.",
+            "B": "It started to rain.",
+            "C": "They were too hungry to wait."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_123",
+        "topic": "A subscription service",
+        "script": "I subscribe to a service that sends me a new book every month. It's a great way to discover new authors.",
+        "question": "What does the speaker receive every month?",
+        "options": {
+            "A": "A magazine",
+            "B": "A new film",
+            "C": "A new book"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_124",
+        "topic": "A difficult customer",
+        "script": "I had a difficult customer at work today. He was shouting because he had to wait for a few minutes. It was very unpleasant.",
+        "question": "Why was the customer shouting?",
+        "options": {
+            "A": "The product was broken.",
+            "B": "He had to wait.",
+            "C": "He couldn't find what he wanted."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_125",
+        "topic": "A home-cooked meal",
+        "script": "I prefer eating at home to eating in restaurants. I enjoy cooking and I know exactly what ingredients are in my food.",
+        "question": "Why does the speaker prefer eating at home?",
+        "options": {
+            "A": "It's cheaper.",
+            "B": "They enjoy cooking.",
+            "C": "Restaurants are too noisy."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_126",
+        "topic": "A school trip",
+        "script": "Next week, my son's class is going on a trip to the science museum. He's very excited about the space exhibition.",
+        "question": "What is the son excited to see?",
+        "options": {
+            "A": "The dinosaur exhibition",
+            "B": "The space exhibition",
+            "C": "The human body exhibition"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_127",
+        "topic": "A flat tyre",
+        "script": "I was late for work this morning because my car had a flat tyre. I had to wait for a mechanic to come and change it.",
+        "question": "Why was the speaker late for work?",
+        "options": {
+            "A": "The traffic was bad.",
+            "B": "The car had a flat tyre.",
+            "C": "The bus was late."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_128",
+        "topic": "A local festival",
+        "script": "There's a music festival in the town square this weekend. There will be live bands and food stalls. It should be fun.",
+        "question": "What will be at the festival?",
+        "options": {
+            "A": "A film screening",
+            "B": "Live bands and food stalls",
+            "C": "A sports competition"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_129",
+        "topic": "A new pair of glasses",
+        "script": "I got new glasses yesterday. I can see much more clearly now. It's much better for reading and watching TV.",
+        "question": "How have the new glasses helped the speaker?",
+        "options": {
+            "A": "They look more stylish.",
+            "B": "They can see more clearly.",
+            "C": "They were cheaper than the old ones."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_130",
+        "topic": "A charity run",
+        "script": "I'm running a 10-kilometre race next month to raise money for charity. I've been training for it for the last two months.",
+        "question": "Why is the speaker running a race?",
+        "options": {
+            "A": "To win a prize",
+            "B": "To get fit",
+            "C": "To raise money for charity"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_131",
+        "topic": "A visit from a relative",
+        "script": "My aunt is coming to stay with us for a week. We're going to take her sightseeing and show her all the famous places in our city.",
+        "question": "What are they going to do with their aunt?",
+        "options": {
+            "A": "Go shopping",
+            "B": "Relax at home",
+            "C": "Go sightseeing"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_132",
+        "topic": "A new supermarket",
+        "script": "A new supermarket has opened near my house. It's much bigger than the old one and it has a bakery and a fish counter.",
+        "question": "What is a feature of the new supermarket?",
+        "options": {
+            "A": "It has a cafe.",
+            "B": "It has a bakery.",
+            "C": "It has a post office."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_133",
+        "topic": "A favourite TV series",
+        "script": "I'm watching a great TV series at the moment. It's a historical drama. I can't wait for the next episode to come out.",
+        "question": "What kind of TV series is the speaker watching?",
+        "options": {
+            "A": "A comedy",
+            "B": "A science fiction series",
+            "C": "A historical drama"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_134",
+        "topic": "A delayed flight",
+        "script": "Our flight was delayed by four hours. The airline gave us vouchers to buy food and drink at the airport while we were waiting.",
+        "question": "What did the airline give the passengers?",
+        "options": {
+            "A": "A refund",
+            "B": "Another flight",
+            "C": "Food and drink vouchers"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_135",
+        "topic": "A new skill",
+        "script": "I'm trying to learn how to code. I'm doing an online course. It's quite difficult, but I think it will be a very useful skill for the future.",
+        "question": "Why does the speaker think coding is a useful skill?",
+        "options": {
+            "A": "It's easy to learn.",
+            "B": "It's good for the future.",
+            "C": "It's a creative skill."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_136",
+        "topic": "A public library",
+        "script": "The public library is a great resource. You can borrow books, use the computers for free, and they also have activities for children.",
+        "question": "What can you do for free at the library?",
+        "options": {
+            "A": "Buy books",
+            "B": "Use the computers",
+            "C": "Drink coffee"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_137",
+        "topic": "A part-time job",
+        "script": "I have a part-time job in a bookshop. I work on Saturdays and Sundays. I like it because I love being surrounded by books.",
+        "question": "When does the speaker work?",
+        "options": {
+            "A": "During the week",
+            "B": "On weekends",
+            "C": "In the evenings"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_138",
+        "topic": "A package holiday",
+        "script": "We booked a package holiday to Greece. It includes the flights, the hotel, and all our meals. It makes the holiday very easy and relaxing.",
+        "question": "What is included in the package holiday?",
+        "options": {
+            "A": "Only the flights and hotel",
+            "B": "Flights, hotel, and meals",
+            "C": "Flights, hotel, and tours"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_139",
+        "topic": "A bad dream",
+        "script": "I had a bad dream last night. I dreamt I was being chased by a monster. I woke up feeling very scared.",
+        "question": "How did the speaker feel when they woke up?",
+        "options": {
+            "A": "Happy",
+            "B": "Tired",
+            "C": "Scared"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_140",
+        "topic": "A formal email",
+        "script": "When you write a formal email, you should start with 'Dear Mr. Smith' and end with 'Yours sincerely'.",
+        "question": "How should you start a formal email?",
+        "options": {
+            "A": "With 'Hi'",
+            "B": "With 'Hello'",
+            "C": "With 'Dear Mr./Ms.'"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_141",
+        "topic": "A visit to the countryside",
+        "script": "It's so peaceful in the countryside. All you can hear are the birds singing. It's a nice change from the noise of the city.",
+        "question": "What can you hear in the countryside?",
+        "options": {
+            "A": "The sound of traffic",
+            "B": "The birds singing",
+            "C": "The sound of the sea"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_142",
+        "topic": "A new diet",
+        "script": "I'm trying a new diet. I'm eating less bread and pasta and more protein like chicken and fish. I hope to lose a few kilos.",
+        "question": "What is the speaker eating less of?",
+        "options": {
+            "A": "Fruit and vegetables",
+            "B": "Chicken and fish",
+            "C": "Bread and pasta"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_143",
+        "topic": "A team meeting",
+        "script": "We have a team meeting every Monday morning to discuss our plans for the week. Everyone has to report on what they are working on.",
+        "question": "What is the purpose of the meeting?",
+        "options": {
+            "A": "To get to know each other",
+            "B": "To discuss plans for the week",
+            "C": "To have coffee together"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_144",
+        "topic": "A theatre show",
+        "script": "We went to see a musical last night. The singing and dancing were incredible. I would definitely recommend it.",
+        "question": "What was incredible about the show?",
+        "options": {
+            "A": "The story",
+            "B": "The costumes",
+            "C": "The singing and dancing"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_145",
+        "topic": "A noisy neighbour",
+        "script": "My upstairs neighbour plays the drums. He usually practises in the evening, which can be very annoying when I'm trying to relax.",
+        "question": "What does the neighbour do that is annoying?",
+        "options": {
+            "A": "He has loud parties.",
+            "B": "He plays the drums.",
+            "C": "His dog barks a lot."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_146",
+        "topic": "A traditional dish",
+        "script": "Fish and chips is a traditional dish in Britain. It's usually served with salt and vinegar.",
+        "question": "What is fish and chips usually served with?",
+        "options": {
+            "A": "Ketchup and mayonnaise",
+            "B": "Salt and vinegar",
+            "C": "Lemon and pepper"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_147",
+        "topic": "A helpful app",
+        "script": "I use an app on my phone to track my exercise. It tells me how far I've walked each day and how many calories I've burned.",
+        "question": "What does the app track?",
+        "options": {
+            "A": "The user's sleep",
+            "B": "The user's exercise",
+            "C": "The user's diet"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_148",
+        "topic": "A change in weather",
+        "script": "It was warm and sunny this morning, but now it's getting cloudy and I think it's going to rain soon.",
+        "question": "How is the weather changing?",
+        "options": {
+            "A": "It's getting warmer.",
+            "B": "It's getting sunnier.",
+            "C": "It's getting cloudy and rainy."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_149",
+        "topic": "A good book",
+        "script": "I'm reading a really good book at the moment. I can't put it down. I stay up late every night to read it.",
+        "question": "What does the speaker do because the book is so good?",
+        "options": {
+            "A": "Read it very slowly",
+            "B": "Stay up late to read it",
+            "C": "Read it during the day"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_150",
+        "topic": "A home improvement",
+        "script": "We're getting a new kitchen fitted next month. It will have a big oven and a lot more storage space. I can't wait.",
+        "question": "What will the new kitchen have?",
+        "options": {
+            "A": "A smaller oven",
+            "B": "More storage space",
+            "C": "A different colour"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_151",
+        "topic": "A difficult language",
+        "script": "I find German grammar quite difficult, especially the word order. But I'm determined to learn it.",
+        "question": "What does the speaker find difficult about German?",
+        "options": {
+            "A": "The pronunciation",
+            "B": "The vocabulary",
+            "C": "The grammar"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_152",
+        "topic": "A street market",
+        "script": "I bought this beautiful handmade necklace at a street market. It was much cheaper than in the shops.",
+        "question": "Where did the speaker buy the necklace?",
+        "options": {
+            "A": "In a department store",
+            "B": "Online",
+            "C": "At a street market"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_153",
+        "topic": "A presentation at work",
+        "script": "I have to give a presentation to my colleagues tomorrow. I'm a bit nervous about speaking in front of people.",
+        "question": "What is the speaker nervous about?",
+        "options": {
+            "A": "The topic of the presentation",
+            "B": "Speaking in front of people",
+            "C": "Using the technology"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_154",
+        "topic": "A favourite childhood game",
+        "script": "When I was a kid, I used to love playing hide-and-seek with my friends in the park.",
+        "question": "What was the speaker's favourite game?",
+        "options": {
+            "A": "Football",
+            "B": "Hide-and-seek",
+            "C": "Tag"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_155",
+        "topic": "A public holiday",
+        "script": "Next Monday is a public holiday, so we have a long weekend. We're thinking of going camping if the weather is good.",
+        "question": "What is the speaker's plan for the long weekend?",
+        "options": {
+            "A": "Working",
+            "B": "Staying at home",
+            "C": "Going camping"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_156",
+        "topic": "A new coffee machine",
+        "script": "We bought a new coffee machine that uses coffee pods. It's much quicker and easier than making coffee the old way.",
+        "question": "What is an advantage of the new coffee machine?",
+        "options": {
+            "A": "It makes better coffee.",
+            "B": "It's cheaper.",
+            "C": "It's quicker and easier."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_157",
+        "topic": "A historical site",
+        "script": "We visited Stonehenge last weekend. It was amazing to see the ancient stones and think about how they were built so long ago.",
+        "question": "What did the speaker find amazing about Stonehenge?",
+        "options": {
+            "A": "The location",
+            "B": "The ancient stones",
+            "C": "The visitor centre"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_158",
+        "topic": "A cooking class",
+        "script": "I'm taking a Thai cooking class. This week we learned how to make a green curry. It was spicy but delicious.",
+        "question": "What did the speaker learn to make?",
+        "options": {
+            "A": "A red curry",
+            "B": "A green curry",
+            "C": "A yellow curry"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_159",
+        "topic": "A job application",
+        "script": "I spent all weekend writing my application for a job at the local museum. I really hope I get an interview.",
+        "question": "Where does the speaker want to work?",
+        "options": {
+            "A": "At the library",
+            "B": "At the museum",
+            "C": "At the university"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_160",
+        "topic": "A crowded train",
+        "script": "The train was so crowded this morning that I had to stand all the way to work. It wasn't very comfortable.",
+        "question": "Why was the journey uncomfortable?",
+        "options": {
+            "A": "The train was late.",
+            "B": "The train was too hot.",
+            "C": "The speaker had to stand."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_161",
+        "topic": "A new haircut",
+        "script": "A: I like your new haircut! B: Thanks! I wanted a change. I think it's much easier to manage now.",
+        "question": "Why does person B like their new haircut?",
+        "options": {
+            "A": "It's a fashionable style.",
+            "B": "It's easier to manage.",
+            "C": "It's a different colour."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_162",
+        "topic": "A walking tour",
+        "script": "The walking tour of the city was really informative. The guide told us a lot of interesting stories about the history of the buildings.",
+        "question": "What did the guide talk about?",
+        "options": {
+            "A": "The best places to shop",
+            "B": "The history of the buildings",
+            "C": "The best restaurants"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_163",
+        "topic": "A phone battery",
+        "script": "My phone battery dies so quickly. I have to charge it twice a day. I think I need to get a new battery.",
+        "question": "What is the problem with the phone?",
+        "options": {
+            "A": "The screen is cracked.",
+            "B": "The battery dies quickly.",
+            "C": "There is no signal."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_164",
+        "topic": "A visit to the farm",
+        "script": "We took the children to a farm where they could feed the animals. They loved giving carrots to the goats.",
+        "question": "Which animal did the children feed?",
+        "options": {
+            "A": "The cows",
+            "B": "The sheep",
+            "C": "The goats"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_165",
+        "topic": "A business trip",
+        "script": "I have to go to Berlin for a business trip next week. It's a short trip, just for two days, for a conference.",
+        "question": "Why is the speaker going to Berlin?",
+        "options": {
+            "A": "For a holiday",
+            "B": "For a conference",
+            "C": "To visit family"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_166",
+        "topic": "A traditional market",
+        "script": "The market is full of interesting things. You can buy everything from handmade jewellery to local cheeses and spices.",
+        "question": "What is something you can buy at the market?",
+        "options": {
+            "A": "Computers",
+            "B": "Local cheeses",
+            "C": "Cars"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_167",
+        "topic": "A surprise party",
+        "script": "We're organizing a surprise party for our friend's 30th birthday. It's a secret, so please don't say anything to her.",
+        "question": "Why shouldn't you say anything to the friend?",
+        "options": {
+            "A": "Because she is busy.",
+            "B": "Because the party is a secret.",
+            "C": "Because she doesn't like parties."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_168",
+        "topic": "A beautiful view",
+        "script": "We climbed to the top of the hill and the view was incredible. You could see the whole city and the sea beyond it.",
+        "question": "What could they see from the top of the hill?",
+        "options": {
+            "A": "Another hill",
+            "B": "A forest",
+            "C": "The city and the sea"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_169",
+        "topic": "A hotel review",
+        "script": "The hotel was in a great location, right in the city centre. However, our room was quite small and a bit noisy at night.",
+        "question": "What was the problem with the hotel room?",
+        "options": {
+            "A": "It was dirty.",
+            "B": "It was small and noisy.",
+            "C": "It didn't have a good view."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_170",
+        "topic": "A favourite meal",
+        "script": "My favourite meal to eat is a traditional Sunday roast, with roast chicken, potatoes, vegetables and gravy. It's a family tradition.",
+        "question": "What is the speaker's favourite meal?",
+        "options": {
+            "A": "Pizza",
+            "B": "Sunday roast",
+            "C": "Curry"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_171",
+        "topic": "A guided tour",
+        "script": "The tour guide was excellent. He was very knowledgeable and told us lots of funny stories about the history of the palace.",
+        "question": "What was good about the tour guide?",
+        "options": {
+            "A": "He spoke many languages.",
+            "B": "He was very knowledgeable.",
+            "C": "He gave them free tickets."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_172",
+        "topic": "A new camera",
+        "script": "I bought a new camera because I want to take better photos. This one has a powerful zoom, so I can take pictures of things that are far away.",
+        "question": "What does the powerful zoom allow the speaker to do?",
+        "options": {
+            "A": "Take photos in the dark",
+            "B": "Take photos of things far away",
+            "C": "Take videos"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_173",
+        "topic": "A lost dog",
+        "script": "We saw a poster for a lost dog. It's a small, brown dog called 'Buddy'. There's a phone number to call if you see him.",
+        "question": "What is the name of the lost dog?",
+        "options": {
+            "A": "Max",
+            "B": "Buddy",
+            "C": "Rocky"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_174",
+        "topic": "A new gym membership",
+        "script": "I joined a gym last month. I've been going to the swimming pool and I also tried a Zumba class, which was really fun.",
+        "question": "What class did the speaker try?",
+        "options": {
+            "A": "Yoga",
+            "B": "Pilates",
+            "C": "Zumba"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_175",
+        "topic": "A problem with a bill",
+        "script": "I think there's a mistake on this bill. We didn't have any desserts, but we've been charged for two.",
+        "question": "What is the mistake on the bill?",
+        "options": {
+            "A": "They were charged for the wrong drinks.",
+            "B": "They were charged for desserts they didn't have.",
+            "C": "The total amount is wrong."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_176",
+        "topic": "A podcast",
+        "script": "I listen to a podcast on my way to work. It's about science and technology. I learn something new every day.",
+        "question": "What is the podcast about?",
+        "options": {
+            "A": "History",
+            "B": "Science and technology",
+            "C": "Comedy"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_177",
+        "topic": "A new neighbour",
+        "script": "We have a new neighbour who moved in last week. She's a musician and plays the cello. She seems very nice.",
+        "question": "What instrument does the new neighbour play?",
+        "options": {
+            "A": "The piano",
+            "B": "The violin",
+            "C": "The cello"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_178",
+        "topic": "A difficult choice",
+        "script": "I can't decide which university to go to. One is in a big city, which would be exciting, but the other one has a better course.",
+        "question": "What is good about the university in the big city?",
+        "options": {
+            "A": "It has a better course.",
+            "B": "It would be exciting.",
+            "C": "It is cheaper."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_179",
+        "topic": "A food festival",
+        "script": "We went to a food festival and tried dishes from all over the world. My favourite was the paella from the Spanish stall.",
+        "question": "What was the speaker's favourite dish?",
+        "options": {
+            "A": "Pizza",
+            "B": "Paella",
+            "C": "Sushi"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_180",
+        "topic": "A train announcement",
+        "script": "We are sorry to announce that the 16:50 service to Liverpool is running approximately 15 minutes late. We apologize for the delay.",
+        "question": "How late is the train to Liverpool?",
+        "options": {
+            "A": "5 minutes",
+            "B": "10 minutes",
+            "C": "15 minutes"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_181",
+        "topic": "A language course",
+        "script": "The course is for beginners and it covers the basics of grammar and conversation. The textbook is included in the price.",
+        "question": "Is the textbook included in the price?",
+        "options": {
+            "A": "No, you have to buy it.",
+            "B": "Yes, it is included.",
+            "C": "You can borrow it."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_182",
+        "topic": "A rainy day",
+        "script": "It's been raining all day, so we can't go to the park. Let's stay in and watch a movie instead.",
+        "question": "What are they going to do?",
+        "options": {
+            "A": "Go to the park",
+            "B": "Go shopping",
+            "C": "Watch a movie"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_183",
+        "topic": "A new recipe book",
+        "script": "I got a new recipe book for my birthday. It's full of healthy and easy-to-make meals. I'm going to try the chicken and vegetable stir-fry tonight.",
+        "question": "What kind of meals are in the book?",
+        "options": {
+            "A": "Difficult and complicated meals",
+            "B": "Healthy and easy meals",
+            "C": "Desserts and cakes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_184",
+        "topic": "A stressful day",
+        "script": "I had such a stressful day at work. The computers crashed and I had an important deadline. I'm looking forward to a relaxing evening.",
+        "question": "Why was the day stressful?",
+        "options": {
+            "A": "The speaker had an argument.",
+            "B": "The computers crashed.",
+            "C": "The speaker was late."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_185",
+        "topic": "A local park",
+        "script": "Our local park has a new children's playground. It also has a lake where you can go boating in the summer.",
+        "question": "What can you do on the lake in summer?",
+        "options": {
+            "A": "Go swimming",
+            "B": "Go fishing",
+            "C": "Go boating"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_186",
+        "topic": "A doctor's advice",
+        "script": "The doctor told me I need to get more exercise. He suggested walking for at least 30 minutes every day.",
+        "question": "What did the doctor suggest?",
+        "options": {
+            "A": "Joining a gym",
+            "B": "Walking every day",
+            "C": "Changing diet"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_187",
+        "topic": "A flight booking",
+        "script": "I need to book a flight with extra legroom because I'm very tall. It usually costs a little more, but it's much more comfortable.",
+        "question": "Why does the speaker need extra legroom?",
+        "options": {
+            "A": "Because they are tall.",
+            "B": "Because they have a lot of luggage.",
+            "C": "Because the flight is long."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A2_L_188",
+        "topic": "A good night's sleep",
+        "script": "I slept really well last night. I feel so much better today. I think it's important to get at least eight hours of sleep a night.",
+        "question": "How much sleep does the speaker think is important?",
+        "options": {
+            "A": "Six hours",
+            "B": "Seven hours",
+            "C": "Eight hours"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_189",
+        "topic": "A car journey",
+        "script": "The journey took longer than we expected because there was a lot of traffic on the motorway. We were stuck in a traffic jam for over an hour.",
+        "question": "Why did the journey take longer?",
+        "options": {
+            "A": "They got lost.",
+            "B": "There was a lot of traffic.",
+            "C": "They had to stop for petrol."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_190",
+        "topic": "A favourite cafe",
+        "script": "The cafe has a lovely garden at the back. It's a great place to sit outside when the weather is nice.",
+        "question": "What is special about the cafe?",
+        "options": {
+            "A": "It has live music.",
+            "B": "It has a garden.",
+            "C": "It is very cheap."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_191",
+        "topic": "A new hobby",
+        "script": "I've started learning to play the ukulele. It's a small, four-stringed instrument. It's easier to learn than the guitar.",
+        "question": "Why is the ukulele easier to learn than the guitar, according to the speaker?",
+        "options": {
+            "A": "It's smaller and has fewer strings.",
+            "B": "It's cheaper.",
+            "C": "It's quieter."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A2_L_192",
+        "topic": "A museum rule",
+        "script": "You are welcome to take photos in the museum, but please make sure your flash is turned off.",
+        "question": "What is the rule about photos?",
+        "options": {
+            "A": "No photos are allowed.",
+            "B": "You must turn your flash off.",
+            "C": "You have to pay to take photos."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_193",
+        "topic": "A visit to a friend",
+        "script": "I went to visit my friend who has just had a baby. The baby is very small and cute, and slept the whole time I was there.",
+        "question": "What did the baby do while the speaker was there?",
+        "options": {
+            "A": "Cried",
+            "B": "Slept",
+            "C": "Played"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_194",
+        "topic": "A healthy breakfast",
+        "script": "For a healthy breakfast, I have porridge with some fruit and nuts. It gives me energy for the whole morning.",
+        "question": "What does the speaker have for breakfast?",
+        "options": {
+            "A": "Toast and jam",
+            "B": "Cereal with sugar",
+            "C": "Porridge with fruit and nuts"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_195",
+        "topic": "A new app",
+        "script": "I downloaded a new weather app. It's very accurate and it sends you an alert if it's going to rain.",
+        "question": "What does the app do if it's going to rain?",
+        "options": {
+            "A": "It plays a sound.",
+            "B": "It sends an alert.",
+            "C": "It changes colour."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_196",
+        "topic": "A public swimming pool",
+        "script": "The swimming pool is open from 6 AM to 9 PM on weekdays. The adult price is five pounds per session.",
+        "question": "How much does it cost for an adult to swim?",
+        "options": {
+            "A": "3 pounds",
+            "B": "4 pounds",
+            "C": "5 pounds"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_197",
+        "topic": "A difficult exam question",
+        "script": "There was one question in the exam that I couldn't answer. I spent a long time thinking about it, but I had no idea.",
+        "question": "What was the problem with one exam question?",
+        "options": {
+            "A": "The speaker didn't have time to answer it.",
+            "B": "The speaker couldn't answer it.",
+            "C": "The speaker didn't understand it."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A2_L_198",
+        "topic": "A beautiful garden",
+        "script": "My grandmother has a beautiful garden. It's full of colourful flowers and she also grows her own vegetables.",
+        "question": "What does the grandmother grow in her garden?",
+        "options": {
+            "A": "Only flowers",
+            "B": "Only vegetables",
+            "C": "Flowers and vegetables"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_199",
+        "topic": "A train ticket",
+        "script": "It's cheaper to buy your train ticket online in advance than to buy it at the station on the day of travel.",
+        "question": "What is the cheaper way to buy a train ticket?",
+        "options": {
+            "A": "At the station",
+            "B": "On the train",
+            "C": "Online in advance"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A2_L_200",
+        "topic": "A helpful colleague",
+        "script": "I was having problems with my computer, but my colleague, who is an IT expert, fixed it for me in five minutes.",
+        "question": "Who fixed the speaker's computer?",
+        "options": {
+            "A": "The IT department",
+            "B": "Their boss",
+            "C": "Their colleague"
+        },
+        "answer": "C"
+    }
+]

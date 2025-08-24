@@ -86,6 +86,7 @@ app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
+app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 
 // 오디오 파일 목록 API (인증 불필요)
 app.get('/audio-files/:level', (req, res) => {
@@ -120,7 +121,6 @@ app.use('/learn', learnRoutes);
 app.use('/vocab', vocabRoutes);
 app.use('/quiz', quizRoutes);
 app.use('/srs', srsRoutes);     // ✅ 단 한 번만 등록
-app.use('/reading', readingRoutes);
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
 app.use('/odat-note', odatNoteRoutes);

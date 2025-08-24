@@ -24,6 +24,9 @@ const REGEN_ANCHOR = process.env.REGEN_ANCHOR === '1';
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
+const TARGET_CLIP_SEC = 8.0;   // Veo preview 목표 길이
+const MIN_CLIP_SEC = 7.8;      // 이보다 짧으면 패딩으로 보정
+
 /* ---------- 공용 유틸 ---------- */
 function run(cmd, args, opts = {}) {
   return new Promise((resolve, reject) => {
@@ -134,6 +137,55 @@ function assertVideoInOperation(operation, tag = 'op') {
   return videoFile;
 }
 
+/* ---------- 길이 보정(필요 시 패딩) ---------- */
+async function getDurationSec(filePath) {
+  const out = await runCapture('ffprobe', [
+    '-v', 'error', '-show_entries', 'format=duration',
+    '-of', 'default=noprint_wrappers=1:nokey=1', filePath,
+  ]);
+  const n = parseFloat(out);
+  if (!isFinite(n)) throw new Error(`ffprobe duration 파싱 실패: ${filePath} (${out})`);
+  return n;
+}
+async function hasAudio(filePath) {
+  try {
+    const out = await runCapture('ffprobe', [
+      '-v', 'error', '-select_streams', 'a:0',
+      '-show_entries', 'stream=codec_type',
+      '-of', 'csv=s=x:p=0', filePath,
+    ]);
+    return /audio/.test(out);
+  } catch {
+    return false;
+  }
+}
+async function ensureMinDuration(filePath, minSec = MIN_CLIP_SEC, targetSec = TARGET_CLIP_SEC) {
+  const d = await getDurationSec(filePath);
+  if (d >= minSec) return filePath;
+  const pad = Math.max(0, targetSec - d);
+  const tmp = filePath.replace(/\.mp4$/, '-pad.mp4');
+  const audio = await hasAudio(filePath);
+  if (audio) {
+    // 비디오 클론 패드 + 오디오 무음 패드
+    await run('ffmpeg', [
+      '-y', '-i', filePath,
+      '-filter_complex', `[0:v]tpad=stop_mode=clone:stop_duration=${pad}[v];[0:a]apad=pad_dur=${pad}[a]`,
+      '-map', '[v]', '-map', '[a]',
+      '-c:v', 'libx264', '-c:a', 'aac', '-shortest', tmp,
+    ]);
+  } else {
+    // 오디오 없는 경우: 영상만 패드
+    await run('ffmpeg', [
+      '-y', '-i', filePath,
+      '-vf', `tpad=stop_mode=clone:stop_duration=${pad}`,
+      '-c:v', 'libx264', '-an', tmp,
+    ]);
+  }
+  await fs.rename(tmp, filePath);
+  console.log(`[LENGTH] ${path.basename(filePath)}: ${d.toFixed(2)}s → >= ${targetSec}s (padded ${pad.toFixed(2)}s)`);
+  return filePath;
+}
+
 /* ---------- 앵커 이미지 생성(파일) ---------- */
 async function generateAnchorImagePNG(outPath) {
   console.log('[ANCHOR] 이미지 생성 시작');
@@ -141,7 +193,7 @@ async function generateAnchorImagePNG(outPath) {
 High-resolution photorealistic **reference still photo** for a video shoot.
 LOCATION: outdoor **city sidewalk/street**, **5 PM (17:00)**, same block for all shots. Natural color grade, eye-level ~35mm, soft bokeh, no text/captions.
 CAST (LOCK ACROSS ALL CLIPS):
-- A: Black male, **extremely heavyset / obese** (large protruding belly, thick neck and arms), **shaved head**, **completely clean-shaven** (**no moustache, no beard, no stubble**); outfit: black hoodie + gray joggers; **cheeseburger in left hand (yellow wrapper)**.
+- A: Black male, **extremely heavyset / obese** (large protruding belly, thick neck and arms), **shaved head**, **completely clean-shaven** (**no moustache, no beard, no stubble**); outfit: black hoodie + gray joggers; **cheeseburger in left hand (white wrapper)**.
 - B: Black male, average build, short curly hair, **very light five o'clock shadow**; outfit: denim jacket + white T-shirt + dark jeans.
 FRAMING: two-shot, head-to-mid-thigh, walking toward camera; storefronts/trees/signs visible for background lock. Use as a **look anchor** for later video generation.
 `.trim();
@@ -172,9 +224,9 @@ async function startVeoJobAndWait({ prompt, imageBase64 }) {
     image: imageBase64 ? { imageBytes: imageBase64, mimeType: 'image/png' } : undefined, // Image-to-Video
     config: {
       aspectRatio: '16:9',
-      // 텍스트/자막 전면 금지 + 수염(전반) 억제
+      // 텍스트/자막 전면 금지 + 수염(전반) 억제 + 웃음 억제
       negativePrompt:
-        'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns',
+        'interior, indoor, cafe, shop interior, lobby, car interior, extra person, third person, text overlays, captions, subtitle, subs, sub, CC, closed captions, lower-third, lower third, chyron, banner, ticker, speech bubble, bubble text, emoji, letters, words, numbers, on-screen text, typography, sign, signage, jump cut, full beard, thick beard, long beard, moustache, mustache, goatee, heavy sideburns, smile, smiling, grin, laughter, laugh',
       personGeneration: 'allow_adult',
     },
   });
@@ -190,9 +242,10 @@ async function downloadVideoOp(operation, rawPath) {
   return rawPath;
 }
 
-/* ---------- 클립 생성(정규화 포함) ---------- */
+/* ---------- 클립 생성(정규화 + 길이보정) ---------- */
 async function generateClip(prompt, fileBase, imageBase64) {
-  console.log(`\n[START] ${fileBase} 생성 요청`);
+  console.log(`
+[START] ${fileBase} 생성 요청`);
   const op = await startVeoJobAndWait({ prompt, imageBase64 });
 
   const rawPath = path.join(OUT_DIR, `${fileBase}-raw.mp4`);
@@ -207,31 +260,28 @@ async function generateClip(prompt, fileBase, imageBase64) {
     normPath,
   ]);
   console.log(`[OK] 정규화 저장: ${normPath}`);
+
+  // 길이 보정(5초로 잘리는 문제 대응)
+  await ensureMinDuration(normPath, MIN_CLIP_SEC, TARGET_CLIP_SEC);
   return normPath;
 }
 
 /* ---------- 결합/메타 ---------- */
 async function concatClips(clips, outPath) {
-  console.log(`\n[MERGE] ${clips.length}개 클립 결합 → ${outPath}`);
-  const args = [
-    '-y',
-    '-i', clips[0], '-i', clips[1], '-i', clips[2],
-    '-filter_complex', '[0:v][0:a][1:v][1:a][2:v][2:a]concat=n=3:v=1:a=1[v][a]',
+  console.log(`
+[MERGE] ${clips.length}개 클립 결합 → ${outPath}`);
+  const args = ['-y'];
+  for (const c of clips) args.push('-i', c);
+  const inputs = clips.map((_, i) => `[${i}:v][${i}:a]`).join('');
+  const filter = `${inputs}concat=n=${clips.length}:v=1:a=1[v][a]`;
+  args.push(
+    '-filter_complex', filter,
     '-map', '[v]', '-map', '[a]',
     '-c:v', 'libx264', '-c:a', 'aac', '-movflags', '+faststart',
     outPath,
-  ];
+  );
   await run('ffmpeg', args);
   console.log('[OK] 결합 완료');
-}
-async function getDurationSec(filePath) {
-  const out = await runCapture('ffprobe', [
-    '-v', 'error', '-show_entries', 'format=duration',
-    '-of', 'default=noprint_wrappers=1:nokey=1', filePath,
-  ]);
-  const n = parseFloat(out);
-  if (!isFinite(n)) throw new Error(`ffprobe duration 파싱 실패: ${filePath} (${out})`);
-  return n;
 }
 function toSrtTime(sec) {
   const ms = Math.max(0, Math.round(sec * 1000));
@@ -242,48 +292,55 @@ function toSrtTime(sec) {
   return `${hh}:${mm}:${ss},${mmm}`;
 }
 
-/* ---------- SRT(clip1 0–5 추적, 5–8 정지 반영) ---------- */
-async function writeKoreanSubtitles(d1, d2, d3) {
-  const m = 0.20;
+/* ---------- SRT(clip1 + clip3만) ---------- */
+async function writeKoreanSubtitles(d1, d3) {
+  const m = 0.20; // 안전 마진
 
-  // clip1: 0–5s 점차 감속 추적, 5–8s 카메라 고정
+  // clip1: 두 줄 (A)
   const p1aStart = 0 + m;
-  const p1aEnd   = Math.min(d1 - m, 5.0 - 0.10); // 첫 대사: 추적 구간
+  const p1aEnd = Math.min(d1 - m, 3.0);
   const p1bStart = p1aEnd + 0.05;
-  const p1bEnd   = Math.min(d1 - m, 7.4);        // 두 번째 대사: 정지 초기까지
+  const p1bEnd = Math.min(d1 - m, 6.6);
 
-  // clip2
-  const off2 = d1;
-  const p2Start = off2 + m;
-  const p2End   = off2 + d2 - m;
-
-  // clip3
-  const off3 = d1 + d2;
-  const p3aStart = off3 + m;
-  const p3aEnd   = off3 + Math.min(d3 - m, d3 * 0.55);
-  const p3bStart = p3aEnd + 0.05;
-  const p3bEnd   = off3 + d3 - m;
+  // clip3: 한 줄 (A 기능 나열)
+  const off3 = d1;
+  const p3Start = off3 + m;
+  const p3End = off3 + d3 - m;
 
   const cues = [
     [1, p1aStart, p1aEnd, '요즘 수능 준비하는데, 영단어가 도무지 머리에 안 들어와.'],
     [2, p1bStart, p1bEnd, '어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어.'],
-    [3, p2Start,  p2End,  "'단무새'라는 앱을 써봐. 과학적으로 설계된 망각 학습 곡선 스케줄로 단어를 효율적으로 익힐 수 있어."],
-    [4, p3aStart, p3aEnd, '맙소사, 한 달에 3,300원? 내 지갑이 살찌겠는걸!'],
-    [5, p3bStart, p3bEnd, '단무새와 함께라면, 네 머리는 영어사전이 될 거야!'],
+    [3, p3Start, p3End, '레벨별로 세분화된 카테고리와 각종 시험 필수 어휘, 거기에 데일리 리딩, 리스닝, 문법 문제까지! 완전 대박인데!'],
   ];
 
   let srt = '';
   for (const [idx, s, e, text] of cues) {
-    srt += `${idx}\n${toSrtTime(s)} --> ${toSrtTime(e)}\n${text}\n\n`;
+    srt += `${idx}
+${toSrtTime(s)} --> ${toSrtTime(e)}
+${text}
+
+`;
   }
   await fs.writeFile(SRT_PATH, srt, 'utf8');
   console.log(`[OK] SRT 저장: ${SRT_PATH}`);
 }
 async function burnSubtitles(input, srt, output) {
-  const vf = `subtitles='${srt.replace(/\\/g, '\\\\').replace(/:/g, '\\:').replace(/'/g, "\\'")}':force_style='FontName=Malgun Gothic,Fontsize=28,Outline=1,BorderStyle=3,Alignment=2'`;
+  // ffmpeg subtitles 필터는 경로 내 특수문자(\, :, [, ], ') 이스케이프가 필요
+  function escapeForSubtitlesFilter(p) {
+    const abs = path.resolve(p).replace(/\\/g, '/'); // Windows도 forward-slash로 통일
+    return abs
+      .replace(/:/g, '\\:')   // colon
+      .replace(/\[/g, '\\[')  // left bracket
+      .replace(/\]/g, '\\]')  // right bracket
+      .replace(/'/g, "\\'");  // single quote
+  }
+  const subPath = escapeForSubtitlesFilter(srt);
+  const forceStyle = 'FontName=Malgun Gothic,Fontsize=28,Outline=1,BorderStyle=3,Alignment=2';
+  const vf = `subtitles='${subPath}':force_style='${forceStyle}'`;
   await run('ffmpeg', ['-y', '-i', input, '-vf', vf, '-c:v', 'libx264', '-c:a', 'aac', '-movflags', '+faststart', output]);
   console.log(`[OK] 자막 번인 완료: ${output}`);
 }
+
 
 /* ---------- 프롬프트 빌더 ---------- */
 function buildConsistencyBlock() {
@@ -291,84 +348,74 @@ function buildConsistencyBlock() {
 # CONSISTENCY (apply to ALL clips, strong)
 - Only TWO Black male leads appear; no extra faces; silhouettes only in background. **No third person.**
 - TIME: **5 PM (17:00)**. LOCATION: **outdoor city sidewalk/street** only. **NO INTERIORS**.
-- **A is EXTREMELY HEAVYSET/OBESE** (large protruding belly, wide torso, thick neck/arms) and **ABSOLUTELY CLEAN-SHAVEN** (**no moustache, no beard, no stubble**). **Shaved head.** Always holds a cheeseburger in the **left** hand (yellow wrapper).
+- **A is EXTREMELY HEAVYSET/OBESE** (large protruding belly, wide torso, thick neck/arms) and **ABSOLUTELY CLEAN-SHAVEN** (**no moustache, no beard, no stubble**). **Shaved head.** Always holds a cheeseburger in the **left** hand (white wrapper).
 - **B** has short curly hair with **very light** five o'clock shadow (not a moustache/beard).
-- Keep identical looks, outfits, props, skin tones across all clips. Lock background composition (storefronts/signs/trees).
-- Camera baseline: eye-level ±10cm, forward 15°, ~35mm eq., natural color.
-- Dialogue MUST be **KOREAN**. No on-screen text/captions.
+- Keep identical looks, outfits, props, skin tones across clips. Lock background composition (storefronts/signs/trees).
+- Camera baseline: eye-level ±10cm; natural color; **24fps with ~180° shutter (≈1/48s)** for cinematic motion cadence.
+- **Movement polish (ad-style):** gimbal-stabilized dolly; micro-bob <1% frame height; gentle parallax; natural body inertia.
+- **Hard bans:** on-screen text/captions/signage/numbers; black frames; jump cuts; whip pans; rack-focus whiplash; **smile/laughter**; beard/moustache on A; heavy facial hair on B.
 `.trim();
 }
+
 function buildP1() {
   const CONS = buildConsistencyBlock();
   return `
 ${CONS}
-# Scene 1/3 — Opening (8s, **single continuous shot**)
+# Scene 1/2 — Opening (target 8s, **single continuous shot**)
 Two Black men walk side by side on the same sidewalk block at 5 PM.
-CAST:
-- A: **extremely heavyset/obese**, shaved head, **completely clean-shaven (no moustache, no beard, no stubble)**; black hoodie + gray joggers; cheeseburger (left hand).
-- B: average build, short curly hair, **very light** five o'clock shadow; denim jacket + white T-shirt + dark jeans.
 
-# PERFORMANCE (scene 1 only)
-- **Only A speaks in KOREAN.** Map the voice to **A (plus-size, shaved head, burger in left hand)**.
-- **B is silent** (non-verbal only): small nods/eye contact. **B’s lips remain closed** (no speech articulation).
-- **No smiling or laughter** from **both A and B** at any time in this clip, **including the final seconds**.
-  A shows mild frustration; B stays neutral/attentive.
+# DURATION (HARD INTENT)
+- **Play for a full ~8.0 seconds. Do NOT cut at 5s.** Maintain motion until the last frame.
 
-# CAMERA CHOREOGRAPHY (critical)
-- 0–1s: ease-in to a smooth **backwards tracking** move on gimbal (stabilized).
-- **1–8s: keep a continuous, steady backwards dolly** at slow constant speed. **Do not stop, do not lock off.**
-- **Both characters keep walking straight forward on the SAME sidewalk lane** (shoulder-to-shoulder). 
-  **No splitting, no turning left/right, no diverging paths, no crossing.** Stay in the same block; maintain spacing.
+# CAST
+- A: **extremely heavyset/obese**, shaved head, **completely clean-shaven**; black hoodie + gray joggers; cheeseburger in **left** hand.
+- B: average build; short curly hair; **very light** five o'clock shadow; denim jacket + white tee + dark jeans.
+
+# PERFORMANCE
+- **Only A speaks (KOREAN).** B is silent; lips closed; small nods/eye contact only. **No smiling** for both.
+
+# CAMERA CHOREOGRAPHY
+- 0–1s: ease-in to smooth **backwards tracking** on gimbal (stabilized), micro-bob <1% allowed.
+- **1–8s: continuous, steady backward dolly at constant speed. No stop/lock-off.**
+- Keep both characters on the **same lane** (shoulder-to-shoulder); no splitting/turning; horizon level; eye-level height.
 
 # DIALOGUE (KOREAN):
-A (slightly frustrated): "요즘 수능 준비하는데, 영단어가 도무지 머리에 안 들어와. 어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어."
+A: "요즘 수능 준비하는데, 영단어가 도무지 머리에 안 들어와. 어젯밤에도 수백 번 써봤지만 결국 잉크만 낭비했어."
 
 # Audio: natural street ambience; subtle BGM; natural chewing (not exaggerated).
 `.trim();
 }
 
-// FIX(P2): 동일 길거리에서 바로 **B의 MCU(가슴선 위 상반신+얼굴)**로 시작, 너무 타이트 금지, 씬1의 후방 트래킹을 그대로 이어서 진행
-function buildP2() {
-  const CONS = buildConsistencyBlock();
-  return `
-${CONS}
-# Scene 2/3 — Suggestion (~7–8s)
-**Same sidewalk, same block, same light/exposure as Scene 1.** **HARD CUT** to a **medium close shot (MCU) of B** at eye-level — **chest-up framing** that shows **both shoulders and the full face** (do **not** go tighter than MCU). A remains at frame edge as a subtle dirty OTS.
-
-# CAMERA / MOVEMENT (continuity from Scene 1)
-- Maintain the **same backward tracking movement and speed** from Scene 1; keep horizon level, no lock-off, no sudden zooms.
-- Lens feeling: **~50–65mm** equivalent (natural perspective, not telephoto-tight).
-- Keep soft background bokeh; preserve color/WB/ISO match.
-
-# EYE-LINE for B:
-- First 60%: looks mostly at **A** (~70%) and briefly toward camera (~30%) with micro eye movements; avoid fixed staring.
-- Last 40%: **smoothly transition** gaze to the **camera**, ending with ~0.5–1.0s gentle direct address.
-
-# DIALOGUE (KOREAN):
-B (friendly, concise): "'단무새'라는 앱을 써봐. 과학적으로 설계된 망각 학습 곡선 스케줄로 단어를 효율적으로 익힐 수 있어."
-
-# Visual restrictions (hard)
-- **ABSOLUTELY NO ON-SCREEN TEXT of any kind** (no subtitles, captions, banners, chyrons, tickers, speech bubbles, emojis, letters, numbers, signage).
-# Audio: ambience continuity; A’s chewing minimal.
-`.trim();
-}
-
+// 유지 요청: clip3 = A가 스마트폰을 들여다보며 놀란 표정으로 기능 나열 + 미소 금지, 톤 자연화
 function buildP3() {
   const CONS = buildConsistencyBlock();
   return `
 ${CONS}
-# Scene 3/3 — Resolution (~7–8s)
-Same outdoor street; match light/exposure and background lock. Start on a **close-up on A**, then end on a **two-shot** with a subtle sun flare; natural fade out. No text.
+# Scene 2/2 — Feature Burst (target ~8s, **A + smartphone**) 
+Same street; match exposure/white balance. **Single continuous shot**.
 
-# DIALOGUE (KOREAN):
-A (checks phone; delighted): "맙소사, 한 달에 3,300원? 내 지갑이 살찌겠는걸!"
-B (smiles): "단무새와 함께라면, 네 머리는 영어사전이 될 거야!"
+## START FRAME (HARD)
+- **Frame 0:** **A holds a smartphone in the RIGHT hand at eye level** and looks at it with **surprised/delighted eyes** (mouth neutral; **no smile**). **Begin speaking at 00:00:00** with visible lip articulation.
+- **Left hand:** cheeseburger (white wrapper). Do not swap hands.
 
-# Audio: clear KOREAN dialogue; short positive end sting; ambience continuity.
+## DELIVERY (KOREAN PROSODY — NATURAL, NOT ANNOUNCER)
+- Conversational enumerative tone; **pace ≈ 3.0–3.6 syll/sec**; micro-pauses **0.18–0.25s** at commas.
+- Clause-final **falling intonation**; avoid robotic equal spacing / over-articulation.
+- Mild emphasis only on: "레벨별로", "시험 필수 어휘", "리딩·리스닝·문법".
+- **No smiling or laughter at any time, including the final second.**
+
+## CAMERA / BLOCKING
+- **0.0–3.2s:** Tight **CU on A (head–shoulders)**; maintain eye-level; subtle rack to eyes once.
+- **3.2–8.0s:** Stay on A (optionally widen slightly), but **keep B offscreen** to avoid mixed eyelines. No transitions/black frames.
+
+# DIALOGUE (KOREAN) — A enumerates while looking at phone:
+A: "레벨별로 세분화된 카테고리와 각종 시험 필수 어휘, 거기에 리딩, 리스닝, 문법 문제까지? 완전 대박인데!"
+
+# HARD BAN: any on-screen text/captions/signage. Smartphone UI remains unreadable.
 `.trim();
 }
 
-/* ---------- 엔트리 포인트 ---------- */
+/* ---------- 엔트리 포인트 (clip1 & clip3만 생성) ---------- */
 async function main() {
   await ensureOutDir();
   await ensureFfmpeg();
@@ -382,25 +429,15 @@ async function main() {
   }
   const anchorB64 = await readFileBase64(ANCHOR_IMG_PATH);
 
-  // 2) 씬 프롬프트
-  const P1 = buildP1(), P2 = buildP2(), P3 = buildP3();
-
-  // 3) 각 클립 생성(동일 앵커 참조)
-  const clip1 = await generateClip(P1, 'clip1', anchorB64);
-  const clip2 = await generateClip(P2, 'clip2', anchorB64);
+  // 2) clip3 프롬프트 준비 및 생성 (clip3 only)
+  const P3 = buildP3();
   const clip3 = await generateClip(P3, 'clip3', anchorB64);
 
-  // 4) 결합 + 자막
-  await concatClips([clip1, clip2, clip3], FINAL_OUTPUT);
-  console.log(`\n완료: ${FINAL_OUTPUT}`);
+  // (선택) 기존 파이프라인 파일명과 맞춰야 한다면 아래 주석 해제
+  // await fs.copyFile(clip3, FINAL_OUTPUT);
 
-  const d1 = await getDurationSec(clip1);
-  const d2 = await getDurationSec(clip2);
   const d3 = await getDurationSec(clip3);
-  await writeKoreanSubtitles(d1, d2, d3);
-  await burnSubtitles(FINAL_OUTPUT, SRT_PATH, SUBBED_OUTPUT);
-
-  console.log(`\n자막 버전 출력: ${SUBBED_OUTPUT}`);
+  console.log(`\n완료: clip3=${clip3} (${d3.toFixed(2)}s)\n`);
 }
 
 main().catch(err => {

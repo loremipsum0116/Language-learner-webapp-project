@@ -246,19 +246,38 @@ router.get('/categories', async (req, res) => {
 /**
  * POST /odat-note/create
  * 오답노트에 새로운 항목 추가 (리딩, 문법, 리스닝 등)
- * body: { itemType, itemId, wrongData }
+ * body: { itemType, itemId, wrongData } 또는 { type, wrongData }
  */
 router.post('/create', async (req, res) => {
   try {
-    const { itemType, itemId, wrongData } = req.body;
+    // 두 가지 형식 지원: { itemType, itemId } 또는 { type }
+    let { itemType, itemId, type, wrongData } = req.body;
     
-    if (!itemType || !itemId) {
+    // type 필드가 있으면 itemType으로 변환하고 itemId 생성
+    if (type && !itemType) {
+      itemType = type;
+      // wrongData에서 고유 ID 생성
+      if (type === 'reading' && wrongData?.level && wrongData?.questionIndex !== undefined) {
+        itemId = `${wrongData.level}_${wrongData.questionIndex}`;
+      } else if (type === 'grammar' && wrongData?.topicId && wrongData?.questionIndex !== undefined) {
+        itemId = `${wrongData.topicId}_${wrongData.questionIndex}`;
+      } else if (type === 'listening' && wrongData?.questionId) {
+        itemId = wrongData.questionId;
+      } else {
+        itemId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      }
+    }
+    
+    const finalItemType = itemType;
+    const finalItemId = itemId;
+    
+    if (!finalItemType || !finalItemId) {
       return res.status(400).json({ error: 'itemType and itemId are required' });
     }
     
     // 지원되는 타입 체크
     const validTypes = ['vocab', 'grammar', 'reading', 'listening'];
-    if (!validTypes.includes(itemType)) {
+    if (!validTypes.includes(finalItemType)) {
       return res.status(400).json({ error: 'Invalid itemType. Must be one of: vocab, grammar, reading, listening' });
     }
     
@@ -266,8 +285,8 @@ router.post('/create', async (req, res) => {
     const existingWrongAnswer = await prisma.wronganswer.findFirst({
       where: {
         userId: req.user.id,
-        itemType: itemType,
-        itemId: String(itemId),
+        itemType: finalItemType,
+        itemId: String(finalItemId),
         isCompleted: false
       }
     });
@@ -292,8 +311,8 @@ router.post('/create', async (req, res) => {
       wrongAnswer = await prisma.wronganswer.create({
         data: {
           userId: req.user.id,
-          itemType: itemType,
-          itemId: String(itemId),
+          itemType: finalItemType,
+          itemId: String(finalItemId),
           attempts: 1,
           wrongAt: new Date(),
           wrongData: wrongData || {},
@@ -351,6 +370,99 @@ router.post('/:id/resolve', async (req, res) => {
   } catch (e) {
     console.error('POST /odat-note/:id/resolve failed:', e);
     return res.status(500).json({ error: 'Failed to resolve wrong answer' });
+  }
+});
+
+/**
+ * POST /odat-note  
+ * 새로운 형식의 오답노트 API (type, wrongData 형식)
+ * body: { type, wrongData }
+ */
+router.post('/', async (req, res) => {
+  try {
+    const { type, wrongData } = req.body;
+    
+    if (!type || !wrongData) {
+      return res.status(400).json({ error: 'type and wrongData are required' });
+    }
+    
+    // 기존 /create 로직 재사용
+    const modifiedReq = {
+      ...req,
+      body: { type, wrongData }
+    };
+    
+    // /create 엔드포인트의 로직을 직접 호출
+    const { itemType, itemId } = req.body;
+    let finalItemType = type;
+    let finalItemId;
+    
+    // wrongData에서 고유 ID 생성
+    if (type === 'reading' && wrongData?.level && wrongData?.questionIndex !== undefined) {
+      finalItemId = `${wrongData.level}_${wrongData.questionIndex}`;
+    } else if (type === 'grammar' && wrongData?.topicId && wrongData?.questionIndex !== undefined) {
+      finalItemId = `${wrongData.topicId}_${wrongData.questionIndex}`;
+    } else if (type === 'listening' && wrongData?.questionId) {
+      finalItemId = wrongData.questionId;
+    } else {
+      finalItemId = `${type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    }
+    
+    // 지원되는 타입 체크
+    const validTypes = ['vocab', 'grammar', 'reading', 'listening'];
+    if (!validTypes.includes(finalItemType)) {
+      return res.status(400).json({ error: 'Invalid type. Must be one of: vocab, grammar, reading, listening' });
+    }
+    
+    // 기존 오답 항목이 있는지 확인
+    const existingWrongAnswer = await prisma.wronganswer.findFirst({
+      where: {
+        userId: req.user.id,
+        itemType: finalItemType,
+        itemId: String(finalItemId),
+        isCompleted: false
+      }
+    });
+    
+    let wrongAnswer;
+    
+    if (existingWrongAnswer) {
+      // 기존 항목이 있으면 카운트 증가
+      wrongAnswer = await prisma.wronganswer.update({
+        where: { id: existingWrongAnswer.id },
+        data: {
+          attempts: existingWrongAnswer.attempts + 1,
+          wrongAt: new Date(),
+          wrongData: wrongData || existingWrongAnswer.wrongData,
+          reviewWindowStart: new Date(),
+          reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        }
+      });
+    } else {
+      // 새로운 오답 항목 생성
+      wrongAnswer = await prisma.wronganswer.create({
+        data: {
+          userId: req.user.id,
+          itemType: finalItemType,
+          itemId: String(finalItemId),
+          attempts: 1,
+          wrongAt: new Date(),
+          wrongData: wrongData || {},
+          isCompleted: false,
+          reviewWindowStart: new Date(),
+          reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
+        }
+      });
+    }
+    
+    return res.json({ 
+      data: wrongAnswer,
+      message: `Wrong answer recorded for ${finalItemType}` 
+    });
+    
+  } catch (e) {
+    console.error('POST /odat-note failed:', e);
+    return res.status(500).json({ error: 'Failed to record wrong answer' });
   }
 });
 

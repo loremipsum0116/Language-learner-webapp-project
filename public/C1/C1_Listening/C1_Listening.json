@@ -1,0 +1,2402 @@
+[
+    {
+        "id": "C1_L_001",
+        "topic": "Discussing Economic Policy",
+        "script": "A: The central bank's decision to raise interest rates seems like a blunt instrument to tackle inflation. It's going to hit homeowners and small businesses disproportionately hard. B: I concur. While their intention to curb inflation is understandable, the collateral damage to the economy might be severe. A more nuanced, fiscal approach is warranted. C: But isn't a short-term economic slowdown a necessary evil to prevent long-term, runaway inflation? The bank has to maintain its credibility.",
+        "question": "What is C's justification for the central bank's decision?",
+        "options": {
+            "A": "They believe it will have no negative effects on the economy.",
+            "B": "They think it's a necessary measure to prevent more severe, long-term inflation.",
+            "C": "They argue that a fiscal approach would be more effective."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_002",
+        "topic": "Literary Analysis",
+        "script": "A: The author's use of an unreliable narrator is what makes the novel so compelling. You're constantly questioning the version of events you're being told. B: Absolutely. It forces the reader into an active role, piecing together the objective truth from subjective accounts. C: I found it slightly frustrating, though. I prefer a more straightforward narrative. The ambiguity left me feeling unsatisfied.",
+        "question": "How did speaker C feel about the narrative technique?",
+        "options": {
+            "A": "They found it compelling and engaging.",
+            "B": "They appreciated the challenge of finding the objective truth.",
+            "C": "They felt unsatisfied due to the narrative's ambiguity."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_003",
+        "topic": "Debating Technological Ethics",
+        "script": "A: The rapid advancement of gene-editing technology like CRISPR presents a moral quandary. The potential to eradicate genetic diseases is immense. B: But the line between therapy and enhancement is perilously thin. Where do we stop? It opens a Pandora's box of ethical dilemmas. C: Precisely. We need robust international regulations and a public discourse on the societal implications before this technology becomes widespread.",
+        "question": "What is C's main argument regarding gene-editing technology?",
+        "options": {
+            "A": "It should be banned completely due to the risks.",
+            "B": "It should be developed as quickly as possible to cure diseases.",
+            "C": "There is a need for regulation and public discussion before it is widely used."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_004",
+        "topic": "Critiquing an Art Exhibition",
+        "script": "A: The exhibition was technically brilliant, but I found it emotionally sterile. It was all concept and no heart. B: I disagree. I thought the minimalist aesthetic was a powerful statement in itself, a commentary on the emptiness of modern consumer culture. C: I'm with Ben on this. The artist's intellectual rigour was palpable, but the work failed to resonate with me on a visceral level.",
+        "question": "What is B's interpretation of the exhibition's minimalist aesthetic?",
+        "options": {
+            "A": "It showed a lack of emotional depth.",
+            "B": "It was a commentary on consumer culture.",
+            "C": "It demonstrated technical brilliance but lacked a concept."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_005",
+        "topic": "A University Philosophy Seminar",
+        "script": "The lecture on existentialism was thought-provoking. The idea that we are condemned to be free, that we are wholly responsible for creating our own meaning in a meaningless universe, is both terrifying and liberating.",
+        "question": "What is the central idea of existentialism described by the speaker?",
+        "options": {
+            "A": "That life has a predetermined meaning.",
+            "B": "That individuals are responsible for creating their own meaning.",
+            "C": "That freedom is an illusion."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_006",
+        "topic": "Discussing a Political Situation",
+        "script": "A: The current political climate is so polarized. There seems to be no room for nuance or compromise. B: It's the effect of social media echo chambers. People are only exposed to opinions that reinforce their own. C: And the mainstream media is complicit, prioritizing sensationalism over balanced reporting to drive engagement.",
+        "question": "According to C, what role does the mainstream media play in political polarization?",
+        "options": {
+            "A": "They provide balanced and nuanced reporting.",
+            "B": "They prioritize sensationalism, which contributes to the problem.",
+            "C": "They are actively trying to promote compromise."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_007",
+        "topic": "A Business Strategy Meeting",
+        "script": "Our market share has stagnated. I propose a strategic pivot towards the B2B sector, where the margins are higher and the customer base is more stable. This will require a significant initial investment in a new sales team.",
+        "question": "What is the proposed new business strategy?",
+        "options": {
+            "A": "To reduce prices to attract more customers.",
+            "B": "To expand into a new geographical market.",
+            "C": "To shift focus to the business-to-business (B2B) sector."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_008",
+        "topic": "A Podcast on Climate Science",
+        "script": "One of the most alarming feedback loops in the climate system is the melting of permafrost. As it thaws, it releases vast quantities of methane, a potent greenhouse gas, which in turn accelerates global warming.",
+        "question": "Why is the melting of permafrost a major concern?",
+        "options": {
+            "A": "It causes sea levels to rise.",
+            "B": "It releases a powerful greenhouse gas.",
+            "C": "It destroys animal habitats."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_009",
+        "topic": "Evaluating a Job Candidate",
+        "script": "A: The candidate has an impeccable CV and aced the technical questions. B: True, but I felt she lacked the interpersonal skills necessary for a client-facing role. She seemed quite introverted. C: I had a different impression. I thought she was thoughtful and a good listener, which can be more valuable than being overtly extroverted.",
+        "question": "What is C's view of the candidate's personality?",
+        "options": {
+            "A": "They agree she lacks interpersonal skills.",
+            "B": "They think her introversion is a negative trait for the role.",
+            "C": "They see her quiet nature as a potential strength."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_010",
+        "topic": "A Lecture on Neuroscience",
+        "script": "The brain's neuroplasticity is a remarkable thing. It's the ability of the brain to reorganize itself by forming new neural connections. This means that our brains are not fixed, but are constantly changing in response to our experiences and learning.",
+        "question": "What does the concept of neuroplasticity imply?",
+        "options": {
+            "A": "The brain's structure is fixed from birth.",
+            "B": "The brain can change and adapt throughout life.",
+            "C": "Brain damage is always permanent."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_011",
+        "topic": "A discussion on urban planning",
+        "script": "A: The city's focus on creating more pedestrianized zones is a step in the right direction for liveability. B: I agree in principle, but they've failed to address the issue of delivery access for local businesses, which is a major oversight. C: And the public consultation process was flawed, alienating many residents who felt their concerns were ignored.",
+        "question": "What is C's criticism of the new pedestrianized zones?",
+        "options": {
+            "A": "They are bad for local businesses.",
+            "B": "The public consultation process was inadequate.",
+            "C": "They will not improve the city's liveability."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_012",
+        "topic": "A critique of a new technology",
+        "script": "A: This new social media app uses an algorithm designed to maximize engagement by showing you increasingly extreme content. B: That's ethically dubious. It's profiting from societal polarization. C: It's a perfect example of how technology that is not designed with human well-being in mind can have detrimental consequences.",
+        "question": "What is the main ethical concern about the new app?",
+        "options": {
+            "A": "It is not very user-friendly.",
+            "B": "It may contribute to societal polarization.",
+            "C": "It has a lot of advertisements."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_013",
+        "topic": "A documentary on the global economy",
+        "script": "Globalization has lifted millions out of poverty, but it has also led to a widening gap between the rich and the poor within many countries, as well as contributing to environmental degradation through increased consumption and transportation.",
+        "question": "What is mentioned as a negative consequence of globalization?",
+        "options": {
+            "A": "It has increased global poverty.",
+            "B": "It has led to a widening wealth gap within countries.",
+            "C": "It has slowed down technological innovation."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_014",
+        "topic": "A university debate on free speech",
+        "script": "A: The principle of free speech means that all views, even offensive ones, must be allowed a platform. B: I disagree. There's a difference between free speech and hate speech. Speech that incites violence or discrimination should not be protected. C: The challenge lies in defining where that line is. It's a complex legal and philosophical question without an easy answer.",
+        "question": "What is the main point of disagreement between A and B?",
+        "options": {
+            "A": "Whether free speech is important.",
+            "B": "Whether there should be limits to free speech.",
+            "C": "What the legal definition of free speech is."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_015",
+        "topic": "A radio news report on a political scandal",
+        "script": "The minister has resigned following allegations of a conflict of interest. Leaked documents appear to show that he awarded a government contract to a company owned by his brother-in-law. The minister denies any wrongdoing.",
+        "question": "What is the minister accused of?",
+        "options": {
+            "A": "Accepting a bribe",
+            "B": "Having a conflict of interest",
+            "C": "Leaking government documents"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_016",
+        "topic": "A discussion about a new architectural design",
+        "script": "A: The design for the new museum is very avant-garde. It's certainly a statement. B: I find it a bit jarring. It doesn't seem to have any connection to the surrounding historic cityscape. C: I think that's the point. It's meant to create a dialogue between the old and the new, a deliberate contrast.",
+        "question": "How does C interpret the modern design of the museum?",
+        "options": {
+            "A": "As a mistake that clashes with the surroundings.",
+            "B": "As a deliberate contrast with the historic buildings.",
+            "C": "As a design that is not very original."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_017",
+        "topic": "A book club discussion on a classic novel",
+        "script": "A: What struck me most was the author's prescience. The novel was written a hundred years ago, yet its themes of surveillance and misinformation are incredibly relevant today. B: Absolutely. It's a testament to the timelessness of the story. C: And the prose is just exquisite. Every sentence is perfectly crafted.",
+        "question": "Why does speaker A find the novel particularly relevant today?",
+        "options": {
+            "A": "Because of its beautiful prose.",
+            "B": "Because of its engaging plot.",
+            "C": "Because of its themes of surveillance and misinformation."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_018",
+        "topic": "A health podcast on the microbiome",
+        "script": "The trillions of bacteria living in our gut, known as the microbiome, are now understood to play a crucial role in everything from our digestion to our mental health. A diverse microbiome is a key indicator of good health.",
+        "question": "What is a key indicator of good health, according to the podcast?",
+        "options": {
+            "A": "Having a low number of bacteria in the gut.",
+            "B": "Having a diverse microbiome.",
+            "C": "Taking antibiotics regularly."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_019",
+        "topic": "A debate on the future of work",
+        "script": "A: I believe automation will lead to mass unemployment as robots and AI replace human workers. B: I think it's more likely to lead to a shift in the types of jobs that exist, with a greater demand for skills like creativity and critical thinking. C: Historically, technological revolutions have always created more jobs than they have destroyed, but the transition period can be very difficult for those whose skills become obsolete.",
+        "question": "What is C's perspective on the impact of technology on jobs?",
+        "options": {
+            "A": "It will have no significant impact on the number of jobs.",
+            "B": "It will ultimately create more jobs, but the transition will be difficult.",
+            "C": "It will lead to permanent mass unemployment."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_020",
+        "topic": "A museum audio guide on an ancient artifact",
+        "script": "This intricate gold necklace dates back to the 4th century BC. The craftsmanship is extraordinary, especially considering the limited tools available at the time. It provides a fascinating insight into the wealth and artistry of this ancient civilization.",
+        "question": "What is particularly impressive about the ancient necklace?",
+        "options": {
+            "A": "Its monetary value",
+            "B": "Its size",
+            "C": "The quality of the craftsmanship"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_021",
+        "topic": "A discussion on renewable energy",
+        "script": "A: While solar and wind power are crucial, their intermittent nature poses a challenge for grid stability. B: That's why energy storage solutions, like large-scale batteries, are so critical for a successful transition to renewables. C: And we also need to invest in a smarter, more flexible grid that can manage the fluctuations in supply and demand.",
+        "question": "What is a major challenge of solar and wind power?",
+        "options": {
+            "A": "They are too expensive.",
+            "B": "They are not powerful enough.",
+            "C": "Their supply is not constant."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_022",
+        "topic": "A lecture on linguistics",
+        "script": "The Sapir-Whorf hypothesis proposes that the language you speak affects the way you think and perceive the world. For example, some languages have many different words for snow, which may allow their speakers to perceive different types of snow in a way that an English speaker cannot.",
+        "question": "What is the central idea of the Sapir-Whorf hypothesis?",
+        "options": {
+            "A": "All languages have a similar grammatical structure.",
+            "B": "Language influences thought and perception.",
+            "C": "Learning a new language is easier for children."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_023",
+        "topic": "A conversation about a difficult work situation",
+        "script": "A: I have to give a presentation to the board of directors, and I'm feeling incredibly intimidated. B: Just remember that you're the expert on this topic. They've asked you to present for a reason. C: And don't forget to practice. The more you rehearse, the more confident you will feel on the day.",
+        "question": "What advice does C give to help with the presentation?",
+        "options": {
+            "A": "To delegate the presentation to someone else.",
+            "B": "To remember that they are the expert.",
+            "C": "To practice the presentation."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_024",
+        "topic": "A radio documentary on a historical event",
+        "script": "The Cuban Missile Crisis in 1962 was a tense 13-day confrontation between the United States and the Soviet Union. It is widely considered to be the closest the world has ever come to a full-scale nuclear war.",
+        "question": "What is the significance of the Cuban Missile Crisis?",
+        "options": {
+            "A": "It was the beginning of the Cold War.",
+            "B": "It was the closest the world came to nuclear war.",
+            "C": "It was a major victory for the Soviet Union."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_025",
+        "topic": "A discussion about a new scientific paper",
+        "script": "A: I've just read a fascinating paper on the intelligence of octopuses. They are capable of complex problem-solving and even seem to have distinct personalities. B: It challenges our anthropocentric view of intelligence. C: It certainly does. It shows that intelligence can evolve in very different ways.",
+        "question": "What does the scientific paper challenge?",
+        "options": {
+            "A": "The idea that octopuses are intelligent.",
+            "B": "A human-centered view of intelligence.",
+            "C": "The theory of evolution."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_026",
+        "topic": "A university lecture on economics",
+        "script": "The 'tragedy of the commons' is a situation where individuals with access to a shared resource act in their own self-interest, and in doing so, ultimately deplete or spoil the resource for everyone. Overfishing is a classic example.",
+        "question": "What is the 'tragedy of the commons'?",
+        "options": {
+            "A": "A situation where a shared resource is managed effectively.",
+            "B": "A situation where individuals acting in their self-interest deplete a shared resource.",
+            "C": "A situation where there are not enough resources to share."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_027",
+        "topic": "A business meeting about a new product",
+        "script": "A: Our market research indicates there is a gap in the market for a high-quality, sustainable alternative to our current product. B: I agree. Consumers are increasingly making purchasing decisions based on environmental credentials. C: This is a significant opportunity, but we need to ensure that the product is genuinely sustainable and not just a case of 'greenwashing'.",
+        "question": "What potential risk does C identify?",
+        "options": {
+            "A": "The product will be too expensive.",
+            "B": "There is no demand for the product.",
+            "C": "The company might be accused of 'greenwashing'."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_028",
+        "topic": "A podcast about philosophy",
+        "script": "Plato's 'Allegory of the Cave' is a famous philosophical metaphor. It suggests that what we perceive as reality is like shadows on a wall, and that the true reality can only be understood through reason and philosophical inquiry.",
+        "question": "According to the 'Allegory of the Cave', how can true reality be understood?",
+        "options": {
+            "A": "Through our senses",
+            "B": "Through reason and philosophical inquiry",
+            "C": "It cannot be understood by humans."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_029",
+        "topic": "A discussion about a city's cultural scene",
+        "script": "A: The city has a vibrant grassroots arts scene, with lots of small, independent galleries and performance spaces. B: That's what gives the city its character. It's much more interesting than a city with only large, mainstream institutions. C: But these small venues are struggling financially. They need more support from the local government.",
+        "question": "What is the problem facing the city's small arts venues?",
+        "options": {
+            "A": "They are not popular with the public.",
+            "B": "They are struggling financially.",
+            "C": "There are too many of them."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_030",
+        "topic": "A lecture on art history",
+        "script": "The Impressionist movement in the 19th century was revolutionary because the artists chose to paint outdoors, 'en plein air', to capture the fleeting effects of light and atmosphere. This was a radical departure from the traditional studio-based painting of the time.",
+        "question": "What was a revolutionary aspect of the Impressionist movement?",
+        "options": {
+            "A": "They painted historical subjects.",
+            "B": "They painted outdoors.",
+            "C": "They used very dark colours."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_031",
+        "topic": "A conversation about a new work policy",
+        "script": "A: The company is introducing a policy of 'radical transparency', where all salaries and company financials are made public to all employees. B: Wow, that's a bold move. It could reduce the gender pay gap. C: But it could also create a lot of jealousy and resentment between colleagues.",
+        "question": "What is a potential negative consequence of the 'radical transparency' policy?",
+        "options": {
+            "A": "It will be difficult to implement.",
+            "B": "It could create jealousy and resentment.",
+            "C": "It will not be popular with senior management."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_032",
+        "topic": "A news report on a new medical treatment",
+        "script": "A new gene therapy treatment has shown remarkable success in clinical trials for a rare genetic disorder. While it is not a cure, it has significantly improved the quality of life for patients.",
+        "question": "What has the new gene therapy treatment achieved?",
+        "options": {
+            "A": "It has cured a rare genetic disorder.",
+            "B": "It has significantly improved patients' quality of life.",
+            "C": "It has been approved for public use."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_033",
+        "topic": "A discussion about a documentary",
+        "script": "A: The documentary on social media's impact was quite alarming. The way it can be used to manipulate public opinion is terrifying. B: It's a powerful reminder that we need to be more critical consumers of information online. C: And it highlights the need for better regulation of these powerful tech companies.",
+        "question": "What does speaker B think we need to be?",
+        "options": {
+            "A": "More active on social media.",
+            "B": "More critical consumers of information.",
+            "C": "More trusting of online information."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_034",
+        "topic": "A university lecture on sociology",
+        "script": "The concept of 'intersectionality' describes how various social and political identities, such as race, class, and gender, can combine to create unique overlapping and interdependent systems of discrimination or disadvantage.",
+        "question": "What is the main idea of 'intersectionality'?",
+        "options": {
+            "A": "That different social identities are separate and do not affect each other.",
+            "B": "That different social identities can combine to create unique systems of discrimination.",
+            "C": "That social class is the most important factor in discrimination."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_035",
+        "topic": "A conversation about a new fitness trend",
+        "script": "A: I've been doing 'animal flow' workouts. It's a type of bodyweight exercise that mimics the movements of animals. B: It sounds like a fun and creative way to exercise. Is it difficult? C: It requires a lot of strength and coordination, but it's a great full-body workout.",
+        "question": "What is required for 'animal flow' workouts?",
+        "options": {
+            "A": "Special equipment",
+            "B": "A lot of space",
+            "C": "Strength and coordination"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_036",
+        "topic": "A podcast about technology",
+        "script": "The 'singularity' is a hypothetical future point in time at which technological growth becomes uncontrollable and irreversible, resulting in unforeseeable changes to human civilization. It's often linked to the emergence of artificial superintelligence.",
+        "question": "What is the 'singularity'?",
+        "options": {
+            "A": "A new type of computer",
+            "B": "A hypothetical point of uncontrollable technological growth",
+            "C": "The end of the universe"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_037",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning to redevelop the old industrial waterfront into a mixed-use area with apartments, offices, and parks. B: It's a huge regeneration project that could transform that part of the city. C: My main concern is that it will lead to gentrification and push out the existing, lower-income communities.",
+        "question": "What is C's main concern about the redevelopment project?",
+        "options": {
+            "A": "It will be too expensive.",
+            "B": "It will cause traffic problems.",
+            "C": "It will lead to gentrification."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_038",
+        "topic": "A lecture on economics",
+        "script": "'Behavioral economics' is a field of study that incorporates insights from psychology into economic analysis. It challenges the traditional economic assumption that humans are always rational decision-makers.",
+        "question": "What traditional economic assumption does behavioral economics challenge?",
+        "options": {
+            "A": "That humans are always rational.",
+            "B": "That supply and demand determine prices.",
+            "C": "That inflation is always bad for the economy."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "C1_L_039",
+        "topic": "A conversation about a new book",
+        "script": "A: The book is a critique of modern capitalism, arguing that it inevitably leads to unsustainable levels of inequality. B: It's a compelling argument, but I think it overlooks the role of innovation and wealth creation. C: It's certainly a provocative read that challenges you to question the economic system we live in.",
+        "question": "What is B's criticism of the book's argument?",
+        "options": {
+            "A": "It is not well-researched.",
+            "B": "It overlooks the positive aspects of capitalism.",
+            "C": "It is too difficult to understand."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_040",
+        "topic": "A review of a new play",
+        "script": "The play was performed in the round, with the audience seated on all sides of the stage. This created a very intimate and immersive atmosphere, making you feel like you were in the middle of the action.",
+        "question": "What was the effect of the stage design?",
+        "options": {
+            "A": "It was difficult to see the actors.",
+            "B": "It created an intimate and immersive atmosphere.",
+            "C": "It allowed for a large and spectacular set."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_041",
+        "topic": "A discussion about a new work initiative",
+        "script": "A: Our company is introducing a 'sabbatical for a cause' program, where you can take paid leave to volunteer for a non-profit organization. B: That's an amazing way for the company to have a positive social impact. C: It's also a great professional development opportunity for the employees, allowing them to gain new skills and perspectives.",
+        "question": "What is a benefit of the program for the employees?",
+        "options": {
+            "A": "They get a higher salary.",
+            "B": "They can gain new skills and perspectives.",
+            "C": "They can get a promotion."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_042",
+        "topic": "A podcast about space",
+        "script": "Dark matter is a mysterious substance that is believed to make up about 27% of the universe. We can't see it directly, but we can infer its existence from its gravitational effects on visible matter.",
+        "question": "How do scientists know that dark matter exists?",
+        "options": {
+            "A": "They can see it with powerful telescopes.",
+            "B": "From its gravitational effects.",
+            "C": "They have collected samples of it."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_043",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'zero-waste' kitchen. They use every part of the ingredients, and any food waste is composted on-site. B: That's a huge commitment to sustainability. C: It also forces the chefs to be more creative and innovative with their cooking.",
+        "question": "What is a consequence of the 'zero-waste' policy for the chefs?",
+        "options": {
+            "A": "It makes their job more difficult.",
+            "B": "It forces them to be more creative.",
+            "C": "It means they can only use a limited number of ingredients."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_044",
+        "topic": "A university lecture on politics",
+        "script": "A 'failed state' is a state whose political or economic system has become so weak that the government is no longer in control. This can lead to a humanitarian crisis and regional instability.",
+        "question": "What is a characteristic of a 'failed state'?",
+        "options": {
+            "A": "A very strong government",
+            "B": "A government that is no longer in control",
+            "C": "A very wealthy economy"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_045",
+        "topic": "A discussion about a new film",
+        "script": "A: The film's use of 'magical realism', where magical elements are blended into a realistic setting, was beautifully done. B: It created a very dreamlike and poetic atmosphere. C: I found it a bit confusing. I wasn't always sure what was real and what was fantasy.",
+        "question": "What is 'magical realism'?",
+        "options": {
+            "A": "A type of fantasy film",
+            "B": "A style where magical elements are blended into a realistic setting",
+            "C": "A documentary about magic"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_046",
+        "topic": "A podcast about finance",
+        "script": "'Ethical investing' is an investment strategy that seeks to consider both financial return and social/environmental good to bring about a positive change. It's about investing your money in line with your values.",
+        "question": "What are the two main considerations of 'ethical investing'?",
+        "options": {
+            "A": "Financial return and risk",
+            "B": "Financial return and social/environmental good",
+            "C": "Short-term profit and long-term growth"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_047",
+        "topic": "A conversation about a new art exhibition",
+        "script": "A: The exhibition was a retrospective, covering the artist's entire career from his early work to his final pieces. B: It was fascinating to see the evolution of his style over 50 years. C: You could really see how his personal experiences influenced the different phases of his work.",
+        "question": "What is a 'retrospective' exhibition?",
+        "options": {
+            "A": "An exhibition of a single work of art",
+            "B": "An exhibition covering an artist's entire career",
+            "C": "An exhibition of work by a group of artists"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_048",
+        "topic": "A news report on a new study",
+        "script": "A new study has found that exposure to nature, even just looking at pictures of natural landscapes, can improve attention and concentration. The researchers call this 'attention restoration theory'.",
+        "question": "What can improve attention and concentration, according to the study?",
+        "options": {
+            "A": "Drinking coffee",
+            "B": "Listening to classical music",
+            "C": "Exposure to nature"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_049",
+        "topic": "A discussion about a new work project",
+        "script": "A: The project has a very ambitious scope. I'm concerned we don't have the resources to deliver it on time. B: I share your concern. We need to manage the client's expectations from the outset. C: Let's break the project down into phases and agree on realistic deliverables for each phase.",
+        "question": "What is the main concern about the new project?",
+        "options": {
+            "A": "The budget is too small.",
+            "B": "The project is not interesting.",
+            "C": "The scope is too ambitious for the available resources."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_050",
+        "topic": "A review of a new theatre production",
+        "script": "The production was a bold reinterpretation of a classic play, setting it in a modern-day corporate environment. The update gave the play's themes of power and corruption a new and urgent relevance.",
+        "question": "How did the production reinterpret the classic play?",
+        "options": {
+            "A": "By changing the ending",
+            "B": "By setting it in a modern corporate environment",
+            "C": "By using a different language"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_051",
+        "topic": "A conversation about a new city policy",
+        "script": "A: The city is introducing a 'participatory budgeting' process, where residents can directly decide how to spend part of the public budget. B: That's a great way to increase civic engagement and ensure that public money is spent on things that people actually want. C: The challenge will be to ensure that the process is inclusive and that all voices are heard, not just the loudest ones.",
+        "question": "What is a potential challenge of 'participatory budgeting'?",
+        "options": {
+            "A": "It is too expensive.",
+            "B": "It is difficult to get people to participate.",
+            "C": "Ensuring the process is inclusive."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_052",
+        "topic": "A lecture on genetics",
+        "script": "Epigenetics is the study of how your behaviors and environment can cause changes that affect the way your genes work. Unlike genetic changes, epigenetic changes are reversible and do not change your DNA sequence, but they can change how your body reads a DNA sequence.",
+        "question": "What is a key feature of epigenetic changes?",
+        "options": {
+            "A": "They change your DNA sequence.",
+            "B": "They are irreversible.",
+            "C": "They are reversible."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "C1_L_053",
+        "topic": "A discussion about a new documentary",
+        "script": "A: The documentary was a fascinating exploration of the concept of 'biophilia', the idea that humans have an innate tendency to seek connections with nature. B: It explains why we feel better after a walk in the woods or by the sea. C: And it's a powerful argument for the importance of preserving wild spaces, not just for the planet, but for our own psychological well-being.",
+        "question": "What is the concept of 'biophilia'?",
+        "options": {
+            "A": "A fear of nature",
+            "B": "An innate tendency to seek connections with nature",
+            "C": "A scientific study of plants"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_054",
+        "topic": "A podcast about artificial intelligence",
+        "script": "An 'adversarial attack' on an AI system is a technique used to fool a model with deceptive data. For example, by making tiny, imperceptible changes to an image, you can cause an AI to completely misclassify it.",
+        "question": "What is an 'adversarial attack' on an AI system?",
+        "options": {
+            "A": "A type of computer virus",
+            "B": "A technique to fool an AI model with deceptive data",
+            "C": "A way to make an AI model more accurate"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_055",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'talent marketplace' where all open roles are first advertised internally. It's designed to promote internal mobility. B: That's a great way to retain talent and provide career progression opportunities for employees. C: It also means the company can fill roles with people who already understand the company culture.",
+        "question": "What is the purpose of the 'talent marketplace'?",
+        "options": {
+            "A": "To hire external candidates",
+            "B": "To promote internal mobility",
+            "C": "To sell company products"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_056",
+        "topic": "A news report about a new environmental initiative",
+        "script": "A new initiative is using satellite technology and AI to monitor deforestation in the Amazon rainforest in real-time. This allows authorities to respond much more quickly to illegal logging activities.",
+        "question": "How does the new initiative help to combat deforestation?",
+        "options": {
+            "A": "By planting new trees",
+            "B": "By allowing authorities to respond more quickly to illegal logging",
+            "C": "By paying local communities to protect the forest"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_057",
+        "topic": "A discussion about a new book",
+        "script": "A: The book is a 'dystopian' novel, set in a future society that appears to be utopian but is in fact oppressive and controlling. B: It's a powerful warning about the dangers of sacrificing freedom for security. C: The world-building was incredibly detailed and plausible, which made the story all the more chilling.",
+        "question": "What is a 'dystopian' novel?",
+        "options": {
+            "A": "A novel about a perfect society",
+            "B": "A novel about a future society that appears perfect but is oppressive",
+            "C": "A novel set in the past"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_058",
+        "topic": "A university lecture on media studies",
+        "script": "The 'agenda-setting' theory of media states that the media doesn't tell us what to think, but it is stunningly successful in telling us what to think about. By selecting which stories to cover, the media influences what the public sees as important.",
+        "question": "According to the 'agenda-setting' theory, how does the media influence the public?",
+        "options": {
+            "A": "By telling them what opinions to have",
+            "B": "By influencing what they see as important",
+            "C": "By providing a balanced view of all issues"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_059",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'foraging' concept. The chef forages for wild ingredients in the local countryside to use in the dishes. B: That means the menu must be completely unique and dependent on the seasons. C: It's the ultimate expression of local and seasonal cooking.",
+        "question": "What is a 'foraging' concept in a restaurant?",
+        "options": {
+            "A": "The restaurant grows all its own food.",
+            "B": "The chef collects wild ingredients from the local area.",
+            "C": "The restaurant only serves foraged food."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "C1_L_060",
+        "topic": "A review of a new gadget",
+        "script": "The new smart glasses have a 'heads-up display' that projects information, like navigation directions, directly into your field of vision. It feels like something out of a science fiction film.",
+        "question": "What does the 'heads-up display' on the smart glasses do?",
+        "options": {
+            "A": "It records what you see.",
+            "B": "It plays music.",
+            "C": "It projects information into your field of vision."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_061",
+        "topic": "A discussion about a new city development",
+        "script": "A: They're planning to build a high-speed rail link between the two cities. B: It will be fantastic for business and commuters, but I'm concerned about the environmental impact of the construction. C: The government claims they will offset the carbon emissions by planting millions of trees along the route.",
+        "question": "What is B's main concern about the high-speed rail link?",
+        "options": {
+            "A": "The cost of the tickets",
+            "B": "The environmental impact",
+            "C": "The length of the construction period"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_062",
+        "topic": "A podcast about psychology",
+        "script": "'Flow' is a mental state in which a person performing an activity is fully immersed in a feeling of energized focus, full involvement, and enjoyment. It's often referred to as 'being in the zone'.",
+        "question": "What is the mental state of 'flow'?",
+        "options": {
+            "A": "A state of deep relaxation",
+            "B": "A state of energized focus and immersion",
+            "C": "A state of daydreaming"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_063",
+        "topic": "A conversation about a new work initiative",
+        "script": "A: The company is offering us all a subscription to a mindfulness app to help with stress management. B: That's a positive step. It shows they're taking mental health seriously. C: I agree. It's much better than just ignoring the problem of workplace stress.",
+        "question": "What is the purpose of the mindfulness app subscription?",
+        "options": {
+            "A": "To improve productivity",
+            "B": "To help with stress management",
+            "C": "To encourage exercise"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_064",
+        "topic": "A news report about a new archaeological find",
+        "script": "A perfectly preserved ancient Roman mosaic has been unearthed during the construction of a new supermarket. Experts have described the find as 'incredibly significant'.",
+        "question": "What has been discovered?",
+        "options": {
+            "A": "A Roman statue",
+            "B": "A Roman mosaic",
+            "C": "A Roman temple"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_065",
+        "topic": "A discussion about a new film",
+        "script": "A: The director used a lot of long takes, with no cuts, which made the scenes feel very intense and realistic. B: It was a very effective technique, but it must have been incredibly difficult for the actors. C: Absolutely. The choreography of the actors and the camera was seamless.",
+        "question": "What filming technique did the director use?",
+        "options": {
+            "A": "Lots of special effects",
+            "B": "Long takes with no cuts",
+            "C": "Filming in black and white"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_066",
+        "topic": "A university lecture on philosophy",
+        "script": "Utilitarianism is an ethical theory that states that the best action is the one that maximizes utility, usually defined as that which maximizes happiness and reduces suffering for the greatest number of people.",
+        "question": "According to utilitarianism, what is the best action?",
+        "options": {
+            "A": "The one that follows the rules",
+            "B": "The one that is best for the individual",
+            "C": "The one that maximizes happiness for the greatest number of people"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_067",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'communal table' where you can sit with other diners you don't know. B: I'm not sure I'd be comfortable with that. I prefer a private table. C: I think it's a nice idea. It could be a good way to meet new people.",
+        "question": "What is C's opinion of the communal table?",
+        "options": {
+            "A": "They would not be comfortable with it.",
+            "B": "They think it is a good way to meet people.",
+            "C": "They think it is unhygienic."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_068",
+        "topic": "A review of a new electric bike",
+        "script": "The electric bike's motor provides assistance when you pedal, which makes cycling up hills almost effortless. It's a game-changer for people who find normal cycling too strenuous.",
+        "question": "What is the main benefit of the electric bike?",
+        "options": {
+            "A": "It is very light.",
+            "B": "It is cheaper than a normal bike.",
+            "C": "It makes cycling up hills easier."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_069",
+        "topic": "A discussion about a new office initiative",
+        "script": "A: Our office is having a 'digital detox' day, where we're not allowed to use email or internal messaging. We have to talk to each other in person or on the phone. B: That will be a challenge, but it might actually improve communication. C: I think it's a great experiment to see how much we rely on digital communication.",
+        "question": "What is the rule for the 'digital detox' day?",
+        "options": {
+            "A": "No using computers",
+            "B": "No using phones",
+            "C": "No using email or internal messaging"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_070",
+        "topic": "A podcast about the brain",
+        "script": "Neuroplasticity is the brain's ability to reorganize itself by forming new neural connections throughout life. This means that our brains can change and adapt in response to new experiences.",
+        "question": "What is neuroplasticity?",
+        "options": {
+            "A": "The size of the brain",
+            "B": "The brain's ability to change and adapt",
+            "C": "The speed of brain activity"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_071",
+        "topic": "A conversation about a new play",
+        "script": "A: The play was a promenade performance, so the audience moved around the building with the actors. B: That sounds like a very dynamic and engaging way to experience a story. C: It was, but it was also quite tiring as we were on our feet for two hours.",
+        "question": "What was a downside of the promenade performance?",
+        "options": {
+            "A": "It was difficult to see the actors.",
+            "B": "It was tiring.",
+            "C": "It was confusing."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_072",
+        "topic": "A news report about a new technology",
+        "script": "A company has developed a new technology that can capture carbon dioxide directly from the atmosphere. They hope it could be a powerful tool in the fight against climate change.",
+        "question": "What does the new technology do?",
+        "options": {
+            "A": "It produces clean energy.",
+            "B": "It captures carbon dioxide from the atmosphere.",
+            "C": "It purifies water."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_073",
+        "topic": "A discussion about a new book",
+        "script": "A: The book is a work of speculative fiction. It's set in an alternative version of the present where history took a different course. B: That's a fascinating concept. It makes you think 'what if?'. C: I enjoy those kinds of stories. They really challenge your perception of reality.",
+        "question": "What is 'speculative fiction'?",
+        "options": {
+            "A": "A story based on true events",
+            "B": "A story set in an alternative version of reality",
+            "C": "A story with a romantic plot"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_074",
+        "topic": "A university lecture on economics",
+        "script": "The principle of 'supply and demand' is a fundamental concept in economics. It states that the price of a good is determined by the interaction of its supply and the demand for it.",
+        "question": "What determines the price of a good, according to the principle?",
+        "options": {
+            "A": "The cost of production",
+            "B": "The government",
+            "C": "The interaction of supply and demand"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_075",
+        "topic": "A conversation about a new film",
+        "script": "A: The film had a very ambiguous ending. It didn't give you any clear answers. B: I liked that. It left it up to the audience to interpret what happened. C: I found it a bit frustrating. I prefer a story with a clear resolution.",
+        "question": "What is C's opinion of the ambiguous ending?",
+        "options": {
+            "A": "They liked it.",
+            "B": "They found it frustrating.",
+            "C": "They didn't understand it."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_076",
+        "topic": "A podcast about architecture",
+        "script": "Brutalism is an architectural style that emerged in the 1950s. It is characterized by its use of raw concrete and its blocky, geometric forms. It's a very divisive style; people tend to either love it or hate it.",
+        "question": "What is a key characteristic of Brutalist architecture?",
+        "options": {
+            "A": "Use of decorative details",
+            "B": "Use of raw concrete",
+            "C": "Use of curved lines"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_077",
+        "topic": "A discussion about a new work initiative",
+        "script": "A: Our company is introducing 'reverse mentoring', where junior employees mentor senior executives on topics like social media and new technology. B: That's a brilliant idea. It's a great way to share knowledge across generations. C: It also empowers the junior staff and gives them more visibility in the company.",
+        "question": "What is 'reverse mentoring'?",
+        "options": {
+            "A": "Senior staff mentoring each other",
+            "B": "Junior employees mentoring senior staff",
+            "C": "An online mentoring platform"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_078",
+        "topic": "A news report about a new study",
+        "script": "A new study has found that bilingualism can delay the onset of dementia. The researchers suggest that the mental effort of switching between languages builds cognitive reserve.",
+        "question": "What is a potential benefit of bilingualism?",
+        "options": {
+            "A": "It can improve your memory.",
+            "B": "It can delay the onset of dementia.",
+            "C": "It can make you more creative."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_079",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'nose-to-tail' philosophy, which means they use every part of the animal in their cooking to minimize waste. B: That's a very sustainable approach to cooking. C: It's also very traditional. It's how people used to cook before the age of supermarkets.",
+        "question": "What is the 'nose-to-tail' philosophy?",
+        "options": {
+            "A": "They only serve meat dishes.",
+            "B": "They use every part of the animal.",
+            "C": "They have an open kitchen."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_080",
+        "topic": "A review of a new documentary",
+        "script": "The documentary used a lot of archive footage, which really brought the historical events to life. It was much more powerful than just hearing experts talk about it.",
+        "question": "What made the documentary powerful?",
+        "options": {
+            "A": "The interviews with experts",
+            "B": "The use of archive footage",
+            "C": "The computer-generated reconstructions"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_081",
+        "topic": "A discussion about a new city initiative",
+        "script": "A: The city is launching a 'citizen science' project where residents can help to monitor air pollution using a simple sensor. B: That's a great way to get the public involved and raise awareness. C: The data collected will also be valuable for researchers and policymakers.",
+        "question": "What is the 'citizen science' project about?",
+        "options": {
+            "A": "Residents cleaning up the city",
+            "B": "Residents monitoring air pollution",
+            "C": "Residents voting on new policies"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_082",
+        "topic": "A lecture on psychology",
+        "script": "The 'placebo effect' is a phenomenon where a person experiences real improvements in their condition after receiving a treatment with no active therapeutic substance, simply because they believe it will work.",
+        "question": "What is the 'placebo effect'?",
+        "options": {
+            "A": "A negative side effect of a medication",
+            "B": "An improvement in a condition due to belief in a treatment",
+            "C": "A treatment that is not effective"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_083",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company is now a 'B Corp', which means it has been certified for meeting high standards of social and environmental performance, transparency and accountability. B: That's impressive. It shows a real commitment to being an ethical business. C: Yes, and it's becoming an increasingly important factor for attracting and retaining talent.",
+        "question": "What does it mean to be a 'B Corp'?",
+        "options": {
+            "A": "It is a very large corporation.",
+            "B": "It has met high standards of social and environmental performance.",
+            "C": "It is a non-profit organization."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_084",
+        "topic": "A podcast about history",
+        "script": "The Rosetta Stone was the key to deciphering ancient Egyptian hieroglyphs. It contained the same text written in three different scripts, which allowed scholars to unlock the meaning of the hieroglyphs.",
+        "question": "Why was the Rosetta Stone so important?",
+        "options": {
+            "A": "It was a beautiful work of art.",
+            "B": "It was the oldest text ever found.",
+            "C": "It helped to decipher hieroglyphs."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_085",
+        "topic": "A discussion about a new film",
+        "script": "A: The film broke the 'fourth wall' several times, with the main character speaking directly to the audience. B: I thought that was a very clever and funny technique. It made you feel more involved in the story. C: I found it a bit jarring, to be honest. It took me out of the film.",
+        "question": "What is C's opinion of the film 'breaking the fourth wall'?",
+        "options": {
+            "A": "They found it clever and funny.",
+            "B": "They found it jarring.",
+            "C": "They didn't notice it."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_086",
+        "topic": "A news report about a new study",
+        "script": "A new study has found a strong correlation between green spaces in cities and the mental well-being of residents. Access to parks and gardens was linked to lower levels of depression and anxiety.",
+        "question": "What did the study find a correlation between?",
+        "options": {
+            "A": "Green spaces and physical health",
+            "B": "Green spaces and mental well-being",
+            "C": "Green spaces and property prices"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_087",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'pop-up' concept. It's only open for three months in this location before it moves somewhere else. B: That creates a sense of urgency to go and try it. C: It's a great way for young chefs to test out their ideas without the risk of a permanent restaurant.",
+        "question": "What is a 'pop-up' restaurant?",
+        "options": {
+            "A": "A restaurant that only serves fast food",
+            "B": "A restaurant that is only open for a short time",
+            "C": "A restaurant that is very small"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_088",
+        "topic": "A university lecture on literature",
+        "script": "An 'unreliable narrator' is a character whose telling of the story is not completely accurate or credible due to problems with their mental state or maturity. It's a technique that can create suspense and intrigue for the reader.",
+        "question": "What is an 'unreliable narrator'?",
+        "options": {
+            "A": "A narrator who is not the main character",
+            "B": "A narrator whose telling of the story is not credible",
+            "C": "A narrator who tells the story from multiple viewpoints"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_089",
+        "topic": "A discussion about a new work initiative",
+        "script": "A: Our company is introducing 'blind recruitment', where they remove the candidate's name and other identifying details from their CV to reduce unconscious bias. B: That's a really positive step towards improving diversity. C: It should ensure that people are judged purely on their skills and experience.",
+        "question": "What is the aim of 'blind recruitment'?",
+        "options": {
+            "A": "To make the recruitment process faster",
+            "B": "To reduce unconscious bias",
+            "C": "To hire more junior employees"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_090",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a powerful piece of investigative journalism. It exposed a major scandal that had been covered up for years. It's already led to calls for a public inquiry.",
+        "question": "What did the documentary do?",
+        "options": {
+            "A": "It told a heartwarming story.",
+            "B": "It exposed a scandal.",
+            "C": "It celebrated a famous person's life."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_091",
+        "topic": "A conversation about a new city project",
+        "script": "A: The city is converting an old, disused railway line into a public park, like the High Line in New York. B: That's a brilliant example of urban regeneration. It will create a new green space for everyone to enjoy. C: And it preserves a piece of the city's industrial heritage at the same time.",
+        "question": "What is being converted into a park?",
+        "options": {
+            "A": "An old factory",
+            "B": "A disused railway line",
+            "C": "An old car park"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_092",
+        "topic": "A podcast about psychology",
+        "script": "'Nudge theory' is a concept in behavioural science which argues that positive reinforcement and indirect suggestions can influence people's decisions and actions, without forbidding any options.",
+        "question": "How does 'nudge theory' aim to influence people?",
+        "options": {
+            "A": "Through strict rules and punishments",
+            "B": "Through direct orders",
+            "C": "Through positive reinforcement and indirect suggestions"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_093",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'mockumentary', a fictional story presented in the style of a documentary. B: I found it hilarious. It was a very clever satire of the music industry. C: Some of the jokes were so subtle that I think some people might not have realized it wasn't a real documentary.",
+        "question": "What is a 'mockumentary'?",
+        "options": {
+            "A": "A very serious documentary",
+            "B": "A fictional story presented as a documentary",
+            "C": "A documentary with a famous narrator"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_094",
+        "topic": "A university lecture on environmental science",
+        "script": "The 'circular economy' is an economic model which aims to eliminate waste and promote the continual use of resources. It's a shift away from the traditional 'take, make, dispose' model.",
+        "question": "What is the aim of the 'circular economy'?",
+        "options": {
+            "A": "To increase consumption",
+            "B": "To eliminate waste",
+            "C": "To make products cheaper"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_095",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'degustation menu', which is a series of many small, creative dishes served over several hours. B: It sounds like a real culinary experience, rather than just a meal. C: It's very expensive though. It's definitely for a special occasion.",
+        "question": "What is a 'degustation menu'?",
+        "options": {
+            "A": "A menu with only one dish",
+            "B": "A buffet-style menu",
+            "C": "A series of many small dishes"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_096",
+        "topic": "A news report about a new policy",
+        "script": "The central bank has decided to raise interest rates in an attempt to control rising inflation. The move is likely to make mortgages and loans more expensive.",
+        "question": "Why has the central bank raised interest rates?",
+        "options": {
+            "A": "To encourage people to spend more",
+            "B": "To control rising inflation",
+            "C": "To make it cheaper to borrow money"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_097",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'land art', created using natural materials from the surrounding landscape. B: It's beautiful how it blends in with the environment. C: And it will change over time as the materials naturally decay, which is part of the concept.",
+        "question": "What is special about 'land art'?",
+        "options": {
+            "A": "It is made in a studio.",
+            "B": "It is made using natural materials from the landscape.",
+            "C": "It is permanent and unchanging."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_098",
+        "topic": "A lecture on sociology",
+        "script": "A 'stereotype' is an over-generalized belief about a particular category of people. It's a cognitive shortcut that can lead to prejudice and discrimination.",
+        "question": "What can a stereotype lead to?",
+        "options": {
+            "A": "A better understanding of people",
+            "B": "Prejudice and discrimination",
+            "C": "A more open-minded view"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_099",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has introduced 'unconscious bias training' for all managers to make the recruitment and promotion processes fairer. B: That's a really important initiative. We all have biases we're not aware of. C: It's a good first step, but it needs to be supported by changes to the systems and processes themselves.",
+        "question": "What is the purpose of 'unconscious bias training'?",
+        "options": {
+            "A": "To teach managers about new technologies",
+            "B": "To make recruitment and promotion processes fairer",
+            "C": "To improve managers' communication skills"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_100",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a compelling portrait of a little-known historical figure. The filmmaker skillfully wove together interviews, archive footage, and dramatic reconstructions to tell her story.",
+        "question": "What techniques did the filmmaker use?",
+        "options": {
+            "A": "Only interviews",
+            "B": "Only archive footage",
+            "C": "A combination of interviews, archive footage, and reconstructions"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_101",
+        "topic": "A discussion about a new city plan",
+        "script": "A: The city plans to create a 'low-emission zone' where older, more polluting vehicles will be charged to enter. B: It's a necessary step to improve air quality, but it will be unpopular with some drivers. C: They need to ensure there are affordable and efficient public transport alternatives in place first.",
+        "question": "What is C's condition for supporting the plan?",
+        "options": {
+            "A": "The charge should be very low.",
+            "B": "It should only apply to commercial vehicles.",
+            "C": "There must be good public transport alternatives."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_102",
+        "topic": "A podcast about psychology",
+        "script": "'Emotional intelligence' is the ability to understand, use, and manage your own emotions in positive ways to relieve stress, communicate effectively, empathize with others, and overcome challenges.",
+        "question": "What is one aspect of emotional intelligence?",
+        "options": {
+            "A": "The ability to solve complex mathematical problems",
+            "B": "The ability to empathize with others",
+            "C": "The ability to learn new languages quickly"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_103",
+        "topic": "A conversation about a new work initiative",
+        "script": "A: Our company is launching a 'job-swapping' scheme, where you can swap jobs with a colleague in a different department for a week. B: That's a fascinating idea. It would give you a much better understanding of how the whole company works. C: And it could help you discover skills you didn't know you had.",
+        "question": "What is a potential benefit of the 'job-swapping' scheme?",
+        "options": {
+            "A": "You can get a higher salary.",
+            "B": "You can work fewer hours.",
+            "C": "You can gain a better understanding of the company."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_104",
+        "topic": "A news report about a new study",
+        "script": "A study has revealed that microplastics have been found in human blood for the first time. Scientists are concerned about the potential long-term health effects.",
+        "question": "What have scientists found in human blood for the first time?",
+        "options": {
+            "A": "A new type of bacteria",
+            "B": "Microplastics",
+            "C": "A new virus"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_105",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a psychological thriller. It was full of suspense and unexpected plot twists. B: It kept me on the edge of my seat. I had no idea what was going to happen next. C: The final twist was a complete shock. I didn't see that coming at all.",
+        "question": "What was the audience's reaction to the final twist?",
+        "options": {
+            "A": "It was predictable.",
+            "B": "It was confusing.",
+            "C": "It was a complete shock."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_106",
+        "topic": "A university lecture on history",
+        "script": "The Renaissance was a period of great cultural change and artistic innovation in Europe that began in Italy in the 14th century. It marked the transition from the Middle Ages to modernity.",
+        "question": "What did the Renaissance mark the transition to?",
+        "options": {
+            "A": "The ancient world",
+            "B": "Modernity",
+            "C": "The Industrial Revolution"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_107",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has an 'all-you-can-eat' buffet, but it's a bit different. You order small dishes from a tablet and they bring them to your table. B: So it's freshly cooked, not just sitting out for hours. That sounds much better. C: Yes, and it stops people wasting food, as you only order what you want.",
+        "question": "What is a benefit of this type of buffet, according to C?",
+        "options": {
+            "A": "It is cheaper.",
+            "B": "It reduces food waste.",
+            "C": "There is more choice."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_108",
+        "topic": "A review of a new smart home device",
+        "script": "The smart thermostat learns your routine and automatically adjusts the temperature to save energy when you're not at home. You can also control it remotely from your phone.",
+        "question": "How does the smart thermostat save energy?",
+        "options": {
+            "A": "By turning the heating off completely",
+            "B": "By adjusting the temperature when you're not at home",
+            "C": "By using a more efficient heating method"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_109",
+        "topic": "A discussion about a new work trend",
+        "script": "A: My company has adopted a 'results-only work environment'. It means we're judged on our performance and results, not on the number of hours we work. B: So you have complete flexibility over your schedule? C: Exactly. As long as the work gets done to a high standard, it doesn't matter when or where you do it.",
+        "question": "In a 'results-only work environment', what are employees judged on?",
+        "options": {
+            "A": "The number of hours they work",
+            "B": "Their performance and results",
+            "C": "Their relationship with the manager"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_110",
+        "topic": "A podcast about science",
+        "script": "The 'observer effect' in physics is the theory that the mere observation of a phenomenon inevitably changes that phenomenon. This is particularly relevant in the strange world of quantum mechanics.",
+        "question": "What is the 'observer effect'?",
+        "options": {
+            "A": "The theory that observation changes a phenomenon",
+            "B": "The theory that some phenomena cannot be observed",
+            "C": "The theory that observation is always subjective"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "B2_L_111",
+        "topic": "A conversation about a new theatre production",
+        "script": "A: The production was site-specific, meaning it was created for and performed in a specific location outside of a traditional theatre - in this case, a disused warehouse. B: That must have created a very unique and atmospheric setting for the play. C: It did. The industrial space really added to the dark, gritty tone of the story.",
+        "question": "What does 'site-specific' theatre mean?",
+        "options": {
+            "A": "The audience sits in a specific area.",
+            "B": "It is performed in a non-traditional location.",
+            "C": "It is about a specific historical site."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_112",
+        "topic": "A news report about a new study",
+        "script": "A new study has found that regular, moderate exercise can be as effective as some medications for treating mild to moderate depression. The researchers emphasized the importance of consistency.",
+        "question": "What did the study find about regular exercise?",
+        "options": {
+            "A": "It is more effective than medication for all types of depression.",
+            "B": "It can be as effective as some medications for mild to moderate depression.",
+            "C": "It has no effect on depression."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_113",
+        "topic": "A discussion about a new book",
+        "script": "A: The book is a 'bildungsroman', which is a literary genre that focuses on the psychological and moral growth of the protagonist from youth to adulthood. B: So it's a coming-of-age story, essentially. C: Yes, exactly. We follow the character as they learn from their experiences and find their place in the world.",
+        "question": "What is a 'bildungsroman'?",
+        "options": {
+            "A": "A historical novel",
+            "B": "A detective story",
+            "C": "A coming-of-age story"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_114",
+        "topic": "A university lecture on sociology",
+        "script": "'Cultural capital' refers to the social assets of a person (education, intellect, style of speech and dress, etc.) that promote social mobility in a stratified society.",
+        "question": "What is 'cultural capital'?",
+        "options": {
+            "A": "The amount of money a person has",
+            "B": "The social assets that promote social mobility",
+            "C": "The cultural attractions of a city"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_115",
+        "topic": "A conversation about a new film",
+        "script": "A: The film's use of a 'MacGuffin' - an object that the characters are pursuing, but which is not really important to the story itself - was very clever. B: I agree. It was just a device to drive the plot forward and create conflict between the characters. C: It's a classic Hitchcock technique, and it was used brilliantly here.",
+        "question": "What is a 'MacGuffin' in a film?",
+        "options": {
+            "A": "The main character",
+            "B": "An object that is not important in itself but drives the plot",
+            "C": "The final twist in the story"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_116",
+        "topic": "A podcast about environmental issues",
+        "script": "'Greenwashing' is a term used to describe the practice of making a product or company appear more environmentally friendly than it actually is, through misleading marketing.",
+        "question": "What is 'greenwashing'?",
+        "options": {
+            "A": "A new method for cleaning up pollution",
+            "B": "The process of making products from recycled materials",
+            "C": "Misleading marketing to make a company seem environmentally friendly"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_117",
+        "topic": "A discussion about a new work initiative",
+        "script": "A: Our company is introducing 'sabbatical leave', where employees can take an extended period of paid leave after working for a certain number of years. B: That's an amazing benefit. It would be a great opportunity to travel or learn a new skill. C: It's also a smart way for the company to retain experienced staff.",
+        "question": "What is a potential benefit of sabbatical leave for the company?",
+        "options": {
+            "A": "It saves the company money.",
+            "B": "It helps to retain experienced staff.",
+            "C": "It attracts new, younger employees."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_118",
+        "topic": "A news report about a new study",
+        "script": "A new study has found that a Mediterranean diet, rich in fruits, vegetables, olive oil, and fish, is associated with a lower risk of cognitive decline in older adults.",
+        "question": "What is a benefit of the Mediterranean diet?",
+        "options": {
+            "A": "It helps with weight loss.",
+            "B": "It is associated with a lower risk of cognitive decline.",
+            "C": "It is cheaper than other diets."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_119",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant offers a 'supper club' experience. It's in the chef's own home and you eat a set menu with a small group of other guests. B: That sounds very intimate and personal. C: It's a completely different experience from a normal restaurant. You get to interact with the chef directly.",
+        "question": "What is unique about the 'supper club' experience?",
+        "options": {
+            "A": "It is very cheap.",
+            "B": "It takes place in the chef's home.",
+            "C": "You can choose from a large menu."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_120",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a fly-on-the-wall look at the inner workings of a political campaign. The filmmakers had unprecedented access, which made for a fascinating and revealing film.",
+        "question": "What does 'fly-on-the-wall' mean in this context?",
+        "options": {
+            "A": "The documentary was filmed using drones.",
+            "B": "The filmmakers observed events without interfering.",
+            "C": "The documentary was about insects."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_121",
+        "topic": "A discussion about a new city initiative",
+        "script": "A: The city is piloting a 'universal basic mobility' scheme, giving some residents a monthly budget to spend on public transport, bike-sharing, and taxis. B: The aim is to reduce car dependency and improve social equity. C: It's an interesting experiment. I'm keen to see if it encourages a long-term shift in travel behaviour.",
+        "question": "What is a goal of the 'universal basic mobility' scheme?",
+        "options": {
+            "A": "To make public transport profitable",
+            "B": "To reduce car dependency",
+            "C": "To encourage more people to buy cars"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_122",
+        "topic": "A lecture on psychology",
+        "script": "The 'Dunning-Kruger effect' is a cognitive bias where people with low ability at a task overestimate their ability. Conversely, experts can underestimate their own ability.",
+        "question": "What is the 'Dunning-Kruger effect'?",
+        "options": {
+            "A": "When experts overestimate their ability",
+            "B": "When people with low ability overestimate their ability",
+            "C": "When people are unable to assess their ability at all"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_123",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has introduced a 'work from anywhere' policy. As long as you have an internet connection, you can work from anywhere in the world. B: That's the ultimate in flexibility. But it must require a lot of self-discipline. C: It does. And you have to be mindful of different time zones when collaborating with colleagues.",
+        "question": "What is a challenge of the 'work from anywhere' policy?",
+        "options": {
+            "A": "It is difficult to get a good internet connection.",
+            "B": "You have to be mindful of different time zones.",
+            "C": "It is easy to get distracted."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_124",
+        "topic": "A podcast about history",
+        "script": "The Enigma machine was a cipher device used by the German military during World War II. The breaking of the Enigma code by Allied cryptographers was a crucial factor in the outcome of the war.",
+        "question": "What was the significance of breaking the Enigma code?",
+        "options": {
+            "A": "It was a major technological achievement.",
+            "B": "It was a crucial factor in the outcome of the war.",
+            "C": "It allowed the Allies to send secret messages."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_125",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'found footage' horror film, where the story is presented as if it were discovered video recordings. B: It made it feel so much more realistic and terrifying. C: I'm not a fan of that style. I find the shaky camera work makes me feel sick.",
+        "question": "What is C's criticism of the 'found footage' style?",
+        "options": {
+            "A": "It is not realistic.",
+            "B": "The story is usually weak.",
+            "C": "The shaky camera work makes them feel sick."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_126",
+        "topic": "A news report about a new study",
+        "script": "A new study has found that intermittent social media use, such as taking a week-long break, can lead to significant improvements in well-being, depression, and anxiety.",
+        "question": "What did the study find about taking a break from social media?",
+        "options": {
+            "A": "It has no effect on well-being.",
+            "B": "It can lead to significant improvements in well-being.",
+            "C": "It can make anxiety worse."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_127",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'dynamic pricing' model. The price of the dishes changes depending on the time of day and how busy they are. B: So it's like surge pricing for Ubers. That's an interesting concept for a restaurant. C: It could be a good way to get a cheaper meal if you eat at off-peak times.",
+        "question": "What is 'dynamic pricing' in this restaurant?",
+        "options": {
+            "A": "The prices change every day.",
+            "B": "The prices change depending on the time and how busy it is.",
+            "C": "You can choose how much you want to pay."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_128",
+        "topic": "A university lecture on literature",
+        "script": "'Stream of consciousness' is a narrative mode that seeks to portray an individual's point of view by giving the written equivalent of the character's thought processes, often in a disjointed and unpunctuated way.",
+        "question": "What does 'stream of consciousness' aim to portray?",
+        "options": {
+            "A": "The character's actions",
+            "B": "The character's thought processes",
+            "C": "The historical context of the story"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_129",
+        "topic": "A discussion about a new work initiative",
+        "script": "A: Our company is introducing 'learning days', where we get one day a month to spend on learning a new skill, completely unrelated to our job. B: That's a fantastic way to encourage personal development and creativity. C: It also shows that the company invests in its employees as people, not just as workers.",
+        "question": "What is the purpose of 'learning days'?",
+        "options": {
+            "A": "To complete any outstanding work",
+            "B": "To learn skills directly related to the job",
+            "C": "To learn a new skill unrelated to the job"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_130",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a balanced and nuanced exploration of a very divisive topic. It managed to present both sides of the argument fairly without telling the audience what to think.",
+        "question": "What was a key strength of the documentary?",
+        "options": {
+            "A": "It had a clear and simple message.",
+            "B": "It presented a balanced view of the topic.",
+            "C": "It was very entertaining."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_131",
+        "topic": "A conversation about a new city project",
+        "script": "A: The city is planning to build a 'sponge city' infrastructure, using permeable surfaces and green roofs to absorb rainwater and prevent flooding. B: That's a much more sustainable and natural approach to flood management than just building concrete walls. C: It also helps to cool the city down during heatwaves.",
+        "question": "What is a benefit of 'sponge city' infrastructure mentioned by C?",
+        "options": {
+            "A": "It is cheaper to build.",
+            "B": "It provides more drinking water.",
+            "C": "It helps to cool the city."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_132",
+        "topic": "A podcast about psychology",
+        "script": "'Gamification' is the application of game-design elements and game principles in non-game contexts. It can be used to improve user engagement, and organizational productivity.",
+        "question": "What is 'gamification' used for?",
+        "options": {
+            "A": "To create new video games",
+            "B": "To improve user engagement",
+            "C": "To teach people how to design games"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_133",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'one-shot' film, meaning it was filmed in a single continuous take without any cuts. B: That's an incredible technical achievement. The choreography must have been immense. C: It certainly made the experience feel very immersive and immediate.",
+        "question": "What does a 'one-shot' film mean?",
+        "options": {
+            "A": "The film was shot very quickly.",
+            "B": "The film only has one character.",
+            "C": "The film was shot in a single continuous take."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_134",
+        "topic": "A university lecture on environmental science",
+        "script": "'Biodiversity' refers to the variety of life on Earth, at all its levels, from genes to ecosystems. It is essential for the health of our planet and our own survival.",
+        "question": "What is 'biodiversity'?",
+        "options": {
+            "A": "The number of people on Earth",
+            "B": "The variety of life on Earth",
+            "C": "The study of biology"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_135",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant is a 'social enterprise'. All of its profits go towards a charity that provides job training for homeless people. B: That's a wonderful business model. It means you can enjoy a great meal and support a good cause at the same time. C: I'll definitely be going there. It's important to support businesses that have a positive social impact.",
+        "question": "What is a 'social enterprise'?",
+        "options": {
+            "A": "A restaurant where you can socialize",
+            "B": "A business that donates its profits to charity",
+            "C": "A restaurant run by a charity"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_136",
+        "topic": "A news report about a new policy",
+        "script": "The government has announced plans for a 'right to repair' law, which would require manufacturers to make spare parts and repair information available to consumers and independent repair shops.",
+        "question": "What is the aim of the 'right to repair' law?",
+        "options": {
+            "A": "To make products cheaper",
+            "B": "To make it easier for consumers to repair their own products",
+            "C": "To force manufacturers to make more durable products"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_137",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'kinetic art'. The different parts of the sculpture move in response to the wind. B: So it's constantly changing. That's a fascinating idea. C: It makes the artwork feel alive and connected to the environment.",
+        "question": "What is 'kinetic art'?",
+        "options": {
+            "A": "Art that uses light",
+            "B": "Art that has moving parts",
+            "C": "Art that is made by a computer"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_138",
+        "topic": "A lecture on sociology",
+        "script": "A 'self-fulfilling prophecy' is a prediction that directly or indirectly causes itself to become true, by the very terms of the prophecy itself, due to positive feedback between belief and behavior.",
+        "question": "What is a 'self-fulfilling prophecy'?",
+        "options": {
+            "A": "A prediction that is always wrong",
+            "B": "A prediction that causes itself to become true",
+            "C": "A prediction about oneself"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_139",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has introduced 'agile working'. It's a project management methodology that involves breaking down large projects into small, manageable tasks called 'sprints'. B: It's supposed to make teams more flexible and responsive to change. C: It's a big shift from the traditional, linear way of working.",
+        "question": "What is a key feature of 'agile working'?",
+        "options": {
+            "A": "Working on one large project at a time",
+            "B": "Breaking down projects into small tasks or 'sprints'",
+            "C": "Working without a manager"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_140",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a powerful exposé of the unethical practices within the pharmaceutical industry. It was meticulously researched and presented its case with compelling evidence.",
+        "question": "What is an 'exposé'?",
+        "options": {
+            "A": "A celebration of an industry",
+            "B": "A fictional story about an industry",
+            "C": "A report that reveals shocking or unethical practices"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_141",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning a 'car-free day' once a month to promote alternative forms of transport and reduce pollution. B: I think it's a great idea. It will make the city centre a much more pleasant place to be. C: But it will be a nightmare for people who live outside the city and need to drive in for work.",
+        "question": "What is C's concern about the 'car-free day'?",
+        "options": {
+            "A": "It will not reduce pollution.",
+            "B": "It will be difficult for people who need to drive into the city.",
+            "C": "It will not be popular with residents."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_142",
+        "topic": "A podcast about psychology",
+        "script": "'Cognitive reframing' is a psychological technique that involves identifying and then disputing irrational or maladaptive thoughts. It's about changing your perspective on a situation.",
+        "question": "What is 'cognitive reframing'?",
+        "options": {
+            "A": "A technique for improving your memory",
+            "B": "A technique for changing your perspective on a situation",
+            "C": "A technique for relaxing your mind"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_143",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'neo-noir' film. It had all the classic elements of a film noir - a cynical detective, a mysterious woman - but it was set in the present day. B: The modern setting gave it a fresh and interesting twist. C: I loved the stylish cinematography and the moody atmosphere.",
+        "question": "What is a 'neo-noir' film?",
+        "options": {
+            "A": "A film noir made in black and white",
+            "B": "A modern film with the style and themes of a classic film noir",
+            "C": "A romantic comedy with a detective"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_144",
+        "topic": "A university lecture on environmental science",
+        "script": "'Carbon offsetting' is a process that involves compensating for the carbon dioxide emissions from an activity, for example a flight, by funding a project that reduces emissions elsewhere, such as planting trees.",
+        "question": "What is 'carbon offsetting'?",
+        "options": {
+            "A": "A way to avoid producing carbon emissions",
+            "B": "A way to compensate for carbon emissions",
+            "C": "A tax on carbon emissions"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_145",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant is a 'fusion' restaurant. It combines elements of different culinary traditions, in this case, Japanese and Peruvian. B: That sounds like an intriguing combination. C: It was delicious. The flavours were so unexpected and worked together beautifully.",
+        "question": "What is 'fusion' cuisine?",
+        "options": {
+            "A": "A very traditional type of cuisine",
+            "B": "A combination of different culinary traditions",
+            "C": "A type of vegetarian cuisine"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_146",
+        "topic": "A news report about a new policy",
+        "script": "The government is introducing a 'sugar tax' on soft drinks in an effort to combat rising levels of childhood obesity. The revenue from the tax will be used to fund school sports programs.",
+        "question": "What will the revenue from the 'sugar tax' be used for?",
+        "options": {
+            "A": "To reduce the price of healthy food",
+            "B": "To fund school sports programs",
+            "C": "To give a tax cut to low-income families"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_147",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'sound art'. There are no visual elements, just a carefully composed soundscape that you experience as you walk through the space. B: That's a very abstract concept for an art gallery. C: It was a very meditative and immersive experience. It made you listen in a different way.",
+        "question": "What is the main component of the 'sound art' installation?",
+        "options": {
+            "A": "Paintings",
+            "B": "Sculptures",
+            "C": "A soundscape"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_148",
+        "topic": "A lecture on sociology",
+        "script": "A 'moral panic' is a feeling of fear spread among a large number of people that some evil threatens the well-being of society. The media often plays a significant role in creating and amplifying moral panics.",
+        "question": "What often plays a role in creating a 'moral panic'?",
+        "options": {
+            "A": "The government",
+            "B": "The media",
+            "C": "Scientists"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_149",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'pet-friendly' office, so you can bring your dog to work. B: That must be great for morale. It would make the office feel much more relaxed. C: It is, but you have to make sure your dog is well-behaved and doesn't distract other people.",
+        "question": "What is a condition for bringing your dog to the office?",
+        "options": {
+            "A": "The dog must be small.",
+            "B": "The dog must be well-behaved.",
+            "C": "You have to pay a fee."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_150",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a powerful piece of 'advocacy journalism'. It didn't just report on the issue, it actively argued for a particular course of action to solve the problem.",
+        "question": "What is 'advocacy journalism'?",
+        "options": {
+            "A": "Journalism that is completely objective",
+            "B": "Journalism that argues for a particular course of action",
+            "C": "Journalism that is focused on celebrities"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_151",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning to build a 'vertical forest', a skyscraper covered in trees and plants. B: It's a visually striking idea, but will it be difficult to maintain? C: It will require a sophisticated irrigation system, but the benefits for air quality and biodiversity could be huge.",
+        "question": "What is a 'vertical forest'?",
+        "options": {
+            "A": "A very large park",
+            "B": "A skyscraper covered in plants",
+            "C": "An indoor forest"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_152",
+        "topic": "A podcast about psychology",
+        "script": "The 'bystander effect' is a social psychological phenomenon where individuals are less likely to offer help to a victim when other people are present. The greater the number of bystanders, the less likely it is that any one of them will help.",
+        "question": "What is the 'bystander effect'?",
+        "options": {
+            "A": "People are more likely to help when others are present.",
+            "B": "People are less likely to help when others are present.",
+            "C": "People are more likely to be victims when others are present."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_153",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'meta-narrative'. It was a story about storytelling, and the characters were aware that they were in a film. B: That's a very postmodern concept. It can be very clever if it's done well. C: I found it a bit too self-indulgent. It constantly reminded you that you were watching a film, so it was hard to get lost in the story.",
+        "question": "What is C's criticism of the 'meta-narrative'?",
+        "options": {
+            "A": "It was too complicated.",
+            "B": "It was not original.",
+            "C": "It was hard to get lost in the story."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_154",
+        "topic": "A university lecture on environmental science",
+        "script": "'Rewilding' is a form of environmental conservation and ecological restoration that aims to restore and protect natural processes and core wilderness areas, providing connectivity between such areas, and protecting or reintroducing apex predators and keystone species.",
+        "question": "What is one aspect of 'rewilding'?",
+        "options": {
+            "A": "Building more national parks",
+            "B": "Reintroducing apex predators",
+            "C": "Planting a single type of tree"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_155",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'hyper-local' sourcing policy. They only use ingredients that are grown or produced within a 10-mile radius of the restaurant. B: That's taking local sourcing to a whole new level. C: It means the menu must be incredibly seasonal and fresh, but also quite limited.",
+        "question": "What is a potential limitation of the 'hyper-local' policy?",
+        "options": {
+            "A": "The food is not very fresh.",
+            "B": "The menu is limited.",
+            "C": "The ingredients are expensive."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_156",
+        "topic": "A news report about a new policy",
+        "script": "The city has introduced a 'tourist tax', a small fee added to hotel bills for visitors. The revenue will be used to maintain the city's infrastructure and historical sites, which are under pressure from mass tourism.",
+        "question": "What will the money from the 'tourist tax' be used for?",
+        "options": {
+            "A": "To build new hotels",
+            "B": "To lower taxes for residents",
+            "C": "To maintain infrastructure and historical sites"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_157",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'bio-art', where the artist uses living materials like bacteria or plants as the medium. B: So the artwork is literally alive and will grow and change over time. C: Yes, it's a fascinating intersection of art and science.",
+        "question": "What medium is used in 'bio-art'?",
+        "options": {
+            "A": "Paint and canvas",
+            "B": "Metal and stone",
+            "C": "Living materials like bacteria"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_158",
+        "topic": "A lecture on sociology",
+        "script": "A 'third place' is a term for a public place that hosts regular, voluntary, informal, and happily anticipated gatherings of individuals beyond the home (the 'first place') and work (the 'second place'). Examples include cafes, libraries, and parks.",
+        "question": "What is an example of a 'third place'?",
+        "options": {
+            "A": "Your home",
+            "B": "Your office",
+            "C": "A cafe"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_159",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'no-meeting' day every Wednesday to give us a full day of uninterrupted time for deep work. B: I wish my company did that. I feel like I spend half my week in meetings. C: It's made a huge difference to my productivity. I get so much more done on Wednesdays.",
+        "question": "What is the purpose of the 'no-meeting' day?",
+        "options": {
+            "A": "To allow people to work from home",
+            "B": "To provide time for deep work",
+            "C": "To have a shorter working day"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_160",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a 'cinéma vérité' style film. There was no narration, no interviews, just observational footage that allowed the audience to draw their own conclusions.",
+        "question": "What was absent from the 'cinéma vérité' documentary?",
+        "options": {
+            "A": "Music",
+            "B": "Narration and interviews",
+            "C": "Colour footage"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_161",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is implementing a 'tactical urbanism' project, using low-cost, temporary changes to a street to test out a new design for a bike lane. B: So they can see if it works before spending a lot of money on a permanent change. C: Exactly. It's a much more flexible and community-focused approach to urban planning.",
+        "question": "What is 'tactical urbanism'?",
+        "options": {
+            "A": "A long-term, expensive city project",
+            "B": "A way to involve the military in urban planning",
+            "C": "Using low-cost, temporary changes to test ideas"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_162",
+        "topic": "A podcast about psychology",
+        "script": "'Heuristics' are mental shortcuts that allow people to quickly make judgments and solve problems. They are usually fast and efficient, but they can also lead to errors in judgment.",
+        "question": "What is a potential downside of using heuristics?",
+        "options": {
+            "A": "They are very slow.",
+            "B": "They can lead to errors in judgment.",
+            "C": "They require a lot of mental effort."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_163",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'spaghetti western', a genre of western films that emerged in the 1960s, directed by Italian filmmakers. B: They have a very distinctive style, don't they? Very gritty and operatic. C: Yes, and the iconic music by Ennio Morricone is a huge part of their appeal.",
+        "question": "What is a 'spaghetti western'?",
+        "options": {
+            "A": "A western film about cooking",
+            "B": "A western film made by Italian directors",
+            "C": "A comedy western film"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_164",
+        "topic": "A university lecture on environmental science",
+        "script": "'Tipping points' in the climate system are thresholds where a small change can lead to a large and often irreversible change in the state of the system. The collapse of the Amazon rainforest is a potential tipping point.",
+        "question": "What is a 'tipping point' in the climate system?",
+        "options": {
+            "A": "A point where the climate starts to improve",
+            "B": "A threshold where a small change can lead to a large, irreversible change",
+            "C": "The point of maximum temperature in a year"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_165",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant is a 'ghost kitchen'. It has no dining area and only prepares food for delivery through apps. B: So it's essentially a kitchen for takeaway food. C: Yes, it's a business model that has become much more popular since the pandemic.",
+        "question": "What is a 'ghost kitchen'?",
+        "options": {
+            "A": "A restaurant that is rumoured to be haunted",
+            "B": "A kitchen that only prepares food for delivery",
+            "C": "A restaurant with a very small dining area"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_166",
+        "topic": "A news report about a new policy",
+        "script": "The government is launching a 'digital nomad' visa to attract remote workers to the country. Applicants will need to prove they have a sufficient income from a foreign employer.",
+        "question": "Who is the 'digital nomad' visa for?",
+        "options": {
+            "A": "Tourists",
+            "B": "Students",
+            "C": "Remote workers"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_167",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'guerrilla art'. It appeared overnight in a public space without any official permission. B: That's very subversive. It challenges the idea of who owns public space. C: The artist is anonymous, which adds to the mystery.",
+        "question": "What is 'guerrilla art'?",
+        "options": {
+            "A": "Art that is officially commissioned by the city",
+            "B": "Art that appears in a public space without permission",
+            "C": "Art that is made by soldiers"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_168",
+        "topic": "A lecture on sociology",
+        "script": "'Conspicuous consumption' is the practice of purchasing goods or services to publicly display one's social status or wealth, rather than for their practical use.",
+        "question": "What is the purpose of 'conspicuous consumption'?",
+        "options": {
+            "A": "To save money",
+            "B": "To buy things for their practical use",
+            "C": "To display one's social status"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_169",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'holacracy' management structure. There are no traditional managers and power is distributed among self-organizing teams. B: That sounds very radical. How does it work in practice? C: It requires a lot of personal responsibility and good communication, but it can lead to more innovation.",
+        "question": "What is a key feature of a 'holacracy' structure?",
+        "options": {
+            "A": "There are many levels of management.",
+            "B": "There are no traditional managers.",
+            "C": "The CEO makes all the decisions."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_170",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a powerful 'verité' film, capturing the raw, unfiltered reality of its subjects' lives. The filmmaker's unobtrusive presence allowed for moments of incredible intimacy and honesty.",
+        "question": "What is a characteristic of a 'verité' film?",
+        "options": {
+            "A": "It uses a lot of special effects.",
+            "B": "It captures the unfiltered reality of its subjects.",
+            "C": "It has a famous narrator."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_171",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning to build a 'gondola' system, a cable car network, as a form of public transport to connect the hilly parts of the city. B: That's a very innovative solution to the city's geographical challenges. C: It would also become a tourist attraction in its own right, offering fantastic views.",
+        "question": "What is the purpose of the proposed 'gondola' system?",
+        "options": {
+            "A": "To be a tourist attraction only",
+            "B": "To be a form of public transport",
+            "C": "To generate electricity"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_172",
+        "topic": "A podcast about psychology",
+        "script": "'Intrinsic motivation' is the desire to do something because it is inherently interesting or enjoyable. This contrasts with 'extrinsic motivation', which is the desire to do something because of external rewards like money or praise.",
+        "question": "What is 'intrinsic motivation'?",
+        "options": {
+            "A": "The desire to do something for an external reward",
+            "B": "The desire to do something because it is interesting or enjoyable",
+            "C": "The desire to avoid punishment"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_173",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'film gris', a subgenre of film noir that is even more cynical, pessimistic, and darker than classic noir. B: It was certainly a bleak film. There were no heroes and no happy ending. C: It was a powerful and unflinching look at the dark side of human nature.",
+        "question": "How does a 'film gris' compare to a classic film noir?",
+        "options": {
+            "A": "It is more optimistic.",
+            "B": "It is more cynical and darker.",
+            "C": "It has a happy ending."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_174",
+        "topic": "A university lecture on environmental science",
+        "script": "'Biomimicry' is an approach to innovation that seeks sustainable solutions to human challenges by emulating nature's time-tested patterns and strategies. For example, designing a building's ventilation system based on a termite mound.",
+        "question": "What is 'biomimicry'?",
+        "options": {
+            "A": "The study of animal behaviour",
+            "B": "An approach that seeks solutions by emulating nature",
+            "C": "A type of genetic engineering"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_175",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'closed-loop' water system. They filter and reuse all their water on-site. B: That's a huge commitment to water conservation. C: It's part of their overall philosophy of being a completely sustainable and self-sufficient business.",
+        "question": "What is a 'closed-loop' water system?",
+        "options": {
+            "A": "They use only bottled water.",
+            "B": "They filter and reuse their water.",
+            "C": "They get their water from a private well."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_176",
+        "topic": "A news report about a new policy",
+        "script": "The government is proposing a 'wealth tax', an annual tax on an individual's net worth above a certain threshold. Proponents argue it will reduce inequality, while opponents claim it will drive investment out of the country.",
+        "question": "What is a potential negative consequence of a 'wealth tax'?",
+        "options": {
+            "A": "It will increase inequality.",
+            "B": "It will be difficult to calculate.",
+            "C": "It might drive investment out of the country."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_177",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'generative art'. The artist creates a set of rules, and a computer program then generates the artwork. B: So each piece is unique and the artist doesn't have complete control over the final outcome. C: Exactly. It's a collaboration between the artist and the machine.",
+        "question": "Who creates the final artwork in 'generative art'?",
+        "options": {
+            "A": "The artist",
+            "B": "A computer program",
+            "C": "The audience"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_178",
+        "topic": "A lecture on sociology",
+        "script": "A 'meritocracy' is a social system in which advancement in society is based on an individual's capabilities and merits rather than on the basis of family, wealth, or social background.",
+        "question": "In a meritocracy, what is social advancement based on?",
+        "options": {
+            "A": "Family connections",
+            "B": "Individual capabilities and merits",
+            "C": "Wealth"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_179",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'chief happiness officer' whose job is to focus on improving employee well-being and company culture. B: That's a very modern role. Does it make a difference? C: I think so. It shows that the company values its employees' happiness, which is motivating.",
+        "question": "What is the role of a 'chief happiness officer'?",
+        "options": {
+            "A": "To organize company parties",
+            "B": "To improve employee well-being and company culture",
+            "C": "To deal with customer complaints"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_180",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a poignant and intimate portrait of a family dealing with loss. The filmmaker's empathetic approach allowed the subjects to tell their own story with dignity.",
+        "question": "What was the filmmaker's approach?",
+        "options": {
+            "A": "Objective and detached",
+            "B": "Critical and judgmental",
+            "C": "Empathetic"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_181",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning to build a 'smart forest city' from scratch, designed to be completely sustainable and technologically advanced. B: It's an ambitious vision, but it could be a model for future urban development. C: The main challenge will be ensuring it doesn't become a sterile, soulless place, but a real community.",
+        "question": "What is a potential challenge for the 'smart forest city'?",
+        "options": {
+            "A": "It will be too expensive to build.",
+            "B": "It will not be technologically advanced enough.",
+            "C": "Ensuring it becomes a real community."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_182",
+        "topic": "A podcast about psychology",
+        "script": "'Analysis paralysis' is the state of over-analyzing or over-thinking a situation so that a decision or action is never taken, in effect paralyzing the outcome.",
+        "question": "What is 'analysis paralysis'?",
+        "options": {
+            "A": "Making a decision too quickly",
+            "B": "The inability to make a decision due to over-thinking",
+            "C": "A fear of analyzing situations"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_183",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'Slasher' film, a subgenre of horror films involving a violent psychopath stalking and murdering a group of people. B: I'm not a fan of that genre. I find it too graphic and formulaic. C: I agree. The plot is always the same and there's no real suspense, just a series of jump scares.",
+        "question": "What is C's criticism of the 'Slasher' genre?",
+        "options": {
+            "A": "It is not scary enough.",
+            "B": "It is too graphic and formulaic.",
+            "C": "The acting is usually poor."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_184",
+        "topic": "A university lecture on environmental science",
+        "script": "'Ocean acidification' is the ongoing decrease in the pH of the Earth's oceans, caused by the uptake of carbon dioxide from the atmosphere. It is a major threat to marine ecosystems, particularly coral reefs.",
+        "question": "What is particularly threatened by ocean acidification?",
+        "options": {
+            "A": "Deep-sea fish",
+            "B": "Marine mammals",
+            "C": "Coral reefs"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_185",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'pay-what-you-feel' policy for one of its dishes each day. You pay what you think the dish is worth. B: That's a very trusting business model. I wonder if it works. C: It's a great way to make their food accessible to people on all budgets.",
+        "question": "What is a benefit of the 'pay-what-you-feel' policy?",
+        "options": {
+            "A": "The restaurant makes a lot of money.",
+            "B": "It makes the food accessible to people on all budgets.",
+            "C": "The chef gets direct feedback on the dish."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_186",
+        "topic": "A news report about a new policy",
+        "script": "The government is considering a 'four-day working week' trial for public sector employees, with no loss of pay. The aim is to assess the impact on productivity and employee well-being.",
+        "question": "What is the purpose of the 'four-day working week' trial?",
+        "options": {
+            "A": "To save the government money",
+            "B": "To assess the impact on productivity and well-being",
+            "C": "To create more jobs"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_187",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'immersive art'. You walk into a room that is completely transformed by light, sound, and projections, so you feel like you are inside the artwork. B: That sounds like a much more powerful experience than just looking at a painting on a wall. C: It was incredible. You completely lost track of time and space.",
+        "question": "What is the aim of 'immersive art'?",
+        "options": {
+            "A": "To make the viewer feel like they are inside the artwork",
+            "B": "To be viewed from a distance",
+            "C": "To be a permanent installation"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "B2_L_188",
+        "topic": "A lecture on sociology",
+        "script": "'Gentrification' is the process whereby the character of a poor urban area is changed by wealthier people moving in, improving housing, and attracting new businesses, but often displacing current inhabitants in the process.",
+        "question": "What is a negative consequence of gentrification?",
+        "options": {
+            "A": "The area becomes more attractive.",
+            "B": "New businesses open.",
+            "C": "Current inhabitants are often displaced."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_189",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'sabbatical' program. After five years of service, you can take up to six months of paid leave to pursue a personal project. B: That's an incredible perk. It's a great way to prevent burnout and encourage personal growth. C: I'm planning to use mine to travel through South America.",
+        "question": "What is the purpose of the sabbatical program?",
+        "options": {
+            "A": "To allow employees to retire early",
+            "B": "To prevent burnout and encourage personal growth",
+            "C": "To allow employees to work in a different department"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_190",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a 'biopic' of a famous musician, but it took a lot of creative liberties with the facts of her life. It was entertaining, but not historically accurate.",
+        "question": "What is a 'biopic'?",
+        "options": {
+            "A": "A film about a fictional character",
+            "B": "A film about the life of a real person",
+            "C": "A film about a historical event"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_191",
+        "topic": "A discussion about a new city project",
+        "script": "A: The city is planning to build a 'sky park', an elevated park built on a disused viaduct. B: It's a creative way to create new public green space in a dense urban area. C: It will also offer unique views of the city skyline.",
+        "question": "What is a 'sky park'?",
+        "options": {
+            "A": "A park on the roof of a skyscraper",
+            "B": "An elevated park on a disused viaduct",
+            "C": "A park with a space theme"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_192",
+        "topic": "A podcast about psychology",
+        "script": "'Cognitive load' refers to the total amount of mental effort being used in the working memory. Overloading the cognitive load can lead to poor performance and mistakes.",
+        "question": "What can happen if the cognitive load is overloaded?",
+        "options": {
+            "A": "Improved performance",
+            "B": "Poor performance and mistakes",
+            "C": "Faster learning"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_193",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was a 'whodunnit', a classic murder mystery where the audience has to try and figure out who the killer is. B: I love those kinds of films. I was guessing right up until the final reveal. C: I had my suspicions, but the final twist still surprised me.",
+        "question": "What is the main objective for the audience in a 'whodunnit'?",
+        "options": {
+            "A": "To sympathize with the main character",
+            "B": "To guess who the killer is",
+            "C": "To understand the killer's motives"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_194",
+        "topic": "A university lecture on environmental science",
+        "script": "'Light pollution' is the presence of excessive artificial light in the night environment. It can have serious environmental consequences for humans, wildlife, and our climate.",
+        "question": "What is 'light pollution'?",
+        "options": {
+            "A": "The lack of natural light in cities",
+            "B": "The reflection of sunlight from buildings",
+            "C": "Excessive artificial light at night"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B2_L_195",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'speakeasy' concept. It has a hidden entrance and you need a password to get in. B: It's designed to feel like the secret bars during the Prohibition era in the US. C: It's a fun and theatrical experience, but probably not somewhere you'd go every week.",
+        "question": "What is a feature of the 'speakeasy' restaurant?",
+        "options": {
+            "A": "It is very large.",
+            "B": "It has a hidden entrance.",
+            "C": "It only serves non-alcoholic drinks."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_196",
+        "topic": "A news report about a new policy",
+        "script": "The government is launching a 'scrappage scheme' to encourage people to trade in their old, polluting cars for a discount on a new, cleaner vehicle. The aim is to accelerate the transition to electric cars.",
+        "question": "What is the purpose of the 'scrappage scheme'?",
+        "options": {
+            "A": "To help car manufacturers sell more cars",
+            "B": "To accelerate the transition to electric cars",
+            "C": "To provide cheaper cars for low-income families"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_197",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new installation is a piece of 'trompe-l'oeil' art. It's a painting on the side of a building that creates a clever optical illusion of a three-dimensional scene. B: It's incredibly realistic. From a distance, you'd really think it was real. C: It's a playful way to interact with the urban environment.",
+        "question": "What is 'trompe-l'oeil' art?",
+        "options": {
+            "A": "Abstract art",
+            "B": "Art that creates an optical illusion",
+            "C": "Art that is made from recycled materials"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_198",
+        "topic": "A lecture on sociology",
+        "script": "'Social capital' refers to the networks of relationships among people who live and work in a particular society, enabling that society to function effectively. It's about the value of social connections.",
+        "question": "What is 'social capital'?",
+        "options": {
+            "A": "The amount of money in a society",
+            "B": "The value of social connections",
+            "C": "The number of social events in a society"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_199",
+        "topic": "A conversation about a new work trend",
+        "script": "A: My company has a 'reverse mentoring' scheme where I, a junior employee, mentor a senior executive on social media. B: That's a great way to bridge the generational gap and share skills within the company. C: It's also a bit nerve-wracking, but a fantastic opportunity for me.",
+        "question": "In the 'reverse mentoring' scheme, who mentors whom?",
+        "options": {
+            "A": "A senior employee mentors a junior employee.",
+            "B": "A junior employee mentors a senior employee.",
+            "C": "Employees from different companies mentor each other."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B2_L_200",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was a 'longitudinal study', following the lives of a group of people over several decades. It provided a unique and profound insight into how people change over time.",
+        "question": "What is a 'longitudinal study'?",
+        "options": {
+            "A": "A study that takes place in many different countries",
+            "B": "A study that follows the same subjects over a long period of time",
+            "C": "A study that is completed very quickly"
+        },
+        "answer": "B"
+    }
+]

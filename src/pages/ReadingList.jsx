@@ -33,7 +33,7 @@ export default function ReadingList() {
             name: 'Upper-Intermediate', 
             description: '복잡한 텍스트와 추상적 주제 이해',
             color: '#42a5f5',
-            available: false
+            available: true
         },
         { 
             code: 'C1', 
@@ -55,12 +55,12 @@ export default function ReadingList() {
         for (const level of levels) {
             if (level.available) {
                 try {
-                    const response = await fetch(`/${level.code}/${level.code}_reading/${level.code}_reading.json`);
+                    const response = await fetch(`http://localhost:4000/api/reading/level/${level.code}`);
                     if (response.ok) {
-                        const jsonData = await response.json();
+                        const result = await response.json();
                         data[level.code] = {
-                            count: jsonData.length,
-                            available: true
+                            count: result.count,
+                            available: result.available
                         };
                     } else {
                         data[level.code] = { count: 0, available: false };

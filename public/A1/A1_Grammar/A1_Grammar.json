@@ -1,0 +1,702 @@
+[
+  {
+    "id": "A1_G_001",
+    "topic": "Present Tense - Be Verbs",
+    "level": "A1",
+    "question": "I ___ a teacher.",
+    "options": {
+      "A": "am",
+      "B": "is", 
+      "C": "are"
+    },
+    "answer": "A",
+    "explanation": "I와 함께 쓰이는 be 동사는 'am'입니다.",
+    "grammar_point": "Be Verbs"
+  },
+  {
+    "id": "A1_G_002",
+    "topic": "Present Tense - Be Verbs",
+    "level": "A1",
+    "question": "She ___ from England.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "B",
+    "explanation": "She(3인칭 단수)와 함께 쓰이는 be 동사는 'is'입니다.",
+    "grammar_point": "Be Verbs"
+  },
+  {
+    "id": "A1_G_003",
+    "topic": "Present Tense - Be Verbs",
+    "level": "A1",
+    "question": "They ___ students.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "C",
+    "explanation": "They(복수)와 함께 쓰이는 be 동사는 'are'입니다.",
+    "grammar_point": "Be Verbs"
+  },
+  {
+    "id": "A1_G_004",
+    "topic": "Articles",
+    "level": "A1",
+    "question": "I have ___ cat.",
+    "options": {
+      "A": "a",
+      "B": "an",
+      "C": "the"
+    },
+    "answer": "A",
+    "explanation": "자음으로 시작하는 단수 명사 앞에는 'a'를 사용합니다.",
+    "grammar_point": "Articles"
+  },
+  {
+    "id": "A1_G_005",
+    "topic": "Articles",
+    "level": "A1",
+    "question": "She eats ___ apple.",
+    "options": {
+      "A": "a",
+      "B": "an",
+      "C": "the"
+    },
+    "answer": "B",
+    "explanation": "모음으로 시작하는 단수 명사 앞에는 'an'을 사용합니다.",
+    "grammar_point": "Articles"
+  },
+  {
+    "id": "A1_G_006",
+    "topic": "Possessive Adjectives",
+    "level": "A1",
+    "question": "This is ___ book.",
+    "options": {
+      "A": "I",
+      "B": "my",
+      "C": "mine"
+    },
+    "answer": "B",
+    "explanation": "명사 앞에서 소유를 나타낼 때는 'my'를 사용합니다.",
+    "grammar_point": "Possessive Adjectives"
+  },
+  {
+    "id": "A1_G_007",
+    "topic": "Possessive Adjectives",
+    "level": "A1",
+    "question": "___ name is John.",
+    "options": {
+      "A": "He",
+      "B": "His",
+      "C": "Him"
+    },
+    "answer": "B",
+    "explanation": "'그의'를 나타낼 때는 소유형용사 'His'를 사용합니다.",
+    "grammar_point": "Possessive Adjectives"
+  },
+  {
+    "id": "A1_G_008",
+    "topic": "Present Simple",
+    "level": "A1",
+    "question": "He ___ to school every day.",
+    "options": {
+      "A": "go",
+      "B": "goes",
+      "C": "going"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수 주어와 함께 쓰이는 일반동사는 -s를 붙입니다.",
+    "grammar_point": "Present Simple"
+  },
+  {
+    "id": "A1_G_009",
+    "topic": "Present Simple",
+    "level": "A1",
+    "question": "I ___ English every day.",
+    "options": {
+      "A": "study",
+      "B": "studies",
+      "C": "studying"
+    },
+    "answer": "A",
+    "explanation": "1인칭 주어와 함께 쓰이는 일반동사는 원형을 사용합니다.",
+    "grammar_point": "Present Simple"
+  },
+  {
+    "id": "A1_G_010",
+    "topic": "Present Simple",
+    "level": "A1",
+    "question": "We ___ pizza on Friday.",
+    "options": {
+      "A": "eat",
+      "B": "eats",
+      "C": "eating"
+    },
+    "answer": "A",
+    "explanation": "복수 주어와 함께 쓰이는 일반동사는 원형을 사용합니다.",
+    "grammar_point": "Present Simple"
+  },
+  {
+    "id": "A1_G_011",
+    "topic": "Plural Nouns",
+    "level": "A1",
+    "question": "I have two ___.",
+    "options": {
+      "A": "cat",
+      "B": "cats",
+      "C": "cates"
+    },
+    "answer": "B",
+    "explanation": "복수형은 대부분의 명사에 -s를 붙여서 만듭니다.",
+    "grammar_point": "Plural Nouns"
+  },
+  {
+    "id": "A1_G_012",
+    "topic": "Plural Nouns",
+    "level": "A1",
+    "question": "She has three ___.",
+    "options": {
+      "A": "box",
+      "B": "boxs",
+      "C": "boxes"
+    },
+    "answer": "C",
+    "explanation": "-x로 끝나는 명사의 복수형은 -es를 붙입니다.",
+    "grammar_point": "Plural Nouns"
+  },
+  {
+    "id": "A1_G_013",
+    "topic": "This/That/These/Those",
+    "level": "A1",
+    "question": "___ is my pen.",
+    "options": {
+      "A": "This",
+      "B": "These",
+      "C": "Those"
+    },
+    "answer": "A",
+    "explanation": "가까이 있는 단수 사물을 가리킬 때는 'This'를 사용합니다.",
+    "grammar_point": "Demonstratives"
+  },
+  {
+    "id": "A1_G_014",
+    "topic": "This/That/These/Those",
+    "level": "A1",
+    "question": "___ are my books.",
+    "options": {
+      "A": "This",
+      "B": "These",
+      "C": "That"
+    },
+    "answer": "B",
+    "explanation": "가까이 있는 복수 사물을 가리킬 때는 'These'를 사용합니다.",
+    "grammar_point": "Demonstratives"
+  },
+  {
+    "id": "A1_G_015",
+    "topic": "Yes/No Questions",
+    "level": "A1",
+    "question": "___ you a student?",
+    "options": {
+      "A": "Is",
+      "B": "Are",
+      "C": "Am"
+    },
+    "answer": "B",
+    "explanation": "'You'와 함께 쓰이는 be 동사 의문문은 'Are'로 시작합니다.",
+    "grammar_point": "Yes/No Questions"
+  },
+  {
+    "id": "A1_G_016",
+    "topic": "Yes/No Questions",
+    "level": "A1",
+    "question": "___ she like music?",
+    "options": {
+      "A": "Do",
+      "B": "Does",
+      "C": "Is"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수 주어의 일반동사 의문문은 'Does'를 사용합니다.",
+    "grammar_point": "Yes/No Questions"
+  },
+  {
+    "id": "A1_G_017",
+    "topic": "Negative Sentences",
+    "level": "A1",
+    "question": "I ___ not hungry.",
+    "options": {
+      "A": "am",
+      "B": "is",
+      "C": "are"
+    },
+    "answer": "A",
+    "explanation": "I와 함께 쓰이는 be 동사 부정문은 'am not'입니다.",
+    "grammar_point": "Negative Sentences"
+  },
+  {
+    "id": "A1_G_018",
+    "topic": "Negative Sentences",
+    "level": "A1",
+    "question": "She ___ like coffee.",
+    "options": {
+      "A": "don't",
+      "B": "doesn't",
+      "C": "not"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수 주어의 일반동사 부정문은 'doesn't'를 사용합니다.",
+    "grammar_point": "Negative Sentences"
+  },
+  {
+    "id": "A1_G_019",
+    "topic": "Wh-Questions",
+    "level": "A1",
+    "question": "___ is your name?",
+    "options": {
+      "A": "What",
+      "B": "Where",
+      "C": "When"
+    },
+    "answer": "A",
+    "explanation": "이름을 묻는 의문문은 'What'을 사용합니다.",
+    "grammar_point": "Wh-Questions"
+  },
+  {
+    "id": "A1_G_020",
+    "topic": "Wh-Questions",
+    "level": "A1",
+    "question": "___ are you from?",
+    "options": {
+      "A": "What",
+      "B": "Where",
+      "C": "Who"
+    },
+    "answer": "B",
+    "explanation": "출신지를 묻는 의문문은 'Where'를 사용합니다.",
+    "grammar_point": "Wh-Questions"
+  },
+  {
+    "id": "A1_G_021",
+    "topic": "Prepositions of Place",
+    "level": "A1",
+    "question": "The book is ___ the table.",
+    "options": {
+      "A": "in",
+      "B": "on",
+      "C": "at"
+    },
+    "answer": "B",
+    "explanation": "표면 위에 있을 때는 전치사 'on'을 사용합니다.",
+    "grammar_point": "Prepositions"
+  },
+  {
+    "id": "A1_G_022",
+    "topic": "Prepositions of Place",
+    "level": "A1",
+    "question": "The cat is ___ the box.",
+    "options": {
+      "A": "in",
+      "B": "on",
+      "C": "at"
+    },
+    "answer": "A",
+    "explanation": "안쪽에 있을 때는 전치사 'in'을 사용합니다.",
+    "grammar_point": "Prepositions"
+  },
+  {
+    "id": "A1_G_023",
+    "topic": "Have/Has",
+    "level": "A1",
+    "question": "I ___ a car.",
+    "options": {
+      "A": "have",
+      "B": "has",
+      "C": "had"
+    },
+    "answer": "A",
+    "explanation": "I, you, we, they와 함께 쓰일 때는 'have'를 사용합니다.",
+    "grammar_point": "Have/Has"
+  },
+  {
+    "id": "A1_G_024",
+    "topic": "Have/Has",
+    "level": "A1",
+    "question": "She ___ a dog.",
+    "options": {
+      "A": "have",
+      "B": "has",
+      "C": "had"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수(he, she, it)와 함께 쓰일 때는 'has'를 사용합니다.",
+    "grammar_point": "Have/Has"
+  },
+  {
+    "id": "A1_G_025",
+    "topic": "Can/Can't",
+    "level": "A1",
+    "question": "I ___ swim very well.",
+    "options": {
+      "A": "can",
+      "B": "can't",
+      "C": "could"
+    },
+    "answer": "A",
+    "explanation": "능력을 나타낼 때 'can'을 사용합니다.",
+    "grammar_point": "Modal Verbs"
+  },
+  {
+    "id": "A1_G_026",
+    "topic": "Can/Can't",
+    "level": "A1",
+    "question": "She ___ drive a car.",
+    "options": {
+      "A": "can",
+      "B": "can't",
+      "C": "couldn't"
+    },
+    "answer": "B",
+    "explanation": "불가능을 나타낼 때 'can't'를 사용합니다.",
+    "grammar_point": "Modal Verbs"
+  },
+  {
+    "id": "A1_G_027",
+    "topic": "There is/There are",
+    "level": "A1",
+    "question": "___ a book on the table.",
+    "options": {
+      "A": "There is",
+      "B": "There are",
+      "C": "There have"
+    },
+    "answer": "A",
+    "explanation": "단수 명사와 함께 쓸 때는 'There is'를 사용합니다.",
+    "grammar_point": "There is/There are"
+  },
+  {
+    "id": "A1_G_028",
+    "topic": "There is/There are",
+    "level": "A1",
+    "question": "___ three cats in the garden.",
+    "options": {
+      "A": "There is",
+      "B": "There are",
+      "C": "There have"
+    },
+    "answer": "B",
+    "explanation": "복수 명사와 함께 쓸 때는 'There are'를 사용합니다.",
+    "grammar_point": "There is/There are"
+  },
+  {
+    "id": "A1_G_029",
+    "topic": "Simple Commands",
+    "level": "A1",
+    "question": "___ the door, please.",
+    "options": {
+      "A": "Open",
+      "B": "Opens",
+      "C": "Opening"
+    },
+    "answer": "A",
+    "explanation": "명령문은 동사 원형으로 시작합니다.",
+    "grammar_point": "Imperatives"
+  },
+  {
+    "id": "A1_G_030",
+    "topic": "Simple Commands",
+    "level": "A1",
+    "question": "___ sit here.",
+    "options": {
+      "A": "Not",
+      "B": "Don't",
+      "C": "Doesn't"
+    },
+    "answer": "B",
+    "explanation": "부정 명령문은 'Don't + 동사 원형'으로 만듭니다.",
+    "grammar_point": "Imperatives"
+  },
+  {
+    "id": "A1_G_031",
+    "topic": "Adjectives",
+    "level": "A1",
+    "question": "This is a ___ car.",
+    "options": {
+      "A": "big red",
+      "B": "red big",
+      "C": "bigger red"
+    },
+    "answer": "A",
+    "explanation": "영어에서 형용사 순서는 크기 + 색깔 순입니다.",
+    "grammar_point": "Adjectives"
+  },
+  {
+    "id": "A1_G_032",
+    "topic": "Adjectives",
+    "level": "A1",
+    "question": "She is very ___.",
+    "options": {
+      "A": "beautiful",
+      "B": "beautifully",
+      "C": "beauty"
+    },
+    "answer": "A",
+    "explanation": "be 동사 뒤에는 형용사가 와야 합니다.",
+    "grammar_point": "Adjectives"
+  },
+  {
+    "id": "A1_G_033",
+    "topic": "Numbers",
+    "level": "A1",
+    "question": "I have ___ apples.",
+    "options": {
+      "A": "five",
+      "B": "fifth",
+      "C": "fives"
+    },
+    "answer": "A",
+    "explanation": "수량을 나타낼 때는 기수(cardinal number)를 사용합니다.",
+    "grammar_point": "Numbers"
+  },
+  {
+    "id": "A1_G_034",
+    "topic": "Time",
+    "level": "A1",
+    "question": "I get up ___ 7 o'clock.",
+    "options": {
+      "A": "in",
+      "B": "at",
+      "C": "on"
+    },
+    "answer": "B",
+    "explanation": "정확한 시간 앞에는 전치사 'at'을 사용합니다.",
+    "grammar_point": "Prepositions of Time"
+  },
+  {
+    "id": "A1_G_035",
+    "topic": "Time",
+    "level": "A1",
+    "question": "I go to school ___ Monday.",
+    "options": {
+      "A": "in",
+      "B": "at",
+      "C": "on"
+    },
+    "answer": "C",
+    "explanation": "요일 앞에는 전치사 'on'을 사용합니다.",
+    "grammar_point": "Prepositions of Time"
+  },
+  {
+    "id": "A1_G_036",
+    "topic": "Countable/Uncountable",
+    "level": "A1",
+    "question": "I drink ___ water.",
+    "options": {
+      "A": "a",
+      "B": "an",
+      "C": "some"
+    },
+    "answer": "C",
+    "explanation": "셀 수 없는 명사 앞에는 'some'을 사용합니다.",
+    "grammar_point": "Countable/Uncountable"
+  },
+  {
+    "id": "A1_G_037",
+    "topic": "Like/Don't like",
+    "level": "A1",
+    "question": "I ___ chocolate.",
+    "options": {
+      "A": "like",
+      "B": "likes",
+      "C": "liking"
+    },
+    "answer": "A",
+    "explanation": "1인칭 주어 I와 함께 쓰는 일반동사는 원형을 사용합니다.",
+    "grammar_point": "Likes and Dislikes"
+  },
+  {
+    "id": "A1_G_038",
+    "topic": "Like/Don't like",
+    "level": "A1",
+    "question": "She ___ coffee.",
+    "options": {
+      "A": "don't like",
+      "B": "doesn't like",
+      "C": "not like"
+    },
+    "answer": "B",
+    "explanation": "3인칭 단수 주어의 일반동사 부정문은 'doesn't + 동사원형'입니다.",
+    "grammar_point": "Likes and Dislikes"
+  },
+  {
+    "id": "A1_G_039",
+    "topic": "Family Members",
+    "level": "A1",
+    "question": "My father's brother is my ___.",
+    "options": {
+      "A": "uncle",
+      "B": "aunt",
+      "C": "cousin"
+    },
+    "answer": "A",
+    "explanation": "아버지의 형제는 삼촌(uncle)입니다.",
+    "grammar_point": "Family Vocabulary"
+  },
+  {
+    "id": "A1_G_040",
+    "topic": "Body Parts",
+    "level": "A1",
+    "question": "I have two ___ and two ___.",
+    "options": {
+      "A": "eye, ear",
+      "B": "eyes, ears",
+      "C": "eyes, ear"
+    },
+    "answer": "B",
+    "explanation": "복수를 나타낼 때는 명사에 -s를 붙입니다.",
+    "grammar_point": "Body Parts Vocabulary"
+  },
+  {
+    "id": "A1_G_041",
+    "topic": "Colors",
+    "level": "A1",
+    "question": "The sky is ___.",
+    "options": {
+      "A": "blue",
+      "B": "blues",
+      "C": "bluely"
+    },
+    "answer": "A",
+    "explanation": "색깔을 나타내는 형용사는 단수형으로 사용합니다.",
+    "grammar_point": "Color Adjectives"
+  },
+  {
+    "id": "A1_G_042",
+    "topic": "Food",
+    "level": "A1",
+    "question": "I eat ___ apple for breakfast.",
+    "options": {
+      "A": "a",
+      "B": "an",
+      "C": "some"
+    },
+    "answer": "B",
+    "explanation": "모음으로 시작하는 단수 가산명사 앞에는 'an'을 사용합니다.",
+    "grammar_point": "Articles with Food"
+  },
+  {
+    "id": "A1_G_043",
+    "topic": "Weather",
+    "level": "A1",
+    "question": "It ___ raining today.",
+    "options": {
+      "A": "is",
+      "B": "are",
+      "C": "am"
+    },
+    "answer": "A",
+    "explanation": "It과 함께 쓰이는 be 동사는 'is'입니다.",
+    "grammar_point": "Weather Expressions"
+  },
+  {
+    "id": "A1_G_044",
+    "topic": "Daily Activities",
+    "level": "A1",
+    "question": "I ___ my teeth every morning.",
+    "options": {
+      "A": "brush",
+      "B": "brushs",
+      "C": "brushing"
+    },
+    "answer": "A",
+    "explanation": "I와 함께 쓰이는 일반동사는 원형을 사용합니다.",
+    "grammar_point": "Daily Routines"
+  },
+  {
+    "id": "A1_G_045",
+    "topic": "Clothes",
+    "level": "A1",
+    "question": "I wear ___ in winter.",
+    "options": {
+      "A": "a coat",
+      "B": "coat",
+      "C": "the coat"
+    },
+    "answer": "A",
+    "explanation": "처음 언급하는 단수 가산명사 앞에는 부정관사 'a'를 사용합니다.",
+    "grammar_point": "Clothing Vocabulary"
+  },
+  {
+    "id": "A1_G_046",
+    "topic": "Transportation",
+    "level": "A1",
+    "question": "I go to work ___ bus.",
+    "options": {
+      "A": "in",
+      "B": "by",
+      "C": "on"
+    },
+    "answer": "B",
+    "explanation": "교통수단을 나타낼 때는 전치사 'by'를 사용합니다.",
+    "grammar_point": "Transportation"
+  },
+  {
+    "id": "A1_G_047",
+    "topic": "Places",
+    "level": "A1",
+    "question": "I study ___ the library.",
+    "options": {
+      "A": "in",
+      "B": "at",
+      "C": "on"
+    },
+    "answer": "B",
+    "explanation": "특정 장소에서의 활동을 나타낼 때는 'at'을 사용합니다.",
+    "grammar_point": "Prepositions of Place"
+  },
+  {
+    "id": "A1_G_048",
+    "topic": "Jobs",
+    "level": "A1",
+    "question": "My father is ___ doctor.",
+    "options": {
+      "A": "a",
+      "B": "an",
+      "C": "the"
+    },
+    "answer": "A",
+    "explanation": "직업을 나타낼 때는 부정관사를 사용합니다.",
+    "grammar_point": "Jobs and Professions"
+  },
+  {
+    "id": "A1_G_049",
+    "topic": "Age",
+    "level": "A1",
+    "question": "I ___ 20 years old.",
+    "options": {
+      "A": "am",
+      "B": "have",
+      "C": "is"
+    },
+    "answer": "A",
+    "explanation": "나이를 나타낼 때는 'be + age + years old' 구조를 사용합니다.",
+    "grammar_point": "Age Expression"
+  },
+  {
+    "id": "A1_G_050",
+    "topic": "Frequency Adverbs",
+    "level": "A1",
+    "question": "I ___ go to the movies.",
+    "options": {
+      "A": "always",
+      "B": "always am",
+      "C": "am always"
+    },
+    "answer": "A",
+    "explanation": "빈도부사는 일반동사 앞에 위치합니다.",
+    "grammar_point": "Frequency Adverbs"
+  }
+]

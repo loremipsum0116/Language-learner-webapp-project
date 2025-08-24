@@ -44,6 +44,24 @@ const useQuery = () => {
 };
 
 export default function LearnVocab() {
+    // 스펠링 입력 필드의 placeholder 색상을 옅은 회색으로 설정
+    const placeholderStyle = `
+        .spelling-input::placeholder {
+            color: #adb5bd !important;
+            opacity: 1 !important;
+        }
+    `;
+    
+    // 스타일 태그를 head에 추가
+    React.useEffect(() => {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = placeholderStyle;
+        document.head.appendChild(styleElement);
+        
+        return () => {
+            document.head.removeChild(styleElement);
+        };
+    }, []);
     const navigate = useNavigate();
     const location = useLocation();
     const query = useQuery();
@@ -98,8 +116,27 @@ export default function LearnVocab() {
     const [maxAttempts] = useState(3);
     const [showSpellingWarning, setShowSpellingWarning] = useState(false);
     
+    // 첫 글자 힌트를 가져오는 헬퍼 함수 (한 글자 답안은 힌트 없음)
+    const getFirstLetterHint = (card) => {
+        if (!card) return '';
+        const answer = card.question || card.vocab?.lemma || '';
+        // 답이 한 글자인 경우 힌트를 제공하지 않음
+        if (answer.length <= 1) return '';
+        return answer.charAt(0).toUpperCase();
+    };
+    
     // 오답 추적 상태
     const [wrongAnswerCards, setWrongAnswerCards] = useState([]);
+    
+    // 현재 카드가 변경될 때마다 스펠링 입력 초기화
+    useEffect(() => {
+        const currentCard = queue[idx];
+        if (currentCard && (quizTypeParam === 'spelling' || quizTypeParam === 'mixed')) {
+            setSpellingInput('');
+            setAttemptCount(0);
+            setShowSpellingWarning(false);
+        }
+    }, [idx, queue, quizTypeParam]);
     
     // 설정 상태
     const [maxPlayCount, setMaxPlayCount] = useState(3);
@@ -2217,7 +2254,7 @@ export default function LearnVocab() {
                                                             <span className="d-inline-block position-relative">
                                                                 <input
                                                                     type="text"
-                                                                    className="form-control d-inline-block text-center fw-bold"
+                                                                    className="form-control d-inline-block text-center fw-bold spelling-input"
                                                                     style={{
                                                                         width: '120px',
                                                                         display: 'inline-block',
@@ -2231,7 +2268,7 @@ export default function LearnVocab() {
                                                                             submit();
                                                                         }
                                                                     }}
-                                                                    placeholder="단어 입력"
+                                                                    placeholder={getFirstLetterHint(current)}
                                                                     disabled={feedback || isSubmitting}
                                                                     autoFocus={index === 0}
                                                                 />
@@ -2279,6 +2316,14 @@ export default function LearnVocab() {
                                             시도 {attemptCount + 1}/{maxAttempts} 
                                             {attemptCount > 0 && ` (${maxAttempts - attemptCount}번 기회 남음)`}
                                         </span>
+                                        {(() => {
+                                            const answer = current.question || current.vocab?.lemma || '';
+                                            return answer.length > 0 && (
+                                                <span className="text-muted small">
+                                                    • 힌트: {answer.length}글자
+                                                </span>
+                                            );
+                                        })()}
                                     </div>
                                     <button 
                                         className="btn btn-success btn-lg"

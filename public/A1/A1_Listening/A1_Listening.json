@@ -1,0 +1,2402 @@
+[
+    {
+        "id": "A1_L_001",
+        "topic": "Greeting",
+        "script": "A: Hi, how are you? B: I'm fine, thank you. And you?",
+        "question": "What does person B say?",
+        "options": {
+            "A": "I'm fine, thank you.",
+            "B": "My name is John.",
+            "C": "I am a student."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_002",
+        "topic": "Introducing Yourself",
+        "script": "My name is Sarah. I am from Canada.",
+        "question": "Where is Sarah from?",
+        "options": {
+            "A": "The USA",
+            "B": "Australia",
+            "C": "Canada"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_003",
+        "topic": "Spelling a Name",
+        "script": "A: How do you spell your name? B: It's T-O-M.",
+        "question": "How is the name spelled?",
+        "options": {
+            "A": "T-I-M",
+            "B": "T-O-M",
+            "C": "T-A-M"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_004",
+        "topic": "Numbers (1-10)",
+        "script": "I have three cats and two dogs.",
+        "question": "How many cats does the speaker have?",
+        "options": {
+            "A": "Two",
+            "B": "Three",
+            "C": "Five"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_005",
+        "topic": "Telling Time",
+        "script": "A: What time is it? B: It's nine o'clock.",
+        "question": "What is the time?",
+        "options": {
+            "A": "It's 8 o'clock.",
+            "B": "It's 9 o'clock.",
+            "C": "It's 10 o'clock."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_006",
+        "topic": "Days of the Week",
+        "script": "Today is Monday. Tomorrow is Tuesday.",
+        "question": "What day is tomorrow?",
+        "options": {
+            "A": "Monday",
+            "B": "Wednesday",
+            "C": "Tuesday"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_007",
+        "topic": "Ordering Food",
+        "script": "I would like a hamburger and a cola, please.",
+        "question": "What does the person want to drink?",
+        "options": {
+            "A": "Water",
+            "B": "Cola",
+            "C": "Orange juice"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_008",
+        "topic": "Family",
+        "script": "I have one brother and no sisters.",
+        "question": "How many sisters does the speaker have?",
+        "options": {
+            "A": "One",
+            "B": "Two",
+            "C": "Zero"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_009",
+        "topic": "Weather",
+        "script": "It's sunny and warm today.",
+        "question": "What is the weather like?",
+        "options": {
+            "A": "Rainy and cold",
+            "B": "Sunny and warm",
+            "C": "Cloudy and windy"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_010",
+        "topic": "Colors",
+        "script": "My favorite color is red. I have a red car.",
+        "question": "What color is the car?",
+        "options": {
+            "A": "Blue",
+            "B": "Green",
+            "C": "Red"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_011",
+        "topic": "Jobs",
+        "script": "He is a doctor. He works at a hospital.",
+        "question": "What is his job?",
+        "options": {
+            "A": "A teacher",
+            "B": "A doctor",
+            "C": "A police officer"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_012",
+        "topic": "Location",
+        "script": "The book is on the table.",
+        "question": "Where is the book?",
+        "options": {
+            "A": "Under the table",
+            "B": "In the bag",
+            "C": "On the table"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_013",
+        "topic": "Likes and Dislikes",
+        "script": "I like cheese, but I don't like milk.",
+        "question": "What does the speaker not like?",
+        "options": {
+            "A": "Cheese",
+            "B": "Milk",
+            "C": "Bread"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_014",
+        "topic": "Asking for Price",
+        "script": "A: How much is this T-shirt? B: It's ten dollars.",
+        "question": "What is the price of the T-shirt?",
+        "options": {
+            "A": "$10",
+            "B": "$15",
+            "C": "$20"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_015",
+        "topic": "Transportation",
+        "script": "I go to work by bus.",
+        "question": "How does the speaker go to work?",
+        "options": {
+            "A": "By car",
+            "B": "By train",
+            "C": "By bus"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_016",
+        "topic": "Daily Routine",
+        "script": "I wake up at 7 AM every morning.",
+        "question": "What time does the speaker wake up?",
+        "options": {
+            "A": "6 AM",
+            "B": "7 AM",
+            "C": "8 AM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_017",
+        "topic": "Months",
+        "script": "My birthday is in June.",
+        "question": "In which month is the speaker's birthday?",
+        "options": {
+            "A": "May",
+            "B": "June",
+            "C": "July"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_018",
+        "topic": "Abilities",
+        "script": "I can play the guitar, but I can't play the piano.",
+        "question": "What can the speaker play?",
+        "options": {
+            "A": "The piano",
+            "B": "The violin",
+            "C": "The guitar"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_019",
+        "topic": "At the Supermarket",
+        "script": "I need to buy some eggs and bread.",
+        "question": "What does the speaker need to buy?",
+        "options": {
+            "A": "Milk and juice",
+            "B": "Eggs and bread",
+            "C": "Fruit and vegetables"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_020",
+        "topic": "Describing People",
+        "script": "She has long brown hair and green eyes.",
+        "question": "What color are her eyes?",
+        "options": {
+            "A": "Blue",
+            "B": "Brown",
+            "C": "Green"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_021",
+        "topic": "Pets",
+        "script": "My pet is a small, white rabbit.",
+        "question": "What kind of pet does the speaker have?",
+        "options": {
+            "A": "A black cat",
+            "B": "A big dog",
+            "C": "A white rabbit"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_022",
+        "topic": "Phone Numbers",
+        "script": "My phone number is 555-1234.",
+        "question": "What is the phone number?",
+        "options": {
+            "A": "555-4321",
+            "B": "555-1234",
+            "C": "555-1122"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_023",
+        "topic": "Feelings",
+        "script": "I am very happy today because it's my birthday.",
+        "question": "How does the speaker feel?",
+        "options": {
+            "A": "Sad",
+            "B": "Tired",
+            "C": "Happy"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_024",
+        "topic": "Hobbies",
+        "script": "In my free time, I like to read books.",
+        "question": "What is the speaker's hobby?",
+        "options": {
+            "A": "Watching TV",
+            "B": "Reading books",
+            "C": "Playing sports"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_025",
+        "topic": "Clothing",
+        "script": "I am wearing a blue shirt and black pants.",
+        "question": "What color are the pants?",
+        "options": {
+            "A": "Blue",
+            "B": "White",
+            "C": "Black"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_026",
+        "topic": "At the Library",
+        "script": "A: Where can I find the history books? B: They are on the second floor.",
+        "question": "Where are the history books?",
+        "options": {
+            "A": "On the first floor",
+            "B": "On the second floor",
+            "C": "On the third floor"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_027",
+        "topic": "Asking for Directions",
+        "script": "A: Excuse me, where is the post office? B: Go straight and turn left.",
+        "question": "What are the directions to the post office?",
+        "options": {
+            "A": "Go straight and turn right.",
+            "B": "Turn left.",
+            "C": "Go straight and turn left."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_028",
+        "topic": "Sports",
+        "script": "My favorite sport is soccer. I play it every weekend.",
+        "question": "What is the speaker's favorite sport?",
+        "options": {
+            "A": "Tennis",
+            "B": "Soccer",
+            "C": "Basketball"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_029",
+        "topic": "Food",
+        "script": "For breakfast, I usually have toast and coffee.",
+        "question": "What does the speaker have for breakfast?",
+        "options": {
+            "A": "Cereal and milk",
+            "B": "Toast and coffee",
+            "C": "Eggs and bacon"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_030",
+        "topic": "Languages",
+        "script": "I can speak English and a little French.",
+        "question": "Which languages can the speaker speak?",
+        "options": {
+            "A": "English and Spanish",
+            "B": "French and German",
+            "C": "English and French"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_031",
+        "topic": "Countries and Nationalities",
+        "script": "Maria is from Italy. She is Italian.",
+        "question": "What is Maria's nationality?",
+        "options": {
+            "A": "Spanish",
+            "B": "Italian",
+            "C": "French"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_032",
+        "topic": "In the Classroom",
+        "script": "Please open your books to page twenty.",
+        "question": "What page should the students open to?",
+        "options": {
+            "A": "Page 10",
+            "B": "Page 12",
+            "C": "Page 20"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_033",
+        "topic": "Simple Requests",
+        "script": "Can you close the window, please? It's cold.",
+        "question": "What does the speaker want to do?",
+        "options": {
+            "A": "Open the window",
+            "B": "Close the window",
+            "C": "Open the door"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_034",
+        "topic": "At a Party",
+        "script": "A: Would you like some cake? B: Yes, please. It looks delicious.",
+        "question": "Does person B want cake?",
+        "options": {
+            "A": "Yes, they do.",
+            "B": "No, they don't.",
+            "C": "They want coffee."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_035",
+        "topic": "The Body",
+        "script": "My head hurts. I think I need to rest.",
+        "question": "What part of the speaker's body hurts?",
+        "options": {
+            "A": "Stomach",
+            "B": "Head",
+            "C": "Back"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_036",
+        "topic": "Rooms in a House",
+        "script": "We cook food in the kitchen.",
+        "question": "Where do we cook food?",
+        "options": {
+            "A": "In the bedroom",
+            "B": "In the living room",
+            "C": "In the kitchen"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_037",
+        "topic": "Fruits",
+        "script": "I like strawberries and oranges.",
+        "question": "Which fruits does the speaker like?",
+        "options": {
+            "A": "Apples and bananas",
+            "B": "Strawberries and oranges",
+            "C": "Grapes and pears"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_038",
+        "topic": "Vegetables",
+        "script": "My favorite vegetable is the carrot.",
+        "question": "What is the speaker's favorite vegetable?",
+        "options": {
+            "A": "Potato",
+            "B": "Carrot",
+            "C": "Tomato"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_039",
+        "topic": "Seasons",
+        "script": "In the summer, it is very hot. I like to go swimming.",
+        "question": "What does the speaker like to do in the summer?",
+        "options": {
+            "A": "Go skiing",
+            "B": "Go swimming",
+            "C": "Build a snowman"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_040",
+        "topic": "At the Doctor's",
+        "script": "A: What's the matter? B: I have a cold.",
+        "question": "What is wrong with person B?",
+        "options": {
+            "A": "They have a fever.",
+            "B": "They have a headache.",
+            "C": "They have a cold."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_041",
+        "topic": "Shopping for Clothes",
+        "script": "A: Can I try this on? B: Sure, the fitting room is over there.",
+        "question": "Where can the person try the clothes on?",
+        "options": {
+            "A": "At the cashier",
+            "B": "Outside the store",
+            "C": "In the fitting room"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_042",
+        "topic": "Making an Apology",
+        "script": "I'm sorry I'm late.",
+        "question": "Why is the speaker apologizing?",
+        "options": {
+            "A": "For being early",
+            "B": "For being late",
+            "C": "For forgetting something"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_043",
+        "topic": "At the Cinema",
+        "script": "Two tickets for the 7:30 PM show, please.",
+        "question": "What time is the movie?",
+        "options": {
+            "A": "7:00 PM",
+            "B": "7:30 PM",
+            "C": "8:00 PM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_044",
+        "topic": "Expressing Possession",
+        "script": "This is my pen, not your pen.",
+        "question": "Whose pen is it?",
+        "options": {
+            "A": "The speaker's pen",
+            "B": "The listener's pen",
+            "C": "Their friend's pen"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_045",
+        "topic": "Places in a City",
+        "script": "The museum is next to the park.",
+        "question": "Where is the museum?",
+        "options": {
+            "A": "Opposite the park",
+            "B": "Next to the park",
+            "C": "Behind the bank"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_046",
+        "topic": "Weekend Plans",
+        "script": "This weekend, I am going to visit my grandparents.",
+        "question": "What is the speaker's plan for the weekend?",
+        "options": {
+            "A": "Go shopping",
+            "B": "Visit grandparents",
+            "C": "Watch a movie"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_047",
+        "topic": "Drinks",
+        "script": "I drink tea with milk in the morning.",
+        "question": "How does the speaker drink tea?",
+        "options": {
+            "A": "With sugar",
+            "B": "With milk",
+            "C": "With lemon"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_048",
+        "topic": "At the Beach",
+        "script": "Let's build a sandcastle.",
+        "question": "What do they want to build?",
+        "options": {
+            "A": "A house",
+            "B": "A sandcastle",
+            "C": "A boat"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_049",
+        "topic": "School Subjects",
+        "script": "My favorite subject is Math because I like numbers.",
+        "question": "What is the speaker's favorite subject?",
+        "options": {
+            "A": "History",
+            "B": "Science",
+            "C": "Math"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_050",
+        "topic": "At the Airport",
+        "script": "My flight is at gate number five.",
+        "question": "Which gate is the flight at?",
+        "options": {
+            "A": "Gate 3",
+            "B": "Gate 5",
+            "C": "Gate 7"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_051",
+        "topic": "Furniture",
+        "script": "There is a sofa and two chairs in the living room.",
+        "question": "How many chairs are in the living room?",
+        "options": {
+            "A": "One",
+            "B": "Two",
+            "C": "Three"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_052",
+        "topic": "Giving a Compliment",
+        "script": "That's a nice dress. You look great!",
+        "question": "What is the speaker complimenting?",
+        "options": {
+            "A": "The shoes",
+            "B": "The dress",
+            "C": "The hair"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_053",
+        "topic": "At the Zoo",
+        "script": "Look at the monkeys! They are so funny.",
+        "question": "Which animal are they looking at?",
+        "options": {
+            "A": "Lions",
+            "B": "Elephants",
+            "C": "Monkeys"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_054",
+        "topic": "Ordinal Numbers",
+        "script": "The office is on the third floor.",
+        "question": "Which floor is the office on?",
+        "options": {
+            "A": "The second floor",
+            "B": "The third floor",
+            "C": "The fourth floor"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_055",
+        "topic": "Asking for Help",
+        "script": "Excuse me, can you help me? I'm lost.",
+        "question": "Why does the speaker need help?",
+        "options": {
+            "A": "They are hungry.",
+            "B": "They are lost.",
+            "C": "They are tired."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_056",
+        "topic": "In a Hotel",
+        "script": "I have a reservation for a single room.",
+        "question": "What kind of room is reserved?",
+        "options": {
+            "A": "A double room",
+            "B": "A single room",
+            "C": "A suite"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_057",
+        "topic": "Describing a City",
+        "script": "Paris is a big city. It has many famous museums.",
+        "question": "What does Paris have?",
+        "options": {
+            "A": "Famous beaches",
+            "B": "Famous mountains",
+            "C": "Famous museums"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_058",
+        "topic": "Talking about the Past",
+        "script": "Yesterday, I went to the park with my friend.",
+        "question": "Where did the speaker go yesterday?",
+        "options": {
+            "A": "To the cinema",
+            "B": "To the park",
+            "C": "To the library"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_059",
+        "topic": "Music",
+        "script": "I like listening to pop music.",
+        "question": "What kind of music does the speaker like?",
+        "options": {
+            "A": "Rock music",
+            "B": "Classical music",
+            "C": "Pop music"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_060",
+        "topic": "At the Post Office",
+        "script": "I'd like to send this letter to Japan, please.",
+        "question": "Where is the letter going?",
+        "options": {
+            "A": "China",
+            "B": "Japan",
+            "C": "Korea"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_061",
+        "topic": "Shapes",
+        "script": "The table is round.",
+        "question": "What is the shape of the table?",
+        "options": {
+            "A": "Square",
+            "B": "Round",
+            "C": "Rectangle"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_062",
+        "topic": "Adjectives",
+        "script": "This box is heavy. Can you help me carry it?",
+        "question": "How is the box described?",
+        "options": {
+            "A": "Light",
+            "B": "Small",
+            "C": "Heavy"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_063",
+        "topic": "At the Train Station",
+        "script": "The train to London leaves from platform 4.",
+        "question": "Which platform is for the London train?",
+        "options": {
+            "A": "Platform 2",
+            "B": "Platform 4",
+            "C": "Platform 6"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_064",
+        "topic": "Making a Suggestion",
+        "script": "It's a beautiful day. Let's go for a walk.",
+        "question": "What does the speaker suggest?",
+        "options": {
+            "A": "Watching a movie",
+            "B": "Going for a walk",
+            "C": "Cooking dinner"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_065",
+        "topic": "The Internet",
+        "script": "I use the internet to check my email every day.",
+        "question": "What does the speaker do on the internet?",
+        "options": {
+            "A": "Play games",
+            "B": "Check email",
+            "C": "Watch videos"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_066",
+        "topic": "Kitchen Objects",
+        "script": "Please pass me a spoon for my soup.",
+        "question": "What does the speaker need for the soup?",
+        "options": {
+            "A": "A fork",
+            "B": "A knife",
+            "C": "A spoon"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_067",
+        "topic": "Invitations",
+        "script": "A: Are you free on Saturday? I'm having a party. B: I'd love to come!",
+        "question": "Is person B going to the party?",
+        "options": {
+            "A": "No, they are busy.",
+            "B": "Yes, they will go.",
+            "C": "Maybe, they are not sure."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_068",
+        "topic": "Farm Animals",
+        "script": "On the farm, there are cows and sheep.",
+        "question": "Which animals are on the farm?",
+        "options": {
+            "A": "Tigers and lions",
+            "B": "Cows and sheep",
+            "C": "Penguins and bears"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_069",
+        "topic": "Frequency",
+        "script": "I sometimes go to the cinema, maybe once a month.",
+        "question": "How often does the speaker go to the cinema?",
+        "options": {
+            "A": "Always",
+            "B": "Never",
+            "C": "Sometimes"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_070",
+        "topic": "At the Bank",
+        "script": "I would like to change one hundred euros into dollars.",
+        "question": "What does the speaker want to do?",
+        "options": {
+            "A": "Open an account",
+            "B": "Change money",
+            "C": "Withdraw money"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_071",
+        "topic": "Describing a House",
+        "script": "My house has two floors and a small garden.",
+        "question": "What does the house have?",
+        "options": {
+            "A": "One floor and a big garden",
+            "B": "Two floors and a small garden",
+            "C": "Three floors and no garden"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_072",
+        "topic": "Drinks at a Cafe",
+        "script": "Can I have a cappuccino, please?",
+        "question": "What did the person order?",
+        "options": {
+            "A": "An espresso",
+            "B": "A latte",
+            "C": "A cappuccino"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_073",
+        "topic": "Health Problems",
+        "script": "I ate too much and now my stomach hurts.",
+        "question": "Why does the speaker's stomach hurt?",
+        "options": {
+            "A": "They are hungry.",
+            "B": "They ate too much.",
+            "C": "They are thirsty."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_074",
+        "topic": "At the Park",
+        "script": "The children are playing on the swings.",
+        "question": "Where are the children playing?",
+        "options": {
+            "A": "On the slide",
+            "B": "On the swings",
+            "C": "In the sandbox"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_075",
+        "topic": "Talking about the Future",
+        "script": "Tomorrow I will go shopping with my sister.",
+        "question": "What will the speaker do tomorrow?",
+        "options": {
+            "A": "Go to work",
+            "B": "Go shopping",
+            "C": "Stay at home"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_076",
+        "topic": "Paying for Something",
+        "script": "A: That's five pounds, please. B: Here you are.",
+        "question": "How much does the person have to pay?",
+        "options": {
+            "A": "Four pounds",
+            "B": "Five pounds",
+            "C": "Six pounds"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_077",
+        "topic": "Personal Information",
+        "script": "I live in a small town near London.",
+        "question": "Where does the speaker live?",
+        "options": {
+            "A": "In a big city",
+            "B": "In London",
+            "C": "In a small town"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_078",
+        "topic": "At a Restaurant",
+        "script": "The fish is very good here. I recommend it.",
+        "question": "What food does the speaker recommend?",
+        "options": {
+            "A": "The chicken",
+            "B": "The steak",
+            "C": "The fish"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_079",
+        "topic": "Time of Day",
+        "script": "I go to bed at 11 o'clock at night.",
+        "question": "When does the speaker go to bed?",
+        "options": {
+            "A": "In the morning",
+            "B": "In the afternoon",
+            "C": "At night"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_080",
+        "topic": "Materials",
+        "script": "This table is made of wood.",
+        "question": "What is the table made of?",
+        "options": {
+            "A": "Metal",
+            "B": "Plastic",
+            "C": "Wood"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_081",
+        "topic": "Classroom Instructions",
+        "script": "Please be quiet. The exam is starting.",
+        "question": "What should the students do?",
+        "options": {
+            "A": "Talk to each other",
+            "B": "Be quiet",
+            "C": "Leave the room"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_082",
+        "topic": "In the Garden",
+        "script": "I like to grow flowers in my garden. I have red and yellow roses.",
+        "question": "What does the speaker grow in the garden?",
+        "options": {
+            "A": "Vegetables",
+            "B": "Flowers",
+            "C": "Trees"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_083",
+        "topic": "Asking for Permission",
+        "script": "Can I use your phone? I need to make a call.",
+        "question": "What does the speaker want to do?",
+        "options": {
+            "A": "Use the computer",
+            "B": "Use the phone",
+            "C": "Borrow a book"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_084",
+        "topic": "At a Birthday Party",
+        "script": "Let's sing 'Happy Birthday' for Anna.",
+        "question": "What are they going to sing?",
+        "options": {
+            "A": "A pop song",
+            "B": "'Happy Birthday'",
+            "C": "A Christmas carol"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_085",
+        "topic": "Household Chores",
+        "script": "I have to wash the dishes after dinner.",
+        "question": "What chore does the speaker have to do?",
+        "options": {
+            "A": "Clean the room",
+            "B": "Wash the dishes",
+            "C": "Do the laundry"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_086",
+        "topic": "Public Transportation",
+        "script": "The next bus arrives in five minutes.",
+        "question": "When will the next bus arrive?",
+        "options": {
+            "A": "In 5 minutes",
+            "B": "In 10 minutes",
+            "C": "In 15 minutes"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_087",
+        "topic": "Describing Weather",
+        "script": "It's cold outside. You should wear a coat.",
+        "question": "What should the person wear?",
+        "options": {
+            "A": "A T-shirt",
+            "B": "A coat",
+            "C": "Shorts"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_088",
+        "topic": "Movies",
+        "script": "I like watching comedy movies because they make me laugh.",
+        "question": "Why does the speaker like comedy movies?",
+        "options": {
+            "A": "They are scary.",
+            "B": "They are sad.",
+            "C": "They are funny."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_089",
+        "topic": "At the Chemist's",
+        "script": "I need something for a headache.",
+        "question": "What does the speaker need?",
+        "options": {
+            "A": "Medicine for a cough",
+            "B": "Medicine for a headache",
+            "C": "Medicine for a stomach ache"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_090",
+        "topic": "Giving Opinions",
+        "script": "I think this book is very interesting.",
+        "question": "What is the speaker's opinion of the book?",
+        "options": {
+            "A": "It's boring.",
+            "B": "It's interesting.",
+            "C": "It's difficult."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_091",
+        "topic": "Computer Parts",
+        "script": "I use a mouse to click on the icons on my computer screen.",
+        "question": "What does the speaker use to click?",
+        "options": {
+            "A": "A keyboard",
+            "B": "A mouse",
+            "C": "A monitor"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_092",
+        "topic": "Travel",
+        "script": "Last year, I traveled to Spain for my vacation.",
+        "question": "Where did the speaker go for vacation?",
+        "options": {
+            "A": "France",
+            "B": "Italy",
+            "C": "Spain"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_093",
+        "topic": "Thanking Someone",
+        "script": "A: Here is your coffee. B: Thank you very much.",
+        "question": "What does person B say?",
+        "options": {
+            "A": "You're welcome.",
+            "B": "I'm sorry.",
+            "C": "Thank you."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_094",
+        "topic": "Sizes",
+        "script": "I need a medium size shirt.",
+        "question": "What size shirt does the speaker need?",
+        "options": {
+            "A": "Small",
+            "B": "Medium",
+            "C": "Large"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_095",
+        "topic": "The Calendar",
+        "script": "The date today is October 25th.",
+        "question": "What is the date?",
+        "options": {
+            "A": "October 24th",
+            "B": "October 25th",
+            "C": "October 26th"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_096",
+        "topic": "Leaving a Message",
+        "script": "Hello, this is Mark. Can you tell Susan I called?",
+        "question": "What does Mark want Susan to know?",
+        "options": {
+            "A": "That he will call back later.",
+            "B": "That he called.",
+            "C": "That he is waiting for her."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_097",
+        "topic": "Wild Animals",
+        "script": "The lion is often called the 'king of the jungle'.",
+        "question": "Which animal is called the 'king of the jungle'?",
+        "options": {
+            "A": "The tiger",
+            "B": "The elephant",
+            "C": "The lion"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_098",
+        "topic": "Desserts",
+        "script": "For dessert, I would like some chocolate ice cream.",
+        "question": "What does the speaker want for dessert?",
+        "options": {
+            "A": "Fruit salad",
+            "B": "Chocolate ice cream",
+            "C": "Apple pie"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_099",
+        "topic": "Morning Activities",
+        "script": "First, I brush my teeth, and then I have breakfast.",
+        "question": "What does the speaker do first in the morning?",
+        "options": {
+            "A": "Have breakfast",
+            "B": "Get dressed",
+            "C": "Brush teeth"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_100",
+        "topic": "Saying Goodbye",
+        "script": "A: See you tomorrow! B: Goodbye!",
+        "question": "What does person B say?",
+        "options": {
+            "A": "Hello!",
+            "B": "Good morning!",
+            "C": "Goodbye!"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_101",
+        "topic": "Physical States",
+        "script": "I'm thirsty. I need a glass of water.",
+        "question": "Why does the speaker need water?",
+        "options": {
+            "A": "Because they are hungry.",
+            "B": "Because they are thirsty.",
+            "C": "Because they are tired."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_102",
+        "topic": "Comparisons",
+        "script": "My brother is taller than me.",
+        "question": "Who is taller?",
+        "options": {
+            "A": "The speaker",
+            "B": "The speaker's brother",
+            "C": "They are the same height."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_103",
+        "topic": "Holiday Activities",
+        "script": "On holiday, I like to relax on the beach and read a book.",
+        "question": "What does the speaker like to do on holiday?",
+        "options": {
+            "A": "Go hiking",
+            "B": "Visit museums",
+            "C": "Relax on the beach"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_104",
+        "topic": "Technology",
+        "script": "I watch videos on my tablet.",
+        "question": "What does the speaker use to watch videos?",
+        "options": {
+            "A": "A television",
+            "B": "A tablet",
+            "C": "A smartphone"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_105",
+        "topic": "Evening Routine",
+        "script": "In the evening, I watch TV with my family.",
+        "question": "What does the speaker do in the evening?",
+        "options": {
+            "A": "Read a book",
+            "B": "Watch TV",
+            "C": "Listen to music"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_106",
+        "topic": "At the Hairdresser's",
+        "script": "I would like to have my hair cut, please. Just a little shorter.",
+        "question": "What does the customer want?",
+        "options": {
+            "A": "A new hair color",
+            "B": "A haircut",
+            "C": "Longer hair"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_107",
+        "topic": "Money",
+        "script": "A coffee costs two euros.",
+        "question": "How much is a coffee?",
+        "options": {
+            "A": "One euro",
+            "B": "Two euros",
+            "C": "Three euros"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_108",
+        "topic": "Directions (Indoors)",
+        "script": "The toilets are down the hall and to the right.",
+        "question": "Where are the toilets?",
+        "options": {
+            "A": "Up the stairs",
+            "B": "To the left",
+            "C": "To the right"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_109",
+        "topic": "The Weather (Negative)",
+        "script": "I don't like the rain. It's wet and cold.",
+        "question": "Why doesn't the speaker like the rain?",
+        "options": {
+            "A": "It's sunny and warm.",
+            "B": "It's wet and cold.",
+            "C": "It's windy and cloudy."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_110",
+        "topic": "Objects in a Bag",
+        "script": "In my bag, I have my keys, my wallet, and my phone.",
+        "question": "What is in the speaker's bag?",
+        "options": {
+            "A": "A book and a pen",
+            "B": "Keys and a wallet",
+            "C": "A laptop and a charger"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_111",
+        "topic": "Telling Time (Half Past)",
+        "script": "The meeting is at half past ten.",
+        "question": "What time is the meeting?",
+        "options": {
+            "A": "10:00",
+            "B": "10:15",
+            "C": "10:30"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_112",
+        "topic": "Daily Food",
+        "script": "I eat rice for dinner almost every day.",
+        "question": "What does the speaker often eat for dinner?",
+        "options": {
+            "A": "Pasta",
+            "B": "Rice",
+            "C": "Potatoes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_113",
+        "topic": "Workplace",
+        "script": "I work in an office. I am a secretary.",
+        "question": "Where does the speaker work?",
+        "options": {
+            "A": "In a school",
+            "B": "In a hospital",
+            "C": "In an office"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_114",
+        "topic": "Describing Feelings",
+        "script": "I am tired because I went to bed late last night.",
+        "question": "How is the speaker feeling?",
+        "options": {
+            "A": "Excited",
+            "B": "Tired",
+            "C": "Angry"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_115",
+        "topic": "Shopping for Food",
+        "script": "I need a kilo of apples and two kilos of bananas.",
+        "question": "How many kilos of bananas does the speaker need?",
+        "options": {
+            "A": "One",
+            "B": "Two",
+            "C": "Three"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_116",
+        "topic": "At the Gym",
+        "script": "I go to the gym to exercise three times a week.",
+        "question": "How often does the speaker go to the gym?",
+        "options": {
+            "A": "Once a week",
+            "B": "Twice a week",
+            "C": "Three times a week"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_117",
+        "topic": "Weekend Activities",
+        "script": "On Sunday, I clean my house.",
+        "question": "What does the speaker do on Sunday?",
+        "options": {
+            "A": "Go shopping",
+            "B": "Meet friends",
+            "C": "Clean the house"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_118",
+        "topic": "Sea Animals",
+        "script": "Dolphins are very intelligent animals that live in the sea.",
+        "question": "Where do dolphins live?",
+        "options": {
+            "A": "In the forest",
+            "B": "In the sea",
+            "C": "In the mountains"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_119",
+        "topic": "Booking a Table",
+        "script": "I'd like to book a table for two people for 8 PM tonight.",
+        "question": "How many people is the table for?",
+        "options": {
+            "A": "Two",
+            "B": "Three",
+            "C": "Four"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_120",
+        "topic": "Simple Instructions",
+        "script": "Please write your name at the top of the paper.",
+        "question": "Where should the name be written?",
+        "options": {
+            "A": "At the bottom",
+            "B": "In the middle",
+            "C": "At the top"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_121",
+        "topic": "Winter Clothes",
+        "script": "It's snowing. I need my hat and gloves.",
+        "question": "What does the speaker need?",
+        "options": {
+            "A": "Sunglasses and a T-shirt",
+            "B": "A hat and gloves",
+            "C": "Shorts and sandals"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_122",
+        "topic": "Birthday Presents",
+        "script": "For my birthday, I got a new watch from my parents.",
+        "question": "What present did the speaker get?",
+        "options": {
+            "A": "A new phone",
+            "B": "A new watch",
+            "C": "A new book"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_123",
+        "topic": "Insects",
+        "script": "Bees are small insects that make honey.",
+        "question": "What do bees make?",
+        "options": {
+            "A": "Milk",
+            "B": "Honey",
+            "C": "Silk"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_124",
+        "topic": "At the Bus Stop",
+        "script": "The bus is late. It was supposed to be here ten minutes ago.",
+        "question": "Is the bus on time?",
+        "options": {
+            "A": "Yes, it's early.",
+            "B": "No, it's late.",
+            "C": "Yes, it's on time."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_125",
+        "topic": "Snacks",
+        "script": "I'm a little hungry. I'll have an apple for a snack.",
+        "question": "What will the speaker have for a snack?",
+        "options": {
+            "A": "A sandwich",
+            "B": "An apple",
+            "C": "A cake"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_126",
+        "topic": "Family Members",
+        "script": "My father's mother is my grandmother.",
+        "question": "Who is the speaker's grandmother?",
+        "options": {
+            "A": "Her mother's sister",
+            "B": "Her father's mother",
+            "C": "Her mother's mother"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_127",
+        "topic": "The City vs The Countryside",
+        "script": "I live in the countryside. It's very quiet here.",
+        "question": "What is the countryside like?",
+        "options": {
+            "A": "It's noisy.",
+            "B": "It's quiet.",
+            "C": "It's busy."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_128",
+        "topic": "Cooking",
+        "script": "To make this pasta, you need tomatoes, onions, and garlic.",
+        "question": "What do you need for the pasta?",
+        "options": {
+            "A": "Chicken and peppers",
+            "B": "Tomatoes and onions",
+            "C": "Cream and mushrooms"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_129",
+        "topic": "At a Cafe (Payment)",
+        "script": "A: Can I pay by credit card? B: Yes, of course.",
+        "question": "How does the customer want to pay?",
+        "options": {
+            "A": "With cash",
+            "B": "By credit card",
+            "C": "With a check"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_130",
+        "topic": "Describing a Room",
+        "script": "My bedroom has a bed, a desk, and a large window.",
+        "question": "What is in the speaker's bedroom?",
+        "options": {
+            "A": "A sofa and a TV",
+            "B": "A bed and a desk",
+            "C": "A table and chairs"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_131",
+        "topic": "Making Plans",
+        "script": "A: What are you doing tonight? B: I'm going to the cinema with friends.",
+        "question": "What is person B's plan for tonight?",
+        "options": {
+            "A": "Staying home",
+            "B": "Going to a restaurant",
+            "C": "Going to the cinema"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_132",
+        "topic": "Plants",
+        "script": "This plant needs water every two days.",
+        "question": "How often does the plant need water?",
+        "options": {
+            "A": "Every day",
+            "B": "Every two days",
+            "C": "Once a week"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_133",
+        "topic": "Telling Time (Quarter Past)",
+        "script": "The class starts at a quarter past nine.",
+        "question": "What time does the class start?",
+        "options": {
+            "A": "9:00",
+            "B": "9:15",
+            "C": "9:30"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_134",
+        "topic": "Jobs (Location)",
+        "script": "A chef is a person who cooks food in a restaurant.",
+        "question": "Where does a chef work?",
+        "options": {
+            "A": "In a school",
+            "B": "In a restaurant",
+            "C": "In a shop"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_135",
+        "topic": "Giving Advice",
+        "script": "You look tired. You should get some sleep.",
+        "question": "What advice does the speaker give?",
+        "options": {
+            "A": "To drink some coffee",
+            "B": "To get some sleep",
+            "C": "To go for a walk"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_136",
+        "topic": "At the Shoe Shop",
+        "script": "Do you have these shoes in size seven?",
+        "question": "What size shoes is the customer looking for?",
+        "options": {
+            "A": "Size 6",
+            "B": "Size 7",
+            "C": "Size 8"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_137",
+        "topic": "The Four Seasons",
+        "script": "After winter comes spring.",
+        "question": "What season is after winter?",
+        "options": {
+            "A": "Summer",
+            "B": "Autumn",
+            "C": "Spring"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_138",
+        "topic": "Likes and Dislikes (Activities)",
+        "script": "I love dancing but I hate singing.",
+        "question": "What activity does the speaker hate?",
+        "options": {
+            "A": "Dancing",
+            "B": "Singing",
+            "C": "Drawing"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_139",
+        "topic": "Buying Tickets",
+        "script": "One adult and two children's tickets for the museum, please.",
+        "question": "How many children's tickets do they want?",
+        "options": {
+            "A": "One",
+            "B": "Two",
+            "C": "Three"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_140",
+        "topic": "Opposites",
+        "script": "This room is very bright. The other room is dark.",
+        "question": "What is the opposite of bright?",
+        "options": {
+            "A": "Light",
+            "B": "Dark",
+            "C": "Big"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_141",
+        "topic": "At the Beach (Activities)",
+        "script": "The sun is strong. Don't forget to use sunscreen.",
+        "question": "What should you use at the beach?",
+        "options": {
+            "A": "A towel",
+            "B": "An umbrella",
+            "C": "Sunscreen"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_142",
+        "topic": "Breakfast Foods",
+        "script": "I don't like cereal for breakfast. I prefer eggs.",
+        "question": "What does the speaker prefer for breakfast?",
+        "options": {
+            "A": "Cereal",
+            "B": "Toast",
+            "C": "Eggs"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_143",
+        "topic": "Getting Around the City",
+        "script": "The fastest way to get there is by taxi.",
+        "question": "What is the fastest way to travel?",
+        "options": {
+            "A": "By bus",
+            "B": "By taxi",
+            "C": "By walking"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_144",
+        "topic": "Parts of a Day",
+        "script": "The sun rises in the morning.",
+        "question": "When does the sun rise?",
+        "options": {
+            "A": "In the morning",
+            "B": "In the evening",
+            "C": "At night"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_145",
+        "topic": "Invitations (Declining)",
+        "script": "A: Do you want to go to the concert on Friday? B: I'm sorry, I can't. I'm busy.",
+        "question": "Is person B going to the concert?",
+        "options": {
+            "A": "Yes, they are.",
+            "B": "No, they are not.",
+            "C": "Maybe."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_146",
+        "topic": "Study Habits",
+        "script": "I study English for one hour every day.",
+        "question": "How long does the speaker study English each day?",
+        "options": {
+            "A": "30 minutes",
+            "B": "One hour",
+            "C": "Two hours"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_147",
+        "topic": "In the Kitchen",
+        "script": "I need a knife to cut the vegetables.",
+        "question": "What does the speaker need a knife for?",
+        "options": {
+            "A": "To eat soup",
+            "B": "To cut vegetables",
+            "C": "To drink water"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_148",
+        "topic": "Describing a Movie",
+        "script": "The movie was very long, about three hours.",
+        "question": "How was the movie?",
+        "options": {
+            "A": "It was short.",
+            "B": "It was long.",
+            "C": "It was boring."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_149",
+        "topic": "At the Station (Information)",
+        "script": "The next train to Oxford is delayed by 20 minutes.",
+        "question": "What is the situation with the Oxford train?",
+        "options": {
+            "A": "It's on time.",
+            "B": "It's cancelled.",
+            "C": "It's delayed."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_150",
+        "topic": "Agreeing",
+        "script": "A: It's a lovely day, isn't it? B: Yes, it's beautiful.",
+        "question": "Does person B agree with person A?",
+        "options": {
+            "A": "Yes, they agree.",
+            "B": "No, they disagree.",
+            "C": "They don't have an opinion."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_151",
+        "topic": "Geography",
+        "script": "The Amazon is a very long river in South America.",
+        "question": "What is the Amazon?",
+        "options": {
+            "A": "A mountain",
+            "B": "A river",
+            "C": "A desert"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_152",
+        "topic": "Telling Time (Quarter To)",
+        "script": "I have an appointment at a quarter to five.",
+        "question": "What time is the appointment?",
+        "options": {
+            "A": "4:15",
+            "B": "4:30",
+            "C": "4:45"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_153",
+        "topic": "At the Market",
+        "script": "These tomatoes are very fresh.",
+        "question": "How are the tomatoes?",
+        "options": {
+            "A": "They are old.",
+            "B": "They are fresh.",
+            "C": "They are expensive."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_154",
+        "topic": "Musical Instruments",
+        "script": "My daughter is learning to play the violin.",
+        "question": "What instrument is the daughter learning?",
+        "options": {
+            "A": "The piano",
+            "B": "The guitar",
+            "C": "The violin"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_155",
+        "topic": "Weather (Temperature)",
+        "script": "The temperature today is 25 degrees Celsius.",
+        "question": "What is the temperature?",
+        "options": {
+            "A": "15 degrees",
+            "B": "20 degrees",
+            "C": "25 degrees"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_156",
+        "topic": "At the Hotel (Checking out)",
+        "script": "We need to check out of the hotel before 11 AM.",
+        "question": "What time do they need to check out?",
+        "options": {
+            "A": "Before 11 AM",
+            "B": "At 12 PM",
+            "C": "In the afternoon"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_157",
+        "topic": "Hobbies (Collecting)",
+        "script": "My hobby is collecting stamps from different countries.",
+        "question": "What does the speaker collect?",
+        "options": {
+            "A": "Coins",
+            "B": "Stamps",
+            "C": "Postcards"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_158",
+        "topic": "Daily Travel",
+        "script": "It takes me 30 minutes to get to work by car.",
+        "question": "How long is the speaker's journey to work?",
+        "options": {
+            "A": "15 minutes",
+            "B": "30 minutes",
+            "C": "45 minutes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_159",
+        "topic": "Food Allergies",
+        "script": "I can't eat nuts because I am allergic.",
+        "question": "What can't the speaker eat?",
+        "options": {
+            "A": "Fish",
+            "B": "Nuts",
+            "C": "Eggs"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_160",
+        "topic": "In a Clothes Shop (Material)",
+        "script": "Is this shirt made of cotton?",
+        "question": "What material is the customer asking about?",
+        "options": {
+            "A": "Wool",
+            "B": "Silk",
+            "C": "Cotton"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_161",
+        "topic": "The Natural World",
+        "script": "Trees are very important because they give us oxygen.",
+        "question": "Why are trees important?",
+        "options": {
+            "A": "They give us water.",
+            "B": "They give us oxygen.",
+            "C": "They give us food."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_162",
+        "topic": "At Home",
+        "script": "The remote control for the TV is on the sofa.",
+        "question": "Where is the remote control?",
+        "options": {
+            "A": "On the table",
+            "B": "On the sofa",
+            "C": "On the floor"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_163",
+        "topic": "Asking for Repetition",
+        "script": "A: My name is... B: Sorry, can you say that again, please?",
+        "question": "What does person B want?",
+        "options": {
+            "A": "To know the time",
+            "B": "To hear the name again",
+            "C": "To leave"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_164",
+        "topic": "Types of Houses",
+        "script": "I live in a flat on the fifth floor.",
+        "question": "Where does the speaker live?",
+        "options": {
+            "A": "In a house",
+            "B": "In a flat",
+            "C": "In a bungalow"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_165",
+        "topic": "At the Office",
+        "script": "My computer is not working. I need to call IT support.",
+        "question": "What is the problem?",
+        "options": {
+            "A": "The phone is not working.",
+            "B": "The computer is not working.",
+            "C": "The printer is not working."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_166",
+        "topic": "Meals of the Day",
+        "script": "Lunch is the meal we eat in the middle of the day.",
+        "question": "When do we eat lunch?",
+        "options": {
+            "A": "In the morning",
+            "B": "In the middle of the day",
+            "C": "In the evening"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_167",
+        "topic": "Renting a Car",
+        "script": "I'd like to rent a small car for three days.",
+        "question": "For how long does the person want to rent a car?",
+        "options": {
+            "A": "For one day",
+            "B": "For two days",
+            "C": "For three days"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_168",
+        "topic": "Expressing Preference",
+        "script": "A: Do you prefer tea or coffee? B: I prefer tea.",
+        "question": "What does person B prefer?",
+        "options": {
+            "A": "Coffee",
+            "B": "Tea",
+            "C": "Neither"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_169",
+        "topic": "The Weather and Activities",
+        "script": "It's windy today. Let's fly a kite.",
+        "question": "What activity is good for a windy day?",
+        "options": {
+            "A": "Having a picnic",
+            "B": "Flying a kite",
+            "C": "Sunbathing"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_170",
+        "topic": "At the Pet Shop",
+        "script": "I would like to buy some food for my cat.",
+        "question": "What does the customer want to buy?",
+        "options": {
+            "A": "A new pet",
+            "B": "A toy for a dog",
+            "C": "Food for a cat"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_171",
+        "topic": "Personal Appearance",
+        "script": "He has a beard and wears glasses.",
+        "question": "What does he look like?",
+        "options": {
+            "A": "He has long hair.",
+            "B": "He has a beard and glasses.",
+            "C": "He is very tall."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_172",
+        "topic": "At the Supermarket (Checkout)",
+        "script": "A: Do you have a loyalty card? B: Yes, here it is.",
+        "question": "What does the cashier ask for?",
+        "options": {
+            "A": "A credit card",
+            "B": "A loyalty card",
+            "C": "A shopping bag"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_173",
+        "topic": "Talking about Age",
+        "script": "My son is five years old.",
+        "question": "How old is the speaker's son?",
+        "options": {
+            "A": "4 years old",
+            "B": "5 years old",
+            "C": "6 years old"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_174",
+        "topic": "Ordering Pizza",
+        "script": "We'd like a large pizza with cheese and tomatoes.",
+        "question": "What size pizza do they want?",
+        "options": {
+            "A": "Small",
+            "B": "Medium",
+            "C": "Large"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_175",
+        "topic": "The Dentist",
+        "script": "You should brush your teeth twice a day.",
+        "question": "How often should you brush your teeth?",
+        "options": {
+            "A": "Once a day",
+            "B": "Twice a day",
+            "C": "Three times a day"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_176",
+        "topic": "Directions (Prepositions)",
+        "script": "The pharmacy is opposite the supermarket.",
+        "question": "Where is the pharmacy?",
+        "options": {
+            "A": "Next to the supermarket",
+            "B": "Opposite the supermarket",
+            "C": "Behind the supermarket"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_177",
+        "topic": "At the Museum",
+        "script": "Please do not touch the paintings.",
+        "question": "What is not allowed in the museum?",
+        "options": {
+            "A": "Taking photos",
+            "B": "Talking quietly",
+            "C": "Touching the paintings"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_178",
+        "topic": "Simple Past Tense",
+        "script": "Last night, I watched a film on TV.",
+        "question": "What did the speaker do last night?",
+        "options": {
+            "A": "Listened to music",
+            "B": "Watched a film",
+            "C": "Read a book"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_179",
+        "topic": "At the Bakery",
+        "script": "I'll have six bread rolls, please.",
+        "question": "How many bread rolls does the customer want?",
+        "options": {
+            "A": "Four",
+            "B": "Five",
+            "C": "Six"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_180",
+        "topic": "Technology Problems",
+        "script": "I can't connect to the Wi-Fi.",
+        "question": "What is the problem?",
+        "options": {
+            "A": "The battery is low.",
+            "B": "Cannot connect to Wi-Fi.",
+            "C": "The screen is broken."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_181",
+        "topic": "Gardening",
+        "script": "In the spring, I plant new flowers in my garden.",
+        "question": "When does the speaker plant flowers?",
+        "options": {
+            "A": "In summer",
+            "B": "In autumn",
+            "C": "In spring"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_182",
+        "topic": "Asking About a Job",
+        "script": "A: What do you do? B: I'm a nurse.",
+        "question": "What is person B's job?",
+        "options": {
+            "A": "A teacher",
+            "B": "A nurse",
+            "C": "A driver"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_183",
+        "topic": "At the Library (Borrowing)",
+        "script": "You can borrow books for two weeks.",
+        "question": "How long can you borrow books for?",
+        "options": {
+            "A": "For one week",
+            "B": "For two weeks",
+            "C": "For one month"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_184",
+        "topic": "Describing a Day",
+        "script": "I had a very busy day at work today.",
+        "question": "How was the speaker's day?",
+        "options": {
+            "A": "It was relaxing.",
+            "B": "It was busy.",
+            "C": "It was boring."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_185",
+        "topic": "At a Concert",
+        "script": "The music is too loud!",
+        "question": "What is the problem with the music?",
+        "options": {
+            "A": "It's too quiet.",
+            "B": "It's too loud.",
+            "C": "It's too slow."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_186",
+        "topic": "Physical Activity",
+        "script": "I like walking in the mountains.",
+        "question": "What activity does the speaker enjoy?",
+        "options": {
+            "A": "Swimming in the sea",
+            "B": "Walking in the mountains",
+            "C": "Cycling in the city"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_187",
+        "topic": "At the Greengrocer's",
+        "script": "Can I have half a kilo of grapes, please?",
+        "question": "How many grapes does the customer want?",
+        "options": {
+            "A": "Half a kilo",
+            "B": "One kilo",
+            "C": "Two kilos"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_188",
+        "topic": "The Time (Noon/Midnight)",
+        "script": "Let's meet for lunch at noon.",
+        "question": "What time are they meeting for lunch?",
+        "options": {
+            "A": "11:00 AM",
+            "B": "12:00 PM (noon)",
+            "C": "1:00 PM"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_189",
+        "topic": "Expressing Certainty",
+        "script": "A: Are you sure? B: Yes, I'm positive.",
+        "question": "Is person B sure?",
+        "options": {
+            "A": "No, they are not sure.",
+            "B": "They are a little sure.",
+            "C": "Yes, they are very sure."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_190",
+        "topic": "At the Cinema (Snacks)",
+        "script": "I'll have a large popcorn and a small drink.",
+        "question": "What size drink does the person want?",
+        "options": {
+            "A": "Small",
+            "B": "Medium",
+            "C": "Large"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_191",
+        "topic": "School Timetable",
+        "script": "We have an English class at 9 AM, and after that, we have Math.",
+        "question": "What class is after the English class?",
+        "options": {
+            "A": "History",
+            "B": "Math",
+            "C": "Science"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_192",
+        "topic": "Weather Forecast",
+        "script": "The forecast for tomorrow is cloudy with a chance of rain.",
+        "question": "What is the weather forecast for tomorrow?",
+        "options": {
+            "A": "Sunny",
+            "B": "Snowy",
+            "C": "Cloudy and possibly rainy"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_193",
+        "topic": "At the Newsagent's",
+        "script": "Can I have a newspaper and a magazine, please?",
+        "question": "What does the customer want to buy?",
+        "options": {
+            "A": "A book and a pen",
+            "B": "A newspaper and a magazine",
+            "C": "A card and a stamp"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_194",
+        "topic": "Lost Property",
+        "script": "I think I lost my wallet. It's black and has my ID card in it.",
+        "question": "What did the speaker lose?",
+        "options": {
+            "A": "Their keys",
+            "B": "Their phone",
+            "C": "Their wallet"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_195",
+        "topic": "Cooking Instructions",
+        "script": "Cook the pasta for ten minutes.",
+        "question": "How long should the pasta be cooked?",
+        "options": {
+            "A": "5 minutes",
+            "B": "10 minutes",
+            "C": "15 minutes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_196",
+        "topic": "Public Signs",
+        "script": "The sign says 'No Smoking'.",
+        "question": "What is not allowed?",
+        "options": {
+            "A": "No eating",
+            "B": "No parking",
+            "C": "No smoking"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_197",
+        "topic": "At the Airport (Baggage)",
+        "script": "You can only take one piece of hand luggage on the plane.",
+        "question": "How much hand luggage is allowed?",
+        "options": {
+            "A": "One piece",
+            "B": "Two pieces",
+            "C": "No hand luggage"
+        },
+        "answer": "A"
+    },
+    {
+        "id": "A1_L_198",
+        "topic": "Making a Phone Call",
+        "script": "Hello, can I speak to Mr. Smith, please?",
+        "question": "Who does the caller want to speak to?",
+        "options": {
+            "A": "Mr. Jones",
+            "B": "Mr. Smith",
+            "C": "Mrs. Davis"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "A1_L_199",
+        "topic": "Routines (Weekly)",
+        "script": "I do my food shopping every Friday afternoon.",
+        "question": "When does the speaker do their food shopping?",
+        "options": {
+            "A": "On Monday",
+            "B": "On Wednesday",
+            "C": "On Friday"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "A1_L_200",
+        "topic": "Ending a Conversation",
+        "script": "It was nice talking to you. I have to go now.",
+        "question": "What is the speaker doing?",
+        "options": {
+            "A": "Starting a conversation",
+            "B": "Asking a question",
+            "C": "Ending a conversation"
+        },
+        "answer": "C"
+    }
+]

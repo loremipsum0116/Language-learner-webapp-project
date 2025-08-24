@@ -1,0 +1,2402 @@
+[
+    {
+        "id": "B1_L_001",
+        "topic": "Expressing Opinions",
+        "script": "A: I've just finished reading that new bestseller. To be honest, I found it a bit overrated. The plot was predictable. B: Really? I thought it was fantastic. I couldn't put it down. I guess it's just a matter of personal taste.",
+        "question": "What is person B's opinion of the book?",
+        "options": {
+            "A": "They agree it was predictable.",
+            "B": "They haven't read it yet.",
+            "C": "They thought it was fantastic."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_002",
+        "topic": "Arranging a Meeting",
+        "script": "A: Hi Tom, I was wondering if you're free to meet next week to discuss the project proposal. B: Sure, how about Tuesday afternoon? I'm free after 2 PM. A: Tuesday at 3 PM works for me. I'll book a meeting room.",
+        "question": "When did they agree to meet?",
+        "options": {
+            "A": "Tuesday at 2 PM",
+            "B": "Tuesday at 3 PM",
+            "C": "Next week, but the time is not decided."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_003",
+        "topic": "Returning an Item",
+        "script": "Customer: I'd like to return this jumper, please. I bought it last week, but it's the wrong size. Shop assistant: Of course. Do you have the receipt? You can either exchange it for a different size or get a full refund.",
+        "question": "Why is the customer returning the jumper?",
+        "options": {
+            "A": "It's damaged.",
+            "B": "They don't like the color.",
+            "C": "It's the wrong size."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_004",
+        "topic": "Discussing a Film",
+        "script": "A: The main actor's performance was incredible. He was so believable in that role. B: I agree, he was brilliant. However, I felt the ending was a bit disappointing. It seemed rushed.",
+        "question": "What did person B dislike about the film?",
+        "options": {
+            "A": "The main actor's performance",
+            "B": "The story",
+            "C": "The ending"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_005",
+        "topic": "Planning a Holiday",
+        "script": "A: I've been looking at holidays in Thailand. The beaches look amazing. B: Oh, that sounds great. But isn't it the rainy season there soon? We should check the best time of year to go.",
+        "question": "What is person B's concern about the holiday plan?",
+        "options": {
+            "A": "The cost of the flights",
+            "B": "The weather",
+            "C": "The quality of the hotels"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_006",
+        "topic": "A Job Interview",
+        "script": "Interviewer: Your CV is very impressive. Could you tell me why you are interested in working for our company? Candidate: I've been following your company for a while, and I'm very impressed by your commitment to sustainability.",
+        "question": "Why is the candidate interested in the company?",
+        "options": {
+            "A": "Because of the high salary",
+            "B": "Because of its commitment to sustainability",
+            "C": "Because it is close to their home"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_007",
+        "topic": "A University Lecture",
+        "script": "Today's lecture will focus on the causes of the Industrial Revolution. We'll examine the technological innovations and the social changes that occurred during that period. Please hold any questions until the end.",
+        "question": "What is the main topic of the lecture?",
+        "options": {
+            "A": "The effects of the Industrial Revolution",
+            "B": "The causes of the Industrial Revolution",
+            "C": "Technological innovations of the 21st century"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_008",
+        "topic": "A Tour Guide's Speech",
+        "script": "Welcome to the Tower of London. This historic castle has served as a royal palace, a prison, and even a zoo. Our tour will last approximately 90 minutes. Please stay with the group.",
+        "question": "How long will the tour last?",
+        "options": {
+            "A": "60 minutes",
+            "B": "90 minutes",
+            "C": "120 minutes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_009",
+        "topic": "A News Report",
+        "script": "The government has announced new plans to invest in public transport. The aim is to reduce traffic congestion in major cities and encourage more people to use buses and trains.",
+        "question": "What is the goal of the government's new plan?",
+        "options": {
+            "A": "To build more roads",
+            "B": "To reduce traffic in cities",
+            "C": "To make cars cheaper"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_010",
+        "topic": "Giving Advice",
+        "script": "A: I'm really struggling to sleep at the moment. B: You should try to avoid looking at your phone or computer screen before bed. The blue light can make it harder to fall asleep.",
+        "question": "What advice does person B give?",
+        "options": {
+            "A": "To drink coffee before bed",
+            "B": "To avoid screens before bed",
+            "C": "To read a book in bed"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_011",
+        "topic": "A Museum Announcement",
+        "script": "Attention visitors. The museum will be closing in 15 minutes. Please make your way to the exit. We hope you have enjoyed your visit.",
+        "question": "What should the visitors do?",
+        "options": {
+            "A": "Go to the museum cafe",
+            "B": "Continue looking at the exhibits",
+            "C": "Leave the museum"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_012",
+        "topic": "Discussing a TV series",
+        "script": "A: Have you seen the latest season? The plot has become so complicated. B: I know! I'm finding it hard to keep track of all the different characters and storylines.",
+        "question": "What do they find difficult about the TV series?",
+        "options": {
+            "A": "The acting is not very good.",
+            "B": "It is not available to watch.",
+            "C": "The plot is complicated."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_013",
+        "topic": "A Restaurant Booking",
+        "script": "I'd like to book a table for four people for this Saturday evening, at around 8 PM. Could we have a table by the window, if possible?",
+        "question": "What special request did the customer make?",
+        "options": {
+            "A": "A quiet table",
+            "B": "A table by the window",
+            "C": "A table outside"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_014",
+        "topic": "A Weather Forecast",
+        "script": "The weekend will start off dry and bright, but a band of heavy rain will move in from the west on Sunday afternoon, accompanied by strong winds.",
+        "question": "What will the weather be like on Sunday afternoon?",
+        "options": {
+            "A": "Dry and bright",
+            "B": "Heavy rain and strong winds",
+            "C": "Light showers and sunny spells"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_015",
+        "topic": "A Product Review",
+        "script": "I'm very pleased with my new wireless headphones. The sound quality is excellent and the battery life is much longer than my old pair. They are also very comfortable to wear.",
+        "question": "What is NOT mentioned as a good feature of the headphones?",
+        "options": {
+            "A": "The sound quality",
+            "B": "The price",
+            "C": "The battery life"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_016",
+        "topic": "A Work Presentation",
+        "script": "In this presentation, I'm going to outline our marketing strategy for the next quarter. I'll start by looking at our target audience and then move on to the channels we plan to use.",
+        "question": "What will the speaker discuss first?",
+        "options": {
+            "A": "The marketing budget",
+            "B": "The target audience",
+            "C": "The marketing channels"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_017",
+        "topic": "A Podcast Introduction",
+        "script": "Welcome to 'Global Issues', the podcast where we discuss the biggest challenges facing our world today. This week, we're talking about climate change and its impact on our oceans.",
+        "question": "What is this week's podcast topic?",
+        "options": {
+            "A": "The global economy",
+            "B": "Climate change and the oceans",
+            "C": "The future of technology"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_018",
+        "topic": "Making a complaint about a service",
+        "script": "I'm calling to complain about the internet service at my property. It has been extremely slow for the past three days and I am unable to work from home.",
+        "question": "What is the customer's problem?",
+        "options": {
+            "A": "The internet is too expensive.",
+            "B": "The internet is not working at all.",
+            "C": "The internet is very slow."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_019",
+        "topic": "A discussion about exercise",
+        "script": "A: I've started going to a yoga class. It's great for flexibility. B: I prefer something more energetic. I go running in the park. It's good for clearing my head.",
+        "question": "Why does person B like running?",
+        "options": {
+            "A": "It's good for flexibility.",
+            "B": "It's a social activity.",
+            "C": "It helps to clear their head."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_020",
+        "topic": "An airport announcement",
+        "script": "This is the final boarding call for flight BA249 to New York. Please proceed immediately to Gate 42. The gate will be closing in five minutes.",
+        "question": "What should passengers for flight BA249 do?",
+        "options": {
+            "A": "Wait at the gate",
+            "B": "Go to Gate 42 immediately",
+            "C": "Go to the information desk"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_021",
+        "topic": "A radio advertisement",
+        "script": "Are you tired of your old car? Come down to 'City Motors' this weekend for our massive sale. Get up to 30% off all used cars. Don't miss out!",
+        "question": "What is being advertised?",
+        "options": {
+            "A": "A new brand of car",
+            "B": "Car repair services",
+            "C": "A sale on used cars"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_022",
+        "topic": "Discussing future technology",
+        "script": "A: I think in the future, all cars will be electric and self-driving. B: I'm not so sure. I think people will always enjoy the experience of driving a car themselves.",
+        "question": "What does person B believe about the future of cars?",
+        "options": {
+            "A": "All cars will be electric.",
+            "B": "People will still want to drive.",
+            "C": "There will be fewer cars."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_023",
+        "topic": "An instruction from a fitness instructor",
+        "script": "Okay everyone, for the next exercise, I want you to lie on your backs and lift your legs slowly. Remember to keep your core engaged and breathe deeply.",
+        "question": "What is an important part of the exercise?",
+        "options": {
+            "A": "Lifting the legs quickly",
+            "B": "Holding your breath",
+            "C": "Keeping your core engaged"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_024",
+        "topic": "A conversation about a new flat",
+        "script": "A: How's your new flat? B: It's great, thanks. It's much more spacious than my old place, and it has a balcony with a lovely view.",
+        "question": "What is a feature of the new flat?",
+        "options": {
+            "A": "It is cheaper.",
+            "B": "It has a garden.",
+            "C": "It has a balcony."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_025",
+        "topic": "A voicemail message",
+        "script": "Hi, it's Mark. I'm just calling to confirm our dinner plans for tomorrow night. We're meeting at the Italian restaurant at 7:30 PM, right? Give me a call back to let me know.",
+        "question": "Why is Mark calling?",
+        "options": {
+            "A": "To cancel the dinner",
+            "B": "To change the time",
+            "C": "To confirm the plans"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_026",
+        "topic": "A guided walk",
+        "script": "On our walk today, we'll be looking out for different types of birds. This area is home to over 50 different species. Please remember not to make loud noises that might scare them away.",
+        "question": "What should the people on the walk avoid doing?",
+        "options": {
+            "A": "Taking photos",
+            "B": "Making loud noises",
+            "C": "Walking too fast"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_027",
+        "topic": "A discussion about a book",
+        "script": "A: I found the main character really unlikeable. I just couldn't sympathize with her. B: I know what you mean, but I thought that's what made the book so interesting.",
+        "question": "What did person A think of the main character?",
+        "options": {
+            "A": "They were interesting.",
+            "B": "They were likeable.",
+            "C": "They were unlikeable."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_028",
+        "topic": "A recipe instruction",
+        "script": "Once the oven is preheated to 200 degrees Celsius, place the chicken in for 25 minutes, or until it is golden brown and cooked through.",
+        "question": "How long should the chicken be cooked for?",
+        "options": {
+            "A": "20 minutes",
+            "B": "25 minutes",
+            "C": "200 minutes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_029",
+        "topic": "A conversation about a city",
+        "script": "A: What I love about this city is the public transport. It's so efficient and you can get anywhere easily. B: I agree. It's much better than in my city, where you really need a car.",
+        "question": "What do they like about the city?",
+        "options": {
+            "A": "The weather",
+            "B": "The public transport",
+            "C": "The restaurants"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_030",
+        "topic": "A university seminar",
+        "script": "For next week's seminar, I'd like you all to read the first two chapters of the book and come prepared to discuss the main arguments.",
+        "question": "What do the students need to do for the next seminar?",
+        "options": {
+            "A": "Write an essay",
+            "B": "Read two chapters and prepare for a discussion",
+            "C": "Prepare a presentation"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_031",
+        "topic": "A travel agent's advice",
+        "script": "If you're looking for a relaxing beach holiday, I would recommend the Greek islands. However, if you prefer a city break with lots of culture, then Rome would be a better choice.",
+        "question": "Which destination is recommended for a city break?",
+        "options": {
+            "A": "The Greek islands",
+            "B": "Thailand",
+            "C": "Rome"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_032",
+        "topic": "A discussion about recycling",
+        "script": "A: I try to recycle as much as possible, but it's confusing knowing what can and can't be recycled. B: I know. And I wish there was less plastic packaging on products in the supermarket.",
+        "question": "What does person B wish for?",
+        "options": {
+            "A": "More recycling bins",
+            "B": "Clearer instructions for recycling",
+            "C": "Less plastic packaging"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_033",
+        "topic": "A problem with a reservation",
+        "script": "I'm calling about my hotel reservation. I have a confirmation email, but when I called the hotel, they said they have no record of my booking.",
+        "question": "What is the problem with the reservation?",
+        "options": {
+            "A": "The dates are wrong.",
+            "B": "The hotel has no record of it.",
+            "C": "The price is incorrect."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_034",
+        "topic": "A conversation about a new job",
+        "script": "A: The best thing about my new job is that I can work from home two days a week. It saves me so much time on commuting. B: That sounds ideal. I wish my company offered that.",
+        "question": "What is the best thing about person A's new job?",
+        "options": {
+            "A": "The salary is high.",
+            "B": "They can work from home sometimes.",
+            "C": "The colleagues are friendly."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_035",
+        "topic": "A podcast about history",
+        "script": "Many people think that Vikings wore helmets with horns, but in fact, there is no historical evidence for this. It's a popular myth that probably started in the 19th century.",
+        "question": "What is a popular myth about Vikings?",
+        "options": {
+            "A": "That they were great sailors",
+            "B": "That they wore helmets with horns",
+            "C": "That they came from Scandinavia"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_036",
+        "topic": "A customer service call",
+        "script": "Thank you for calling Tech Support. All our operators are currently busy. Your call is important to us. Please stay on the line and you will be connected to the next available agent.",
+        "question": "What should the caller do?",
+        "options": {
+            "A": "Hang up and call again",
+            "B": "Leave a message",
+            "C": "Wait on the line"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_037",
+        "topic": "A discussion about online shopping",
+        "script": "A: I do most of my shopping online now. It's so convenient. B: I prefer going to actual shops. I like to see and touch things before I buy them, especially with clothes.",
+        "question": "Why does person B prefer shopping in stores?",
+        "options": {
+            "A": "It's cheaper.",
+            "B": "They like to see and touch things.",
+            "C": "It's more convenient."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_038",
+        "topic": "A radio phone-in",
+        "script": "Our topic for discussion today is 'Should plastic bags be banned completely?'. We'd love to hear your views. The number to call is 0800 123 456.",
+        "question": "What is the topic of the discussion?",
+        "options": {
+            "A": "The price of plastic bags",
+            "B": "Whether plastic bags should be banned",
+            "C": "How to recycle plastic bags"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_039",
+        "topic": "An automated phone menu",
+        "script": "Welcome to the National Bank. For account balances, press one. To speak to a customer service representative, press two. For all other enquiries, press three.",
+        "question": "Which number should you press to speak to a person?",
+        "options": {
+            "A": "One",
+            "B": "Two",
+            "C": "Three"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_040",
+        "topic": "A conversation about a concert",
+        "script": "A: The support band was surprisingly good. I'd never heard of them before. B: Me neither. But the main band was a bit disappointing. They didn't play my favourite song.",
+        "question": "What did person B think of the main band?",
+        "options": {
+            "A": "They were surprisingly good.",
+            "B": "They were disappointing.",
+            "C": "They were better than the support band."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_041",
+        "topic": "A talk about healthy eating",
+        "script": "It's important to have a balanced diet, which means eating a variety of foods. You should aim to eat five portions of fruit and vegetables every day.",
+        "question": "How many portions of fruit and vegetables should you eat daily?",
+        "options": {
+            "A": "Three",
+            "B": "Four",
+            "C": "Five"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_042",
+        "topic": "A discussion about a new law",
+        "script": "A: Did you hear about the new law to ban smoking in public parks? B: Yes, I think it's a great idea. It will make the parks a healthier environment for children.",
+        "question": "Why does person B support the new law?",
+        "options": {
+            "A": "They think smoking is too expensive.",
+            "B": "They think it will make parks healthier for children.",
+            "C": "They are a non-smoker."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_043",
+        "topic": "An art class",
+        "script": "Today we're going to be working with watercolours. The key is not to use too much water, otherwise the colours will run into each other and become muddy.",
+        "question": "What is the key to working with watercolours?",
+        "options": {
+            "A": "To use a lot of water",
+            "B": "To mix the colours together",
+            "C": "Not to use too much water"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_044",
+        "topic": "A conversation about a TV show",
+        "script": "A: I can't believe the series has finished. I'm going to miss it. B: Me too. I wonder if they'll make another series. The ending left a lot of unanswered questions.",
+        "question": "What did they think about the ending of the series?",
+        "options": {
+            "A": "It answered all the questions.",
+            "B": "It was a happy ending.",
+            "C": "It left questions unanswered."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_045",
+        "topic": "A train station announcement",
+        "script": "May I have your attention please. The station will be closing in 10 minutes. Will all remaining passengers please make their way to the exits. The last train has now departed.",
+        "question": "What has happened to the last train?",
+        "options": {
+            "A": "It is delayed.",
+            "B": "It is about to depart.",
+            "C": "It has already departed."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_046",
+        "topic": "A discussion about a holiday destination",
+        "script": "A: I'd love to go to Japan one day to see the cherry blossoms. B: That would be amazing. I've heard it's incredibly beautiful, but also very crowded at that time of year.",
+        "question": "What is a potential disadvantage of visiting Japan during cherry blossom season?",
+        "options": {
+            "A": "It is very expensive.",
+            "B": "It is very crowded.",
+            "C": "The weather is bad."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_047",
+        "topic": "A DIY project",
+        "script": "I'm trying to build a bookshelf, but the instructions are really confusing. I think I've put one of the pieces on backwards.",
+        "question": "What is the problem with the bookshelf?",
+        "options": {
+            "A": "There is a piece missing.",
+            "B": "The instructions are confusing.",
+            "C": "It is the wrong colour."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_048",
+        "topic": "A conversation about a new car",
+        "script": "A: My new car is a hybrid, so it uses both petrol and electricity. It's much more fuel-efficient than my old car. B: That's great. It must save you a lot of money on petrol.",
+        "question": "What is an advantage of the new car?",
+        "options": {
+            "A": "It is faster.",
+            "B": "It is bigger.",
+            "C": "It is more fuel-efficient."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_049",
+        "topic": "A visit to a historical house",
+        "script": "This house was built over 400 years ago. You can still see the original wooden beams in the ceiling. Please be careful not to touch any of the antique furniture.",
+        "question": "What are visitors asked not to do?",
+        "options": {
+            "A": "Take photos",
+            "B": "Talk loudly",
+            "C": "Touch the furniture"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_050",
+        "topic": "A discussion about work-life balance",
+        "script": "I feel like I'm working all the time. I need to find a better work-life balance. I'm thinking of taking up a hobby, like painting, to help me relax in the evenings.",
+        "question": "What is the speaker thinking of doing to relax?",
+        "options": {
+            "A": "Working fewer hours",
+            "B": "Going on holiday",
+            "C": "Taking up a hobby"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_051",
+        "topic": "A nature documentary",
+        "script": "The chameleon is a master of camouflage. It can change the colour of its skin to blend in with its surroundings, making it almost invisible to predators.",
+        "question": "How does the chameleon protect itself?",
+        "options": {
+            "A": "By running fast",
+            "B": "By changing its skin colour",
+            "C": "By making a loud noise"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_052",
+        "topic": "A conversation about a difficult task",
+        "script": "A: I have to write a 2,000-word essay by Friday. I don't know where to start. B: You should make a plan first. Break it down into smaller sections. That always helps me.",
+        "question": "What advice does person B give?",
+        "options": {
+            "A": "To ask for more time",
+            "B": "To write the introduction first",
+            "C": "To make a plan"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_053",
+        "topic": "A restaurant review",
+        "script": "The restaurant had a wonderful atmosphere and the staff were very attentive. Unfortunately, the food itself was quite average and a little overpriced for what it was.",
+        "question": "What was the problem with the restaurant?",
+        "options": {
+            "A": "The staff were unfriendly.",
+            "B": "The atmosphere was not good.",
+            "C": "The food was average and overpriced."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_054",
+        "topic": "A talk about a charity",
+        "script": "Our charity works to provide clean drinking water to communities in developing countries. A small donation of just five pounds can provide one person with clean water for a whole year.",
+        "question": "What does the charity do?",
+        "options": {
+            "A": "Builds schools",
+            "B": "Provides clean water",
+            "C": "Protects endangered animals"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_055",
+        "topic": "A discussion about social media",
+        "script": "A: I think I spend too much time on social media. It can be a bit of a waste of time. B: I agree. I deleted most of the apps from my phone and I feel much better for it.",
+        "question": "What did person B do about social media?",
+        "options": {
+            "A": "They use it less often.",
+            "B": "They deleted the apps from their phone.",
+            "C": "They only use it for work."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_056",
+        "topic": "A flight safety announcement",
+        "script": "Please ensure that your seat belt is securely fastened and your seat back and tray table are in the upright position for take-off. All electronic devices must be switched to flight mode.",
+        "question": "What must be done with electronic devices?",
+        "options": {
+            "A": "They must be turned off.",
+            "B": "They must be put in the overhead locker.",
+            "C": "They must be switched to flight mode."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_057",
+        "topic": "A conversation about a new film",
+        "script": "A: The film was based on a true story, which made it even more powerful. B: I didn't know that. It was certainly a very moving film. I cried at the end.",
+        "question": "What was special about the film's story?",
+        "options": {
+            "A": "It was a comedy.",
+            "B": "It was based on a true story.",
+            "C": "It was a science fiction story."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_058",
+        "topic": "A university open day",
+        "script": "Welcome to our university. Today you will have the opportunity to attend sample lectures, tour the campus, and speak to current students about their experiences.",
+        "question": "What is one of the activities available on the open day?",
+        "options": {
+            "A": "Take an exam",
+            "B": "Register for a course",
+            "C": "Attend sample lectures"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_059",
+        "topic": "A discussion about a city's problems",
+        "script": "The biggest problem in this city is the cost of housing. It's almost impossible for young people to afford to buy a flat here.",
+        "question": "What is the biggest problem in the city?",
+        "options": {
+            "A": "The traffic",
+            "B": "The cost of housing",
+            "C": "The lack of green spaces"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_060",
+        "topic": "A gardening show",
+        "script": "The best time to plant tulip bulbs is in the autumn, before the first frost. This will give them time to establish their roots before winter.",
+        "question": "When is the best time to plant tulip bulbs?",
+        "options": {
+            "A": "In the spring",
+            "B": "In the summer",
+            "C": "In the autumn"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_061",
+        "topic": "A conversation about a new cafe",
+        "script": "A: The new cafe has a great selection of vegetarian and vegan options. B: That's good to know. It can be difficult to find places with good veggie food.",
+        "question": "What is good about the new cafe's menu?",
+        "options": {
+            "A": "It is very cheap.",
+            "B": "It has good vegetarian and vegan options.",
+            "C": "It has a lot of traditional dishes."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_062",
+        "topic": "A language learning tip",
+        "script": "Don't be afraid to make mistakes when you're speaking a new language. It's a natural part of the learning process. The important thing is to communicate.",
+        "question": "What does the speaker say about making mistakes?",
+        "options": {
+            "A": "You should try to avoid them.",
+            "B": "It's a natural part of learning.",
+            "C": "It means you are not learning properly."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_063",
+        "topic": "A problem with a car",
+        "script": "My car won't start. I think the battery might be flat. I'll have to call a breakdown service to come and help.",
+        "question": "What does the speaker think is wrong with the car?",
+        "options": {
+            "A": "It has run out of petrol.",
+            "B": "It has a flat tyre.",
+            "C": "The battery might be flat."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_064",
+        "topic": "A discussion about a holiday",
+        "script": "A: For our next holiday, I'd prefer to go somewhere with a bit of history and culture, not just a beach. B: I agree. It would be nice to explore some ancient ruins or visit some art galleries.",
+        "question": "What kind of holiday do they want?",
+        "options": {
+            "A": "A relaxing beach holiday",
+            "B": "An adventure holiday",
+            "C": "A cultural holiday"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_065",
+        "topic": "A museum exhibit",
+        "script": "This exhibit shows what life was like for a typical family in Victorian times. You can see the clothes they wore and the tools they used in their daily lives.",
+        "question": "What does the exhibit show?",
+        "options": {
+            "A": "The life of a royal family",
+            "B": "The life of a typical Victorian family",
+            "C": "The tools used in the Industrial Revolution"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_066",
+        "topic": "A conversation about a new technology",
+        "script": "A: I've just bought a smart speaker. I can ask it to play music or tell me the weather forecast. B: That's clever. But are you not worried about privacy?",
+        "question": "What is person B's concern about the smart speaker?",
+        "options": {
+            "A": "The cost",
+            "B": "The privacy",
+            "C": "The sound quality"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_067",
+        "topic": "A travel announcement",
+        "script": "Due to engineering works, the last train to Bristol will depart at 10:30 PM this evening, not 11:30 PM as scheduled. A replacement bus service will be available after this time.",
+        "question": "What is available for people who miss the last train?",
+        "options": {
+            "A": "Taxis",
+            "B": "Another train",
+            "C": "A replacement bus service"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_068",
+        "topic": "A discussion about a new film",
+        "script": "A: I thought the film was a bit slow in the beginning, but it got really exciting towards the end. B: Yes, the final action scene was incredible.",
+        "question": "What did person A think about the beginning of the film?",
+        "options": {
+            "A": "It was exciting.",
+            "B": "It was confusing.",
+            "C": "It was a bit slow."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_069",
+        "topic": "A university assignment",
+        "script": "The deadline for the history essay is next Friday. Please remember that it must be submitted electronically through the university portal. No paper copies will be accepted.",
+        "question": "How must the essay be submitted?",
+        "options": {
+            "A": "As a paper copy",
+            "B": "By email",
+            "C": "Electronically through the university portal"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_070",
+        "topic": "A conversation about a new hobby",
+        "script": "A: I've taken up rock climbing. It's a great physical and mental challenge. B: Wow, that sounds scary. Are you not afraid of heights?",
+        "question": "What does person A say rock climbing is?",
+        "options": {
+            "A": "A relaxing hobby",
+            "B": "A physical and mental challenge",
+            "C": "A cheap sport"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_071",
+        "topic": "A product demonstration",
+        "script": "This new food processor is incredibly versatile. It can chop, mix, and even make dough. And all the parts are dishwasher-safe, which makes cleaning up so much easier.",
+        "question": "What makes cleaning the food processor easy?",
+        "options": {
+            "A": "It has a self-cleaning function.",
+            "B": "The parts are dishwasher-safe.",
+            "C": "It doesn't get very dirty."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_072",
+        "topic": "A discussion about a city",
+        "script": "A: The best thing about living here is the amount of green space. There are so many parks to relax in. B: I agree. It doesn't feel like you're in a huge city.",
+        "question": "What is the best thing about the city, according to person A?",
+        "options": {
+            "A": "The nightlife",
+            "B": "The amount of green space",
+            "C": "The shopping"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_073",
+        "topic": "A museum audio guide",
+        "script": "In front of you is a portrait of the king, painted in 1650. Notice the rich colours and the detailed fabrics of his clothing, which were a symbol of his wealth and power.",
+        "question": "What did the king's clothing symbolize?",
+        "options": {
+            "A": "His love of fashion",
+            "B": "His wealth and power",
+            "C": "His artistic taste"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_074",
+        "topic": "A conversation about a new job",
+        "script": "A: How are you finding your new job? B: It's good, but it's a steep learning curve. There's so much new information to take in.",
+        "question": "What is challenging about the new job?",
+        "options": {
+            "A": "The colleagues are unfriendly.",
+            "B": "The hours are long.",
+            "C": "There is a lot of new information to learn."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_075",
+        "topic": "A radio travel show",
+        "script": "This week we're exploring the beautiful region of Tuscany in Italy. It's famous for its rolling hills, vineyards, and historic towns. The best way to explore is by renting a car.",
+        "question": "What is the best way to explore Tuscany?",
+        "options": {
+            "A": "By train",
+            "B": "By bus",
+            "C": "By car"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_076",
+        "topic": "A discussion about a new building",
+        "script": "A: Have you seen that new office building they've built? It's all glass and steel. B: Yes, it's very modern, but I don't think it fits in with the older, historic buildings around it.",
+        "question": "What is person B's criticism of the new building?",
+        "options": {
+            "A": "It is too small.",
+            "B": "It doesn't fit in with the surrounding buildings.",
+            "C": "It is not modern enough."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_077",
+        "topic": "A cooking programme",
+        "script": "The secret to a perfect omelette is to use fresh, good-quality eggs and not to overcook it. It should be light and fluffy.",
+        "question": "What is the secret to a perfect omelette?",
+        "options": {
+            "A": "Using a lot of cheese",
+            "B": "Cooking it for a long time",
+            "C": "Not overcooking it"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_078",
+        "topic": "A conversation about a party",
+        "script": "A: Are you going to Sarah's party on Saturday? B: I'd love to, but I'm not sure if I can. I have to look after my little sister that evening.",
+        "question": "Why might person B not be able to go to the party?",
+        "options": {
+            "A": "They have to work.",
+            "B": "They have to look after their sister.",
+            "C": "They were not invited."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_079",
+        "topic": "A university lecture on psychology",
+        "script": "Short-term memory allows us to hold a small amount of information in our minds for a short period of time. For example, remembering a phone number just long enough to dial it.",
+        "question": "What is an example of using short-term memory?",
+        "options": {
+            "A": "Remembering your own birthday",
+            "B": "Remembering a phone number to dial it",
+            "C": "Remembering a historical event"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_080",
+        "topic": "A discussion about a new app",
+        "script": "A: This new app helps you manage your money. You can see all your bank accounts in one place and it categorizes your spending. B: That sounds really useful. I'm terrible at budgeting.",
+        "question": "What does the new app do?",
+        "options": {
+            "A": "It helps you learn a language.",
+            "B": "It helps you manage your money.",
+            "C": "It helps you order food."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_081",
+        "topic": "A guided tour of a factory",
+        "script": "For safety reasons, all visitors must wear a hard hat and safety glasses while in the factory. Please do not touch any of the machinery.",
+        "question": "What must all visitors wear?",
+        "options": {
+            "A": "A uniform",
+            "B": "A hard hat and safety glasses",
+            "C": "Special shoes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_082",
+        "topic": "A conversation about a film adaptation",
+        "script": "A: I saw the film version of the book. It was good, but they changed the ending. B: Oh, really? I always think the book is better than the film.",
+        "question": "What was different in the film version?",
+        "options": {
+            "A": "The main character",
+            "B": "The setting",
+            "C": "The ending"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_083",
+        "topic": "A talk about artificial intelligence",
+        "script": "Artificial intelligence is already a part of our daily lives, from the recommendations we get on streaming services to the navigation apps we use on our phones.",
+        "question": "What is an example of artificial intelligence in daily life?",
+        "options": {
+            "A": "Making a phone call",
+            "B": "Navigation apps",
+            "C": "Writing an email"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_084",
+        "topic": "A discussion about a concert venue",
+        "script": "A: The concert was great, but the venue was not so good. It was really difficult to see the stage from where we were sitting. B: I agree. And the sound wasn't very clear either.",
+        "question": "What was the problem with the concert venue?",
+        "options": {
+            "A": "It was too small.",
+            "B": "It was difficult to get to.",
+            "C": "It was difficult to see the stage."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_085",
+        "topic": "A news report on the economy",
+        "script": "The latest figures show that unemployment has fallen for the third consecutive month, which is a positive sign for the economy.",
+        "question": "What do the latest figures show about unemployment?",
+        "options": {
+            "A": "It has risen.",
+            "B": "It has stayed the same.",
+            "C": "It has fallen."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_086",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: We should try that new Mexican restaurant. I've heard the food is very authentic. B: Good idea. I love Mexican food. Let's go this Friday.",
+        "question": "What kind of food does the new restaurant serve?",
+        "options": {
+            "A": "Italian",
+            "B": "Mexican",
+            "C": "Indian"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_087",
+        "topic": "A lecture about architecture",
+        "script": "The architect, Frank Lloyd Wright, was famous for his 'organic architecture', which aimed to create harmony between buildings and the natural world.",
+        "question": "What was the aim of 'organic architecture'?",
+        "options": {
+            "A": "To build very tall buildings",
+            "B": "To create harmony between buildings and nature",
+            "C": "To use only natural materials"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_088",
+        "topic": "A discussion about a new policy at work",
+        "script": "A: The company is introducing a 'flexible working' policy. We can choose our own start and finish times, as long as we work our contracted hours. B: That's a great initiative. It will really help with my commute.",
+        "question": "What does the new 'flexible working' policy allow employees to do?",
+        "options": {
+            "A": "Work from home",
+            "B": "Work fewer hours",
+            "C": "Choose their own start and finish times"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_089",
+        "topic": "A review of a theatre play",
+        "script": "The play was a modern adaptation of a Shakespeare classic. The actors were excellent, but I found the modern costumes a bit distracting.",
+        "question": "What did the reviewer find distracting?",
+        "options": {
+            "A": "The acting",
+            "B": "The story",
+            "C": "The costumes"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_090",
+        "topic": "A conversation about a new car",
+        "script": "A: My new car has all sorts of safety features, like automatic emergency braking. B: That's reassuring. It's amazing how much technology is in cars these days.",
+        "question": "What is an example of a safety feature in the new car?",
+        "options": {
+            "A": "A sunroof",
+            "B": "A good sound system",
+            "C": "Automatic emergency braking"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_091",
+        "topic": "A talk about a historical figure",
+        "script": "Marie Curie was a pioneering scientist who is famous for her research on radioactivity. She was the first woman to win a Nobel Prize, and the only person to win it in two different scientific fields.",
+        "question": "What is a significant achievement of Marie Curie?",
+        "options": {
+            "A": "She was the first female scientist.",
+            "B": "She won the Nobel Prize in two different fields.",
+            "C": "She discovered a new planet."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_092",
+        "topic": "A discussion about a new supermarket",
+        "script": "A: The new supermarket has a self-service checkout system, which is supposed to be faster. B: I'm not a fan. I prefer to be served by a real person.",
+        "question": "What does person B prefer?",
+        "options": {
+            "A": "The self-service checkout",
+            "B": "Being served by a person",
+            "C": "Shopping online"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_093",
+        "topic": "A podcast about travel",
+        "script": "When packing for a trip, it's a good idea to roll your clothes instead of folding them. It saves a surprising amount of space in your suitcase.",
+        "question": "What packing tip is given?",
+        "options": {
+            "A": "To pack light",
+            "B": "To roll your clothes",
+            "C": "To use packing cubes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_094",
+        "topic": "A conversation about a new hobby",
+        "script": "A: I've started learning pottery. It's very therapeutic to work with the clay. B: That sounds interesting. Is it difficult to learn?",
+        "question": "How does person A describe pottery?",
+        "options": {
+            "A": "As exciting",
+            "B": "As difficult",
+            "C": "As therapeutic"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_095",
+        "topic": "A news report about a discovery",
+        "script": "Archaeologists have discovered the remains of a Roman villa underneath a farmer's field. The discovery is considered to be of national importance.",
+        "question": "What have archaeologists discovered?",
+        "options": {
+            "A": "A medieval castle",
+            "B": "A Roman villa",
+            "C": "A prehistoric settlement"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_096",
+        "topic": "A discussion about a new restaurant",
+        "script": "A: The restaurant specializes in seafood. I had the grilled octopus and it was cooked to perfection. B: I'm not a big fan of seafood. Do they have any other options?",
+        "question": "What does the restaurant specialize in?",
+        "options": {
+            "A": "Steak",
+            "B": "Pizza",
+            "C": "Seafood"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_097",
+        "topic": "A university lecture on literature",
+        "script": "The novel is a powerful critique of society at the time. The author uses satire to expose the hypocrisy of the upper classes.",
+        "question": "What does the author use to critique society?",
+        "options": {
+            "A": "Romance",
+            "B": "Satire",
+            "C": "Tragedy"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_098",
+        "topic": "A conversation about a new fitness trend",
+        "script": "A: Have you tried that new high-intensity interval training class? It's really tough, but you burn a lot of calories in a short time. B: I've heard about it. I think I'd find it too difficult.",
+        "question": "What is the benefit of the high-intensity class?",
+        "options": {
+            "A": "It is relaxing.",
+            "B": "It is not very difficult.",
+            "C": "You burn a lot of calories quickly."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_099",
+        "topic": "A radio documentary",
+        "script": "The Great Barrier Reef is the world's largest coral reef system. Unfortunately, it is under threat from climate change and pollution, which cause coral bleaching.",
+        "question": "What is a threat to the Great Barrier Reef?",
+        "options": {
+            "A": "Overfishing",
+            "B": "Tourism",
+            "C": "Climate change and pollution"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_100",
+        "topic": "A discussion about a new exhibition",
+        "script": "A: The new photography exhibition at the gallery is fantastic. The images are so powerful. B: I'd like to see that. Is it on for long? A: I think it's on until the end of the month.",
+        "question": "When does the exhibition finish?",
+        "options": {
+            "A": "Next week",
+            "B": "At the end of the month",
+            "C": "Next month"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_101",
+        "topic": "A conversation about moving house",
+        "script": "A: We're moving house next month. I'm excited about the new place, but I'm not looking forward to the process of packing everything. B: I can imagine. It's a huge job. Let me know if you need any help.",
+        "question": "What is person A not looking forward to?",
+        "options": {
+            "A": "Living in the new house",
+            "B": "Packing their belongings",
+            "C": "Decorating the new house"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_102",
+        "topic": "A talk about urban gardening",
+        "script": "Even if you live in a flat with no garden, you can still grow your own herbs and salads. All you need is a sunny windowsill and some pots.",
+        "question": "What do you need to grow herbs in a flat?",
+        "options": {
+            "A": "A large balcony",
+            "B": "A special lamp",
+            "C": "A sunny windowsill"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_103",
+        "topic": "A discussion about a new gadget",
+        "script": "A: My new smartwatch tracks my steps and my heart rate. It even reminds me to stand up if I've been sitting for too long. B: That's clever. Does the battery last long?",
+        "question": "What does the smartwatch remind person A to do?",
+        "options": {
+            "A": "To drink water",
+            "B": "To stand up",
+            "C": "To go to bed"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_104",
+        "topic": "A museum announcement",
+        "script": "We would like to remind our visitors that large bags and rucksacks are not permitted in the galleries. Please leave them in the cloakroom on the ground floor.",
+        "question": "Where should visitors leave large bags?",
+        "options": {
+            "A": "At the entrance",
+            "B": "In the cloakroom",
+            "C": "In a locker"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_105",
+        "topic": "A conversation about a new TV",
+        "script": "A: We bought a new smart TV. The picture quality is amazing, and we can connect to the internet to watch streaming services. B: That's great. It's much better than having lots of different boxes and cables.",
+        "question": "What is an advantage of the new smart TV?",
+        "options": {
+            "A": "It has a bigger screen.",
+            "B": "It can connect to the internet.",
+            "C": "It was cheaper than their old TV."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_106",
+        "topic": "A lecture on climate change",
+        "script": "One of the most effective things individuals can do to combat climate change is to reduce their consumption of meat and dairy products, as livestock farming has a huge environmental impact.",
+        "question": "What is one way individuals can combat climate change?",
+        "options": {
+            "A": "Drive an electric car",
+            "B": "Use less electricity",
+            "C": "Reduce consumption of meat and dairy"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_107",
+        "topic": "A discussion about a new colleague",
+        "script": "A: How is the new team member settling in? B: She's doing really well. She's a quick learner and she's already made some great contributions to the project.",
+        "question": "What is the new team member good at?",
+        "options": {
+            "A": "Making coffee",
+            "B": "Learning quickly",
+            "C": "Speaking foreign languages"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_108",
+        "topic": "A travel show",
+        "script": "New Zealand is a paradise for adventure lovers. You can go bungee jumping, white-water rafting, and hiking on glaciers, all in the same trip.",
+        "question": "What kind of holidaymaker is New Zealand good for?",
+        "options": {
+            "A": "Someone who wants to relax on a beach",
+            "B": "Someone who loves adventure",
+            "C": "Someone interested in history"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_109",
+        "topic": "A conversation about a new course",
+        "script": "A: I've signed up for a creative writing course. I've always wanted to write a novel. B: That's a great idea. It's important to have a creative outlet.",
+        "question": "Why did person A sign up for the course?",
+        "options": {
+            "A": "To improve their grammar",
+            "B": "To meet new people",
+            "C": "Because they want to write a novel"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_110",
+        "topic": "A news report on a scientific study",
+        "script": "A new study has found that spending time in nature can significantly reduce stress levels. Even a short walk in a park can have a positive effect.",
+        "question": "What did the new study find?",
+        "options": {
+            "A": "Exercise is good for your health.",
+            "B": "Spending time in nature reduces stress.",
+            "C": "Walking is the best form of exercise."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_111",
+        "topic": "A discussion about a new app",
+        "script": "A: This app is great for identifying plants. You just take a photo of a flower or a leaf and it tells you what it is. B: Wow, that's clever. I could use that in my garden.",
+        "question": "What does the app do?",
+        "options": {
+            "A": "It identifies birds.",
+            "B": "It identifies plants.",
+            "C": "It identifies insects."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_112",
+        "topic": "A lecture on economics",
+        "script": "Inflation is the rate at which the general level of prices for goods and services is rising, and subsequently, purchasing power is falling. Central banks attempt to limit inflation.",
+        "question": "What is inflation?",
+        "options": {
+            "A": "The rate at which prices are falling.",
+            "B": "The rate at which prices are rising.",
+            "C": "The rate of economic growth."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_113",
+        "topic": "A conversation about a difficult meeting",
+        "script": "A: That was a difficult meeting. The clients were not happy with our proposal. B: I know. We'll have to work hard to come up with some new ideas before we meet them again.",
+        "question": "Why was the meeting difficult?",
+        "options": {
+            "A": "It was very long.",
+            "B": "The clients were unhappy with the proposal.",
+            "C": "There was a technical problem."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_114",
+        "topic": "A podcast about sleep",
+        "script": "To improve your sleep quality, it's important to have a regular sleep schedule, even on weekends. This helps to regulate your body's internal clock.",
+        "question": "What is important for improving sleep quality?",
+        "options": {
+            "A": "Sleeping for a long time at weekends",
+            "B": "Having a regular sleep schedule",
+            "C": "Taking a nap during the day"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_115",
+        "topic": "A discussion about a new play",
+        "script": "A: The play was very thought-provoking. It really made me think about the issue of social inequality. B: I agree. The performances were so powerful as well.",
+        "question": "What effect did the play have on person A?",
+        "options": {
+            "A": "It made them laugh.",
+            "B": "It made them feel sad.",
+            "C": "It made them think."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_116",
+        "topic": "A travel show about a remote island",
+        "script": "The island is only accessible by a small boat, and there is no internet or phone signal. It's the perfect place to disconnect from the modern world.",
+        "question": "What is a feature of the island?",
+        "options": {
+            "A": "It has a large airport.",
+            "B": "It has fast internet.",
+            "C": "There is no internet or phone signal."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_117",
+        "topic": "A conversation about a new law",
+        "script": "A: The government is planning to introduce a tax on sugary drinks to tackle obesity. B: It's a controversial idea, but I think it might help to encourage people to make healthier choices.",
+        "question": "What is the purpose of the new tax?",
+        "options": {
+            "A": "To raise money for the government",
+            "B": "To tackle obesity",
+            "C": "To make drinks companies more profitable"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_118",
+        "topic": "A university lecture on biology",
+        "script": "Photosynthesis is the process used by plants to convert light energy into chemical energy, which they use as food. It's essential for most life on Earth.",
+        "question": "What is photosynthesis?",
+        "options": {
+            "A": "The process of plants absorbing water",
+            "B": "The process of converting light into chemical energy",
+            "C": "The process of plant reproduction"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_119",
+        "topic": "A discussion about a new office",
+        "script": "A: The new office is an open-plan design, so there are no individual offices. B: I'm not sure I like that idea. I think it will be too noisy and distracting for me to concentrate.",
+        "question": "Why is person B concerned about the new office design?",
+        "options": {
+            "A": "It will be too small.",
+            "B": "It will be too noisy and distracting.",
+            "C": "It will not have enough natural light."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_120",
+        "topic": "A review of a new car",
+        "script": "The car's main selling point is its impressive range. On a single charge, it can travel up to 300 miles, which is much further than most other electric cars on the market.",
+        "question": "What is the car's main selling point?",
+        "options": {
+            "A": "Its speed",
+            "B": "Its design",
+            "C": "Its range"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_121",
+        "topic": "A conversation about a concert",
+        "script": "A: I managed to get tickets for the festival, but they sold out in minutes. I was very lucky. B: Wow, you were lucky. I tried to get tickets but the website crashed.",
+        "question": "What happened when person B tried to buy tickets?",
+        "options": {
+            "A": "They were too expensive.",
+            "B": "The website crashed.",
+            "C": "They had already sold out."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_122",
+        "topic": "A talk about volunteering abroad",
+        "script": "Volunteering abroad can be a life-changing experience. It's a chance to immerse yourself in a different culture and contribute to a local community.",
+        "question": "What is a benefit of volunteering abroad?",
+        "options": {
+            "A": "It is a cheap way to travel.",
+            "B": "You can learn a new language.",
+            "C": "You can immerse yourself in a different culture."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_123",
+        "topic": "A discussion about a new book",
+        "script": "A: The book is set in the future, in a society where everyone is controlled by technology. It's quite a scary vision of the future. B: It sounds fascinating. I'll have to read it.",
+        "question": "What is the setting of the book?",
+        "options": {
+            "A": "The past",
+            "B": "The present",
+            "C": "The future"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_124",
+        "topic": "A university lecture on art history",
+        "script": "The Cubist movement, pioneered by artists like Picasso, was revolutionary because it abandoned the traditional single viewpoint and instead depicted subjects from multiple viewpoints simultaneously.",
+        "question": "What was revolutionary about the Cubist movement?",
+        "options": {
+            "A": "It used bright colours.",
+            "B": "It depicted subjects from multiple viewpoints.",
+            "C": "It was the first abstract art movement."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_125",
+        "topic": "A conversation about a new diet",
+        "script": "A: I'm trying the intermittent fasting diet. I only eat between noon and 8 PM. B: That sounds difficult. Don't you get hungry in the mornings?",
+        "question": "What are the rules of the diet person A is trying?",
+        "options": {
+            "A": "They don't eat carbohydrates.",
+            "B": "They only eat during a specific time window.",
+            "C": "They only eat fruit and vegetables."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_126",
+        "topic": "A news report about a new technology",
+        "script": "Scientists have developed a new type of plastic that is completely biodegradable. They hope it will help to solve the problem of plastic pollution in our oceans.",
+        "question": "What is special about the new type of plastic?",
+        "options": {
+            "A": "It is stronger than normal plastic.",
+            "B": "It is cheaper to produce.",
+            "C": "It is biodegradable."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_127",
+        "topic": "A discussion about a new manager",
+        "script": "A: What's the new manager like? B: She seems very efficient and organized. She has a clear vision for the team, which I think is what we need.",
+        "question": "What is person B's impression of the new manager?",
+        "options": {
+            "A": "She is unfriendly.",
+            "B": "She is efficient and organized.",
+            "C": "She is not very experienced."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_128",
+        "topic": "A podcast about psychology",
+        "script": "Mindfulness is the practice of paying attention to the present moment without judgment. It can be a very effective tool for reducing anxiety and improving focus.",
+        "question": "What can mindfulness help with?",
+        "options": {
+            "A": "Improving memory",
+            "B": "Reducing anxiety",
+            "C": "Learning a new skill"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_129",
+        "topic": "A conversation about a new apartment",
+        "script": "A: The best thing about our new apartment is the location. We're right next to the train station, so my commute to work is only 15 minutes now. B: That must make a huge difference.",
+        "question": "What has improved for person A with the new apartment?",
+        "options": {
+            "A": "The size of the apartment",
+            "B": "The rent",
+            "C": "Their commute to work"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_130",
+        "topic": "A review of a new video game",
+        "script": "The game has stunning graphics and an immersive open world to explore. However, the main storyline is a bit short and I finished it in about 20 hours.",
+        "question": "What is a criticism of the video game?",
+        "options": {
+            "A": "The graphics are not good.",
+            "B": "The main storyline is short.",
+            "C": "The world is not interesting to explore."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_131",
+        "topic": "A discussion about a new fitness tracker",
+        "script": "A: My new fitness tracker can even monitor my sleep patterns. It tells me how much deep sleep and light sleep I'm getting. B: That's really interesting. Is it accurate?",
+        "question": "What can the new fitness tracker monitor?",
+        "options": {
+            "A": "Blood pressure",
+            "B": "Sleep patterns",
+            "C": "Calorie intake"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_132",
+        "topic": "A talk about a famous inventor",
+        "script": "Thomas Edison is famous for inventing the light bulb, but in fact he held over a thousand patents for his inventions, including the phonograph and an early motion picture camera.",
+        "question": "What is another invention of Thomas Edison?",
+        "options": {
+            "A": "The telephone",
+            "B": "The phonograph",
+            "C": "The radio"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_133",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a tasting menu, where you get to try small portions of many different dishes. B: That sounds like a great way to experience their cooking. I'd like to try that.",
+        "question": "What is a tasting menu?",
+        "options": {
+            "A": "A menu with only vegetarian dishes",
+            "B": "A menu with small portions of many dishes",
+            "C": "A menu that is very cheap"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_134",
+        "topic": "A university lecture on business",
+        "script": "A unique selling proposition, or USP, is what makes your product or service different from your competitors. It's a crucial part of any successful marketing strategy.",
+        "question": "What is a unique selling proposition?",
+        "options": {
+            "A": "The price of your product",
+            "B": "What makes your product different",
+            "C": "The name of your product"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_135",
+        "topic": "A discussion about a new film",
+        "script": "A: The cinematography in that film was breathtaking. Every shot looked like a beautiful painting. B: I agree. The director has a real artistic vision.",
+        "question": "What was breathtaking about the film?",
+        "options": {
+            "A": "The acting",
+            "B": "The music",
+            "C": "The cinematography"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_136",
+        "topic": "A podcast about healthy habits",
+        "script": "Starting your day with a glass of water is a simple habit that can have many health benefits, including improving digestion and hydrating your body after a long night's sleep.",
+        "question": "What is a benefit of drinking water in the morning?",
+        "options": {
+            "A": "It helps you wake up.",
+            "B": "It improves digestion.",
+            "C": "It cleans your teeth."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_137",
+        "topic": "A conversation about a new policy",
+        "script": "A: The city council is proposing a new pedestrian-only zone in the city centre to reduce pollution. B: That's a good idea in principle, but it might make it difficult for local businesses.",
+        "question": "What is a potential problem with the new policy?",
+        "options": {
+            "A": "It will not reduce pollution.",
+            "B": "It will cause more traffic.",
+            "C": "It might be difficult for businesses."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_138",
+        "topic": "A news report about an election",
+        "script": "The final results of the election have been announced, and no single party has won an overall majority. This means they will have to form a coalition government.",
+        "question": "What is the outcome of the election?",
+        "options": {
+            "A": "One party has won a majority.",
+            "B": "No party has won a majority.",
+            "C": "The election has been cancelled."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_139",
+        "topic": "A discussion about a new play",
+        "script": "A: The play was very experimental. There was no real story, and the actors spoke directly to the audience. B: I found it a bit strange. I prefer a more traditional play.",
+        "question": "What was unusual about the play?",
+        "options": {
+            "A": "It was very long.",
+            "B": "The actors spoke to the audience.",
+            "C": "The tickets were very expensive."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_140",
+        "topic": "A talk about renewable energy",
+        "script": "Solar power is becoming an increasingly important source of renewable energy. The cost of solar panels has fallen dramatically in recent years, making it more accessible for homeowners.",
+        "question": "What has happened to the cost of solar panels?",
+        "options": {
+            "A": "It has increased.",
+            "B": "It has stayed the same.",
+            "C": "It has fallen."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_141",
+        "topic": "A conversation about a new smartphone",
+        "script": "A: The new smartphone has a foldable screen. You can use it as a normal phone, or open it up to have a tablet-sized screen. B: That's innovative, but I wonder if it's durable.",
+        "question": "What is a special feature of the new smartphone?",
+        "options": {
+            "A": "It has a very long battery life.",
+            "B": "It has a foldable screen.",
+            "C": "It is waterproof."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_142",
+        "topic": "A lecture on modern art",
+        "script": "Abstract art does not attempt to represent an accurate depiction of a visual reality but instead uses shapes, colours, forms and gestural marks to achieve its effect.",
+        "question": "What does abstract art use to achieve its effect?",
+        "options": {
+            "A": "Accurate depictions of reality",
+            "B": "Shapes, colours, and forms",
+            "C": "Photographs"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_143",
+        "topic": "A discussion about a new office space",
+        "script": "A: The new office has a 'hot-desking' system, so no one has their own permanent desk. B: I'm not sure about that. I like to have my own space with my photos and personal things.",
+        "question": "What is a 'hot-desking' system?",
+        "options": {
+            "A": "Everyone has a large desk.",
+            "B": "No one has their own permanent desk.",
+            "C": "The office is very warm."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_144",
+        "topic": "A podcast about finance",
+        "script": "It's a good idea to start saving for a pension as early as possible. Even small, regular contributions can grow into a large amount over time thanks to compound interest.",
+        "question": "Why is it good to start saving for a pension early?",
+        "options": {
+            "A": "Because it is tax-free.",
+            "B": "Because of compound interest.",
+            "C": "Because you can access the money at any time."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_145",
+        "topic": "A conversation about a new TV series",
+        "script": "A: The new series is a prequel to the original films. It's set 200 years before and tells the backstory of the main characters. B: Oh, that sounds interesting. I always wondered what happened before.",
+        "question": "What is a prequel?",
+        "options": {
+            "A": "A story that continues after the original story",
+            "B": "A story that is set before the original story",
+            "C": "A remake of the original story"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_146",
+        "topic": "A news report about a new bridge",
+        "script": "The new bridge is expected to open to traffic next month. It will significantly reduce journey times between the city and the airport.",
+        "question": "What will be the benefit of the new bridge?",
+        "options": {
+            "A": "It will be a tourist attraction.",
+            "B": "It will reduce journey times.",
+            "C": "It will have a cycle lane."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_147",
+        "topic": "A discussion about a new exhibition",
+        "script": "A: The exhibition is interactive. You can touch some of the exhibits and there are lots of hands-on activities. B: That sounds much more fun than a traditional museum where you can only look.",
+        "question": "What is special about the exhibition?",
+        "options": {
+            "A": "It is free.",
+            "B": "It is interactive.",
+            "C": "It is very large."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_148",
+        "topic": "A lecture on philosophy",
+        "script": "The famous philosophical question 'If a tree falls in a forest and no one is around to hear it, does it make a sound?' makes us think about the nature of reality and perception.",
+        "question": "What does the philosophical question make us think about?",
+        "options": {
+            "A": "The importance of trees",
+            "B": "The science of sound",
+            "C": "The nature of reality and perception"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_149",
+        "topic": "A conversation about a new recipe",
+        "script": "A: I tried making sourdough bread. It's a long process because you have to 'feed' the starter every day. B: But I bet the final result is worth it. Homemade bread is the best.",
+        "question": "Why is making sourdough bread a long process?",
+        "options": {
+            "A": "It has to be baked for a long time.",
+            "B": "You have to feed the starter every day.",
+            "C": "The ingredients are hard to find."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_150",
+        "topic": "A review of a new laptop",
+        "script": "The laptop is incredibly thin and light, which makes it perfect for travelling. However, the downside is that there are very few ports, so you might need to buy an adapter.",
+        "question": "What is a downside of the new laptop?",
+        "options": {
+            "A": "It is heavy.",
+            "B": "The battery life is short.",
+            "C": "There are very few ports."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_151",
+        "topic": "A discussion about a new housing development",
+        "script": "A: They are building a new housing development on the edge of town. B: I hope they include some affordable housing for first-time buyers.",
+        "question": "What does person B hope the new development will include?",
+        "options": {
+            "A": "A park",
+            "B": "A school",
+            "C": "Affordable housing"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_152",
+        "topic": "A podcast about space exploration",
+        "script": "One of the biggest challenges of a manned mission to Mars will be protecting the astronauts from the high levels of radiation in space.",
+        "question": "What is a major challenge of a mission to Mars?",
+        "options": {
+            "A": "The long journey time",
+            "B": "The lack of water on Mars",
+            "C": "The high levels of radiation"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_153",
+        "topic": "A conversation about a new gym",
+        "script": "A: The new gym has a swimming pool and a sauna. The membership is a bit more expensive, but I think it's worth it for the extra facilities. B: It sounds great. I might join too.",
+        "question": "Why is the new gym more expensive?",
+        "options": {
+            "A": "It is in the city centre.",
+            "B": "It has extra facilities.",
+            "C": "It is open 24 hours."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_154",
+        "topic": "A lecture on history",
+        "script": "The invention of the printing press in the 15th century was a turning point in history. It allowed for the mass production of books, which made knowledge much more accessible to ordinary people.",
+        "question": "What was a major impact of the printing press?",
+        "options": {
+            "A": "It made books more expensive.",
+            "B": "It made knowledge more accessible.",
+            "C": "It led to the closure of libraries."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_155",
+        "topic": "A discussion about a new film",
+        "script": "A: The film was visually stunning, but I found the plot to be rather weak and predictable. B: I felt the same. It was a case of style over substance.",
+        "question": "What was the problem with the film?",
+        "options": {
+            "A": "The acting was poor.",
+            "B": "The plot was weak.",
+            "C": "It was not visually impressive."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_156",
+        "topic": "A podcast about productivity",
+        "script": "The Pomodoro Technique is a time management method that uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks.",
+        "question": "What is the Pomodoro Technique?",
+        "options": {
+            "A": "A way to work without breaks",
+            "B": "A method for breaking down work into intervals",
+            "C": "A way to work on multiple tasks at once"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_157",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a zero-waste policy. They use all parts of the ingredients and compost any food scraps. B: That's very impressive. I admire their commitment to sustainability.",
+        "question": "What is a 'zero-waste' policy?",
+        "options": {
+            "A": "The food is free.",
+            "B": "They try to produce no rubbish.",
+            "C": "They only serve raw food."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_158",
+        "topic": "A news report about a new study",
+        "script": "A recent study suggests that learning a musical instrument can improve cognitive skills, such as memory and problem-solving, in both children and adults.",
+        "question": "What can learning a musical instrument improve?",
+        "options": {
+            "A": "Physical fitness",
+            "B": "Social skills",
+            "C": "Cognitive skills"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_159",
+        "topic": "A discussion about a new office policy",
+        "script": "A: Our company is now offering 'unlimited holiday'. We can take as much time off as we want, as long as our work gets done. B: That sounds amazing, but it requires a lot of trust and responsibility.",
+        "question": "What does the 'unlimited holiday' policy mean?",
+        "options": {
+            "A": "Employees can take a very long holiday once a year.",
+            "B": "There is no fixed limit on the amount of holiday.",
+            "C": "The company pays for the employees' holidays."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_160",
+        "topic": "A review of a new smartphone",
+        "script": "The phone's camera has an excellent 'night mode', which allows you to take surprisingly clear and bright photos even in very low light conditions.",
+        "question": "What does the 'night mode' on the camera do?",
+        "options": {
+            "A": "It allows you to take photos of the stars.",
+            "B": "It allows you to take clear photos in low light.",
+            "C": "It automatically turns on the flash."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_161",
+        "topic": "A conversation about a new exhibition",
+        "script": "A: The exhibition features virtual reality headsets that transport you to ancient Rome. You can walk through the streets and see the buildings as they were 2,000 years ago. B: That sounds incredible. I have to go and see that.",
+        "question": "What does the virtual reality experience allow you to do?",
+        "options": {
+            "A": "Read about ancient Rome",
+            "B": "See ancient Roman artefacts",
+            "C": "Experience ancient Rome as if you were there"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_162",
+        "topic": "A lecture on environmental science",
+        "script": "The concept of a 'carbon footprint' refers to the total amount of greenhouse gases produced to directly and indirectly support a person's lifestyle and activities.",
+        "question": "What is a 'carbon footprint'?",
+        "options": {
+            "A": "The amount of carbon in the atmosphere",
+            "B": "The amount of greenhouse gases produced by a person's lifestyle",
+            "C": "The amount of pollution produced by a country"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_163",
+        "topic": "A discussion about a new play",
+        "script": "A: The play was an immersive experience. The audience had to walk through different rooms and the actors performed around them. B: That's a very different way of experiencing theatre.",
+        "question": "What was special about the play?",
+        "options": {
+            "A": "The audience was part of the performance.",
+            "B": "It was a very long play.",
+            "C": "It was a comedy."
+        },
+        "answer": "A"
+    },
+    {
+        "id": "B1_L_164",
+        "topic": "A podcast about technology",
+        "script": "The 'Internet of Things' refers to the network of physical devices, vehicles, and home appliances that contain electronics and software that allows them to connect and exchange data.",
+        "question": "What is the 'Internet of Things'?",
+        "options": {
+            "A": "A new type of social media",
+            "B": "A network of connected physical devices",
+            "C": "A faster version of the internet"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_165",
+        "topic": "A conversation about a new job",
+        "script": "A: My new job has a great company culture. There's a real emphasis on teamwork and collaboration. B: That's so important. It makes such a difference to your job satisfaction.",
+        "question": "What is good about the company culture?",
+        "options": {
+            "A": "There are lots of social events.",
+            "B": "There is an emphasis on teamwork.",
+            "C": "The office is very modern."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_166",
+        "topic": "A news report about a new discovery",
+        "script": "Marine biologists have discovered a new species of deep-sea fish that can survive in the extreme pressure and darkness of the ocean floor.",
+        "question": "What is special about the new species of fish?",
+        "options": {
+            "A": "It is very large.",
+            "B": "It can survive in extreme conditions.",
+            "C": "It is brightly coloured."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_167",
+        "topic": "A discussion about a new book",
+        "script": "A: The author's writing style is very descriptive. You can almost feel the heat and smell the spices of the market she is describing. B: I love books like that. They really transport you to another place.",
+        "question": "What is special about the author's writing style?",
+        "options": {
+            "A": "It is very simple.",
+            "B": "It is very funny.",
+            "C": "It is very descriptive."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_168",
+        "topic": "A university lecture on sociology",
+        "script": "Cultural appropriation is the adoption of an element or elements of one culture by members of another culture. This can be controversial when members of a dominant culture appropriate from disadvantaged minority cultures.",
+        "question": "When can cultural appropriation be controversial?",
+        "options": {
+            "A": "When it is done for commercial gain",
+            "B": "When a dominant culture appropriates from a minority culture",
+            "C": "When it is done without understanding"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_169",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has a 'farm-to-table' concept, which means they source all their ingredients from local farms. B: That's fantastic. The food must be incredibly fresh.",
+        "question": "What does a 'farm-to-table' concept mean?",
+        "options": {
+            "A": "You can eat on a farm.",
+            "B": "The restaurant grows its own ingredients.",
+            "C": "They source ingredients from local farms."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_170",
+        "topic": "A review of a new documentary",
+        "script": "The documentary was very well-researched and presented a balanced view of the issue. It interviewed experts from both sides of the argument.",
+        "question": "What was good about the documentary?",
+        "options": {
+            "A": "It was very short.",
+            "B": "It had a clear opinion.",
+            "C": "It presented a balanced view."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_171",
+        "topic": "A discussion about a new office trend",
+        "script": "A: Our office now has a 'quiet zone' where you can go to work if you need to concentrate without any interruptions. B: That's a brilliant idea. It's so hard to focus in an open-plan office sometimes.",
+        "question": "What is the purpose of the 'quiet zone'?",
+        "options": {
+            "A": "To have meetings",
+            "B": "To make phone calls",
+            "C": "To concentrate without interruptions"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_172",
+        "topic": "A podcast about history",
+        "script": "The Silk Road was not a single road, but a network of trade routes connecting the East and West. It was central to cultural interaction between them for centuries.",
+        "question": "What was the Silk Road?",
+        "options": {
+            "A": "A single road across Asia",
+            "B": "A network of trade routes",
+            "C": "A famous tourist route"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_173",
+        "topic": "A conversation about a new technology",
+        "script": "A: I've been reading about 3D printing. It's amazing that you can print solid objects, from tools to even medical implants. B: The possibilities seem endless.",
+        "question": "What is an example of something that can be 3D printed?",
+        "options": {
+            "A": "Food",
+            "B": "Medical implants",
+            "C": "Clothes"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_174",
+        "topic": "A lecture on psychology",
+        "script": "Cognitive dissonance is the mental discomfort experienced by a person who holds two or more contradictory beliefs, ideas, or values at the same time.",
+        "question": "What is cognitive dissonance?",
+        "options": {
+            "A": "The inability to make a decision",
+            "B": "The discomfort from holding contradictory beliefs",
+            "C": "The process of learning new information"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_175",
+        "topic": "A discussion about a new film",
+        "script": "A: The film's non-linear narrative was a bit confusing at first, with all the jumping back and forth in time. B: I agree, but I thought it was very effective once you got used to it.",
+        "question": "What was confusing about the film?",
+        "options": {
+            "A": "The dialogue",
+            "B": "The non-linear narrative",
+            "C": "The characters"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_176",
+        "topic": "A podcast about travel",
+        "script": "Slow travel is an approach to travel that emphasizes connection to local people, culture, food and music. It's about spending longer in one place rather than trying to see as much as possible.",
+        "question": "What is the emphasis of 'slow travel'?",
+        "options": {
+            "A": "Visiting as many places as possible",
+            "B": "Travelling by slow forms of transport",
+            "C": "Spending longer in one place"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_177",
+        "topic": "A conversation about a new building",
+        "script": "A: The new building has a 'green roof', which is covered with plants. It helps to insulate the building and absorb rainwater. B: That's a fantastic sustainable feature.",
+        "question": "What is a benefit of a 'green roof'?",
+        "options": {
+            "A": "It provides a space for a garden.",
+            "B": "It helps to insulate the building.",
+            "C": "It is cheaper to build."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_178",
+        "topic": "A news report about a new policy",
+        "script": "The government is considering implementing a universal basic income, where all citizens would receive a regular, unconditional sum of money from the government.",
+        "question": "What is a universal basic income?",
+        "options": {
+            "A": "A tax increase for the wealthy",
+            "B": "A regular, unconditional payment to all citizens",
+            "C": "A programme to create more jobs"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_179",
+        "topic": "A discussion about a new art installation",
+        "script": "A: The new art installation in the park is very controversial. Some people love it, but others think it's a waste of public money. B: I'm not sure what to think. It's certainly very unusual.",
+        "question": "What is the public opinion of the art installation?",
+        "options": {
+            "A": "Everyone loves it.",
+            "B": "Everyone hates it.",
+            "C": "It is controversial."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_180",
+        "topic": "A talk about artificial intelligence",
+        "script": "Machine learning is a type of artificial intelligence that allows software applications to become more accurate at predicting outcomes without being explicitly programmed. The algorithm learns from data.",
+        "question": "How does machine learning work?",
+        "options": {
+            "A": "It follows a set of programmed rules.",
+            "B": "It learns from data.",
+            "C": "It copies human intelligence."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_181",
+        "topic": "A conversation about a new restaurant",
+        "script": "A: The restaurant has an 'open kitchen', so you can watch the chefs at work while you eat. B: I like that. It's a sign of confidence in their cleanliness and skill.",
+        "question": "What is an 'open kitchen'?",
+        "options": {
+            "A": "A kitchen that is outside",
+            "B": "A kitchen where customers can cook their own food",
+            "C": "A kitchen that is visible to the customers"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_182",
+        "topic": "A lecture on psychology",
+        "script": "Confirmation bias is the tendency to search for, interpret, and recall information in a way that confirms one's pre-existing beliefs or hypotheses.",
+        "question": "What is confirmation bias?",
+        "options": {
+            "A": "The tendency to forget information",
+            "B": "The tendency to favour information that confirms one's beliefs",
+            "C": "The tendency to believe everything you hear"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_183",
+        "topic": "A discussion about a new office perk",
+        "script": "A: Our company now offers a 'wellness allowance' that we can spend on things like gym memberships or yoga classes. B: That's a progressive policy. It shows they care about employee well-being.",
+        "question": "What is a 'wellness allowance'?",
+        "options": {
+            "A": "Extra holiday for being healthy",
+            "B": "Money to spend on health and fitness activities",
+            "C": "Free healthy food at work"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_184",
+        "topic": "A podcast about science",
+        "script": "The theory of relativity, developed by Albert Einstein, fundamentally changed our understanding of space and time. It's one of the most important scientific achievements of the 20th century.",
+        "question": "What did the theory of relativity change our understanding of?",
+        "options": {
+            "A": "The human body",
+            "B": "The Earth's climate",
+            "C": "Space and time"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_185",
+        "topic": "A conversation about a new film",
+        "script": "A: The film was shot in black and white, which gave it a very classic, timeless feel. B: I agree. It was a bold artistic choice, but it worked really well.",
+        "question": "What was unusual about how the film was shot?",
+        "options": {
+            "A": "It had no dialogue.",
+            "B": "It was shot in black and white.",
+            "C": "It was very short."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_186",
+        "topic": "A news report about a new law",
+        "script": "A new law will require all new buildings to be fitted with solar panels. The government hopes this will help to meet its renewable energy targets.",
+        "question": "What will the new law require?",
+        "options": {
+            "A": "All new buildings to have gardens",
+            "B": "All new buildings to have solar panels",
+            "C": "All new buildings to be made of wood"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_187",
+        "topic": "A discussion about a new book",
+        "script": "A: The book is a biography of a famous scientist. It's fascinating to read about her life and her struggles to be recognized in a male-dominated field. B: It sounds very inspiring.",
+        "question": "What is the book about?",
+        "options": {
+            "A": "A fictional story",
+            "B": "The life of a famous scientist",
+            "C": "A historical event"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_188",
+        "topic": "A lecture on urban planning",
+        "script": "Mixed-use development is an urban planning concept that blends residential, commercial, and cultural uses in one area. This creates more vibrant and walkable neighbourhoods.",
+        "question": "What is a benefit of mixed-use development?",
+        "options": {
+            "A": "It reduces the cost of housing.",
+            "B": "It creates more vibrant and walkable neighbourhoods.",
+            "C": "It provides more space for cars."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_189",
+        "topic": "A conversation about a new app",
+        "script": "A: This app uses augmented reality. You point your phone's camera at a piece of furniture in a shop, and it shows you what it would look like in your own living room. B: That's incredible. It would make decorating so much easier.",
+        "question": "What does the augmented reality app do?",
+        "options": {
+            "A": "It allows you to buy furniture online.",
+            "B": "It shows you what furniture would look like in your home.",
+            "C": "It gives you design advice."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_190",
+        "topic": "A review of a new restaurant",
+        "script": "The restaurant's menu is based on seasonal produce, so it changes every few months depending on what's available from local suppliers.",
+        "question": "Why does the restaurant's menu change?",
+        "options": {
+            "A": "Because the chef gets bored.",
+            "B": "Because it is based on seasonal produce.",
+            "C": "To attract new customers."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_191",
+        "topic": "A discussion about a new technology",
+        "script": "A: I've been reading about blockchain technology. It's the technology behind cryptocurrencies like Bitcoin. B: It's supposed to be very secure because the data is decentralized.",
+        "question": "What is a key feature of blockchain technology?",
+        "options": {
+            "A": "It is very fast.",
+            "B": "It is controlled by a central authority.",
+            "C": "The data is decentralized."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_192",
+        "topic": "A podcast about psychology",
+        "script": "The 'imposter syndrome' is a psychological pattern in which an individual doubts their accomplishments and has a persistent internalized fear of being exposed as a 'fraud'.",
+        "question": "What is the 'imposter syndrome'?",
+        "options": {
+            "A": "A fear of failure",
+            "B": "A fear of being exposed as a fraud",
+            "C": "A fear of success"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_193",
+        "topic": "A conversation about a new office",
+        "script": "A: The new office has biophilic design principles, which means it incorporates natural elements like plants and natural light to improve employee well-being. B: That's a great concept. It must be a much nicer environment to work in.",
+        "question": "What is biophilic design?",
+        "options": {
+            "A": "A minimalist design style",
+            "B": "A design that incorporates natural elements",
+            "C": "A design that uses bright colours"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_194",
+        "topic": "A news report about a new medical breakthrough",
+        "script": "Scientists have made a major breakthrough in cancer research. They have developed a new drug that targets cancer cells without harming healthy cells.",
+        "question": "What is special about the new cancer drug?",
+        "options": {
+            "A": "It is very cheap.",
+            "B": "It has no side effects.",
+            "C": "It targets cancer cells without harming healthy cells."
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_195",
+        "topic": "A discussion about a new film",
+        "script": "A: The film's soundtrack was composed by Hans Zimmer. It was so powerful and really added to the atmosphere of the film. B: I agree. The music was a character in itself.",
+        "question": "What was powerful about the film?",
+        "options": {
+            "A": "The acting",
+            "B": "The special effects",
+            "C": "The soundtrack"
+        },
+        "answer": "C"
+    },
+    {
+        "id": "B1_L_196",
+        "topic": "A lecture on sociology",
+        "script": "Gentrification is a process of changing the character of a neighbourhood through the influx of more affluent residents and businesses. It often results in the displacement of poorer residents.",
+        "question": "What is a common result of gentrification?",
+        "options": {
+            "A": "A decrease in house prices",
+            "B": "The displacement of poorer residents",
+            "C": "An increase in crime"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_197",
+        "topic": "A conversation about a new app",
+        "script": "A: This app uses gamification to help you learn a new language. You get points and badges for completing lessons. B: That sounds like a fun way to stay motivated.",
+        "question": "What is 'gamification'?",
+        "options": {
+            "A": "Learning by playing video games",
+            "B": "Using game-like elements in a non-game context",
+            "C": "A competition to see who can learn the fastest"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_198",
+        "topic": "A review of a new electric car",
+        "script": "The car features regenerative braking, which means that when you slow down, the energy is captured and used to recharge the battery slightly. This helps to increase the car's overall range.",
+        "question": "What does regenerative braking do?",
+        "options": {
+            "A": "It makes the car stop more quickly.",
+            "B": "It recharges the battery slightly.",
+            "C": "It makes the car quieter."
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_199",
+        "topic": "A discussion about a new work trend",
+        "script": "A: My company is trialling a four-day work week, with the same pay. The idea is that it will improve productivity and employee well-being. B: That's a bold move. I'd be interested to see the results.",
+        "question": "What is the company trialling?",
+        "options": {
+            "A": "A pay rise for all employees",
+            "B": "A four-day work week",
+            "C": "Longer working hours"
+        },
+        "answer": "B"
+    },
+    {
+        "id": "B1_L_200",
+        "topic": "A podcast about artificial intelligence",
+        "script": "An artificial neural network is a computing system inspired by the biological neural networks that constitute animal brains. It's a key tool in machine learning.",
+        "question": "What is an artificial neural network inspired by?",
+        "options": {
+            "A": "The structure of a computer",
+            "B": "The human brain",
+            "C": "The laws of physics"
+        },
+        "answer": "B"
+    }
+]

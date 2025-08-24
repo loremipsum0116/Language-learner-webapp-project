@@ -232,7 +232,7 @@ export default function WrongAnswers() {
       return;
     }
 
-    // 선택된 오답 항목들에서 리딩 데이터 추출
+    // 선택된 오답 항목들에서 데이터 추출
     const selectedWrongAnswers = wrongAnswers.filter((wa) => selectedIds.has(wa.id));
 
     if (selectedTab === "reading") {
@@ -252,9 +252,24 @@ export default function WrongAnswers() {
 
       sessionStorage.setItem("readingReviewData", JSON.stringify(reviewData));
       navigate("/reading/review");
-    } else {
-      // 문법/리스닝은 아직 구현되지 않음
-      alert(`${selectedTab} 복습 기능은 아직 구현되지 않았습니다.`);
+    } else if (selectedTab === "grammar") {
+      // 문법 오답 복습 - 새 창에서 문법 페이지로 이동
+      const grammarTopics = [...new Set(selectedWrongAnswers.map(wa => wa.wrongData?.topicId).filter(Boolean))];
+      if (grammarTopics.length > 0) {
+        // 첫 번째 주제로 이동 (나중에 복습 전용 페이지 구현 가능)
+        navigate(`/learn/grammar/${grammarTopics[0]}`);
+      } else {
+        alert("문법 주제 정보를 찾을 수 없습니다.");
+      }
+    } else if (selectedTab === "listening") {
+      // 리스닝 오답 복습
+      const listeningLevels = [...new Set(selectedWrongAnswers.map(wa => wa.wrongData?.level).filter(Boolean))];
+      if (listeningLevels.length > 0) {
+        // 첫 번째 레벨의 리스닝 페이지로 이동
+        navigate(`/listening?level=${listeningLevels[0]}`);
+      } else {
+        alert("리스닝 레벨 정보를 찾을 수 없습니다.");
+      }
     }
   };
 
@@ -545,10 +560,19 @@ export default function WrongAnswers() {
                       {selectedTab === "grammar" && wa.wrongData && (
                         <>
                           <div className="d-flex align-items-center mb-2">
-                            <h5 className="mb-0 me-2">📝 {wa.wrongData.topic || "문법 문제"}</h5>
+                            <h5 className="mb-0 me-2">📝 {wa.wrongData.topicTitle || "문법 문제"}</h5>
+                            <span className="badge bg-secondary">{wa.wrongData.level} 레벨</span>
                           </div>
 
-                          <p className="mb-2">{wa.wrongData.rule || "문법 규칙 정보 없음"}</p>
+                          <div className="mb-2">
+                            <div className="mb-2">
+                              <strong>문제:</strong> {wa.wrongData.question}
+                            </div>
+                            <div className="mb-2">
+                              <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
+                              <span className="badge bg-success">정답: {wa.wrongData.correctAnswer}</span>
+                            </div>
+                          </div>
                         </>
                       )}
 
@@ -556,12 +580,27 @@ export default function WrongAnswers() {
                       {selectedTab === "listening" && wa.wrongData && (
                         <>
                           <div className="d-flex align-items-center mb-2">
-                            <h5 className="mb-0 me-2">🎧 {wa.wrongData.title || "리스닝 문제"}</h5>
+                            <h5 className="mb-0 me-2">🎧 {wa.wrongData.topic || "리스닝 문제"}</h5>
+                            <span className="badge bg-secondary">{wa.wrongData.level} 레벨</span>
                           </div>
 
-                          <p className="mb-2">
-                            {wa.wrongData.audioUrl ? "오디오 파일: " + wa.wrongData.audioUrl : "리스닝 정보 없음"}
-                          </p>
+                          <div className="mb-2">
+                            <div className="mb-2">
+                              <strong>질문:</strong> {wa.wrongData.question}
+                            </div>
+                            <div className="mb-2">
+                              <strong>스크립트:</strong> <em>"{wa.wrongData.script}"</em>
+                            </div>
+                            <div className="mb-2">
+                              <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
+                              <span className="badge bg-success">정답: {wa.wrongData.correctAnswer}</span>
+                            </div>
+                            {wa.wrongData.audioFile && (
+                              <div className="small text-muted">
+                                <strong>음성 파일:</strong> {wa.wrongData.audioFile}
+                              </div>
+                            )}
+                          </div>
                         </>
                       )}
 
@@ -777,25 +816,130 @@ export default function WrongAnswers() {
                               </>
                             )}
 
-                            {/* 문법/리스닝 오답의 세부정보 */}
-                            {(selectedTab === "grammar" || selectedTab === "listening") && (
-                              <div className="row">
-                                <div className="col-md-6">
-                                  <div className="mb-2">
-                                    <strong>오답 시각:</strong>
-                                    <br />
-                                    <small className="text-muted">
-                                      {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
-                                    </small>
+                            {/* 문법 오답의 세부정보 */}
+                            {selectedTab === "grammar" && wa.wrongData && (
+                              <>
+                                <div className="mb-3">
+                                  <strong>📝 문제 전체:</strong>
+                                  <div className="bg-white p-3 mt-2 rounded border">{wa.wrongData.question}</div>
+                                </div>
+
+                                <div className="mb-3">
+                                  <strong>📝 선택지:</strong>
+                                  <div className="mt-2">
+                                    {wa.wrongData.options && wa.wrongData.options.map((option, idx) => (
+                                      <div
+                                        key={idx}
+                                        className={`p-2 mb-1 rounded border ${
+                                          option === wa.wrongData.correctAnswer
+                                            ? "bg-success text-white"
+                                            : option === wa.wrongData.userAnswer
+                                            ? "bg-danger text-white"
+                                            : "bg-white"
+                                        }`}
+                                      >
+                                        <strong>{option}</strong>
+                                        {option === wa.wrongData.correctAnswer && (
+                                          <span className="ms-2">✅ 정답</span>
+                                        )}
+                                        {option === wa.wrongData.userAnswer &&
+                                          option !== wa.wrongData.correctAnswer && (
+                                            <span className="ms-2">❌ 내 답</span>
+                                          )}
+                                      </div>
+                                    ))}
                                   </div>
                                 </div>
-                                <div className="col-md-6">
-                                  <div className="mb-2">
-                                    <strong>총 오답 횟수:</strong>{" "}
-                                    <span className="badge bg-warning">{wa.attempts}회</span>
+
+                                {wa.wrongData.explanation && (
+                                  <div className="mb-3">
+                                    <strong>💡 해설:</strong>
+                                    <div className="bg-info bg-opacity-10 p-2 mt-1 rounded border">
+                                      {wa.wrongData.explanation}
+                                    </div>
+                                  </div>
+                                )}
+
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="mb-2">
+                                      <strong>오답 시각:</strong>
+                                      <br />
+                                      <small className="text-muted">
+                                        {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <div className="mb-2">
+                                      <strong>총 오답 횟수:</strong>{" "}
+                                      <span className="badge bg-warning">{wa.attempts}회</span>
+                                    </div>
                                   </div>
                                 </div>
-                              </div>
+                              </>
+                            )}
+
+                            {/* 리스닝 오답의 세부정보 */}
+                            {selectedTab === "listening" && wa.wrongData && (
+                              <>
+                                <div className="mb-3">
+                                  <strong>🎧 질문:</strong>
+                                  <div className="bg-white p-2 mt-1 rounded border">{wa.wrongData.question}</div>
+                                </div>
+
+                                <div className="mb-3">
+                                  <strong>📝 스크립트:</strong>
+                                  <div className="bg-light p-3 mt-2 rounded border">
+                                    <em>"{wa.wrongData.script}"</em>
+                                  </div>
+                                </div>
+
+                                <div className="mb-3">
+                                  <strong>📝 선택지:</strong>
+                                  <div className="mt-2">
+                                    {Object.entries(wa.wrongData.options || {}).map(([key, value]) => (
+                                      <div
+                                        key={key}
+                                        className={`p-2 mb-1 rounded border ${
+                                          key === wa.wrongData.correctAnswer
+                                            ? "bg-success text-white"
+                                            : key === wa.wrongData.userAnswer
+                                            ? "bg-danger text-white"
+                                            : "bg-white"
+                                        }`}
+                                      >
+                                        <strong>{key}.</strong> {value}
+                                        {key === wa.wrongData.correctAnswer && (
+                                          <span className="ms-2">✅ 정답</span>
+                                        )}
+                                        {key === wa.wrongData.userAnswer &&
+                                          key !== wa.wrongData.correctAnswer && (
+                                            <span className="ms-2">❌ 내 답</span>
+                                          )}
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
+
+                                <div className="row">
+                                  <div className="col-md-6">
+                                    <div className="mb-2">
+                                      <strong>오답 시각:</strong>
+                                      <br />
+                                      <small className="text-muted">
+                                        {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                      </small>
+                                    </div>
+                                  </div>
+                                  <div className="col-md-6">
+                                    <div className="mb-2">
+                                      <strong>총 오답 횟수:</strong>{" "}
+                                      <span className="badge bg-warning">{wa.attempts}회</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
                             )}
                           </div>
                         )}

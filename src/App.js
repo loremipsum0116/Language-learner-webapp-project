@@ -31,6 +31,7 @@ import LandingPage from "./pages/LandingPage";
 import Reading from "./pages/Reading";
 import ReadingList from "./pages/ReadingList";
 import ReadingReview from "./pages/ReadingReview";
+import Listening from "./pages/Listening";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -314,7 +315,7 @@ export default function App() {
               <>
                 <Header />
                 <div className="main-content">
-                  <Placeholder title="리스닝 연습" />
+                  <Listening />
                 </div>
                 <Footer />
               </>

@@ -59,8 +59,30 @@ export default function GrammarQuiz() {
         if (!isCorrect) {
             setIncorrectAnswers(prev => [...prev, currentQuestion]);
 
-            // TODO: 오답노트 연동을 위한 백엔드 API 호출 로직 (현재는 콘솔 로그로 시뮬레이션)
-            console.log(`[오답 기록 시도] 문법 항목 ID: ${topicId}-${currentIndex}, 결과: fail`);
+            // 오답노트에 문법 문제 기록
+            try {
+                await fetchJSON('/odat-note', withCreds({
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        type: 'grammar',
+                        wrongData: {
+                            topicId: topicId,
+                            topicTitle: topic.title,
+                            questionIndex: currentIndex,
+                            question: currentQuestion.stem,
+                            userAnswer: userAnswer,
+                            correctAnswer: currentQuestion.answer,
+                            options: currentQuestion.options,
+                            explanation: currentQuestion.explanation,
+                            level: topic.level
+                        }
+                    })
+                }));
+                console.log(`[문법 오답 기록 완료] ${topic.title} - 문제 ${currentIndex + 1}`);
+            } catch (error) {
+                console.error('문법 오답 기록 실패:', error);
+            }
         }
     };
 
