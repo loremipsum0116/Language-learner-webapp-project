@@ -11,11 +11,13 @@ async function seedReadingData() {
         await prisma.reading.deleteMany();
         console.log('✅ 기존 리딩 데이터 삭제 완료');
 
-        const levels = ['A1', 'A2', 'B1', 'B2', 'C2']; // C1 제외, C2 추가
+        const levels = ['A1', 'A2', 'B1', 'B2', 'C1']; // C1 포함
         let totalImported = 0;
 
         for (const level of levels) {
-            const filePath = path.join(__dirname, level, `${level}_reading`, `${level}_reading.json`);
+            // C1은 폴더명이 다름
+            const folderName = level === 'C1' ? 'C1_Reading' : `${level}_reading`;
+            const filePath = path.join(__dirname, level, folderName, `${level}_reading.json`);
             
             if (fs.existsSync(filePath)) {
                 const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));

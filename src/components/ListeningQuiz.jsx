@@ -88,7 +88,7 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
       
       // 오답노트에 리스닝 문제 기록
       try {
-        await fetchJSON('/odat-note', withCreds({
+        await fetchJSON('/api/odat-note', withCreds({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({

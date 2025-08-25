@@ -150,18 +150,25 @@ export default function ReadingList() {
         }
     };
 
-    // UTC를 KST로 변환하는 함수
-    const formatKSTDate = (utcDateString) => {
-        const date = new Date(utcDateString);
-        const kstDate = new Date(date.getTime() + (9 * 60 * 60 * 1000)); // UTC + 9시간
-        return kstDate.toLocaleString('ko-KR', {
+    // 날짜를 KST로 표시하는 함수
+    const formatKSTDate = (dateString) => {
+        console.log('🕐 [DATE DEBUG] Original dateString:', dateString);
+        const date = new Date(dateString);
+        console.log('🕐 [DATE DEBUG] Parsed date:', date.toISOString());
+        console.log('🕐 [DATE DEBUG] Current time:', new Date().toISOString());
+        
+        const result = date.toLocaleString('ko-KR', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false
+            hour12: false,
+            timeZone: 'Asia/Seoul'
         }) + ' (KST)';
+        
+        console.log('🕐 [DATE DEBUG] Formatted result:', result);
+        return result;
     };
 
     // 문제별 학습 기록 가져오기
@@ -187,6 +194,20 @@ export default function ReadingList() {
         } else {
             setSelectedQuestions(new Set(questions.map((_, index) => index)));
         }
+    };
+
+    // 오답 문제만 선택
+    const handleSelectWrongAnswers = () => {
+        const wrongAnswerIndexes = questions
+            .map((question, index) => {
+                const studyRecord = getStudyRecord(question.id);
+                const hasStudied = !!studyRecord;
+                const isCorrect = studyRecord?.isCompleted || studyRecord?.wrongData?.isCorrect;
+                return hasStudied && !isCorrect ? index : null;
+            })
+            .filter(index => index !== null);
+        
+        setSelectedQuestions(new Set(wrongAnswerIndexes));
     };
 
     // 선택된 문제들로 학습 시작
@@ -286,12 +307,19 @@ export default function ReadingList() {
                             </div>
 
                             <div className="d-flex justify-content-between align-items-center mb-3">
-                                <div className="d-flex gap-2">
+                                <div className="d-flex gap-2 flex-wrap">
                                     <button 
                                         className="btn btn-outline-secondary btn-sm"
                                         onClick={handleSelectAll}
                                     >
                                         {selectedQuestions.size === questions.length ? '전체 해제' : '전체 선택'}
+                                    </button>
+                                    <button 
+                                        className="btn btn-outline-danger btn-sm"
+                                        onClick={handleSelectWrongAnswers}
+                                        title="빨간색 표시된 오답 문제들만 선택합니다"
+                                    >
+                                        ❌ 오답만 선택
                                     </button>
                                     <button 
                                         className={`btn btn-primary btn-sm ${selectedQuestions.size === 0 ? 'disabled' : ''}`}

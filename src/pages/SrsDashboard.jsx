@@ -12,6 +12,7 @@ import ReviewTimer from "../components/ReviewTimer";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale("ko");
+dayjs.tz.setDefault("Asia/Seoul");
 
 function fmt(d) {
     if (!d) return "-";

@@ -19,9 +19,9 @@ const OFFSETS = [0, ...STAGE_DELAYS];
  * 수동으로 새 학습 폴더를 생성합니다.
  */
 async function createManualFolder(userId, folderName, vocabIds = [], learningCurveType = "long") {
-    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, UTC 기준 자정으로 변환
+    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, KST 기준 자정으로 변환
     const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
-    const todayUtcDate = new Date(todayKst + 'T00:00:00.000Z'); // UTC 기준 자정으로 저장
+    const todayKstDate = new Date(todayKst + 'T00:00:00.000+09:00'); // KST 기준 자정으로 저장
     
     // 폴더 생성 날짜 로그 제거
     
@@ -29,8 +29,8 @@ async function createManualFolder(userId, folderName, vocabIds = [], learningCur
         data: {
             userId,
             name: folderName,
-            createdDate: todayUtcDate,
-            nextReviewDate: todayUtcDate, // Stage 0은 즉시 복습 가능
+            createdDate: todayKstDate,
+            nextReviewDate: todayKstDate, // Stage 0은 즉시 복습 가능
             cycleAnchorAt: new Date(), // 망각곡선 기준점을 생성 시각으로 설정
             kind: 'manual',
             autoCreated: false,

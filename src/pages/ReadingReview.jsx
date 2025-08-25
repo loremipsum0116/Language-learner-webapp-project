@@ -37,7 +37,7 @@ export default function ReadingReview() {
     const markAsResolved = async (wrongAnswerId) => {
         try {
             // 오답을 완료 처리
-            await fetchJSON(`/odat-note/${wrongAnswerId}/resolve`, withCreds({
+            await fetchJSON(`/api/odat-note/${wrongAnswerId}/resolve`, withCreds({
                 method: 'POST'
             }));
         } catch (error) {

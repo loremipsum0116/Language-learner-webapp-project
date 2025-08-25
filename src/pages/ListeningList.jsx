@@ -92,6 +92,18 @@ export default function ListeningList() {
         }
     };
 
+    // 오답 문제만 선택
+    const handleSelectWrongAnswers = () => {
+        const wrongAnswerIndexes = listeningData
+            .map((question, index) => {
+                const status = getQuestionStatus(question.id);
+                return status === 'incorrect' ? index : null;
+            })
+            .filter(index => index !== null);
+        
+        setSelectedQuestions(new Set(wrongAnswerIndexes));
+    };
+
     const handleStartSelectedQuestions = () => {
         if (selectedQuestions.size === 0) {
             alert('학습할 문제를 선택해주세요.');
@@ -126,12 +138,14 @@ export default function ListeningList() {
     const getQuestionDate = (questionId) => {
         const record = history.get(questionId);
         if (!record) return null;
-        return new Date(record.solvedAt).toLocaleDateString('ko-KR', {
+        return new Date(record.solvedAt).toLocaleString('ko-KR', {
             year: 'numeric',
             month: 'short', 
             day: 'numeric',
             hour: '2-digit',
-            minute: '2-digit'
+            minute: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Seoul'
         });
     };
 
@@ -226,6 +240,13 @@ export default function ListeningList() {
                             전체 선택 ({selectedQuestions.size}/{listeningData.length})
                         </label>
                     </div>
+                    <button 
+                        className="btn btn-outline-danger btn-sm ms-3"
+                        onClick={handleSelectWrongAnswers}
+                        title="빨간색 표시된 오답 문제들만 선택합니다"
+                    >
+                        ❌ 오답만 선택
+                    </button>
                 </div>
                 
                 {selectedQuestions.size > 0 && (
@@ -245,7 +266,7 @@ export default function ListeningList() {
                     const solvedDate = getQuestionDate(question.id);
                     
                     return (
-                        <div key={index} className={`question-card ${status}`}>
+                        <div key={index} className={`question-card ${status === 'correct' ? 'studied-correct' : status === 'incorrect' ? 'studied-incorrect' : ''}`}>
                             <div className="question-checkbox">
                                 <input
                                     type="checkbox"
@@ -256,15 +277,23 @@ export default function ListeningList() {
                             </div>
                             
                             <div className="question-content">
+                                {status !== 'unsolved' && (
+                                    <div className="study-status">
+                                        <div className="status-badge">
+                                            {status === 'correct' ? '✅ 정답' : '❌ 오답'}
+                                        </div>
+                                        {solvedDate && (
+                                            <div className="last-study-date">
+                                                📅 마지막 학습: {solvedDate}
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                                
                                 <div className="question-header">
                                     <span className="question-number">문제 {index + 1}</span>
                                     <div className="question-meta">
                                         <span className="question-topic">{question.topic || '리스닝'}</span>
-                                        {status !== 'unsolved' && (
-                                            <span className={`status-badge ${status}`}>
-                                                {status === 'correct' ? '✅' : '❌'}
-                                            </span>
-                                        )}
                                     </div>
                                 </div>
                                 
@@ -279,11 +308,6 @@ export default function ListeningList() {
                                     </p>
                                 </div>
                                 
-                                {solvedDate && (
-                                    <div className="solved-date">
-                                        📅 {solvedDate}
-                                    </div>
-                                )}
                             </div>
                             
                             <div className="question-actions">

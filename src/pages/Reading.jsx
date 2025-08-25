@@ -83,7 +83,7 @@ export default function Reading() {
     const recordWrongAnswer = async (questionData, userAnswer) => {
         try {
             // 오답노트에 리딩 문제 기록 (기존 API 형식 사용)
-            await fetchJSON('/odat-note/create', withCreds({
+            await fetchJSON('/api/odat-note/create', withCreds({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

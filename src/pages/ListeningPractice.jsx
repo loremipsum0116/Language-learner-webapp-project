@@ -180,27 +180,40 @@ export default function ListeningPractice() {
     };
 
     const recordWrongAnswer = async (questionData, userAnswer) => {
+        console.log(`🔍 [오답노트 디버그] recordWrongAnswer 함수 시작`);
+        console.log(`🔍 [오답노트 디버그] questionData:`, questionData);
+        console.log(`🔍 [오답노트 디버그] userAnswer:`, userAnswer);
+        console.log(`🔍 [오답노트 디버그] level:`, level);
+        
+        const requestData = {
+            type: 'listening',
+            wrongData: {
+                questionId: questionData.id,
+                level: level,
+                questionIndex: currentQuestion,
+                question: questionData.question,
+                options: questionData.options,
+                correctAnswer: questionData.correctAnswer || questionData.answer,
+                userAnswer: userAnswer,
+                explanation: questionData.explanation,
+                audioFile: `${questionData.id}.mp3`,
+                script: questionData.script,
+                topic: questionData.topic
+            }
+        };
+        
+        console.log(`🔍 [오답노트 디버그] 전송할 데이터:`, requestData);
+        
         try {
-            const response = await fetch('http://localhost:4000/api/odat-note/create', {
+            console.log(`🔍 [오답노트 디버그] API 요청 시작: http://localhost:4000/api/odat-note`);
+            const response = await fetch('http://localhost:4000/api/odat-note', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    type: 'listening', // API에서 지원하는 type 형식 사용
-                    wrongData: {
-                        questionId: questionData.id, // 오답노트 API에서 확인하는 필드
-                        level: level,
-                        questionIndex: currentQuestion,
-                        question: questionData.question,
-                        options: questionData.options,
-                        correctAnswer: questionData.correctAnswer || questionData.answer,
-                        userAnswer: userAnswer,
-                        explanation: questionData.explanation,
-                        audioFile: `${questionData.id}.mp3`,
-                        script: questionData.script
-                    }
-                })
+                body: JSON.stringify(requestData)
             });
+            
+            console.log(`🔍 [오답노트 디버그] 응답 상태:`, response.status);
             
             if (response.ok) {
                 const result = await response.json();
@@ -211,6 +224,7 @@ export default function ListeningPractice() {
                 console.error(`❌ 리스닝 오답 기록 실패 (${response.status}):`, errorText);
             }
         } catch (error) {
+            console.error('🔍 [오답노트 디버그] 네트워크 오류:', error);
             if (error.message?.includes('Unauthorized')) {
                 console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');
             } else {
@@ -266,11 +280,14 @@ export default function ListeningPractice() {
         if (correct && !completedQuestions.has(currentQuestion)) {
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
+            console.log(`✅ [리스닝 정답] ${level} - 문제 ${currentQuestion + 1} - 정답: ${correctAnswer}`);
         } else if (!correct) {
+            console.log(`❌ [리스닝 오답] ${level} - 문제 ${currentQuestion + 1} - 오답노트 기록 시작`);
             try {
                 await recordWrongAnswer(current, selectedAnswer);
+                console.log(`📝 [오답노트] 리스닝 오답 기록 함수 호출 완료`);
             } catch (error) {
-                console.error('Failed to record wrong answer:', error);
+                console.error('❌ [오답노트] 리스닝 오답 기록 실패:', error);
             }
         }
         

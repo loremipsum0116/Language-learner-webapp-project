@@ -381,6 +381,10 @@ router.post('/:id/resolve', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
+    console.log(`🔍 [서버 디버그] POST /api/odat-note 요청 받음`);
+    console.log(`🔍 [서버 디버그] req.body:`, req.body);
+    console.log(`🔍 [서버 디버그] req.user:`, req.user);
+    
     const { type, wrongData } = req.body;
     
     if (!type || !wrongData) {

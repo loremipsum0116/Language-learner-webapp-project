@@ -9,6 +9,7 @@ import { fetchJSON, withCreds } from '../api/client';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(duration);
+dayjs.tz.setDefault("Asia/Seoul");
 
 const ReviewTimer = ({ nextReviewAt, waitingUntil, isOverdue, overdueDeadline, isFromWrongAnswer, frozenUntil, isMastered, stage, className = "" }) => {
     const [timeLeft, setTimeLeft] = useState(null);

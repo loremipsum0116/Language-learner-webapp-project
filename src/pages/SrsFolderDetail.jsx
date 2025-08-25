@@ -15,6 +15,7 @@ import TimeAcceleratorControl from "../components/TimeAcceleratorControl";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.locale("ko");
+dayjs.tz.setDefault("Asia/Seoul");
 
 const fmt = (d) => (d ? dayjs.utc(d).tz('Asia/Seoul').format("YYYY.MM.DD (ddd)") : "-");
 

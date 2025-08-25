@@ -363,7 +363,7 @@ export default function LearnVocab() {
                         const queueUrl = `/srs/queue?all=true&selectedItems=${selectedItemsParam}${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
                         ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (mode === 'odat') {
-                        const queueUrl = `/odat-note/queue?limit=100${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
+                        const queueUrl = `/api/odat-note/queue?limit=100${quizTypeParam ? `&quizType=${quizTypeParam}` : ''}`;
                         ({ data } = await fetchJSON(queueUrl, withCreds({ signal: ac.signal })));
                     } else if (mode === 'flash' && folderIdParam && selectedItemsParam) {
                         // 플래시 모드에서 SRS 폴더의 선택된 아이템들로 자동학습

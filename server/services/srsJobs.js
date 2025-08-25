@@ -5,6 +5,7 @@ const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const tz = require('dayjs/plugin/timezone');
 dayjs.extend(utc); dayjs.extend(tz);
+dayjs.tz.setDefault("Asia/Seoul");
 
 const { prisma } = require('../lib/prismaClient');
 const KST = 'Asia/Seoul';

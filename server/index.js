@@ -124,7 +124,7 @@ app.use('/quiz', quizRoutes);
 app.use('/srs', srsRoutes);     // ✅ 단 한 번만 등록
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
-app.use('/odat-note', odatNoteRoutes);
+app.use('/api/odat-note', odatNoteRoutes);
 // app.use('/dict', dictRoutes);  // 이미 인증 불필요 섹션에서 등록됨
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use('/admin', adminRoutes);  // 관리자 API

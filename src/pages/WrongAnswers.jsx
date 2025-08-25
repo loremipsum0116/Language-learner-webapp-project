@@ -84,7 +84,7 @@ export default function WrongAnswers() {
 
   const loadCategories = async () => {
     try {
-      const { data } = await fetchJSON("/odat-note/categories", withCreds());
+      const { data } = await fetchJSON("/api/odat-note/categories", withCreds());
       setCategories(data);
     } catch (error) {
       console.error("Failed to load categories:", error);
@@ -94,7 +94,7 @@ export default function WrongAnswers() {
   const reload = async () => {
     setLoading(true);
     try {
-      const { data } = await fetchJSON(`/odat-note/list?type=${selectedTab}`, withCreds());
+      const { data } = await fetchJSON(`/api/odat-note/list?type=${selectedTab}`, withCreds());
       setWrongAnswers(data || []);
     } catch (error) {
       console.error("Failed to load wrong answers:", error);
@@ -112,20 +112,22 @@ export default function WrongAnswers() {
   }, [selectedTab]);
 
   const handleSelectItem = (id) => {
-    const newSelected = new Set(selectedIds);
-    if (newSelected.has(id)) {
-      newSelected.delete(id);
-    } else {
-      newSelected.add(id);
-    }
-    setSelectedIds(newSelected);
+    setSelectedIds(prev => {
+      const newSelected = new Set(prev);
+      if (newSelected.has(id)) {
+        newSelected.delete(id);
+      } else {
+        newSelected.add(id);
+      }
+      return newSelected;
+    });
   };
 
   const handleSelectAll = () => {
     if (selectedIds.size === wrongAnswers.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(wrongAnswers.map((wa) => wa.id)));
+      setSelectedIds(new Set(wrongAnswers.map((wa, index) => wa.id || `temp-${index}`)));
     }
   };
 
@@ -151,13 +153,15 @@ export default function WrongAnswers() {
   };
 
   const toggleDetails = (id) => {
-    const newExpanded = new Set(expandedDetails);
-    if (newExpanded.has(id)) {
-      newExpanded.delete(id);
-    } else {
-      newExpanded.add(id);
-    }
-    setExpandedDetails(newExpanded);
+    setExpandedDetails(prev => {
+      const newExpanded = new Set(prev);
+      if (newExpanded.has(id)) {
+        newExpanded.delete(id);
+      } else {
+        newExpanded.add(id);
+      }
+      return newExpanded;
+    });
   };
 
   const handleStartLearning = (mode) => {
@@ -436,21 +440,27 @@ export default function WrongAnswers() {
         </div>
       ) : (
         <div className="list-group">
-          {wrongAnswers.map((wa) => {
+          {wrongAnswers.map((wa, index) => {
+            const safeId = wa.id || `temp-${index}`;
             return (
               <div
-                key={wa.id}
+                key={`wrong-answer-${safeId}`}
                 className={`list-group-item ${
                   wa.srsCard?.isMastered ? "border-warning bg-light" : ""
-                } ${selectedIds.has(wa.id) ? "border-primary bg-light" : ""}`}
+                } ${selectedIds.has(safeId) ? "border-primary bg-light" : ""}`}
               >
                 <div className="d-flex justify-content-between align-items-start">
                   <div className="d-flex align-items-start gap-3">
                     <input
                       type="checkbox"
                       className="form-check-input mt-1"
-                      checked={selectedIds.has(wa.id)}
-                      onChange={() => handleSelectItem(wa.id)}
+                      checked={selectedIds.has(safeId)}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleSelectItem(safeId);
+                      }}
+                      id={`checkbox-${safeId}`}
                     />
                     <div className="flex-grow-1">
                       {/* 어휘 오답의 경우 */}
@@ -640,7 +650,7 @@ export default function WrongAnswers() {
                           <small className="text-muted">폴더:</small>
                           {wa.srsCard.folders.map((folder, idx) => (
                             <span key={folder.id} className="d-flex align-items-center gap-1">
-                              {idx > 0 && <span className="text-muted">,</span>}
+                              {idx > 0 && <span key={`comma-${folder.id}`} className="text-muted">,</span>}
                               <Link
                                 to={folder.parentId ? `/srs/folder/${folder.id}` : `/srs/parent/${folder.id}`}
                                 className={`btn ${
@@ -651,9 +661,9 @@ export default function WrongAnswers() {
                                   folder.isWrongAnswerFolder ? "[오답 폴더] " : ""
                                 }${folder.parentName ? `${folder.parentName} > ` : ""}${folder.name}으로 이동`}
                               >
-                                {folder.isWrongAnswerFolder && <span className="text-warning">⚠️ </span>}
+                                {folder.isWrongAnswerFolder && <span key={`warning-${folder.id}`} className="text-warning">⚠️ </span>}
                                 {folder.parentName && (
-                                  <span className="text-muted">{folder.parentName} &gt; </span>
+                                  <span key={`parent-${folder.id}`} className="text-muted">{folder.parentName} &gt; </span>
                                 )}
                                 {folder.name}
                               </Link>
@@ -662,15 +672,23 @@ export default function WrongAnswers() {
                         </div>
                       )}
 
-                      <button className="btn btn-sm btn-outline-info" onClick={() => toggleDetails(wa.id)}>
-                        {expandedDetails.has(wa.id) ? "▼ 세부정보 접기" : "▶ 세부정보 보기"}
+                      <button 
+                        className="btn btn-sm btn-outline-info" 
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          toggleDetails(safeId);
+                        }}
+                        key={`toggle-${safeId}`}
+                      >
+                        {expandedDetails.has(safeId) ? "▼ 세부정보 접기" : "▶ 세부정보 보기"}
                       </button>
 
                       {/* ▼▼▼ 이 아래 블록을 한 루트 내에 유지해 인접 JSX 오류 제거 ▼▼▼ */}
                       <div className="mt-2">
                         {/* 확장된 세부 정보 */}
-                        {expandedDetails.has(wa.id) && (
-                          <div className="border rounded p-3 mb-2 bg-light">
+                        {expandedDetails.has(safeId) && (
+                          <div key={`details-${safeId}`} className="border rounded p-3 mb-2 bg-light">
                             <h6 className="text-primary mb-2">📊 오답 세부 정보</h6>
 
                             {/* 어휘 오답의 세부정보 */}
@@ -768,11 +786,11 @@ export default function WrongAnswers() {
                                       >
                                         <strong>{key}.</strong> {value}
                                         {key === wa.wrongData.correctAnswer && (
-                                          <span className="ms-2">✅ 정답</span>
+                                          <span key={`reading-correct-${wa.id}-${key}`} className="ms-2">✅ 정답</span>
                                         )}
                                         {key === wa.wrongData.userAnswer &&
                                           key !== wa.wrongData.correctAnswer && (
-                                            <span className="ms-2">❌ 내 답</span>
+                                            <span key={`reading-wrong-${wa.id}-${key}`} className="ms-2">❌ 내 답</span>
                                           )}
                                       </div>
                                     ))}
@@ -821,7 +839,7 @@ export default function WrongAnswers() {
                                   <div className="mt-2">
                                     {wa.wrongData.options && wa.wrongData.options.map((option, idx) => (
                                       <div
-                                        key={idx}
+                                        key={`${wa.id}-option-${idx}-${option}`}
                                         className={`p-2 mb-1 rounded border ${
                                           option === wa.wrongData.correctAnswer
                                             ? "bg-success text-white"
@@ -832,11 +850,11 @@ export default function WrongAnswers() {
                                       >
                                         <strong>{option}</strong>
                                         {option === wa.wrongData.correctAnswer && (
-                                          <span className="ms-2">✅ 정답</span>
+                                          <span key={`grammar-correct-${wa.id}-${idx}`} className="ms-2">✅ 정답</span>
                                         )}
                                         {option === wa.wrongData.userAnswer &&
                                           option !== wa.wrongData.correctAnswer && (
-                                            <span className="ms-2">❌ 내 답</span>
+                                            <span key={`grammar-wrong-${wa.id}-${idx}`} className="ms-2">❌ 내 답</span>
                                           )}
                                       </div>
                                     ))}
@@ -903,11 +921,11 @@ export default function WrongAnswers() {
                                       >
                                         <strong>{key}.</strong> {value}
                                         {key === wa.wrongData.correctAnswer && (
-                                          <span className="ms-2">✅ 정답</span>
+                                          <span key={`listening-correct-${wa.id}-${key}`} className="ms-2">✅ 정답</span>
                                         )}
                                         {key === wa.wrongData.userAnswer &&
                                           key !== wa.wrongData.correctAnswer && (
-                                            <span className="ms-2">❌ 내 답</span>
+                                            <span key={`listening-wrong-${wa.id}-${key}`} className="ms-2">❌ 내 답</span>
                                           )}
                                       </div>
                                     ))}

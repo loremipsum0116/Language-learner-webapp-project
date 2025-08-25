@@ -5,6 +5,7 @@ const utc = require('dayjs/plugin/utc');
 const timezone = require('dayjs/plugin/timezone');
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.tz.setDefault("Asia/Seoul");
 
 // 장기 학습 곡선 (long): Stage 0 → 1 → 2 → 3 → 4 → 5 → 6 → 7 → 마스터
 // 대기 시간: [즉시, 1시간, 24h, 72h, 168h, 312h, 696h, 1440h, 마스터]
@@ -57,26 +58,25 @@ function delayDaysFor(stage, learningCurveType = "long") {
   }
 }
 
-function dateOnlyUTC(yyyy_mm_dd) {
-  // Return Date at 00:00:00Z for given YYYY-MM-DD
-  return new Date(yyyy_mm_dd + 'T00:00:00.000Z');
+function dateOnlyKST(yyyy_mm_dd) {
+  // Return Date at 00:00:00 KST for given YYYY-MM-DD
+  return new Date(yyyy_mm_dd + 'T00:00:00.000+09:00');
 }
 
-function addDaysUTC(date, days) {
-  const result = new Date(date);
-  result.setUTCDate(result.getUTCDate() + days);
+function addDaysKST(date, days) {
+  const result = dayjs(date).tz('Asia/Seoul').add(days, 'day').toDate();
   return result;
 }
 
 /**
  * Compute next review date from baseDate and given stage.
  * stage=1 ⇒ +3d, stage=2 ⇒ +7d, ... capped at 120.
- * Returns Date at 00:00:00Z (treat as date-only).
+ * Returns Date in KST timezone.
  */
 function computeNextReviewDate(baseDate, stage, learningCurveType = "long") {
   const delay = delayDaysFor(stage, learningCurveType);
   // Next review date calculation
-  return addDaysUTC(baseDate, delay);
+  return addDaysKST(baseDate, delay);
 }
 
 /**
@@ -208,8 +208,8 @@ module.exports = {
   isMaxStage,
   isFinalStage,
   delayDaysFor,
-  dateOnlyUTC,
-  addDaysUTC,
+  dateOnlyKST,
+  addDaysKST,
   computeNextReviewDate,
   computeWaitingPeriod,
   computeWaitingUntil,

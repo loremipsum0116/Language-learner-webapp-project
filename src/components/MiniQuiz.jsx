@@ -85,7 +85,7 @@ export default function LearnVocab() {
                 if (mode === 'srs_folder' && folderIdParam) {
                     ({ data } = await fetchJSON(`/srs/queue?folderId=${folderIdParam}`, withCreds({ signal: ac.signal })));
                 } else if (mode === 'odat') {
-                    ({ data } = await fetchJSON('/odat-note/queue?limit=100', withCreds({ signal: ac.signal })));
+                    ({ data } = await fetchJSON('/api/odat-note/queue?limit=100', withCreds({ signal: ac.signal })));
                 } else if (idsParam) {
                     const vocabIds = idsParam.split(',').map(Number).filter(Boolean);
                     ({ data } = await fetchJSON('/quiz/by-vocab', withCreds({ method: 'POST', body: JSON.stringify({ vocabIds }), signal: ac.signal })));

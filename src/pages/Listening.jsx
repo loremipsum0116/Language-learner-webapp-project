@@ -187,7 +187,7 @@ export default function Listening() {
                   🎧 {lv} 리스닝
                 </h5>
                 <p className="card-text text-muted">
-                  {lv === level ? questions.length : '?'}개 문제
+                  {lv === level ? questions.length : '200'}개 문제
                 </p>
                 <p className="card-text small text-muted">
                   {lv === 'A1' && '기초 일상 대화'}

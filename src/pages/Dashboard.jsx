@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import tz from 'dayjs/plugin/timezone';
 dayjs.extend(utc); dayjs.extend(tz);
+dayjs.tz.setDefault("Asia/Seoul");
 const todayKst = () => dayjs().tz('Asia/Seoul').format('YYYY-MM-DD');
 
 function StatCard({ title, value, icon, link, linkText, loading, showDetails, onDetailsClick, detailsButtonRef }) {
