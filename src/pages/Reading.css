@@ -99,12 +99,24 @@
   border: 2px solid rgba(244, 208, 63, 0.3);
 }
 
+.reading-header-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.reading-header-top .btn {
+  flex-shrink: 0;
+}
+
 .reading-title {
   font-size: 2rem;
   font-weight: 700;
   color: var(--color-charcoal);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
   text-align: center;
+  flex: 1;
 }
 
 .reading-stats {
@@ -259,6 +271,30 @@
 
 .option-btn:disabled {
   cursor: not-allowed;
+}
+
+/* Listening-specific option buttons (A/B/C only) */
+.listening-container .options-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.listening-container .option-btn {
+  justify-content: center;
+  min-height: 80px;
+  min-width: 80px;
+  padding: 1rem;
+  flex: none;
+}
+
+.listening-container .option-letter {
+  font-size: 1.8rem;
+  font-weight: 700;
+  width: auto;
+  height: auto;
+  background: none;
 }
 
 .option-letter {
@@ -463,6 +499,20 @@
   
   .reading-title {
     font-size: 1.5rem;
+  }
+
+  .reading-header-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .reading-header-top .btn {
+    align-self: flex-start;
+  }
+
+  .reading-title {
+    text-align: left;
   }
   
   .reading-card {

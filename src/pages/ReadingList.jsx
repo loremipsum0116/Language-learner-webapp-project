@@ -48,7 +48,7 @@ export default function ReadingList() {
             name: 'Advanced', 
             description: '복잡하고 긴 텍스트의 함축적 의미 파악',
             color: '#ab47bc',
-            available: false
+            available: true
         }
     ];
 

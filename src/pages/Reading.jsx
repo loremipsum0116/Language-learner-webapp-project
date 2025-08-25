@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
 import './Reading.css';
 
 export default function Reading() {
     const [searchParams] = useSearchParams();
+    const navigate = useNavigate();
     const level = searchParams.get('level') || 'A1';
     const startIndex = parseInt(searchParams.get('start')) || 0;
     const selectedQuestions = searchParams.get('questions')?.split(',').map(Number) || null;
@@ -252,7 +253,16 @@ export default function Reading() {
             <div className="reading-container">
                 {/* Header */}
                 <div className="reading-header">
-                    <h2 className="reading-title">📚 {level} 리딩 연습</h2>
+                    <div className="reading-header-top">
+                        <button 
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => navigate(`/reading?level=${level}`)}
+                            title="문제 목록으로 돌아가기"
+                        >
+                            ← 뒤로가기
+                        </button>
+                        <h2 className="reading-title">📚 {level} 리딩 연습</h2>
+                    </div>
                     <div className="reading-stats">
                         <div className="progress-info">
                             <span className="question-counter">
