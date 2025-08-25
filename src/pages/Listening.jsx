@@ -177,127 +177,38 @@ export default function Listening() {
         </div>
       </div>
       
-      {/* 퀴즈 설정 */}
+      {/* 레벨별 리스닝 연습 카드 */}
       <div className="row mb-4">
-        <div className="col-md-8">
-          <div className="card">
-            <div className="card-header">
-              <h5>⚙️ 퀴즈 설정</h5>
-            </div>
-            <div className="card-body">
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <label className="form-label">문제 수</label>
-                  <select 
-                    className="form-select"
-                    value={quizSettings.questionCount}
-                    onChange={(e) => setQuizSettings(prev => ({
-                      ...prev,
-                      questionCount: parseInt(e.target.value)
-                    }))}
-                  >
-                    <option value={5}>5문제</option>
-                    <option value={10}>10문제</option>
-                    <option value={20}>20문제</option>
-                    <option value={0}>전체 ({questions.length}문제)</option>
-                  </select>
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label">문제 순서</label>
-                  <div className="form-check form-switch mt-2">
-                    <input 
-                      className="form-check-input"
-                      type="checkbox"
-                      checked={quizSettings.randomOrder}
-                      onChange={(e) => setQuizSettings(prev => ({
-                        ...prev,
-                        randomOrder: e.target.checked
-                      }))}
-                    />
-                    <label className="form-check-label">
-                      랜덤 순서
-                    </label>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="mt-4">
-                <button 
-                  className="btn btn-success btn-lg"
-                  onClick={startQuiz}
-                  disabled={questions.length === 0}
+        {['A1', 'A2', 'B1', 'B2', 'C1'].map((lv) => (
+          <div key={lv} className="col-md-4 mb-3">
+            <div className={`card h-100 ${level === lv ? 'border-primary' : ''}`}>
+              <div className="card-body text-center">
+                <h5 className="card-title">
+                  🎧 {lv} 리스닝
+                </h5>
+                <p className="card-text text-muted">
+                  {lv === level ? questions.length : '?'}개 문제
+                </p>
+                <p className="card-text small text-muted">
+                  {lv === 'A1' && '기초 일상 대화'}
+                  {lv === 'A2' && '간단한 상황 대화'}
+                  {lv === 'B1' && '일반적인 주제 대화'}
+                  {lv === 'B2' && '복잡한 내용 이해'}
+                  {lv === 'C1' && '전문적인 내용 이해'}
+                </p>
+                <Link
+                  to={`/listening/list?level=${lv}`}
+                  className={`btn ${level === lv ? 'btn-primary' : 'btn-outline-primary'}`}
                 >
-                  🎧 리스닝 퀴즈 시작
-                </button>
+                  📋 목록 보기
+                </Link>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div className="col-md-4">
-          <div className="card">
-            <div className="card-header">
-              <h6>📋 퀴즈 정보</h6>
-            </div>
-            <div className="card-body">
-              <ul className="list-unstyled mb-0">
-                <li>📊 <strong>레벨:</strong> {level}</li>
-                <li>📝 <strong>총 문제:</strong> {questions.length}개</li>
-                <li>🎯 <strong>선택한 문제:</strong> {
-                  quizSettings.questionCount === 0 ? questions.length : 
-                  Math.min(quizSettings.questionCount, questions.length)
-                }개</li>
-                <li>🔀 <strong>순서:</strong> {quizSettings.randomOrder ? '랜덤' : '순차'}</li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        ))}
       </div>
       
-      {/* 문제 미리보기 */}
-      {questions.length > 0 && (
-        <div className="row">
-          <div className="col">
-            <div className="card">
-              <div className="card-header d-flex justify-content-between align-items-center">
-                <h5>📝 문제 미리보기</h5>
-                <span className="badge bg-primary">{questions.length}개 문제</span>
-              </div>
-              <div className="card-body">
-                <div className="row">
-                  {questions.slice(0, 6).map((q, index) => (
-                    <div key={q.id} className="col-md-6 mb-3">
-                      <div className="border rounded p-3">
-                        <div className="d-flex justify-content-between align-items-center mb-2">
-                          <span className="badge bg-secondary">{q.topic}</span>
-                          <small className="text-muted">{q.id}</small>
-                        </div>
-                        <p className="mb-2 fw-semibold">{q.question}</p>
-                        <p className="mb-0 text-muted small">
-                          <em>"{q.script.slice(0, 50)}..."</em>
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                {questions.length > 6 && (
-                  <p className="text-center text-muted mt-3">
-                    ... 그 외 {questions.length - 6}개 문제
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
       
-      {questions.length === 0 && !loading && (
-        <div className="alert alert-info">
-          <h4>문제가 없습니다</h4>
-          <p>{level} 레벨의 리스닝 문제가 아직 준비되지 않았습니다.</p>
-          <p>다른 레벨을 선택해주세요.</p>
-        </div>
-      )}
     </div>
   );
 }

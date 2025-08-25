@@ -2271,7 +2271,10 @@ router.get('/wrong-answers', async (req, res, next) => {
 
         // 폴더별 독립적인 SRS 카드 상태 정보 조회
         // 오답노트의 folderId와 정확히 일치하는 SRS 카드들만 조회
-        const vocabFolderPairs = wrongAnswers.map(wa => ({ vocabId: wa.vocabId, folderId: wa.folderId }));
+        const vocabFolderPairs = wrongAnswers
+            .filter(wa => wa.vocabId != null) // vocabId가 null이 아닌 것만
+            .map(wa => ({ vocabId: wa.vocabId, folderId: wa.folderId }));
+        
         const srsCards = vocabFolderPairs.length > 0 ? await prisma.srscard.findMany({
             where: {
                 userId,
@@ -2341,9 +2344,17 @@ router.get('/wrong-answers', async (req, res, next) => {
         // 단어별로 최신 오답 레코드만 추출 (폴더별 독립성 고려)
         const latestWrongAnswers = new Map();
         wrongAnswers.forEach(wa => {
-            const key = wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString();
-            if (!latestWrongAnswers.has(key) || new Date(wa.wrongAt) > new Date(latestWrongAnswers.get(key).wrongAt)) {
-                latestWrongAnswers.set(key, wa);
+            // vocabId가 null인 경우 (리딩 문제 등) 처리
+            if (wa.vocabId == null) {
+                const key = `reading_${wa.itemId || wa.id}_${wa.folderId || 'none'}`;
+                if (!latestWrongAnswers.has(key) || new Date(wa.wrongAt) > new Date(latestWrongAnswers.get(key).wrongAt)) {
+                    latestWrongAnswers.set(key, wa);
+                }
+            } else {
+                const key = wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString();
+                if (!latestWrongAnswers.has(key) || new Date(wa.wrongAt) > new Date(latestWrongAnswers.get(key).wrongAt)) {
+                    latestWrongAnswers.set(key, wa);
+                }
             }
         });
         
@@ -2369,15 +2380,24 @@ router.get('/wrong-answers', async (req, res, next) => {
                 Math.max(0, Math.ceil((reviewWindowStart.getTime() - now.getTime()) / (1000 * 60 * 60))) : 0;
             
             // 해당 단어+폴더의 SRS 카드 상태 정보 추가 (폴더별 독립성)
-            const srsCardKey = wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString();
+            const srsCardKey = wa.vocabId != null 
+                ? (wa.folderId ? `${wa.vocabId}_${wa.folderId}` : wa.vocabId.toString())
+                : `reading_${wa.itemId || wa.id}_${wa.folderId || 'none'}`;
             const srsCard = srsCardMap.get(srsCardKey);
             
             // 해당 단어+폴더의 모든 오답 기록 가져오기 (폴더별 독립성)
             const allWrongAnswersForVocab = wrongAnswers.filter(record => {
-                if (wa.folderId) {
-                    return record.vocabId === wa.vocabId && record.folderId === wa.folderId;
+                // vocabId가 null인 경우 (리딩 문제 등) 처리
+                if (wa.vocabId == null) {
+                    return record.vocabId == null && 
+                           (record.itemId === wa.itemId || record.id === wa.id) &&
+                           record.folderId === wa.folderId;
                 } else {
-                    return record.vocabId === wa.vocabId;
+                    if (wa.folderId) {
+                        return record.vocabId === wa.vocabId && record.folderId === wa.folderId;
+                    } else {
+                        return record.vocabId === wa.vocabId;
+                    }
                 }
             });
             

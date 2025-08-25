@@ -218,6 +218,8 @@ model user {
   tutorlog         tutorlog[]
   uservocab        uservocab[]
   wronganswer      wronganswer[]
+  readingRecord    readingRecord[]
+  listeningRecord  listeningRecord[]
 }
 
 model uservocab {
@@ -310,4 +312,36 @@ model vocabexamcategory {
   @@index([examCategoryId])
   @@index([vocabId])
   @@map("vocab_exam_categories")
+}
+
+model readingRecord {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  questionId    String
+  level         String
+  isCorrect     Boolean
+  userAnswer    String
+  correctAnswer String
+  solvedAt      DateTime @default(now())
+  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId, level])
+  @@index([userId, level])
+  @@map("reading_records")
+}
+
+model listeningRecord {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  questionId    String
+  level         String
+  isCorrect     Boolean
+  userAnswer    String
+  correctAnswer String
+  solvedAt      DateTime @default(now())
+  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, questionId, level])
+  @@index([userId, level])
+  @@map("listening_records")
 }

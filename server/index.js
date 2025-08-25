@@ -87,6 +87,7 @@ app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
+app.use('/api/listening', require('./routes/listening'));  // Listening API
 
 // 오디오 파일 목록 API (인증 불필요)
 app.get('/audio-files/:level', (req, res) => {

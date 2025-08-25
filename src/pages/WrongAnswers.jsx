@@ -311,43 +311,35 @@ export default function WrongAnswers() {
         </ul>
       </div>
 
-      {/* 요약 정보 */}
-      <div className="row mb-4">
-        <div className="col-md-4">
-          <div className="card text-center">
-            <div className="card-body">
-              <h3 className="text-success">{availableCount}</h3>
-              <p className="mb-0">복습 가능</p>
+      {/* 요약 정보 - 어휘 탭일 때만 표시 */}
+      {selectedTab === "vocab" && (
+        <div className="row mb-4">
+          <div className="col-md-4">
+            <div className="card text-center">
+              <div className="card-body">
+                <h3 className="text-success">{availableCount}</h3>
+                <p className="mb-0">복습 가능</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card text-center">
+              <div className="card-body">
+                <h3 className="text-warning">{totalCount - availableCount}</h3>
+                <p className="mb-0">복습 대기 중</p>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-4">
+            <div className="card text-center">
+              <div className="card-body">
+                <h3 className="text-info">{categories[selectedTab]?.total || 0}</h3>
+                <p className="mb-0">전체 어휘 오답</p>
+              </div>
             </div>
           </div>
         </div>
-        <div className="col-md-4">
-          <div className="card text-center">
-            <div className="card-body">
-              <h3 className="text-warning">{totalCount - availableCount}</h3>
-              <p className="mb-0">복습 대기 중</p>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-4">
-          <div className="card text-center">
-            <div className="card-body">
-              <h3 className="text-info">{categories[selectedTab]?.total || 0}</h3>
-              <p className="mb-0">
-                전체{" "}
-                {selectedTab === "vocab"
-                  ? "어휘"
-                  : selectedTab === "grammar"
-                  ? "문법"
-                  : selectedTab === "reading"
-                  ? "리딩"
-                  : "리스닝"}{" "}
-                오답
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      )}
 
       {/* 어휘 탭일 때만 학습 버튼들 표시 */}
       {selectedTab === "vocab" && (

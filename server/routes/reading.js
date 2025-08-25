@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
+const authMiddleware = require('../middleware/auth');
 
 // GET /reading/list
 router.get('/list', async (req, res) => {
@@ -63,7 +64,7 @@ router.get('/practice/:level', async (req, res) => {
 });
 
 // POST /reading/record - 리딩 문제 풀이 기록 저장 (정답/오답 모두)
-router.post('/record', async (req, res) => {
+router.post('/record', authMiddleware, async (req, res) => {
     try {
         const { questionId, level, isCorrect, userAnswer, correctAnswer, timeTaken } = req.body;
         
@@ -143,7 +144,7 @@ router.post('/record', async (req, res) => {
 });
 
 // GET /reading/history/:level - 레벨별 학습 기록 조회
-router.get('/history/:level', async (req, res) => {
+router.get('/history/:level', authMiddleware, async (req, res) => {
     try {
         const { level } = req.params;
         const userId = req.user?.id;
@@ -153,21 +154,29 @@ router.get('/history/:level', async (req, res) => {
         }
 
         // 해당 레벨의 모든 학습 기록 조회
+        console.log(`[DEBUG] Searching for records: userId=${userId}, level=${level}`);
+        
         const records = await prisma.wronganswer.findMany({
             where: {
                 userId: userId,
-                itemType: 'reading',
-                wrongData: {
-                    path: ['level'],
-                    equals: level.toUpperCase()
-                }
+                itemType: 'reading'
             },
             orderBy: { wrongAt: 'desc' }
+        });
+        
+        // 클라이언트 측에서 레벨 필터링
+        const filteredRecords = records.filter(record => 
+            record.wrongData?.level === level || record.wrongData?.level === level.toUpperCase()
+        );
+
+        console.log(`[DEBUG] Found ${records.length} total records, ${filteredRecords.length} filtered for user ${userId}, level ${level}`);
+        filteredRecords.forEach(record => {
+            console.log(`[DEBUG] Record ID ${record.id}: questionId=${record.wrongData?.questionId}, level=${record.wrongData?.level}, isCompleted=${record.isCompleted}`);
         });
 
         // questionId별로 최신 기록만 유지
         const latestRecords = {};
-        records.forEach(record => {
+        filteredRecords.forEach(record => {
             const questionId = record.wrongData?.questionId;
             if (questionId && (!latestRecords[questionId] || record.wrongAt > latestRecords[questionId].wrongAt)) {
                 latestRecords[questionId] = record;

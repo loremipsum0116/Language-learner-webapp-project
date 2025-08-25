@@ -32,6 +32,8 @@ import Reading from "./pages/Reading";
 import ReadingList from "./pages/ReadingList";
 import ReadingReview from "./pages/ReadingReview";
 import Listening from "./pages/Listening";
+import ListeningList from "./pages/ListeningList";
+import ListeningPractice from "./pages/ListeningPractice";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -279,6 +281,30 @@ export default function App() {
                 <Header />
                 <div className="main-content">
                   <Listening />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/listening/list" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <ListeningList />
+                </div>
+                <Footer />
+              </>
+            } 
+          />
+          <Route 
+            path="/listening/practice" 
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <ListeningPractice />
                 </div>
                 <Footer />
               </>

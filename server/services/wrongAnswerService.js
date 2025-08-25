@@ -121,6 +121,10 @@ async function getWrongAnswers(userId, includeCompleted = false, folderId = null
     // 타임머신 시간 오프셋 적용
     const { getOffsetDate } = require('../routes/timeMachine');
     const now = dayjs(getOffsetDate());
+    console.log(`[WRONG ANSWER SERVICE] Current time: ${now.format()}`);
+    
+    // 데이터베이스 연결 테스트
+    await prisma.$queryRaw`SELECT 1`;
     
     // 기본 where 조건
     const whereCondition = {

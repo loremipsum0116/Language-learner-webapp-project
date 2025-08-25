@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams, useLocation } from 'react-router-dom';
 import './ReadingList.css';
 
 export default function ReadingList() {
     const [searchParams] = useSearchParams();
+    const location = useLocation();
     const selectedLevel = searchParams.get('level');
     
     const [levelData, setLevelData] = useState({});
@@ -11,6 +12,7 @@ export default function ReadingList() {
     const [studyHistory, setStudyHistory] = useState({});
     const [loading, setLoading] = useState(true);
     const [questionsLoading, setQuestionsLoading] = useState(false);
+    const [selectedQuestions, setSelectedQuestions] = useState(new Set());
 
     const levels = [
         { 
@@ -56,6 +58,13 @@ export default function ReadingList() {
             loadQuestionsForLevel(selectedLevel);
         }
     }, [selectedLevel]);
+
+    // 페이지 location이 변경될 때마다 학습 기록 새로고침
+    useEffect(() => {
+        if (selectedLevel) {
+            loadQuestionsForLevel(selectedLevel);
+        }
+    }, [location.key, selectedLevel]);
 
     const loadLevelData = async () => {
         setLoading(true);
@@ -107,12 +116,17 @@ export default function ReadingList() {
                 });
                 if (historyResponse.ok) {
                     const historyResult = await historyResponse.json();
+                    console.log(`[DEBUG] History loaded for ${level}:`, historyResult.data);
                     setStudyHistory(historyResult.data || {});
-                } else if (historyResponse.status !== 401) {
-                    console.error(`Failed to load history for ${level}`);
+                } else if (historyResponse.status === 401) {
+                    console.log(`[DEBUG] User not authenticated - no history loaded for ${level}`);
+                    setStudyHistory({});
+                } else {
+                    console.error(`[DEBUG] Failed to load history for ${level}:`, historyResponse.status);
+                    setStudyHistory({});
                 }
             } catch (historyErr) {
-                console.log('History loading failed (user might not be logged in):', historyErr);
+                console.log('[DEBUG] History loading failed (user might not be logged in):', historyErr);
                 setStudyHistory({});
             }
             
@@ -153,6 +167,42 @@ export default function ReadingList() {
     // 문제별 학습 기록 가져오기
     const getStudyRecord = (questionId) => {
         return studyHistory[questionId];
+    };
+
+    // 문제 선택/해제
+    const handleQuestionSelect = (questionIndex) => {
+        const newSelected = new Set(selectedQuestions);
+        if (newSelected.has(questionIndex)) {
+            newSelected.delete(questionIndex);
+        } else {
+            newSelected.add(questionIndex);
+        }
+        setSelectedQuestions(newSelected);
+    };
+
+    // 전체 선택/해제
+    const handleSelectAll = () => {
+        if (selectedQuestions.size === questions.length) {
+            setSelectedQuestions(new Set());
+        } else {
+            setSelectedQuestions(new Set(questions.map((_, index) => index)));
+        }
+    };
+
+    // 선택된 문제들로 학습 시작
+    const handleStartSelectedQuestions = () => {
+        if (selectedQuestions.size === 0) {
+            alert('학습할 문제를 선택해주세요.');
+            return;
+        }
+        
+        const selectedIndexes = Array.from(selectedQuestions).sort((a, b) => a - b);
+        const queryParams = new URLSearchParams({
+            level: selectedLevel,
+            questions: selectedIndexes.join(',')
+        });
+        
+        window.location.href = `/reading/practice?${queryParams.toString()}`;
     };
 
     if (loading) {
@@ -208,19 +258,25 @@ export default function ReadingList() {
                         <div className="questions-container">
                             <div className="questions-summary mb-4">
                                 <div className="row text-center">
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div className="summary-card">
                                             <h3>{questions.length}</h3>
                                             <p>총 문제 수</p>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div className="summary-card">
-                                            <h3>약 {Math.ceil(questions.length * 1.5)}분</h3>
+                                            <h3>{selectedQuestions.size}</h3>
+                                            <p>선택된 문제</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-3">
+                                        <div className="summary-card">
+                                            <h3>약 {Math.ceil((selectedQuestions.size || questions.length) * 1.5)}분</h3>
                                             <p>예상 소요시간</p>
                                         </div>
                                     </div>
-                                    <div className="col-md-4">
+                                    <div className="col-md-3">
                                         <div className="summary-card">
                                             <h3>{difficultyInfo.difficulty}</h3>
                                             <p>난이도</p>
@@ -229,11 +285,29 @@ export default function ReadingList() {
                                 </div>
                             </div>
 
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div className="d-flex gap-2">
+                                    <button 
+                                        className="btn btn-outline-secondary btn-sm"
+                                        onClick={handleSelectAll}
+                                    >
+                                        {selectedQuestions.size === questions.length ? '전체 해제' : '전체 선택'}
+                                    </button>
+                                    <button 
+                                        className={`btn btn-primary btn-sm ${selectedQuestions.size === 0 ? 'disabled' : ''}`}
+                                        onClick={handleStartSelectedQuestions}
+                                        disabled={selectedQuestions.size === 0}
+                                    >
+                                        🚀 선택한 문제 학습하기 ({selectedQuestions.size}개)
+                                    </button>
+                                </div>
+                            </div>
+
                             <div className="questions-grid">
                                 {questions.map((question, index) => {
                                     const studyRecord = getStudyRecord(question.id);
                                     const hasStudied = !!studyRecord;
-                                    const isCorrect = studyRecord?.wrongData?.isCorrect;
+                                    const isCorrect = studyRecord?.isCompleted || studyRecord?.wrongData?.isCorrect;
                                     
                                     return (
                                         <div 
@@ -245,7 +319,15 @@ export default function ReadingList() {
                                             }`}
                                         >
                                             <div className="question-header">
-                                                <span className="question-number">#{index + 1}</span>
+                                                <div className="d-flex align-items-center gap-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="form-check-input"
+                                                        checked={selectedQuestions.has(index)}
+                                                        onChange={() => handleQuestionSelect(index)}
+                                                    />
+                                                    <span className="question-number">#{index + 1}</span>
+                                                </div>
                                                 <div className="question-actions">
                                                     <Link 
                                                         to={`/reading/practice?level=${selectedLevel}&start=${index}`}
@@ -382,10 +464,10 @@ export default function ReadingList() {
                                 <div className="level-actions">
                                     {isAvailable ? (
                                         <Link 
-                                            to={`/reading/practice?level=${level.code}`}
+                                            to={`/reading?level=${level.code}`}
                                             className="start-btn"
                                         >
-                                            🚀 시작하기
+                                            📋 목록 보기
                                         </Link>
                                     ) : (
                                         <button className="start-btn disabled" disabled>

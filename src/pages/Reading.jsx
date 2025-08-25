@@ -7,6 +7,7 @@ export default function Reading() {
     const [searchParams] = useSearchParams();
     const level = searchParams.get('level') || 'A1';
     const startIndex = parseInt(searchParams.get('start')) || 0;
+    const selectedQuestions = searchParams.get('questions')?.split(',').map(Number) || null;
     
     const [readingData, setReadingData] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState(startIndex);
@@ -35,13 +36,36 @@ export default function Reading() {
             const result = await response.json();
             
             if (result.data && result.data.length > 0) {
-                setReadingData(result.data);
+                // 선택된 문제들만 필터링
+                if (selectedQuestions && selectedQuestions.length > 0) {
+                    const filteredData = selectedQuestions.map(index => result.data[index]).filter(Boolean);
+                    setReadingData(filteredData);
+                    setCurrentQuestion(0); // 필터된 데이터에서는 처음부터 시작
+                } else if (!selectedQuestions && startIndex >= 0 && searchParams.get('start')) {
+                    // 단일 문제 모드: start 파라미터가 있고 questions 파라미터가 없는 경우
+                    const singleQuestion = result.data[startIndex];
+                    if (singleQuestion) {
+                        setReadingData([singleQuestion]);
+                        setCurrentQuestion(0);
+                    } else {
+                        setReadingData([]);
+                        setError('해당 문제를 찾을 수 없습니다.');
+                    }
+                } else {
+                    // 전체 데이터 로드 (처음부터 시작하거나 특정 인덱스부터 시작)
+                    setReadingData(result.data);
+                    setCurrentQuestion(startIndex);
+                }
             } else {
                 setReadingData([]);
                 setError(`${level} 레벨 리딩 데이터가 없습니다.`);
             }
             
-            setCurrentQuestion(startIndex);
+            // 필터링되지 않은 전체 데이터를 로드한 경우에만 startIndex 사용
+            if (!selectedQuestions && startIndex === 0) {
+                setCurrentQuestion(startIndex);
+            }
+            // 다른 경우들은 위에서 이미 setCurrentQuestion(0)으로 처리됨
             setSelectedAnswer(null);
             setShowExplanation(false);
             setIsCorrect(false);
@@ -113,8 +137,9 @@ export default function Reading() {
         
         // 정답/오답 모두 기록 저장 (로그인된 사용자만)
         try {
-            await fetchJSON('/api/reading/record', withCreds({
+            const response = await fetch('http://localhost:4000/api/reading/record', {
                 method: 'POST',
+                credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     questionId: current.id,
@@ -123,14 +148,19 @@ export default function Reading() {
                     userAnswer: selectedAnswer,
                     correctAnswer: current.correctAnswer
                 })
-            }));
-            console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
-        } catch (error) {
-            if (error.message === 'Unauthorized') {
+            });
+            
+            if (response.ok) {
+                const result = await response.json();
+                console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`, result);
+            } else if (response.status === 401) {
                 console.log('📝 [비로그인 사용자] 리딩 기록은 로그인 후 저장됩니다.');
             } else {
-                console.error('❌ 리딩 기록 저장 실패:', error);
+                const errorText = await response.text();
+                console.error(`❌ 리딩 기록 저장 실패 (${response.status}):`, errorText);
             }
+        } catch (error) {
+            console.error('❌ 리딩 기록 저장 실패:', error);
         }
 
         if (correct && !completedQuestions.has(currentQuestion)) {
@@ -288,7 +318,9 @@ export default function Reading() {
                                     )}
                                     <span className="correct-answer">정답: {current.correctAnswer}</span>
                                 </div>
-                                <p className="explanation-text">{current.explanation}</p>
+                                {current.explanation && (
+                                    <p className="explanation-text">{current.explanation}</p>
+                                )}
                             </div>
                         )}
                     </div>
