@@ -20,6 +20,7 @@
     "react-router-dom": "^7.7.1",
     "react-scripts": "5.0.1",
     "react-toastify": "^11.0.5",
+    "stream-json": "^1.9.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
