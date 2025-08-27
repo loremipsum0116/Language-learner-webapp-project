@@ -1,30 +1,4142 @@
-adviser
-bank
-buyer
-criteria
-damn
-dialog
-firstly
-gently
-grammar
-holder
-lovely
-lover
-maker
-mine
-noun
-pro
-race
-rest
-row
-server
-set
-stick
-strip
-supplier
-surprisingly
-voter
-wed
-whilst
-outdate
-unauthorize
+{
+    "lemma": "accrual",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/əˈkruːəl/",
+    "definition": "The accumulation or increase of something over time, especially payments or benefits.",
+    "koGloss": "n. 발생, 증가",
+    "koExample": "휴가 일수의 발생은 연초에 시작된다.",
+    "koChirpScript": "accrual. 발생 또는 증가라는 뜻입니다. The accrual of vacation days begins at the start of the year. 휴가 일수의 발생은 연초에 시작된다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/accrual/word.mp3",
+      "gloss": "advanced/accrual/gloss.mp3",
+      "example": "advanced/accrual/example.mp3"
+    }
+  },
+  {
+    "lemma": "accrue",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/əˈkruː/",
+    "definition": "(of sums of money or benefits) be received by someone in regular or increasing amounts over time.",
+    "koGloss": "v. (이자가) 붙다, 발생하다",
+    "koExample": "이자는 매일 발생할 것이다.",
+    "koChirpScript": "accrue. 이자가 붙다 또는 발생하다 라는 뜻입니다. Interest will accrue on a daily basis. 이자는 매일 발생할 것이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/accrue/word.mp3",
+      "gloss": "advanced/accrue/gloss.mp3",
+      "example": "advanced/accrue/example.mp3"
+    }
+  },
+  {
+    "lemma": "alas",
+    "pos": "interjection",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/əˈlæs/",
+    "definition": "An expression of grief, pity, or concern.",
+    "koGloss": "int. 아아, 슬프다",
+    "koExample": "아아, 그는 너무 늦게 도착했다.",
+    "koChirpScript": "alas. 아아, 슬프다 라는 감탄사입니다. Alas, he arrived too late. 아아, 그는 너무 늦게 도착했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/alas/word.mp3",
+      "gloss": "intermediate/alas/gloss.mp3",
+      "example": "intermediate/alas/example.mp3"
+    }
+  },
+  {
+    "lemma": "albeit",
+    "pos": "conjunction",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌɔːlˈbiːɪt/",
+    "definition": "Though.",
+    "koGloss": "conj. 비록 ~일지라도",
+    "koExample": "그는 비록 느리긴 했지만, 꾸준히 발전했다.",
+    "koChirpScript": "albeit. 비록 ~일지라도 라는 뜻입니다. He made steady progress, albeit slowly. 그는 비록 느리긴 했지만, 꾸준히 발전했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/albeit/word.mp3",
+      "gloss": "advanced/albeit/gloss.mp3",
+      "example": "advanced/albeit/example.mp3"
+    }
+  },
+  {
+    "lemma": "alpha",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈælfə/",
+    "definition": "The first letter of the Greek alphabet (Α, α).",
+    "koGloss": "n. 알파, 처음",
+    "koExample": "알파와 오메가는 시작과 끝을 의미한다.",
+    "koChirpScript": "alpha. 알파 또는 처음이라는 뜻입니다. Alpha and Omega signify the beginning and the end. 알파와 오메가는 시작과 끝을 의미한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/alpha/word.mp3",
+      "gloss": "intermediate/alpha/gloss.mp3",
+      "example": "intermediate/alpha/example.mp3"
+    }
+  },
+  {
+    "lemma": "amortization",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌæmərtəˈzeɪʃn/",
+    "definition": "The action or process of gradually writing off the initial cost of an asset.",
+    "koGloss": "n. (부채의) 상환",
+    "koExample": "대출 상환 기간은 30년이다.",
+    "koChirpScript": "amortization. 부채의 상환이라는 뜻입니다. The loan has an amortization period of 30 years. 대출 상환 기간은 30년이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/amortization/word.mp3",
+      "gloss": "advanced/amortization/gloss.mp3",
+      "example": "advanced/amortization/example.mp3"
+    }
+  },
+  {
+    "lemma": "amortize",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈæmərtaɪz/",
+    "definition": "Gradually write off the initial cost of (an asset).",
+    "koGloss": "v. (부채를) 상환하다",
+    "koExample": "그들은 25년에 걸쳐 주택 담보 대출을 상환할 것이다.",
+    "koChirpScript": "amortize. 부채를 상환하다 라는 뜻입니다. They will amortize their mortgage over 25 years. 그들은 25년에 걸쳐 주택 담보 대출을 상환할 것이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/amortize/word.mp3",
+      "gloss": "advanced/amortize/gloss.mp3",
+      "example": "advanced/amortize/example.mp3"
+    }
+  },
+  {
+    "lemma": "analytic",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌænəˈlɪtɪk/",
+    "definition": "Relating to or using analysis or logical reasoning.",
+    "koGloss": "adj. 분석적인",
+    "koExample": "그는 문제에 대해 분석적인 접근을 했다.",
+    "koChirpScript": "analytic. 분석적인 이라는 뜻입니다. He took an analytic approach to the problem. 그는 문제에 대해 분석적인 접근을 했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/analytic/word.mp3",
+      "gloss": "upper/analytic/gloss.mp3",
+      "example": "upper/analytic/example.mp3"
+    }
+  },
+  {
+    "lemma": "annualize",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈænjuəlaɪz/",
+    "definition": "Calculate or recalculate (a rate or figure) on an annual basis.",
+    "koGloss": "v. 연간으로 환산하다",
+    "koExample": "분기별 수익을 연간으로 환산하면 전체 그림을 볼 수 있다.",
+    "koChirpScript": "annualize. 연간으로 환산하다 라는 뜻입니다. Annualizing the quarterly profits gives a fuller picture. 분기별 수익을 연간으로 환산하면 전체 그림을 볼 수 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/annualize/word.mp3",
+      "gloss": "advanced/annualize/gloss.mp3",
+      "example": "advanced/annualize/example.mp3"
+    }
+  },
+  {
+    "lemma": "annuity",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/əˈnuːəti/",
+    "definition": "A fixed sum of money paid to someone each year, typically for the rest of their life.",
+    "koGloss": "n. 연금",
+    "koExample": "그는 은퇴 후 연금으로 생활한다.",
+    "koChirpScript": "annuity. 연금이라는 뜻입니다. He lives on an annuity after retirement. 그는 은퇴 후 연금으로 생활한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/annuity/word.mp3",
+      "gloss": "advanced/annuity/gloss.mp3",
+      "example": "advanced/annuity/example.mp3"
+    }
+  },
+  {
+    "lemma": "annum",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈænəm/",
+    "definition": "By the year; yearly.",
+    "koGloss": "n. 1년에",
+    "koExample": "그의 연봉은 1년에 5만 달러이다.",
+    "koChirpScript": "annum. 1년에 라는 뜻입니다. His salary is $50,000 per annum. 그의 연봉은 1년에 5만 달러이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/annum/word.mp3",
+      "gloss": "advanced/annum/gloss.mp3",
+      "example": "advanced/annum/example.mp3"
+    }
+  },
+  {
+    "lemma": "antitrust",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌæntiˈtrʌst/",
+    "definition": "Relating to legislation preventing or controlling trusts or other monopolies, with the intention of promoting competition in business.",
+    "koGloss": "adj. 독점 금지의",
+    "koExample": "그 회사는 독점 금지법 위반으로 조사를 받았다.",
+    "koChirpScript": "antitrust. 독점 금지의 라는 뜻입니다. The company was investigated for violating antitrust laws. 그 회사는 독점 금지법 위반으로 조사를 받았다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/antitrust/word.mp3",
+      "gloss": "upper/antitrust/gloss.mp3",
+      "example": "upper/antitrust/example.mp3"
+    }
+  },
+  {
+    "lemma": "arbitrage",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈɑːrbɪtrɑːʒ/",
+    "definition": "The simultaneous buying and selling of securities, currency, or commodities in different markets or in derivative forms in order to take advantage of differing prices for the same asset.",
+    "koGloss": "n. 차익 거래",
+    "koExample": "차익 거래는 위험이 없는 이익을 얻기 위해 사용된다.",
+    "koChirpScript": "arbitrage. 차익 거래라는 뜻입니다. Arbitrage is used to make a risk-free profit. 차익 거래는 위험이 없는 이익을 얻기 위해 사용된다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/arbitrage/word.mp3",
+      "gloss": "advanced/arbitrage/gloss.mp3",
+      "example": "advanced/arbitrage/example.mp3"
+    }
+  },
+  {
+    "lemma": "arbitration",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌɑːrbɪˈtreɪʃn/",
+    "definition": "The use of an arbitrator to settle a dispute.",
+    "koGloss": "n. 중재",
+    "koExample": "그 분쟁은 중재를 통해 해결되었다.",
+    "koChirpScript": "arbitration. 중재라는 뜻입니다. The dispute was settled by arbitration. 그 분쟁은 중재를 통해 해결되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/arbitration/word.mp3",
+      "gloss": "advanced/arbitration/gloss.mp3",
+      "example": "advanced/arbitration/example.mp3"
+    }
+  },
+  {
+    "lemma": "arguably",
+    "pos": "adverb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈɑːrɡjuəbli/",
+    "definition": "It may be argued (used to qualify a statement by acknowledging that it is open to debate).",
+    "koGloss": "adv. 거의 틀림없이",
+    "koExample": "그는 거의 틀림없이 우리 시대 최고의 선수이다.",
+    "koChirpScript": "arguably. 거의 틀림없이 라는 뜻입니다. He is arguably the best player of our time. 그는 거의 틀림없이 우리 시대 최고의 선수이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/arguably/word.mp3",
+      "gloss": "intermediate/arguably/gloss.mp3",
+      "example": "intermediate/arguably/example.mp3"
+    }
+  },
+  {
+    "lemma": "attributable",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/əˈtrɪbjətəbl/",
+    "definition": "Regarded as being caused by (someone or something).",
+    "koGloss": "adj. ~에 기인하는",
+    "koExample": "그의 성공은 노력에 기인한다.",
+    "koChirpScript": "attributable. ~에 기인하는 이라는 뜻입니다. His success is attributable to hard work. 그의 성공은 노력에 기인한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/attributable/word.mp3",
+      "gloss": "upper/attributable/gloss.mp3",
+      "example": "upper/attributable/example.mp3"
+    }
+  },
+  {
+    "lemma": "averse",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/əˈvɜːrs/",
+    "definition": "Having a strong dislike of or opposition to something.",
+    "koGloss": "adj. ~을 싫어하는",
+    "koExample": "그는 위험을 감수하는 것을 싫어한다.",
+    "koChirpScript": "averse. ~을 싫어하는 이라는 뜻입니다. He is averse to taking risks. 그는 위험을 감수하는 것을 싫어한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/averse/word.mp3",
+      "gloss": "advanced/averse/gloss.mp3",
+      "example": "advanced/averse/example.mp3"
+    }
+  },
+  {
+    "lemma": "baseline",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈbeɪslaɪn/",
+    "definition": "A minimum or starting point used for comparisons.",
+    "koGloss": "n. 기준선",
+    "koExample": "우리는 측정을 위한 기준선이 필요하다.",
+    "koChirpScript": "baseline. 기준선이라는 뜻입니다. We need a baseline for our measurements. 우리는 측정을 위한 기준선이 필요하다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/baseline/word.mp3",
+      "gloss": "intermediate/baseline/gloss.mp3",
+      "example": "intermediate/baseline/example.mp3"
+    }
+  },
+  {
+    "lemma": "batch",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/bætʃ/",
+    "definition": "A quantity or consignment of goods produced at one time.",
+    "koGloss": "n. 한 묶음, 한 회분",
+    "koExample": "우리는 쿠키 한 판을 구웠다.",
+    "koChirpScript": "batch. 한 묶음 또는 한 회분이라는 뜻입니다. We baked a batch of cookies. 우리는 쿠키 한 판을 구웠다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/batch/word.mp3",
+      "gloss": "intermediate/batch/gloss.mp3",
+      "example": "intermediate/batch/example.mp3"
+    }
+  },
+  {
+    "lemma": "beta",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈbeɪtə/",
+    "definition": "The second letter of the Greek alphabet (Β, β).",
+    "koGloss": "n. 베타",
+    "koExample": "그 소프트웨어는 아직 베타 버전이다.",
+    "koChirpScript": "beta. 베타라는 뜻입니다. The software is still in its beta version. 그 소프트웨어는 아직 베타 버전이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/beta/word.mp3",
+      "gloss": "intermediate/beta/gloss.mp3",
+      "example": "intermediate/beta/example.mp3"
+    }
+  },
+  {
+    "lemma": "bidder",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈbɪdər/",
+    "definition": "A person or organization making a formal offer for something, especially at an auction.",
+    "koGloss": "n. 입찰자",
+    "koExample": "최고가 입찰자가 그 그림을 샀다.",
+    "koChirpScript": "bidder. 입찰자라는 뜻입니다. The highest bidder bought the painting. 최고가 입찰자가 그 그림을 샀다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/bidder/word.mp3",
+      "gloss": "intermediate/bidder/gloss.mp3",
+      "example": "intermediate/bidder/example.mp3"
+    }
+  },
+  {
+    "lemma": "borrower",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈbɔːroʊər/",
+    "definition": "A person or organization that borrows something, especially money from a bank.",
+    "koGloss": "n. 차용인, 대출자",
+    "koExample": "대출자는 대출금을 상환해야 한다.",
+    "koChirpScript": "borrower. 차용인 또는 대출자라는 뜻입니다. The borrower must repay the loan. 대출자는 대출금을 상환해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/borrower/word.mp3",
+      "gloss": "elementary/borrower/gloss.mp3",
+      "example": "elementary/borrower/example.mp3"
+    }
+  },
+  {
+    "lemma": "boycott",
+    "pos": "verb, noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈbɔɪkɑːt/",
+    "definition": "Withdraw from commercial or social relations with (a country, organization, or person) as a punishment or protest.",
+    "koGloss": "v. 불매 운동을 하다; n. 불매 운동",
+    "koExample": "그들은 그 회사 제품에 대한 불매 운동을 벌였다.",
+    "koChirpScript": "boycott. 불매 운동을 하다라는 동사와 불매 운동이라는 명사로 쓰입니다. They organized a boycott of the company's products. 그들은 그 회사 제품에 대한 불매 운동을 벌였다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/boycott/word.mp3",
+      "gloss": "intermediate/boycott/gloss.mp3",
+      "example": "intermediate/boycott/example.mp3"
+    }
+  },
+  {
+    "lemma": "builder",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈbɪldər/",
+    "definition": "A person who constructs something, especially a person who contracts for and supervises the construction of buildings.",
+    "koGloss": "n. 건축업자",
+    "koExample": "건축업자가 새 집을 짓고 있다.",
+    "koChirpScript": "builder. 건축업자라는 뜻입니다. The builder is constructing a new house. 건축업자가 새 집을 짓고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/builder/word.mp3",
+      "gloss": "elementary/builder/gloss.mp3",
+      "example": "elementary/builder/example.mp3"
+    }
+  },
+  {
+    "lemma": "bureaucratic",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌbjʊrəˈkrætɪk/",
+    "definition": "Relating to a system of government in which most of the important decisions are taken by state officials rather than by elected representatives.",
+    "koGloss": "adj. 관료적인",
+    "koExample": "그 과정은 너무 관료적이어서 시간이 오래 걸렸다.",
+    "koChirpScript": "bureaucratic. 관료적인 이라는 뜻입니다. The process was too bureaucratic and took a long time. 그 과정은 너무 관료적이어서 시간이 오래 걸렸다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/bureaucratic/word.mp3",
+      "gloss": "advanced/bureaucratic/gloss.mp3",
+      "example": "advanced/bureaucratic/example.mp3"
+    }
+  },
+  {
+    "lemma": "buyout",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈbaɪaʊt/",
+    "definition": "The purchase of a controlling share in a company.",
+    "koGloss": "n. 인수",
+    "koExample": "경영진의 인수가 성공적으로 완료되었다.",
+    "koChirpScript": "buyout. 인수라는 뜻입니다. The management buyout was successfully completed. 경영진의 인수가 성공적으로 완료되었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/buyout/word.mp3",
+      "gloss": "upper/buyout/gloss.mp3",
+      "example": "upper/buyout/example.mp3"
+    }
+  },
+  {
+    "lemma": "capita",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈkæpɪtə/",
+    "definition": "For each person; in relation to people taken individually.",
+    "koGloss": "n. 1인당",
+    "koExample": "그 나라의 1인당 소득은 높다.",
+    "koChirpScript": "capita. 1인당 이라는 뜻으로, 보통 per capita 형태로 쓰입니다. The country has a high per capita income. 그 나라의 1인당 소득은 높다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/capita/word.mp3",
+      "gloss": "advanced/capita/gloss.mp3",
+      "example": "advanced/capita/example.mp3"
+    }
+  },
+  {
+    "lemma": "capitalization",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌkæpɪtələˈzeɪʃn/",
+    "definition": "The action of writing or printing in capital letters or with a capital first letter.",
+    "koGloss": "n. 자본화, 대문자 사용",
+    "koExample": "그 회사는 시가 총액이 높다.",
+    "koChirpScript": "capitalization. 자본화 또는 대문자 사용이라는 뜻입니다. The company has a high market capitalization. 그 회사는 시가 총액이 높다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/capitalization/word.mp3",
+      "gloss": "upper/capitalization/gloss.mp3",
+      "example": "upper/capitalization/example.mp3"
+    }
+  },
+  {
+    "lemma": "carmaker",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈkɑːrmeɪkər/",
+    "definition": "A company that manufactures cars.",
+    "koGloss": "n. 자동차 제조업체",
+    "koExample": "그 자동차 제조업체는 새로운 모델을 출시했다.",
+    "koChirpScript": "carmaker. 자동차 제조업체라는 뜻입니다. The carmaker launched a new model. 그 자동차 제조업체는 새로운 모델을 출시했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/carmaker/word.mp3",
+      "gloss": "elementary/carmaker/gloss.mp3",
+      "example": "elementary/carmaker/example.mp3"
+    }
+  },
+  {
+    "lemma": "cartel",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kɑːrˈtel/",
+    "definition": "An association of manufacturers or suppliers with the purpose of maintaining prices at a high level and restricting competition.",
+    "koGloss": "n. 카르텔, 기업 연합",
+    "koExample": "그들은 가격 담합을 위해 카르텔을 형성했다.",
+    "koChirpScript": "cartel. 카르텔 또는 기업 연합이라는 뜻입니다. They formed a cartel to fix prices. 그들은 가격 담합을 위해 카르텔을 형성했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/cartel/word.mp3",
+      "gloss": "advanced/cartel/gloss.mp3",
+      "example": "advanced/cartel/example.mp3"
+    }
+  },
+  {
+    "lemma": "centralize",
+    "pos": "verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈsentrəlaɪz/",
+    "definition": "Concentrate (control of an activity or organization) under a single authority.",
+    "koGloss": "v. 중앙집권화하다",
+    "koExample": "정부는 권력을 중앙집권화하려고 했다.",
+    "koChirpScript": "centralize. 중앙집권화하다 라는 뜻입니다. The government tried to centralize power. 정부는 권력을 중앙집권화하려고 했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/centralize/word.mp3",
+      "gloss": "intermediate/centralize/gloss.mp3",
+      "example": "intermediate/centralize/example.mp3"
+    }
+  },
+  {
+    "lemma": "chancellor",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈtʃænsələr/",
+    "definition": "A senior state or legal official.",
+    "koGloss": "n. 총리, 장관",
+    "koExample": "독일 총리가 그 나라를 방문했다.",
+    "koChirpScript": "chancellor. 총리 또는 장관이라는 뜻입니다. The German Chancellor visited the country. 독일 총리가 그 나라를 방문했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/chancellor/word.mp3",
+      "gloss": "upper/chancellor/gloss.mp3",
+      "example": "upper/chancellor/example.mp3"
+    }
+  },
+  {
+    "lemma": "cheaply",
+    "pos": "adverb",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈtʃiːpli/",
+    "definition": "At a low price.",
+    "koGloss": "adv. 싸게",
+    "koExample": "나는 그 셔츠를 싸게 샀다.",
+    "koChirpScript": "cheaply. 싸게 라는 뜻입니다. I bought the shirt cheaply. 나는 그 셔츠를 싸게 샀다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/cheaply/word.mp3",
+      "gloss": "elementary/cheaply/gloss.mp3",
+      "example": "elementary/cheaply/example.mp3"
+    }
+  },
+  {
+    "lemma": "cheque",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/tʃek/",
+    "definition": "An order to a bank to pay a stated sum from the drawer's account, written on a specially printed form.",
+    "koGloss": "n. 수표",
+    "koExample": "수표로 지불해도 될까요?",
+    "koChirpScript": "cheque. 수표라는 뜻입니다. Can I pay by cheque? 수표로 지불해도 될까요? 라는 의미네요.",
+    "audio": {
+      "word": "elementary/cheque/word.mp3",
+      "gloss": "elementary/cheque/gloss.mp3",
+      "example": "elementary/cheque/example.mp3"
+    }
+  },
+  {
+    "lemma": "citation",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/saɪˈteɪʃn/",
+    "definition": "A quotation from or reference to a book, paper, or author, especially in a scholarly work.",
+    "koGloss": "n. 인용",
+    "koExample": "그 에세이에는 많은 인용문이 포함되어 있었다.",
+    "koChirpScript": "citation. 인용이라는 뜻입니다. The essay included many citations. 그 에세이에는 많은 인용문이 포함되어 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/citation/word.mp3",
+      "gloss": "intermediate/citation/gloss.mp3",
+      "example": "intermediate/citation/example.mp3"
+    }
+  },
+  {
+    "lemma": "clout",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/klaʊt/",
+    "definition": "Influence or power, especially in politics or business.",
+    "koGloss": "n. 영향력",
+    "koExample": "그는 업계에서 상당한 영향력을 가지고 있다.",
+    "koChirpScript": "clout. 영향력이라는 뜻입니다. He has considerable clout in the industry. 그는 업계에서 상당한 영향력을 가지고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/clout/word.mp3",
+      "gloss": "advanced/clout/gloss.mp3",
+      "example": "advanced/clout/example.mp3"
+    }
+  },
+  {
+    "lemma": "collateral",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kəˈlætərəl/",
+    "definition": "Something pledged as security for repayment of a loan, to be forfeited in the event of a default.",
+    "koGloss": "n. 담보",
+    "koExample": "그는 대출을 받기 위해 집을 담보로 제공했다.",
+    "koChirpScript": "collateral. 담보라는 뜻입니다. He offered his house as collateral for the loan. 그는 대출을 받기 위해 집을 담보로 제공했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/collateral/word.mp3",
+      "gloss": "advanced/collateral/gloss.mp3",
+      "example": "advanced/collateral/example.mp3"
+    }
+  },
+  {
+    "lemma": "competency",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈkɑːmpətənsi/",
+    "definition": "The ability to do something successfully or efficiently.",
+    "koGloss": "n. 역량",
+    "koExample": "그는 그 직무에 필요한 핵심 역량을 갖추고 있다.",
+    "koChirpScript": "competency. 역량이라는 뜻입니다. He has the core competencies required for the job. 그는 그 직무에 필요한 핵심 역량을 갖추고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/competency/word.mp3",
+      "gloss": "upper/competency/gloss.mp3",
+      "example": "upper/competency/example.mp3"
+    }
+  },
+  {
+    "lemma": "computerize",
+    "pos": "verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/kəmˈpjuːtəraɪz/",
+    "definition": "Convert to a system that is operated or controlled by computer.",
+    "koGloss": "v. 컴퓨터화하다",
+    "koExample": "그들은 기록 보관 시스템을 컴퓨터화했다.",
+    "koChirpScript": "computerize. 컴퓨터화하다 라는 뜻입니다. They computerized their record-keeping system. 그들은 기록 보관 시스템을 컴퓨터화했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/computerize/word.mp3",
+      "gloss": "intermediate/computerize/gloss.mp3",
+      "example": "intermediate/computerize/example.mp3"
+    }
+  },
+  {
+    "lemma": "con",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/kɑːn/",
+    "definition": "A disadvantage or argument against.",
+    "koGloss": "n. 반대 의견",
+    "koExample": "모든 계획에는 장단점이 있다.",
+    "koChirpScript": "con. 반대 의견이라는 뜻입니다. Every plan has its pros and cons. 모든 계획에는 장단점이 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/con/word.mp3",
+      "gloss": "intermediate/con/gloss.mp3",
+      "example": "intermediate/con/example.mp3"
+    }
+  },
+  {
+    "lemma": "conglomerate",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˈɡlɑːmərət/",
+    "definition": "A number of different things or parts that are put or grouped together to form a whole but remain distinct entities.",
+    "koGloss": "n. 대기업",
+    "koExample": "그 회사는 거대한 미디어 대기업이다.",
+    "koChirpScript": "conglomerate. 대기업이라는 뜻입니다. The company is a large media conglomerate. 그 회사는 거대한 미디어 대기업이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/conglomerate/word.mp3",
+      "gloss": "advanced/conglomerate/gloss.mp3",
+      "example": "advanced/conglomerate/example.mp3"
+    }
+  },
+  {
+    "lemma": "congressman",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈkɑːŋɡrəsmən/",
+    "definition": "A man who belongs to a congress, especially a member of the US House of Representatives.",
+    "koGloss": "n. 국회의원",
+    "koExample": "그 국회의원은 자신의 지역구를 대표했다.",
+    "koChirpScript": "congressman. 국회의원이라는 뜻입니다. The congressman represented his district. 그 국회의원은 자신의 지역구를 대표했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/congressman/word.mp3",
+      "gloss": "intermediate/congressman/gloss.mp3",
+      "example": "intermediate/congressman/example.mp3"
+    }
+  },
+  {
+    "lemma": "consolidation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˌsɑːlɪˈdeɪʃn/",
+    "definition": "The action or process of making something stronger or more solid.",
+    "koGloss": "n. 통합, 강화",
+    "koExample": "그 산업은 통합의 시기를 겪었다.",
+    "koChirpScript": "consolidation. 통합 또는 강화라는 뜻입니다. The industry went through a period of consolidation. 그 산업은 통합의 시기를 겪었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/consolidation/word.mp3",
+      "gloss": "advanced/consolidation/gloss.mp3",
+      "example": "advanced/consolidation/example.mp3"
+    }
+  },
+  {
+    "lemma": "consortium",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˈsɔːrʃiəm/",
+    "definition": "An association, typically of several business companies.",
+    "koGloss": "n. 컨소시엄, 협력단",
+    "koExample": "여러 은행으로 구성된 컨소시엄이 그 프로젝트에 자금을 지원했다.",
+    "koChirpScript": "consortium. 컨소시엄 또는 협력단이라는 뜻입니다. A consortium of banks financed the project. 여러 은행으로 구성된 컨소시엄이 그 프로젝트에 자금을 지원했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/consortium/word.mp3",
+      "gloss": "advanced/consortium/gloss.mp3",
+      "example": "advanced/consortium/example.mp3"
+    }
+  },
+  {
+    "lemma": "constituency",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˈstɪtʃuənsi/",
+    "definition": "A body of voters in a specified area who elect a representative to a legislative body.",
+    "koGloss": "n. 선거구",
+    "koExample": "그는 자신의 선거구에서 매우 인기가 많다.",
+    "koChirpScript": "constituency. 선거구라는 뜻입니다. He is very popular in his constituency. 그는 자신의 선거구에서 매우 인기가 많다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/constituency/word.mp3",
+      "gloss": "advanced/constituency/gloss.mp3",
+      "example": "advanced/constituency/example.mp3"
+    }
+  },
+  {
+    "lemma": "consultancy",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/kənˈsʌltənsi/",
+    "definition": "A professional practice that gives expert advice within a particular field.",
+    "koGloss": "n. 컨설팅 회사",
+    "koExample": "그는 경영 컨설팅 회사에서 일한다.",
+    "koChirpScript": "consultancy. 컨설팅 회사라는 뜻입니다. He works for a management consultancy. 그는 경영 컨설팅 회사에서 일한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/consultancy/word.mp3",
+      "gloss": "upper/consultancy/gloss.mp3",
+      "example": "upper/consultancy/example.mp3"
+    }
+  },
+  {
+    "lemma": "contingency",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˈtɪndʒənsi/",
+    "definition": "A future event or circumstance that is possible but cannot be predicted with certainty.",
+    "koGloss": "n. 만일의 사태",
+    "koExample": "우리는 모든 만일의 사태에 대비해야 한다.",
+    "koChirpScript": "contingency. 만일의 사태라는 뜻입니다. We must be prepared for any contingency. 우리는 모든 만일의 사태에 대비해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/contingency/word.mp3",
+      "gloss": "advanced/contingency/gloss.mp3",
+      "example": "advanced/contingency/example.mp3"
+    }
+  },
+  {
+    "lemma": "contingent",
+    "pos": "adjective, noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/kənˈtɪndʒənt/",
+    "definition": "Subject to chance.",
+    "koGloss": "adj. ~에 따라 결정되는; n. 파견단",
+    "koExample": "그 결과는 날씨에 따라 결정된다.",
+    "koChirpScript": "contingent. ~에 따라 결정되는 이라는 형용사와 파견단이라는 명사로 쓰입니다. The outcome is contingent on the weather. 그 결과는 날씨에 따라 결정된다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/contingent/word.mp3",
+      "gloss": "advanced/contingent/gloss.mp3",
+      "example": "advanced/contingent/example.mp3"
+    }
+  },
+  {
+    "lemma": "continuously",
+    "pos": "adverb",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/kənˈtɪnjuəsli/",
+    "definition": "Without interruption or cessation.",
+    "koGloss": "adv. 계속해서",
+    "koExample": "비가 하루 종일 계속해서 내렸다.",
+    "koChirpScript": "continuously. 계속해서 라는 뜻입니다. It rained continuously all day. 비가 하루 종일 계속해서 내렸다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/continuously/word.mp3",
+      "gloss": "elementary/continuously/gloss.mp3",
+      "example": "elementary/continuously/example.mp3"
+    }
+  },
+  {
+    "lemma": "contractual",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/kənˈtræktʃuəl/",
+    "definition": "Relating to or in the form of a contract.",
+    "koGloss": "adj. 계약상의",
+    "koExample": "그들은 계약상의 의무를 이행해야 한다.",
+    "koChirpScript": "contractual. 계약상의 라는 뜻입니다. They must fulfill their contractual obligations. 그들은 계약상의 의무를 이행해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/contractual/word.mp3",
+      "gloss": "upper/contractual/gloss.mp3",
+      "example": "upper/contractual/example.mp3"
+    }
+  },
+  {
+    "lemma": "controller",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/kənˈtroʊlər/",
+    "definition": "A person or thing that directs or regulates something.",
+    "koGloss": "n. 관제사, 관리자",
+    "koExample": "항공 교통 관제사는 비행기를 안전하게 유도한다.",
+    "koChirpScript": "controller. 관제사 또는 관리자라는 뜻입니다. An air traffic controller guides planes safely. 항공 교통 관제사는 비행기를 안전하게 유도한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/controller/word.mp3",
+      "gloss": "intermediate/controller/gloss.mp3",
+      "example": "intermediate/controller/example.mp3"
+    }
+  },
+  {
+    "lemma": "corrective",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/kəˈrektɪv/",
+    "definition": "Designed to correct or counteract something harmful or undesirable.",
+    "koGloss": "adj. 교정의",
+    "koExample": "문제를 해결하기 위해 교정 조치가 필요하다.",
+    "koChirpScript": "corrective. 교정의 라는 뜻입니다. Corrective action is needed to solve the problem. 문제를 해결하기 위해 교정 조치가 필요하다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/corrective/word.mp3",
+      "gloss": "upper/corrective/gloss.mp3",
+      "example": "upper/corrective/example.mp3"
+    }
+  },
+  {
+    "lemma": "counterparty",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈkaʊntərpɑːrti/",
+    "definition": "The other party in a financial, legal, or commercial transaction.",
+    "koGloss": "n. 거래 상대방",
+    "koExample": "거래 상대방의 신용도를 확인하는 것이 중요하다.",
+    "koChirpScript": "counterparty. 거래 상대방이라는 뜻입니다. It is important to check the creditworthiness of the counterparty. 거래 상대방의 신용도를 확인하는 것이 중요하다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/counterparty/word.mp3",
+      "gloss": "advanced/counterparty/gloss.mp3",
+      "example": "advanced/counterparty/example.mp3"
+    }
+  },
+  {
+    "lemma": "covariance",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/koʊˈveriəns/",
+    "definition": "The mean value of the product of the deviations of two variates from their respective means.",
+    "koGloss": "n. 공분산",
+    "koExample": "공분산은 두 변수 사이의 관계를 측정한다.",
+    "koChirpScript": "covariance. 공분산이라는 뜻입니다. Covariance measures the relationship between two variables. 공분산은 두 변수 사이의 관계를 측정한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/covariance/word.mp3",
+      "gloss": "advanced/covariance/gloss.mp3",
+      "example": "advanced/covariance/example.mp3"
+    }
+  },
+  {
+    "lemma": "credential",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/krəˈdenʃl/",
+    "definition": "A qualification, achievement, personal quality, or aspect of a person's background, typically when used to indicate that they are suitable for something.",
+    "koGloss": "n. 자격 증명",
+    "koExample": "그는 그 직무에 대한 훌륭한 자격 증명을 가지고 있다.",
+    "koChirpScript": "credential. 자격 증명이라는 뜻입니다. He has excellent credentials for the job. 그는 그 직무에 대한 훌륭한 자격 증명을 가지고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/credential/word.mp3",
+      "gloss": "upper/credential/gloss.mp3",
+      "example": "upper/credential/example.mp3"
+    }
+  },
+  {
+    "lemma": "creditor",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈkredɪtər/",
+    "definition": "A person or company to whom money is owed.",
+    "koGloss": "n. 채권자",
+    "koExample": "채권자는 빚을 갚으라고 요구했다.",
+    "koChirpScript": "creditor. 채권자라는 뜻입니다. The creditor demanded payment of the debt. 채권자는 빚을 갚으라고 요구했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/creditor/word.mp3",
+      "gloss": "upper/creditor/gloss.mp3",
+      "example": "upper/creditor/example.mp3"
+    }
+  },
+  {
+    "lemma": "crunch",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/krʌntʃ/",
+    "definition": "A crucial point or situation, typically one at which a decision with important consequences must be made.",
+    "koGloss": "n. 위기, 부족 사태",
+    "koExample": "그 회사는 자금 위기에 직면했다.",
+    "koChirpScript": "crunch. 위기 또는 부족 사태라는 뜻입니다. The company is facing a cash crunch. 그 회사는 자금 위기에 직면했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/crunch/word.mp3",
+      "gloss": "intermediate/crunch/gloss.mp3",
+      "example": "intermediate/crunch/example.mp3"
+    }
+  },
+  {
+    "lemma": "cyclical",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈsɪklɪkl/",
+    "definition": "Occurring in cycles; recurrent.",
+    "koGloss": "adj. 주기적인",
+    "koExample": "경제는 주기적인 호황과 불황을 겪는다.",
+    "koChirpScript": "cyclical. 주기적인 이라는 뜻입니다. The economy goes through cyclical booms and busts. 경제는 주기적인 호황과 불황을 겪는다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/cyclical/word.mp3",
+      "gloss": "advanced/cyclical/gloss.mp3",
+      "example": "advanced/cyclical/example.mp3"
+    }
+  },
+  {
+    "lemma": "debenture",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/dɪˈbentʃər/",
+    "definition": "A long-term security yielding a fixed rate of interest, issued by a company and secured against assets.",
+    "koGloss": "n. 회사채",
+    "koExample": "그 회사는 자금을 조달하기 위해 회사채를 발행했다.",
+    "koChirpScript": "debenture. 회사채라는 뜻입니다. The company issued debentures to raise capital. 그 회사는 자금을 조달하기 위해 회사채를 발행했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/debenture/word.mp3",
+      "gloss": "advanced/debenture/gloss.mp3",
+      "example": "advanced/debenture/example.mp3"
+    }
+  },
+  {
+    "lemma": "debtor",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈdetər/",
+    "definition": "A person or institution that owes a sum of money.",
+    "koGloss": "n. 채무자",
+    "koExample": "채무자는 빚을 갚아야 한다.",
+    "koChirpScript": "debtor. 채무자라는 뜻입니다. The debtor must pay back the debt. 채무자는 빚을 갚아야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/debtor/word.mp3",
+      "gloss": "upper/debtor/gloss.mp3",
+      "example": "upper/debtor/example.mp3"
+    }
+  },
+  {
+    "lemma": "decentralize",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/diːˈsentrəlaɪz/",
+    "definition": "Transfer (authority) from central to local government.",
+    "koGloss": "v. 분권화하다",
+    "koExample": "정부는 권력을 지방 정부로 분권화했다.",
+    "koChirpScript": "decentralize. 분권화하다 라는 뜻입니다. The government decentralized power to local authorities. 정부는 권력을 지방 정부로 분권화했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/decentralize/word.mp3",
+      "gloss": "upper/decentralize/gloss.mp3",
+      "example": "upper/decentralize/example.mp3"
+    }
+  },
+  {
+    "lemma": "deductible",
+    "pos": "adjective, noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/dɪˈdʌktəbl/",
+    "definition": "Able to be deducted, especially from taxable income or tax to be paid.",
+    "koGloss": "adj. 공제할 수 있는; n. 공제액",
+    "koExample": "보험에는 500달러의 자기 부담금이 있다.",
+    "koChirpScript": "deductible. 공제할 수 있는 이라는 형용사와 공제액이라는 명사로 쓰입니다. The insurance policy has a $500 deductible. 보험에는 500달러의 자기 부담금이 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/deductible/word.mp3",
+      "gloss": "intermediate/deductible/gloss.mp3",
+      "example": "intermediate/deductible/example.mp3"
+    }
+  },
+  {
+    "lemma": "defer",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/dɪˈfɜːr/",
+    "definition": "Put off (an action or event) to a later time; postpone.",
+    "koGloss": "v. 미루다, 연기하다",
+    "koExample": "그들은 결정을 내년까지 미루기로 했다.",
+    "koChirpScript": "defer. 미루다 또는 연기하다 라는 뜻입니다. They decided to defer the decision until next year. 그들은 결정을 내년까지 미루기로 했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/defer/word.mp3",
+      "gloss": "advanced/defer/gloss.mp3",
+      "example": "advanced/defer/example.mp3"
+    }
+  },
+  {
+    "lemma": "deflation",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/dɪˈfleɪʃn/",
+    "definition": "Reduction of the general level of prices in an economy.",
+    "koGloss": "n. 디플레이션",
+    "koExample": "디플레이션은 경제에 해로울 수 있다.",
+    "koChirpScript": "deflation. 디플레이션이라는 뜻입니다. Deflation can be harmful to the economy. 디플레이션은 경제에 해로울 수 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/deflation/word.mp3",
+      "gloss": "upper/deflation/gloss.mp3",
+      "example": "upper/deflation/example.mp3"
+    }
+  },
+  {
+    "lemma": "deliverable",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/dɪˈlɪvərəbl/",
+    "definition": "A thing able to be provided, especially as a product of a development process.",
+    "koGloss": "n. 인도물, 결과물",
+    "koExample": "프로젝트의 최종 결과물은 보고서이다.",
+    "koChirpScript": "deliverable. 인도물 또는 결과물이라는 뜻입니다. The final deliverable of the project is a report. 프로젝트의 최종 결과물은 보고서이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/deliverable/word.mp3",
+      "gloss": "upper/deliverable/gloss.mp3",
+      "example": "upper/deliverable/example.mp3"
+    }
+  },
+  {
+    "lemma": "demise",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/dɪˈmaɪz/",
+    "definition": "A person's death.",
+    "koGloss": "n. 종말, 사망",
+    "koExample": "그 회사의 종말은 갑작스러웠다.",
+    "koChirpScript": "demise. 종말 또는 사망이라는 뜻입니다. The company's demise was sudden. 그 회사의 종말은 갑작스러웠다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/demise/word.mp3",
+      "gloss": "advanced/demise/gloss.mp3",
+      "example": "advanced/demise/example.mp3"
+    }
+  },
+  {
+    "lemma": "demographic",
+    "pos": "adjective, noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌdeməˈɡræfɪk/",
+    "definition": "Relating to the structure of populations.",
+    "koGloss": "adj. 인구 통계의; n. (특정) 인구 집단",
+    "koExample": "그 제품은 젊은 인구 집단을 대상으로 한다.",
+    "koChirpScript": "demographic. 인구 통계의 라는 형용사와 특정 인구 집단이라는 명사로 쓰입니다. The product is aimed at a young demographic. 그 제품은 젊은 인구 집단을 대상으로 한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/demographic/word.mp3",
+      "gloss": "upper/demographic/gloss.mp3",
+      "example": "upper/demographic/example.mp3"
+    }
+  },
+  {
+    "lemma": "denominate",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/dɪˈnɑːmɪneɪt/",
+    "definition": "Express (a sum of money) in a specified monetary unit.",
+    "koGloss": "v. (특정 화폐 단위로) 표시하다",
+    "koExample": "그 계약은 달러로 표시되었다.",
+    "koChirpScript": "denominate. 특정 화폐 단위로 표시하다 라는 뜻입니다. The contract was denominated in dollars. 그 계약은 달러로 표시되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/denominate/word.mp3",
+      "gloss": "advanced/denominate/gloss.mp3",
+      "example": "advanced/denominate/example.mp3"
+    }
+  },
+  {
+    "lemma": "dent",
+    "pos": "noun, verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/dent/",
+    "definition": "A slight hollow in a hard surface.",
+    "koGloss": "n. 움푹 들어간 곳; v. 움푹 들어가게 하다",
+    "koExample": "사고로 차에 흠집이 생겼다.",
+    "koChirpScript": "dent. 움푹 들어간 곳이라는 명사와 움푹 들어가게 하다라는 동사로 쓰입니다. The accident made a dent in the car. 사고로 차에 흠집이 생겼다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/dent/word.mp3",
+      "gloss": "intermediate/dent/gloss.mp3",
+      "example": "intermediate/dent/example.mp3"
+    }
+  },
+  {
+    "lemma": "dependency",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/dɪˈpendənsi/",
+    "definition": "A country or province controlled by another.",
+    "koGloss": "n. 의존",
+    "koExample": "그는 약물에 대한 의존성을 극복했다.",
+    "koChirpScript": "dependency. 의존이라는 뜻입니다. He overcame his dependency on drugs. 그는 약물에 대한 의존성을 극복했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/dependency/word.mp3",
+      "gloss": "intermediate/dependency/gloss.mp3",
+      "example": "intermediate/dependency/example.mp3"
+    }
+  },
+  {
+    "lemma": "depositor",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/dɪˈpɑːzɪtər/",
+    "definition": "A person who keeps money in a bank account.",
+    "koGloss": "n. 예금자",
+    "koExample": "은행은 예금자에게 이자를 지급한다.",
+    "koChirpScript": "depositor. 예금자라는 뜻입니다. The bank pays interest to its depositors. 은행은 예금자에게 이자를 지급한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/depositor/word.mp3",
+      "gloss": "intermediate/depositor/gloss.mp3",
+      "example": "intermediate/depositor/example.mp3"
+    }
+  },
+  {
+    "lemma": "deter",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/dɪˈtɜːr/",
+    "definition": "Discourage (someone) from doing something by instilling doubt or fear of the consequences.",
+    "koGloss": "v. 단념시키다",
+    "koExample": "악천후가 그들이 등산하는 것을 단념시켰다.",
+    "koChirpScript": "deter. 단념시키다 라는 뜻입니다. The bad weather deterred them from climbing the mountain. 악천후가 그들이 등산하는 것을 단념시켰다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/deter/word.mp3",
+      "gloss": "upper/deter/gloss.mp3",
+      "example": "upper/deter/example.mp3"
+    }
+  },
+  {
+    "lemma": "devaluation",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/diːˌvæljuˈeɪʃn/",
+    "definition": "The reduction or underestimation of the worth or importance of something.",
+    "koGloss": "n. 평가 절하",
+    "koExample": "통화 평가 절하는 수입품을 더 비싸게 만든다.",
+    "koChirpScript": "devaluation. 평가 절하라는 뜻입니다. Currency devaluation makes imports more expensive. 통화 평가 절하는 수입품을 더 비싸게 만든다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/devaluation/word.mp3",
+      "gloss": "upper/devaluation/gloss.mp3",
+      "example": "upper/devaluation/example.mp3"
+    }
+  },
+  {
+    "lemma": "discretionary",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/dɪˈskreʃəneri/",
+    "definition": "Available for use at the discretion of the user.",
+    "koGloss": "adj. 자유재량의",
+    "koExample": "그는 자신의 재량 소득을 취미에 썼다.",
+    "koChirpScript": "discretionary. 자유재량의 라는 뜻입니다. He spent his discretionary income on hobbies. 그는 자신의 재량 소득을 취미에 썼다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/discretionary/word.mp3",
+      "gloss": "advanced/discretionary/gloss.mp3",
+      "example": "advanced/discretionary/example.mp3"
+    }
+  },
+  {
+    "lemma": "dismantle",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/dɪsˈmæntl/",
+    "definition": "Take (a machine or structure) to pieces.",
+    "koGloss": "v. 해체하다",
+    "koExample": "그들은 오래된 기계를 해체했다.",
+    "koChirpScript": "dismantle. 해체하다 라는 뜻입니다. They dismantled the old machine. 그들은 오래된 기계를 해체했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/dismantle/word.mp3",
+      "gloss": "upper/dismantle/gloss.mp3",
+      "example": "upper/dismantle/example.mp3"
+    }
+  },
+  {
+    "lemma": "dissident",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈdɪsɪdənt/",
+    "definition": "A person who opposes official policy, especially that of an authoritarian state.",
+    "koGloss": "n. 반체제 인사",
+    "koExample": "그 반체제 인사는 정치적 견해 때문에 투옥되었다.",
+    "koChirpScript": "dissident. 반체제 인사라는 뜻입니다. The dissident was imprisoned for his political views. 그 반체제 인사는 정치적 견해 때문에 투옥되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/dissident/word.mp3",
+      "gloss": "advanced/dissident/gloss.mp3",
+      "example": "advanced/dissident/example.mp3"
+    }
+  },
+  {
+    "lemma": "diversification",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/daɪˌvɜːrsɪfɪˈkeɪʃn/",
+    "definition": "The process of a business enlarging or varying its range of products or field of operation.",
+    "koGloss": "n. 다양화",
+    "koExample": "투자의 다양화는 위험을 줄이는 데 도움이 된다.",
+    "koChirpScript": "diversification. 다양화라는 뜻입니다. Diversification of investments helps to reduce risk. 투자의 다양화는 위험을 줄이는 데 도움이 된다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/diversification/word.mp3",
+      "gloss": "upper/diversification/gloss.mp3",
+      "example": "upper/diversification/example.mp3"
+    }
+  },
+  {
+    "lemma": "doom",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/duːm/",
+    "definition": "Death, destruction, or some other terrible fate.",
+    "koGloss": "n. 파멸, 비운",
+    "koExample": "그들은 파멸을 향해 나아가고 있었다.",
+    "koChirpScript": "doom. 파멸 또는 비운이라는 뜻입니다. They were heading for their doom. 그들은 파멸을 향해 나아가고 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/doom/word.mp3",
+      "gloss": "intermediate/doom/gloss.mp3",
+      "example": "intermediate/doom/example.mp3"
+    }
+  },
+  {
+    "lemma": "downgrade",
+    "pos": "verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈdaʊnɡreɪd/",
+    "definition": "Reduce to a lower grade, rank, or level of importance.",
+    "koGloss": "v. 격하시키다",
+    "koExample": "그의 직위가 격하되었다.",
+    "koChirpScript": "downgrade. 격하시키다 라는 뜻입니다. His position was downgraded. 그의 직위가 격하되었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/downgrade/word.mp3",
+      "gloss": "intermediate/downgrade/gloss.mp3",
+      "example": "intermediate/downgrade/example.mp3"
+    }
+  },
+  {
+    "lemma": "downside",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈdaʊnsaɪd/",
+    "definition": "The negative aspect of something.",
+    "koGloss": "n. 단점",
+    "koExample": "그 계획에는 몇 가지 단점이 있다.",
+    "koChirpScript": "downside. 단점이라는 뜻입니다. There are some downsides to the plan. 그 계획에는 몇 가지 단점이 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/downside/word.mp3",
+      "gloss": "intermediate/downside/gloss.mp3",
+      "example": "intermediate/downside/example.mp3"
+    }
+  },
+  {
+    "lemma": "duly",
+    "pos": "adverb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈduːli/",
+    "definition": "In accordance with what is required or appropriate; following proper procedure or arrangement.",
+    "koGloss": "adv. 적절하게, 정식으로",
+    "koExample": "그는 자신의 임무를 적절하게 수행했다.",
+    "koChirpScript": "duly. 적절하게 또는 정식으로 라는 뜻입니다. He duly performed his duties. 그는 자신의 임무를 적절하게 수행했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/duly/word.mp3",
+      "gloss": "upper/duly/gloss.mp3",
+      "example": "upper/duly/example.mp3"
+    }
+  },
+  {
+    "lemma": "electorate",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ɪˈlektərət/",
+    "definition": "All the people in a country or area who are entitled to vote in an election.",
+    "koGloss": "n. 유권자 전체",
+    "koExample": "유권자 전체가 그 변화를 지지했다.",
+    "koChirpScript": "electorate. 유권자 전체라는 뜻입니다. The electorate supported the change. 유권자 전체가 그 변화를 지지했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/electorate/word.mp3",
+      "gloss": "advanced/electorate/gloss.mp3",
+      "example": "advanced/electorate/example.mp3"
+    }
+  },
+  {
+    "lemma": "empowerment",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ɪmˈpaʊərmənt/",
+    "definition": "Authority or power given to someone to do something.",
+    "koGloss": "n. 권한 부여",
+    "koExample": "직원 권한 부여는 생산성을 높일 수 있다.",
+    "koChirpScript": "empowerment. 권한 부여라는 뜻입니다. Employee empowerment can increase productivity. 직원 권한 부여는 생산성을 높일 수 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/empowerment/word.mp3",
+      "gloss": "upper/empowerment/gloss.mp3",
+      "example": "upper/empowerment/example.mp3"
+    }
+  },
+  {
+    "lemma": "enforceable",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ɪnˈfɔːrsəbl/",
+    "definition": "(of a law, rule, or obligation) able to be imposed so that it must be complied with.",
+    "koGloss": "adj. 시행할 수 있는",
+    "koExample": "그 계약은 법적으로 시행 가능하다.",
+    "koChirpScript": "enforceable. 시행할 수 있는 이라는 뜻입니다. The contract is legally enforceable. 그 계약은 법적으로 시행 가능하다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/enforceable/word.mp3",
+      "gloss": "upper/enforceable/gloss.mp3",
+      "example": "upper/enforceable/example.mp3"
+    }
+  },
+  {
+    "lemma": "enhancement",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ɪnˈhænsmənt/",
+    "definition": "An increase or improvement in quality, value, or extent.",
+    "koGloss": "n. 향상",
+    "koExample": "그 소프트웨어는 몇 가지 성능 향상을 포함한다.",
+    "koChirpScript": "enhancement. 향상이라는 뜻입니다. The software includes several performance enhancements. 그 소프트웨어는 몇 가지 성능 향상을 포함한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/enhancement/word.mp3",
+      "gloss": "intermediate/enhancement/gloss.mp3",
+      "example": "intermediate/enhancement/example.mp3"
+    }
+  },
+  {
+    "lemma": "enlargement",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ɪnˈlɑːrdʒmənt/",
+    "definition": "The action or state of enlarging or being enlarged.",
+    "koGloss": "n. 확대",
+    "koExample": "나는 그 사진의 확대를 주문했다.",
+    "koChirpScript": "enlargement. 확대라는 뜻입니다. I ordered an enlargement of the photograph. 나는 그 사진의 확대를 주문했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/enlargement/word.mp3",
+      "gloss": "intermediate/enlargement/gloss.mp3",
+      "example": "intermediate/enlargement/example.mp3"
+    }
+  },
+  {
+    "lemma": "entrepreneurial",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌɑːntrəprəˈnɜːriəl/",
+    "definition": "Characterized by the taking of financial risks in the hope of profit; enterprising.",
+    "koGloss": "adj. 기업가적인",
+    "koExample": "그는 기업가적인 정신을 가지고 있었다.",
+    "koChirpScript": "entrepreneurial. 기업가적인 이라는 뜻입니다. He had an entrepreneurial spirit. 그는 기업가적인 정신을 가지고 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/entrepreneurial/word.mp3",
+      "gloss": "upper/entrepreneurial/gloss.mp3",
+      "example": "upper/entrepreneurial/example.mp3"
+    }
+  },
+  {
+    "lemma": "equity",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈekwəti/",
+    "definition": "The quality of being fair and impartial.",
+    "koGloss": "n. 공평, 자기 자본",
+    "koExample": "그 회사는 자기 자본을 늘려야 한다.",
+    "koChirpScript": "equity. 공평 또는 자기 자본이라는 뜻입니다. The company needs to increase its equity. 그 회사는 자기 자본을 늘려야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/equity/word.mp3",
+      "gloss": "advanced/equity/gloss.mp3",
+      "example": "advanced/equity/example.mp3"
+    }
+  },
+  {
+    "lemma": "ethanol",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈeθənɔːl/",
+    "definition": "A colorless volatile flammable liquid which is produced by the natural fermentation of sugars; alcohol.",
+    "koGloss": "n. 에탄올",
+    "koExample": "에탄올은 연료로 사용될 수 있다.",
+    "koChirpScript": "ethanol. 에탄올이라는 뜻입니다. Ethanol can be used as a fuel. 에탄올은 연료로 사용될 수 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/ethanol/word.mp3",
+      "gloss": "upper/ethanol/gloss.mp3",
+      "example": "upper/ethanol/example.mp3"
+    }
+  },
+  {
+    "lemma": "exporter",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ekˈspɔːrtər/",
+    "definition": "A person, country, or company that sends goods or services to another country for sale.",
+    "koGloss": "n. 수출업자",
+    "koExample": "그 회사는 주요 자동차 수출업체이다.",
+    "koChirpScript": "exporter. 수출업자라는 뜻입니다. The company is a major exporter of cars. 그 회사는 주요 자동차 수출업체이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/exporter/word.mp3",
+      "gloss": "elementary/exporter/gloss.mp3",
+      "example": "elementary/exporter/example.mp3"
+    }
+  },
+  {
+    "lemma": "externality",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌekstɜːrˈnæləti/",
+    "definition": "A side effect or consequence of an industrial or commercial activity that affects other parties without this being reflected in the cost of the goods or services involved.",
+    "koGloss": "n. 외부 효과",
+    "koExample": "오염은 부정적인 외부 효과의 한 예이다.",
+    "koChirpScript": "externality. 외부 효과라는 뜻입니다. Pollution is an example of a negative externality. 오염은 부정적인 외부 효과의 한 예이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/externality/word.mp3",
+      "gloss": "advanced/externality/gloss.mp3",
+      "example": "advanced/externality/example.mp3"
+    }
+  },
+  {
+    "lemma": "fiduciary",
+    "pos": "adjective, noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/fɪˈduːʃieri/",
+    "definition": "Involving trust, especially with regard to the relationship between a trustee and a beneficiary.",
+    "koGloss": "adj. 신탁의; n. 수탁자",
+    "koExample": "수탁자는 신탁 의무를 진다.",
+    "koChirpScript": "fiduciary. 신탁의 라는 형용사와 수탁자라는 명사로 쓰입니다. A trustee has a fiduciary duty. 수탁자는 신탁 의무를 진다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/fiduciary/word.mp3",
+      "gloss": "advanced/fiduciary/gloss.mp3",
+      "example": "advanced/fiduciary/example.mp3"
+    }
+  },
+  {
+    "lemma": "fighter",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈfaɪtər/",
+    "definition": "A person or animal that fights.",
+    "koGloss": "n. 투사, 전투기",
+    "koExample": "그는 자유를 위한 투사였다.",
+    "koChirpScript": "fighter. 투사 또는 전투기라는 뜻입니다. He was a fighter for freedom. 그는 자유를 위한 투사였다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/fighter/word.mp3",
+      "gloss": "elementary/fighter/gloss.mp3",
+      "example": "elementary/fighter/example.mp3"
+    }
+  },
+  {
+    "lemma": "flotation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/floʊˈteɪʃn/",
+    "definition": "The action of floating in a liquid or gas.",
+    "koGloss": "n. (주식) 상장, 부양",
+    "koExample": "그 회사는 주식 상장을 계획하고 있다.",
+    "koChirpScript": "flotation. 주식 상장 또는 부양이라는 뜻입니다. The company is planning a stock market flotation. 그 회사는 주식 상장을 계획하고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/flotation/word.mp3",
+      "gloss": "advanced/flotation/gloss.mp3",
+      "example": "advanced/flotation/example.mp3"
+    }
+  },
+  {
+    "lemma": "forecaster",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈfɔːrkæstər/",
+    "definition": "A person who predicts or estimates a future event or trend.",
+    "koGloss": "n. 예보관",
+    "koExample": "기상 예보관이 내일 날씨를 예측했다.",
+    "koChirpScript": "forecaster. 예보관이라는 뜻입니다. The weather forecaster predicted the weather for tomorrow. 기상 예보관이 내일 날씨를 예측했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/forecaster/word.mp3",
+      "gloss": "intermediate/forecaster/gloss.mp3",
+      "example": "intermediate/forecaster/example.mp3"
+    }
+  },
+  {
+    "lemma": "franc",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/fræŋk/",
+    "definition": "The basic monetary unit of France, Belgium, Switzerland, Luxembourg, and several other countries, equal to 100 centimes.",
+    "koGloss": "n. 프랑 (화폐 단위)",
+    "koExample": "프랑은 더 이상 프랑스의 통화가 아니다.",
+    "koChirpScript": "franc. 프랑이라는 화폐 단위입니다. The franc is no longer the currency of France. 프랑은 더 이상 프랑스의 통화가 아니다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/franc/word.mp3",
+      "gloss": "intermediate/franc/gloss.mp3",
+      "example": "intermediate/franc/example.mp3"
+    }
+  },
+  {
+    "lemma": "fret",
+    "pos": "verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/fret/",
+    "definition": "Be constantly or visibly worried or anxious.",
+    "koGloss": "v. 초조해하다",
+    "koExample": "사소한 일로 초조해하지 마라.",
+    "koChirpScript": "fret. 초조해하다 라는 뜻입니다. Don't fret over small things. 사소한 일로 초조해하지 마라. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/fret/word.mp3",
+      "gloss": "intermediate/fret/gloss.mp3",
+      "example": "intermediate/fret/example.mp3"
+    }
+  },
+  {
+    "lemma": "geographic",
+    "pos": "adjective",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˌdʒiːəˈɡræfɪk/",
+    "definition": "Relating to geography.",
+    "koGloss": "adj. 지리적인",
+    "koExample": "그 나라는 다양한 지리적 특징을 가지고 있다.",
+    "koChirpScript": "geographic. 지리적인 이라는 뜻입니다. The country has diverse geographic features. 그 나라는 다양한 지리적 특징을 가지고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/geographic/word.mp3",
+      "gloss": "elementary/geographic/gloss.mp3",
+      "example": "elementary/geographic/example.mp3"
+    }
+  },
+  {
+    "lemma": "globally",
+    "pos": "adverb",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈɡloʊbəli/",
+    "definition": "In a way that relates to the whole world.",
+    "koGloss": "adv. 세계적으로",
+    "koExample": "그 문제는 세계적으로 해결되어야 한다.",
+    "koChirpScript": "globally. 세계적으로 라는 뜻입니다. The problem needs to be addressed globally. 그 문제는 세계적으로 해결되어야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/globally/word.mp3",
+      "gloss": "elementary/globally/gloss.mp3",
+      "example": "elementary/globally/example.mp3"
+    }
+  },
+  {
+    "lemma": "governmental",
+    "pos": "adjective",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˌɡʌvərnˈmentl/",
+    "definition": "Relating to a government or the system of government.",
+    "koGloss": "adj. 정부의",
+    "koExample": "그것은 정부 기관이다.",
+    "koChirpScript": "governmental. 정부의 라는 뜻입니다. It is a governmental agency. 그것은 정부 기관이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/governmental/word.mp3",
+      "gloss": "intermediate/governmental/gloss.mp3",
+      "example": "intermediate/governmental/example.mp3"
+    }
+  },
+  {
+    "lemma": "handset",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈhændset/",
+    "definition": "The part of a telephone that a person holds to their ear and mouth, containing the receiver and transmitter.",
+    "koGloss": "n. 수화기",
+    "koExample": "그는 수화기를 들었다.",
+    "koChirpScript": "handset. 수화기라는 뜻입니다. He picked up the handset. 그는 수화기를 들었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/handset/word.mp3",
+      "gloss": "intermediate/handset/gloss.mp3",
+      "example": "intermediate/handset/example.mp3"
+    }
+  },
+  {
+    "lemma": "histogram",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈhɪstəɡræm/",
+    "definition": "A diagram consisting of rectangles whose area is proportional to the frequency of a variable and whose width is equal to the class interval.",
+    "koGloss": "n. 히스토그램",
+    "koExample": "그 히스토그램은 데이터의 분포를 보여준다.",
+    "koChirpScript": "histogram. 히스토그램이라는 뜻입니다. The histogram shows the distribution of the data. 그 히스토그램은 데이터의 분포를 보여준다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/histogram/word.mp3",
+      "gloss": "advanced/histogram/gloss.mp3",
+      "example": "advanced/histogram/example.mp3"
+    }
+  },
+  {
+    "lemma": "hugely",
+    "pos": "adverb",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈhjuːdʒli/",
+    "definition": "Extremely.",
+    "koGloss": "adv. 엄청나게",
+    "koExample": "그 영화는 엄청나게 성공했다.",
+    "koChirpScript": "hugely. 엄청나게 라는 뜻입니다. The movie was hugely successful. 그 영화는 엄청나게 성공했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/hugely/word.mp3",
+      "gloss": "elementary/hugely/gloss.mp3",
+      "example": "elementary/hugely/example.mp3"
+    }
+  },
+  {
+    "lemma": "hypothetical",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌhaɪpəˈθetɪkl/",
+    "definition": "Of, based on, or serving as a hypothesis.",
+    "koGloss": "adj. 가설의",
+    "koExample": "가상적인 상황을 상상해 보자.",
+    "koChirpScript": "hypothetical. 가설의 라는 뜻입니다. Let's imagine a hypothetical situation. 가상적인 상황을 상상해 보자. 라는 의미네요.",
+    "audio": {
+      "word": "upper/hypothetical/word.mp3",
+      "gloss": "upper/hypothetical/gloss.mp3",
+      "example": "upper/hypothetical/example.mp3"
+    }
+  },
+  {
+    "lemma": "idle",
+    "pos": "adjective",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈaɪdl/",
+    "definition": "(of a person) avoiding work; lazy.",
+    "koGloss": "adj. 게으른, 가동되지 않는",
+    "koExample": "엔진이 공회전하고 있었다.",
+    "koChirpScript": "idle. 게으른 또는 가동되지 않는 이라는 뜻입니다. The engine was idling. 엔진이 공회전하고 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/idle/word.mp3",
+      "gloss": "intermediate/idle/gloss.mp3",
+      "example": "intermediate/idle/example.mp3"
+    }
+  },
+  {
+    "lemma": "importer",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ɪmˈpɔːrtər/",
+    "definition": "A person or organization that brings goods or services into a country from abroad for sale.",
+    "koGloss": "n. 수입업자",
+    "koExample": "그 회사는 주요 커피 수입업체이다.",
+    "koChirpScript": "importer. 수입업자라는 뜻입니다. The company is a major importer of coffee. 그 회사는 주요 커피 수입업체이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/importer/word.mp3",
+      "gloss": "elementary/importer/gloss.mp3",
+      "example": "elementary/importer/example.mp3"
+    }
+  },
+  {
+    "lemma": "incorporation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ɪnˌkɔːrpəˈreɪʃn/",
+    "definition": "The inclusion of something as part of a whole.",
+    "koGloss": "n. 법인 설립, 통합",
+    "koExample": "그 회사는 법인 설립 절차를 밟았다.",
+    "koChirpScript": "incorporation. 법인 설립 또는 통합이라는 뜻입니다. The company went through the process of incorporation. 그 회사는 법인 설립 절차를 밟았다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/incorporation/word.mp3",
+      "gloss": "advanced/incorporation/gloss.mp3",
+      "example": "advanced/incorporation/example.mp3"
+    }
+  },
+  {
+    "lemma": "incremental",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌɪŋkrəˈmentl/",
+    "definition": "Relating to or denoting an increase or addition, especially one of a series on a fixed scale.",
+    "koGloss": "adj. 점진적인",
+    "koExample": "우리는 점진적인 개선을 이루었다.",
+    "koChirpScript": "incremental. 점진적인 이라는 뜻입니다. We made incremental improvements. 우리는 점진적인 개선을 이루었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/incremental/word.mp3",
+      "gloss": "advanced/incremental/gloss.mp3",
+      "example": "advanced/incremental/example.mp3"
+    }
+  },
+  {
+    "lemma": "indirectly",
+    "pos": "adverb",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˌɪndəˈrektli/",
+    "definition": "In a way that is not directly caused by or connected with something.",
+    "koGloss": "adv. 간접적으로",
+    "koExample": "그 결정은 우리에게 간접적으로 영향을 미쳤다.",
+    "koChirpScript": "indirectly. 간접적으로 라는 뜻입니다. The decision affected us indirectly. 그 결정은 우리에게 간접적으로 영향을 미쳤다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/indirectly/word.mp3",
+      "gloss": "elementary/indirectly/gloss.mp3",
+      "example": "elementary/indirectly/example.mp3"
+    }
+  },
+  {
+    "lemma": "inefficiency",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˌɪnɪˈfɪʃnsi/",
+    "definition": "The state of not achieving maximum productivity; wastefulness of time or energy.",
+    "koGloss": "n. 비효율",
+    "koExample": "그 시스템에는 많은 비효율이 있었다.",
+    "koChirpScript": "inefficiency. 비효율이라는 뜻입니다. There were many inefficiencies in the system. 그 시스템에는 많은 비효율이 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/inefficiency/word.mp3",
+      "gloss": "intermediate/inefficiency/gloss.mp3",
+      "example": "intermediate/inefficiency/example.mp3"
+    }
+  },
+  {
+    "lemma": "inflationary",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ɪnˈfleɪʃəneri/",
+    "definition": "Relating to or causing inflation.",
+    "koGloss": "adj. 인플레이션의",
+    "koExample": "정부는 인플레이션 압력에 직면했다.",
+    "koChirpScript": "inflationary. 인플레이션의 라는 뜻입니다. The government faced inflationary pressures. 정부는 인플레이션 압력에 직면했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/inflationary/word.mp3",
+      "gloss": "upper/inflationary/gloss.mp3",
+      "example": "upper/inflationary/example.mp3"
+    }
+  },
+  {
+    "lemma": "inflow",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈɪnfloʊ/",
+    "definition": "A large amount of money, people, or things moving or being transferred into a place.",
+    "koGloss": "n. 유입",
+    "koExample": "외국인 투자 유입이 있었다.",
+    "koChirpScript": "inflow. 유입이라는 뜻입니다. There was an inflow of foreign investment. 외국인 투자 유입이 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/inflow/word.mp3",
+      "gloss": "upper/inflow/gloss.mp3",
+      "example": "upper/inflow/example.mp3"
+    }
+  },
+  {
+    "lemma": "insurer",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ɪnˈʃʊrər/",
+    "definition": "A person or company that underwrites an insurance risk; the party in an insurance contract undertaking to pay compensation.",
+    "koGloss": "n. 보험업자",
+    "koExample": "보험업자는 손해를 보상할 것이다.",
+    "koChirpScript": "insurer. 보험업자라는 뜻입니다. The insurer will compensate for the damage. 보험업자는 손해를 보상할 것이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/insurer/word.mp3",
+      "gloss": "intermediate/insurer/gloss.mp3",
+      "example": "intermediate/insurer/example.mp3"
+    }
+  },
+  {
+    "lemma": "insurgency",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ɪnˈsɜːrdʒənsi/",
+    "definition": "An active revolt or uprising.",
+    "koGloss": "n. 반란",
+    "koExample": "그 나라는 반란으로 고통받았다.",
+    "koChirpScript": "insurgency. 반란이라는 뜻입니다. The country was plagued by an insurgency. 그 나라는 반란으로 고통받았다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/insurgency/word.mp3",
+      "gloss": "advanced/insurgency/gloss.mp3",
+      "example": "advanced/insurgency/example.mp3"
+    }
+  },
+  {
+    "lemma": "insurgent",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ɪnˈsɜːrdʒənt/",
+    "definition": "A rebel or revolutionary.",
+    "koGloss": "n. 반란군",
+    "koExample": "반란군이 도시를 점령했다.",
+    "koChirpScript": "insurgent. 반란군이라는 뜻입니다. The insurgents captured the city. 반란군이 도시를 점령했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/insurgent/word.mp3",
+      "gloss": "advanced/insurgent/gloss.mp3",
+      "example": "advanced/insurgent/example.mp3"
+    }
+  },
+  {
+    "lemma": "inter",
+    "pos": "prefix",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈɪntər/",
+    "definition": "Between; among.",
+    "koGloss": "prefix. 상호간의",
+    "koExample": "국제 무역은 국가 간에 중요하다.",
+    "koChirpScript": "inter. 상호간의 라는 뜻의 접두사입니다. International trade is important between countries. 국제 무역은 국가 간에 중요하다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/inter/word.mp3",
+      "gloss": "elementary/inter/gloss.mp3",
+      "example": "elementary/inter/example.mp3"
+    }
+  },
+  {
+    "lemma": "intermediary",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌɪntərˈmiːdieri/",
+    "definition": "A person who acts as a link between people in order to try to bring about an agreement or reconciliation; a mediator.",
+    "koGloss": "n. 중개자",
+    "koExample": "그는 협상에서 중개자 역할을 했다.",
+    "koChirpScript": "intermediary. 중개자라는 뜻입니다. He acted as an intermediary in the negotiations. 그는 협상에서 중개자 역할을 했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/intermediary/word.mp3",
+      "gloss": "advanced/intermediary/gloss.mp3",
+      "example": "advanced/intermediary/example.mp3"
+    }
+  },
+  {
+    "lemma": "internally",
+    "pos": "adverb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ɪnˈtɜːrnəli/",
+    "definition": "With regard to the internal affairs of a country or organization.",
+    "koGloss": "adv. 내부적으로",
+    "koExample": "그 문제는 내부적으로 해결되었다.",
+    "koChirpScript": "internally. 내부적으로 라는 뜻입니다. The issue was resolved internally. 그 문제는 내부적으로 해결되었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/internally/word.mp3",
+      "gloss": "intermediate/internally/gloss.mp3",
+      "example": "intermediate/internally/example.mp3"
+    }
+  },
+  {
+    "lemma": "issuance",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈɪʃuəns/",
+    "definition": "The action of supplying or distributing an item for use, sale, or official purposes.",
+    "koGloss": "n. 발행",
+    "koExample": "새로운 여권의 발행이 지연되었다.",
+    "koChirpScript": "issuance. 발행이라는 뜻입니다. The issuance of new passports has been delayed. 새로운 여권의 발행이 지연되었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/issuance/word.mp3",
+      "gloss": "upper/issuance/gloss.mp3",
+      "example": "upper/issuance/example.mp3"
+    }
+  },
+  {
+    "lemma": "issuer",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈɪʃuər/",
+    "definition": "A person or company that issues something, such as stocks, bonds, or an insurance policy.",
+    "koGloss": "n. 발행인",
+    "koExample": "채권 발행인은 이자를 지불할 책임이 있다.",
+    "koChirpScript": "issuer. 발행인이라는 뜻입니다. The issuer of the bond is responsible for paying interest. 채권 발행인은 이자를 지불할 책임이 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/issuer/word.mp3",
+      "gloss": "upper/issuer/gloss.mp3",
+      "example": "upper/issuer/example.mp3"
+    }
+  },
+  {
+    "lemma": "jointly",
+    "pos": "adverb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈdʒɔɪntli/",
+    "definition": "With another person or people; together.",
+    "koGloss": "adv. 공동으로",
+    "koExample": "그들은 그 프로젝트를 공동으로 작업했다.",
+    "koChirpScript": "jointly. 공동으로 라는 뜻입니다. They worked on the project jointly. 그들은 그 프로젝트를 공동으로 작업했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/jointly/word.mp3",
+      "gloss": "intermediate/jointly/gloss.mp3",
+      "example": "intermediate/jointly/example.mp3"
+    }
+  },
+  {
+    "lemma": "killer",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈkɪlər/",
+    "definition": "A person or thing that kills.",
+    "koGloss": "n. 살인자",
+    "koExample": "경찰은 살인자를 찾고 있다.",
+    "koChirpScript": "killer. 살인자라는 뜻입니다. The police are looking for the killer. 경찰은 살인자를 찾고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/killer/word.mp3",
+      "gloss": "elementary/killer/gloss.mp3",
+      "example": "elementary/killer/example.mp3"
+    }
+  },
+  {
+    "lemma": "launder",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈlɔːndər/",
+    "definition": "Conceal the origins of (money obtained illegally), typically by transfers involving foreign banks or legitimate businesses.",
+    "koGloss": "v. (불법 자금을) 세탁하다",
+    "koExample": "그는 돈세탁 혐의로 체포되었다.",
+    "koChirpScript": "launder. 불법 자금을 세탁하다 라는 뜻입니다. He was arrested for laundering money. 그는 돈세탁 혐의로 체포되었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/launder/word.mp3",
+      "gloss": "upper/launder/gloss.mp3",
+      "example": "upper/launder/example.mp3"
+    }
+  },
+  {
+    "lemma": "ledger",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈledʒər/",
+    "definition": "A book or other collection of financial accounts of a particular type.",
+    "koGloss": "n. 회계 장부",
+    "koExample": "회계사가 회계 장부를 검토했다.",
+    "koChirpScript": "ledger. 회계 장부라는 뜻입니다. The accountant reviewed the ledger. 회계사가 회계 장부를 검토했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/ledger/word.mp3",
+      "gloss": "upper/ledger/gloss.mp3",
+      "example": "upper/ledger/example.mp3"
+    }
+  },
+  {
+    "lemma": "legitimacy",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/lɪˈdʒɪtəməsi/",
+    "definition": "Conformity to the law or to rules.",
+    "koGloss": "n. 합법성, 정당성",
+    "koExample": "정부의 정당성에 의문이 제기되었다.",
+    "koChirpScript": "legitimacy. 합법성 또는 정당성이라는 뜻입니다. The legitimacy of the government was questioned. 정부의 정당성에 의문이 제기되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/legitimacy/word.mp3",
+      "gloss": "advanced/legitimacy/gloss.mp3",
+      "example": "advanced/legitimacy/example.mp3"
+    }
+  },
+  {
+    "lemma": "lender",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈlendər/",
+    "definition": "An organization or person that lends money.",
+    "koGloss": "n. 대출 기관, 대여자",
+    "koExample": "은행은 주요 대출 기관이다.",
+    "koChirpScript": "lender. 대출 기관 또는 대여자라는 뜻입니다. A bank is a major lender. 은행은 주요 대출 기관이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/lender/word.mp3",
+      "gloss": "elementary/lender/gloss.mp3",
+      "example": "elementary/lender/example.mp3"
+    }
+  },
+  {
+    "lemma": "lessee",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/leˈsiː/",
+    "definition": "A person who holds the lease of a property; a tenant.",
+    "koGloss": "n. 임차인",
+    "koExample": "임차인은 임대 계약서에 서명했다.",
+    "koChirpScript": "lessee. 임차인이라는 뜻입니다. The lessee signed the lease agreement. 임차인은 임대 계약서에 서명했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/lessee/word.mp3",
+      "gloss": "advanced/lessee/gloss.mp3",
+      "example": "advanced/lessee/example.mp3"
+    }
+  },
+  {
+    "lemma": "lessor",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈlesɔːr/",
+    "definition": "A person who leases or lets a property to another; a landlord.",
+    "koGloss": "n. 임대인",
+    "koExample": "임대인은 부동산 소유자이다.",
+    "koChirpScript": "lessor. 임대인이라는 뜻입니다. The lessor is the owner of the property. 임대인은 부동산 소유자이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/lessor/word.mp3",
+      "gloss": "advanced/lessor/gloss.mp3",
+      "example": "advanced/lessor/example.mp3"
+    }
+  },
+  {
+    "lemma": "leverage",
+    "pos": "noun, verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈlevərɪdʒ/",
+    "definition": "The exertion of force by means of a lever or an object used in the manner of a lever.",
+    "koGloss": "n. 레버리지, 영향력; v. 활용하다",
+    "koExample": "그는 자신의 경험을 활용하여 새로운 직업을 얻었다.",
+    "koChirpScript": "leverage. 레버리지, 영향력이라는 명사와 활용하다라는 동사로 쓰입니다. He leveraged his experience to get a new job. 그는 자신의 경험을 활용하여 새로운 직업을 얻었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/leverage/word.mp3",
+      "gloss": "advanced/leverage/gloss.mp3",
+      "example": "advanced/leverage/example.mp3"
+    }
+  },
+  {
+    "lemma": "levy",
+    "pos": "verb, noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈlevi/",
+    "definition": "Impose (a tax, fee, or fine).",
+    "koGloss": "v. (세금을) 부과하다; n. 부과금",
+    "koExample": "정부는 수입품에 새로운 세금을 부과했다.",
+    "koChirpScript": "levy. 세금을 부과하다라는 동사와 부과금이라는 명사로 쓰입니다. The government levied a new tax on imports. 정부는 수입품에 새로운 세금을 부과했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/levy/word.mp3",
+      "gloss": "advanced/levy/gloss.mp3",
+      "example": "advanced/levy/example.mp3"
+    }
+  },
+  {
+    "lemma": "liberalization",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌlɪbərələˈzeɪʃn/",
+    "definition": "The removal or loosening of restrictions on something, typically an economic or political system.",
+    "koGloss": "n. 자유화",
+    "koExample": "무역 자유화는 경제 성장을 촉진했다.",
+    "koChirpScript": "liberalization. 자유화라는 뜻입니다. Trade liberalization has boosted economic growth. 무역 자유화는 경제 성장을 촉진했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/liberalization/word.mp3",
+      "gloss": "advanced/liberalization/gloss.mp3",
+      "example": "advanced/liberalization/example.mp3"
+    }
+  },
+  {
+    "lemma": "liberalize",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈlɪbərəlaɪz/",
+    "definition": "Remove or loosen restrictions on (something, typically an economic or political system).",
+    "koGloss": "v. 자유화하다",
+    "koExample": "정부는 경제를 자유화하기로 결정했다.",
+    "koChirpScript": "liberalize. 자유화하다 라는 뜻입니다. The government decided to liberalize the economy. 정부는 경제를 자유화하기로 결정했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/liberalize/word.mp3",
+      "gloss": "advanced/liberalize/gloss.mp3",
+      "example": "advanced/liberalize/example.mp3"
+    }
+  },
+  {
+    "lemma": "liquidate",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈlɪkwɪdeɪt/",
+    "definition": "Wind up the affairs of (a company or firm) by ascertaining the liabilities and apportioning the assets.",
+    "koGloss": "v. (회사를) 청산하다",
+    "koExample": "그 회사는 부채를 갚기 위해 자산을 청산해야 했다.",
+    "koChirpScript": "liquidate. 회사를 청산하다 라는 뜻입니다. The company had to liquidate its assets to pay its debts. 그 회사는 부채를 갚기 위해 자산을 청산해야 했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/liquidate/word.mp3",
+      "gloss": "advanced/liquidate/gloss.mp3",
+      "example": "advanced/liquidate/example.mp3"
+    }
+  },
+  {
+    "lemma": "liquidation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌlɪkwɪˈdeɪʃn/",
+    "definition": "The process of liquidating a business.",
+    "koGloss": "n. 청산",
+    "koExample": "그 회사는 청산 절차를 밟고 있다.",
+    "koChirpScript": "liquidation. 청산이라는 뜻입니다. The company is in the process of liquidation. 그 회사는 청산 절차를 밟고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/liquidation/word.mp3",
+      "gloss": "advanced/liquidation/gloss.mp3",
+      "example": "advanced/liquidation/example.mp3"
+    }
+  },
+  {
+    "lemma": "liquidity",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/lɪˈkwɪdəti/",
+    "definition": "The availability of liquid assets to a market or company.",
+    "koGloss": "n. 유동성",
+    "koExample": "그 회사는 유동성 문제가 있었다.",
+    "koChirpScript": "liquidity. 유동성이라는 뜻입니다. The company had a liquidity problem. 그 회사는 유동성 문제가 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/liquidity/word.mp3",
+      "gloss": "advanced/liquidity/gloss.mp3",
+      "example": "advanced/liquidity/example.mp3"
+    }
+  },
+  {
+    "lemma": "litigation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌlɪtɪˈɡeɪʃn/",
+    "definition": "The process of taking legal action.",
+    "koGloss": "n. 소송",
+    "koExample": "그들은 소송을 통해 분쟁을 해결했다.",
+    "koChirpScript": "litigation. 소송이라는 뜻입니다. They settled the dispute through litigation. 그들은 소송을 통해 분쟁을 해결했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/litigation/word.mp3",
+      "gloss": "advanced/litigation/gloss.mp3",
+      "example": "advanced/litigation/example.mp3"
+    }
+  },
+  {
+    "lemma": "logistics",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ləˈdʒɪstɪks/",
+    "definition": "The detailed coordination of a complex operation involving many people, facilities, or supplies.",
+    "koGloss": "n. 물류",
+    "koExample": "그 행사의 물류는 복잡했다.",
+    "koChirpScript": "logistics. 물류라는 뜻입니다. The logistics of the event were complicated. 그 행사의 물류는 복잡했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/logistics/word.mp3",
+      "gloss": "upper/logistics/gloss.mp3",
+      "example": "upper/logistics/example.mp3"
+    }
+  },
+  {
+    "lemma": "loser",
+    "pos": "noun",
+    "categories": "기초, TOEFL",
+    "pronunciation": "/ˈluːzər/",
+    "definition": "A person or thing that loses or has lost something, especially a game or contest.",
+    "koGloss": "n. 패배자",
+    "koExample": "그는 지는 것을 싫어하는 성격이다.",
+    "koChirpScript": "loser. 패배자라는 뜻입니다. He is a sore loser. 그는 지는 것을 싫어하는 성격이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/loser/word.mp3",
+      "gloss": "elementary/loser/gloss.mp3",
+      "example": "elementary/loser/example.mp3"
+    }
+  },
+  {
+    "lemma": "lucrative",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈluːkrətɪv/",
+    "definition": "Producing a great deal of profit.",
+    "koGloss": "adj. 수익성이 좋은",
+    "koExample": "그것은 수익성이 좋은 사업이었다.",
+    "koChirpScript": "lucrative. 수익성이 좋은 이라는 뜻입니다. It was a lucrative business. 그것은 수익성이 좋은 사업이었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/lucrative/word.mp3",
+      "gloss": "advanced/lucrative/gloss.mp3",
+      "example": "advanced/lucrative/example.mp3"
+    }
+  },
+  {
+    "lemma": "macro",
+    "pos": "prefix",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈmækroʊ/",
+    "definition": "Large-scale; overall.",
+    "koGloss": "prefix. 거시적인",
+    "koExample": "거시경제학은 경제 전체를 연구한다.",
+    "koChirpScript": "macro. 거시적인 이라는 뜻의 접두사입니다. Macroeconomics studies the economy as a whole. 거시경제학은 경제 전체를 연구한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/macro/word.mp3",
+      "gloss": "intermediate/macro/gloss.mp3",
+      "example": "intermediate/macro/example.mp3"
+    }
+  },
+  {
+    "lemma": "macroeconomic",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌmækroʊˌiːkəˈnɑːmɪk/",
+    "definition": "Relating to macroeconomics.",
+    "koGloss": "adj. 거시경제의",
+    "koExample": "정부는 거시경제 지표를 주시하고 있다.",
+    "koChirpScript": "macroeconomic. 거시경제의 라는 뜻입니다. The government is monitoring macroeconomic indicators. 정부는 거시경제 지표를 주시하고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/macroeconomic/word.mp3",
+      "gloss": "advanced/macroeconomic/gloss.mp3",
+      "example": "advanced/macroeconomic/example.mp3"
+    }
+  },
+  {
+    "lemma": "macroeconomics",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌmækroʊˌiːkəˈnɑːmɪks/",
+    "definition": "The part of economics concerned with large-scale or general economic factors, such as interest rates and national productivity.",
+    "koGloss": "n. 거시경제학",
+    "koExample": "거시경제학은 인플레이션과 실업을 다룬다.",
+    "koChirpScript": "macroeconomics. 거시경제학이라는 뜻입니다. Macroeconomics deals with inflation and unemployment. 거시경제학은 인플레이션과 실업을 다룬다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/macroeconomics/word.mp3",
+      "gloss": "advanced/macroeconomics/gloss.mp3",
+      "example": "advanced/macroeconomics/example.mp3"
+    }
+  },
+  {
+    "lemma": "marketable",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈmɑːrkɪtəbl/",
+    "definition": "Able to be sold; fit for sale.",
+    "koGloss": "adj. 시장성이 있는",
+    "koExample": "그들은 시장성 있는 기술을 개발했다.",
+    "koChirpScript": "marketable. 시장성이 있는 이라는 뜻입니다. They developed a marketable technology. 그들은 시장성 있는 기술을 개발했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/marketable/word.mp3",
+      "gloss": "upper/marketable/gloss.mp3",
+      "example": "upper/marketable/example.mp3"
+    }
+  },
+  {
+    "lemma": "marketer",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈmɑːrkɪtər/",
+    "definition": "A person or company that advertises or promotes something.",
+    "koGloss": "n. 마케터, 시장 상인",
+    "koExample": "그 마케터는 새로운 광고 캠페인을 기획했다.",
+    "koChirpScript": "marketer. 마케터 또는 시장 상인이라는 뜻입니다. The marketer planned a new advertising campaign. 그 마케터는 새로운 광고 캠페인을 기획했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/marketer/word.mp3",
+      "gloss": "intermediate/marketer/gloss.mp3",
+      "example": "intermediate/marketer/example.mp3"
+    }
+  },
+  {
+    "lemma": "maturity",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/məˈtʃʊrəti/",
+    "definition": "The state, fact, or period of being mature.",
+    "koGloss": "n. 성숙, 만기",
+    "koExample": "그 채권은 10년 만기이다.",
+    "koChirpScript": "maturity. 성숙 또는 만기라는 뜻입니다. The bond has a maturity of 10 years. 그 채권은 10년 만기이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/maturity/word.mp3",
+      "gloss": "upper/maturity/gloss.mp3",
+      "example": "upper/maturity/example.mp3"
+    }
+  },
+  {
+    "lemma": "maximization",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌmæksɪməˈzeɪʃn/",
+    "definition": "The action of making something as large or great as possible.",
+    "koGloss": "n. 극대화",
+    "koExample": "회사의 목표는 이익 극대화이다.",
+    "koChirpScript": "maximization. 극대화라는 뜻입니다. The company's goal is profit maximization. 회사의 목표는 이익 극대화이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/maximization/word.mp3",
+      "gloss": "advanced/maximization/gloss.mp3",
+      "example": "advanced/maximization/example.mp3"
+    }
+  },
+  {
+    "lemma": "median",
+    "pos": "adjective, noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈmiːdiən/",
+    "definition": "Denoting or relating to a value or quantity lying at the midpoint of a frequency distribution of observed values or quantities, such that there is an equal probability of falling above or below it.",
+    "koGloss": "adj. 중앙의; n. 중앙값",
+    "koExample": "그 데이터 세트의 중앙값은 50이다.",
+    "koChirpScript": "median. 중앙의 라는 형용사와 중앙값이라는 명사로 쓰입니다. The median of the data set is 50. 그 데이터 세트의 중앙값은 50이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/median/word.mp3",
+      "gloss": "intermediate/median/gloss.mp3",
+      "example": "intermediate/median/example.mp3"
+    }
+  },
+  {
+    "lemma": "metric",
+    "pos": "adjective, noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈmetrɪk/",
+    "definition": "Relating to or based on the meter as a unit of length.",
+    "koGloss": "adj. 미터법의; n. 측정 기준",
+    "koExample": "우리는 성공을 측정하기 위해 몇 가지 지표를 사용한다.",
+    "koChirpScript": "metric. 미터법의 라는 형용사와 측정 기준이라는 명사로 쓰입니다. We use several metrics to measure success. 우리는 성공을 측정하기 위해 몇 가지 지표를 사용한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/metric/word.mp3",
+      "gloss": "intermediate/metric/gloss.mp3",
+      "example": "intermediate/metric/example.mp3"
+    }
+  },
+  {
+    "lemma": "monopolist",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/məˈnɑːpəlɪst/",
+    "definition": "A person or company that has a monopoly.",
+    "koGloss": "n. 독점 기업가",
+    "koExample": "그 독점 기업가는 시장을 통제했다.",
+    "koChirpScript": "monopolist. 독점 기업가라는 뜻입니다. The monopolist controlled the market. 그 독점 기업가는 시장을 통제했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/monopolist/word.mp3",
+      "gloss": "upper/monopolist/gloss.mp3",
+      "example": "upper/monopolist/example.mp3"
+    }
+  },
+  {
+    "lemma": "multiplier",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈmʌltɪplaɪər/",
+    "definition": "A quantity by which a given number (the multiplicand) is to be multiplied.",
+    "koGloss": "n. 승수",
+    "koExample": "정부 지출은 경제에 승수 효과를 가진다.",
+    "koChirpScript": "multiplier. 승수라는 뜻입니다. Government spending has a multiplier effect on the economy. 정부 지출은 경제에 승수 효과를 가진다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/multiplier/word.mp3",
+      "gloss": "advanced/multiplier/gloss.mp3",
+      "example": "advanced/multiplier/example.mp3"
+    }
+  }
+[
+  {
+    "lemma": "nationalist",
+    "pos": "noun, adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈnæʃnəlɪst/",
+    "definition": "A person who strongly identifies with their own nation and vigorously supports its interests, especially to the exclusion or detriment of the interests of other nations.",
+    "koGloss": "n. 민족주의자; adj. 민족주의의",
+    "koExample": "그는 열렬한 민족주의자였다.",
+    "koChirpScript": "nationalist. 민족주의자라는 명사와 민족주의의 라는 형용사로 쓰입니다. He was a fervent nationalist. 그는 열렬한 민족주의자였다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/nationalist/word.mp3",
+      "gloss": "upper/nationalist/gloss.mp3",
+      "example": "upper/nationalist/example.mp3"
+    }
+  },
+  {
+    "lemma": "nationalize",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈnæʃnəlaɪz/",
+    "definition": "Transfer (a major branch of industry or commerce) from private to state ownership or control.",
+    "koGloss": "v. 국유화하다",
+    "koExample": "정부는 철도 산업을 국유화했다.",
+    "koChirpScript": "nationalize. 국유화하다 라는 뜻입니다. The government nationalized the railway industry. 정부는 철도 산업을 국유화했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/nationalize/word.mp3",
+      "gloss": "upper/nationalize/gloss.mp3",
+      "example": "upper/nationalize/example.mp3"
+    }
+  },
+  {
+    "lemma": "negotiable",
+    "pos": "adjective",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/nɪˈɡoʊʃəbl/",
+    "definition": "Open to discussion or modification.",
+    "koGloss": "adj. 협상 가능한",
+    "koExample": "가격은 협상 가능하다.",
+    "koChirpScript": "negotiable. 협상 가능한 이라는 뜻입니다. The price is negotiable. 가격은 협상 가능하다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/negotiable/word.mp3",
+      "gloss": "intermediate/negotiable/gloss.mp3",
+      "example": "intermediate/negotiable/example.mp3"
+    }
+  },
+  {
+    "lemma": "negotiator",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/nɪˈɡoʊʃieɪtər/",
+    "definition": "A person who conducts negotiations.",
+    "koGloss": "n. 협상가",
+    "koExample": "그는 숙련된 협상가이다.",
+    "koChirpScript": "negotiator. 협상가라는 뜻입니다. He is a skilled negotiator. 그는 숙련된 협상가이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/negotiator/word.mp3",
+      "gloss": "intermediate/negotiator/gloss.mp3",
+      "example": "intermediate/negotiator/example.mp3"
+    }
+  },
+  {
+    "lemma": "newcomer",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈnuːkʌmər/",
+    "definition": "A person who has recently arrived in a place.",
+    "koGloss": "n. 신입",
+    "koExample": "그는 팀의 신입이다.",
+    "koChirpScript": "newcomer. 신입이라는 뜻입니다. He is a newcomer to the team. 그는 팀의 신입이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/newcomer/word.mp3",
+      "gloss": "elementary/newcomer/gloss.mp3",
+      "example": "elementary/newcomer/example.mp3"
+    }
+  },
+  {
+    "lemma": "obituary",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/oʊˈbɪtʃueri/",
+    "definition": "A notice of a death, especially in a newspaper, typically including a brief biography of the deceased person.",
+    "koGloss": "n. 부고",
+    "koExample": "그의 부고가 신문에 실렸다.",
+    "koChirpScript": "obituary. 부고라는 뜻입니다. His obituary was published in the newspaper. 그의 부고가 신문에 실렸다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/obituary/word.mp3",
+      "gloss": "advanced/obituary/gloss.mp3",
+      "example": "advanced/obituary/example.mp3"
+    }
+  },
+  {
+    "lemma": "offset",
+    "pos": "verb, noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈɔːfset/",
+    "definition": "Counteract (something) by having an opposing force or effect.",
+    "koGloss": "v. 상쇄하다; n. 상쇄",
+    "koExample": "이익이 손실을 상쇄했다.",
+    "koChirpScript": "offset. 상쇄하다라는 동사와 상쇄라는 명사로 쓰입니다. The profits offset the losses. 이익이 손실을 상쇄했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/offset/word.mp3",
+      "gloss": "upper/offset/gloss.mp3",
+      "example": "upper/offset/example.mp3"
+    }
+  },
+  {
+    "lemma": "offshore",
+    "pos": "adjective, adverb",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌɔːfˈʃɔːr/",
+    "definition": "Situated at sea some distance from the shore.",
+    "koGloss": "adj. 해외의; adv. 해외에서",
+    "koExample": "그 회사는 해외 계좌를 가지고 있다.",
+    "koChirpScript": "offshore. 해외의 라는 형용사와 해외에서 라는 부사로 쓰입니다. The company has offshore bank accounts. 그 회사는 해외 계좌를 가지고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/offshore/word.mp3",
+      "gloss": "intermediate/offshore/gloss.mp3",
+      "example": "intermediate/offshore/example.mp3"
+    }
+  },
+  {
+    "lemma": "optimization",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌɑːptəməˈzeɪʃn/",
+    "definition": "The action of making the best or most effective use of a situation or resource.",
+    "koGloss": "n. 최적화",
+    "koExample": "프로세스 최적화는 효율성을 높였다.",
+    "koChirpScript": "optimization. 최적화라는 뜻입니다. The optimization of the process increased efficiency. 프로세스 최적화는 효율성을 높였다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/optimization/word.mp3",
+      "gloss": "advanced/optimization/gloss.mp3",
+      "example": "advanced/optimization/example.mp3"
+    }
+  },
+  {
+    "lemma": "optimize",
+    "pos": "verb",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˈɑːptɪmaɪz/",
+    "definition": "Make the best or most effective use of (a situation, opportunity, or resource).",
+    "koGloss": "v. 최적화하다",
+    "koExample": "우리는 자원 사용을 최적화해야 한다.",
+    "koChirpScript": "optimize. 최적화하다 라는 뜻입니다. We need to optimize our use of resources. 우리는 자원 사용을 최적화해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/optimize/word.mp3",
+      "gloss": "upper/optimize/gloss.mp3",
+      "example": "upper/optimize/example.mp3"
+    }
+  },
+  {
+    "lemma": "ordinate",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈɔːrdɪnət/",
+    "definition": "A straight line from any point to the diameter of a conic section parallel to the tangent at the principal vertex.",
+    "koGloss": "n. 세로 좌표",
+    "koExample": "그래프에서 y축은 세로 좌표를 나타낸다.",
+    "koChirpScript": "ordinate. 세로 좌표라는 뜻입니다. In a graph, the y-axis represents the ordinate. 그래프에서 y축은 세로 좌표를 나타낸다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/ordinate/word.mp3",
+      "gloss": "advanced/ordinate/gloss.mp3",
+      "example": "advanced/ordinate/example.mp3"
+    }
+  },
+  {
+    "lemma": "ounce",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/aʊns/",
+    "definition": "A unit of weight of one sixteenth of a pound avoirdupois (approximately 28 grams).",
+    "koGloss": "n. 온스",
+    "koExample": "그 금괴는 무게가 몇 온스였다.",
+    "koChirpScript": "ounce. 온스라는 무게 단위입니다. The gold bar weighed several ounces. 그 금괴는 무게가 몇 온스였다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/ounce/word.mp3",
+      "gloss": "elementary/ounce/gloss.mp3",
+      "example": "elementary/ounce/example.mp3"
+    }
+  },
+  {
+    "lemma": "oust",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/aʊst/",
+    "definition": "Drive out or expel (someone) from a position or place.",
+    "koGloss": "v. 몰아내다",
+    "koExample": "그는 권력에서 몰아내졌다.",
+    "koChirpScript": "oust. 몰아내다 라는 뜻입니다. He was ousted from power. 그는 권력에서 몰아내졌다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/oust/word.mp3",
+      "gloss": "advanced/oust/gloss.mp3",
+      "example": "advanced/oust/example.mp3"
+    }
+  },
+  {
+    "lemma": "outflow",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈaʊtfloʊ/",
+    "definition": "A large amount of money, liquid, or people moving or being transferred out of a place.",
+    "koGloss": "n. 유출",
+    "koExample": "자본 유출이 경제에 해를 끼쳤다.",
+    "koChirpScript": "outflow. 유출이라는 뜻입니다. The outflow of capital harmed the economy. 자본 유출이 경제에 해를 끼쳤다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/outflow/word.mp3",
+      "gloss": "upper/outflow/gloss.mp3",
+      "example": "upper/outflow/example.mp3"
+    }
+  },
+  {
+    "lemma": "outlay",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈaʊtleɪ/",
+    "definition": "An amount of money spent on something.",
+    "koGloss": "n. 지출",
+    "koExample": "그 프로젝트는 상당한 초기 지출을 필요로 했다.",
+    "koChirpScript": "outlay. 지출이라는 뜻입니다. The project required a large initial outlay. 그 프로젝트는 상당한 초기 지출을 필요로 했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/outlay/word.mp3",
+      "gloss": "advanced/outlay/gloss.mp3",
+      "example": "advanced/outlay/example.mp3"
+    }
+  },
+  {
+    "lemma": "outsource",
+    "pos": "verb",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈaʊtsɔːrs/",
+    "definition": "Obtain (goods or a service) from an outside or foreign supplier, especially in place of an internal source.",
+    "koGloss": "v. 외주를 주다",
+    "koExample": "많은 회사들이 고객 서비스를 외주 준다.",
+    "koChirpScript": "outsource. 외주를 주다 라는 뜻입니다. Many companies outsource their customer service. 많은 회사들이 고객 서비스를 외주 준다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/outsource/word.mp3",
+      "gloss": "intermediate/outsource/gloss.mp3",
+      "example": "intermediate/outsource/example.mp3"
+    }
+  },
+  {
+    "lemma": "overhaul",
+    "pos": "verb, noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈoʊvərhɔːl/",
+    "definition": "Take apart (a piece of machinery or equipment) in order to examine it and repair it if necessary.",
+    "koGloss": "v. 점검하다; n. 점검",
+    "koExample": "그들은 엔진을 철저히 점검했다.",
+    "koChirpScript": "overhaul. 점검하다라는 동사와 점검이라는 명사로 쓰입니다. They gave the engine a complete overhaul. 그들은 엔진을 철저히 점검했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/overhaul/word.mp3",
+      "gloss": "upper/overhaul/gloss.mp3",
+      "example": "upper/overhaul/example.mp3"
+    }
+  },
+  {
+    "lemma": "oversight",
+    "pos": "noun",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˈoʊvərsaɪt/",
+    "definition": "An unintentional failure to notice or do something.",
+    "koGloss": "n. 간과, 감독",
+    "koExample": "그것은 유감스러운 간과였다.",
+    "koChirpScript": "oversight. 간과 또는 감독이라는 뜻입니다. It was an unfortunate oversight. 그것은 유감스러운 간과였다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/oversight/word.mp3",
+      "gloss": "upper/oversight/gloss.mp3",
+      "example": "upper/oversight/example.mp3"
+    }
+  },
+  {
+    "lemma": "overstate",
+    "pos": "verb",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌoʊvərˈsteɪt/",
+    "definition": "Express or state too strongly; exaggerate.",
+    "koGloss": "v. 과장하다",
+    "koExample": "그는 자신의 역할을 과장하는 경향이 있다.",
+    "koChirpScript": "overstate. 과장하다 라는 뜻입니다. He tends to overstate his role. 그는 자신의 역할을 과장하는 경향이 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/overstate/word.mp3",
+      "gloss": "intermediate/overstate/gloss.mp3",
+      "example": "intermediate/overstate/example.mp3"
+    }
+  },
+  {
+    "lemma": "pact",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/pækt/",
+    "definition": "A formal agreement between individuals or parties.",
+    "koGloss": "n. 조약, 협정",
+    "koExample": "두 나라는 평화 조약을 맺었다.",
+    "koChirpScript": "pact. 조약 또는 협정이라는 뜻입니다. The two countries signed a peace pact. 두 나라는 평화 조약을 맺었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/pact/word.mp3",
+      "gloss": "upper/pact/gloss.mp3",
+      "example": "upper/pact/example.mp3"
+    }
+  },
+  {
+    "lemma": "paramilitary",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌpærəˈmɪləteri/",
+    "definition": "(of a group) organized in a way that is similar to that of a military force.",
+    "koGloss": "adj. 준군사적인",
+    "koExample": "그들은 준군사 조직에 속해 있었다.",
+    "koChirpScript": "paramilitary. 준군사적인 이라는 뜻입니다. They belonged to a paramilitary organization. 그들은 준군사 조직에 속해 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/paramilitary/word.mp3",
+      "gloss": "advanced/paramilitary/gloss.mp3",
+      "example": "advanced/paramilitary/example.mp3"
+    }
+  },
+  {
+    "lemma": "parity",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈpærəti/",
+    "definition": "The state or condition of being equal, especially regarding status or pay.",
+    "koGloss": "n. 동등함",
+    "koExample": "그들은 남녀 간의 임금 동등을 위해 싸웠다.",
+    "koChirpScript": "parity. 동등함이라는 뜻입니다. They fought for pay parity between men and women. 그들은 남녀 간의 임금 동등을 위해 싸웠다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/parity/word.mp3",
+      "gloss": "advanced/parity/gloss.mp3",
+      "example": "advanced/parity/example.mp3"
+    }
+  },
+  {
+    "lemma": "parliamentary",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌpɑːrləˈmentri/",
+    "definition": "Relating to, enacted by, or suitable for a parliament.",
+    "koGloss": "adj. 의회의",
+    "koExample": "의회 선거가 내년에 있을 것이다.",
+    "koChirpScript": "parliamentary. 의회의 라는 뜻입니다. The parliamentary elections will be held next year. 의회 선거가 내년에 있을 것이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/parliamentary/word.mp3",
+      "gloss": "upper/parliamentary/gloss.mp3",
+      "example": "upper/parliamentary/example.mp3"
+    }
+  },
+  {
+    "lemma": "payback",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈpeɪbæk/",
+    "definition": "Profit from an investment equal to the initial outlay.",
+    "koGloss": "n. 상환, 보복",
+    "koExample": "그 투자의 회수 기간은 5년이다.",
+    "koChirpScript": "payback. 상환 또는 보복이라는 뜻입니다. The payback period for the investment is five years. 그 투자의 회수 기간은 5년이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/payback/word.mp3",
+      "gloss": "intermediate/payback/gloss.mp3",
+      "example": "intermediate/payback/example.mp3"
+    }
+  },
+  {
+    "lemma": "payoff",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈpeɪɔːf/",
+    "definition": "A payment made to someone, especially as a bribe or to ensure their silence.",
+    "koGloss": "n. 이익, 뇌물",
+    "koExample": "그의 노력은 마침내 결실을 맺었다.",
+    "koChirpScript": "payoff. 이익 또는 뇌물이라는 뜻입니다. His hard work finally had a payoff. 그의 노력은 마침내 결실을 맺었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/payoff/word.mp3",
+      "gloss": "intermediate/payoff/gloss.mp3",
+      "example": "intermediate/payoff/example.mp3"
+    }
+  },
+  {
+    "lemma": "payout",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈpeɪaʊt/",
+    "definition": "A large payment of money, especially as compensation or a dividend.",
+    "koGloss": "n. 지불금",
+    "koExample": "보험금 지급액은 상당했다.",
+    "koChirpScript": "payout. 지불금이라는 뜻입니다. The insurance payout was substantial. 보험금 지급액은 상당했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/payout/word.mp3",
+      "gloss": "intermediate/payout/gloss.mp3",
+      "example": "intermediate/payout/example.mp3"
+    }
+  },
+  {
+    "lemma": "peacekeeping",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈpiːskiːpɪŋ/",
+    "definition": "The active maintenance of a truce between nations or communities, especially by an international military force.",
+    "koGloss": "n. 평화 유지",
+    "koExample": "유엔은 평화 유지 임무를 수행한다.",
+    "koChirpScript": "peacekeeping. 평화 유지라는 뜻입니다. The United Nations carries out peacekeeping missions. 유엔은 평화 유지 임무를 수행한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/peacekeeping/word.mp3",
+      "gloss": "upper/peacekeeping/gloss.mp3",
+      "example": "upper/peacekeeping/example.mp3"
+    }
+  },
+  {
+    "lemma": "pensioner",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈpenʃənər/",
+    "definition": "A person who receives a pension.",
+    "koGloss": "n. 연금 수급자",
+    "koExample": "많은 연금 수급자들이 고정 수입으로 생활한다.",
+    "koChirpScript": "pensioner. 연금 수급자라는 뜻입니다. Many pensioners live on a fixed income. 많은 연금 수급자들이 고정 수입으로 생활한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/pensioner/word.mp3",
+      "gloss": "intermediate/pensioner/gloss.mp3",
+      "example": "intermediate/pensioner/example.mp3"
+    }
+  },
+  {
+    "lemma": "peso",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈpeɪsoʊ/",
+    "definition": "The basic monetary unit of Mexico, Colombia, the Dominican Republic, the Philippines, and several other countries.",
+    "koGloss": "n. 페소 (화폐 단위)",
+    "koExample": "멕시코의 통화는 페소이다.",
+    "koChirpScript": "peso. 페소라는 화폐 단위입니다. The currency of Mexico is the peso. 멕시코의 통화는 페소이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/peso/word.mp3",
+      "gloss": "intermediate/peso/gloss.mp3",
+      "example": "intermediate/peso/example.mp3"
+    }
+  },
+  {
+    "lemma": "petrol",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈpetrəl/",
+    "definition": "Gasoline.",
+    "koGloss": "n. 휘발유",
+    "koExample": "주유소에서 휘발유를 넣어야 한다.",
+    "koChirpScript": "petrol. 휘발유라는 뜻입니다. I need to get some petrol at the gas station. 주유소에서 휘발유를 넣어야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/petrol/word.mp3",
+      "gloss": "elementary/petrol/gloss.mp3",
+      "example": "elementary/petrol/example.mp3"
+    }
+  },
+  {
+    "lemma": "plainly",
+    "pos": "adverb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈpleɪnli/",
+    "definition": "In a way that is easy to see, hear, or understand.",
+    "koGloss": "adv. 명백히",
+    "koExample": "그는 명백히 거짓말을 하고 있었다.",
+    "koChirpScript": "plainly. 명백히 라는 뜻입니다. He was plainly lying. 그는 명백히 거짓말을 하고 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/plainly/word.mp3",
+      "gloss": "elementary/plainly/gloss.mp3",
+      "example": "elementary/plainly/example.mp3"
+    }
+  },
+  {
+    "lemma": "policyholder",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈpɑːləsihoʊldər/",
+    "definition": "A person or group in whose name an insurance policy is held.",
+    "koGloss": "n. 보험 계약자",
+    "koExample": "보험 계약자는 정기적으로 보험료를 납부해야 한다.",
+    "koChirpScript": "policyholder. 보험 계약자라는 뜻입니다. The policyholder must pay the premiums regularly. 보험 계약자는 정기적으로 보험료를 납부해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/policyholder/word.mp3",
+      "gloss": "intermediate/policyholder/gloss.mp3",
+      "example": "intermediate/policyholder/example.mp3"
+    }
+  },
+  {
+    "lemma": "policymaker",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈpɑːləsimeɪkər/",
+    "definition": "A person responsible for or involved in formulating policies, especially in politics.",
+    "koGloss": "n. 정책 입안자",
+    "koExample": "정책 입안자들은 어려운 결정에 직면했다.",
+    "koChirpScript": "policymaker. 정책 입안자라는 뜻입니다. The policymakers faced a difficult decision. 정책 입안자들은 어려운 결정에 직면했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/policymaker/word.mp3",
+      "gloss": "upper/policymaker/gloss.mp3",
+      "example": "upper/policymaker/example.mp3"
+    }
+  },
+  {
+    "lemma": "populist",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈpɑːpjəlɪst/",
+    "definition": "A person, especially a politician, who strives to appeal to ordinary people who feel that their concerns are disregarded by established elite groups.",
+    "koGloss": "n. 포퓰리스트, 대중영합주의자",
+    "koExample": "그 포퓰리스트 정치인은 대중의 지지를 얻었다.",
+    "koChirpScript": "populist. 포퓰리스트 또는 대중영합주의자라는 뜻입니다. The populist politician gained the support of the masses. 그 포퓰리스트 정치인은 대중의 지지를 얻었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/populist/word.mp3",
+      "gloss": "advanced/populist/gloss.mp3",
+      "example": "advanced/populist/example.mp3"
+    }
+  },
+  {
+    "lemma": "predetermine",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌpriːdɪˈtɜːrmɪn/",
+    "definition": "Establish or decide in advance.",
+    "koGloss": "v. 미리 결정하다",
+    "koExample": "결과는 미리 결정되어 있었다.",
+    "koChirpScript": "predetermine. 미리 결정하다 라는 뜻입니다. The outcome was predetermined. 결과는 미리 결정되어 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/predetermine/word.mp3",
+      "gloss": "advanced/predetermine/gloss.mp3",
+      "example": "advanced/predetermine/example.mp3"
+    }
+  },
+  {
+    "lemma": "predictor",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/prɪˈdɪktər/",
+    "definition": "A person or thing that predicts that something will happen in the future or will be a consequence of something.",
+    "koGloss": "n. 예측 변수, 예언자",
+    "koExample": "과거의 성과는 미래 성공의 좋은 예측 변수이다.",
+    "koChirpScript": "predictor. 예측 변수 또는 예언자라는 뜻입니다. Past performance is a good predictor of future success. 과거의 성과는 미래 성공의 좋은 예측 변수이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/predictor/word.mp3",
+      "gloss": "upper/predictor/gloss.mp3",
+      "example": "upper/predictor/example.mp3"
+    }
+  },
+  {
+    "lemma": "prepayment",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌpriːˈpeɪmənt/",
+    "definition": "Payment for something in advance.",
+    "koGloss": "n. 선불",
+    "koExample": "그 서비스는 선불이 필요하다.",
+    "koChirpScript": "prepayment. 선불이라는 뜻입니다. Prepayment is required for the service. 그 서비스는 선불이 필요하다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/prepayment/word.mp3",
+      "gloss": "intermediate/prepayment/gloss.mp3",
+      "example": "intermediate/prepayment/example.mp3"
+    }
+  },
+  {
+    "lemma": "privately",
+    "pos": "adverb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈpraɪvətli/",
+    "definition": "In a secret or confidential way.",
+    "koGloss": "adv. 개인적으로, 사적으로",
+    "koExample": "그는 사적으로 그녀에게 이야기했다.",
+    "koChirpScript": "privately. 개인적으로 또는 사적으로 라는 뜻입니다. He spoke to her privately. 그는 사적으로 그녀에게 이야기했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/privately/word.mp3",
+      "gloss": "elementary/privately/gloss.mp3",
+      "example": "elementary/privately/example.mp3"
+    }
+  },
+  {
+    "lemma": "privatize",
+    "pos": "verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈpraɪvətaɪz/",
+    "definition": "Transfer (a business, industry, or service) from public to private ownership and control.",
+    "koGloss": "v. 민영화하다",
+    "koExample": "정부는 국영 기업을 민영화했다.",
+    "koChirpScript": "privatize. 민영화하다 라는 뜻입니다. The government privatized the state-owned company. 정부는 국영 기업을 민영화했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/privatize/word.mp3",
+      "gloss": "upper/privatize/gloss.mp3",
+      "example": "upper/privatize/example.mp3"
+    }
+  },
+  {
+    "lemma": "procurement",
+    "pos": "noun",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/prəˈkjʊrmənt/",
+    "definition": "The action of obtaining or procuring something.",
+    "koGloss": "n. 조달",
+    "koExample": "그는 회사의 조달 부서에서 일한다.",
+    "koChirpScript": "procurement. 조달이라는 뜻입니다. He works in the company's procurement department. 그는 회사의 조달 부서에서 일한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/procurement/word.mp3",
+      "gloss": "upper/procurement/gloss.mp3",
+      "example": "upper/procurement/example.mp3"
+    }
+  },
+  {
+    "lemma": "prod",
+    "pos": "verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/prɑːd/",
+    "definition": "Poke (someone) with a finger, foot, or pointed object.",
+    "koGloss": "v. 찌르다, 재촉하다",
+    "koExample": "그녀는 그에게 대답하라고 재촉했다.",
+    "koChirpScript": "prod. 찌르다 또는 재촉하다 라는 뜻입니다. She prodded him to answer. 그녀는 그에게 대답하라고 재촉했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/prod/word.mp3",
+      "gloss": "intermediate/prod/gloss.mp3",
+      "example": "intermediate/prod/example.mp3"
+    }
+  },
+  {
+    "lemma": "profitability",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌprɑːfɪtəˈbɪləti/",
+    "definition": "The degree to which a business or activity yields profit or financial gain.",
+    "koGloss": "n. 수익성",
+    "koExample": "그 회사의 수익성은 지난 몇 년간 증가했다.",
+    "koChirpScript": "profitability. 수익성이라는 뜻입니다. The company's profitability has increased over the past few years. 그 회사의 수익성은 지난 몇 년간 증가했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/profitability/word.mp3",
+      "gloss": "intermediate/profitability/gloss.mp3",
+      "example": "intermediate/profitability/example.mp3"
+    }
+  },
+  {
+    "lemma": "proportional",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/prəˈpɔːrʃənl/",
+    "definition": "Corresponding in size or amount to something else.",
+    "koGloss": "adj. 비례하는",
+    "koExample": "급여는 경험에 비례한다.",
+    "koChirpScript": "proportional. 비례하는 이라는 뜻입니다. The salary is proportional to experience. 급여는 경험에 비례한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/proportional/word.mp3",
+      "gloss": "upper/proportional/gloss.mp3",
+      "example": "upper/proportional/example.mp3"
+    }
+  },
+  {
+    "lemma": "proprietary",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/prəˈpraɪəteri/",
+    "definition": "Relating to an owner or ownership.",
+    "koGloss": "adj. 소유권의",
+    "koExample": "그 소프트웨어는 독점적이다.",
+    "koChirpScript": "proprietary. 소유권의 라는 뜻입니다. The software is proprietary. 그 소프트웨어는 독점적이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/proprietary/word.mp3",
+      "gloss": "advanced/proprietary/gloss.mp3",
+      "example": "advanced/proprietary/example.mp3"
+    }
+  },
+  {
+    "lemma": "proprietorship",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/prəˈpraɪətərʃɪp/",
+    "definition": "The state or right of owning a business or holding property.",
+    "koGloss": "n. 소유권",
+    "koExample": "그는 개인 사업체를 운영한다.",
+    "koChirpScript": "proprietorship. 소유권이라는 뜻입니다. He runs a sole proprietorship. 그는 개인 사업체를 운영한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/proprietorship/word.mp3",
+      "gloss": "advanced/proprietorship/gloss.mp3",
+      "example": "advanced/proprietorship/example.mp3"
+    }
+  },
+  {
+    "lemma": "prospectus",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/prəˈspektəs/",
+    "definition": "A printed booklet advertising a school or university to potential parents or students or a business to potential investors.",
+    "koGloss": "n. (학교, 사업 등의) 안내서",
+    "koExample": "투자하기 전에 사업 설명서를 읽어보세요.",
+    "koChirpScript": "prospectus. 안내서라는 뜻입니다. Read the prospectus before you invest. 투자하기 전에 사업 설명서를 읽어보세요. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/prospectus/word.mp3",
+      "gloss": "advanced/prospectus/gloss.mp3",
+      "example": "advanced/prospectus/example.mp3"
+    }
+  },
+  {
+    "lemma": "prototype",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈproʊtətaɪp/",
+    "definition": "A first, typical or preliminary model of something, especially a machine, from which other forms are developed or copied.",
+    "koGloss": "n. 시제품",
+    "koExample": "그들은 새 차의 시제품을 만들었다.",
+    "koChirpScript": "prototype. 시제품이라는 뜻입니다. They built a prototype of the new car. 그들은 새 차의 시제품을 만들었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/prototype/word.mp3",
+      "gloss": "intermediate/prototype/gloss.mp3",
+      "example": "intermediate/prototype/example.mp3"
+    }
+  },
+  {
+    "lemma": "proxy",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈprɑːksi/",
+    "definition": "The authority to represent someone else, especially in voting.",
+    "koGloss": "n. 대리인",
+    "koExample": "나는 회의에 참석할 수 없어서 대리인을 통해 투표했다.",
+    "koChirpScript": "proxy. 대리인이라는 뜻입니다. I couldn't attend the meeting, so I voted by proxy. 나는 회의에 참석할 수 없어서 대리인을 통해 투표했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/proxy/word.mp3",
+      "gloss": "advanced/proxy/gloss.mp3",
+      "example": "advanced/proxy/example.mp3"
+    }
+  },
+  {
+    "lemma": "publicly",
+    "pos": "adverb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈpʌblɪkli/",
+    "definition": "So as to be seen by other people; in public.",
+    "koGloss": "adv. 공개적으로",
+    "koExample": "그는 자신의 실수를 공개적으로 인정했다.",
+    "koChirpScript": "publicly. 공개적으로 라는 뜻입니다. He publicly admitted his mistake. 그는 자신의 실수를 공개적으로 인정했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/publicly/word.mp3",
+      "gloss": "elementary/publicly/gloss.mp3",
+      "example": "elementary/publicly/example.mp3"
+    }
+  },
+  {
+    "lemma": "quasi",
+    "pos": "prefix",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈkweɪzaɪ/",
+    "definition": "Seemingly; apparently but not really.",
+    "koGloss": "prefix. 유사",
+    "koExample": "그것은 준정부 기관이었다.",
+    "koChirpScript": "quasi. 유사 라는 뜻의 접두사입니다. It was a quasi-governmental agency. 그것은 준정부 기관이었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/quasi/word.mp3",
+      "gloss": "advanced/quasi/gloss.mp3",
+      "example": "advanced/quasi/example.mp3"
+    }
+  },
+  {
+    "lemma": "ration",
+    "pos": "noun, verb",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/ˈræʃn/",
+    "definition": "A fixed amount of a commodity officially allowed to each person during a time of shortage, as in wartime.",
+    "koGloss": "n. 배급량; v. 배급하다",
+    "koExample": "전쟁 중에는 음식이 배급되었다.",
+    "koChirpScript": "ration. 배급량이라는 명사와 배급하다라는 동사로 쓰입니다. Food was rationed during the war. 전쟁 중에는 음식이 배급되었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/ration/word.mp3",
+      "gloss": "intermediate/ration/gloss.mp3",
+      "example": "intermediate/ration/example.mp3"
+    }
+  },
+  {
+    "lemma": "realizable",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈriːəlaɪzəbl/",
+    "definition": "Able to be achieved or made to happen.",
+    "koGloss": "adj. 실현 가능한",
+    "koExample": "그 목표는 실현 가능해 보였다.",
+    "koChirpScript": "realizable. 실현 가능한 이라는 뜻입니다. The goal seemed realizable. 그 목표는 실현 가능해 보였다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/realizable/word.mp3",
+      "gloss": "advanced/realizable/gloss.mp3",
+      "example": "advanced/realizable/example.mp3"
+    }
+  },
+  {
+    "lemma": "receivable",
+    "pos": "adjective",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/rɪˈsiːvəbl/",
+    "definition": "(of a thing) able to be received.",
+    "koGloss": "adj. 받을 수 있는",
+    "koExample": "미수금 계정은 회사의 자산이다.",
+    "koChirpScript": "receivable. 받을 수 있는 이라는 뜻입니다. Accounts receivable is an asset for the company. 미수금 계정은 회사의 자산이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/receivable/word.mp3",
+      "gloss": "intermediate/receivable/gloss.mp3",
+      "example": "intermediate/receivable/example.mp3"
+    }
+  },
+  {
+    "lemma": "redundancy",
+    "pos": "noun",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/rɪˈdʌndənsi/",
+    "definition": "The state of being not or no longer needed or useful.",
+    "koGloss": "n. 정리 해고, 과잉",
+    "koExample": "그 회사는 정리 해고를 피하기 위해 노력했다.",
+    "koChirpScript": "redundancy. 정리 해고 또는 과잉이라는 뜻입니다. The company tried to avoid redundancies. 그 회사는 정리 해고를 피하기 위해 노력했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/redundancy/word.mp3",
+      "gloss": "upper/redundancy/gloss.mp3",
+      "example": "upper/redundancy/example.mp3"
+    }
+  },
+  {
+    "lemma": "refinance",
+    "pos": "verb",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˌriːˈfaɪnæns/",
+    "definition": "Finance (something) again, typically with a new loan at a lower rate of interest.",
+    "koGloss": "v. 재융자하다",
+    "koExample": "그들은 주택 담보 대출을 재융자했다.",
+    "koChirpScript": "refinance. 재융자하다 라는 뜻입니다. They refinanced their mortgage. 그들은 주택 담보 대출을 재융자했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/refinance/word.mp3",
+      "gloss": "upper/refinance/gloss.mp3",
+      "example": "upper/refinance/example.mp3"
+    }
+  },
+  {
+    "lemma": "reformer",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/rɪˈfɔːrmər/",
+    "definition": "A person who makes changes to something in order to improve it.",
+    "koGloss": "n. 개혁가",
+    "koExample": "그는 사회 개혁가였다.",
+    "koChirpScript": "reformer. 개혁가라는 뜻입니다. He was a social reformer. 그는 사회 개혁가였다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reformer/word.mp3",
+      "gloss": "intermediate/reformer/gloss.mp3",
+      "example": "intermediate/reformer/example.mp3"
+    }
+  },
+  {
+    "lemma": "reformist",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/rɪˈfɔːrmɪst/",
+    "definition": "A person who advocates or practices reform.",
+    "koGloss": "n. 개혁주의자",
+    "koExample": "그는 온건한 개혁주의자였다.",
+    "koChirpScript": "reformist. 개혁주의자라는 뜻입니다. He was a moderate reformist. 그는 온건한 개혁주의자였다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/reformist/word.mp3",
+      "gloss": "upper/reformist/gloss.mp3",
+      "example": "upper/reformist/example.mp3"
+    }
+  },
+  {
+    "lemma": "rein",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/reɪn/",
+    "definition": "A long, narrow strap attached at one end to a horse's bit, typically used in pairs to guide or check a horse in riding or driving.",
+    "koGloss": "n. 고삐",
+    "koExample": "그는 말의 고삐를 잡았다.",
+    "koChirpScript": "rein. 고삐라는 뜻입니다. He took the reins of the horse. 그는 말의 고삐를 잡았다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/rein/word.mp3",
+      "gloss": "upper/rein/gloss.mp3",
+      "example": "upper/rein/example.mp3"
+    }
+  },
+  {
+    "lemma": "reinvest",
+    "pos": "verb",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌriːɪnˈvest/",
+    "definition": "Invest (money or profits) in something else.",
+    "koGloss": "v. 재투자하다",
+    "koExample": "그는 수익을 사업에 재투자했다.",
+    "koChirpScript": "reinvest. 재투자하다 라는 뜻입니다. He reinvested the profits in his business. 그는 수익을 사업에 재투자했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reinvest/word.mp3",
+      "gloss": "intermediate/reinvest/gloss.mp3",
+      "example": "intermediate/reinvest/example.mp3"
+    }
+  },
+  {
+    "lemma": "reinvestment",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌriːɪnˈvestmənt/",
+    "definition": "The action of investing money or profits in something else.",
+    "koGloss": "n. 재투자",
+    "koExample": "재투자는 장기적인 성장에 중요하다.",
+    "koChirpScript": "reinvestment. 재투자라는 뜻입니다. Reinvestment is important for long-term growth. 재투자는 장기적인 성장에 중요하다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reinvestment/word.mp3",
+      "gloss": "intermediate/reinvestment/gloss.mp3",
+      "example": "intermediate/reinvestment/example.mp3"
+    }
+  },
+  {
+    "lemma": "relational",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/rɪˈleɪʃənl/",
+    "definition": "Concerning the way in which two or more people or things are connected.",
+    "koGloss": "adj. 관계의",
+    "koExample": "관계형 데이터베이스는 데이터를 테이블에 저장한다.",
+    "koChirpScript": "relational. 관계의 라는 뜻입니다. A relational database stores data in tables. 관계형 데이터베이스는 데이터를 테이블에 저장한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/relational/word.mp3",
+      "gloss": "advanced/relational/gloss.mp3",
+      "example": "advanced/relational/example.mp3"
+    }
+  },
+  {
+    "lemma": "reorganization",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/riˌɔːrɡənəˈzeɪʃn/",
+    "definition": "The action or process of changing the way in which something is organized.",
+    "koGloss": "n. 재편성",
+    "koExample": "그 회사는 대대적인 재편성을 겪었다.",
+    "koChirpScript": "reorganization. 재편성이라는 뜻입니다. The company underwent a major reorganization. 그 회사는 대대적인 재편성을 겪었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reorganization/word.mp3",
+      "gloss": "intermediate/reorganization/gloss.mp3",
+      "example": "intermediate/reorganization/example.mp3"
+    }
+  },
+  {
+    "lemma": "repay",
+    "pos": "verb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/rɪˈpeɪ/",
+    "definition": "Pay back (a loan).",
+    "koGloss": "v. 갚다",
+    "koExample": "나는 그에게 빌린 돈을 갚아야 한다.",
+    "koChirpScript": "repay. 갚다 라는 뜻입니다. I need to repay the money I borrowed from him. 나는 그에게 빌린 돈을 갚아야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/repay/word.mp3",
+      "gloss": "elementary/repay/gloss.mp3",
+      "example": "elementary/repay/example.mp3"
+    }
+  },
+  {
+    "lemma": "repayment",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/rɪˈpeɪmənt/",
+    "definition": "The action of paying back a loan.",
+    "koGloss": "n. 상환",
+    "koExample": "대출 상환은 매달 이루어진다.",
+    "koChirpScript": "repayment. 상환이라는 뜻입니다. The loan repayment is made monthly. 대출 상환은 매달 이루어진다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/repayment/word.mp3",
+      "gloss": "intermediate/repayment/gloss.mp3",
+      "example": "intermediate/repayment/example.mp3"
+    }
+  },
+  {
+    "lemma": "reprint",
+    "pos": "verb, noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌriːˈprɪnt/",
+    "definition": "Print again or in a different form.",
+    "koGloss": "v. 재인쇄하다; n. 재인쇄",
+    "koExample": "그 책은 여러 번 재인쇄되었다.",
+    "koChirpScript": "reprint. 재인쇄하다라는 동사와 재인쇄라는 명사로 쓰입니다. The book has been reprinted many times. 그 책은 여러 번 재인쇄되었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reprint/word.mp3",
+      "gloss": "intermediate/reprint/gloss.mp3",
+      "example": "intermediate/reprint/example.mp3"
+    }
+  },
+  {
+    "lemma": "repurchase",
+    "pos": "verb",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˌriːˈpɜːrtʃəs/",
+    "definition": "Buy (something) again.",
+    "koGloss": "v. 재구매하다",
+    "koExample": "그 회사는 자사주를 재매입할 계획이다.",
+    "koChirpScript": "repurchase. 재구매하다 라는 뜻입니다. The company plans to repurchase its own shares. 그 회사는 자사주를 재매입할 계획이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/repurchase/word.mp3",
+      "gloss": "upper/repurchase/gloss.mp3",
+      "example": "upper/repurchase/example.mp3"
+    }
+  },
+  {
+    "lemma": "resale",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈriːseɪl/",
+    "definition": "The sale of a thing previously bought.",
+    "koGloss": "n. 재판매",
+    "koExample": "그 티켓은 재판매가 금지되어 있다.",
+    "koChirpScript": "resale. 재판매라는 뜻입니다. The resale of the tickets is prohibited. 그 티켓은 재판매가 금지되어 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/resale/word.mp3",
+      "gloss": "intermediate/resale/gloss.mp3",
+      "example": "intermediate/resale/example.mp3"
+    }
+  },
+  {
+    "lemma": "restate",
+    "pos": "verb",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌriːˈsteɪt/",
+    "definition": "State (something) again or differently, especially in order to correct or clarify.",
+    "koGloss": "v. 재진술하다",
+    "koExample": "요점을 다시 말씀해 주시겠어요?",
+    "koChirpScript": "restate. 재진술하다 라는 뜻입니다. Could you restate your main point? 요점을 다시 말씀해 주시겠어요? 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/restate/word.mp3",
+      "gloss": "intermediate/restate/gloss.mp3",
+      "example": "intermediate/restate/example.mp3"
+    }
+  },
+  {
+    "lemma": "revaluation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌriːvæljuˈeɪʃn/",
+    "definition": "Reassessment of the value of something.",
+    "koGloss": "n. 재평가",
+    "koExample": "통화 재평가가 있었다.",
+    "koChirpScript": "revaluation. 재평가라는 뜻입니다. There was a revaluation of the currency. 통화 재평가가 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/revaluation/word.mp3",
+      "gloss": "advanced/revaluation/gloss.mp3",
+      "example": "advanced/revaluation/example.mp3"
+    }
+  },
+  {
+    "lemma": "reversal",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/rɪˈvɜːrsl/",
+    "definition": "A change to an opposite direction, position, or course of action.",
+    "koGloss": "n. 반전, 역전",
+    "koExample": "그 경기는 극적인 반전으로 끝났다.",
+    "koChirpScript": "reversal. 반전 또는 역전이라는 뜻입니다. The game ended in a dramatic reversal. 그 경기는 극적인 반전으로 끝났다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/reversal/word.mp3",
+      "gloss": "intermediate/reversal/gloss.mp3",
+      "example": "intermediate/reversal/example.mp3"
+    }
+  },
+  {
+    "lemma": "rig",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/rɪɡ/",
+    "definition": "Manage or conduct (something) fraudulently so as to produce a result or situation that is advantageous to a particular person.",
+    "koGloss": "v. 조작하다",
+    "koExample": "그 선거는 조작되었다는 비난을 받았다.",
+    "koChirpScript": "rig. 조작하다 라는 뜻입니다. The election was accused of being rigged. 그 선거는 조작되었다는 비난을 받았다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/rig/word.mp3",
+      "gloss": "advanced/rig/gloss.mp3",
+      "example": "advanced/rig/example.mp3"
+    }
+  },
+  {
+    "lemma": "rightly",
+    "pos": "adverb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈraɪtli/",
+    "definition": "Justly; fairly.",
+    "koGloss": "adv. 당연히, 올바르게",
+    "koExample": "그는 당연히 그 상을 받았다.",
+    "koChirpScript": "rightly. 당연히 또는 올바르게 라는 뜻입니다. He rightly deserved the prize. 그는 당연히 그 상을 받았다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/rightly/word.mp3",
+      "gloss": "elementary/rightly/gloss.mp3",
+      "example": "elementary/rightly/example.mp3"
+    }
+  },
+  {
+    "lemma": "safeguard",
+    "pos": "noun, verb",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˈseɪfɡɑːrd/",
+    "definition": "A measure taken to protect someone or something or to prevent something undesirable.",
+    "koGloss": "n. 보호 장치; v. 보호하다",
+    "koExample": "우리는 환경을 보호해야 한다.",
+    "koChirpScript": "safeguard. 보호 장치라는 명사와 보호하다라는 동사로 쓰입니다. We must safeguard the environment. 우리는 환경을 보호해야 한다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/safeguard/word.mp3",
+      "gloss": "upper/safeguard/gloss.mp3",
+      "example": "upper/safeguard/example.mp3"
+    }
+  },
+  {
+    "lemma": "saver",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈseɪvər/",
+    "definition": "A person who regularly saves money through a bank or recognized scheme.",
+    "koGloss": "n. 절약가, 저축가",
+    "koExample": "그는 돈을 잘 아껴 쓰는 사람이다.",
+    "koChirpScript": "saver. 절약가 또는 저축가라는 뜻입니다. He is a good saver. 그는 돈을 잘 아껴 쓰는 사람이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/saver/word.mp3",
+      "gloss": "elementary/saver/gloss.mp3",
+      "example": "elementary/saver/example.mp3"
+    }
+  },
+  {
+    "lemma": "scorecard",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈskɔːrkɑːrd/",
+    "definition": "A card for recording the score in a game or match.",
+    "koGloss": "n. 점수 기록표",
+    "koExample": "심판이 점수 기록표를 확인했다.",
+    "koChirpScript": "scorecard. 점수 기록표라는 뜻입니다. The referee checked the scorecard. 심판이 점수 기록표를 확인했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/scorecard/word.mp3",
+      "gloss": "intermediate/scorecard/gloss.mp3",
+      "example": "intermediate/scorecard/example.mp3"
+    }
+  },
+  {
+    "lemma": "segmentation",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌseɡmenˈteɪʃn/",
+    "definition": "The division of something into separate parts or sections.",
+    "koGloss": "n. 분할",
+    "koExample": "시장 세분화는 마케팅 전략의 일부이다.",
+    "koChirpScript": "segmentation. 분할이라는 뜻입니다. Market segmentation is part of the marketing strategy. 시장 세분화는 마케팅 전략의 일부이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/segmentation/word.mp3",
+      "gloss": "advanced/segmentation/gloss.mp3",
+      "example": "advanced/segmentation/example.mp3"
+    }
+  },
+  {
+    "lemma": "separatist",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈsepərətɪst/",
+    "definition": "A person who supports the separation of a particular group of people from a larger body on the basis of ethnicity, religion, or gender.",
+    "koGloss": "n. 분리주의자",
+    "koExample": "분리주의자들은 독립을 요구했다.",
+    "koChirpScript": "separatist. 분리주의자라는 뜻입니다. The separatists demanded independence. 분리주의자들은 독립을 요구했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/separatist/word.mp3",
+      "gloss": "advanced/separatist/gloss.mp3",
+      "example": "advanced/separatist/example.mp3"
+    }
+  },
+  {
+    "lemma": "skeptic",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈskeptɪk/",
+    "definition": "A person inclined to question or doubt all accepted opinions.",
+    "koGloss": "n. 회의론자",
+    "koExample": "그는 그 계획에 대해 회의적이었다.",
+    "koChirpScript": "skeptic. 회의론자라는 뜻입니다. He was a skeptic about the plan. 그는 그 계획에 대해 회의적이었다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/skeptic/word.mp3",
+      "gloss": "upper/skeptic/gloss.mp3",
+      "example": "upper/skeptic/example.mp3"
+    }
+  },
+  {
+    "lemma": "slack",
+    "pos": "adjective",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/slæk/",
+    "definition": "Not taut or held tightly in position; loose.",
+    "koGloss": "adj. 느슨한",
+    "koExample": "밧줄이 느슨해졌다.",
+    "koChirpScript": "slack. 느슨한 이라는 뜻입니다. The rope went slack. 밧줄이 느슨해졌다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/slack/word.mp3",
+      "gloss": "intermediate/slack/gloss.mp3",
+      "example": "intermediate/slack/example.mp3"
+    }
+  },
+  {
+    "lemma": "slowdown",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈsloʊdaʊn/",
+    "definition": "A decline in the rate of progress; a slowing down.",
+    "koGloss": "n. 둔화",
+    "koExample": "경제 성장 둔화가 있었다.",
+    "koChirpScript": "slowdown. 둔화라는 뜻입니다. There has been a slowdown in economic growth. 경제 성장 둔화가 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/slowdown/word.mp3",
+      "gloss": "intermediate/slowdown/gloss.mp3",
+      "example": "intermediate/slowdown/example.mp3"
+    }
+  },
+  {
+    "lemma": "slump",
+    "pos": "verb, noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/slʌmp/",
+    "definition": "Sit, lean, or fall heavily and limply, especially with a bent back.",
+    "koGloss": "v. 급감하다; n. 불황",
+    "koExample": "주식 시장이 불황에 빠졌다.",
+    "koChirpScript": "slump. 급감하다라는 동사와 불황이라는 명사로 쓰입니다. The stock market went into a slump. 주식 시장이 불황에 빠졌다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/slump/word.mp3",
+      "gloss": "intermediate/slump/gloss.mp3",
+      "example": "intermediate/slump/example.mp3"
+    }
+  },
+  {
+    "lemma": "specialization",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˌspeʃələˈzeɪʃn/",
+    "definition": "The process of concentrating on and becoming expert in a particular subject or skill.",
+    "koGloss": "n. 전문화",
+    "koExample": "그의 전문 분야는 심장학이다.",
+    "koChirpScript": "specialization. 전문화라는 뜻입니다. His specialization is in cardiology. 그의 전문 분야는 심장학이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/specialization/word.mp3",
+      "gloss": "intermediate/specialization/gloss.mp3",
+      "example": "intermediate/specialization/example.mp3"
+    }
+  },
+  {
+    "lemma": "speculative",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈspekjələtɪv/",
+    "definition": "Engaged in, expressing, or based on conjecture rather than knowledge.",
+    "koGloss": "adj. 추측에 근거한, 투기적인",
+    "koExample": "그것은 순전히 추측에 근거한 이야기였다.",
+    "koChirpScript": "speculative. 추측에 근거한 또는 투기적인 이라는 뜻입니다. It was a purely speculative story. 그것은 순전히 추측에 근거한 이야기였다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/speculative/word.mp3",
+      "gloss": "advanced/speculative/gloss.mp3",
+      "example": "advanced/speculative/example.mp3"
+    }
+  },
+  {
+    "lemma": "speculator",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈspekjəleɪtər/",
+    "definition": "A person who invests in stocks, property, or other ventures in the hope of making a profit from fluctuations in the market.",
+    "koGloss": "n. 투기꾼",
+    "koExample": "투기꾼들은 주식 시장에서 돈을 벌었다.",
+    "koChirpScript": "speculator. 투기꾼이라는 뜻입니다. The speculators made money on the stock market. 투기꾼들은 주식 시장에서 돈을 벌었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/speculator/word.mp3",
+      "gloss": "advanced/speculator/gloss.mp3",
+      "example": "advanced/speculator/example.mp3"
+    }
+  },
+  {
+    "lemma": "stakeholder",
+    "pos": "noun",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˈsteɪkhoʊldər/",
+    "definition": "A person with an interest or concern in something, especially a business.",
+    "koGloss": "n. 이해관계자",
+    "koExample": "모든 이해관계자들이 그 결정에 참여했다.",
+    "koChirpScript": "stakeholder. 이해관계자라는 뜻입니다. All stakeholders were involved in the decision. 모든 이해관계자들이 그 결정에 참여했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/stakeholder/word.mp3",
+      "gloss": "upper/stakeholder/gloss.mp3",
+      "example": "upper/stakeholder/example.mp3"
+    }
+  },
+  {
+    "lemma": "statute",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈstætʃuːt/",
+    "definition": "A written law passed by a legislative body.",
+    "koGloss": "n. 법규, 법령",
+    "koExample": "그 법규는 의회에서 통과되었다.",
+    "koChirpScript": "statute. 법규 또는 법령이라는 뜻입니다. The statute was passed by parliament. 그 법규는 의회에서 통과되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/statute/word.mp3",
+      "gloss": "advanced/statute/gloss.mp3",
+      "example": "advanced/statute/example.mp3"
+    }
+  },
+  {
+    "lemma": "statutory",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈstætʃətɔːri/",
+    "definition": "Required, permitted, or enacted by statute.",
+    "koGloss": "adj. 법에 명시된",
+    "koExample": "그것은 법적 요구 사항이다.",
+    "koChirpScript": "statutory. 법에 명시된 이라는 뜻입니다. It is a statutory requirement. 그것은 법적 요구 사항이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/statutory/word.mp3",
+      "gloss": "advanced/statutory/gloss.mp3",
+      "example": "advanced/statutory/example.mp3"
+    }
+  },
+  {
+    "lemma": "sterling",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈstɜːrlɪŋ/",
+    "definition": "British money.",
+    "koGloss": "n. 영국 파운드화",
+    "koExample": "가격은 파운드 스털링으로 표시된다.",
+    "koChirpScript": "sterling. 영국 파운드화라는 뜻입니다. Prices are quoted in pounds sterling. 가격은 파운드 스털링으로 표시된다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/sterling/word.mp3",
+      "gloss": "upper/sterling/gloss.mp3",
+      "example": "upper/sterling/example.mp3"
+    }
+  },
+  {
+    "lemma": "stochastic",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/stoʊˈkæstɪk/",
+    "definition": "Having a random probability distribution or pattern that may be analyzed statistically but may not be predicted precisely.",
+    "koGloss": "adj. 확률적인",
+    "koExample": "그 모델은 확률적 과정을 사용한다.",
+    "koChirpScript": "stochastic. 확률적인 이라는 뜻입니다. The model uses a stochastic process. 그 모델은 확률적 과정을 사용한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/stochastic/word.mp3",
+      "gloss": "advanced/stochastic/gloss.mp3",
+      "example": "advanced/stochastic/example.mp3"
+    }
+  },
+  {
+    "lemma": "stockmarket",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈstɑːk mɑːrkɪt/",
+    "definition": "A stock exchange.",
+    "koGloss": "n. 주식 시장",
+    "koExample": "주식 시장이 오늘 상승했다.",
+    "koChirpScript": "stockmarket. 주식 시장이라는 뜻입니다. The stock market went up today. 주식 시장이 오늘 상승했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/stockmarket/word.mp3",
+      "gloss": "elementary/stockmarket/gloss.mp3",
+      "example": "elementary/stockmarket/example.mp3"
+    }
+  },
+  {
+    "lemma": "subprime",
+    "pos": "adjective",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌsʌbˈpraɪm/",
+    "definition": "Relating to or denoting credit or a loan arrangement for borrowers with a poor credit history, typically having unfavorable conditions such as high interest rates.",
+    "koGloss": "adj. 서브프라임의 (비우량 주택 담보 대출)",
+    "koExample": "서브프라임 모기지 사태는 금융 위기를 초래했다.",
+    "koChirpScript": "subprime. 서브프라임의 라는 뜻입니다. The subprime mortgage crisis led to a financial crisis. 서브프라임 모기지 사태는 금융 위기를 초래했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/subprime/word.mp3",
+      "gloss": "advanced/subprime/gloss.mp3",
+      "example": "advanced/subprime/example.mp3"
+    }
+  },
+  {
+    "lemma": "subsection",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈsʌbsekʃn/",
+    "definition": "A division of a section.",
+    "koGloss": "n. 하위 부분, 세부 항목",
+    "koExample": "자세한 내용은 보고서의 해당 하위 부분을 참조하세요.",
+    "koChirpScript": "subsection. 하위 부분 또는 세부 항목이라는 뜻입니다. Please refer to the relevant subsection of the report for details. 자세한 내용은 보고서의 해당 하위 부분을 참조하세요. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/subsection/word.mp3",
+      "gloss": "intermediate/subsection/gloss.mp3",
+      "example": "intermediate/subsection/example.mp3"
+    }
+  },
+  {
+    "lemma": "supervisory",
+    "pos": "adjective",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˌsuːpərˈvaɪzəri/",
+    "definition": "Relating to or concerned with supervising people or a process.",
+    "koGloss": "adj. 감독의",
+    "koExample": "그는 감독 역할을 맡고 있다.",
+    "koChirpScript": "supervisory. 감독의 라는 뜻입니다. He has a supervisory role. 그는 감독 역할을 맡고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/supervisory/word.mp3",
+      "gloss": "upper/supervisory/gloss.mp3",
+      "example": "upper/supervisory/example.mp3"
+    }
+  },
+  {
+    "lemma": "sustainability",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/səˌsteɪnəˈbɪləti/",
+    "definition": "The ability to be maintained at a certain rate or level.",
+    "koGloss": "n. 지속 가능성",
+    "koExample": "환경 지속 가능성은 중요한 문제이다.",
+    "koChirpScript": "sustainability. 지속 가능성이라는 뜻입니다. Environmental sustainability is an important issue. 환경 지속 가능성은 중요한 문제이다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/sustainability/word.mp3",
+      "gloss": "upper/sustainability/gloss.mp3",
+      "example": "upper/sustainability/example.mp3"
+    }
+  },
+  {
+    "lemma": "syndicate",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈsɪndɪkət/",
+    "definition": "A group of individuals or organizations combined to promote some common interest.",
+    "koGloss": "n. 신디케이트, 기업 연합",
+    "koExample": "범죄 조직이 그 도시를 통제했다.",
+    "koChirpScript": "syndicate. 신디케이트 또는 기업 연합이라는 뜻입니다. A crime syndicate controlled the city. 범죄 조직이 그 도시를 통제했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/syndicate/word.mp3",
+      "gloss": "advanced/syndicate/gloss.mp3",
+      "example": "advanced/syndicate/example.mp3"
+    }
+  },
+  {
+    "lemma": "synergy",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈsɪnərdʒi/",
+    "definition": "The interaction or cooperation of two or more organizations, substances, or other agents to produce a combined effect greater than the sum of their separate effects.",
+    "koGloss": "n. 시너지, 동반 상승 효과",
+    "koExample": "두 회사 간의 시너지가 있었다.",
+    "koChirpScript": "synergy. 시너지 또는 동반 상승 효과라는 뜻입니다. There was a synergy between the two companies. 두 회사 간의 시너지가 있었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/synergy/word.mp3",
+      "gloss": "advanced/synergy/gloss.mp3",
+      "example": "advanced/synergy/example.mp3"
+    }
+  },
+  {
+    "lemma": "taxable",
+    "pos": "adjective",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈtæksəbl/",
+    "definition": "Subject to tax.",
+    "koGloss": "adj. 과세 대상의",
+    "koExample": "모든 소득이 과세 대상인 것은 아니다.",
+    "koChirpScript": "taxable. 과세 대상의 라는 뜻입니다. Not all income is taxable. 모든 소득이 과세 대상인 것은 아니다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/taxable/word.mp3",
+      "gloss": "intermediate/taxable/gloss.mp3",
+      "example": "intermediate/taxable/example.mp3"
+    }
+  },
+  {
+    "lemma": "telecom",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈtelikɑːm/",
+    "definition": "Telecommunication.",
+    "koGloss": "n. 통신",
+    "koExample": "통신 산업은 빠르게 성장하고 있다.",
+    "koChirpScript": "telecom. 통신이라는 뜻입니다. The telecom industry is growing rapidly. 통신 산업은 빠르게 성장하고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/telecom/word.mp3",
+      "gloss": "intermediate/telecom/gloss.mp3",
+      "example": "intermediate/telecom/example.mp3"
+    }
+  },
+  {
+    "lemma": "template",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈtemplət/",
+    "definition": "A shaped piece of metal, wood, card, plastic, or other material used as a pattern for processes such as painting, cutting out, shaping, or drilling.",
+    "koGloss": "n. 템플릿",
+    "koExample": "이메일을 작성하기 위해 템플릿을 사용했다.",
+    "koChirpScript": "template. 템플릿이라는 뜻입니다. I used a template to write the email. 이메일을 작성하기 위해 템플릿을 사용했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/template/word.mp3",
+      "gloss": "intermediate/template/gloss.mp3",
+      "example": "intermediate/template/example.mp3"
+    }
+  },
+  {
+    "lemma": "textile",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈtekstaɪl/",
+    "definition": "A type of cloth or woven fabric.",
+    "koGloss": "n. 직물",
+    "koExample": "섬유 산업은 그 나라 경제에 중요하다.",
+    "koChirpScript": "textile. 직물이라는 뜻입니다. The textile industry is important to the country's economy. 섬유 산업은 그 나라 경제에 중요하다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/textile/word.mp3",
+      "gloss": "intermediate/textile/gloss.mp3",
+      "example": "intermediate/textile/example.mp3"
+    }
+  },
+  {
+    "lemma": "tier",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/tɪr/",
+    "definition": "A row or level of a structure, typically one of a series of rows placed one above the other and successively receding or diminishing in size.",
+    "koGloss": "n. 단계, 계층",
+    "koExample": "그 회사는 3단계 가격 구조를 가지고 있다.",
+    "koChirpScript": "tier. 단계 또는 계층이라는 뜻입니다. The company has a three-tier pricing structure. 그 회사는 3단계 가격 구조를 가지고 있다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/tier/word.mp3",
+      "gloss": "upper/tier/gloss.mp3",
+      "example": "upper/tier/example.mp3"
+    }
+  },
+  {
+    "lemma": "tonne",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/tʌn/",
+    "definition": "A metric ton.",
+    "koGloss": "n. 톤",
+    "koExample": "그 트럭은 10톤의 화물을 운반할 수 있다.",
+    "koChirpScript": "tonne. 톤이라는 뜻입니다. The truck can carry 10 tonnes of cargo. 그 트럭은 10톤의 화물을 운반할 수 있다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/tonne/word.mp3",
+      "gloss": "intermediate/tonne/gloss.mp3",
+      "example": "intermediate/tonne/example.mp3"
+    }
+  },
+  {
+    "lemma": "tort",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/tɔːrt/",
+    "definition": "A wrongful act or an infringement of a right (other than under contract) leading to civil legal liability.",
+    "koGloss": "n. 불법 행위",
+    "koExample": "그는 불법 행위로 고소당했다.",
+    "koChirpScript": "tort. 불법 행위라는 뜻입니다. He was sued for tort. 그는 불법 행위로 고소당했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/tort/word.mp3",
+      "gloss": "advanced/tort/gloss.mp3",
+      "example": "advanced/tort/example.mp3"
+    }
+  },
+  {
+    "lemma": "trader",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈtreɪdər/",
+    "definition": "A person who buys and sells goods, currency, or stocks.",
+    "koGloss": "n. 상인, 거래인",
+    "koExample": "그는 성공한 주식 거래인이다.",
+    "koChirpScript": "trader. 상인 또는 거래인이라는 뜻입니다. He is a successful stock trader. 그는 성공한 주식 거래인이다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/trader/word.mp3",
+      "gloss": "elementary/trader/gloss.mp3",
+      "example": "elementary/trader/example.mp3"
+    }
+  },
+  {
+    "lemma": "tranche",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/trɑːnʃ/",
+    "definition": "A portion of something, especially money.",
+    "koGloss": "n. (자금의) 분할 발행분",
+    "koExample": "대출금은 여러 차례에 걸쳐 지급될 것이다.",
+    "koChirpScript": "tranche. 자금의 분할 발행분이라는 뜻입니다. The loan will be paid in several tranches. 대출금은 여러 차례에 걸쳐 지급될 것이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/tranche/word.mp3",
+      "gloss": "advanced/tranche/gloss.mp3",
+      "example": "advanced/tranche/example.mp3"
+    }
+  },
+  {
+    "lemma": "treasury",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈtreʒəri/",
+    "definition": "The funds or revenue of a government, corporation, or institution.",
+    "koGloss": "n. 재무부, 국고",
+    "koExample": "재무부는 경제 정책을 책임진다.",
+    "koChirpScript": "treasury. 재무부 또는 국고라는 뜻입니다. The Treasury is responsible for economic policy. 재무부는 경제 정책을 책임진다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/treasury/word.mp3",
+      "gloss": "upper/treasury/gloss.mp3",
+      "example": "upper/treasury/example.mp3"
+    }
+  },
+  {
+    "lemma": "tribunal",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/traɪˈbjuːnl/",
+    "definition": "A body established to settle certain types of dispute.",
+    "koGloss": "n. 재판소",
+    "koExample": "그 사건은 국제 재판소에 회부되었다.",
+    "koChirpScript": "tribunal. 재판소라는 뜻입니다. The case was referred to an international tribunal. 그 사건은 국제 재판소에 회부되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/tribunal/word.mp3",
+      "gloss": "advanced/tribunal/gloss.mp3",
+      "example": "advanced/tribunal/example.mp3"
+    }
+  },
+  {
+    "lemma": "triple",
+    "pos": "adjective, verb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈtrɪpl/",
+    "definition": "Consisting of or involving three parts, things, or people.",
+    "koGloss": "adj. 3배의; v. 3배가 되다",
+    "koExample": "그 회사는 이익을 3배로 늘렸다.",
+    "koChirpScript": "triple. 3배의 라는 형용사와 3배가 되다라는 동사로 쓰입니다. The company tripled its profits. 그 회사는 이익을 3배로 늘렸다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/triple/word.mp3",
+      "gloss": "elementary/triple/gloss.mp3",
+      "example": "elementary/triple/example.mp3"
+    }
+  },
+  {
+    "lemma": "tuple",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈtuːpl/",
+    "definition": "A data structure consisting of multiple parts.",
+    "koGloss": "n. 튜플 (데이터 구조)",
+    "koExample": "튜플은 순서가 있는 값들의 모음이다.",
+    "koChirpScript": "tuple. 데이터 구조의 일종인 튜플이라는 뜻입니다. A tuple is a collection of ordered values. 튜플은 순서가 있는 값들의 모음이다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/tuple/word.mp3",
+      "gloss": "advanced/tuple/gloss.mp3",
+      "example": "advanced/tuple/example.mp3"
+    }
+  },
+  {
+    "lemma": "unchanged",
+    "pos": "adjective",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ʌnˈtʃeɪndʒd/",
+    "definition": "Not changed.",
+    "koGloss": "adj. 변하지 않은",
+    "koExample": "그 계획은 변하지 않았다.",
+    "koChirpScript": "unchanged. 변하지 않은 이라는 뜻입니다. The plan remains unchanged. 그 계획은 변하지 않았다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/unchanged/word.mp3",
+      "gloss": "elementary/unchanged/gloss.mp3",
+      "example": "elementary/unchanged/example.mp3"
+    }
+  },
+  {
+    "lemma": "underpin",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌʌndərˈpɪn/",
+    "definition": "Support, justify, or form the basis for.",
+    "koGloss": "v. 뒷받침하다",
+    "koExample": "그의 주장은 강력한 증거로 뒷받침되었다.",
+    "koChirpScript": "underpin. 뒷받침하다 라는 뜻입니다. His argument was underpinned by strong evidence. 그의 주장은 강력한 증거로 뒷받침되었다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/underpin/word.mp3",
+      "gloss": "advanced/underpin/gloss.mp3",
+      "example": "advanced/underpin/example.mp3"
+    }
+  },
+  {
+    "lemma": "underwrite",
+    "pos": "verb",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈʌndərraɪt/",
+    "definition": "Sign and accept liability under (an insurance policy), thus guaranteeing payment in case loss or damage occurs.",
+    "koGloss": "v. (보험을) 인수하다",
+    "koExample": "그 회사는 그 위험을 인수하기로 동의했다.",
+    "koChirpScript": "underwrite. 보험을 인수하다 라는 뜻입니다. The company agreed to underwrite the risk. 그 회사는 그 위험을 인수하기로 동의했다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/underwrite/word.mp3",
+      "gloss": "advanced/underwrite/gloss.mp3",
+      "example": "advanced/underwrite/example.mp3"
+    }
+  },
+  {
+    "lemma": "underwriter",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˈʌndərraɪtər/",
+    "definition": "A person or company that underwrites an insurance risk.",
+    "koGloss": "n. 보험업자",
+    "koExample": "보험업자는 위험을 평가한다.",
+    "koChirpScript": "underwriter. 보험업자라는 뜻입니다. An underwriter assesses the risk. 보험업자는 위험을 평가한다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/underwriter/word.mp3",
+      "gloss": "advanced/underwriter/gloss.mp3",
+      "example": "advanced/underwriter/example.mp3"
+    }
+  },
+  {
+    "lemma": "unfavorable",
+    "pos": "adjective",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ʌnˈfeɪvərəbl/",
+    "definition": "Expressing or showing a lack of approval or support.",
+    "koGloss": "adj. 비호의적인, 불리한",
+    "koExample": "그 보고서는 회사에 불리했다.",
+    "koChirpScript": "unfavorable. 비호의적인 또는 불리한 이라는 뜻입니다. The report was unfavorable to the company. 그 보고서는 회사에 불리했다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/unfavorable/word.mp3",
+      "gloss": "intermediate/unfavorable/gloss.mp3",
+      "example": "intermediate/unfavorable/example.mp3"
+    }
+  },
+  {
+    "lemma": "unpopular",
+    "pos": "adjective",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ʌnˈpɑːpjələr/",
+    "definition": "Not liked or popular.",
+    "koGloss": "adj. 인기 없는",
+    "koExample": "그 결정은 매우 인기 없었다.",
+    "koChirpScript": "unpopular. 인기 없는 이라는 뜻입니다. The decision was very unpopular. 그 결정은 매우 인기 없었다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/unpopular/word.mp3",
+      "gloss": "elementary/unpopular/gloss.mp3",
+      "example": "elementary/unpopular/example.mp3"
+    }
+  },
+  {
+    "lemma": "unrelated",
+    "pos": "adjective",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˌʌnrɪˈleɪtɪd/",
+    "definition": "Not related or connected.",
+    "koGloss": "adj. 관련 없는",
+    "koExample": "그 두 사건은 관련이 없었다.",
+    "koChirpScript": "unrelated. 관련 없는 이라는 뜻입니다. The two events were unrelated. 그 두 사건은 관련이 없었다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/unrelated/word.mp3",
+      "gloss": "elementary/unrelated/gloss.mp3",
+      "example": "elementary/unrelated/example.mp3"
+    }
+  },
+  {
+    "lemma": "unsecured",
+    "pos": "adjective",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌʌnsɪˈkjʊrd/",
+    "definition": "(of a loan) made without an asset given as security.",
+    "koGloss": "adj. 무담보의",
+    "koExample": "무담보 대출은 이자율이 더 높다.",
+    "koChirpScript": "unsecured. 무담보의 라는 뜻입니다. An unsecured loan has a higher interest rate. 무담보 대출은 이자율이 더 높다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/unsecured/word.mp3",
+      "gloss": "upper/unsecured/gloss.mp3",
+      "example": "upper/unsecured/example.mp3"
+    }
+  },
+  {
+    "lemma": "uranium",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/jʊˈreɪniəm/",
+    "definition": "The chemical element of atomic number 92, a gray, dense radioactive metal used as a fuel in nuclear reactors.",
+    "koGloss": "n. 우라늄",
+    "koExample": "우라늄은 핵에너지에 사용된다.",
+    "koChirpScript": "uranium. 우라늄이라는 뜻입니다. Uranium is used for nuclear energy. 우라늄은 핵에너지에 사용된다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/uranium/word.mp3",
+      "gloss": "upper/uranium/gloss.mp3",
+      "example": "upper/uranium/example.mp3"
+    }
+  },
+  {
+    "lemma": "utilization",
+    "pos": "noun",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˌjuːtələˈzeɪʃn/",
+    "definition": "The action of making practical and effective use of something.",
+    "koGloss": "n. 활용",
+    "koExample": "자원의 효율적인 활용이 중요하다.",
+    "koChirpScript": "utilization. 활용이라는 뜻입니다. The efficient utilization of resources is important. 자원의 효율적인 활용이 중요하다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/utilization/word.mp3",
+      "gloss": "upper/utilization/gloss.mp3",
+      "example": "upper/utilization/example.mp3"
+    }
+  },
+  {
+    "lemma": "valuation",
+    "pos": "noun",
+    "categories": "중상급, TOEIC",
+    "pronunciation": "/ˌvæljuˈeɪʃn/",
+    "definition": "An estimation of something's worth, especially one carried out by a professional valuer.",
+    "koGloss": "n. 평가",
+    "koExample": "그들은 집의 가치 평가를 받았다.",
+    "koChirpScript": "valuation. 평가라는 뜻입니다. They got a valuation of their house. 그들은 집의 가치 평가를 받았다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/valuation/word.mp3",
+      "gloss": "upper/valuation/gloss.mp3",
+      "example": "upper/valuation/example.mp3"
+    }
+  },
+  {
+    "lemma": "vest",
+    "pos": "noun, verb",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/vest/",
+    "definition": "A sleeveless upper-body garment worn for a particular purpose.",
+    "koGloss": "n. 조끼; v. (권리를) 부여하다",
+    "koExample": "그는 양복 아래에 조끼를 입었다.",
+    "koChirpScript": "vest. 조끼라는 명사와 권리를 부여하다라는 동사로 쓰입니다. He wore a vest under his suit. 그는 양복 아래에 조끼를 입었다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/vest/word.mp3",
+      "gloss": "elementary/vest/gloss.mp3",
+      "example": "elementary/vest/example.mp3"
+    }
+  },
+  {
+    "lemma": "veto",
+    "pos": "noun, verb",
+    "categories": "중상급, TOEFL",
+    "pronunciation": "/ˈviːtoʊ/",
+    "definition": "A constitutional right to reject a decision or proposal made by a law-making body.",
+    "koGloss": "n. 거부권; v. 거부권을 행사하다",
+    "koExample": "대통령은 그 법안에 거부권을 행사했다.",
+    "koChirpScript": "veto. 거부권이라는 명사와 거부권을 행사하다라는 동사로 쓰입니다. The president vetoed the bill. 대통령은 그 법안에 거부권을 행사했다. 라는 의미네요.",
+    "audio": {
+      "word": "upper/veto/word.mp3",
+      "gloss": "upper/veto/gloss.mp3",
+      "example": "upper/veto/example.mp3"
+    }
+  },
+  {
+    "lemma": "volatility",
+    "pos": "noun",
+    "categories": "고급, TOEFL",
+    "pronunciation": "/ˌvɑːləˈtɪləti/",
+    "definition": "Liability to change rapidly and unpredictably, especially for the worse.",
+    "koGloss": "n. 변동성",
+    "koExample": "주식 시장은 높은 변동성으로 알려져 있다.",
+    "koChirpScript": "volatility. 변동성이라는 뜻입니다. The stock market is known for its high volatility. 주식 시장은 높은 변동성으로 알려져 있다. 라는 의미네요.",
+    "audio": {
+      "word": "advanced/volatility/word.mp3",
+      "gloss": "advanced/volatility/gloss.mp3",
+      "example": "advanced/volatility/example.mp3"
+    }
+  },
+  {
+    "lemma": "wholesaler",
+    "pos": "noun",
+    "categories": "중급, TOEIC",
+    "pronunciation": "/ˈhoʊlseɪlər/",
+    "definition": "A person or company that sells goods in large quantities at low prices, typically to retailers.",
+    "koGloss": "n. 도매업자",
+    "koExample": "도매업자는 소매업자에게 상품을 판매한다.",
+    "koChirpScript": "wholesaler. 도매업자라는 뜻입니다. A wholesaler sells goods to retailers. 도매업자는 소매업자에게 상품을 판매한다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/wholesaler/word.mp3",
+      "gloss": "intermediate/wholesaler/gloss.mp3",
+      "example": "intermediate/wholesaler/example.mp3"
+    }
+  },
+  {
+    "lemma": "worksheet",
+    "pos": "noun",
+    "categories": "기초, TOEIC",
+    "pronunciation": "/ˈwɜːrkʃiːt/",
+    "definition": "A paper for recording work done or in progress.",
+    "koGloss": "n. 연습 문제지",
+    "koExample": "학생들은 연습 문제지를 작성했다.",
+    "koChirpScript": "worksheet. 연습 문제지라는 뜻입니다. The students completed the worksheet. 학생들은 연습 문제지를 작성했다. 라는 의미네요.",
+    "audio": {
+      "word": "elementary/worksheet/word.mp3",
+      "gloss": "elementary/worksheet/gloss.mp3",
+      "example": "elementary/worksheet/example.mp3"
+    }
+  },
+  {
+    "lemma": "yuan",
+    "pos": "noun",
+    "categories": "중급, TOEFL",
+    "pronunciation": "/juˈɑːn/",
+    "definition": "The basic monetary unit of China.",
+    "koGloss": "n. 위안 (중국 화폐 단위)",
+    "koExample": "중국의 통화는 위안이다.",
+    "koChirpScript": "yuan. 중국의 화폐 단위인 위안이라는 뜻입니다. The currency of China is the yuan. 중국의 통화는 위안이다. 라는 의미네요.",
+    "audio": {
+      "word": "intermediate/yuan/word.mp3",
+      "gloss": "intermediate/yuan/gloss.mp3",
+      "example": "intermediate/yuan/example.mp3"
+    }
+  }
+]

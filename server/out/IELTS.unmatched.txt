@@ -1,0 +1,68 @@
+oxford
+cefr
+level (american english)
+is
+words
+english
+b
+prep
+adv
+n
+v
+adj
+det
+pron
+conj
+april
+august
+auxiliary
+exclam
+modal
+cd
+december
+dvd
+FALSE
+february
+friday
+i
+january
+july
+june
+kind (type)
+like (similar)
+sb
+sth
+monday
+november
+o
+october
+ok
+saturday
+september
+sunday
+thursday
+infinitive
+TRUE
+t-shirt
+tuesday
+tv
+wednesday
+according
+taking
+used
+row
+bear (deal with)
+t
+expanded
+learners
+includes
+c
+are
+listed
+aids
+counter (long flat surface)
+id
+r
+counter (argue against)
+grave (for dead person)
+grave (serious)

@@ -271,43 +271,9 @@ export default function VocabDetailModal({
   const dictentry = vocab?.dictentry || {};
   const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
   
-  // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
-  const posGroups = new Map();
-  for (const meaning of rawMeanings) {
-    const pos = (meaning.pos || 'unknown').toLowerCase().trim();
-    if (!posGroups.has(pos)) {
-      posGroups.set(pos, []);
-    }
-    posGroups.get(pos).push(meaning);
-  }
-  
-  const meanings = [];
-  for (const [pos, groupMeanings] of posGroups.entries()) {
-    if (groupMeanings.length === 1) {
-      meanings.push(groupMeanings[0]);
-    } else {
-      // 같은 pos를 가진 여러 meanings 중에서 최고 선택
-      const best = groupMeanings.reduce((prev, current) => {
-        const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
-        const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
-        
-        if (currentExampleCount > prevExampleCount) return current;
-        if (prevExampleCount > currentExampleCount) return prev;
-        
-        const prevKoDef = prev.definitions?.[0]?.ko_def || '';
-        const currentKoDef = current.definitions?.[0]?.ko_def || '';
-        
-        if (currentKoDef.length > prevKoDef.length) return current;
-        if (prevKoDef.length > currentKoDef.length) return prev;
-        
-        const prevDef = prev.definitions?.[0]?.def || '';
-        const currentDef = current.definitions?.[0]?.def || '';
-        
-        return currentDef.length > prevDef.length ? current : prev;
-      });
-      meanings.push(best);
-    }
-  }
+  // CEFR 데이터 구조를 위한 간소화된 처리
+  const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+  const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
   
   const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
   const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
@@ -353,54 +319,47 @@ export default function VocabDetailModal({
           <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <Pron ipa={dictentry.ipa} ipaKo={dictentry.ipaKo} />
 
-            {meanings.length > 0 ? (
-              meanings.map((meaning, index) => (
-                <div key={index} className="mt-3 border-top pt-3">
-                  <h6 className={`fw-bold fst-italic ${getPosBadgeColor(meaning.pos)} text-white d-inline-block px-2 py-1 rounded small`}>{meaning.pos}</h6>
-                  {meaning.definitions && meaning.definitions.map((defItem, defIndex) => (
-                    <div key={defIndex} className="ps-2 mt-2">
+            {glossExample || exampleExample ? (
+              <div className="mt-3">
+                {glossExample && (
+                  <div className="mb-3">
+                    <h6 className={`fw-bold fst-italic ${getPosBadgeColor(vocab.pos)} text-white d-inline-block px-2 py-1 rounded small`}>{vocab.pos}</h6>
+                    <div className="ps-2 mt-2">
                       <p className="mb-1">
-                        <strong>{defItem.ko_def}</strong>
-                        <span className="d-block text-muted small">{defItem.def}</span>
+                        <strong>{glossExample.ko}</strong>
                       </p>
-                      {defItem.examples && defItem.examples.length > 0 && (
-                        <ul className="list-unstyled ps-3 mt-2">
-                          {defItem.examples.map((ex, exIndex) => {
-                            const audioId = `${vocab.id}-${index}-${defIndex}-${exIndex}`;
-                            const isExamplePlaying = playingAudio?.type === 'example' && playingAudio?.id === audioId;
-                            // 모든 CEFR 레벨에 대해 동일한 경로 패턴 사용
-                            const audioFileName = getSmartAudioFileName(vocab.lemma, vocab.pos);
-                            const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
-                            return (
-                              <li key={exIndex} className="d-flex justify-content-between align-items-center mb-2 p-2 rounded bg-light">
-                                <div className="me-2">
-                                  <span lang="en" className="d-block">{ex.example || ex.de}</span>
-                                  <span className="text-muted small">— {ex.ko_example || ex.ko}</span>
-                                </div>
-                                <button
-                                  className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center flex-shrink-0"
-                                  style={{ width: '32px', height: '32px' }}
-                                  onClick={(e) => { e.stopPropagation(); onPlayUrl(localAudioPath, 'example', audioId); }}
-                                  aria-label="예문 오디오 재생"
-                                  title="예문 듣기"
-                                >
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isExamplePlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
-                                    {isExamplePlaying ? (
-                                      <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
-                                    ) : (
-                                      <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
-                                    )}
-                                  </svg>
-                                </button>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
                     </div>
-                  ))}
-                </div>
-              ))
+                  </div>
+                )}
+                
+                {exampleExample && exampleExample.ko && (
+                  <div className="mt-3 border-top pt-3">
+                    <h6 className="fw-bold">예문</h6>
+                    <div className="mb-2 p-2 rounded bg-light">
+                      <div className="me-2">
+                        {(() => {
+                          // 저장된 영어 예문 우선 사용 (JSON의 example 필드에서)
+                          let englishExample = exampleExample.en || '';
+                          
+                          return (
+                            <>
+                              {englishExample && (
+                                <span lang="en" className="d-block fw-bold mb-1">{englishExample}</span>
+                              )}
+                              <span className="text-muted small">— {exampleExample.ko}</span>
+                              {exampleExample.chirpScript && (
+                                <div className="mt-2 p-2 bg-info bg-opacity-10 rounded small">
+                                  <strong>설명:</strong> {exampleExample.chirpScript}
+                                </div>
+                              )}
+                            </>
+                          );
+                        })()}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <p className="text-muted mt-3">상세한 뜻 정보가 없습니다.</p>
             )}

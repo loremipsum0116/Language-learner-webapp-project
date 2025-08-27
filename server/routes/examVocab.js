@@ -81,6 +81,7 @@ router.get('/:examName', async (req, res) => {
                 LIMIT ${limit} OFFSET ${offset}
             `;
 
+            // 검색 시에는 실제 검색 결과 개수 사용
             totalCountResult = await prisma.$queryRaw`
                 SELECT COUNT(*) as total
                 FROM vocab v
@@ -105,59 +106,32 @@ router.get('/:examName', async (req, res) => {
                 LIMIT ${limit} OFFSET ${offset}
             `;
 
-            totalCountResult = await prisma.$queryRaw`
-                SELECT COUNT(*) as total
-                FROM vocab v
-                INNER JOIN vocab_exam_categories vec ON v.id = vec.vocabId
-                WHERE vec.examCategoryId = ${categoryId}
-            `;
+            // 카테고리의 totalWords 필드 사용 (JSON 원본 기준)
+            console.log(`[DEBUG] Using category totalWords: ${category[0].totalWords}`);
+            totalCountResult = [{ total: BigInt(category[0].totalWords) }];
         }
 
         // BigInt 변환 및 ko_gloss 추출
         const vocabs = vocabsRaw.map(vocab => {
             const rawExamples = Array.isArray(vocab.examples) ? vocab.examples : [];
             
-            // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
-            const posGroups = new Map();
-            for (const example of rawExamples) {
-                const pos = (example.pos || 'unknown').toLowerCase().trim();
-                if (!posGroups.has(pos)) {
-                    posGroups.set(pos, []);
-                }
-                posGroups.get(pos).push(example);
-            }
-            
-            const examples = [];
-            for (const [pos, groupExamples] of posGroups.entries()) {
-                if (groupExamples.length === 1) {
-                    examples.push(groupExamples[0]);
-                } else {
-                    // 같은 pos를 가진 여러 examples 중에서 최고 선택
-                    const best = groupExamples.reduce((prev, current) => {
-                        const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
-                        const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
-                        
-                        if (currentExampleCount > prevExampleCount) return current;
-                        if (prevExampleCount > currentExampleCount) return prev;
-                        
-                        const prevKoDef = prev.definitions?.[0]?.ko_def || '';
-                        const currentKoDef = current.definitions?.[0]?.ko_def || '';
-                        
-                        if (currentKoDef.length > prevKoDef.length) return current;
-                        if (prevKoDef.length > currentKoDef.length) return prev;
-                        
-                        const prevDef = prev.definitions?.[0]?.def || '';
-                        const currentDef = current.definitions?.[0]?.def || '';
-                        
-                        return currentDef.length > prevDef.length ? current : prev;
-                    });
-                    examples.push(best);
-                }
-            }
-            
+            // CEFR 데이터 구조에서 Korean gloss 추출
             let primaryGloss = null;
-            if (examples.length > 0 && examples[0].definitions?.length > 0) {
-                primaryGloss = examples[0].definitions[0].ko_def || null;
+            
+            // CEFR 구조: examples[].ko (gloss kind)
+            const glossExample = rawExamples.find(ex => ex.kind === 'gloss');
+            if (glossExample && glossExample.ko) {
+                primaryGloss = glossExample.ko;
+            }
+            
+            // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+            if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].ko) {
+                primaryGloss = rawExamples[0].ko;
+            }
+            
+            // 기존 복잡한 구조도 지원 (backward compatibility)
+            if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].definitions?.length > 0) {
+                primaryGloss = rawExamples[0].definitions[0].ko_def || null;
             }
             
             return {
@@ -165,7 +139,7 @@ router.get('/:examName', async (req, res) => {
                 id: Number(vocab.id),
                 priority: Number(vocab.priority),
                 ko_gloss: primaryGloss,
-                examples: examples
+                examples: rawExamples
             };
         });
 

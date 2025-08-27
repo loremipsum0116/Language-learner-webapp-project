@@ -256,7 +256,6 @@ model vocab {
   wronganswer       wronganswer[]
   vocabexamcategory vocabexamcategory[]
 
-  @@unique([lemma, pos], map: "Vocab_lemma_pos_key")
   @@index([lemma], map: "Vocab_lemma_idx")
   @@index([source], map: "Vocab_source_idx")
 }

@@ -84,16 +84,30 @@ router.get('/list', async (req, res) => {
         }
       }
       
+      // CEFR 데이터 구조에서 Korean gloss 추출
       let primaryGloss = null;
-      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
-        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      
+      // CEFR 구조: examples[].ko (gloss kind)
+      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+      if (glossExample && glossExample.ko) {
+        primaryGloss = glossExample.ko;
       }
+      
+      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
+        primaryGloss = rawMeanings[0].ko;
+      }
+      
+      // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
+      // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
+      //   primaryGloss = meanings[0].definitions[0].ko_def || null;
+      // }
       
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,
         ko_gloss: primaryGloss, ipa: dictentry?.ipa ?? null,
         ipaKo: dictentry?.ipaKo ?? null, audio: dictentry?.audioUrl ?? null,
-        examples: meanings
+        examples: rawMeanings
       };
     });
 
@@ -177,10 +191,24 @@ router.get('/search', async (req, res) => {
         }
       }
       
+      // CEFR 데이터 구조에서 Korean gloss 추출
       let primaryGloss = null;
-      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
-        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      
+      // CEFR 구조: examples[].ko (gloss kind)
+      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+      if (glossExample && glossExample.ko) {
+        primaryGloss = glossExample.ko;
       }
+      
+      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
+        primaryGloss = rawMeanings[0].ko;
+      }
+      
+      // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
+      // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
+      //   primaryGloss = meanings[0].definitions[0].ko_def || null;
+      // }
       
       return {
         id: v.id,
@@ -191,7 +219,7 @@ router.get('/search', async (req, res) => {
         ipa: v.dictentry?.ipa ?? null,
         ipaKo: v.dictentry?.ipaKo ?? null,
         audio: v.dictentry?.audioUrl ?? null,
-        examples: meanings
+        examples: rawMeanings
       };
     });
 
@@ -335,11 +363,25 @@ router.get('/user/:userId/folder/:folderId', async (req, res) => {
     const data = userVocabs.map(uv => {
       const v = uv.vocab;
       const dictentry = v.dictentry;
-      const meanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      // CEFR 데이터 구조에서 Korean gloss 추출
       let primaryGloss = null;
-      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
-        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      
+      // CEFR 구조: examples[].ko (gloss kind)
+      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+      if (glossExample && glossExample.ko) {
+        primaryGloss = glossExample.ko;
       }
+      
+      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
+        primaryGloss = rawMeanings[0].ko;
+      }
+      
+      // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
+      // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
+      //   primaryGloss = meanings[0].definitions[0].ko_def || null;
+      // }
       return {
         id: v.id,
         lemma: v.lemma,
@@ -349,7 +391,7 @@ router.get('/user/:userId/folder/:folderId', async (req, res) => {
         ipa: dictentry?.ipa ?? null,
         ipaKo: dictentry?.ipaKo ?? null,
         audio: dictentry?.audioUrl ?? null,
-        examples: meanings,
+        examples: rawMeanings,
         addedAt: uv.createdAt
       };
     });
@@ -400,11 +442,25 @@ router.get('/user/:userId', async (req, res) => {
     const data = userVocabs.map(uv => {
       const v = uv.vocab;
       const dictentry = v.dictentry;
-      const meanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      // CEFR 데이터 구조에서 Korean gloss 추출
       let primaryGloss = null;
-      if (meanings.length > 0 && meanings[0].definitions?.length > 0) {
-        primaryGloss = meanings[0].definitions[0].ko_def || null;
+      
+      // CEFR 구조: examples[].ko (gloss kind)
+      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+      if (glossExample && glossExample.ko) {
+        primaryGloss = glossExample.ko;
       }
+      
+      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
+        primaryGloss = rawMeanings[0].ko;
+      }
+      
+      // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
+      // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
+      //   primaryGloss = meanings[0].definitions[0].ko_def || null;
+      // }
       return {
         id: v.id,
         lemma: v.lemma,
@@ -414,7 +470,7 @@ router.get('/user/:userId', async (req, res) => {
         ipa: dictentry?.ipa ?? null,
         ipaKo: dictentry?.ipaKo ?? null,
         audio: dictentry?.audioUrl ?? null,
-        examples: meanings,
+        examples: rawMeanings,
         addedAt: uv.createdAt,
         folderId: uv.folderId,
         folderName: uv.folder?.name || 'Legacy'

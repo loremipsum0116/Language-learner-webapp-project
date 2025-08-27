@@ -86,6 +86,7 @@ app.use(cookieParser());
 app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
+app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필요)
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API
 
@@ -128,7 +129,6 @@ app.use('/api/odat-note', odatNoteRoutes);
 // app.use('/dict', dictRoutes);  // 이미 인증 불필요 섹션에서 등록됨
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use('/admin', adminRoutes);  // 관리자 API
-app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API
 app.use('/auto-folder', autoFolderRoutes);  // 자동 폴더 생성 API
 app.use(userRoutes);
 

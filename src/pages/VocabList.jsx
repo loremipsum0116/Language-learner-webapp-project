@@ -168,6 +168,9 @@ export default function VocabList() {
     const [words, setWords] = useState([]);
     const [allWords, setAllWords] = useState([]); // 전체 단어 리스트
     const [displayCount, setDisplayCount] = useState(100); // 현재 표시되는 단어 개수
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
+    const [hasNextPage, setHasNextPage] = useState(false); // 다음 페이지 존재 여부
+    const [totalCount, setTotalCount] = useState(0); // 전체 단어 수
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
     const [pickerOpen, setPickerOpen] = useState(false);
     const [pendingVocabIds, setPendingVocabIds] = useState([]);
@@ -236,10 +239,15 @@ export default function VocabList() {
                     // 시험별 조회
                     if (!activeExam) {
                         data = []; // 선택된 시험이 없으면 빈 배열
+                        setTotalCount(0);
+                        setHasNextPage(false);
                     } else {
-                        url = `/exam-vocab/${activeExam}?limit=100`;
+                        url = `/exam-vocab/${activeExam}?page=1&limit=100`;
                         const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                         data = response.data?.vocabs || [];
+                        setTotalCount(response.data?.pagination?.totalCount || 0);
+                        setHasNextPage(response.data?.pagination?.hasNext || false);
+                        setCurrentPage(1);
                     }
                 }
                 
@@ -342,15 +350,51 @@ export default function VocabList() {
     };
 
     const isAllSelected = useMemo(() => {
-        if (allWords.length === 0) return false;
-        return allWords.every(word => selectedIds.has(word.id));
-    }, [allWords, selectedIds]);
-
-    const handleToggleSelectAll = () => {
-        if (isAllSelected) {
-            setSelectedIds(new Set());
+        if (activeTab === 'exam') {
+            // 시험별 탭에서는 실제 로드 가능한 단어 수와 비교
+            // API에서 전체 단어를 가져왔을 때의 실제 개수와 비교
+            const actualMaxCount = Math.min(totalCount, allWords.length || totalCount);
+            return selectedIds.size > 0 && selectedIds.size >= actualMaxCount - 1; // 1개 차이 허용
         } else {
-            setSelectedIds(new Set(allWords.map(word => word.id)));
+            // CEFR 탭에서는 현재 표시된 단어들과 비교
+            if (words.length === 0) return false;
+            return words.every(word => selectedIds.has(word.id));
+        }
+    }, [words, selectedIds, activeTab, totalCount, allWords.length]);
+
+    const handleToggleSelectAll = async () => {
+        if (activeTab === 'exam' && !isAllSelected) {
+            // 시험별 탭에서 전체 선택: 서버에서 모든 단어 ID 가져오기
+            try {
+                setLoading(true);
+                const response = await fetchJSON(`/exam-vocab/${activeExam}?limit=${totalCount}`, withCreds());
+                const allVocabIds = response.data?.vocabs?.map(v => v.id) || [];
+                setSelectedIds(new Set(allVocabIds));
+            } catch (error) {
+                console.error('Failed to select all words:', error);
+                // 실패 시 현재 페이지 단어들만 선택
+                const newSelected = new Set(selectedIds);
+                words.forEach(word => newSelected.add(word.id));
+                setSelectedIds(newSelected);
+            } finally {
+                setLoading(false);
+            }
+        } else if (activeTab === 'cefr') {
+            // CEFR 탭에서는 기존 로직 유지
+            if (isAllSelected) {
+                // 현재 표시된 단어들만 선택 해제
+                const newSelected = new Set(selectedIds);
+                words.forEach(word => newSelected.delete(word.id));
+                setSelectedIds(newSelected);
+            } else {
+                // 현재 표시된 단어들을 기존 선택에 추가
+                const newSelected = new Set(selectedIds);
+                words.forEach(word => newSelected.add(word.id));
+                setSelectedIds(newSelected);
+            }
+        } else {
+            // 선택 해제의 경우
+            setSelectedIds(new Set());
         }
     };
 
@@ -736,9 +780,30 @@ export default function VocabList() {
         return () => { if (audioRef.current) stopAudio(); };
     }, []);
 
-    // 더 보기 버튼 핸들러
-    const handleLoadMore = () => {
-        setDisplayCount(prev => prev + 100);
+    // 더 보기 버튼 핸들러 - 페이지네이션으로 추가 데이터 로드
+    const handleLoadMore = async () => {
+        if (!hasNextPage || loading || activeTab !== 'exam' || !activeExam) return;
+        
+        try {
+            setLoading(true);
+            const nextPage = currentPage + 1;
+            const url = `/exam-vocab/${activeExam}?page=${nextPage}&limit=100`;
+            const response = await fetchJSON(url, withCreds());
+            const newVocabs = response.data?.vocabs || [];
+            
+            // 기존 단어에 새 단어 추가
+            setAllWords(prev => [...prev, ...newVocabs]);
+            setWords(prev => [...prev, ...newVocabs]);
+            
+            // 페이지네이션 상태 업데이트
+            setCurrentPage(nextPage);
+            setHasNextPage(response.data?.pagination?.hasNext || false);
+            
+        } catch (error) {
+            console.error('Failed to load more words:', error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     // JSX rendering (no changes)
@@ -769,9 +834,11 @@ export default function VocabList() {
                                 setSearchTerm(''); 
                                 setSelectedIds(new Set()); // 선택된 단어 초기화
                                 setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
                             }}
                         >
-                            CEFR 레벨별
+                            수준별 단어
                         </button>
                     </li>
                     <li className="nav-item">
@@ -782,6 +849,8 @@ export default function VocabList() {
                                 setSearchTerm(''); 
                                 setSelectedIds(new Set()); // 선택된 단어 초기화
                                 setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
                             }}
                         >
                             시험별 단어
@@ -793,7 +862,7 @@ export default function VocabList() {
             {/* CEFR 레벨 탭 */}
             {activeTab === 'cefr' && (
                 <div className="d-flex justify-content-between align-items-center mb-3">
-                    <h4 className="m-0">CEFR 레벨별 단어</h4>
+                    <h4 className="m-0">수준별 단어</h4>
                     <div className="btn-group">
                         {['A1', 'A2', 'B1', 'B2', 'C1'].map(l => (
                             <button 
@@ -804,6 +873,8 @@ export default function VocabList() {
                                     setActiveLevel(l); 
                                     setSelectedIds(new Set()); // 선택된 단어 초기화
                                     setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
                                 }}
                             >
                                 {l}
@@ -828,12 +899,14 @@ export default function VocabList() {
                                         setActiveExam(exam.name); 
                                         setSelectedIds(new Set()); // 선택된 단어 초기화
                                         setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
                                     }}
-                                    title={`${exam.description} (${exam.actualWordCount || 0}개 단어)`}
+                                    title={`${exam.description} (${exam.totalWords || 0}개 단어)`}
                                 >
                                     {exam.name}
-                                    {exam.actualWordCount > 0 && (
-                                    <span className="badge bg-secondary ms-1">{exam.actualWordCount}</span>
+                                    {exam.totalWords > 0 && (
+                                    <span className="badge bg-secondary ms-1">{exam.totalWords}</span>
                                 )}
                             </button>
                         ))
@@ -856,10 +929,15 @@ export default function VocabList() {
                         id="selectAllCheck"
                         checked={isAllSelected}
                         onChange={handleToggleSelectAll}
-                        disabled={allWords.length === 0}
+                        disabled={words.length === 0}
                     />
                     <label className="form-check-label" htmlFor="selectAllCheck">
-                        {isAllSelected ? '전체 해제' : '전체 선택'} ({selectedIds.size} / {allWords.length})
+                        {activeTab === 'exam' ? 
+                            (isAllSelected ? '전체 해제' : '전체 선택') : 
+                            (isAllSelected ? '페이지 해제' : '페이지 선택')
+                        } ({selectedIds.size}개 선택됨)
+                        {activeTab === 'exam' && totalCount > 0 && ` / ${totalCount}개 전체`}
+                        {activeTab === 'cefr' && ` / ${allWords.length}개 전체`}
                     </label>
                 </div>
                 <div className="d-flex gap-2">
@@ -883,6 +961,8 @@ export default function VocabList() {
                     onChange={(e) => {
                         setSearchTerm(e.target.value);
                         setDisplayCount(100); // 검색 시 표시 개수 초기화
+                        setCurrentPage(1); // 페이지 초기화
+                        setHasNextPage(false); // 페이지네이션 상태 초기화
                     }}
                 />
             </div>
@@ -917,11 +997,23 @@ export default function VocabList() {
             </div>
             
             {/* 더 보기 버튼 */}
-            {!loading && !err && allWords.length > displayCount && (
+            {!loading && !err && hasNextPage && activeTab === 'exam' && (
                 <div className="text-center mt-4">
                     <button 
                         className="btn btn-outline-primary btn-lg"
                         onClick={handleLoadMore}
+                    >
+                        더 보기 ({totalCount - allWords.length}개 더)
+                    </button>
+                </div>
+            )}
+            
+            {/* CEFR 레벨의 경우 기존 로직 유지 */}
+            {!loading && !err && activeTab === 'cefr' && allWords.length > displayCount && (
+                <div className="text-center mt-4">
+                    <button 
+                        className="btn btn-outline-primary btn-lg"
+                        onClick={() => setDisplayCount(prev => prev + 100)}
                     >
                         더 보기 ({allWords.length - displayCount}개 더)
                     </button>
