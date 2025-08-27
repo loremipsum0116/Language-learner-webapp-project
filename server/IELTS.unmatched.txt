@@ -1,55 +1,250 @@
-oxford
-cefr
-(american
-english)
-is
-words
-english
-b
-prep
-adv
-n
-v
-adj
-det
-pron
-conj
-(money)
-auxiliary
-exclam
-modal
-sb
-sth
-o
-infinitive
-according
-taking
-(not
-heavy)
-(belongs
-me)
-(remaining
-part)
-(hole
-ground)
-(of
-people)
-(piece
-wood)
-(deal
-with)
-t
-expanded
-learners
-includes
-c
-are
-listed
-(long
-surface)
-r
-(argue
-against)
-(for
-person)
-piece)
+go out
+go over
+go through
+go together
+go under
+go up
+go without
+grow into
+grow out of
+grow up
+grow on
+hand back
+hand down
+hand in
+hand on
+hand out
+hand over
+hand round
+hang in
+hang on
+hang out
+hang up
+hang back
+hang around
+hang onto
+have on
+have it out with
+head back
+head for
+head off
+head out
+head up
+head into
+hear out
+hear of
+hear about
+hear from
+help out
+help along
+help yourself to
+hold back
+hold in
+hold off
+hold on
+hold out
+hold out for
+hold up
+keep at
+keep away
+keep away from
+keep back
+keep down
+keep in
+keep off
+keep on
+keep out
+keep out of
+keep to
+keep up
+keep up with
+kick back
+kick in
+kick off
+kick out
+kick up
+knock down
+knock off
+knock out
+knock over
+knock up
+knock around
+lay down
+lay off
+lay out
+lay over
+lay up
+lay into
+lay aside
+leave behind
+leave off
+leave out
+leave out of
+leave over
+leave up to
+let down
+let in
+let into
+let off
+let on
+let out
+let up
+live by
+live down
+live off
+live on
+live out
+live through
+live up to
+live with
+look after
+look ahead
+look around
+look at
+look back
+look back on
+look down on
+look for
+look forward to
+look in
+look into
+look on
+look out
+look out for
+look over
+look through
+look to
+look up
+look up to
+make for
+make into
+make of
+make off
+make out
+make out of
+make over
+make over with
+make up
+make up for
+make up to
+make with
+make do with
+move along
+move ahead
+move away
+move down
+move in
+move into
+move off
+move on
+move out
+move over
+move up
+pass away
+pass by
+pass down
+pass off
+pass on
+pass out
+pass over
+pass up
+pay back
+pay down
+pay for
+pay off
+pay out
+pay up
+pick at
+pick off
+pick on
+pick out
+pick up
+pick up on
+pick yourself up
+point out
+point to
+point up
+pull ahead
+pull apart
+pull away
+pull back
+pull down
+pull in
+pull off
+pull out
+pull over
+pull through
+pull together
+pull up
+push ahead
+push around
+push back
+push down
+push for
+push in
+push off
+push on
+push out
+push through
+push up
+put across
+put aside
+put away
+put back
+put down
+put forward
+put in
+put off
+put on
+put out
+put out to
+put over
+put through
+put together
+put up
+put up with
+run across
+run after
+run along
+run around
+run away
+run down
+run for
+run in
+run into
+run off
+run on
+run out
+run out of
+run over
+run through
+run up
+send away
+send back
+send down
+send for
+send in
+send off
+send out
+send over
+send up
+set about
+set aside
+set back
+set down
+set forth
+set in
+set off
+set out
+set to
+set up
+show around
+show off
+show up
+show out
+shut down
+shut in
+shut off
+shut out
+shut up
+sit around
