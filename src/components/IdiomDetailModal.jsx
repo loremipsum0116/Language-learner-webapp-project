@@ -45,64 +45,28 @@ export default function IdiomDetailModal({
                 </span>
               </div>
             </div>
-            <div className="ms-auto d-flex align-items-center gap-1">
-              {idiom.audio && (
-                <>
-                  {idiom.audio.word && (
-                    <button
-                      className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
-                      style={{ width: '32px', height: '32px' }}
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (onPlayUrl) {
-                          onPlayUrl(`/${idiom.audio.word}`);
-                        }
-                      }}
-                      aria-label="숙어 단어 발음"
-                      title="숙어 발음"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isIdiomPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
-                        {isIdiomPlaying ? (
-                          <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
-                        ) : (
-                          <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
-                        )}
-                      </svg>
-                    </button>
-                  )}
-                  {idiom.audio.gloss && (
-                    <button
-                      className="btn btn-sm btn-outline-success rounded-circle d-flex align-items-center justify-content-center"
-                      style={{ width: '32px', height: '32px' }}
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (onPlayUrl) {
-                          onPlayUrl(`/${idiom.audio.gloss}`);
-                        }
-                      }}
-                      aria-label="한국어 뜻 발음"
-                      title="뜻 발음"
-                    >
-                      🇰🇷
-                    </button>
-                  )}
-                  {idiom.audio.example && (
-                    <button
-                      className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center"
-                      style={{ width: '32px', height: '32px' }}
-                      onClick={(e) => { 
-                        e.stopPropagation(); 
-                        if (onPlayUrl) {
-                          onPlayUrl(`/${idiom.audio.example}`);
-                        }
-                      }}
-                      aria-label="예시 발음"
-                      title="예시 발음"
-                    >
-                      💡
-                    </button>
-                  )}
-                </>
+            <div className="ms-auto d-flex align-items-center">
+              {idiom.audio?.word && (
+                <button
+                  className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
+                  style={{ width: '32px', height: '32px' }}
+                  onClick={(e) => { 
+                    e.stopPropagation(); 
+                    if (onPlayUrl) {
+                      onPlayUrl(`/${idiom.audio.word}`, 'idiom', idiom.id);
+                    }
+                  }}
+                  aria-label="숙어 발음 재생"
+                  title="숙어 발음"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isIdiomPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
+                    {isIdiomPlaying ? (
+                      <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                    ) : (
+                      <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                    )}
+                  </svg>
+                </button>
               )}
               <button type="button" className="btn-close ms-2" aria-label="닫기" onClick={onClose} />
             </div>
@@ -120,11 +84,30 @@ export default function IdiomDetailModal({
               </div>
             )}
             
-            {/* 영어 예문과 한국어 뜻 */}
-            {(idiom.example_english || idiom.example_korean) && (
+            {/* 예문 섹션 */}
+            {(idiom.example || idiom.koExample) && (
               <div className="mt-3 border-top pt-3">
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <h6 className="fw-bold mb-0">예문</h6>
+                </div>
+                <div className="mb-2 p-2 rounded bg-light">
+                  <div className="me-2">
+                    {idiom.example && (
+                      <span lang="en" className="d-block fw-bold mb-1">{idiom.example}</span>
+                    )}
+                    {idiom.koExample && (
+                      <span className="text-muted small">— {idiom.koExample}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* 사용법 */}
+            {idiom.usage_context_korean && (
+              <div className="mt-3 border-top pt-3">
+                <div className="d-flex align-items-center justify-content-between mb-2">
+                  <h6 className="fw-bold mb-0">사용법</h6>
                   {idiom.audio?.example && (
                     <button
                       className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
@@ -132,7 +115,7 @@ export default function IdiomDetailModal({
                       onClick={(e) => { 
                         e.stopPropagation(); 
                         if (onPlayUrl) {
-                          onPlayUrl(`/${idiom.audio.example}`);
+                          onPlayUrl(`/${idiom.audio.example}`, 'example', idiom.id);
                         }
                       }}
                       aria-label="예문 오디오 재생"
@@ -144,23 +127,6 @@ export default function IdiomDetailModal({
                     </button>
                   )}
                 </div>
-                <div className="mb-2 p-2 rounded bg-light">
-                  <div className="me-2">
-                    {idiom.example_english && (
-                      <span lang="en" className="d-block fw-bold mb-1">{idiom.example_english}</span>
-                    )}
-                    {idiom.example_korean && (
-                      <span className="text-muted small">— {idiom.example_korean}</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-            
-            {/* 사용법 (기존 유지) */}
-            {idiom.usage_context_korean && (
-              <div className="mt-3 border-top pt-3">
-                <h6 className="fw-bold">사용법</h6>
                 <div className="mb-2 p-2 rounded bg-light">
                   <span className="text-muted small">{idiom.usage_context_korean}</span>
                 </div>

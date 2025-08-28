@@ -128,6 +128,83 @@ app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API
 app.use('/api/idiom', require('./routes/idiom_working')); // Idiom API (인증 불필요) - Working version from test server
+// Vocab-by-pos endpoint for idiom/phrasal verb integration (unauthenticated)
+app.get('/api/vocab/vocab-by-pos', async (req, res) => {
+  try {
+    const { prisma } = require('./lib/prismaClient');
+    const { pos, search } = req.query;
+    
+    console.log('[API] vocab-by-pos called with:', { pos, search });
+    
+    if (!pos) {
+      return res.status(400).json({ ok: false, error: 'pos parameter is required' });
+    }
+    
+    const where = { 
+      pos: pos,
+      source: 'idiom_migration'
+    };
+    
+    if (search && search.trim()) {
+      where.lemma = { contains: search.trim() };
+    }
+    
+    console.log('[API] Query where:', JSON.stringify(where));
+    
+    const vocabs = await prisma.vocab.findMany({
+      where,
+      include: {
+        dictentry: true
+      },
+      orderBy: { lemma: 'asc' }
+    });
+    
+    console.log('[API] Found vocabs:', vocabs.length);
+    
+    // Transform to expected idiom format
+    const transformedData = vocabs.map(vocab => {
+      const examples = vocab.dictentry?.examples || [];
+      const glossExample = examples.find(ex => ex.kind === 'gloss');
+      const sentenceExample = examples.find(ex => ex.kind === 'example');
+      const usageExample = examples.find(ex => ex.kind === 'usage');
+      
+      // Parse audio data
+      let audioData = {};
+      if (vocab.dictentry?.audioLocal) {
+        try {
+          audioData = JSON.parse(vocab.dictentry.audioLocal);
+        } catch (e) {
+          console.warn('Failed to parse audio for', vocab.lemma, e.message);
+        }
+      }
+      
+      return {
+        id: vocab.id,
+        idiom: vocab.lemma,
+        pos: vocab.pos,
+        korean_meaning: glossExample?.ko || '',
+        example: sentenceExample?.en || '',
+        koExample: sentenceExample?.ko || '',
+        koChirpScript: sentenceExample?.chirpScript || '',
+        usage_context_korean: usageExample?.ko || '',
+        category: `${vocab.levelCEFR}, ${vocab.pos}`,
+        audio: audioData
+      };
+    });
+    
+    res.json({ 
+      ok: true, 
+      data: transformedData,
+      count: transformedData.length 
+    });
+    
+  } catch (error) {
+    console.error('[API] vocab-by-pos error:', error);
+    res.status(500).json({ ok: false, error: 'Internal server error' });
+  }
+});
+
+app.use('/api/vocab', vocabRoutes); // Vocab API for unified idiom/phrasal verb access (인증 불필요)
 
 // 오디오 파일 목록 API (인증 불필요)
 app.get('/audio-files/:level', (req, res) => {

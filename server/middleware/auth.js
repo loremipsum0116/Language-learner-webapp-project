@@ -9,6 +9,7 @@ module.exports = function auth(req, res, next) {
     // 오디오 파일 및 공개 vocab 요청은 인증 제외
     if (req.path.includes('/audio/') || req.path.includes('/audio-files/') || 
         req.path.startsWith('/vocab/list') || req.path.startsWith('/vocab/test') ||
+        req.path.startsWith('/vocab/vocab-by-pos') ||
         req.path.startsWith('/exam-vocab/categories') || req.path.startsWith('/api/idiom') ||
         req.path.startsWith('/starter/') || req.path.startsWith('/elementary/') ||
         req.path.startsWith('/intermediate/') || req.path.startsWith('/upper/') ||

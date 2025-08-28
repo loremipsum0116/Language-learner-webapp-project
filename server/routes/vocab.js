@@ -230,10 +230,112 @@ router.get('/search', async (req, res) => {
   }
 });
 
+// GET /vocab-by-pos - Get vocabularies by part of speech (for idioms and phrasal verbs)
+// MUST come before /:id route to avoid route conflicts
+router.get('/vocab-by-pos', async (req, res) => {
+  console.log('🚀 [VOCAB-BY-POS] Route hit with query:', req.query);
+  try {
+    const { pos, search } = req.query;
+    
+    if (!pos) {
+      return res.status(400).json({ error: 'pos parameter is required' });
+    }
+    
+    const where = { 
+      pos: pos,
+      source: 'idiom_migration' // Only get migrated idioms/phrasal verbs
+    };
+    
+    // Add search filter if provided
+    if (search && search.trim()) {
+      where.lemma = { contains: search.trim() };
+    }
+    
+    console.log('DEBUG /vocab-by-pos: Query where:', JSON.stringify(where));
+    
+    // Get vocabs
+    const vocabs = await prisma.vocab.findMany({
+      where,
+      orderBy: { lemma: 'asc' }
+    });
+    
+    console.log('DEBUG /vocab-by-pos: Found vocabs:', vocabs.length);
+    
+    // Get dictentries separately
+    const vocabIds = vocabs.map(v => v.id);
+    const dictentries = await prisma.dictentry.findMany({
+      where: { vocabId: { in: vocabIds } },
+      select: { vocabId: true, examples: true, ipa: true, ipaKo: true, audioUrl: true, audioLocal: true }
+    });
+    
+    console.log('DEBUG /vocab-by-pos: Found dictentries:', dictentries.length);
+    
+    // Create a map for quick lookup
+    const dictMap = new Map();
+    dictentries.forEach(d => dictMap.set(d.vocabId, d));
+
+    const items = vocabs.map(v => {
+      const dictentry = dictMap.get(v.id);
+      const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
+      
+      // Extract Korean gloss from examples
+      let primaryGloss = null;
+      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+      if (glossExample && glossExample.ko) {
+        primaryGloss = glossExample.ko;
+      }
+      
+      // Extract English example and Korean example
+      let englishExample = null;
+      let koreanExample = null;
+      const exampleEntry = rawMeanings.find(ex => ex.kind === 'example');
+      if (exampleEntry) {
+        englishExample = exampleEntry.en || null;
+        koreanExample = exampleEntry.ko || null;
+      }
+      
+      // Extract usage context
+      let usageContext = null;
+      const usageEntry = rawMeanings.find(ex => ex.kind === 'usage');
+      if (usageEntry) {
+        usageContext = usageEntry.ko || null;
+      }
+      
+      return {
+        id: v.id,
+        lemma: v.lemma,
+        pos: v.pos,
+        levelCEFR: v.levelCEFR,
+        ko_gloss: primaryGloss,
+        example: englishExample,
+        koExample: koreanExample,
+        usage_context_korean: usageContext,
+        ipa: dictentry?.ipa ?? null,
+        ipaKo: dictentry?.ipaKo ?? null,
+        audio: dictentry?.audioUrl ?? null,
+        dictentry: {
+          audioLocal: dictentry?.audioLocal || null,
+          examples: rawMeanings,
+          ipa: dictentry?.ipa ?? null,
+          ipaKo: dictentry?.ipaKo ?? null
+        }
+      };
+    });
+
+    console.log('DEBUG /vocab-by-pos: First item:', JSON.stringify(items[0], null, 2));
+    return res.json({ data: items });
+  } catch (e) {
+    console.error('GET /vocab-by-pos failed:', e);
+    return res.status(500).json({ error: 'vocab-by-pos query failed' });
+  }
+});
+
 // GET /vocab/:id  ← "/search" 아래에 둬야 함
 router.get('/:id', async (req, res) => {
+  console.log('🔍 [VOCAB-ID] Route hit with param:', req.params.id);
   const vocabId = Number(req.params.id);
   if (!vocabId || !Number.isFinite(vocabId)) {
+    console.log('❌ [VOCAB-ID] Invalid vocab ID:', req.params.id);
     return res.status(400).json({ error: 'Invalid vocab ID' });
   }
   try {
@@ -483,5 +585,6 @@ router.get('/user/:userId', async (req, res) => {
     return res.status(500).json({ error: 'Failed to fetch user vocabulary' });
   }
 });
+
 
 module.exports = router;

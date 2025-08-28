@@ -359,7 +359,7 @@ export default function VocabDetailModal({
                   </div>
                 )}
                 
-                {exampleExample && exampleExample.ko && (
+                {((exampleExample && exampleExample.ko) || vocab.example || vocab.koExample) && (
                   <div className="mt-3 border-top pt-3">
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <h6 className="fw-bold mb-0">예문</h6>
@@ -410,15 +410,58 @@ export default function VocabDetailModal({
                     <div className="mb-2 p-2 rounded bg-light">
                       <div className="me-2">
                         {(() => {
-                          // 저장된 영어 예문 우선 사용 (JSON의 example 필드에서)
-                          let englishExample = exampleExample.en || '';
+                          // 다양한 소스에서 영어 예문 찾기
+                          let englishExample = '';
+                          
+                          // 1. vocab.example에서 직접 찾기 (CEFR 데이터의 주요 소스)
+                          if (vocab.example) {
+                            englishExample = vocab.example;
+                          }
+                          // 1.1. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열)
+                          else if (vocab.dictentry && vocab.dictentry.examples) {
+                            const exampleEntry = vocab.dictentry.examples.find(ex => ex.kind === 'example' && ex.en);
+                            if (exampleEntry) {
+                              englishExample = exampleEntry.en;
+                            }
+                          }
+                          // 1.5. chirpScript에서 영어 예문 추출 (CEFR 데이터)
+                          else if (exampleExample && exampleExample.chirpScript) {
+                            // "예문은 I need a pen to write this down. 이것을" 패턴에서 영어 부분 추출
+                            const match = exampleExample.chirpScript.match(/예문은\s+([^.]+\.)/);
+                            if (match) {
+                              englishExample = match[1].trim();
+                            }
+                          }
+                          // 2. exampleExample.en에서 찾기
+                          else if (exampleExample.en) {
+                            englishExample = exampleExample.en;
+                          }
+                          // 3. exampleExample 자체가 문자열인 경우
+                          else if (typeof exampleExample === 'string') {
+                            englishExample = exampleExample;
+                          }
+                          // 4. definitions 내부의 examples에서 찾기
+                          else if (exampleExample.definitions) {
+                            for (const def of exampleExample.definitions) {
+                              if (def.examples && def.examples.length > 0) {
+                                // 첫 번째 예문이 객체인 경우 en 필드 사용, 문자열인 경우 그대로 사용
+                                const firstExample = def.examples[0];
+                                if (typeof firstExample === 'object' && firstExample.en) {
+                                  englishExample = firstExample.en;
+                                } else if (typeof firstExample === 'string') {
+                                  englishExample = firstExample;
+                                }
+                                break;
+                              }
+                            }
+                          }
                           
                           return (
                             <>
                               {englishExample && (
                                 <span lang="en" className="d-block fw-bold mb-1">{englishExample}</span>
                               )}
-                              <span className="text-muted small">— {exampleExample.ko}</span>
+                              <span className="text-muted small">— {vocab.koExample || exampleExample.ko}</span>
                             </>
                           );
                         })()}
@@ -426,6 +469,63 @@ export default function VocabDetailModal({
                     </div>
                   </div>
                 )}
+                
+                {/* 사용법 섹션 - 숙어/구동사용 */}
+                {(() => {
+                  // dictentry.examples에서 usage 종류의 데이터 찾기
+                  if (vocab.dictentry && vocab.dictentry.examples) {
+                    const usageEntry = vocab.dictentry.examples.find(ex => ex.kind === 'usage' && ex.ko);
+                    if (usageEntry) {
+                      return (
+                        <div className="mt-3 border-top pt-3">
+                          <div className="d-flex align-items-center justify-content-between mb-2">
+                            <h6 className="fw-bold mb-0">사용법</h6>
+                            {(() => {
+                              // 사용법 오디오 버튼
+                              const dictentry = vocab.dictentry;
+                              const audioData = dictentry?.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
+                              const usageAudioPath = audioData?.gloss; // 사용법은 gloss 오디오를 사용
+                              const isUsagePlaying = playingAudio?.type === 'usage' && playingAudio?.id === vocab.id;
+                              
+                              if (usageAudioPath && onPlayUrl) {
+                                return (
+                                  <button
+                                    className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
+                                    style={{ width: '32px', height: '32px' }}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      // 절대 경로로 변환
+                                      const absolutePath = usageAudioPath.startsWith('/') ? usageAudioPath : `/${usageAudioPath}`;
+                                      onPlayUrl(absolutePath, 'usage', vocab.id);
+                                    }}
+                                    aria-label="사용법 오디오 재생"
+                                    title="사용법 듣기"
+                                  >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isUsagePlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
+                                      {isUsagePlaying ? (
+                                        <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                      ) : (
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z M6.271 5.055a.5.5 0 0 1 .52.098L11.5 7.854a.5.5 0 0 1 0 .292L6.791 10.847a.5.5 0 0 1-.791-.292V5.445a.5.5 0 0 1 .271-.39z" />
+                                      )}
+                                    </svg>
+                                  </button>
+                                );
+                              }
+                              return null;
+                            })()}
+                          </div>
+                          <div className="mb-2 p-2 rounded bg-light">
+                            <div className="me-2">
+                              <span className="text-muted small">{usageEntry.ko}</span>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  }
+                  return null;
+                })()}
+                
               </div>
             ) : (
               <p className="text-muted mt-3">상세한 뜻 정보가 없습니다.</p>

@@ -1019,48 +1019,162 @@ export default function SrsFolderDetail() {
                                                 <div className="mb-3">
                                                     {(() => {
                                                         try {
-                                                            // VocabDetailModal과 동일한 로직 사용
-                                                            const dictentry = v?.dictentry || {};
-                                                            const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                                            // 디버깅용 로그 추가
+                                                            console.log(`[CARD FLIP DEBUG] ${lemma} vocab data:`, v);
+                                                            console.log(`[CARD FLIP DEBUG] ${lemma} item data:`, item);
+                                                            console.log(`[CARD FLIP DEBUG] ${lemma} v.example:`, v?.example, 'v.koExample:', v?.koExample);
+                                                            console.log(`[CARD FLIP DEBUG] ${lemma} item.example:`, item?.example, 'item.koExample:', item?.koExample);
+                                                            console.log(`[CARD FLIP DEBUG] ${lemma} dictentry.examples:`, v?.dictentry?.examples);
                                                             
-                                                            if (rawMeanings.length === 0) {
-                                                                return <div className="text-muted small">예문이 없습니다.</div>;
+                                                            // 먼저 직접적인 example 필드 확인 (영어 단어장용)
+                                                            if (v?.example && v?.koExample) {
+                                                                console.log(`[CARD FLIP SUCCESS] ${lemma} Using v.example:`, v.example);
+                                                                return (
+                                                                    <div className="mb-2 p-2 bg-light rounded">
+                                                                        <div className="fw-bold text-dark" lang="en">{v.example}</div>
+                                                                        <div className="text-muted small">— {v.koExample}</div>
+                                                                    </div>
+                                                                );
                                                             }
                                                             
-                                                            const examples = [];
+                                                            // 숙어 데이터의 경우 item 자체에 example이 있을 수 있음
+                                                            if (item?.example && item?.koExample) {
+                                                                console.log(`[CARD FLIP SUCCESS] ${lemma} Using item.example:`, item.example);
+                                                                return (
+                                                                    <div className="mb-2 p-2 bg-light rounded">
+                                                                        <div className="fw-bold text-dark" lang="en">{item.example}</div>
+                                                                        <div className="text-muted small">— {item.koExample}</div>
+                                                                    </div>
+                                                                );
+                                                            }
                                                             
-                                                            // VocabDetailModal처럼 meanings를 처리
-                                                            for (const meaning of rawMeanings) {
-                                                                if (meaning.definitions && Array.isArray(meaning.definitions)) {
-                                                                    for (const defItem of meaning.definitions) {
-                                                                        if (defItem.examples && Array.isArray(defItem.examples)) {
-                                                                            for (const ex of defItem.examples) {
-                                                                                if (ex.de && ex.ko) {
-                                                                                    examples.push({
-                                                                                        german: ex.de,
-                                                                                        korean: ex.ko
-                                                                                    });
+                                                            // vocab.dictentry에서 직접 example과 koExample 확인 (숙어용 추가 체크)
+                                                            if (v?.dictentry?.example && v?.dictentry?.koExample) {
+                                                                console.log(`[CARD FLIP SUCCESS] ${lemma} Using dictentry.example:`, v.dictentry.example);
+                                                                return (
+                                                                    <div className="mb-2 p-2 bg-light rounded">
+                                                                        <div className="fw-bold text-dark" lang="en">{v.dictentry.example}</div>
+                                                                        <div className="text-muted small">— {v.dictentry.koExample}</div>
+                                                                    </div>
+                                                                );
+                                                            }
+                                                            
+                                                            // dictentry.examples에서 영어 예문 찾기 (새로운 구조)
+                                                            const dictentry = v?.dictentry || {};
+                                                            const rawExamples = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                                            
+                                                            if (rawExamples.length > 0) {
+                                                                const examples = [];
+                                                                
+                                                                // kind === "example"인 항목에서 예문 추출
+                                                                for (const exampleEntry of rawExamples) {
+                                                                    if (exampleEntry.kind === "example" && exampleEntry.en && exampleEntry.ko) {
+                                                                        examples.push({
+                                                                            english: exampleEntry.en,
+                                                                            korean: exampleEntry.ko
+                                                                        });
+                                                                    }
+                                                                }
+                                                                
+                                                                if (examples.length > 0) {
+                                                                    console.log(`[CARD FLIP SUCCESS] ${lemma} Found examples from dictentry:`, examples);
+                                                                    return (
+                                                                        <div>
+                                                                            {examples.slice(0, 2).map((ex, idx) => (
+                                                                                <div key={idx} className="mb-2 p-2 bg-light rounded">
+                                                                                    <div className="fw-bold text-dark" lang="en">{ex.english}</div>
+                                                                                    <div className="text-muted small">— {ex.korean}</div>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    );
+                                                                }
+                                                            }
+                                                            
+                                                            // 이전 구조도 유지 (호환성을 위해)
+                                                            const legacyMeanings = Array.isArray(dictentry.meanings) ? dictentry.meanings : [];
+                                                            if (legacyMeanings.length > 0) {
+                                                                const examples = [];
+                                                                
+                                                                // 영어 예문 처리 (기존 로직)
+                                                                for (const meaning of legacyMeanings) {
+                                                                    if (meaning.definitions && Array.isArray(meaning.definitions)) {
+                                                                        for (const defItem of meaning.definitions) {
+                                                                            if (defItem.examples && Array.isArray(defItem.examples)) {
+                                                                                for (const ex of defItem.examples) {
+                                                                                    // 영어 예문 (en/english 필드)
+                                                                                    if (ex.en && ex.ko) {
+                                                                                        examples.push({
+                                                                                            english: ex.en,
+                                                                                            korean: ex.ko
+                                                                                        });
+                                                                                    }
+                                                                                    // 독일어 예문 (de/german 필드) - 기존 로직 유지
+                                                                                    else if (ex.de && ex.ko) {
+                                                                                        examples.push({
+                                                                                            english: ex.de,
+                                                                                            korean: ex.ko
+                                                                                        });
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
                                                                     }
                                                                 }
+                                                                
+                                                                if (examples.length > 0) {
+                                                                    return (
+                                                                        <div>
+                                                                            {examples.slice(0, 2).map((ex, idx) => (
+                                                                                <div key={idx} className="mb-2 p-2 bg-light rounded">
+                                                                                    <div className="fw-bold text-dark" lang="en">{ex.english}</div>
+                                                                                    <div className="text-muted small">— {ex.korean}</div>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    );
+                                                                }
                                                             }
                                                             
-                                                            if (examples.length > 0) {
-                                                                return (
-                                                                    <div>
-                                                                        {examples.slice(0, 2).map((ex, idx) => (
-                                                                            <div key={idx} className="mb-2 p-2 bg-light rounded">
-                                                                                <div className="fw-bold text-dark" lang="de">{ex.german}</div>
-                                                                                <div className="text-muted small">— {ex.korean}</div>
-                                                                            </div>
-                                                                        ))}
-                                                                    </div>
-                                                                );
-                                                            } else {
-                                                                return <div className="text-muted small">예문이 없습니다.</div>;
+                                                            // 다른 방식으로 저장된 예문도 확인
+                                                            if (v?.dictMeta?.examples) {
+                                                                const examples = Array.isArray(v.dictMeta.examples) 
+                                                                    ? v.dictMeta.examples 
+                                                                    : JSON.parse(v.dictMeta.examples);
+                                                                
+                                                                const validExamples = [];
+                                                                for (const ex of examples) {
+                                                                    if (ex.definitions && Array.isArray(ex.definitions)) {
+                                                                        for (const def of ex.definitions) {
+                                                                            if (def.examples && Array.isArray(def.examples)) {
+                                                                                for (const example of def.examples) {
+                                                                                    if ((example.en || example.english) && (example.ko || example.korean)) {
+                                                                                        validExamples.push({
+                                                                                            english: example.en || example.english,
+                                                                                            korean: example.ko || example.korean
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                                
+                                                                if (validExamples.length > 0) {
+                                                                    return (
+                                                                        <div>
+                                                                            {validExamples.slice(0, 2).map((ex, idx) => (
+                                                                                <div key={idx} className="mb-2 p-2 bg-light rounded">
+                                                                                    <div className="fw-bold text-dark" lang="en">{ex.english}</div>
+                                                                                    <div className="text-muted small">— {ex.korean}</div>
+                                                                                </div>
+                                                                            ))}
+                                                                        </div>
+                                                                    );
+                                                                }
                                                             }
+                                                            
+                                                            return <div className="text-muted small">예문이 없습니다.</div>;
                                                         } catch (e) {
                                                             console.warn('Failed to parse examples for card flip:', e);
                                                             return <div className="text-muted small">예문을 불러올 수 없습니다.</div>;
