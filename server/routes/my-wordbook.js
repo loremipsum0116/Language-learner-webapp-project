@@ -48,7 +48,12 @@ router.get('/', async (req, res) => {
             if (!item.vocab) return item;
             const examples = item.vocab.dictentry?.examples || [];
             let gloss = null;
-            if (examples[0]?.definitions?.[0]) {
+            
+            // 우선순위: CEFR vocabs의 gloss > 기존 definitions
+            const glossExample = examples.find(ex => ex.kind === 'gloss');
+            if (glossExample && glossExample.ko) {
+                gloss = glossExample.ko;
+            } else if (examples[0]?.definitions?.[0]) {
                 gloss = examples[0].definitions[0].ko_def || null;
             }
             

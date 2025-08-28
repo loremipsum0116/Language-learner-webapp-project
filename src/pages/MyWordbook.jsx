@@ -19,6 +19,7 @@ const getCefrBadgeColor = (level) => {
         case 'B1': return 'bg-success';
         case 'B2': return 'bg-info text-dark';
         case 'C1': return 'bg-primary';
+        case 'C2': return 'bg-dark';
         default: return 'bg-secondary';
     }
 };
@@ -237,15 +238,38 @@ export default function MyWordbook() {
 
     const playVocabAudio = (vocabData) => {
         const vocab = vocabData.vocab || vocabData;
-        // vocab 페이지와 동일한 우선순위: vocab.audio || vocab.dictentry?.audioUrl
+        
+        // CEFR 레벨을 실제 폴더명으로 매핑
+        const cefrToFolder = {
+            'A1': 'starter',
+            'A2': 'elementary', 
+            'B1': 'intermediate',
+            'B2': 'upper',
+            'C1': 'advanced',
+            'C2': 'advanced'
+        };
+        
+        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
+        const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
+        const wordAudioPath = audioData?.example || audioData?.word;
+        
+        if (wordAudioPath) {
+            // 절대 경로로 변환
+            const absolutePath = wordAudioPath.startsWith('/') ? wordAudioPath : `/${wordAudioPath}`;
+            playUrl(absolutePath, 'vocab', vocab.id);
+            return;
+        }
+        
+        // 2. 기존 방식 (폴백)
         const targetUrl = vocab.audio || vocab.dictentry?.audioUrl;
         if (targetUrl) {
             playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
         
-        // vocab 페이지와 동일한 fallback: 로컬 오디오 패스 생성
-        const localAudioPath = `/${vocab.levelCEFR}/audio/${safeFileName(vocab.lemma)}.mp3`;
+        // 3. 레거시 로컬 오디오 패스 생성 (최종 폴백)
+        const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+        const localAudioPath = `/${folderName}/${safeFileName(vocab.lemma)}/example.mp3`;
         playUrl(localAudioPath, 'vocab', vocab.id);
     };
 

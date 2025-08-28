@@ -21,6 +21,33 @@ import MiniQuiz from '../components/MiniQuiz';
 
 // ───────────────────── 헬퍼 ─────────────────────
 const safeFileName = (s) => encodeURIComponent(String(s ?? ''));
+
+// CEFR 레벨을 실제 폴더명으로 매핑
+const cefrToFolder = {
+    'A1': 'starter',
+    'A2': 'elementary', 
+    'B1': 'intermediate',
+    'B2': 'upper',
+    'C1': 'advanced',
+    'C2': 'advanced'
+};
+
+// 현재 cefr_vocabs.json 오디오 경로 생성
+const getCurrentAudioPath = (vocab) => {
+    // 1. cefr_vocabs.json의 audioLocal 데이터 우선 사용
+    const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
+    const exampleAudioPath = audioData?.example;
+    
+    if (exampleAudioPath) {
+        // 절대 경로로 변환
+        return exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
+    }
+    
+    // 2. 폴백: 레거시 방식
+    const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+    return `/${folderName}/${safeFileName(vocab.question)}/example.mp3`;
+};
+
 const getPosBadgeColor = (pos) => {
     switch ((pos || '').toLowerCase()) {
         case 'noun': return 'bg-primary';
@@ -443,7 +470,7 @@ export default function LearnVocab() {
             audioPlayCountRef.current = 0;
             setAudioPlayCount(0);
             
-            const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
+            const localAudioPath = getCurrentAudioPath(current);
             const el = audioRef.current;
             
             // 기존 이벤트 리스너 제거 (중복 방지)
@@ -1737,7 +1764,7 @@ export default function LearnVocab() {
                                     }
                                     
                                     // 오디오 재생 재개를 위한 이벤트 리스너 설정
-                                    const localAudioPath = `/${current.levelCEFR || 'A1'}/audio/${safeFileName(current.question)}.mp3`;
+                                    const localAudioPath = getCurrentAudioPath(current);
                                     
                                     // 기존 이벤트 리스너 제거
                                     el.removeEventListener('play', el._currentPlayHandler);
@@ -1935,33 +1962,37 @@ export default function LearnVocab() {
                         ) : (
                             <>
                                 <div className="mb-3 lead"><strong>뜻:</strong> {current.answer}</div>
-                                {examples.length > 0 && (
-                                    <div className="mt-4 text-start w-100">
-                                        <h6 className="fw-bold">예문</h6>
-                                        {examples.map((blk, i) => (
-                                            <div key={i}>
-                                                {blk.definitions?.map((def, j) => (
-                                                    <ul key={j} className="list-unstyled mt-2">
-                                                        {def.examples?.map((ex, k) => (
-                                                            <li key={k} className="mb-2 p-2 bg-light rounded">
-                                                                <span
-                                                                    lang="en"
-                                                                    dangerouslySetInnerHTML={{
-                                                                        __html: (ex.de || '').replace(
-                                                                            new RegExp(`\\b(${current.question})\\b`, 'gi'),
-                                                                            '<strong>$1</strong>',
-                                                                        ),
-                                                                    }}
-                                                                />
-                                                                {ex.ko && <div className="text-muted small mt-1">— {ex.ko}</div>}
-                                                            </li>
-                                                        ))}
-                                                    </ul>
-                                                ))}
+{(() => {
+                                    // Use the exact same logic as VocabDetailModal
+                                    const dictentry = current.vocab?.dictentry || {};
+                                    const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                    const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
+                                    
+                                    if (exampleExample && exampleExample.ko) {
+                                        // Same logic as VocabDetailModal, with chirpScript fallback
+                                        let englishExample = exampleExample.en || '';
+                                        
+                                        // If no en field, try to extract from chirpScript
+                                        if (!englishExample && exampleExample.chirpScript) {
+                                            const match = exampleExample.chirpScript.match(/예문은 (.+?)\./);
+                                            englishExample = match ? match[1] : '';
+                                        }
+                                        
+                                        return (
+                                            <div className="mt-4 text-start w-100">
+                                                <h6 className="fw-bold">예문</h6>
+                                                <div className="p-2 rounded bg-light">
+                                                    {englishExample && (
+                                                        <p lang="en" className="fw-bold mb-1">{englishExample}</p>
+                                                    )}
+                                                    <p className="text-muted small mb-0">— {exampleExample.ko}</p>
+                                                </div>
                                             </div>
-                                        ))}
-                                    </div>
-                                )}
+                                        );
+                                    }
+                                    
+                                    return null;
+                                })()}
                             </>
                         )}
                     </div>

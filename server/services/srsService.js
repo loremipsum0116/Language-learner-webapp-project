@@ -43,12 +43,56 @@ async function createManualFolder(userId, folderName, vocabIds = [], learningCur
     
     // 단어들을 폴더에 추가 (폴더별 독립적인 카드 생성)
     if (vocabIds.length > 0) {
+        // 새 폴더이므로 vocab 타입 검증 불필요
         const cardIds = await ensureCardsForVocabs(userId, vocabIds, folder.id);
         
         const folderItems = cardIds.map((cardId, index) => ({
             folderId: folder.id,
             cardId: cardId,
             vocabId: vocabIds[index],
+            learned: false
+        }));
+        
+        await prisma.srsfolderitem.createMany({
+            data: folderItems
+        });
+    }
+    
+    return folder;
+}
+
+/**
+ * 숙어/구동사용 수동 학습 폴더를 생성합니다.
+ */
+async function createManualIdiomFolder(userId, folderName, idiomIds = [], learningCurveType = "long") {
+    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, KST 기준 자정으로 변환
+    const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
+    const todayKstDate = new Date(todayKst + 'T00:00:00.000+09:00'); // KST 기준 자정으로 저장
+    
+    const folder = await prisma.srsfolder.create({
+        data: {
+            userId,
+            name: folderName,
+            createdDate: todayKstDate,
+            nextReviewDate: todayKstDate, // Stage 0은 즉시 복습 가능
+            cycleAnchorAt: new Date(), // 망각곡선 기준점을 생성 시각으로 설정
+            kind: 'manual',
+            autoCreated: false,
+            alarmActive: true,
+            stage: 0, // 초기 단계
+            learningCurveType: learningCurveType, // 학습 곡선 타입 저장
+            updatedAt: new Date(), // updatedAt 필드 추가
+        },
+    });
+    
+    // 숙어들을 폴더에 추가 (폴더별 독립적인 카드 생성)
+    if (idiomIds.length > 0) {
+        const cardIds = await ensureCardsForIdioms(userId, idiomIds, folder.id);
+        
+        const folderItems = cardIds.map((cardId, index) => ({
+            folderId: folder.id,
+            cardId: cardId,
+            vocabId: null, // 숙어는 vocabId가 없음
             learned: false
         }));
         
@@ -256,9 +300,90 @@ async function ensureCardsForVocabs(userId, vocabIds, folderId = null) {
     return all.map(x => x.id); // cardIds 반환
 }
 
-async function addItemsToFolder(userId, folderId, cardIds) {
+// idiomIds로 들어오면 특정 폴더에 대한 SRSCard를 보장(없으면 생성)하고 cardIds를 리턴
+async function ensureCardsForIdioms(userId, idiomIds, folderId = null) {
+    const uniq = [...new Set(idiomIds.map(Number).filter(Boolean))];
+    if (!uniq.length) return [];
+    
+    // 폴더별 독립적인 카드 조회
+    const existing = await prisma.srscard.findMany({
+        where: { 
+            userId, 
+            itemType: 'idiom', 
+            itemId: { in: uniq },
+            folderId: folderId  // 폴더별 독립성
+        },
+        select: { id: true, itemId: true }
+    });
+    const existMap = new Map(existing.map(e => [e.itemId, e.id]));
+    const toCreate = uniq
+        .filter(iId => !existMap.has(iId))
+        .map(iId => ({ 
+            userId, 
+            itemType: 'idiom', 
+            itemId: iId,
+            folderId: folderId, // 폴더별 독립성
+            stage: 0, 
+            nextReviewAt: null,
+            waitingUntil: null,
+            isOverdue: false,
+            frozenUntil: null,
+            overdueDeadline: null,
+            overdueStartAt: null
+        }));
+    
+    if (toCreate.length) {
+        await prisma.srscard.createMany({ data: toCreate });
+    }
+    const all = await prisma.srscard.findMany({
+        where: { 
+            userId, 
+            itemType: 'idiom', 
+            itemId: { in: uniq },
+            folderId: folderId  // 폴더별 독립성
+        },
+        select: { id: true, itemId: true }
+    });
+    return all.map(x => x.id); // cardIds 반환
+}
+
+// 폴더의 콘텐츠 타입을 검증하는 함수 (vocab과 idiom 분리 강제)
+async function validateFolderContentType(folderId, newItemType) {
+    if (!folderId) return true; // 새 폴더는 검증 불필요
+    
+    const existingCards = await prisma.srscard.findMany({
+        where: { folderId },
+        select: { itemType: true },
+        distinct: ['itemType']
+    });
+    
+    const existingTypes = existingCards.map(card => card.itemType);
+    
+    // 빈 폴더는 어떤 타입이든 허용
+    if (existingTypes.length === 0) {
+        return true;
+    }
+    
+    // 동일한 타입만 추가 가능
+    if (existingTypes.includes(newItemType)) {
+        return true;
+    }
+    
+    // vocab과 idiom은 혼재 불가
+    if ((existingTypes.includes('vocab') && newItemType === 'idiom') ||
+        (existingTypes.includes('idiom') && newItemType === 'vocab')) {
+        throw createError(400, `이 폴더에는 ${existingTypes.includes('vocab') ? '수준별/시험별 단어' : '숙어/구동사'}가 이미 포함되어 있습니다. ${newItemType === 'vocab' ? '수준별/시험별 단어' : '숙어/구동사'}는 별도의 폴더에 추가해주세요.`);
+    }
+    
+    return true;
+}
+
+async function addItemsToFolder(userId, folderId, cardIds, itemType = 'vocab') {
     const folder = await prisma.srsfolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
+    
+    // 콘텐츠 타입 검증 (vocab과 idiom 분리)
+    await validateFolderContentType(folderId, itemType);
 
     const existing = await prisma.srsfolderitem.findMany({
         where: { folderId, cardId: { in: cardIds } },
@@ -288,7 +413,7 @@ async function removeItem(userId, folderId, cardId) {
 }
 
 async function getQueue(userId, folderId) {
-    // 학습 안 한 카드만, vocab 상세 포함(단순 버전)
+    // 학습 안 한 카드만, vocab/idiom 상세 포함
     const folder = await prisma.srsfolder.findFirst({
         where: { id: folderId, userId },
         select: { id: true, items: { where: { learned: false }, include: { card: true } } },
@@ -298,11 +423,36 @@ async function getQueue(userId, folderId) {
     const vocabIds = folder.items
         .filter(i => i.srscard.itemType === 'vocab')
         .map(i => i.srscard.itemId);
+    
+    const idiomIds = folder.items
+        .filter(i => i.srscard.itemType === 'idiom')
+        .map(i => i.srscard.itemId);
 
     const vocabMap = new Map();
     if (vocabIds.length) {
         const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } } });
         for (const v of vocabs) vocabMap.set(v.id, v);
+    }
+    
+    const idiomMap = new Map();
+    if (idiomIds.length) {
+        const idioms = await prisma.idiom.findMany({ 
+            where: { id: { in: idiomIds } },
+            select: {
+                id: true,
+                idiom: true,
+                korean_meaning: true,
+                usage_context_korean: true,
+                category: true,
+                koChirpScript: true,
+                audioWord: true,
+                audioGloss: true,
+                audioExample: true,
+                example_sentence: true,
+                ko_example_sentence: true
+            }
+        });
+        for (const i of idioms) idiomMap.set(i.id, i);
     }
 
     return folder.items.map(i => ({
@@ -313,6 +463,7 @@ async function getQueue(userId, folderId) {
         learned: i.learned,
         wrongCount: i.wrongCount,
         vocab: i.srscard.itemType === 'vocab' ? vocabMap.get(i.srscard.itemId) : null,
+        idiom: i.srscard.itemType === 'idiom' ? idiomMap.get(i.srscard.itemId) : null,
     }));
 }
 
@@ -1507,6 +1658,7 @@ async function getSrsStatus(userId) {
 
 module.exports = {
     createManualFolder,
+    createManualIdiomFolder,
     completeFolderAndScheduleNext,
     restartMasteredFolder,
     listFoldersForDate,
@@ -1518,6 +1670,8 @@ module.exports = {
     markAnswer,
     bumpDailyStat,
     ensureCardsForVocabs,
+    ensureCardsForIdioms,
+    validateFolderContentType,
     getAvailableCardsForReview,
     getWaitingCardsCount,
     getSrsStatus,

@@ -344,3 +344,21 @@ model listeningRecord {
   @@index([userId, level])
   @@map("listening_records")
 }
+
+model idiom {
+  id                   Int      @id @default(autoincrement())
+  idiom               String   @unique
+  korean_meaning      String?
+  usage_context_korean String?
+  category            String?
+  koChirpScript       String?
+  audioWord          String?
+  audioGloss         String?
+  audioExample       String?
+  example_sentence    String?
+  ko_example_sentence String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("idioms")
+}

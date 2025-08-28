@@ -5,6 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError, API_BASE } from '../api/client';
 import Pron from '../components/Pron';
 import VocabDetailModal from '../components/VocabDetailModal.jsx';
+import IdiomDetailModal from '../components/IdiomDetailModal.jsx';
 import { SrsApi } from '../api/srs';
 import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
 import RainbowStar from '../components/RainbowStar';
@@ -18,6 +19,7 @@ const getCefrBadgeColor = (level) => {
         case 'B1': return 'bg-success';
         case 'B2': return 'bg-info text-dark';
         case 'C1': return 'bg-primary';
+        case 'C2': return 'bg-dark';
         default: return 'bg-secondary';
     }
 };
@@ -32,6 +34,101 @@ const getPosBadgeColor = (pos) => {
         default: return 'bg-secondary';
     }
 };
+
+// IdiomCard component
+function IdiomCard({ idiom, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, isSelected, onToggleSelect, playingAudio }) {
+    const koGloss = idiom.korean_meaning || '뜻 정보 없음';
+    const isEnriching = enrichingId === idiom.id;
+    const isPlaying = playingAudio?.type === 'idiom' && playingAudio?.id === idiom.id;
+    
+    // 레벨 정보 추출 (예: "중급, 숙어" -> "중급")
+    const level = idiom.category?.split(',')[0]?.trim() || '';
+    
+    // CEFR 레벨로 변환
+    const cefrLevel = (() => {
+        switch(level) {
+            case '입문': return 'A1';
+            case '기초': return 'A2';
+            case '중급': return 'B1';
+            case '중상급': return 'B2';
+            case '고급': case '상급': return 'C1';
+            case '최고급': return 'C2';
+            default: return level;
+        }
+    })();
+
+    return (
+        <div className="col-md-6 col-lg-4 mb-3">
+            <div className={`card h-100 ${isSelected ? 'border-primary' : ''} position-relative`}>
+                <div className="card-header d-flex justify-content-end p-1">
+                    <input
+                        className="form-check-input"
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={(e) => { e.stopPropagation(); onToggleSelect(idiom.id); }}
+                        title="숙어 선택"
+                    />
+                </div>
+                <div
+                    className="card-body card-clickable pt-0"
+                    onClick={() => onOpenDetail(idiom.id)}
+                    style={{ cursor: 'pointer' }}
+                >
+                    <div className="d-flex align-items-center mb-1">
+                        <h5 className="card-title mb-0 me-2" lang="en">{idiom.idiom}</h5>
+                        <div className="d-flex gap-1">
+                            {cefrLevel && <span className={`badge ${getCefrBadgeColor(cefrLevel)}`}>{cefrLevel}</span>}
+                            <span className={`badge ${idiom.category?.includes('숙어') ? 'bg-success' : 'bg-info'} fst-italic`}>
+                                {idiom.category?.includes('숙어') ? '숙어' : '구동사'}
+                            </span>
+                        </div>
+                    </div>
+                    <div className="card-subtitle text-muted">{koGloss}</div>
+                </div>
+                <div className="card-footer d-flex gap-2 justify-content-between align-items-center">
+                    <div className="d-flex align-items-center">
+                        <div className="btn-group">
+                            <button
+                                className={`btn btn-sm ${inWordbook ? 'btn-secondary' : 'btn-outline-primary'}`}
+                                onClick={(e) => { e.stopPropagation(); onAddWordbook(idiom.id); }}
+                                disabled={inWordbook || isEnriching}
+                                title="내 단어장에 추가"
+                            >
+                                {inWordbook ? '단어장에 있음' : '내 단어장'}
+                            </button>
+                            <button
+                                className={`btn btn-sm ${inSRS ? 'btn-warning' : 'btn-outline-warning'}`}
+                                onClick={(e) => { e.stopPropagation(); onAddSRS([idiom.id]); }}
+                                disabled={inSRS || isEnriching}
+                                title="SRS 폴더에 추가"
+                            >
+                                {inSRS ? 'SRS에 있음' : '+SRS'}
+                            </button>
+                        </div>
+                    </div>
+                    {idiom.audio && (
+                        <button
+                            className="btn btn-sm btn-outline-secondary rounded-circle d-flex align-items-center justify-content-center"
+                            style={{ width: '32px', height: '32px' }}
+                            onClick={(e) => { e.stopPropagation(); onPlayAudio(idiom); }}
+                            disabled={isEnriching}
+                            aria-label="숙어 오디오 재생"
+                            title="숙어 듣기"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
+                                {isPlaying ? (
+                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                ) : (
+                                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                                )}
+                            </svg>
+                        </button>
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 // VocabCard component (updated with RainbowStar support)
 function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, onDeleteVocab, isAdmin, isSelected, onToggleSelect, playingAudio, masteredCards }) {
@@ -159,24 +256,38 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
+// CEFR to folder mapping for audio paths
+const cefrToFolder = {
+    'A1': 'starter',
+    'A2': 'elementary', 
+    'B1': 'intermediate',
+    'B2': 'upper',
+    'C1': 'advanced',
+    'C2': 'advanced'
+};
+
 export default function VocabList() {
     const { user, srsIds, loading: authLoading, refreshSrsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
-    const [activeTab, setActiveTab] = useState('cefr'); // 'cefr' or 'exam'
+    const [activeTab, setActiveTab] = useState('cefr'); // 'cefr', 'exam', or 'idiom'
     const [activeExam, setActiveExam] = useState('');
+    const [activeIdiomCategory, setActiveIdiomCategory] = useState('숙어'); // '숙어' or '구동사'
     const [examCategories, setExamCategories] = useState([]);
     const [words, setWords] = useState([]);
+    const [idioms, setIdioms] = useState([]);
     const [allWords, setAllWords] = useState([]); // 전체 단어 리스트
     const [displayCount, setDisplayCount] = useState(100); // 현재 표시되는 단어 개수
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지
     const [hasNextPage, setHasNextPage] = useState(false); // 다음 페이지 존재 여부
     const [totalCount, setTotalCount] = useState(0); // 전체 단어 수
     const [myWordbookIds, setMyWordbookIds] = useState(new Set());
+    const [myIdiomIds, setMyIdiomIds] = useState(new Set()); // 숙어 단어장 별도 관리
     const [pickerOpen, setPickerOpen] = useState(false);
     const [pendingVocabIds, setPendingVocabIds] = useState([]);
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState(null);
     const [detail, setDetail] = useState(null);
+    const [detailType, setDetailType] = useState('vocab'); // 'vocab' or 'idiom'
     const [detailLoading, setDetailLoading] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const audioRef = useRef(null);
@@ -235,6 +346,40 @@ export default function VocabList() {
                     url = `/vocab/list?level=${encodeURIComponent(activeLevel)}`;
                     const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                     data = response.data;
+                    // CEFR 탭에서도 totalCount 설정
+                    setTotalCount(Array.isArray(data) ? data.length : 0);
+                } else if (activeTab === 'idiom') {
+                    // 숙어·구동사 조회
+                    url = `/api/idiom/list?category=${encodeURIComponent(activeIdiomCategory)}`;
+                    console.log('🔍 [IDIOM] Calling API:', url);
+                    const response = await fetchJSON(url, { signal: ac.signal });
+                    console.log('📥 [IDIOM] API Response:', response);
+                    data = response.data;
+                    console.log('📋 [IDIOM] Data length:', Array.isArray(data) ? data.length : 'Not array');
+                    if (Array.isArray(data) && data.length > 0) {
+                        const firstThree = data.slice(0, 3).map(item => ({
+                            id: item.id,
+                            idiom: item.idiom || item.lemma || 'NO_IDIOM_FIELD',
+                            korean_meaning: item.korean_meaning || item.ko_gloss || 'NO_MEANING_FIELD',
+                            category: item.category,
+                            allFields: Object.keys(item)
+                        }));
+                        console.log('📋 [IDIOM] First 3 items:', firstThree);
+                        // 전역 변수에 저장하여 브라우저 콘솔에서 확인 가능
+                        window.idiomsDebug = { 
+                            fullData: data,
+                            firstThree,
+                            dataType: typeof data[0],
+                            hasIdiomField: 'idiom' in data[0],
+                            hasLemmaField: 'lemma' in data[0]
+                        };
+                    }
+                    setIdioms(data || []);
+                    setTotalCount(Array.isArray(data) ? data.length : 0);
+                    setAllWords([]); // 숙어 탭에서는 단어 데이터 초기화
+                    setWords([]);
+                    setDisplayCount(100); // 새로운 데이터 로드 시 초기화
+                    return; // 숙어 탭에서는 여기서 종료
                 } else {
                     // 시험별 조회
                     if (!activeExam) {
@@ -265,7 +410,7 @@ export default function VocabList() {
             }
         })();
         return () => ac.abort();
-    }, [activeLevel, activeTab, activeExam, debouncedSearchTerm, authLoading]);
+    }, [activeLevel, activeTab, activeExam, activeIdiomCategory, debouncedSearchTerm, authLoading]);
 
     // displayCount 변경 시 words 업데이트
     useEffect(() => {
@@ -283,6 +428,22 @@ export default function VocabList() {
             })
             .catch(e => {
                 if (!isAbortError(e)) console.error("Failed to fetch my wordbook IDs", e);
+            });
+        return () => ac.abort();
+    }, [user]);
+
+    // 숙어 단어장 불러오기
+    useEffect(() => {
+        if (!user) return;
+        const ac = new AbortController();
+        fetchJSON('/my-idioms', withCreds({ signal: ac.signal }))
+            .then(({ data }) => {
+                if (Array.isArray(data)) {
+                    setMyIdiomIds(new Set(data.map(item => item.id)));
+                }
+            })
+            .catch(e => {
+                if (!isAbortError(e)) console.error("Failed to fetch my idiom IDs", e);
             });
         return () => ac.abort();
     }, [user]);
@@ -355,12 +516,16 @@ export default function VocabList() {
             // API에서 전체 단어를 가져왔을 때의 실제 개수와 비교
             const actualMaxCount = Math.min(totalCount, allWords.length || totalCount);
             return selectedIds.size > 0 && selectedIds.size >= actualMaxCount - 1; // 1개 차이 허용
+        } else if (activeTab === 'idiom') {
+            // 숙어 탭에서는 현재 표시된 숙어들과 비교
+            if (idioms.length === 0) return false;
+            return idioms.every(idiom => selectedIds.has(idiom.id));
         } else {
             // CEFR 탭에서는 현재 표시된 단어들과 비교
             if (words.length === 0) return false;
             return words.every(word => selectedIds.has(word.id));
         }
-    }, [words, selectedIds, activeTab, totalCount, allWords.length]);
+    }, [words, idioms, selectedIds, activeTab, totalCount, allWords.length]);
 
     const handleToggleSelectAll = async () => {
         if (activeTab === 'exam' && !isAllSelected) {
@@ -379,19 +544,27 @@ export default function VocabList() {
             } finally {
                 setLoading(false);
             }
-        } else if (activeTab === 'cefr') {
-            // CEFR 탭에서는 기존 로직 유지
-            if (isAllSelected) {
-                // 현재 표시된 단어들만 선택 해제
-                const newSelected = new Set(selectedIds);
-                words.forEach(word => newSelected.delete(word.id));
-                setSelectedIds(newSelected);
-            } else {
-                // 현재 표시된 단어들을 기존 선택에 추가
+        } else if (activeTab === 'cefr' && !isAllSelected) {
+            // CEFR 탭에서 전체 선택: 서버에서 모든 단어 ID 가져오기
+            try {
+                setLoading(true);
+                const response = await fetchJSON(`/vocab/list?level=${encodeURIComponent(activeLevel)}`, withCreds());
+                const allVocabData = response.data || [];
+                const allVocabIds = allVocabData.map(v => v.id) || [];
+                setSelectedIds(new Set(allVocabIds));
+            } catch (error) {
+                console.error('Failed to select all words:', error);
+                // 실패 시 현재 페이지 단어들만 선택
                 const newSelected = new Set(selectedIds);
                 words.forEach(word => newSelected.add(word.id));
                 setSelectedIds(newSelected);
+            } finally {
+                setLoading(false);
             }
+        } else if (activeTab === 'idiom' && !isAllSelected) {
+            // 숙어 탭에서 전체 선택: 모든 숙어 ID 선택
+            const allIdiomIds = idioms.map(idiom => idiom.id);
+            setSelectedIds(new Set(allIdiomIds));
         } else {
             // 선택 해제의 경우
             setSelectedIds(new Set());
@@ -700,21 +873,45 @@ export default function VocabList() {
     }
 
     const playVocabAudio = async (vocab) => {
-        // 단어 자체 발음: audioUrl 우선 사용 (ielts_a2_n.json의 audioUrl)
+        // 단어 자체 발음: cefr_vocabs.json의 audio.word 경로 우선 사용
         console.log('playVocabAudio called with vocab:', vocab.lemma);
-        console.log('vocab.audio:', vocab.audio);
-        console.log('vocab.dictentry?.audioUrl:', vocab.dictentry?.audioUrl);
         
+        // CEFR 레벨을 실제 폴더명으로 매핑
+        const cefrToFolder = {
+            'A1': 'starter',
+            'A2': 'elementary', 
+            'B1': 'intermediate',
+            'B2': 'upper',
+            'C1': 'advanced',
+            'C2': 'advanced'
+        };
+        
+        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
+        const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
+        // 임시: word, gloss, example 모두 example.mp3로 통일 (실제 파일이 example.mp3만 존재)
+        const wordAudioPath = audioData?.example || audioData?.word;
+        
+        if (wordAudioPath) {
+            // wordAudioPath에 이미 starter/a/example.mp3 형태로 포함되어 있음
+            // 앞에 /를 추가하여 절대 경로로 만듦
+            const absolutePath = wordAudioPath.startsWith('/') ? wordAudioPath : `/${wordAudioPath}`;
+            console.log('✅ Playing WORD audio from cefr_vocabs:', absolutePath);
+            playUrl(absolutePath, 'vocab', vocab.id);
+            return;
+        }
+        
+        // 2. 기존 방식 (폴백)
         const targetUrl = vocab.audio || vocab.dictentry?.audioUrl;
         if (targetUrl) {
-            console.log('✅ Playing WORD audio from audioUrl:', targetUrl);
+            console.log('✅ Playing WORD audio from legacy audioUrl:', targetUrl);
             playUrl(targetUrl, 'vocab', vocab.id);
             return;
         }
         
-        // audioUrl이 없는 경우 로컬 오디오 사용 (단어 발음용)
+        // audioUrl이 없는 경우 로컬 오디오 사용 (단어 발음용) 
+        const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName}/example.mp3`;
         console.log('⚠️ Playing WORD audio from local path (no audioUrl found):', localAudioPath);
         console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'vocab', vocab.id);
@@ -723,8 +920,9 @@ export default function VocabList() {
     // 예문 전용 오디오 재생 함수 추가
     const playExampleOnlyAudio = async (vocab) => {
         // 예문은 항상 로컬 오디오 사용
+        const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${vocab.levelCEFR}/audio/${audioFileName}.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName}/example.mp3`;
         console.log('Playing example audio from local path:', localAudioPath);
         console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'example', vocab.id);
@@ -749,7 +947,7 @@ export default function VocabList() {
 
     const handleOpenDetail = async (vocabId) => {
         try {
-            setDetailLoading(true); setDetail(null);
+            setDetailLoading(true); setDetail(null); setDetailType('vocab');
             const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds());
             setDetail(data);
         } catch (e) {
@@ -759,6 +957,61 @@ export default function VocabList() {
         } finally {
             setDetailLoading(false);
         }
+    };
+
+    // Idiom handlers
+    const handleOpenIdiomDetail = async (idiomId) => {
+        try {
+            setDetailLoading(true); setDetail(null); setDetailType('idiom');
+            const { data } = await fetchJSON(`/api/idiom/${idiomId}`);
+            setDetail(data);
+        } catch (e) {
+            alert('숙어 상세 정보를 불러오지 못했습니다.');
+            console.error(e);
+        } finally {
+            setDetailLoading(false);
+        }
+    };
+
+    const handleAddIdiomWordbook = async (idiomId) => {
+        if (!user) {
+            alert('로그인이 필요합니다.');
+            return;
+        }
+
+        console.log(`[숙어 단어장 추가 시도] Idiom ID: ${idiomId}`);
+
+        try {
+            const response = await fetchJSON('/my-idioms/add', withCreds({
+                method: 'POST',
+                body: JSON.stringify({ idiomId })
+            }));
+
+            console.log('[API 응답 수신]', response);
+
+            if (response?.meta?.created) {
+                alert(`숙어가 내 단어장에 새로 추가되었습니다.`);
+                setMyIdiomIds(prev => new Set(prev).add(idiomId));
+            } else if (response?.meta?.already) {
+                alert('이미 내 단어장에 있는 숙어입니다.');
+                if (!myIdiomIds.has(idiomId)) {
+                    setMyIdiomIds(prev => new Set(prev).add(idiomId));
+                }
+            } else {
+                alert('요청은 성공했지만 서버 응답 형식이 예상과 다릅니다.');
+                console.warn('예상치 못한 성공 응답:', response);
+            }
+
+        } catch (e) {
+            console.error('handleAddIdiomWordbook 함수에서 에러 발생:', e);
+            alert(`[오류] 숙어 단어장 추가에 실패했습니다. 브라우저 개발자 콘솔(F12)에서 자세한 오류를 확인해주세요. 메시지: ${e.message}`);
+        }
+    };
+
+    const playIdiomAudio = (idiom) => {
+        if (!idiom.audio || !idiom.audio.word) return;
+        // 기본적으로 단어 발음을 재생 (word)
+        playExampleAudio(`/${idiom.audio.word}`, 'idiom', idiom.id);
     };
 
     // src/pages/VocabList.jsx
@@ -856,6 +1109,21 @@ export default function VocabList() {
                             시험별 단어
                         </button>
                     </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'idiom' ? 'active' : ''}`}
+                            onClick={() => { 
+                                setActiveTab('idiom'); 
+                                setSearchTerm(''); 
+                                setSelectedIds(new Set()); // 선택된 단어 초기화
+                                setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
+                            }}
+                        >
+                            숙어·구동사
+                        </button>
+                    </li>
                 </ul>
             </div>
 
@@ -920,6 +1188,30 @@ export default function VocabList() {
                 </div>
             )}
 
+            {/* 숙어·구동사 탭 */}
+            {activeTab === 'idiom' && (
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="m-0">숙어·구동사</h4>
+                    <div className="btn-group">
+                        {['숙어', '구동사'].map(category => (
+                            <button 
+                                key={category} 
+                                className={`btn btn-sm ${activeIdiomCategory === category ? 'btn-success' : 'btn-outline-success'}`} 
+                                onClick={() => { 
+                                    setSearchTerm(''); 
+                                    setActiveIdiomCategory(category); 
+                                    setSelectedIds(new Set()); // 선택된 단어 초기화
+                                    setDisplayCount(100); // 표시 개수 초기화
+                                    setCurrentPage(1); // 페이지 초기화
+                                    setHasNextPage(false); // 페이지네이션 상태 초기화
+                                }}
+                            >
+                                {category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <div className="d-flex justify-content-between align-items-center mb-3 p-2 rounded bg-light">
                 <div className="form-check">
@@ -929,15 +1221,13 @@ export default function VocabList() {
                         id="selectAllCheck"
                         checked={isAllSelected}
                         onChange={handleToggleSelectAll}
-                        disabled={words.length === 0}
+                        disabled={activeTab === 'idiom' ? idioms.length === 0 : words.length === 0}
                     />
                     <label className="form-check-label" htmlFor="selectAllCheck">
-                        {activeTab === 'exam' ? 
-                            (isAllSelected ? '전체 해제' : '전체 선택') : 
-                            (isAllSelected ? '페이지 해제' : '페이지 선택')
-                        } ({selectedIds.size}개 선택됨)
+                        {(isAllSelected ? '전체 해제' : '전체 선택')} ({selectedIds.size}개 선택됨)
                         {activeTab === 'exam' && totalCount > 0 && ` / ${totalCount}개 전체`}
-                        {activeTab === 'cefr' && ` / ${allWords.length}개 전체`}
+                        {activeTab === 'cefr' && totalCount > 0 && ` / ${totalCount}개 전체`}
+                        {activeTab === 'idiom' && totalCount > 0 && ` / ${totalCount}개 전체`}
                     </label>
                 </div>
                 <div className="d-flex gap-2">
@@ -969,31 +1259,54 @@ export default function VocabList() {
 
             {loading && <div>목록 로딩 중…</div>}
             {err && <div className="alert alert-warning">해당 레벨 목록을 불러오지 못했습니다.</div>}
-            {!loading && !err && words.length === 0 && (
+            {!loading && !err && (activeTab === 'idiom' ? idioms.length === 0 : words.length === 0) && (
                 <div className="text-muted">
-                    {searchTerm ? '검색 결과가 없습니다.' : '이 레벨에 표시할 단어가 없습니다.'}
+                    {searchTerm ? '검색 결과가 없습니다.' : 
+                     activeTab === 'idiom' ? '이 카테고리에 표시할 숙어가 없습니다.' : 
+                     '이 레벨에 표시할 단어가 없습니다.'}
                 </div>
             )}
             <div className="row">
-                {words.map(vocab => (
-                    <VocabCard
-                        key={vocab.id}
-                        vocab={vocab}
-                        onOpenDetail={handleOpenDetail}
-                        onAddWordbook={handleAddWordbook}
-                        onAddSRS={handleAddSRS}
-                        inWordbook={myWordbookIds.has(vocab.id)}
-                        inSRS={srsIds.has(vocab.id)}
-                        onPlayAudio={playVocabAudio}
-                        enrichingId={enrichingId}
-                        onDeleteVocab={handleDeleteVocab}
-                        isAdmin={isAdmin}
-                        isSelected={selectedIds.has(vocab.id)}
-                        onToggleSelect={handleToggleSelect}
-                        playingAudio={playingAudio}
-                        masteredCards={masteredCards}
-                    />
-                ))}
+                {activeTab === 'idiom' ? (
+                    // 숙어·구동사 카드 렌더링
+                    idioms.map(idiom => (
+                        <IdiomCard
+                            key={idiom.id}
+                            idiom={idiom}
+                            onOpenDetail={(id) => handleOpenIdiomDetail(id)}
+                            onAddWordbook={(id) => handleAddIdiomWordbook(id)}
+                            onAddSRS={(ids) => handleAddSRS(ids)}
+                            inWordbook={myIdiomIds.has(idiom.id)} // 숙어 단어장 상태 확인
+                            inSRS={false} // 숙어 SRS 기능 미구현
+                            onPlayAudio={(idiom) => playIdiomAudio(idiom)}
+                            enrichingId={enrichingId}
+                            isSelected={selectedIds.has(idiom.id)}
+                            onToggleSelect={handleToggleSelect}
+                            playingAudio={playingAudio}
+                        />
+                    ))
+                ) : (
+                    // 기존 단어 카드 렌더링
+                    words.map(vocab => (
+                        <VocabCard
+                            key={vocab.id}
+                            vocab={vocab}
+                            onOpenDetail={handleOpenDetail}
+                            onAddWordbook={handleAddWordbook}
+                            onAddSRS={handleAddSRS}
+                            inWordbook={myWordbookIds.has(vocab.id)}
+                            inSRS={srsIds.has(vocab.id)}
+                            onPlayAudio={playVocabAudio}
+                            enrichingId={enrichingId}
+                            onDeleteVocab={handleDeleteVocab}
+                            isAdmin={isAdmin}
+                            isSelected={selectedIds.has(vocab.id)}
+                            onToggleSelect={handleToggleSelect}
+                            playingAudio={playingAudio}
+                            masteredCards={masteredCards}
+                        />
+                    ))
+                )}
             </div>
             
             {/* 더 보기 버튼 */}
@@ -1027,6 +1340,14 @@ export default function VocabList() {
                                 <div className="modal-body text-center p-5">
                                     <div className="spinner-border" role="status"><span className="visually-hidden">Loading...</span></div>
                                 </div>
+                            ) : detailType === 'idiom' ? (
+                                <IdiomDetailModal
+                                    idiom={detail}
+                                    onClose={() => { setDetail(null); stopAudio(); }}
+                                    onPlayUrl={(url) => playExampleAudio(url, 'idiom', detail.id)}
+                                    playingAudio={playingAudio}
+                                    onAddSRS={(ids) => handleAddSRS(ids)}
+                                />
                             ) : (
                                 <VocabDetailModal
                                     vocab={detail}

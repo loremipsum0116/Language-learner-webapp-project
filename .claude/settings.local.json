@@ -47,7 +47,8 @@
       "Bash(python:*)",
       "Bash(mv:*)",
       "Bash(ffmpeg:*)",
-      "Bash(ffprobe:*)"
+      "Bash(ffprobe:*)",
+      "Bash(del update_cefr_levels.js)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

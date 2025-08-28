@@ -4,12 +4,15 @@ const jwt = require('jsonwebtoken');
 // JWT는 httpOnly 쿠키 'token'에 있다고 가정(또는 Authorization 헤더 허용)
 module.exports = function auth(req, res, next) {
   try {
-    console.log('[AUTH] Checking request to:', req.path);
+    console.log('[AUTH] Checking request to:', req.path, 'method:', req.method);
     
     // 오디오 파일 및 공개 vocab 요청은 인증 제외
     if (req.path.includes('/audio/') || req.path.includes('/audio-files/') || 
         req.path.startsWith('/vocab/list') || req.path.startsWith('/vocab/test') ||
-        req.path.startsWith('/exam-vocab/categories')) {
+        req.path.startsWith('/exam-vocab/categories') || req.path.startsWith('/api/idiom') ||
+        req.path.startsWith('/starter/') || req.path.startsWith('/elementary/') ||
+        req.path.startsWith('/intermediate/') || req.path.startsWith('/upper/') ||
+        req.path.startsWith('/advanced/')) {
       console.log('[AUTH] Skipping auth for public endpoint:', req.path);
       return next();
     }

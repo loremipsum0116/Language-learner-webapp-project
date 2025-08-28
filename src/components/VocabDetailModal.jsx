@@ -243,6 +243,7 @@ const getCefrBadgeColor = (level) => {
     case 'B1': return 'bg-success';
     case 'B2': return 'bg-info text-dark';
     case 'C1': return 'bg-primary';
+    case 'C2': return 'bg-dark';
     default: return 'bg-secondary';
   }
 };
@@ -277,6 +278,7 @@ export default function VocabDetailModal({
   
   const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
   const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
+  const isExamplePlaying = playingAudio?.type === 'example' && playingAudio?.id === vocab.id;
 
   return (
     <div className="modal show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} onClick={onClose}>
@@ -300,9 +302,35 @@ export default function VocabDetailModal({
               <button
                 className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
                 style={{ width: '32px', height: '32px' }}
-                onClick={(e) => { e.stopPropagation(); onPlayVocabAudio(vocab); }}
-                aria-label="단어 오디오 재생"
-                title="단어 듣기"
+                onClick={(e) => { 
+                  e.stopPropagation(); 
+                  
+                  // CEFR 레벨을 실제 폴더명으로 매핑
+                  const cefrToFolder = {
+                    'A1': 'starter',
+                    'A2': 'elementary', 
+                    'B1': 'intermediate',
+                    'B2': 'upper',
+                    'C1': 'advanced',
+                    'C2': 'advanced'
+                  };
+                  
+                  // cefr_vocabs.json의 audio 경로 사용
+                  const audioData = dictentry.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
+                  // 임시: gloss도 example.mp3 사용 (실제 파일이 example.mp3만 존재)
+                  const glossAudioPath = audioData?.example || audioData?.gloss;
+                  
+                  if (glossAudioPath && onPlayUrl) {
+                    // 절대 경로로 변환
+                    const absolutePath = glossAudioPath.startsWith('/') ? glossAudioPath : `/${glossAudioPath}`;
+                    onPlayUrl(absolutePath, 'vocab', vocab.id);
+                  } else {
+                    // 폴백: 기존 방식
+                    onPlayVocabAudio(vocab);
+                  }
+                }}
+                aria-label="한국어 뜻 오디오 재생"
+                title="뜻 듣기"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isVocabPlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
                   {isVocabPlaying ? (
@@ -323,7 +351,6 @@ export default function VocabDetailModal({
               <div className="mt-3">
                 {glossExample && (
                   <div className="mb-3">
-                    <h6 className={`fw-bold fst-italic ${getPosBadgeColor(vocab.pos)} text-white d-inline-block px-2 py-1 rounded small`}>{vocab.pos}</h6>
                     <div className="ps-2 mt-2">
                       <p className="mb-1">
                         <strong>{glossExample.ko}</strong>
@@ -334,7 +361,52 @@ export default function VocabDetailModal({
                 
                 {exampleExample && exampleExample.ko && (
                   <div className="mt-3 border-top pt-3">
-                    <h6 className="fw-bold">예문</h6>
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                      <h6 className="fw-bold mb-0">예문</h6>
+                      {(() => {
+                        // CEFR 레벨을 실제 폴더명으로 매핑
+                        const cefrToFolder = {
+                          'A1': 'starter',
+                          'A2': 'elementary', 
+                          'B1': 'intermediate',
+                          'B2': 'upper',
+                          'C1': 'advanced',
+                          'C2': 'advanced'
+                        };
+                        
+                        // cefr_vocabs.json의 audio.example 경로 사용
+                        const audioData = dictentry.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
+                        const exampleAudioPath = audioData?.example;
+                        
+                        if (exampleAudioPath) {
+                          return (
+                            <button
+                              className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
+                              style={{ width: '32px', height: '32px' }}
+                              onClick={(e) => { 
+                                e.stopPropagation(); 
+                                if (onPlayUrl) {
+                                  // 절대 경로로 변환
+                                  const absolutePath = exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
+                                  onPlayUrl(absolutePath, 'example', vocab.id);
+                                }
+                              }}
+                              aria-label="예문 오디오 재생"
+                              title="예문 듣기"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isExamplePlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
+                                {isExamplePlaying ? (
+                                  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                ) : (
+                                  <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                                )}
+                              </svg>
+                            </button>
+                          );
+                        }
+                        return null;
+                      })()}
+                    </div>
                     <div className="mb-2 p-2 rounded bg-light">
                       <div className="me-2">
                         {(() => {
@@ -347,11 +419,6 @@ export default function VocabDetailModal({
                                 <span lang="en" className="d-block fw-bold mb-1">{englishExample}</span>
                               )}
                               <span className="text-muted small">— {exampleExample.ko}</span>
-                              {exampleExample.chirpScript && (
-                                <div className="mt-2 p-2 bg-info bg-opacity-10 rounded small">
-                                  <strong>설명:</strong> {exampleExample.chirpScript}
-                                </div>
-                              )}
                             </>
                           );
                         })()}

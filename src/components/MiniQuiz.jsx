@@ -12,7 +12,49 @@ import MiniQuiz from '../components/MiniQuiz';
 
 // --- Helper Functions (No changes) ---
 const safeFileName = (s) => encodeURIComponent(String(s ?? '').toLowerCase().replace(/\s+/g, '_'));
-const getPosBadgeColor = (pos) => { /* ... */ };
+
+const cefrToFolder = {
+    'A1': 'starter',
+    'A2': 'elementary', 
+    'B1': 'intermediate',
+    'B2': 'upper',
+    'C1': 'advanced',
+    'C2': 'advanced'
+};
+
+const getCurrentAudioPath = (vocab) => {
+    const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
+    const exampleAudioPath = audioData?.example;
+    if (exampleAudioPath) {
+        return exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
+    }
+    const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+    return `/${folderName}/${safeFileName(vocab.question)}/example.mp3`;
+};
+
+const getCefrBadgeColor = (level) => {
+    switch (level) {
+        case 'A1': return 'bg-danger';
+        case 'A2': return 'bg-warning text-dark';
+        case 'B1': return 'bg-success';
+        case 'B2': return 'bg-info text-dark';
+        case 'C1': return 'bg-primary';
+        case 'C2': return 'bg-dark';
+        default: return 'bg-secondary';
+    }
+};
+
+const getPosBadgeColor = (pos) => {
+    if (!pos) return 'bg-secondary';
+    switch (pos.toLowerCase().trim()) {
+        case 'noun': return 'bg-primary';
+        case 'verb': return 'bg-success';
+        case 'adjective': return 'bg-warning text-dark';
+        case 'adverb': return 'bg-info text-dark';
+        default: return 'bg-secondary';
+    }
+};
+
 const shuffleArray = (arr) => _.shuffle(arr);
 const useQuery = () => {
     const { search } = useLocation();
@@ -21,6 +63,7 @@ const useQuery = () => {
 
 
 export default function LearnVocab() {
+    console.log('[COMPONENT] LearnVocab component is rendering');
     const navigate = useNavigate();
     const location = useLocation();
     const query = useQuery();
@@ -157,7 +200,8 @@ export default function LearnVocab() {
         if (mode !== 'flash' && !idsParam) return;
         if (!auto || !currentCardForDetail) return;
         
-        const localAudioPath = `/${currentCardForDetail.levelCEFR}/audio/${safeFileName(currentCardForDetail.question)}.mp3`;
+        // 현재 cefr_vocabs.json 오디오 경로 사용
+        const localAudioPath = getCurrentAudioPath(currentCardForDetail);
         playUrl(localAudioPath);
 
         const flip = setInterval(() => setFlipped((f) => !f), 5000);
@@ -171,8 +215,15 @@ export default function LearnVocab() {
     }, [mode, auto, currentCardForDetail, idsParam]);
 
     // ======================== RENDER ========================
-    if (loading) return <main className="container py-4"><h4>학습 데이터 로딩 중…</h4></main>;
-    if (err) return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
+    console.log('[RENDER] Loading:', loading, 'Error:', err, 'Current:', current, 'Queue length:', queue.length);
+    if (loading) {
+        console.log('[RENDER] Showing loading screen');
+        return <main className="container py-4"><h4>학습 데이터 로딩 중…</h4></main>;
+    }
+    if (err) {
+        console.log('[RENDER] Showing error screen:', err);
+        return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
+    }
     
     if (reviewQuiz.show) {
         return (
@@ -202,11 +253,145 @@ export default function LearnVocab() {
     }
 
     if (mode === 'flash' || idsParam) {
+        const vocab = current.vocab || current;
+        const koGloss = vocab.ko_gloss || '뜻 정보 없음';
+        const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
+        
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
-                {/* ... (Existing flashcard header) ... */}
+                {/* Header */}
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="mb-0">
+                        🎯 {mode === 'flash' ? '플래시카드 학습' : '선택 자동학습'} 
+                        <span className="text-muted"> ({idx + 1}/{queue.length})</span>
+                    </h4>
+                    <div className="d-flex align-items-center gap-2">
+                        <label className="form-check-label d-flex align-items-center">
+                            <input
+                                type="checkbox"
+                                className="form-check-input me-1"
+                                checked={auto}
+                                onChange={(e) => setAuto(e.target.checked)}
+                            />
+                            자동 재생
+                        </label>
+                    </div>
+                </div>
+
                 <div className="card">
-                    {/* ... (Existing card body) ... */}
+                    <div className="card-body text-center">
+                        <div className="mb-3">
+                            <h2 className="card-title mb-2" lang="en">{vocab.lemma || vocab.question}</h2>
+                            <div className="d-flex justify-content-center gap-1 mb-2">
+                                {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
+                                {uniquePosList.map(p => (
+                                    p && p.toLowerCase() !== 'unk' && (
+                                        <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
+                                            {p}
+                                        </span>
+                                    )
+                                ))}
+                            </div>
+                            {currentPron && (
+                                <div className="mb-2">
+                                    <Pron ipa={currentPron.ipa} ipaKo={currentPron.ipaKo} />
+                                </div>
+                            )}
+                        </div>
+
+
+{console.log('[RENDER DEBUG] Flipped state:', flipped)}
+                        {!flipped ? (
+                            <div className="text-center">
+                                <p className="text-muted mb-3">카드를 뒤집어서 뜻과 예문을 확인하세요</p>
+                                <button 
+                                    className="btn btn-primary btn-lg"
+                                    onClick={() => setFlipped(true)}
+                                >
+                                    뒤집기
+                                </button>
+                                <div className="mt-2 text-muted small">
+                                    DEBUG: flipped = {flipped.toString()}
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                <div className="mb-3">
+                                    <h5 className="text-primary">🇰🇷 뜻</h5>
+                                    <p className="fs-5">{koGloss}</p>
+                                </div>
+                                
+{/* Debug: Show all available data - Always show for debugging */}
+                                <div className="mb-2 p-2 bg-light border rounded">
+                                    <small className="text-muted">Debug Info:</small>
+                                    <pre style={{ fontSize: '10px', maxHeight: '150px', overflow: 'auto' }}>
+                                        {JSON.stringify({
+                                            currentDetail,
+                                            vocab: vocab,
+                                            dictMeta: vocab.dictMeta,
+                                            dictentry: vocab.dictentry,
+                                            examples: vocab?.dictentry?.examples
+                                        }, null, 2)}
+                                    </pre>
+                                </div>
+                                
+                                {/* Use the exact same logic as VocabDetailModal */}
+                                {(() => {
+                                    const dictentry = vocab?.dictentry || {};
+                                    const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                    const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
+                                    
+                                    // Same condition as VocabDetailModal
+                                    if (exampleExample && exampleExample.ko) {
+                                        // Same logic as VocabDetailModal, with chirpScript fallback
+                                        let englishExample = exampleExample.en || '';
+                                        
+                                        // If no en field, try to extract from chirpScript
+                                        if (!englishExample && exampleExample.chirpScript) {
+                                            const match = exampleExample.chirpScript.match(/예문은 (.+?)\./);
+                                            englishExample = match ? match[1] : '';
+                                            console.log('[EXAMPLE DEBUG] Extracted from chirpScript:', englishExample);
+                                        }
+                                        
+                                        console.log('[EXAMPLE DEBUG] Final englishExample:', englishExample);
+                                        console.log('[EXAMPLE DEBUG] Korean translation:', exampleExample.ko);
+                                        
+                                        return (
+                                            <div className="mb-3">
+                                                <h5 className="text-success">🇺🇸 예문</h5>
+                                                <div className="p-2 rounded bg-light">
+                                                    {englishExample && (
+                                                        <p lang="en" className="fw-bold mb-1">{englishExample}</p>
+                                                    )}
+                                                    <p className="text-muted small mb-0">— {exampleExample.ko}</p>
+                                                </div>
+                                                
+                                                <button 
+                                                    className="btn btn-sm btn-outline-success mt-2"
+                                                    onClick={() => {
+                                                        const localAudioPath = getCurrentAudioPath(current);
+                                                        playUrl(localAudioPath);
+                                                    }}
+                                                >
+                                                    🔊 예문 듣기
+                                                </button>
+                                            </div>
+                                        );
+                                    }
+                                    
+                                    return null;
+                                })()}
+                                
+                                <button 
+                                    className="btn btn-secondary"
+                                    onClick={() => setFlipped(false)}
+                                >
+                                    앞면 보기
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                    
                     <div className="card-footer d-flex gap-2">
                         <button className="btn btn-outline-secondary w-25"
                             onClick={() => { stopAudio(); setFlipped(false); setIdx((i) => Math.max(0, i - 1)); }}>

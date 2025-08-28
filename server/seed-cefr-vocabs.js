@@ -81,25 +81,34 @@ async function seedVocabFromCefrJson(vocabData) {
     try {
         const { cefrLevel, examCategories: examCats } = parseCategoriesString(vocabData.categories);
         
-        // Vocab 생성/업데이트
-        const vocab = await prisma.vocab.upsert({
-            where: { 
-                lemma_pos: {
-                    lemma: vocabData.lemma,
-                    pos: vocabData.pos || 'unknown'
-                }
-            },
-            update: {
-                levelCEFR: cefrLevel || 'A1',
-                source: 'cefr_vocabs'
-            },
-            create: {
+        // Vocab 찾기 또는 생성
+        let vocab = await prisma.vocab.findFirst({
+            where: {
                 lemma: vocabData.lemma,
-                pos: vocabData.pos || 'unknown',
-                levelCEFR: cefrLevel || 'A1',
-                source: 'cefr_vocabs'
+                pos: vocabData.pos || 'unknown'
             }
         });
+
+        if (vocab) {
+            // 기존 vocab 업데이트
+            vocab = await prisma.vocab.update({
+                where: { id: vocab.id },
+                data: {
+                    levelCEFR: cefrLevel || 'A1',
+                    source: 'cefr_vocabs'
+                }
+            });
+        } else {
+            // 새 vocab 생성
+            vocab = await prisma.vocab.create({
+                data: {
+                    lemma: vocabData.lemma,
+                    pos: vocabData.pos || 'unknown',
+                    levelCEFR: cefrLevel || 'A1',
+                    source: 'cefr_vocabs'
+                }
+            });
+        }
 
         // DictEntry 생성/업데이트 
         const examples = [
@@ -212,7 +221,7 @@ async function main() {
                 if (!categoryStats[cefrLevel]) categoryStats[cefrLevel] = 0;
                 categoryStats[cefrLevel]++;
                 
-                if ((i + 1) % 100 === 0) {
+                if ((i + 1) % 300 === 0) {
                     console.log(`   Processed: ${i + 1}/${vocabsData.length} (${successCount} success, ${errorCount} errors)`);
                 }
                 

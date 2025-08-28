@@ -16,10 +16,12 @@ const userRoutes = require('./routes/user');
 const readingRoutes = require('./routes/reading');
 const categoryRoutes = require('./routes/categories');
 const myWordbookRoutes = require('./routes/my-wordbook');
+const myIdiomsRoutes = require('./routes/my-idioms');
 const odatNoteRoutes = require('./routes/odat-note');
 const dictRoutes = require('./routes/dict');
 const examVocabRoutes = require('./routes/examVocab');
 const autoFolderRoutes = require('./routes/autoFolder');
+// const idiomRoutes = require('./routes/idiom'); // Removed - using idiom_working.js instead
 
 // (선택) 대시보드 오버라이드/Flat 확장 라우터
 const srsFlatExt = require('./routes/srs-flat-extensions');         // 제공 파일
@@ -36,7 +38,42 @@ const authMiddleware = require('./middleware/auth');
 
 const app = express();
 
+console.log('[STARTUP] Express app created, setting up routes...');
+
 // === 정적 파일 서빙 (최우선) ===
+// Test route for debugging
+app.get('/test-static', (req, res) => {
+  console.log('[TEST] Static test route hit');
+  res.json({ message: 'Static routing works', timestamp: new Date().toISOString() });
+});
+
+// vocabs_example.py로 생성된 레벨별 오디오 라우팅 (인증 불필요)
+app.use('/starter', (req, res, next) => {
+  console.log('[STATIC] starter audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'starter')));
+
+app.use('/elementary', (req, res, next) => {
+  console.log('[STATIC] elementary audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'elementary')));
+
+app.use('/intermediate', (req, res, next) => {
+  console.log('[STATIC] intermediate audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'intermediate')));
+
+app.use('/upper', (req, res, next) => {
+  console.log('[STATIC] upper audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'upper')));
+
+app.use('/advanced', (req, res, next) => {
+  console.log('[STATIC] advanced audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'advanced')));
+
+// === 기존 정적 파일 서빙 (최우선) ===
 console.log('Setting up A1 audio:', path.join(__dirname, 'A1', 'audio'));
 console.log('Setting up A2 audio:', path.join(__dirname, 'A2', 'audio'));
 console.log('Setting up B1 audio:', path.join(__dirname, 'B1', 'audio'));
@@ -73,6 +110,7 @@ app.use('/C2/audio', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'C2', 'audio')));
 
+
 // 비디오 파일 서빙
 app.use('/api/video', express.static(path.join(__dirname, 'out')));
 
@@ -89,6 +127,7 @@ app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
 app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필요)
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API
+app.use('/api/idiom', require('./routes/idiom_working')); // Idiom API (인증 불필요) - Working version from test server
 
 // 오디오 파일 목록 API (인증 불필요)
 app.get('/audio-files/:level', (req, res) => {
@@ -125,7 +164,9 @@ app.use('/quiz', quizRoutes);
 app.use('/srs', srsRoutes);     // ✅ 단 한 번만 등록
 app.use('/categories', categoryRoutes);
 app.use('/my-wordbook', myWordbookRoutes);
+app.use('/my-idioms', myIdiomsRoutes);
 app.use('/api/odat-note', odatNoteRoutes);
+// Idiom API moved to unauthenticated section above
 // app.use('/dict', dictRoutes);  // 이미 인증 불필요 섹션에서 등록됨
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use('/admin', adminRoutes);  // 관리자 API

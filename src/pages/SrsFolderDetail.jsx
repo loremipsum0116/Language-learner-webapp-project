@@ -26,6 +26,7 @@ const getCefrBadgeColor = (level) => {
         case 'B1': return 'bg-success';
         case 'B2': return 'bg-info text-dark';
         case 'C1': return 'bg-primary';
+        case 'C2': return 'bg-dark';
         default: return 'bg-secondary';
     }
 };
