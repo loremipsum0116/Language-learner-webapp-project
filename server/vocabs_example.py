@@ -218,6 +218,11 @@ def synthesize_vocab_audio(json_file_path: str):
                 write_last_saved_lemma(last_saved_lemma)
                 return
 
+        # ★ 이미 생성된 오디오 파일이 있으면 스킵
+        if os.path.exists(out_path) and os.path.getsize(out_path) > 0:
+            print(f"[{i+1}/{total}] '{lemma}' → 이미 존재: {out_path} (건너뜀)")
+            continue
+
         # ★ 보이스: en-US(Chirp3) 남/여 교대
         gender = gender_for_index(i, START_GENDER)
         voice = VOICE_MALE if gender == "male" else VOICE_FEMALE
