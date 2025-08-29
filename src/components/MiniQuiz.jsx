@@ -28,6 +28,13 @@ const getCurrentAudioPath = (vocab) => {
     if (exampleAudioPath) {
         return exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
     }
+    
+    // 숙어/구동사인 경우 특별 처리
+    if (vocab.source === 'idiom_migration' && vocab.lemma) {
+        const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_');
+        return `/idiom/${cleanLemma}_example.mp3`;
+    }
+    
     const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
     return `/${folderName}/${safeFileName(vocab.question)}/example.mp3`;
 };

@@ -378,7 +378,10 @@ export default function VocabDetailModal({
                         const audioData = dictentry.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
                         const exampleAudioPath = audioData?.example;
                         
-                        if (exampleAudioPath) {
+                        // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
+                        const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                        
+                        if (exampleAudioPath && !isIdiomOrPhrasal) {
                           return (
                             <button
                               className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
@@ -484,7 +487,10 @@ export default function VocabDetailModal({
                               // 사용법 오디오 버튼
                               const dictentry = vocab.dictentry;
                               const audioData = dictentry?.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
-                              const usageAudioPath = audioData?.gloss; // 사용법은 gloss 오디오를 사용
+                              const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                              
+                              // 숙어/구동사의 경우 example 오디오를 사용법에서 재생
+                              const usageAudioPath = isIdiomOrPhrasal ? audioData?.example : audioData?.gloss;
                               const isUsagePlaying = playingAudio?.type === 'usage' && playingAudio?.id === vocab.id;
                               
                               if (usageAudioPath && onPlayUrl) {

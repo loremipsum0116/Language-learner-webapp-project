@@ -1025,6 +1025,9 @@ export default function SrsFolderDetail() {
                                                             console.log(`[CARD FLIP DEBUG] ${lemma} v.example:`, v?.example, 'v.koExample:', v?.koExample);
                                                             console.log(`[CARD FLIP DEBUG] ${lemma} item.example:`, item?.example, 'item.koExample:', item?.koExample);
                                                             console.log(`[CARD FLIP DEBUG] ${lemma} dictentry.examples:`, v?.dictentry?.examples);
+                                                            if (v?.dictentry?.examples) {
+                                                                console.log(`[CARD FLIP DEBUG] ${lemma} dictentry.examples detailed:`, JSON.stringify(v.dictentry.examples, null, 2));
+                                                            }
                                                             
                                                             // 먼저 직접적인 example 필드 확인 (영어 단어장용)
                                                             if (v?.example && v?.koExample) {
@@ -1061,17 +1064,79 @@ export default function SrsFolderDetail() {
                                                             
                                                             // dictentry.examples에서 영어 예문 찾기 (새로운 구조)
                                                             const dictentry = v?.dictentry || {};
-                                                            const rawExamples = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                                            let rawExamples = [];
+                                                            
+                                                            // dictentry.examples가 문자열인 경우 파싱 시도
+                                                            if (typeof dictentry.examples === 'string') {
+                                                                try {
+                                                                    rawExamples = JSON.parse(dictentry.examples);
+                                                                } catch (e) {
+                                                                    console.warn(`[CARD FLIP] ${lemma} Failed to parse dictentry.examples:`, e);
+                                                                    rawExamples = [];
+                                                                }
+                                                            } else if (Array.isArray(dictentry.examples)) {
+                                                                rawExamples = dictentry.examples;
+                                                            }
                                                             
                                                             if (rawExamples.length > 0) {
                                                                 const examples = [];
                                                                 
-                                                                // kind === "example"인 항목에서 예문 추출
+                                                                // 더 포괄적인 예문 추출 로직
                                                                 for (const exampleEntry of rawExamples) {
-                                                                    if (exampleEntry.kind === "example" && exampleEntry.en && exampleEntry.ko) {
+                                                                    // kind === "example"인 항목 처리
+                                                                    if (exampleEntry.kind === "example") {
+                                                                        let englishText = exampleEntry.en;
+                                                                        let koreanText = exampleEntry.ko;
+                                                                        
+                                                                        // 영어 예문이 없지만 chirpScript가 있는 경우 추출 시도
+                                                                        if (!englishText && exampleEntry.chirpScript && koreanText) {
+                                                                            console.log(`[CARD FLIP] ${lemma} Trying to extract from chirpScript:`, exampleEntry.chirpScript);
+                                                                            // chirpScript에서 영어 예문 추출 - 더 유연한 패턴들 시도
+                                                                            const patterns = [
+                                                                                /([A-Z][^?]*\?)/,  // What is the book about?
+                                                                                /([A-Z][^.]*\.)/,  // 대문자로 시작하고 .로 끝나는 문장
+                                                                                /\b([A-Z][a-z\s]+[?.])/,  // 단어 경계에서 시작하는 문장
+                                                                                /([A-Z][^가-힣]*[?.])/, // 한글이 나오기 전까지의 문장
+                                                                            ];
+                                                                            
+                                                                            for (const pattern of patterns) {
+                                                                                const match = exampleEntry.chirpScript.match(pattern);
+                                                                                if (match) {
+                                                                                    englishText = match[1].trim();
+                                                                                    console.log(`[CARD FLIP] ${lemma} Extracted English from chirpScript:`, englishText);
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        
+                                                                        // 영어와 한국어 둘 다 있으면 추가
+                                                                        if (englishText && koreanText) {
+                                                                            examples.push({
+                                                                                english: englishText,
+                                                                                korean: koreanText
+                                                                            });
+                                                                        }
+                                                                    }
+                                                                    // 일반 단어용: definitions 내부의 examples 배열
+                                                                    else if (exampleEntry.definitions && Array.isArray(exampleEntry.definitions)) {
+                                                                        for (const def of exampleEntry.definitions) {
+                                                                            if (def.examples && Array.isArray(def.examples)) {
+                                                                                for (const ex of def.examples) {
+                                                                                    if ((ex.en || ex.english) && (ex.ko || ex.korean)) {
+                                                                                        examples.push({
+                                                                                            english: ex.en || ex.english,
+                                                                                            korean: ex.ko || ex.korean
+                                                                                        });
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    // 직접 예문이 있는 경우
+                                                                    else if ((exampleEntry.en || exampleEntry.english) && (exampleEntry.ko || exampleEntry.korean)) {
                                                                         examples.push({
-                                                                            english: exampleEntry.en,
-                                                                            korean: exampleEntry.ko
+                                                                            english: exampleEntry.en || exampleEntry.english,
+                                                                            korean: exampleEntry.ko || exampleEntry.korean
                                                                         });
                                                                     }
                                                                 }

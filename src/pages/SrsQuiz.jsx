@@ -182,6 +182,45 @@ export default function SrsQuiz() {
 
             setQueue(updatedQueue);
 
+            // 오답인 경우 오답노트에 기록
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] correct: ${correct}, canUpdateCardState: ${canUpdateCardState}, folderId: ${folderId}, cardId: ${current.cardId}, vocabId: ${current.vocabId}`);
+            if (!correct && canUpdateCardState) {
+                try {
+                    const odatPayload = {
+                        itemType: 'vocab',
+                        itemId: current.vocabId || current.cardId,
+                        wrongData: {
+                            question: current.question || '알 수 없는 단어',
+                            answer: current.question || '정답',
+                            userAnswer: 'incorrect', // SrsQuiz에서는 단순히 오답 표시
+                            quizType: 'srs-meaning',
+                            folderId: folderId,
+                            vocabId: current.vocabId || current.cardId,
+                            ko_gloss: current.answer || '뜻 정보 없음',
+                            context: current.contextSentence || null,
+                            pron: current.pron || null
+                        }
+                    };
+                    console.log(`[SRS 퀴즈 오답노트 DEBUG] 전송할 데이터:`, odatPayload);
+                    
+                    const response = await fetchJSON('/api/odat-note/create', withCreds({
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(odatPayload)
+                    }));
+                    console.log(`✅ [SRS 퀴즈 오답 기록 완료] 응답:`, response);
+                } catch (error) {
+                    if (error.message.includes('Unauthorized')) {
+                        console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');
+                    } else {
+                        console.error('❌ SRS 퀴즈 오답 기록 실패:', error);
+                        console.warn('⚠️ 오답노트 저장에 실패했습니다. 네트워크 연결을 확인해주세요.');
+                    }
+                }
+            } else {
+                console.log(`[SRS 퀴즈 오답노트 DEBUG] 조건 미충족 - 기록하지 않음`);
+            }
+
             // 다음 문제 찾기
             const nextIndex = updatedQueue.findIndex((q, i) => i > idx && !q.learned);
             const fallbackIndex = updatedQueue.findIndex(q => !q.learned);

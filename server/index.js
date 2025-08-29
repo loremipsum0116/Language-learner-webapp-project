@@ -110,13 +110,31 @@ app.use('/C2/audio', (req, res, next) => {
   next();
 }, express.static(path.join(__dirname, 'C2', 'audio')));
 
+// 숙어/구동사 오디오 서빙 (인증 불필요)
+app.use('/idiom', (req, res, next) => {
+  console.log('[STATIC] idiom audio request:', req.path);
+  // CORS 헤더 직접 설정
+  const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+}, express.static(path.join(__dirname, 'idiom')));
+
+app.use('/phrasal_verb', (req, res, next) => {
+  console.log('[STATIC] phrasal_verb audio request:', req.path);
+  next();
+}, express.static(path.join(__dirname, 'phrasal_verb')));
 
 // 비디오 파일 서빙
 app.use('/api/video', express.static(path.join(__dirname, 'out')));
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-
+// CORS 설정을 정적 파일보다 먼저 적용
 app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
+
+app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
 

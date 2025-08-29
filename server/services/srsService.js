@@ -19,9 +19,8 @@ const OFFSETS = [0, ...STAGE_DELAYS];
  * 수동으로 새 학습 폴더를 생성합니다.
  */
 async function createManualFolder(userId, folderName, vocabIds = [], learningCurveType = "long") {
-    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, KST 기준 자정으로 변환
-    const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
-    const todayKstDate = new Date(todayKst + 'T00:00:00.000+09:00'); // KST 기준 자정으로 저장
+    // KST 기준 오늘 자정을 올바르게 생성
+    const todayKstDate = startOfKstDay().toDate(); // 직접 Date 객체 사용
     
     // 폴더 생성 날짜 로그 제거
     
@@ -65,9 +64,8 @@ async function createManualFolder(userId, folderName, vocabIds = [], learningCur
  * 숙어/구동사용 수동 학습 폴더를 생성합니다.
  */
 async function createManualIdiomFolder(userId, folderName, idiomIds = [], learningCurveType = "long") {
-    // KST 날짜를 "YYYY-MM-DD" 형식으로 생성하고, KST 기준 자정으로 변환
-    const todayKst = startOfKstDay().format('YYYY-MM-DD'); 
-    const todayKstDate = new Date(todayKst + 'T00:00:00.000+09:00'); // KST 기준 자정으로 저장
+    // KST 기준 오늘 자정을 올바르게 생성
+    const todayKstDate = startOfKstDay().toDate(); // 직접 Date 객체 사용
     
     const folder = await prisma.srsfolder.create({
         data: {
@@ -408,7 +406,33 @@ async function removeItem(userId, folderId, cardId) {
     // 권한 체크: 해당 폴더가 본인 것인지
     const folder = await prisma.srsfolder.findFirst({ where: { id: folderId, userId }, select: { id: true } });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
+    
+    // 삭제할 아이템의 vocabId 조회 (오답노트 정리를 위해)
+    const folderItem = await prisma.srsfolderitem.findFirst({
+        where: { folderId, cardId },
+        select: { vocabId: true }
+    });
+    
+    // 폴더 아이템 삭제
     await prisma.srsfolderitem.deleteMany({ where: { folderId, cardId } });
+    
+    // 관련 오답노트 정리
+    if (folderItem && folderItem.vocabId) {
+        try {
+            await prisma.wronganswer.deleteMany({
+                where: {
+                    userId,
+                    folderId,
+                    vocabId: folderItem.vocabId
+                }
+            });
+            console.log(`[REMOVE ITEM] Cleaned up wrong answers for vocabId ${folderItem.vocabId} in folder ${folderId}`);
+        } catch (error) {
+            console.warn(`[REMOVE ITEM] Failed to clean up wrong answers:`, error);
+            // 오답노트 정리 실패는 치명적이지 않음
+        }
+    }
+    
     return { ok: true };
 }
 
@@ -420,39 +444,25 @@ async function getQueue(userId, folderId) {
     });
     if (!folder) throw createError(404, '폴더를 찾을 수 없습니다.');
 
-    const vocabIds = folder.items
-        .filter(i => i.srscard.itemType === 'vocab')
-        .map(i => i.srscard.itemId);
-    
-    const idiomIds = folder.items
-        .filter(i => i.srscard.itemType === 'idiom')
+    // Get all vocab IDs (including both regular and migrated idioms)
+    const allVocabIds = folder.items
+        .filter(i => i.srscard.itemType === 'vocab' || i.srscard.itemType === 'idiom')
         .map(i => i.srscard.itemId);
 
     const vocabMap = new Map();
-    if (vocabIds.length) {
-        const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } } });
-        for (const v of vocabs) vocabMap.set(v.id, v);
-    }
-    
-    const idiomMap = new Map();
-    if (idiomIds.length) {
-        const idioms = await prisma.idiom.findMany({ 
-            where: { id: { in: idiomIds } },
-            select: {
-                id: true,
-                idiom: true,
-                korean_meaning: true,
-                usage_context_korean: true,
-                category: true,
-                koChirpScript: true,
-                audioWord: true,
-                audioGloss: true,
-                audioExample: true,
-                example_sentence: true,
-                ko_example_sentence: true
+    if (allVocabIds.length) {
+        const vocabs = await prisma.vocab.findMany({ 
+            where: { id: { in: allVocabIds } },
+            include: {
+                dictentry: {
+                    select: {
+                        examples: true,
+                        audioLocal: true
+                    }
+                }
             }
         });
-        for (const i of idioms) idiomMap.set(i.id, i);
+        for (const v of vocabs) vocabMap.set(v.id, v);
     }
 
     return folder.items.map(i => ({
@@ -462,8 +472,9 @@ async function getQueue(userId, folderId) {
         itemId: i.srscard.itemId,
         learned: i.learned,
         wrongCount: i.wrongCount,
-        vocab: i.srscard.itemType === 'vocab' ? vocabMap.get(i.srscard.itemId) : null,
-        idiom: i.srscard.itemType === 'idiom' ? idiomMap.get(i.srscard.itemId) : null,
+        // Always use vocab since idioms are now in vocab table
+        vocab: vocabMap.get(i.srscard.itemId) || null,
+        idiom: null, // Legacy field, no longer used
     }));
 }
 
@@ -1558,9 +1569,10 @@ async function restartMasteredFolder(folderId, userId) {
  * 사용자의 현재 학습 가능한 카드들을 조회합니다.
  * 모든 overdue 상태 카드들을 반환합니다 (자동학습 카드 포함).
  */
-async function getAvailableCardsForReview(userId) {
+async function getAvailableCardsForReviewFixed(userId) {
     const now = new Date();
     
+    // 일단 기본 조건으로 SRS 카드들을 가져옴
     const cards = await prisma.srscard.findMany({
         where: {
             userId: userId,
@@ -1574,7 +1586,10 @@ async function getAvailableCardsForReview(userId) {
         include: {
             srsfolderitem: {
                 include: {
-                    vocab: true
+                    vocab: true,
+                    srsfolder: {
+                        select: { id: true, name: true }
+                    }
                 }
             }
         },
@@ -1584,7 +1599,19 @@ async function getAvailableCardsForReview(userId) {
         ]
     });
 
-    return cards;
+    // 고아 카드 필터링: srsfolderitem이 있고 해당 폴더가 존재하는 카드만 반환
+    const validCards = cards.filter(card => {
+        // srsfolderitem이 없으면 고아
+        if (!card.srsfolderitem || card.srsfolderitem.length === 0) {
+            return false;
+        }
+        
+        // srsfolderitem은 있지만 srsfolder가 null인 경우도 고아
+        const hasValidFolder = card.srsfolderitem.some(item => item.srsfolder && item.srsfolder.id);
+        return hasValidFolder;
+    });
+
+    return validCards;
 }
 
 /**
@@ -1672,7 +1699,7 @@ module.exports = {
     ensureCardsForVocabs,
     ensureCardsForIdioms,
     validateFolderContentType,
-    getAvailableCardsForReview,
+    getAvailableCardsForReview: getAvailableCardsForReviewFixed,
     getWaitingCardsCount,
     getSrsStatus,
     checkAndUpdateFolderMasteryStatus,

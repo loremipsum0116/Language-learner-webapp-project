@@ -15,24 +15,74 @@ async function addWrongAnswer(userId, vocabId, folderId = null) {
   const { getOffsetDate } = require('../routes/timeMachine');
   const wrongAt = dayjs(getOffsetDate());
   
-  // 복습 윈도우: 틀린 시각 다음날 같은 시각부터 그 다음날 같은 시각까지
-  const reviewWindowStart = wrongAt.add(1, 'day');
-  const reviewWindowEnd = wrongAt.add(2, 'day');
+  // SRS 곡선에 맞는 복습 기간 계산
+  let reviewDelayHours = 24; // 기본값: 1일 후
+  
+  try {
+    // 해당 단어의 SRS 카드 찾기
+    const srsCard = await prisma.srscard.findFirst({
+      where: {
+        userId,
+        itemType: 'vocab',
+        itemId: vocabId
+      }
+    });
+    
+    if (srsCard) {
+      // SRS 스케줄 로직 import
+      const { STAGE_DELAYS } = require('./srsSchedule');
+      
+      // 현재 stage에 따른 복습 간격 설정 (오답시에는 좀 더 짧게)
+      const stage = Math.max(0, srsCard.stage - 1); // 오답시 한 스테이지 뒤로
+      const stageIndex = Math.min(stage, STAGE_DELAYS.length - 1);
+      const delayDays = STAGE_DELAYS[stageIndex];
+      reviewDelayHours = Math.max(1, delayDays * 24); // 최소 1시간
+      
+      console.log(`[WRONG ANSWER SERVICE] SRS card found - stage: ${srsCard.stage}, adjusted stage: ${stage}, delay: ${reviewDelayHours}h`);
+    } else {
+      console.log(`[WRONG ANSWER SERVICE] No SRS card found, using default 24h delay`);
+    }
+  } catch (error) {
+    console.error(`[WRONG ANSWER SERVICE] Error finding SRS card:`, error);
+    // 에러 시 기본값 사용
+  }
+  
+  // 복습 윈도우: 계산된 시간 후부터 그 다음날까지
+  const reviewWindowStart = wrongAt.add(reviewDelayHours, 'hour');
+  const reviewWindowEnd = reviewWindowStart.add(24, 'hour'); // 24시간 복습 윈도우
   
   // 오답 히스토리를 위해 항상 새로운 레코드 생성
   console.log(`[WRONG ANSWER SERVICE] Creating new wrong answer history record`);
   
   // 현재 틀린 횟수 계산 (같은 단어의 기존 오답 개수 + 1)
-  const whereCondition = folderId 
-    ? { userId, vocabId, folderId }  // 폴더별 독립
-    : { userId, vocabId };           // 전역 관리 (하위호환)
+  // 삭제된 폴더의 오답노트는 제외하고 카운트
+  let existingCount = 0;
+  
+  if (folderId) {
+    // 폴더별 독립: 해당 폴더가 실제로 존재하는지 먼저 확인
+    const folderExists = await prisma.srsfolder.findUnique({
+      where: { id: folderId },
+      select: { id: true }
+    });
     
-  const existingCount = await prisma.wronganswer.count({
-    where: whereCondition
-  });
+    if (folderExists) {
+      // 폴더가 존재하면 해당 폴더의 오답만 카운트
+      existingCount = await prisma.wronganswer.count({
+        where: { userId, vocabId, folderId }
+      });
+    } else {
+      console.log(`[WRONG ANSWER SERVICE] Folder ${folderId} does not exist - starting fresh`);
+      existingCount = 0; // 폴더가 없으면 새로 시작
+    }
+  } else {
+    // 전역 관리 (하위호환): folderId가 null인 것만
+    existingCount = await prisma.wronganswer.count({
+      where: { userId, vocabId, folderId: null }
+    });
+  }
   
   const currentAttempts = existingCount + 1;
-  console.log(`[WRONG ANSWER SERVICE] This will be attempt #${currentAttempts} for this vocab`);
+  console.log(`[WRONG ANSWER SERVICE] This will be attempt #${currentAttempts} for this vocab (existing: ${existingCount})`);
   
   
   // 새로운 오답노트 항목 생성 (히스토리로 관리)

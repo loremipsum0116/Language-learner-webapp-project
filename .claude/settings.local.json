@@ -48,7 +48,12 @@
       "Bash(mv:*)",
       "Bash(ffmpeg:*)",
       "Bash(ffprobe:*)",
-      "Bash(del update_cefr_levels.js)"
+      "Bash(del update_cefr_levels.js)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\test_integration.js\")",
+      "Bash(dir:*)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\test_idiom_data.js\")",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Deutsch-learner-web-project\\server\\test_audio_path_logic.js\")",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",

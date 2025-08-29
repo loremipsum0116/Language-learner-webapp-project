@@ -6,7 +6,7 @@ async function migrateIdiomsToVocab() {
     
     try {
         // 1. Get all idioms from idioms table
-        const idioms = await prisma.idiom.findMany();
+        const idioms = await prisma.$queryRaw`SELECT * FROM idioms`;
         console.log(`📚 Found ${idioms.length} idioms to migrate`);
         
         // 2. Prepare vocab data

@@ -899,7 +899,16 @@ export default function VocabList() {
 
     // 예문 전용 오디오 재생 함수 추가
     const playExampleOnlyAudio = async (vocab) => {
-        // 예문은 항상 로컬 오디오 사용
+        // 숙어/구동사인 경우 특별 처리
+        if (vocab.source === 'idiom_migration' && vocab.lemma) {
+            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_');
+            const idiomAudioPath = `/idiom/${cleanLemma}_example.mp3`;
+            console.log('Playing idiom audio from path:', idiomAudioPath);
+            playUrl(idiomAudioPath, 'example', vocab.id);
+            return;
+        }
+        
+        // 일반 단어는 기존 로직 사용
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
         const localAudioPath = `/${folderName}/${audioFileName}/example.mp3`;

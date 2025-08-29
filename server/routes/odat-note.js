@@ -4,6 +4,7 @@ const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 const { generateMcqQuizItems } = require('../services/quizService');
 const auth = require('../middleware/auth');
+const { formatKstDateTime, nowKst } = require('../lib/kst');
 
 // ✅ 이 파일의 모든 라우트는 로그인 필요
 router.use(auth);
@@ -92,10 +93,15 @@ router.get('/list', async (req, res) => {
     
     const wrongAnswers = await prisma.$queryRaw`
       SELECT wa.*, v.lemma, v.pos, v.levelCEFR, 
-             de.ipa, de.ipaKo, de.examples
+             de.ipa, de.ipaKo, de.examples,
+             sc.id as srsCardId, sc.stage, sc.nextReviewAt, sc.waitingUntil, 
+             sc.isOverdue, sc.overdueDeadline, sc.isFromWrongAnswer, sc.frozenUntil,
+             sc.isMastered, sc.masterCycles, sc.masteredAt, sc.correctTotal, sc.wrongTotal
       FROM wronganswer wa
       LEFT JOIN vocab v ON wa.vocabId = v.id
       LEFT JOIN dictentry de ON v.id = de.vocabId
+      LEFT JOIN srscard sc ON sc.userId = wa.userId AND sc.itemType = 'vocab' AND sc.itemId = wa.vocabId
+        AND (wa.folderId IS NULL OR sc.folderId = wa.folderId)
       WHERE wa.userId = ${req.user.id}
         AND wa.isCompleted = false 
         AND wa.itemType = ${type}
@@ -128,6 +134,28 @@ router.get('/list', async (req, res) => {
         wrongData: wa.wrongData
       };
 
+      // SRS 카드 정보 추가 (vocab 타입에만 적용)
+      if (wa.itemType === 'vocab' && wa.srsCardId) {
+        result.srsCard = {
+          id: wa.srsCardId,
+          stage: wa.stage || 0,
+          nextReviewAt: wa.nextReviewAt,
+          waitingUntil: wa.waitingUntil,
+          isOverdue: Boolean(wa.isOverdue),
+          overdueDeadline: wa.overdueDeadline,
+          isFromWrongAnswer: Boolean(wa.isFromWrongAnswer),
+          frozenUntil: wa.frozenUntil,
+          isMastered: Boolean(wa.isMastered),
+          masterCycles: wa.masterCycles || 0,
+          masteredAt: wa.masteredAt,
+          correctTotal: wa.correctTotal || 0,
+          wrongTotal: wa.wrongTotal || 0
+        };
+      } else if (wa.itemType === 'vocab') {
+        // SRS 카드가 없는 경우 null로 설정
+        result.srsCard = null;
+      }
+
       // 타입별 추가 정보
       if (wa.itemType === 'vocab') {
         result.vocabId = wa.vocabId;
@@ -137,6 +165,22 @@ router.get('/list', async (req, res) => {
         result.ipa = wa.ipa ?? null;
         result.ipaKo = wa.ipaKo ?? null;
         result.ko_gloss = gloss;
+        
+        // 오답노트 전용 횟수 추가 (attempts는 이미 오답노트 기록 횟수)
+        result.totalWrongAttempts = wa.attempts || 0;
+        
+        // 프론트엔드가 기대하는 vocab 객체 구조 생성
+        result.vocab = {
+          id: wa.vocabId,
+          lemma: wa.lemma ?? '',
+          pos: wa.pos ?? '',
+          levelCEFR: wa.levelCEFR ?? '',
+          dictentry: {
+            ipa: wa.ipa ?? null,
+            ipaKo: wa.ipaKo ?? null,
+            examples: wa.examples
+          }
+        };
       } else if (wa.itemType === 'grammar') {
         result.grammarId = wa.itemId;
         result.topic = wa.wrongData?.topic || 'Unknown Topic';
@@ -153,6 +197,23 @@ router.get('/list', async (req, res) => {
 
       return result;
     });
+
+    console.log(`[오답노트 목록] ${req.user.id} 사용자의 ${type} 타입 오답 ${wrongAnswers.length}개 조회`);
+    
+    // SRS 카드 정보 디버깅
+    const srsCardCount = data.filter(wa => wa.srsCard).length;
+    console.log(`[오답노트 SRS 디버깅] 총 ${data.length}개 중 SRS 카드 정보가 있는 항목: ${srsCardCount}개`);
+    if (data.length > 0) {
+      console.log(`[오답노트 디버깅] 첫 번째 항목 샘플:`, {
+        vocabId: data[0].vocabId,
+        itemId: data[0].itemId,
+        itemType: data[0].itemType,
+        hasSrsCard: !!data[0].srsCard,
+        hasVocab: !!data[0].vocab,
+        vocabLemma: data[0].vocab?.lemma,
+        lemma: data[0].lemma
+      });
+    }
 
     return res.json({ data });
   } catch (e) {
@@ -250,6 +311,8 @@ router.get('/categories', async (req, res) => {
  */
 router.post('/create', async (req, res) => {
   try {
+    console.log('[ODAT CREATE] 요청 받음:', JSON.stringify(req.body, null, 2));
+    
     // 두 가지 형식 지원: { itemType, itemId } 또는 { type }
     let { itemType, itemId, type, wrongData } = req.body;
     
@@ -272,17 +335,22 @@ router.post('/create', async (req, res) => {
     const finalItemType = itemType;
     const finalItemId = itemId;
     
+    console.log('[ODAT CREATE] 최종 정보:', { finalItemType, finalItemId, userId: req.user.id });
+    
     if (!finalItemType || !finalItemId) {
+      console.log('[ODAT CREATE] 필수 필드 누락');
       return res.status(400).json({ error: 'itemType and itemId are required' });
     }
     
     // 지원되는 타입 체크
     const validTypes = ['vocab', 'grammar', 'reading', 'listening'];
     if (!validTypes.includes(finalItemType)) {
+      console.log('[ODAT CREATE] 잘못된 타입:', finalItemType);
       return res.status(400).json({ error: 'Invalid itemType. Must be one of: vocab, grammar, reading, listening' });
     }
     
     // 기존 오답 항목이 있는지 확인
+    console.log('[ODAT CREATE] 기존 항목 조회 중...');
     const existingWrongAnswer = await prisma.wronganswer.findFirst({
       where: {
         userId: req.user.id,
@@ -292,16 +360,21 @@ router.post('/create', async (req, res) => {
       }
     });
     
+    console.log('[ODAT CREATE] 기존 항목 조회 결과:', existingWrongAnswer ? '있음' : '없음');
+    
     let wrongAnswer;
     
     if (existingWrongAnswer) {
       // 기존 항목이 있으면 카운트 증가
+      console.log('[ODAT CREATE] 기존 항목 업데이트 중...');
       wrongAnswer = await prisma.wronganswer.update({
         where: { id: existingWrongAnswer.id },
         data: {
           attempts: existingWrongAnswer.attempts + 1,
-          wrongAt: new Date(),
+          wrongAt: nowKst(),
           wrongData: wrongData || existingWrongAnswer.wrongData,
+          // vocab 타입인 경우 vocabId 필드도 업데이트 (JOIN을 위해)
+          ...(finalItemType === 'vocab' && wrongData?.vocabId && { vocabId: parseInt(wrongData.vocabId) }),
           // 복습 창을 다시 연장 (24시간)
           reviewWindowStart: new Date(),
           reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -309,13 +382,16 @@ router.post('/create', async (req, res) => {
       });
     } else {
       // 새로운 오답 항목 생성
+      console.log('[ODAT CREATE] 새로운 항목 생성 중...');
       wrongAnswer = await prisma.wronganswer.create({
         data: {
           userId: req.user.id,
           itemType: finalItemType,
           itemId: finalItemId,
+          // vocab 타입인 경우 vocabId 필드도 설정 (JOIN을 위해)
+          ...(finalItemType === 'vocab' && wrongData?.vocabId && { vocabId: parseInt(wrongData.vocabId) }),
           attempts: 1,
-          wrongAt: new Date(),
+          wrongAt: nowKst(),
           wrongData: wrongData || {},
           isCompleted: false,
           // 24시간 복습 창 설정
@@ -324,6 +400,12 @@ router.post('/create', async (req, res) => {
         }
       });
     }
+    
+    console.log('[ODAT CREATE] 최종 결과:', {
+      id: wrongAnswer.id,
+      attempts: wrongAnswer.attempts,
+      message: existingWrongAnswer ? 'Wrong answer count updated' : 'Wrong answer recorded'
+    });
     
     return res.json({ 
       data: wrongAnswer,
@@ -449,7 +531,7 @@ router.post('/', async (req, res) => {
         where: { id: existingWrongAnswer.id },
         data: {
           attempts: existingWrongAnswer.attempts + 1,
-          wrongAt: new Date(),
+          wrongAt: nowKst(),
           wrongData: wrongData || existingWrongAnswer.wrongData,
           reviewWindowStart: new Date(),
           reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -463,7 +545,7 @@ router.post('/', async (req, res) => {
           itemType: finalItemType,
           itemId: finalItemId,
           attempts: 1,
-          wrongAt: new Date(),
+          wrongAt: nowKst(),
           wrongData: wrongData || {},
           isCompleted: false,
           reviewWindowStart: new Date(),

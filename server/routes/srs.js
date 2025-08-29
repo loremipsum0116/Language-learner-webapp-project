@@ -1447,15 +1447,22 @@ router.delete('/folders/:id', async (req, res, next) => {
             }
             
             // ✅ 해당 폴더의 오답노트 삭제 (폴더별 독립성)
-            if (vocabIds.length > 0) {
-                const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
-                    where: { 
-                        userId,
-                        folderId: id,
-                        vocabId: { in: vocabIds }
-                    }
-                });
-                console.log(`[FOLDER DELETE] Deleted ${wrongAnswersDeleted.count} wrong answers for folder ${id}`);
+            // vocabIds가 있는 경우와 없는 경우 모두 처리
+            const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
+                where: { 
+                    userId,
+                    folderId: id
+                }
+            });
+            console.log(`[FOLDER DELETE] Deleted ${wrongAnswersDeleted.count} wrong answers for folder ${id}`);
+            
+            // 추가 안전장치: 정리 서비스로 고아 오답노트 정리
+            try {
+                const { cleanupWrongAnswersForDeletedFolder } = require('../services/wrongAnswerCleanupService');
+                await cleanupWrongAnswersForDeletedFolder(id, userId);
+            } catch (cleanupError) {
+                console.warn(`[FOLDER DELETE] Cleanup service warning for folder ${id}:`, cleanupError.message);
+                // 정리 서비스 오류는 치명적이지 않음
             }
         });
 
