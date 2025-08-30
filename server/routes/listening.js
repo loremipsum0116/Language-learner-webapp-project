@@ -202,10 +202,11 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
             return res.status(400).json({ error: 'Level parameter is required' });
         }
 
-        // 해당 레벨의 모든 리스닝 학습 기록 조회
+        // 해당 레벨의 모든 리스닝 학습 기록 조회 (두 테이블 모두 확인)
         console.log(`[DEBUG] Searching for listening records: userId=${userId}, level=${level}`);
         
-        const records = await prisma.wronganswer.findMany({
+        // 1. wronganswer 테이블에서 조회
+        const wrongAnswerRecords = await prisma.wronganswer.findMany({
             where: {
                 userId: userId,
                 itemType: 'listening'
@@ -213,27 +214,65 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
             orderBy: { wrongAt: 'desc' }
         });
         
-        // 클라이언트 측에서 레벨 필터링
-        const filteredRecords = records.filter(record => 
+        // 2. listeningRecord 테이블에서도 조회 (삭제된 항목들의 학습 기록)
+        const listeningRecords = await prisma.listeningRecord.findMany({
+            where: {
+                userId: userId,
+                level: level
+            },
+            orderBy: { solvedAt: 'desc' }
+        });
+        
+        console.log(`[DEBUG] Found ${wrongAnswerRecords.length} wrongAnswer records, ${listeningRecords.length} listeningRecord records`);
+        
+        // wrongAnswer에서 레벨 필터링
+        const filteredWrongRecords = wrongAnswerRecords.filter(record => 
             record.wrongData?.level === level || record.wrongData?.level === level.toUpperCase()
         );
-
-        console.log(`[DEBUG] Found ${records.length} total listening records, ${filteredRecords.length} filtered for user ${userId}, level ${level}`);
-        filteredRecords.forEach(record => {
-            console.log(`[DEBUG] Record ID ${record.id}: questionId=${record.wrongData?.questionId}, level=${record.wrongData?.level}, isCompleted=${record.isCompleted}`);
-        });
-
-        // questionId별로 최신 기록만 유지
-        const latestRecords = {};
-        filteredRecords.forEach(record => {
+        
+        // 두 테이블의 데이터를 통합
+        const combinedRecords = {};
+        
+        // wrongAnswer 기록 우선 추가
+        filteredWrongRecords.forEach(record => {
             const questionId = record.wrongData?.questionId;
-            if (questionId && (!latestRecords[questionId] || record.wrongAt > latestRecords[questionId].wrongAt)) {
-                latestRecords[questionId] = record;
+            if (questionId) {
+                combinedRecords[questionId] = {
+                    questionId: questionId,
+                    isCorrect: record.wrongData?.isCorrect || record.isCompleted,
+                    solvedAt: record.wrongAt.toISOString(),
+                    isCompleted: record.isCompleted,
+                    attempts: record.attempts,
+                    wrongData: record.wrongData,
+                    source: 'wrongAnswer'
+                };
+            }
+        });
+        
+        // listeningRecord 기록 추가 (wrongAnswer에 없는 것만)
+        listeningRecords.forEach(record => {
+            const questionId = record.questionId;
+            if (questionId && !combinedRecords[questionId]) {
+                console.log(`[DEBUG] Adding listeningRecord: ${questionId}, solvedAt: ${record.solvedAt}, isCorrect: ${record.isCorrect}`);
+                combinedRecords[questionId] = {
+                    questionId: questionId,
+                    isCorrect: record.isCorrect,
+                    solvedAt: record.solvedAt ? record.solvedAt.toISOString() : null,
+                    isCompleted: record.isCorrect,
+                    attempts: 1,
+                    wrongData: null,
+                    source: 'listeningRecord'
+                };
             }
         });
 
-        console.log(`✅ [LISTENING HISTORY] User ${userId} - Level ${level} - ${Object.keys(latestRecords).length} unique records`);
-        res.json({ data: latestRecords });
+        console.log(`[DEBUG] Combined ${Object.keys(combinedRecords).length} unique listening records for user ${userId}, level ${level}`);
+        Object.values(combinedRecords).forEach(record => {
+            console.log(`[DEBUG] Record: questionId=${record.questionId}, isCorrect=${record.isCorrect}, source=${record.source}`);
+        });
+
+        console.log(`✅ [LISTENING HISTORY] User ${userId} - Level ${level} - ${Object.keys(combinedRecords).length} unique records`);
+        res.json({ data: combinedRecords });
 
     } catch (error) {
         console.error('❌ [LISTENING HISTORY ERROR]:', error);

@@ -145,7 +145,7 @@ export default function ListeningList() {
                             ...record,
                             questionId,
                             isCorrect,
-                            solvedAt: record.wrongAt,
+                            solvedAt: record.solvedAt || record.wrongAt,
                             wrongData: enhancedWrongData
                         });
                     });
@@ -248,18 +248,39 @@ export default function ListeningList() {
 
     const getQuestionDate = (questionId) => {
         const record = history.get(questionId);
-        if (!record) return null;
+        console.log(`🕐 [DATE DEBUG] questionId: ${questionId}, record:`, record);
         
-        // UTC 시간으로 저장되어 있으므로 KST로 변환
-        return new Date(record.solvedAt).toLocaleString('ko-KR', {
-            timeZone: 'Asia/Seoul',
-            year: 'numeric',
-            month: 'long', 
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false
-        });
+        if (!record || !record.solvedAt) {
+            console.log(`🕐 [DATE DEBUG] No record or solvedAt for ${questionId}`);
+            return null;
+        }
+        
+        try {
+            // UTC 시간으로 저장되어 있으므로 KST로 변환
+            const date = new Date(record.solvedAt);
+            console.log(`🕐 [DATE DEBUG] Parsed date for ${questionId}:`, date, 'isValid:', !isNaN(date.getTime()));
+            
+            if (isNaN(date.getTime())) {
+                console.warn(`Invalid date for questionId ${questionId}:`, record.solvedAt);
+                return null;
+            }
+            
+            const formattedDate = date.toLocaleString('ko-KR', {
+                timeZone: 'Asia/Seoul',
+                year: 'numeric',
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+            
+            console.log(`🕐 [DATE DEBUG] Formatted date for ${questionId}:`, formattedDate);
+            return formattedDate;
+        } catch (error) {
+            console.warn(`Date conversion error for questionId ${questionId}:`, error);
+            return null;
+        }
     };
 
     const getQuestionStats = (questionId) => {
