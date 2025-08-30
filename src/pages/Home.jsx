@@ -803,7 +803,7 @@ export default function Home() {
               {["A1", "A2", "B1", "B2", "C1"].map((level) => (
                 <Link 
                   key={level}
-                  to={`/listening?level=${level}`} 
+                  to={`/listening/list?level=${level}`} 
                   className="level-btn listening"
                 >
                   {level}

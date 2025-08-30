@@ -4,7 +4,7 @@ const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 const { generateMcqQuizItems } = require('../services/quizService');
 const auth = require('../middleware/auth');
-const { formatKstDateTime, nowKst } = require('../lib/kst');
+const { formatKstDateTime } = require('../lib/kst');
 
 // ✅ 이 파일의 모든 라우트는 로그인 필요
 router.use(auth);
@@ -372,7 +372,7 @@ router.post('/create', async (req, res) => {
         where: { id: existingWrongAnswer.id },
         data: {
           attempts: existingWrongAnswer.attempts + 1,
-          wrongAt: nowKst(),
+          wrongAt: new Date(), // UTC 시간으로 통일
           wrongData: wrongData || existingWrongAnswer.wrongData,
           // vocab 타입인 경우 vocabId 필드도 업데이트 (JOIN을 위해)
           ...(finalItemType === 'vocab' && wrongData?.vocabId && { vocabId: parseInt(wrongData.vocabId) }),
@@ -392,7 +392,7 @@ router.post('/create', async (req, res) => {
           // vocab 타입인 경우 vocabId 필드도 설정 (JOIN을 위해)
           ...(finalItemType === 'vocab' && wrongData?.vocabId && { vocabId: parseInt(wrongData.vocabId) }),
           attempts: 1,
-          wrongAt: nowKst(),
+          wrongAt: new Date(), // UTC 시간으로 통일
           wrongData: wrongData || {},
           isCompleted: false,
           // 24시간 복습 창 설정
@@ -550,7 +550,7 @@ router.post('/', async (req, res) => {
         where: { id: existingWrongAnswer.id },
         data: {
           attempts: existingWrongAnswer.attempts + 1,
-          wrongAt: nowKst(),
+          wrongAt: new Date(), // UTC 시간으로 통일
           wrongData: wrongData || existingWrongAnswer.wrongData,
           reviewWindowStart: new Date(),
           reviewWindowEnd: new Date(Date.now() + 24 * 60 * 60 * 1000)
@@ -564,7 +564,7 @@ router.post('/', async (req, res) => {
           itemType: finalItemType,
           itemId: finalItemId,
           attempts: 1,
-          wrongAt: nowKst(),
+          wrongAt: new Date(), // UTC 시간으로 통일
           wrongData: wrongData || {},
           isCompleted: false,
           reviewWindowStart: new Date(),
