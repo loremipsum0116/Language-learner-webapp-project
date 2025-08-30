@@ -750,6 +750,29 @@
   font-style: italic;
 }
 
+.attempt-counts {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0.3rem 0;
+  font-size: 0.8rem;
+}
+
+.correct-count {
+  color: #28a745;
+  font-weight: 500;
+}
+
+.incorrect-count {
+  color: #dc3545;
+  font-weight: 500;
+}
+
+.total-attempts {
+  color: #6c757d;
+  font-size: 0.75rem;
+}
+
 /* Hover effects for studied cards */
 .question-card.studied-correct:hover {
   border-left-color: #388e3c;

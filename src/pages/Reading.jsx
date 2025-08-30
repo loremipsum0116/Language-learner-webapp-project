@@ -81,40 +81,7 @@ export default function Reading() {
         }
     };
 
-    const recordWrongAnswer = async (questionData, userAnswer) => {
-        try {
-            // 오답노트에 리딩 문제 기록 (기존 API 형식 사용)
-            await fetchJSON('/api/odat-note/create', withCreds({
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    itemType: 'reading',
-                    itemId: currentQuestion + 1000, // 간단한 정수 ID 생성
-                    wrongData: {
-                        level: level,
-                        questionIndex: currentQuestion,
-                        passage: questionData.passage,
-                        question: questionData.question,
-                        options: questionData.options,
-                        correctAnswer: questionData.correctAnswer,
-                        userAnswer: userAnswer,
-                        explanation: questionData.explanation
-                    }
-                })
-            }));
-            console.log(`✅ [리딩 오답 기록 완료] ${level} - 문제 ${currentQuestion + 1}`);
-            // 사용자에게 알림 (선택적)
-            // alert(`오답이 오답노트에 저장되었습니다. (리딩: ${level} 레벨)`);
-        } catch (error) {
-            if (error.message.includes('Unauthorized')) {
-                console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');
-            } else {
-                console.error('❌ 리딩 오답 기록 실패:', error);
-                console.warn('⚠️ 오답노트 저장에 실패했습니다. 네트워크 연결을 확인해주세요.');
-            }
-            // 오답 기록 실패해도 게임은 계속 진행
-        }
-    };
+    // 오답노트 기록은 /api/reading/record에서 통합 처리됨
 
     const handleAnswerSelect = (option) => {
         if (showExplanation) return;
@@ -147,7 +114,12 @@ export default function Reading() {
                     level: level,
                     isCorrect: correct,
                     userAnswer: selectedAnswer,
-                    correctAnswer: current.correctAnswer
+                    correctAnswer: current.correctAnswer,
+                    timeTaken: null,
+                    question: current.question,
+                    passage: current.passage,
+                    options: current.options,
+                    explanation: current.explanation
                 })
             });
             
@@ -169,14 +141,8 @@ export default function Reading() {
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
         } else if (!correct) {
-            console.log('Debug - Recording wrong answer');
-            // 틀린 경우 추가로 오답노트에도 기록
-            try {
-                await recordWrongAnswer(current, selectedAnswer);
-            } catch (error) {
-                console.error('Failed to record wrong answer:', error);
-                // 오답 기록 실패해도 UI는 계속 진행
-            }
+            console.log('Debug - Wrong answer recorded via /api/reading/record');
+            // 오답은 이미 /api/reading/record에서 처리됨 - 중복 기록 방지
         }
         
         setShowExplanation(true);

@@ -2598,7 +2598,142 @@ router.post('/wrong-answers/delete-multiple', auth, async (req, res, next) => {
             return fail(res, 400, 'No valid numeric IDs provided');
         }
         
-        console.log(`🔍 [DELETE DEBUG] About to call prisma.wronganswer.deleteMany...`);
+        console.log(`🔍 [DELETE DEBUG] About to delete wronganswer records...`);
+        
+        // 삭제하기 전에 리딩/리스닝 문제들의 통계를 백업
+        console.log(`📊 [DELETE BACKUP] Searching for reading/listening records to backup stats...`);
+        const recordsToBackup = await prisma.wronganswer.findMany({
+            where: {
+                id: { in: numericIds },
+                userId: userId,
+                itemType: { in: ['reading', 'listening'] }
+            }
+        });
+        
+        console.log(`📊 [DELETE BACKUP] Found ${recordsToBackup.length} reading/listening records to backup`);
+        
+        // 각 리딩/리스닝 기록의 통계를 레거시 테이블에 백업
+        for (const record of recordsToBackup) {
+            try {
+                if (record.itemType === 'reading' && record.wrongData?.questionId) {
+                    console.log(`💾 [READING BACKUP] Backing up stats for ${record.wrongData.questionId}`);
+                    
+                    // questionId에서 숫자 추출 (A1_R_001 -> 001 -> 0)
+                    const match = record.wrongData.questionId.match(/_R_(\d+)$/);
+                    const level = record.wrongData.level;
+                    
+                    if (match && level) {
+                        const questionIndex = parseInt(match[1]) - 1; // 001 -> 0
+                        
+                        // readingRecord 테이블에서 기존 기록 찾기
+                        const existingRecord = await prisma.readingRecord.findFirst({
+                            where: {
+                                userId: userId,
+                                questionId: String(questionIndex),
+                                level: level
+                            }
+                        });
+                        
+                        // 통계 데이터를 기존 필드에 임베드하는 방식 사용
+                        const statsData = {
+                            correctCount: record.wrongData.correctCount || 0,
+                            incorrectCount: record.wrongData.incorrectCount || 0,
+                            totalAttempts: record.wrongData.totalAttempts || record.attempts || 1
+                        };
+                        
+                        // userAnswer 필드에 통계 정보를 JSON으로 저장 (백업용)
+                        const backupData = `STATS:${JSON.stringify(statsData)}`;
+                        
+                        if (existingRecord) {
+                            // 기존 기록이 이미 통계 백업인지 확인
+                            if (!existingRecord.userAnswer?.startsWith('STATS:')) {
+                                await prisma.readingRecord.update({
+                                    where: { id: existingRecord.id },
+                                    data: {
+                                        // 기존이 실제 답안 기록이면 통계 백업으로 변환
+                                        userAnswer: backupData
+                                    }
+                                });
+                                console.log(`💾 [READING BACKUP] Updated existing record with stats: ${JSON.stringify(statsData)}`);
+                            }
+                        } else {
+                            // 새로운 통계 전용 레코드 생성
+                            await prisma.readingRecord.create({
+                                data: {
+                                    userId: userId,
+                                    questionId: String(questionIndex),
+                                    level: level,
+                                    isCorrect: record.wrongData.lastResult === 'correct',
+                                    userAnswer: backupData, // 통계 정보 저장
+                                    correctAnswer: String(record.wrongData.correctAnswer || ''),
+                                    solvedAt: record.wrongAt
+                                }
+                            });
+                            console.log(`💾 [READING BACKUP] Created new record with stats: ${JSON.stringify(statsData)}`);
+                        }
+                    }
+                } else if (record.itemType === 'listening' && record.wrongData?.questionId) {
+                    console.log(`💾 [LISTENING BACKUP] Backing up stats for ${record.wrongData.questionId}`);
+                    
+                    // questionId에서 숫자 추출 (A1_L_001 -> 001 -> 0)
+                    const match = record.wrongData.questionId.match(/_L_(\d+)$/);
+                    const level = record.wrongData.level;
+                    
+                    if (match && level) {
+                        const questionIndex = parseInt(match[1]) - 1; // 001 -> 0
+                        
+                        // listeningRecord 테이블에서 기존 기록 찾기
+                        const existingRecord = await prisma.listeningRecord.findFirst({
+                            where: {
+                                userId: userId,
+                                questionId: record.wrongData.questionId, // listeningRecord는 full questionId 사용
+                                level: level
+                            }
+                        });
+                        
+                        // 통계 데이터를 기존 필드에 임베드하는 방식 사용
+                        const statsData = {
+                            correctCount: record.wrongData.correctCount || 0,
+                            incorrectCount: record.wrongData.incorrectCount || 0,
+                            totalAttempts: record.wrongData.totalAttempts || record.attempts || 1
+                        };
+                        
+                        // userAnswer 필드에 통계 정보를 JSON으로 저장 (백업용)
+                        const backupData = `STATS:${JSON.stringify(statsData)}`;
+                        
+                        if (existingRecord) {
+                            // 기존 기록이 이미 통계 백업인지 확인
+                            if (!existingRecord.userAnswer?.startsWith('STATS:')) {
+                                await prisma.listeningRecord.update({
+                                    where: { id: existingRecord.id },
+                                    data: {
+                                        // 기존이 실제 답안 기록이면 통계 백업으로 변환
+                                        userAnswer: backupData
+                                    }
+                                });
+                                console.log(`💾 [LISTENING BACKUP] Updated existing record with stats: ${JSON.stringify(statsData)}`);
+                            }
+                        } else {
+                            // 새로운 통계 전용 레코드 생성
+                            await prisma.listeningRecord.create({
+                                data: {
+                                    userId: userId,
+                                    questionId: record.wrongData.questionId, // full questionId 저장
+                                    level: level,
+                                    isCorrect: record.wrongData.lastResult === 'correct',
+                                    userAnswer: backupData, // 통계 정보 저장
+                                    correctAnswer: String(record.wrongData.correctAnswer || ''),
+                                    solvedAt: record.wrongAt
+                                }
+                            });
+                            console.log(`💾 [LISTENING BACKUP] Created new record with stats: ${JSON.stringify(statsData)}`);
+                        }
+                    }
+                }
+            } catch (backupError) {
+                console.error(`❌ [DELETE BACKUP ERROR] Failed to backup stats for record ${record.id}:`, backupError.message);
+            }
+        }
         
         // 사용자 소유 확인 후 삭제
         const result = await prisma.wronganswer.deleteMany({
@@ -2608,7 +2743,7 @@ router.post('/wrong-answers/delete-multiple', auth, async (req, res, next) => {
             }
         });
         
-        console.log(`✅ [DELETE SUCCESS] Deleted ${result.count} items`);
+        console.log(`✅ [DELETE SUCCESS] Deleted ${result.count} items (${recordsToBackup.length} had stats backed up)`);
         
         return ok(res, { 
             message: `${result.count}개 항목이 삭제되었습니다.`,

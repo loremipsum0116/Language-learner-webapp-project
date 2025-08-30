@@ -41,6 +41,8 @@ router.post('/record', authMiddleware, async (req, res) => {
         
         // 기존 기록 찾기 (통합 오답노트 시스템)
         // questionId 기반으로 더 정확한 중복 검사
+        console.log(`🔍 [LISTENING SEARCH] 기존 기록 검색 시작: userId=${userId}, questionId=${questionId}, itemId=${itemId}`);
+        
         const allUserListeningRecords = await prisma.wronganswer.findMany({
             where: {
                 userId: userId,
@@ -48,10 +50,17 @@ router.post('/record', authMiddleware, async (req, res) => {
             }
         });
         
+        console.log(`📚 [LISTENING SEARCH] 찾은 전체 listening 기록: ${allUserListeningRecords.length}개`);
+        allUserListeningRecords.forEach((record, index) => {
+            console.log(`📝 [LISTENING RECORD ${index}] itemId: ${record.itemId}, questionId: ${record.wrongData?.questionId}, id: ${record.id}, attempts: ${record.attempts}`);
+        });
+        
         const existingRecord = allUserListeningRecords.find(record => 
             record.itemId === itemId || 
             (record.wrongData && record.wrongData.questionId === questionId)
         );
+        
+        console.log(`🎯 [LISTENING FOUND] 기존 기록 매칭 결과:`, existingRecord ? `found (id: ${existingRecord.id}, attempts: ${existingRecord.attempts})` : 'not found');
 
         // UTC 시간으로 저장 (프론트엔드에서 KST로 변환)
         const now = new Date();
@@ -96,8 +105,22 @@ router.post('/record', authMiddleware, async (req, res) => {
                     wrongAt: finalTime, // 마지막 학습 시간으로 변경 (KST)
                     wrongData: {
                         ...currentWrongData, // 기존 데이터 먼저 보존
-                        ...recordData,       // 새 답안 정보 추가
-                        correctCount: correctCount,    // 누적 통계 덮어쓰기
+                        // recordData에서 통계에 영향주지 않는 필드만 추가
+                        questionId: recordData.questionId,
+                        level: recordData.level,
+                        userAnswer: recordData.userAnswer,
+                        correctAnswer: recordData.correctAnswer,
+                        timeTaken: recordData.timeTaken,
+                        recordedAt: recordData.recordedAt,
+                        question: recordData.question,
+                        script: recordData.script,
+                        topic: recordData.topic,
+                        options: recordData.options,
+                        explanation: recordData.explanation,
+                        audioFile: recordData.audioFile,
+                        // 누적 통계는 별도로 계산한 값 사용
+                        isCorrect: isCorrect,
+                        correctCount: correctCount,
                         incorrectCount: incorrectCount,
                         totalAttempts: totalAttempts,
                         lastResult: isCorrect ? 'correct' : 'incorrect'
@@ -108,19 +131,47 @@ router.post('/record', authMiddleware, async (req, res) => {
                 }
             });
         } else if (!isCorrect) {
-            // 오답인 경우에만 새 기록 생성
+            // 오답인 경우에만 새 기록 생성 (기존 listeningRecord의 모든 기록 고려)
+            // listeningRecord에서 해당 문제의 총 시도 횟수를 조회
+            const allListeningRecordsForQuestion = await prisma.listeningRecord.findMany({
+                where: {
+                    userId: userId,
+                    questionId: String(questionId),
+                    level: level
+                }
+            });
+            
+            // 총 시도 횟수와 정답/오답 횟수 계산
+            let totalCorrectCount = 0;
+            let totalIncorrectCount = 0;
+            let totalAttempts = allListeningRecordsForQuestion.length;
+            
+            allListeningRecordsForQuestion.forEach(record => {
+                if (record.isCorrect) {
+                    totalCorrectCount++;
+                } else {
+                    totalIncorrectCount++;
+                }
+            });
+            
+            // 현재 오답 추가
+            totalIncorrectCount += 1;
+            totalAttempts += 1;
+            
+            console.log(`📝 [NEW WRONG RECORD] 기존 listeningRecord 통계 - 정답: ${totalCorrectCount}회, 오답: ${totalIncorrectCount}회, 총 시도: ${totalAttempts}회`);
+            
             result = await prisma.wronganswer.create({
                 data: {
                     userId: userId,
                     itemType: 'listening',
                     itemId: itemId,
-                    attempts: 1,
+                    attempts: totalAttempts, // 총 시도 횟수 (기존 + 현재)
                     wrongAt: finalTime,
                     wrongData: {
                         ...recordData,
-                        correctCount: 0,
-                        incorrectCount: 1,
-                        totalAttempts: 1,
+                        correctCount: totalCorrectCount, // 총 정답 기록
+                        incorrectCount: totalIncorrectCount, // 총 오답 기록 (현재 포함)
+                        totalAttempts: totalAttempts,
                         lastResult: 'incorrect'
                     },
                     isCompleted: false, // 오답이므로 미완료
@@ -254,14 +305,34 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
             const questionId = record.questionId;
             if (questionId && !combinedRecords[questionId]) {
                 console.log(`[DEBUG] Adding listeningRecord: ${questionId}, solvedAt: ${record.solvedAt}, isCorrect: ${record.isCorrect}`);
+                
+                // 백업된 통계가 있는지 확인 (userAnswer 필드에서)
+                let backupStats = null;
+                if (record.userAnswer?.startsWith('STATS:')) {
+                    try {
+                        const statsJson = record.userAnswer.substring(6); // "STATS:" 제거
+                        backupStats = JSON.parse(statsJson);
+                        console.log(`📊 [LISTENING DEBUG] Found backup stats for ${questionId}:`, backupStats);
+                    } catch (e) {
+                        console.warn(`❌ [LISTENING DEBUG] Failed to parse backup stats for ${questionId}:`, e);
+                    }
+                }
+                
                 combinedRecords[questionId] = {
                     questionId: questionId,
                     isCorrect: record.isCorrect,
                     solvedAt: record.solvedAt ? record.solvedAt.toISOString() : null,
                     isCompleted: record.isCorrect,
-                    attempts: 1,
-                    wrongData: null,
-                    source: 'listeningRecord'
+                    attempts: backupStats?.totalAttempts || 1,
+                    wrongData: {
+                        questionId: questionId,
+                        isCorrect: record.isCorrect,
+                        correctCount: backupStats?.correctCount || (record.isCorrect ? 1 : 0),
+                        incorrectCount: backupStats?.incorrectCount || (record.isCorrect ? 0 : 1),
+                        totalAttempts: backupStats?.totalAttempts || 1,
+                        lastResult: record.isCorrect ? 'correct' : 'incorrect'
+                    },
+                    source: backupStats ? 'listeningRecord+backup' : 'listeningRecord'
                 };
             }
         });

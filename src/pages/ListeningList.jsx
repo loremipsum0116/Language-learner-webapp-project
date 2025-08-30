@@ -12,6 +12,7 @@ export default function ListeningList() {
     const [error, setError] = useState(null);
     const [selectedQuestions, setSelectedQuestions] = useState(new Set());
     const [history, setHistory] = useState(new Map()); // Map<questionId, historyData>
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     useEffect(() => {
         console.log(`🔄🆕 [EFFECT START] useEffect 시작`);
@@ -48,7 +49,32 @@ export default function ListeningList() {
             console.log(`🧹🆕 [EFFECT CLEANUP] useEffect 정리 중`);
             abortController.abort();
         };
-    }, [level, location]); // location 변경 시에도 새로고침
+    }, [level, location, refreshTrigger]); // location 변경 시에도 새로고침
+
+    // 오답노트에서 삭제 시 실시간 업데이트
+    useEffect(() => {
+        const handleWrongAnswersUpdate = () => {
+            console.log('🔄 [REAL-TIME UPDATE] Wrong answers updated, triggering refresh...');
+            setRefreshTrigger(prev => prev + 1);
+        };
+        
+        // localStorage 변경 이벤트 리스닝
+        const handleStorageChange = (e) => {
+            if (e.key === 'wrongAnswersUpdated') {
+                handleWrongAnswersUpdate();
+            }
+        };
+        
+        window.addEventListener('storage', handleStorageChange);
+        
+        // 같은 탭에서의 변경도 감지 (storage 이벤트는 다른 탭에서만 발생)
+        window.addEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        };
+    }, [level]);
 
     const loadListeningData = async () => {
         try {

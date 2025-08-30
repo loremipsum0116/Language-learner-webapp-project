@@ -171,6 +171,15 @@ export default function WrongAnswers() {
           body: JSON.stringify({ wrongAnswerIds: realIds }),
         }),
       );
+      
+      // 다른 페이지에 삭제 완료 알림 (실시간 업데이트용)
+      localStorage.setItem('wrongAnswersUpdated', Date.now().toString());
+      
+      // 같은 탭에서도 이벤트 발생 (storage 이벤트는 다른 탭에서만 발생)
+      window.dispatchEvent(new CustomEvent('wrongAnswersUpdated', { 
+        detail: { timestamp: Date.now() } 
+      }));
+      
       setSelectedIds(new Set());
       await reload();
     } catch (error) {
@@ -267,18 +276,30 @@ export default function WrongAnswers() {
 
     if (selectedTab === "reading") {
       // 리딩 오답들을 세션 스토리지에 저장하고 복습 페이지로 이동
-      const reviewData = selectedWrongAnswers.map((wa) => ({
-        id: wa.id,
-        level: wa.wrongData?.level || "A1",
-        questionIndex: wa.wrongData?.questionIndex || 0,
-        passage: wa.wrongData?.passage || "",
-        question: wa.wrongData?.question || "",
-        options: wa.wrongData?.options || {},
-        answer: wa.wrongData?.correctAnswer || "A",
-        explanation_ko: wa.wrongData?.explanation || "",
-        isReview: true,
-        wrongAnswerId: wa.id,
-      }));
+      const reviewData = selectedWrongAnswers.map((wa) => {
+        // questionId에서 숫자 부분 추출
+        let questionIndex = 0;
+        const questionId = wa.wrongData?.questionId;
+        if (typeof questionId === 'string' && questionId.includes('_')) {
+          const match = questionId.match(/_(\d+)$/);
+          questionIndex = match ? parseInt(match[1]) - 1 : 0; // 0-based index
+        } else if (questionId) {
+          questionIndex = parseInt(questionId) - 1 || 0;
+        }
+        
+        return {
+          id: wa.id,
+          level: wa.wrongData?.level || "A1",
+          questionIndex: questionIndex,
+          passage: wa.wrongData?.passage || "",
+          question: wa.wrongData?.question || "",
+          options: wa.wrongData?.options || {},
+          answer: wa.wrongData?.correctAnswer || "A",
+          explanation_ko: wa.wrongData?.explanation || "",
+          isReview: true,
+          wrongAnswerId: wa.id,
+        };
+      });
 
       sessionStorage.setItem("readingReviewData", JSON.stringify(reviewData));
       navigate("/reading/review");
@@ -583,7 +604,15 @@ export default function WrongAnswers() {
                         <>
                           <div className="d-flex align-items-center mb-2">
                             <h5 className="mb-0 me-2">
-                              📖 {wa.wrongData.level} 레벨 리딩 문제 #{wa.wrongData.questionIndex + 1}
+                              📖 {wa.wrongData.level} 레벨 리딩 문제 #{(() => {
+                                // questionId에서 숫자 부분 추출
+                                const questionId = wa.wrongData.questionId;
+                                if (typeof questionId === 'string' && questionId.includes('_')) {
+                                  const match = questionId.match(/_(\d+)$/);
+                                  return match ? parseInt(match[1]) : 'NaN';
+                                }
+                                return questionId || 'NaN';
+                              })()}
                             </h5>
                           </div>
 
@@ -691,7 +720,7 @@ export default function WrongAnswers() {
                       {/* 리딩/문법/리스닝 오답의 경우 기본 정보만 표시 */}
                       {selectedTab !== "vocab" && (
                         <div className="d-flex align-items-center gap-2 mb-2 flex-wrap">
-                          <small className="text-muted">총 오답 {wa.attempts}회</small>
+                          <small className="text-muted">총 오답 {wa.wrongData?.incorrectCount || wa.attempts}회</small>
                           <small className="text-muted">최근 오답: {new Date(wa.wrongAt).toLocaleString('ko-KR', { 
                             timeZone: 'Asia/Seoul',
                             month: '2-digit', 
@@ -887,7 +916,7 @@ export default function WrongAnswers() {
                                   <div className="col-md-6">
                                     <div className="mb-2">
                                       <strong>총 오답 횟수:</strong>{" "}
-                                      <span className="badge bg-warning">{wa.attempts}회</span>
+                                      <span className="badge bg-warning">{wa.wrongData?.incorrectCount || wa.attempts}회</span>
                                     </div>
                                   </div>
                                 </div>
@@ -951,7 +980,7 @@ export default function WrongAnswers() {
                                   <div className="col-md-6">
                                     <div className="mb-2">
                                       <strong>총 오답 횟수:</strong>{" "}
-                                      <span className="badge bg-warning">{wa.attempts}회</span>
+                                      <span className="badge bg-warning">{wa.wrongData?.incorrectCount || wa.attempts}회</span>
                                     </div>
                                   </div>
                                 </div>
@@ -1013,7 +1042,7 @@ export default function WrongAnswers() {
                                   <div className="col-md-6">
                                     <div className="mb-2">
                                       <strong>총 오답 횟수:</strong>{" "}
-                                      <span className="badge bg-warning">{wa.attempts}회</span>
+                                      <span className="badge bg-warning">{wa.wrongData?.incorrectCount || wa.attempts}회</span>
                                     </div>
                                   </div>
                                 </div>

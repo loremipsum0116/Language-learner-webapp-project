@@ -13,6 +13,7 @@ export default function ReadingList() {
     const [loading, setLoading] = useState(true);
     const [questionsLoading, setQuestionsLoading] = useState(false);
     const [selectedQuestions, setSelectedQuestions] = useState(new Set());
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
 
     const levels = [
         { 
@@ -57,14 +58,36 @@ export default function ReadingList() {
         if (selectedLevel) {
             loadQuestionsForLevel(selectedLevel);
         }
-    }, [selectedLevel]);
+    }, [selectedLevel, refreshTrigger]);
 
     // 페이지 location이 변경될 때마다 학습 기록 새로고침
     useEffect(() => {
         if (selectedLevel) {
             loadQuestionsForLevel(selectedLevel);
         }
-    }, [location.key, selectedLevel]);
+    }, [location.key, selectedLevel, refreshTrigger]);
+
+    // 오답노트에서 삭제 시 실시간 업데이트
+    useEffect(() => {
+        const handleWrongAnswersUpdate = () => {
+            console.log('🔄 [REAL-TIME UPDATE] Wrong answers updated, triggering refresh...');
+            setRefreshTrigger(prev => prev + 1);
+        };
+        
+        const handleStorageChange = (e) => {
+            if (e.key === 'wrongAnswersUpdated') {
+                handleWrongAnswersUpdate();
+            }
+        };
+        
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        };
+    }, []);
 
     const loadLevelData = async () => {
         setLoading(true);
@@ -111,22 +134,39 @@ export default function ReadingList() {
 
             // 학습 기록 로드 (로그인된 경우만)
             try {
+                console.log(`🔍 [HISTORY FETCH] Starting history fetch for ${level}...`);
                 const historyResponse = await fetch(`http://localhost:4000/api/reading/history/${level}`, {
                     credentials: 'include'
                 });
+                console.log(`📡 [HISTORY RESPONSE] Status: ${historyResponse.status}, OK: ${historyResponse.ok}`);
+                
                 if (historyResponse.ok) {
                     const historyResult = await historyResponse.json();
-                    console.log(`[DEBUG] History loaded for ${level}:`, historyResult.data);
+                    console.log(`✅ [HISTORY SUCCESS] History loaded for ${level}:`, historyResult);
+                    console.log(`🔍 [HISTORY DATA] Keys in data:`, Object.keys(historyResult.data || {}));
+                    
+                    // 각 기록에 대한 자세한 디버그
+                    if (historyResult.data) {
+                        Object.entries(historyResult.data).forEach(([questionId, record]) => {
+                            console.log(`📝 [RECORD DEBUG] ${questionId}:`, {
+                                attempts: record.attempts,
+                                isCompleted: record.isCompleted,
+                                wrongData: record.wrongData,
+                                source: record.source
+                            });
+                        });
+                    }
+                    
                     setStudyHistory(historyResult.data || {});
                 } else if (historyResponse.status === 401) {
-                    console.log(`[DEBUG] User not authenticated - no history loaded for ${level}`);
+                    console.log(`🔐 [HISTORY AUTH] User not authenticated - no history loaded for ${level}`);
                     setStudyHistory({});
                 } else {
-                    console.error(`[DEBUG] Failed to load history for ${level}:`, historyResponse.status);
+                    console.error(`❌ [HISTORY ERROR] Failed to load history for ${level}:`, historyResponse.status);
                     setStudyHistory({});
                 }
             } catch (historyErr) {
-                console.log('[DEBUG] History loading failed (user might not be logged in):', historyErr);
+                console.log('❌ [HISTORY EXCEPTION] History loading failed:', historyErr);
                 setStudyHistory({});
             }
             
@@ -167,7 +207,12 @@ export default function ReadingList() {
 
     // 문제별 학습 기록 가져오기
     const getStudyRecord = (questionId) => {
-        return studyHistory[questionId];
+        const record = studyHistory[questionId];
+        if (record) {
+            console.log(`🔍 [STUDY RECORD DEBUG] questionId: ${questionId}`, record);
+            console.log(`🔍 [WRONG DATA DEBUG] wrongData:`, record.wrongData);
+        }
+        return record;
     };
 
     // 문제 선택/해제
@@ -365,8 +410,21 @@ export default function ReadingList() {
                                                     <div className="status-badge">
                                                         {isCorrect ? '✅ 정답' : '❌ 오답'}
                                                     </div>
+                                                    {studyRecord && (
+                                                        <div className="attempt-counts">
+                                                            <span className="correct-count">
+                                                                ✅ {studyRecord.wrongData?.correctCount || (studyRecord.isCompleted || studyRecord.isCorrect ? 1 : 0)}회
+                                                            </span>
+                                                            <span className="incorrect-count">
+                                                                ❌ {studyRecord.wrongData?.incorrectCount || (!(studyRecord.isCompleted || studyRecord.isCorrect) ? 1 : 0)}회
+                                                            </span>
+                                                            <span className="total-attempts">
+                                                                (총 {studyRecord.attempts || studyRecord.wrongData?.totalAttempts || 1}회 시도)
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                     <div className="last-study-date">
-                                                        마지막 학습: {formatKSTDate(studyRecord.wrongAt)}
+                                                        마지막 학습: {formatKSTDate(studyRecord.solvedAt || studyRecord.wrongAt)}
                                                     </div>
                                                 </div>
                                             )}

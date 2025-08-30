@@ -59,7 +59,8 @@
       "Read(/var/log/**)",
       "Bash(kill:*)",
       "Bash(GENERATE_SOURCEMAP=false npm start)",
-      "Bash(netstat:*)"
+      "Bash(netstat:*)",
+      "Bash(PORT=3001 npm start)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
