@@ -112,13 +112,27 @@ export default function WrongAnswers() {
   }, [selectedTab]);
 
   const handleSelectItem = (id) => {
+    // Only allow selection of real database IDs (number or string, but not temp IDs)
+    if (!id || (typeof id === 'string' && id.startsWith('temp-'))) {
+      console.log('handleSelectItem: Ignoring invalid ID:', id);
+      return; // Ignore temp IDs
+    }
+    
+    console.log('handleSelectItem called with ID:', id, 'type:', typeof id);
+    
     setSelectedIds(prev => {
       const newSelected = new Set(prev);
-      if (newSelected.has(id)) {
+      const wasSelected = newSelected.has(id);
+      
+      if (wasSelected) {
         newSelected.delete(id);
+        console.log('  - Removing ID from selection');
       } else {
         newSelected.add(id);
+        console.log('  - Adding ID to selection');
       }
+      
+      console.log('  - New selectedIds:', Array.from(newSelected));
       return newSelected;
     });
   };
@@ -127,14 +141,26 @@ export default function WrongAnswers() {
     if (selectedIds.size === wrongAnswers.length) {
       setSelectedIds(new Set());
     } else {
-      setSelectedIds(new Set(wrongAnswers.map((wa, index) => wa.id || `temp-${index}`)));
+      // Only select items with real database IDs, skip temp IDs
+      const realIds = wrongAnswers
+        .map(wa => wa.id || wa.wrongAnswerId)
+        .filter(id => id && !String(id).startsWith('temp-'));
+      setSelectedIds(new Set(realIds));
     }
   };
 
   const handleDeleteSelected = async () => {
     if (selectedIds.size === 0) return;
 
-    if (!window.confirm(`선택한 ${selectedIds.size}개 항목을 삭제하시겠습니까?`)) return;
+    // Filter out temp IDs and only keep real database IDs
+    const realIds = Array.from(selectedIds).filter(id => id && !String(id).startsWith('temp-'));
+    
+    if (realIds.length === 0) {
+      alert('선택된 항목 중 삭제 가능한 항목이 없습니다. (실제 데이터베이스 ID가 필요함)');
+      return;
+    }
+
+    if (!window.confirm(`선택한 ${realIds.length}개 항목을 삭제하시겠습니까?`)) return;
 
     try {
       await fetchJSON(
@@ -142,7 +168,7 @@ export default function WrongAnswers() {
         withCreds({
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wrongAnswerIds: Array.from(selectedIds) }),
+          body: JSON.stringify({ wrongAnswerIds: realIds }),
         }),
       );
       setSelectedIds(new Set());
@@ -441,26 +467,46 @@ export default function WrongAnswers() {
       ) : (
         <div className="list-group">
           {wrongAnswers.map((wa, index) => {
-            const safeId = wa.id || `temp-${index}`;
+            // Use id or wrongAnswerId as fallback
+            const actualId = wa.id || wa.wrongAnswerId;
+            const safeId = actualId || `temp-${index}`;
+            const hasRealId = actualId && !String(actualId).startsWith('temp-');
+            
+            // Debug log to see the data structure
+            if (index === 0) {
+              console.log('First wrong answer data:', wa);
+              console.log('wa.id:', wa.id, 'wa.wrongAnswerId:', wa.wrongAnswerId, 'actualId:', actualId, 'hasRealId:', hasRealId);
+            }
+            
             return (
               <div
                 key={`wrong-answer-${safeId}`}
                 className={`list-group-item ${
                   wa.srsCard?.isMastered ? "border-warning bg-light" : ""
-                } ${selectedIds.has(safeId) ? "border-primary bg-light" : ""}`}
+                } ${hasRealId && selectedIds.has(actualId) ? "border-primary bg-light" : ""}`}
               >
                 <div className="d-flex justify-content-between align-items-start">
                   <div className="d-flex align-items-start gap-3">
                     <input
                       type="checkbox"
                       className="form-check-input mt-1"
-                      checked={selectedIds.has(safeId)}
+                      checked={hasRealId && selectedIds.has(actualId)}
+                      disabled={!hasRealId}
                       onChange={(e) => {
-                        e.preventDefault();
                         e.stopPropagation();
-                        handleSelectItem(safeId);
+                        console.log('Checkbox onChange triggered:');
+                        console.log('  - actualId:', actualId, 'type:', typeof actualId);
+                        console.log('  - hasRealId:', hasRealId);
+                        console.log('  - selectedIds has actualId:', selectedIds.has(actualId));
+                        console.log('  - selectedIds contents:', Array.from(selectedIds));
+                        console.log('  - checkbox checked:', e.target.checked);
+                        if (hasRealId) {
+                          // 약간의 지연을 두어 React 상태 업데이트가 완료된 후 처리
+                          setTimeout(() => handleSelectItem(actualId), 0);
+                        }
                       }}
                       id={`checkbox-${safeId}`}
+                      title={hasRealId ? "선택 가능" : "데이터베이스 ID가 없어 선택할 수 없습니다"}
                     />
                     <div className="flex-grow-1">
                       {/* 어휘 오답의 경우 */}
@@ -588,10 +634,10 @@ export default function WrongAnswers() {
 
                           <div className="mb-2">
                             <div className="mb-2">
-                              <strong>질문:</strong> {wa.wrongData.question}
+                              <strong>질문:</strong> {wa.wrongData.question || "질문 정보 없음"}
                             </div>
                             <div className="mb-2">
-                              <strong>스크립트:</strong> <em>"{wa.wrongData.script}"</em>
+                              <strong>스크립트:</strong> <em>"{wa.wrongData.script || "스크립트 정보 없음"}"</em>
                             </div>
                             <div className="mb-2">
                               <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
@@ -618,7 +664,14 @@ export default function WrongAnswers() {
                               <span className="text-info"> ({wa.wrongAnswerHistory.length}회 기록)</span>
                             )}
                           </small>
-                          <small className="text-muted">최근 오답: {dayjs(wa.wrongAt).format("MM/DD HH:mm")}</small>
+                          <small className="text-muted">최근 오답: {new Date(wa.wrongAt).toLocaleString('ko-KR', { 
+                            timeZone: 'Asia/Seoul',
+                            month: '2-digit', 
+                            day: '2-digit', 
+                            hour: '2-digit', 
+                            minute: '2-digit', 
+                            hour12: false 
+                          })}</small>
                           {/* SRS 타이머 정보 */}
                           {wa.srsCard && !wa.srsCard.isMastered && (
                             <ReviewTimer
@@ -639,7 +692,14 @@ export default function WrongAnswers() {
                       {selectedTab !== "vocab" && (
                         <div className="d-flex align-items-center gap-2 mb-2 flex-wrap">
                           <small className="text-muted">총 오답 {wa.attempts}회</small>
-                          <small className="text-muted">최근 오답: {dayjs(wa.wrongAt).format("MM/DD HH:mm")}</small>
+                          <small className="text-muted">최근 오답: {new Date(wa.wrongAt).toLocaleString('ko-KR', { 
+                            timeZone: 'Asia/Seoul',
+                            month: '2-digit', 
+                            day: '2-digit', 
+                            hour: '2-digit', 
+                            minute: '2-digit', 
+                            hour12: false 
+                          })}</small>
                           <span className="badge bg-info">복습 가능</span>
                         </div>
                       )}
@@ -677,17 +737,17 @@ export default function WrongAnswers() {
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          toggleDetails(safeId);
+                          toggleDetails(actualId || safeId);
                         }}
                         key={`toggle-${safeId}`}
                       >
-                        {expandedDetails.has(safeId) ? "▼ 세부정보 접기" : "▶ 세부정보 보기"}
+                        {expandedDetails.has(actualId || safeId) ? "▼ 세부정보 접기" : "▶ 세부정보 보기"}
                       </button>
 
                       {/* ▼▼▼ 이 아래 블록을 한 루트 내에 유지해 인접 JSX 오류 제거 ▼▼▼ */}
                       <div className="mt-2">
                         {/* 확장된 세부 정보 */}
-                        {expandedDetails.has(safeId) && (
+                        {expandedDetails.has(actualId || safeId) && (
                           <div key={`details-${safeId}`} className="border rounded p-3 mb-2 bg-light">
                             <h6 className="text-primary mb-2">📊 오답 세부 정보</h6>
 
@@ -709,10 +769,18 @@ export default function WrongAnswers() {
                                       <br />
                                       <small className="text-muted">
                                         {wa.wrongAnswerHistory && wa.wrongAnswerHistory.length > 0
-                                          ? dayjs(wa.wrongAnswerHistory[0].wrongAt).format(
+                                          ? dayjs(wa.wrongAnswerHistory[0].wrongAt).tz('Asia/Seoul').format(
                                               "YYYY년 MM월 DD일 HH:mm",
                                             )
-                                          : dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                          : new Date(wa.wrongAt).toLocaleString('ko-KR', { 
+                                              timeZone: 'Asia/Seoul',
+                                              year: 'numeric', 
+                                              month: 'long', 
+                                              day: 'numeric', 
+                                              hour: '2-digit', 
+                                              minute: '2-digit', 
+                                              hour12: false 
+                                            })}
                                       </small>
                                     </div>
                                   </div>
@@ -812,7 +880,7 @@ export default function WrongAnswers() {
                                       <strong>오답 시각:</strong>
                                       <br />
                                       <small className="text-muted">
-                                        {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                        {new Date(wa.wrongAt).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}
                                       </small>
                                     </div>
                                   </div>
@@ -876,7 +944,7 @@ export default function WrongAnswers() {
                                       <strong>오답 시각:</strong>
                                       <br />
                                       <small className="text-muted">
-                                        {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                        {new Date(wa.wrongAt).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}
                                       </small>
                                     </div>
                                   </div>
@@ -938,7 +1006,7 @@ export default function WrongAnswers() {
                                       <strong>오답 시각:</strong>
                                       <br />
                                       <small className="text-muted">
-                                        {dayjs(wa.wrongAt).format("YYYY년 MM월 DD일 HH:mm")}
+                                        {new Date(wa.wrongAt).toLocaleString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false })}
                                       </small>
                                     </div>
                                   </div>

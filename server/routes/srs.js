@@ -10,6 +10,13 @@ console.log('[SRS ROUTER] build=2025-08-08_#3 loaded');
 const express = require('express');
 const router = express.Router();
 
+// 모든 SRS API 요청 로깅
+console.log('🔧 [SRS SETUP] Setting up SRS API request logging middleware');
+router.use((req, res, next) => {
+    console.log(`📋 [SRS API] ${req.method} ${req.originalUrl}`);
+    next();
+});
+
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const tz = require('dayjs/plugin/timezone');
@@ -2562,29 +2569,55 @@ router.post('/wrong-answers/:vocabId/complete', async (req, res, next) => {
 });
 
 // POST /srs/wrong-answers/delete-multiple — 오답노트 대량 삭제
-router.post('/wrong-answers/delete-multiple', async (req, res, next) => {
+router.post('/wrong-answers/delete-multiple', auth, async (req, res, next) => {
+    console.log(`🚀 [DELETE API HIT] 삭제 API 호출됨`);
     try {
         const userId = req.user.id;
         const { wrongAnswerIds } = req.body;
         
+        console.log(`🗑️ [DELETE DEBUG] userId: ${userId}`);
+        console.log(`🗑️ [DELETE DEBUG] req.body:`, req.body);
+        console.log(`🗑️ [DELETE DEBUG] wrongAnswerIds:`, wrongAnswerIds, 'type:', typeof wrongAnswerIds);
+        
         if (!Array.isArray(wrongAnswerIds) || wrongAnswerIds.length === 0) {
+            console.log(`❌ [DELETE ERROR] Validation failed - not array or empty`);
             return fail(res, 400, 'wrongAnswerIds must be a non-empty array');
         }
+        
+        const numericIds = wrongAnswerIds
+            .map(id => {
+                console.log(`🔢 [DELETE DEBUG] Converting ID: ${id} (${typeof id}) -> ${Number(id)}`);
+                return Number(id);
+            })
+            .filter(id => !isNaN(id)); // NaN 값들 제거
+            
+        console.log(`🔢 [DELETE DEBUG] Final numeric IDs (filtered):`, numericIds);
+        
+        if (numericIds.length === 0) {
+            console.log(`❌ [DELETE ERROR] No valid IDs after filtering`);
+            return fail(res, 400, 'No valid numeric IDs provided');
+        }
+        
+        console.log(`🔍 [DELETE DEBUG] About to call prisma.wronganswer.deleteMany...`);
         
         // 사용자 소유 확인 후 삭제
         const result = await prisma.wronganswer.deleteMany({
             where: {
-                id: { in: wrongAnswerIds.map(Number) },
+                id: { in: numericIds },
                 userId: userId
             }
         });
+        
+        console.log(`✅ [DELETE SUCCESS] Deleted ${result.count} items`);
         
         return ok(res, { 
             message: `${result.count}개 항목이 삭제되었습니다.`,
             deletedCount: result.count
         });
     } catch (e) {
-        console.error('POST /srs/wrong-answers/delete-multiple failed:', e);
+        console.error('💥 [DELETE ERROR] POST /srs/wrong-answers/delete-multiple failed:', e.message);
+        console.error('💥 [DELETE ERROR] Full error:', e);
+        console.error('💥 [DELETE ERROR] Stack:', e.stack);
         return fail(res, 500, 'Failed to delete wrong answers');
     }
 });

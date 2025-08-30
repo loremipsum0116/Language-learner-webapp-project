@@ -22,9 +22,11 @@ export default function ListeningPractice() {
     const [currentAudio, setCurrentAudio] = useState(null);
     const [playbackRate, setPlaybackRate] = useState(1.0);
     const [showScript, setShowScript] = useState(false);
+    const [history, setHistory] = useState(new Map()); // 사용자 학습 기록
 
     useEffect(() => {
         loadListeningData();
+        loadHistory();
     }, [level, startIndex]);
 
     // 오디오 정리
@@ -45,6 +47,10 @@ export default function ListeningPractice() {
                 throw new Error(`Failed to load ${level} listening data`);
             }
             const result = await response.json();
+            
+            console.log('🔍 [DATA LOAD DEBUG] First question from JSON:', result[0]);
+            console.log('🔍 [DATA LOAD DEBUG] Keys in first question:', result[0] ? Object.keys(result[0]) : 'No first question');
+            console.log('🔍 [DATA LOAD DEBUG] First question fields - topic:', result[0]?.topic, 'question:', result[0]?.question, 'script:', result[0]?.script);
             
             if (result && Array.isArray(result) && result.length > 0) {
                 // 선택된 문제들만 필터링
@@ -89,6 +95,82 @@ export default function ListeningPractice() {
         } finally {
             setLoading(false);
         }
+    };
+
+    // 사용자 리스닝 학습 기록 로드
+    const loadHistory = async () => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+                method: 'GET',
+                credentials: 'include'
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const historyData = result.data ? Object.values(result.data) : [];
+                console.log(`✅ [리스닝 기록 로드] ${level} 레벨:`, historyData);
+                
+                const historyMap = new Map();
+                historyData.forEach(record => {
+                    const questionId = record.wrongData?.questionId;
+                    if (questionId) {
+                        // 다양한 방식으로 isCorrect 확인
+                        const isCorrect = record.wrongData?.isCorrect || record.isCompleted;
+                        
+                        console.log(`📝 [리스닝 기록] questionId: ${questionId}`);
+                        console.log(`   - record.wrongData.isCorrect: ${record.wrongData?.isCorrect}`);
+                        console.log(`   - record.isCompleted: ${record.isCompleted}`);
+                        console.log(`   - 최종 isCorrect: ${isCorrect}`);
+                        
+                        historyMap.set(String(questionId), {
+                            questionId: questionId,
+                            isCorrect: isCorrect,
+                            solvedAt: record.wrongData?.recordedAt,
+                            isCompleted: record.isCompleted,
+                            attempts: record.attempts,
+                            wrongData: record.wrongData // 원본 데이터도 포함
+                        });
+                    }
+                });
+                
+                console.log(`🗺️ [히스토리 맵 생성 완료] 총 ${historyMap.size}개 기록`);
+                historyMap.forEach((record, questionId) => {
+                    console.log(`   - '${questionId}' -> isCorrect: ${record.isCorrect}`);
+                });
+                
+                setHistory(historyMap);
+            } else if (response.status === 401) {
+                console.log('📝 [비로그인 사용자] 리스닝 기록을 불러올 수 없습니다.');
+                setHistory(new Map());
+            } else {
+                console.error(`❌ 리스닝 기록 로드 실패 (${response.status})`);
+                setHistory(new Map());
+            }
+        } catch (error) {
+            console.error('❌ 리스닝 기록 로드 실패:', error);
+            setHistory(new Map());
+        }
+    };
+
+    // 문제 상태 확인 헬퍼 함수들
+    const getQuestionStatus = (questionId) => {
+        const record = history.get(String(questionId));
+        console.log(`🔍 getQuestionStatus for '${questionId}':`, record);
+        if (!record) return 'unsolved';
+        
+        // wrongData.isCorrect 또는 isCompleted 확인
+        const isCorrect = record.isCorrect || record.wrongData?.isCorrect || record.isCompleted;
+        console.log(`🎯 Question '${questionId}' isCorrect:`, isCorrect);
+        return isCorrect ? 'correct' : 'incorrect';
+    };
+
+    const isQuestionSolved = (questionId) => {
+        return history.has(String(questionId));
+    };
+
+    const isQuestionCorrect = (questionId) => {
+        const record = history.get(String(questionId));
+        return record?.isCorrect || record?.wrongData?.isCorrect || record?.isCompleted || false;
     };
 
     const playAudio = () => {
@@ -180,69 +262,27 @@ export default function ListeningPractice() {
         }
     };
 
-    const recordWrongAnswer = async (questionData, userAnswer) => {
-        console.log(`🔍 [오답노트 디버그] recordWrongAnswer 함수 시작`);
-        console.log(`🔍 [오답노트 디버그] questionData:`, questionData);
-        console.log(`🔍 [오답노트 디버그] userAnswer:`, userAnswer);
-        console.log(`🔍 [오답노트 디버그] level:`, level);
-        
-        const requestData = {
-            type: 'listening',
-            wrongData: {
-                questionId: questionData.id,
-                level: level,
-                questionIndex: currentQuestion,
-                question: questionData.question,
-                options: questionData.options,
-                correctAnswer: questionData.correctAnswer || questionData.answer,
-                userAnswer: userAnswer,
-                explanation: questionData.explanation,
-                audioFile: `${questionData.id}.mp3`,
-                script: questionData.script,
-                topic: questionData.topic
-            }
-        };
-        
-        console.log(`🔍 [오답노트 디버그] 전송할 데이터:`, requestData);
-        
-        try {
-            console.log(`🔍 [오답노트 디버그] API 요청 시작: http://localhost:4000/api/odat-note`);
-            const response = await fetch('http://localhost:4000/api/odat-note', {
-                method: 'POST',
-                credentials: 'include',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(requestData)
-            });
-            
-            console.log(`🔍 [오답노트 디버그] 응답 상태:`, response.status);
-            
-            if (response.ok) {
-                const result = await response.json();
-                console.log(`✅ [리스닝 오답 기록 완료] ${level} - 문제 ${currentQuestion + 1}`, result);
-                console.log(`📝 [오답노트 저장] questionId: ${questionData.id}, type: listening`);
-            } else {
-                const errorText = await response.text();
-                console.error(`❌ 리스닝 오답 기록 실패 (${response.status}):`, errorText);
-            }
-        } catch (error) {
-            console.error('🔍 [오답노트 디버그] 네트워크 오류:', error);
-            if (error.message?.includes('Unauthorized')) {
-                console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');
-            } else {
-                console.error('❌ 리스닝 오답 기록 실패:', error);
-            }
-        }
-    };
+    // recordWrongAnswer 함수 제거 - listening/record API에서 자동 처리
 
     const handleAnswerSelect = (option) => {
         if (showExplanation) return;
         setSelectedAnswer(option);
     };
 
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const handleSubmit = async () => {
-        if (!selectedAnswer) return;
+        if (!selectedAnswer || isSubmitting) return;
         
+        setIsSubmitting(true);
         const current = listeningData[currentQuestion];
+        
+        console.log('🔍 [SUBMIT DEBUG] Current Question Data:', current);
+        console.log('🔍 [SUBMIT DEBUG] Fields - topic:', current?.topic, 'question:', current?.question, 'script:', current?.script);
+        console.log('🔍 [SUBMIT DEBUG] All Keys in current:', current ? Object.keys(current) : 'current is null/undefined');
+        console.log('🔍 [SUBMIT DEBUG] current.id:', current?.id);
+        console.log('🔍 [SUBMIT DEBUG] current object type:', typeof current);
+        
         // JSON에서는 'answer' 필드를 사용
         const correctAnswer = current.correctAnswer || current.answer;
         const correct = String(selectedAnswer).trim() === String(correctAnswer).trim();
@@ -251,23 +291,51 @@ export default function ListeningPractice() {
         console.log('Debug - Selected Answer:', selectedAnswer, 'Correct Answer:', correctAnswer, 'Result:', correct);
         
         // 정답/오답 모두 기록 저장 (로그인된 사용자만)
+        console.log('🔄 [API CALL] Starting listening/record API call...');
+        
+        const requestData = {
+            questionId: current.id,
+            level: level,
+            isCorrect: correct,
+            userAnswer: selectedAnswer,
+            correctAnswer: correctAnswer,
+            // 추가 데이터 포함
+            question: current.question,
+            script: current.script,
+            topic: current.topic,
+            options: current.options,
+            explanation: current.explanation
+        };
+        
+        console.log('🔍 [API REQUEST DATA] Full request payload:', requestData);
+        console.log('🔍 [API REQUEST DATA] question field:', requestData.question);
+        console.log('🔍 [API REQUEST DATA] script field:', requestData.script);
+        console.log('🔍 [API REQUEST DATA] topic field:', requestData.topic);
+        
         try {
             const response = await fetch('http://localhost:4000/api/listening/record', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    questionId: current.id,
-                    level: level,
-                    isCorrect: correct,
-                    userAnswer: selectedAnswer,
-                    correctAnswer: correctAnswer
-                })
+                body: JSON.stringify(requestData)
             });
             
             if (response.ok) {
                 console.log(`✅ [리스닝 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
                 console.log(`📝 [저장된 데이터] questionId: ${current.id}, level: ${level}, isCorrect: ${correct}`);
+                
+                // UI 상태 즉시 업데이트
+                setHistory(prev => {
+                    const newHistory = new Map(prev);
+                    newHistory.set(String(current.id), {
+                        questionId: current.id,
+                        isCorrect: correct,
+                        solvedAt: new Date().toISOString(),
+                        isCompleted: correct,
+                        attempts: 1
+                    });
+                    return newHistory;
+                });
             } else if (response.status === 401) {
                 console.log('📝 [비로그인 사용자] 리스닝 기록은 로그인 후 저장됩니다.');
             } else {
@@ -282,16 +350,10 @@ export default function ListeningPractice() {
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
             console.log(`✅ [리스닝 정답] ${level} - 문제 ${currentQuestion + 1} - 정답: ${correctAnswer}`);
-        } else if (!correct) {
-            console.log(`❌ [리스닝 오답] ${level} - 문제 ${currentQuestion + 1} - 오답노트 기록 시작`);
-            try {
-                await recordWrongAnswer(current, selectedAnswer);
-                console.log(`📝 [오답노트] 리스닝 오답 기록 함수 호출 완료`);
-            } catch (error) {
-                console.error('❌ [오답노트] 리스닝 오답 기록 실패:', error);
-            }
         }
+        // 오답노트 기록은 listening/record API에서 자동으로 처리되므로 별도 호출 불필요
         
+        setIsSubmitting(false);
         setShowExplanation(true);
     };
 
@@ -302,6 +364,7 @@ export default function ListeningPractice() {
             setShowExplanation(false);
             setIsCorrect(false);
             setShowScript(false); // 스크립트 숨기기
+            setIsSubmitting(false); // 제출 상태 리셋
             
             // 오디오 정리
             if (currentAudio) {
@@ -319,6 +382,7 @@ export default function ListeningPractice() {
             setShowExplanation(false);
             setIsCorrect(false);
             setShowScript(false); // 스크립트 숨기기
+            setIsSubmitting(false); // 제출 상태 리셋
             
             // 오디오 정리
             if (currentAudio) {
@@ -399,6 +463,17 @@ export default function ListeningPractice() {
                             ← 뒤로가기
                         </button>
                         <h2 className="reading-title">🎧 {level} 리스닝 연습</h2>
+                        {/* 현재 문제 상태 표시 */}
+                        {listeningData[currentQuestion] && (
+                            <div className="question-status">
+                                {getQuestionStatus(listeningData[currentQuestion].id) === 'correct' && (
+                                    <span className="status-badge correct" title="정답으로 해결한 문제">✅ 해결됨</span>
+                                )}
+                                {getQuestionStatus(listeningData[currentQuestion].id) === 'incorrect' && (
+                                    <span className="status-badge incorrect" title="틀린 문제 (오답노트 등록됨)">❌ 오답</span>
+                                )}
+                            </div>
+                        )}
                     </div>
                     <div className="reading-stats">
                         <div className="progress-info">

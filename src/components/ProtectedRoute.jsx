@@ -3,7 +3,7 @@ import React from "react";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export default function ProtectedRoute() {
+export default function ProtectedRoute({ children }) {
   const location = useLocation();
   const { user, loading } = useAuth(); // 'useAuth'는 항상 정의되어 있으므로 '?.'는 불필요합니다.
 
@@ -25,6 +25,6 @@ export default function ProtectedRoute() {
     return <Navigate to="/login" replace state={{ from: location }} />;
   }
 
-  // 3. 로딩이 끝났고 user가 있으면 요청한 페이지(Outlet)를 보여줍니다.
-  return <Outlet />;
+  // 3. 로딩이 끝났고 user가 있으면 요청한 페이지를 보여줍니다.
+  return children || <Outlet />;
 }

@@ -14,8 +14,40 @@ export default function ListeningList() {
     const [history, setHistory] = useState(new Map()); // Map<questionId, historyData>
 
     useEffect(() => {
-        loadListeningData();
-        loadHistory();
+        console.log(`🔄🆕 [EFFECT START] useEffect 시작`);
+        
+        const abortController = new AbortController();
+        
+        const loadData = async () => {
+            try {
+                console.log(`🔄🆕 [DATA LOADING START] 데이터 로딩 시작`);
+                
+                // 리스닝 데이터와 히스토리를 순차적으로 로드
+                await loadListeningData();
+                console.log(`📚🆕 [LISTENING DATA LOADED] 리스닝 데이터 로드 완료`);
+                
+                if (!abortController.signal.aborted) {
+                    await loadHistory(abortController.signal);
+                    console.log(`📊🆕 [HISTORY LOADED] 히스토리 로드 완료`);
+                }
+                
+                console.log(`✅🆕 [ALL DATA LOADED] 모든 데이터 로딩 완료`);
+            } catch (error) {
+                if (error.name === 'AbortError') {
+                    console.log(`🚫🆕 [EFFECT ABORTED] useEffect가 정리되어 요청 중단됨`);
+                } else {
+                    console.error(`❌🆕 [EFFECT ERROR]`, error);
+                }
+            }
+        };
+        
+        loadData();
+        
+        // Cleanup function
+        return () => {
+            console.log(`🧹🆕 [EFFECT CLEANUP] useEffect 정리 중`);
+            abortController.abort();
+        };
     }, [level, location]); // location 변경 시에도 새로고침
 
     const loadListeningData = async () => {
@@ -45,31 +77,102 @@ export default function ListeningList() {
         }
     };
 
-    const loadHistory = async () => {
+    const loadHistory = async (signal) => {
         try {
+            console.log(`🚀🆕 [SIMPLIFIED FETCH START] 단순화된 fetch 시작`);
+            
             const response = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
-                credentials: 'include'
+                credentials: 'include',
+                signal: signal
             });
             
+            console.log(`📡🆕 [SIMPLE RESPONSE] Status: ${response.status}, OK: ${response.ok}`);
+            
             if (response.ok) {
-                const historyData = await response.json();
-                console.log(`✅ [리스닝 기록 로드] ${level} 레벨:`, historyData);
+                const result = await response.json();
+                console.log(`✅🆕 [SIMPLE SUCCESS] 데이터 받음:`, result);
+                console.log(`🔍🆕 [DATA EXISTS] result.data:`, !!result.data, 'keys:', Object.keys(result.data || {}));
                 
                 const historyMap = new Map();
-                historyData.forEach(record => {
-                    console.log(`📝 [리스닝 기록] questionId: ${record.questionId}, isCorrect: ${record.isCorrect}, solvedAt: ${record.solvedAt}`);
-                    historyMap.set(record.questionId, record);
-                });
+                // API returns { data: { questionId: record } } format
+                if (result.data) {
+                    Object.entries(result.data).forEach(([questionId, record]) => {
+                        console.log(`🔍🆕 [RAW RECORD] questionId: ${questionId}, record:`, record);
+                        console.log(`🔍🆕 [WRONG DATA] wrongData type: ${typeof record.wrongData}, value:`, record.wrongData);
+                        
+                        // wrongData가 문자열인 경우 JSON 파싱
+                        let wrongData = record.wrongData;
+                        if (typeof wrongData === 'string') {
+                            try {
+                                wrongData = JSON.parse(wrongData);
+                                console.log(`🔧🆕 [PARSED DATA] 파싱된 wrongData:`, wrongData);
+                            } catch (e) {
+                                console.error(`❌🆕 [PARSE ERROR] JSON 파싱 실패:`, e);
+                                wrongData = {};
+                            }
+                        } else if (!wrongData) {
+                            wrongData = {};
+                        }
+                        
+                        // 통계 정보가 없다면 userAnswer와 correctAnswer로 계산
+                        let isCorrect = wrongData?.isCorrect;
+                        let lastResult = wrongData?.lastResult;
+                        
+                        if (isCorrect === undefined && wrongData?.userAnswer && wrongData?.correctAnswer) {
+                            isCorrect = wrongData.userAnswer === wrongData.correctAnswer;
+                            lastResult = isCorrect ? 'correct' : 'incorrect';
+                            console.log(`🔧🆕 [CALCULATED] userAnswer: ${wrongData.userAnswer}, correctAnswer: ${wrongData.correctAnswer}, isCorrect: ${isCorrect}`);
+                        }
+                        
+                        // 기본 통계값 설정
+                        const correctCount = wrongData?.correctCount || (isCorrect ? 1 : 0);
+                        const incorrectCount = wrongData?.incorrectCount || (isCorrect ? 0 : 1);  
+                        const totalAttempts = wrongData?.totalAttempts || record.attempts || 1;
+                        
+                        console.log(`📝🆕 [리스닝 기록 BUSTED] questionId: ${questionId}, isCorrect: ${isCorrect}, lastResult: ${lastResult}, stats: ${correctCount}/${incorrectCount}/${totalAttempts}`);
+                        
+                        // wrongData에 계산된 값들 추가
+                        const enhancedWrongData = {
+                            ...wrongData,
+                            isCorrect,
+                            lastResult,
+                            correctCount,
+                            incorrectCount,
+                            totalAttempts
+                        };
+                        
+                        historyMap.set(questionId, {
+                            ...record,
+                            questionId,
+                            isCorrect,
+                            solvedAt: record.wrongAt,
+                            wrongData: enhancedWrongData
+                        });
+                    });
+                }
+                console.log(`🗺️🆕 [HISTORY MAP BUSTED] Size: ${historyMap.size}, Entries:`, Array.from(historyMap.entries()));
                 setHistory(historyMap);
             } else if (response.status === 401) {
-                console.log('📝 [비로그인 사용자] 리스닝 기록을 불러올 수 없습니다.');
+                console.log('📝🆕 [비로그인 사용자 BUSTED] 리스닝 기록을 불러올 수 없습니다.');
+                console.log('🔐🆕 [AUTH ERROR] 401 Unauthorized - 인증 토큰이 없거나 만료됨');
                 setHistory(new Map());
             } else {
-                console.error(`❌ 리스닝 기록 로드 실패 (${response.status})`);
+                console.error(`❌🆕 [리스닝 기록 로드 실패 BUSTED] (${response.status})`);
+                console.error(`❌🆕 [HTTP ERROR] Status: ${response.status}, StatusText: ${response.statusText}`);
                 setHistory(new Map());
             }
         } catch (error) {
-            console.error('❌ 리스닝 기록 로드 실패:', error);
+            console.error('❌🆕 [리스닝 기록 로드 실패 BUSTED] - ERROR DETAILS:', error);
+            console.error('❌🆕 [ERROR NAME]:', error.name);
+            console.error('❌🆕 [ERROR MESSAGE]:', error.message);
+            
+            if (error.name === 'AbortError') {
+                console.error('⏰🆕 [TIMEOUT ERROR] 요청이 10초 내에 완료되지 않아 타임아웃됨');
+            } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
+                console.error('🌐🆕 [NETWORK ERROR] 네트워크 연결 실패 - 서버가 응답하지 않음');
+            }
+            
+            console.error('❌🆕 [ERROR STACK]:', error.stack);
             setHistory(new Map());
         }
     };
@@ -132,21 +235,39 @@ export default function ListeningList() {
         const record = history.get(questionId);
         console.log(`🔍 [상태 확인] questionId: ${questionId}, record:`, record);
         if (!record) return 'unsolved';
+        
+        // lastResult가 있으면 최신 결과를 사용, 없으면 기존 isCorrect 사용
+        const lastResult = record.wrongData?.lastResult;
+        if (lastResult) {
+            return lastResult === 'correct' ? 'correct' : 'incorrect';
+        }
+        
+        // 호환성을 위한 fallback
         return record.isCorrect ? 'correct' : 'incorrect';
     };
 
     const getQuestionDate = (questionId) => {
         const record = history.get(questionId);
         if (!record) return null;
+        
+        // UTC 시간으로 저장되어 있으므로 KST로 변환
         return new Date(record.solvedAt).toLocaleString('ko-KR', {
+            timeZone: 'Asia/Seoul',
             year: 'numeric',
-            month: 'short', 
+            month: 'long', 
             day: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
-            hour12: false,
-            timeZone: 'Asia/Seoul'
+            hour12: false
         });
+    };
+
+    const getQuestionStats = (questionId) => {
+        const record = history.get(questionId);
+        if (!record || !record.wrongData) return null;
+        
+        const { correctCount = 0, incorrectCount = 0, totalAttempts = 0 } = record.wrongData;
+        return { correctCount, incorrectCount, totalAttempts };
     };
 
     if (loading) {
@@ -264,6 +385,7 @@ export default function ListeningList() {
                 {listeningData.map((question, index) => {
                     const status = getQuestionStatus(question.id);
                     const solvedDate = getQuestionDate(question.id);
+                    const stats = getQuestionStats(question.id);
                     
                     return (
                         <div key={index} className={`question-card ${status === 'correct' ? 'studied-correct' : status === 'incorrect' ? 'studied-incorrect' : ''}`}>
@@ -285,6 +407,11 @@ export default function ListeningList() {
                                         {solvedDate && (
                                             <div className="last-study-date">
                                                 📅 마지막 학습: {solvedDate}
+                                            </div>
+                                        )}
+                                        {stats && (
+                                            <div className="study-stats">
+                                                📊 정답: {stats.correctCount}회, 오답: {stats.incorrectCount}회 (총 {stats.totalAttempts}회)
                                             </div>
                                         )}
                                     </div>

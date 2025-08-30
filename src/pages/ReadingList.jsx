@@ -152,23 +152,17 @@ export default function ReadingList() {
 
     // 날짜를 KST로 표시하는 함수
     const formatKSTDate = (dateString) => {
-        console.log('🕐 [DATE DEBUG] Original dateString:', dateString);
         const date = new Date(dateString);
-        console.log('🕐 [DATE DEBUG] Parsed date:', date.toISOString());
-        console.log('🕐 [DATE DEBUG] Current time:', new Date().toISOString());
         
-        const result = date.toLocaleString('ko-KR', {
+        return date.toLocaleString('ko-KR', {
             year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
+            month: 'long',
+            day: 'numeric',
             hour: '2-digit',
             minute: '2-digit',
             hour12: false,
             timeZone: 'Asia/Seoul'
-        }) + ' (KST)';
-        
-        console.log('🕐 [DATE DEBUG] Formatted result:', result);
-        return result;
+        });
     };
 
     // 문제별 학습 기록 가져오기

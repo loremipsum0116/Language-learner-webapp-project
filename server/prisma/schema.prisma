@@ -107,7 +107,7 @@ model srscard {
   wrongStreakCount  Int             @default(0)
   lastReviewedAt    DateTime?
   isTodayStudy      Boolean         @default(false)
-  todayFirstResult  Boolean?        
+  todayFirstResult  Boolean?
   todayStudyDate    DateTime?
   category          category?       @relation(fields: [categoryId], references: [id], map: "SRSCard_categoryId_fkey")
   folder            srsfolder?      @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "SRSCard_folderId_fkey")
@@ -218,8 +218,6 @@ model user {
   tutorlog         tutorlog[]
   uservocab        uservocab[]
   wronganswer      wronganswer[]
-  readingRecord    readingRecord[]
-  listeningRecord  listeningRecord[]
 }
 
 model uservocab {
@@ -243,18 +241,18 @@ model uservocab {
 }
 
 model vocab {
-  id            Int             @id @default(autoincrement())
-  lemma         String
-  pos           String
-  plural        String?
-  levelCEFR     String
-  freq          Int?
-  source        String?
+  id                Int                 @id @default(autoincrement())
+  lemma             String
+  pos               String
+  plural            String?
+  levelCEFR         String
+  freq              Int?
+  source            String?
   dictentry         dictentry?
   srsfolderitem     srsfolderitem[]
   uservocab         uservocab[]
-  wronganswer       wronganswer[]
   vocabexamcategory vocabexamcategory[]
+  wronganswer       wronganswer[]
 
   @@index([lemma], map: "Vocab_lemma_idx")
   @@index([source], map: "Vocab_source_idx")
@@ -263,9 +261,7 @@ model vocab {
 model wronganswer {
   id                Int        @id @default(autoincrement())
   userId            Int
-  itemType          String     @default("vocab") // "vocab", "grammar", "reading", "listening"
-  itemId            Int
-  vocabId           Int?       // 기존 호환성을 위해 nullable로 변경
+  vocabId           Int?
   wrongAt           DateTime   @default(now())
   reviewWindowStart DateTime
   reviewWindowEnd   DateTime
@@ -273,7 +269,9 @@ model wronganswer {
   isCompleted       Boolean    @default(false)
   attempts          Int        @default(0)
   folderId          Int?
-  wrongData         Json?      // 오답 상세 정보 (문제 내용, 선택한 답 등)
+  itemId            Int
+  itemType          String     @default("vocab")
+  wrongData         Json?
   folder            srsfolder? @relation(fields: [folderId], references: [id], onDelete: Cascade, map: "WrongAnswer_folderId_fkey")
   user              user       @relation(fields: [userId], references: [id], onDelete: Cascade, map: "WrongAnswer_userId_fkey")
   vocab             vocab?     @relation(fields: [vocabId], references: [id], onDelete: Cascade, map: "WrongAnswer_vocabId_fkey")
@@ -287,12 +285,12 @@ model wronganswer {
 }
 
 model examcategory {
-  id          Int      @id @default(autoincrement()) @map("id")
-  name        String   @unique
-  description String?
-  totalWords  Int      @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                Int                 @id @default(autoincrement()) @map("id")
+  name              String              @unique
+  description       String?
+  totalWords        Int                 @default(0)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   vocabexamcategory vocabexamcategory[]
 
   @@map("exam_categories")
@@ -304,8 +302,8 @@ model vocabexamcategory {
   examCategoryId Int
   priority       Int          @default(0)
   addedAt        DateTime     @default(now())
-  vocab          vocab        @relation(fields: [vocabId], references: [id], onDelete: Cascade)
   examCategory   examcategory @relation(fields: [examCategoryId], references: [id], onDelete: Cascade)
+  vocab          vocab        @relation(fields: [vocabId], references: [id], onDelete: Cascade)
 
   @@unique([vocabId, examCategoryId])
   @@index([examCategoryId])
@@ -322,7 +320,6 @@ model readingRecord {
   userAnswer    String
   correctAnswer String
   solvedAt      DateTime @default(now())
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, questionId, level])
   @@index([userId, level])
@@ -338,10 +335,8 @@ model listeningRecord {
   userAnswer    String
   correctAnswer String
   solvedAt      DateTime @default(now())
-  user          user     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, questionId, level])
   @@index([userId, level])
   @@map("listening_records")
 }
-

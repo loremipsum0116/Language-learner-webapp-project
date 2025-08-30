@@ -123,7 +123,8 @@ router.get('/list', async (req, res) => {
       }
 
       const result = {
-        wrongAnswerId: wa.id,
+        id: wa.id, // 프론트엔드에서 기대하는 id 필드
+        wrongAnswerId: wa.id, // 호환성을 위해 유지
         itemType: wa.itemType,
         itemId: wa.itemId,
         attempts: wa.attempts,
@@ -513,15 +514,33 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Invalid type. Must be one of: vocab, grammar, reading, listening' });
     }
     
-    // 기존 오답 항목이 있는지 확인
-    const existingWrongAnswer = await prisma.wronganswer.findFirst({
-      where: {
-        userId: req.user.id,
-        itemType: finalItemType,
-        itemId: finalItemId,
-        isCompleted: false
-      }
-    });
+    // 기존 오답 항목이 있는지 확인 (리스닝은 questionId로도 중복 체크)
+    let existingWrongAnswer;
+    
+    if (finalItemType === 'listening' && wrongData?.questionId) {
+      // 리스닝의 경우 questionId 기반으로 더 정확한 중복 체크
+      const allUserListeningRecords = await prisma.wronganswer.findMany({
+        where: {
+          userId: req.user.id,
+          itemType: 'listening',
+          isCompleted: false
+        }
+      });
+      
+      existingWrongAnswer = allUserListeningRecords.find(record => 
+        record.itemId === finalItemId || 
+        (record.wrongData && record.wrongData.questionId === wrongData.questionId)
+      );
+    } else {
+      existingWrongAnswer = await prisma.wronganswer.findFirst({
+        where: {
+          userId: req.user.id,
+          itemType: finalItemType,
+          itemId: finalItemId,
+          isCompleted: false
+        }
+      });
+    }
     
     let wrongAnswer;
     

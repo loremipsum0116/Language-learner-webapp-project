@@ -17,6 +17,8 @@ router.get('/list', async (req, res) => {
       where.lemma = { contains: q.trim() };
     } else {
       where.levelCEFR = level || 'A1';
+      // Exclude idioms and phrasal verbs from level-based vocabulary
+      where.source = { not: 'idiom' };
     }
     
     console.log('DEBUG /list: Query where:', JSON.stringify(where));
@@ -32,55 +34,39 @@ router.get('/list', async (req, res) => {
     // Get dictentries separately for all vocabs
     const vocabIds = vocabs.map(v => v.id);
     const dictentries = await prisma.dictentry.findMany({
-      where: { vocabId: { in: vocabIds } },
-      select: { vocabId: true, examples: true, ipa: true, ipaKo: true, audioUrl: true }
+      where: { vocabId: { in: vocabIds } }
     });
     
     console.log('DEBUG /list: Found dictentries:', dictentries.length);
+    if (dictentries.length > 0) {
+      console.log('DEBUG /list: First dictentry:', JSON.stringify(dictentries[0], null, 2));
+    }
     
     // Create a map for quick lookup
     const dictMap = new Map();
-    dictentries.forEach(d => dictMap.set(d.vocabId, d));
+    dictentries.forEach(d => {
+      // Parse examples if it's a string
+      let parsedExamples = d.examples;
+      if (typeof d.examples === 'string') {
+        try {
+          parsedExamples = JSON.parse(d.examples);
+        } catch (e) {
+          console.warn('Failed to parse examples for vocabId', d.vocabId);
+          parsedExamples = [];
+        }
+      }
+      dictMap.set(d.vocabId, { ...d, examples: parsedExamples });
+    });
 
     const items = vocabs.map(v => {
       const dictentry = dictMap.get(v.id);
       const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
       
-      // 고급 중복 제거: pos 기준으로 그룹화하여 가장 좋은 것만 선택
-      const posGroups = new Map();
-      for (const meaning of rawMeanings) {
-        const pos = (meaning.pos || 'unknown').toLowerCase().trim();
-        if (!posGroups.has(pos)) {
-          posGroups.set(pos, []);
-        }
-        posGroups.get(pos).push(meaning);
-      }
-      
-      const meanings = [];
-      for (const [pos, groupMeanings] of posGroups.entries()) {
-        if (groupMeanings.length === 1) {
-          meanings.push(groupMeanings[0]);
-        } else {
-          // 같은 pos를 가진 여러 meanings 중에서 최고 선택
-          const best = groupMeanings.reduce((prev, current) => {
-            const prevExampleCount = prev.definitions?.[0]?.examples?.length || 0;
-            const currentExampleCount = current.definitions?.[0]?.examples?.length || 0;
-            
-            if (currentExampleCount > prevExampleCount) return current;
-            if (prevExampleCount > currentExampleCount) return prev;
-            
-            const prevKoDef = prev.definitions?.[0]?.ko_def || '';
-            const currentKoDef = current.definitions?.[0]?.ko_def || '';
-            
-            if (currentKoDef.length > prevKoDef.length) return current;
-            if (prevKoDef.length > currentKoDef.length) return prev;
-            
-            const prevDef = prev.definitions?.[0]?.def || '';
-            const currentDef = current.definitions?.[0]?.def || '';
-            
-            return currentDef.length > prevDef.length ? current : prev;
-          });
-          meanings.push(best);
+      console.log(`DEBUG /list: Vocab ${v.lemma} (${v.id}) - dictentry found:`, !!dictentry);
+      if (dictentry) {
+        console.log(`DEBUG /list: Examples length:`, rawMeanings.length);
+        if (rawMeanings.length > 0) {
+          console.log(`DEBUG /list: First example:`, JSON.stringify(rawMeanings[0]));
         }
       }
       
@@ -93,15 +79,12 @@ router.get('/list', async (req, res) => {
         primaryGloss = glossExample.ko;
       }
       
-      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
-      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
-        primaryGloss = rawMeanings[0].ko;
+      // 만약 gloss가 없다면 ipaKo 사용 (fallback)
+      if (!primaryGloss && dictentry?.ipaKo) {
+        primaryGloss = dictentry.ipaKo;
       }
       
-      // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
-      // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
-      //   primaryGloss = meanings[0].definitions[0].ko_def || null;
-      // }
+      console.log(`DEBUG /list: Vocab ${v.lemma} - primaryGloss:`, primaryGloss);
       
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,
@@ -230,9 +213,15 @@ router.get('/search', async (req, res) => {
   }
 });
 
+// Test route to check if this file is loaded
+router.get('/vocab-by-pos-test', (req, res) => {
+  console.log('🧪 [VOCAB-BY-POS-TEST] Test route hit');
+  res.json({ message: 'vocab-by-pos test works!' });
+});
+
 // GET /vocab-by-pos - Get vocabularies by part of speech (for idioms and phrasal verbs)
 // MUST come before /:id route to avoid route conflicts
-router.get('/vocab-by-pos', async (req, res) => {
+router.get('/idioms-phrasal', async (req, res) => {
   console.log('🚀 [VOCAB-BY-POS] Route hit with query:', req.query);
   try {
     const { pos, search } = req.query;
@@ -243,7 +232,7 @@ router.get('/vocab-by-pos', async (req, res) => {
     
     const where = { 
       pos: pos,
-      source: 'idiom_migration' // Only get migrated idioms/phrasal verbs
+      source: 'idiom' // Only get idioms/phrasal verbs
     };
     
     // Add search filter if provided
@@ -272,7 +261,19 @@ router.get('/vocab-by-pos', async (req, res) => {
     
     // Create a map for quick lookup
     const dictMap = new Map();
-    dictentries.forEach(d => dictMap.set(d.vocabId, d));
+    dictentries.forEach(d => {
+      // Parse examples if it's a string
+      let parsedExamples = d.examples;
+      if (typeof d.examples === 'string') {
+        try {
+          parsedExamples = JSON.parse(d.examples);
+        } catch (e) {
+          console.warn('Failed to parse examples for vocabId', d.vocabId);
+          parsedExamples = [];
+        }
+      }
+      dictMap.set(d.vocabId, { ...d, examples: parsedExamples });
+    });
 
     const items = vocabs.map(v => {
       const dictentry = dictMap.get(v.id);
@@ -363,6 +364,16 @@ router.get('/:id', async (req, res) => {
       console.log(`DEBUG /:id: dictentry.ipa:`, dictentry.ipa);
       console.log(`DEBUG /:id: dictentry.ipaKo:`, dictentry.ipaKo);
       console.log(`DEBUG /:id: dictentry.audioUrl:`, dictentry.audioUrl);
+    }
+    
+    // Parse dictentry examples if it's a string
+    if (dictentry && typeof dictentry.examples === 'string') {
+      try {
+        dictentry.examples = JSON.parse(dictentry.examples);
+      } catch (e) {
+        console.warn('Failed to parse dictentry examples for vocab', vocabId);
+        dictentry.examples = [];
+      }
     }
     
     // Combine the results

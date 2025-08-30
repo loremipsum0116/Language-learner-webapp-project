@@ -270,7 +270,27 @@ export default function VocabDetailModal({
   onAddSRS,
 }) {
   const dictentry = vocab?.dictentry || {};
-  const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+  
+  // Parse examples if it's a string - handle all possible cases
+  let rawMeanings = [];
+  console.log('VocabDetailModal - dictentry.examples type:', typeof dictentry.examples);
+  console.log('VocabDetailModal - dictentry.examples value:', dictentry.examples);
+  
+  if (typeof dictentry.examples === 'string') {
+    try {
+      rawMeanings = JSON.parse(dictentry.examples);
+    } catch (e) {
+      console.warn('Failed to parse examples in modal:', e);
+      rawMeanings = [];
+    }
+  } else if (Array.isArray(dictentry.examples)) {
+    rawMeanings = dictentry.examples;
+  } else if (dictentry.examples) {
+    console.warn('Unexpected examples type:', typeof dictentry.examples);
+    rawMeanings = [];
+  }
+  
+  console.log('VocabDetailModal - parsed rawMeanings:', rawMeanings);
   
   // CEFR 데이터 구조를 위한 간소화된 처리
   const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
@@ -316,9 +336,36 @@ export default function VocabDetailModal({
                   };
                   
                   // cefr_vocabs.json의 audio 경로 사용
-                  const audioData = dictentry.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
-                  // 임시: gloss도 example.mp3 사용 (실제 파일이 example.mp3만 존재)
-                  const glossAudioPath = audioData?.example || audioData?.gloss;
+                  let audioData = null;
+                  if (dictentry.audioLocal) {
+                    try {
+                      // Check if it's already a valid JSON string
+                      if (typeof dictentry.audioLocal === 'string' && dictentry.audioLocal.startsWith('{')) {
+                        audioData = JSON.parse(dictentry.audioLocal);
+                      } else if (typeof dictentry.audioLocal === 'string') {
+                        // It's a simple path string, not JSON - create proper paths
+                        const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                        audioData = { 
+                          word: `${basePath}/word.mp3`, 
+                          gloss: `${basePath}/gloss.mp3`,
+                          example: `${basePath}/example.mp3` 
+                        };
+                      } else {
+                        audioData = dictentry.audioLocal;
+                      }
+                    } catch (e) {
+                      console.warn('Failed to parse audioLocal:', e, dictentry.audioLocal);
+                      // Fallback: treat as simple path - create proper paths
+                      const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                      audioData = { 
+                        word: `${basePath}/word.mp3`, 
+                        gloss: `${basePath}/gloss.mp3`,
+                        example: `${basePath}/example.mp3` 
+                      };
+                    }
+                  }
+                  // 상세 보기 상단 오디오는 gloss 경로 사용
+                  const glossAudioPath = audioData?.gloss;
                   
                   if (glossAudioPath && onPlayUrl) {
                     // 절대 경로로 변환
@@ -374,12 +421,41 @@ export default function VocabDetailModal({
                           'C2': 'advanced'
                         };
                         
-                        // cefr_vocabs.json의 audio.example 경로 사용
-                        const audioData = dictentry.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
+                        // cefr_vocabs.json의 audio.example 경로 사용 (예문 제목 옆 버튼)
+                        let audioData = null;
+                        if (dictentry.audioLocal) {
+                          try {
+                            // Check if it's already a valid JSON string
+                            if (typeof dictentry.audioLocal === 'string' && dictentry.audioLocal.startsWith('{')) {
+                              audioData = JSON.parse(dictentry.audioLocal);
+                            } else if (typeof dictentry.audioLocal === 'string') {
+                              // It's a simple path string, not JSON - create proper paths
+                              const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                              audioData = { 
+                                word: `${basePath}/word.mp3`, 
+                                gloss: `${basePath}/gloss.mp3`,
+                                example: `${basePath}/example.mp3` 
+                              };
+                            } else {
+                              audioData = dictentry.audioLocal;
+                            }
+                          } catch (e) {
+                            console.warn('Failed to parse audioLocal for example:', e, dictentry.audioLocal);
+                            // Fallback: treat as simple path - create proper paths
+                            const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                            audioData = { 
+                              word: `${basePath}/word.mp3`, 
+                              gloss: `${basePath}/gloss.mp3`,
+                              example: `${basePath}/example.mp3` 
+                            };
+                          }
+                        }
                         const exampleAudioPath = audioData?.example;
                         
                         // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
-                        const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                        const isIdiomOrPhrasal = vocab.source === 'idiom';
+                        
+                        console.log('Audio button check:', { exampleAudioPath, isIdiomOrPhrasal, vocabSource: vocab.source });
                         
                         if (exampleAudioPath && !isIdiomOrPhrasal) {
                           return (
@@ -486,8 +562,34 @@ export default function VocabDetailModal({
                             {(() => {
                               // 사용법 오디오 버튼
                               const dictentry = vocab.dictentry;
-                              const audioData = dictentry?.audioLocal ? JSON.parse(dictentry.audioLocal) : null;
-                              const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                              let audioData = null;
+                              if (dictentry?.audioLocal) {
+                                try {
+                                  if (typeof dictentry.audioLocal === 'string' && dictentry.audioLocal.startsWith('{')) {
+                                    audioData = JSON.parse(dictentry.audioLocal);
+                                  } else if (typeof dictentry.audioLocal === 'string') {
+                                    // It's a simple path string, not JSON - create proper paths
+                                    const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                                    audioData = { 
+                                      word: `${basePath}/word.mp3`, 
+                                      gloss: `${basePath}/gloss.mp3`,
+                                      example: `${basePath}/example.mp3` 
+                                    };
+                                  } else {
+                                    audioData = dictentry.audioLocal;
+                                  }
+                                } catch (e) {
+                                  console.warn('Failed to parse audioLocal for usage:', e);
+                                  // Fallback: treat as simple path - create proper paths
+                                  const basePath = dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                                  audioData = { 
+                                    word: `${basePath}/word.mp3`, 
+                                    gloss: `${basePath}/gloss.mp3`,
+                                    example: `${basePath}/example.mp3` 
+                                  };
+                                }
+                              }
+                              const isIdiomOrPhrasal = vocab.source === 'idiom';
                               
                               // 숙어/구동사의 경우 example 오디오를 사용법에서 재생
                               const usageAudioPath = isIdiomOrPhrasal ? audioData?.example : audioData?.gloss;

@@ -182,8 +182,8 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                             ))}
                         </div>
                     </div>
-                    <Pron ipa={vocab.ipa} ipaKo={vocab.ipaKo} />
-                    <div className="card-subtitle text-muted">{koGloss}</div>
+                    <Pron ipa={vocab.ipa} ipaKo={vocab.ipa ? vocab.ipaKo : null} />
+                    <div className="card-subtitle text-muted">{vocab.ipa ? '' : koGloss}</div>
                 </div>
                 <div className="card-footer d-flex gap-2 justify-content-between align-items-center">
                     <div className="d-flex align-items-center">
@@ -349,7 +349,7 @@ export default function VocabList() {
                 } else if (activeTab === 'idiom') {
                     // 숙어·구동사 조회 - 이제 vocab 테이블에서 조회
                     const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-                    url = `/vocab/vocab-by-pos?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}`;
+                    url = `/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}`;
                     console.log('🔍 [IDIOM UNIFIED] Calling API:', url);
                     const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                     console.log('📥 [IDIOM UNIFIED] API Response:', response);
@@ -533,7 +533,7 @@ export default function VocabList() {
             try {
                 setLoading(true);
                 const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-                const response = await fetchJSON(`/vocab/vocab-by-pos?pos=${encodeURIComponent(posType)}&search=`, withCreds());
+                const response = await fetchJSON(`/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=`, withCreds());
                 const allIdiomIds = response.data?.map(item => item.id) || [];
                 console.log(`🔍 [IDIOM SELECT ALL] Found ${allIdiomIds.length} ${posType}s to select`);
                 setSelectedIds(new Set(allIdiomIds));
@@ -854,7 +854,9 @@ export default function VocabList() {
 
     const playVocabAudio = async (vocab) => {
         // 단어 자체 발음: cefr_vocabs.json의 audio.word 경로 우선 사용
-        console.log('playVocabAudio called with vocab:', vocab.lemma);
+        console.log('🔍 [DEBUG] playVocabAudio called with vocab:', vocab.lemma);
+        console.log('🔍 [DEBUG] vocab.dictentry:', vocab.dictentry);
+        console.log('🔍 [DEBUG] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
         
         // CEFR 레벨을 실제 폴더명으로 매핑
         const cefrToFolder = {
@@ -867,12 +869,43 @@ export default function VocabList() {
         };
         
         // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
-        const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
-        // 임시: word, gloss, example 모두 example.mp3로 통일 (실제 파일이 example.mp3만 존재)
-        const wordAudioPath = audioData?.example || audioData?.word;
+        let audioData = null;
+        if (vocab.dictentry?.audioLocal) {
+            console.log('🔍 [DEBUG] audioLocal raw value:', vocab.dictentry.audioLocal);
+            try {
+                // JSON 형태인지 확인
+                if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
+                    audioData = JSON.parse(vocab.dictentry.audioLocal);
+                    console.log('🔍 [DEBUG] Parsed as JSON:', audioData);
+                } else if (typeof vocab.dictentry.audioLocal === 'string') {
+                    // 단순한 경로 문자열인 경우, 적절한 경로들 생성
+                    const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                    audioData = { 
+                        word: `${basePath}/word.mp3`, 
+                        gloss: `${basePath}/gloss.mp3`,
+                        example: `${basePath}/example.mp3` 
+                    };
+                    console.log('🔍 [DEBUG] Treated as simple string, created audioData:', audioData);
+                } else {
+                    audioData = vocab.dictentry.audioLocal;
+                    console.log('🔍 [DEBUG] Used as object:', audioData);
+                }
+            } catch (e) {
+                console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
+                // 파싱 실패 시 단순한 경로로 처리
+                const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                audioData = { 
+                    word: `${basePath}/word.mp3`, 
+                    gloss: `${basePath}/gloss.mp3`,
+                    example: `${basePath}/example.mp3` 
+                };
+            }
+        }
+        // 단어 발음: audio.word 경로 우선 사용
+        const wordAudioPath = audioData?.word;
         
         if (wordAudioPath) {
-            // wordAudioPath에 이미 starter/a/example.mp3 형태로 포함되어 있음
+            // wordAudioPath에 이미 starter/a/word.mp3 형태로 포함되어 있음
             // 앞에 /를 추가하여 절대 경로로 만듦
             const absolutePath = wordAudioPath.startsWith('/') ? wordAudioPath : `/${wordAudioPath}`;
             console.log('✅ Playing WORD audio from cefr_vocabs:', absolutePath);
@@ -888,10 +921,10 @@ export default function VocabList() {
             return;
         }
         
-        // audioUrl이 없는 경우 로컬 오디오 사용 (단어 발음용) 
+        // 3. 로컬 오디오 사용 (단어 발음용) - word.mp3 사용
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${folderName}/${audioFileName}/example.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName}/word.mp3`;
         console.log('⚠️ Playing WORD audio from local path (no audioUrl found):', localAudioPath);
         console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'vocab', vocab.id);

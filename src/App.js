@@ -289,25 +289,25 @@ export default function App() {
           <Route 
             path="/listening/list" 
             element={
-              <>
+              <ProtectedRoute>
                 <Header />
                 <div className="main-content">
                   <ListeningList />
                 </div>
                 <Footer />
-              </>
+              </ProtectedRoute>
             } 
           />
           <Route 
             path="/listening/practice" 
             element={
-              <>
+              <ProtectedRoute>
                 <Header />
                 <div className="main-content">
                   <ListeningPractice />
                 </div>
                 <Footer />
-              </>
+              </ProtectedRoute>
             } 
           />
 
@@ -340,41 +340,41 @@ export default function App() {
           </Route>
         </Route>
 
-        {/* Reading 관련 라우트 (공개 접근) */}
+        {/* Reading 관련 라우트 (인증 필요) */}
         <Route 
           path="/reading" 
           element={
-            <>
+            <ProtectedRoute>
               <Header />
               <div className="main-content">
                 <ReadingList />
               </div>
               <Footer />
-            </>
+            </ProtectedRoute>
           } 
         />
         <Route 
           path="/reading/practice" 
           element={
-            <>
+            <ProtectedRoute>
               <Header />
               <div className="main-content">
                 <Reading />
               </div>
               <Footer />
-            </>
+            </ProtectedRoute>
           } 
         />
         <Route 
           path="/reading/review" 
           element={
-            <>
+            <ProtectedRoute>
               <Header />
               <div className="main-content">
                 <ReadingReview />
               </div>
               <Footer />
-            </>
+            </ProtectedRoute>
           } 
         />
 
