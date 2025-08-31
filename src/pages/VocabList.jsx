@@ -673,6 +673,8 @@ export default function VocabList() {
             'rest (remaining part)': 'rest (remaining part)',
             'rest (sleep/relax)': 'rest (sleeprelax)(unkown)', // Note: actual file has typo "unkown"
             'second (next after the first)': 'second (next after the first)',
+            'strip (remove clothes/a layer)': 'strip (remove clothesa layer)', // 복잡한 C1 케이스
+            'strip (long narrow piece)': 'strip (long narrow piece)', // C1 케이스
             
             // Additional mappings for common patterns
             'used to': 'used to',
@@ -832,6 +834,8 @@ export default function VocabList() {
                 'race (competition).mp3',
                 'second (next after the first).mp3',
                 'bank (money).mp3', // A1에서도 매칭되도록 추가
+                'strip (remove clothesa layer).mp3', // C1 복잡한 경우
+                'strip (long narrow piece).mp3', // C1 케이스
                 
                 // Additional common words (ACTUAL A2 files)
                 'used to.mp3',
@@ -851,6 +855,98 @@ export default function VocabList() {
         
         return getBestMatchingFileName(lemma, pos, availableFiles);
     }
+
+    // Gloss 오디오 재생 함수 (상세 보기 상단 버튼용)
+    const playGlossAudio = async (vocab) => {
+        console.log('🔍 [DEBUG] playGlossAudio called with vocab:', vocab.lemma);
+        
+        // CEFR 레벨을 실제 폴더명으로 매핑
+        const cefrToFolder = {
+            'A1': 'starter',
+            'A2': 'elementary', 
+            'B1': 'intermediate',
+            'B2': 'upper',
+            'C1': 'advanced',
+            'C2': 'advanced'
+        };
+        
+        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
+        let audioData = null;
+        if (vocab.dictentry?.audioLocal) {
+            try {
+                if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
+                    audioData = JSON.parse(vocab.dictentry.audioLocal);
+                } else if (typeof vocab.dictentry.audioLocal === 'string') {
+                    const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                    audioData = { 
+                        word: `${basePath}/word.mp3`, 
+                        gloss: `${basePath}/gloss.mp3`,
+                        example: `${basePath}/example.mp3` 
+                    };
+                } else {
+                    audioData = vocab.dictentry.audioLocal;
+                }
+            } catch (e) {
+                console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
+                const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                audioData = { 
+                    word: `${basePath}/word.mp3`, 
+                    gloss: `${basePath}/gloss.mp3`,
+                    example: `${basePath}/example.mp3` 
+                };
+            }
+        }
+        
+        // 경로 수정: bank-money -> bank (money) 등 괄호 포함 단어 처리
+        let glossAudioPath = audioData?.gloss;
+        
+        if (glossAudioPath && (glossAudioPath.includes('-') || glossAudioPath.includes(' '))) {
+            const pathParts = glossAudioPath.split('/');
+            if (pathParts.length >= 3) {
+                const folderName = pathParts[1];
+                const fileName = pathParts[2];
+                
+                const pathMappings = {
+                    'bank-money': 'bank (money)',
+                    'rock-music': 'rock (music)',
+                    'rock-stone': 'rock (stone)',
+                    'light-not-heavy': 'light (not heavy)',
+                    'light-from-the-sun': 'light (from the sun/a lamp)',
+                    'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
+                    'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
+                    'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
+                    'rest-remaining part': 'rest (remaining part)', // JSON에 공백이 포함된 경우
+                    'like-find sb/sth pleasant': 'like (find sbsth pleasant)', // 복잡한 경우 (슬래시 제거)
+                    'strip-remove clothes/a layer': 'strip (remove clothesa layer)', // 슬래시와 공백이 모두 제거된 경우
+                    'last-final': 'last (final)',
+                    'mine-belongs-to-me': 'mine (belongs to me)',
+                    'bear-animal': 'bear (animal)',
+                    'race-competition': 'race (competition)',
+                    'rest-remaining-part': 'rest (remaining part)',
+                    'rest-sleeprelax': 'rest (sleep/relax)'
+                };
+                
+                if (pathMappings[folderName]) {
+                    glossAudioPath = `${pathParts[0]}/${pathMappings[folderName]}/${fileName}`;
+                    console.log('🔧 [DEBUG] Gloss path corrected to', glossAudioPath);
+                }
+            }
+        }
+        
+        if (glossAudioPath) {
+            const absolutePath = glossAudioPath.startsWith('/') ? glossAudioPath : `/${glossAudioPath}`;
+            console.log('✅ Playing GLOSS audio from cefr_vocabs:', absolutePath);
+            playUrl(absolutePath, 'vocab', vocab.id);
+            return;
+        }
+        
+        // 폴백: 로컬 오디오 사용 (gloss.mp3)
+        const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+        const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+        const localAudioPath = `/${folderName}/${audioFileName}/gloss.mp3`;
+        console.log('⚠️ Playing GLOSS audio from local path:', localAudioPath);
+        playUrl(localAudioPath, 'vocab', vocab.id);
+    };
 
     const playVocabAudio = async (vocab) => {
         // 단어 자체 발음: cefr_vocabs.json의 audio.word 경로 우선 사용
@@ -902,7 +998,62 @@ export default function VocabList() {
             }
         }
         // 단어 발음: audio.word 경로 우선 사용
-        const wordAudioPath = audioData?.word;
+        let wordAudioPath = audioData?.word;
+        
+        // 경로 수정: bank-money -> bank (money) 등 괄호 포함 단어 처리
+        if (wordAudioPath && (wordAudioPath.includes('-') || wordAudioPath.includes(' '))) {
+            console.log('🔍 [DEBUG] Original wordAudioPath:', wordAudioPath);
+            
+            // 특별한 경우들을 먼저 처리
+            const specialMappings = {
+                'advanced/strip-remove clothes/a layer/word.mp3': 'advanced/strip (remove clothesa layer)/word.mp3',
+                'advanced/strip-remove clothes/a layer/gloss.mp3': 'advanced/strip (remove clothesa layer)/gloss.mp3',
+                'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip (remove clothesa layer)/example.mp3',
+                'advanced/strip-long narrow piece/word.mp3': 'advanced/strip (long narrow piece)/word.mp3',
+                'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip (long narrow piece)/gloss.mp3',
+                'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3'
+            };
+            
+            if (specialMappings[wordAudioPath]) {
+                wordAudioPath = specialMappings[wordAudioPath];
+                console.log('🔧 [DEBUG] Special mapping applied:', wordAudioPath);
+            } else {
+                // 일반적인 경로 변환
+                const pathParts = wordAudioPath.split('/');
+                if (pathParts.length >= 3) {
+                    const folderName = pathParts[1];
+                    const fileName = pathParts[2];
+                    
+                    // 하이픈을 공백과 괄호로 변환하는 매핑
+                    const pathMappings = {
+                        'bank-money': 'bank (money)',
+                        'rock-music': 'rock (music)',
+                        'rock-stone': 'rock (stone)',
+                        'light-not-heavy': 'light (not heavy)',
+                        'light-from-the-sun': 'light (from the sun/a lamp)',
+                        'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
+                        'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
+                        'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
+                        'rest-remaining part': 'rest (remaining part)', // JSON에 공백이 포함된 경우
+                        'like-find sb/sth pleasant': 'like (find sbsth pleasant)', // 복잡한 경우 (슬래시 제거)
+                        'last-final': 'last (final)',
+                        'mine-belongs-to-me': 'mine (belongs to me)',
+                        'bear-animal': 'bear (animal)',
+                        'race-competition': 'race (competition)',
+                        'rest-remaining-part': 'rest (remaining part)',
+                        'rest-sleeprelax': 'rest (sleep/relax)'
+                    };
+                    
+                    console.log('🔍 [DEBUG] Checking folderName for mapping:', folderName);
+                    if (pathMappings[folderName]) {
+                        wordAudioPath = `${pathParts[0]}/${pathMappings[folderName]}/${fileName}`;
+                        console.log('🔧 [DEBUG] Path corrected from', audioData.word, 'to', wordAudioPath);
+                    } else {
+                        console.log('⚠️ [DEBUG] No mapping found for folderName:', folderName);
+                    }
+                }
+            }
+        }
         
         if (wordAudioPath) {
             // wordAudioPath에 이미 starter/a/word.mp3 형태로 포함되어 있음
@@ -1346,6 +1497,7 @@ export default function VocabList() {
                                     onClose={() => { setDetail(null); stopAudio(); }}
                                     onPlayUrl={(url, type, id) => playExampleAudio(url, type, id)}
                                     onPlayVocabAudio={playVocabAudio}
+                                    onPlayGlossAudio={playGlossAudio}
                                     playingAudio={playingAudio}
                                     onAddSRS={(ids) => handleAddSRS(ids)}
                                 />
