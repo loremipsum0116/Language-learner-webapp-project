@@ -2249,21 +2249,51 @@ export default function LearnVocab() {
                             <>
                                 <div className="mb-3 lead"><strong>뜻:</strong> {current.answer}</div>
                                 {(() => {
-                                    // Use the exact same logic as VocabDetailModal
+                                    // Enhanced example extraction logic
                                     const dictentry = current.vocab?.dictentry || {};
                                     const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+                                    
+                                    // Try multiple approaches to find examples
+                                    let englishExample = '';
+                                    let koreanExample = '';
+                                    
+                                    // 1. Find example with kind === 'example'
                                     const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
-
-                                    if (exampleExample && exampleExample.ko) {
-                                        // Same logic as VocabDetailModal, with chirpScript fallback
-                                        let englishExample = exampleExample.en || '';
-
-                                        // If no en field, try to extract from chirpScript
+                                    if (exampleExample) {
+                                        englishExample = exampleExample.en || '';
+                                        koreanExample = exampleExample.ko || '';
+                                        
+                                        // Extract from chirpScript if needed
                                         if (!englishExample && exampleExample.chirpScript) {
-                                            const match = exampleExample.chirpScript.match(/예문은 (.+?)\./);
-                                            englishExample = match ? match[1] : '';
+                                            const patterns = [
+                                                /예문은 (.+?)\./,
+                                                /([A-Z][^.!?]*[.!?])/,
+                                                /([A-Z][^가-힣]*?)\s*([가-힣][^.]*[.])/
+                                            ];
+                                            
+                                            for (const pattern of patterns) {
+                                                const match = exampleExample.chirpScript.match(pattern);
+                                                if (match) {
+                                                    englishExample = match[1].trim();
+                                                    break;
+                                                }
+                                            }
                                         }
+                                    }
+                                    
+                                    // 2. If no example found, try any entry with examples
+                                    if (!koreanExample && !englishExample) {
+                                        for (const entry of rawMeanings) {
+                                            if (entry.ko || entry.en || entry.chirpScript) {
+                                                koreanExample = entry.ko || '';
+                                                englishExample = entry.en || '';
+                                                break;
+                                            }
+                                        }
+                                    }
 
+                                    // Only show if we have at least Korean translation
+                                    if (koreanExample) {
                                         return (
                                             <div className="mt-4 text-start w-100">
                                                 <h6 className="fw-bold">예문</h6>
@@ -2271,7 +2301,7 @@ export default function LearnVocab() {
                                                     {englishExample && (
                                                         <p lang="en" className="fw-bold mb-1">{englishExample}</p>
                                                     )}
-                                                    <p className="text-muted small mb-0">— {exampleExample.ko}</p>
+                                                    <p className="text-muted small mb-0">— {koreanExample}</p>
                                                 </div>
                                             </div>
                                         );
