@@ -1,0 +1,1715 @@
+{
+  "totalTested": 10815,
+  "failedCount": 186,
+  "timestamp": "2025-08-31T13:32:09.211Z",
+  "failedAudios": [
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/according to/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/according to/word.mp3"
+    },
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/according to/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/according to/word.mp3"
+    },
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/according to/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/according to/gloss.mp3"
+    },
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/according to/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/according to/gloss.mp3"
+    },
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/according to/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/according to/example.mp3"
+    },
+    {
+      "id": 906,
+      "lemma": "according to",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/according to/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/according to/example.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/all right/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/all right/word.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/all right/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/all right/word.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/all right/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/all right/gloss.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/all right/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/all right/gloss.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/all right/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/all right/example.mp3"
+    },
+    {
+      "id": 924,
+      "lemma": "all right",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/all right/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/all right/example.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/close-near in distance /word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/close-near in distance /word.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/close-near in distance /word.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/close-near in distance /word.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/close-near in distance /gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/close-near in distance /gloss.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/close-near in distance /gloss.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/close-near in distance /gloss.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/close-near in distance /example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/close-near in distance /example.mp3"
+    },
+    {
+      "id": 1889,
+      "lemma": "close (near in distance) ",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/close-near in distance /example.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/close-near in distance /example.mp3"
+    },
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "word",
+      "url": "http://localhost:4000/upper/entrée/word.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/word.mp3"
+    },
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "gloss",
+      "url": "http://localhost:4000/upper/entrée/gloss.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/gloss.mp3"
+    },
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "example",
+      "url": "http://localhost:4000/upper/entrée/example.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/example.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/have to/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/have to/word.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/have to/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/have to/word.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/have to/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/have to/gloss.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/have to/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/have to/gloss.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/have to/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/have to/example.mp3"
+    },
+    {
+      "id": 350,
+      "lemma": "have to",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/have to/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/have to/example.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/ice cream/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/ice cream/word.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/ice cream/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/ice cream/word.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/ice cream/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/ice cream/gloss.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/ice cream/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/ice cream/gloss.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/ice cream/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/ice cream/example.mp3"
+    },
+    {
+      "id": 383,
+      "lemma": "ice cream",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/ice cream/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/ice cream/example.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/last-taking time/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/last-taking time/word.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/last-taking time/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/last-taking time/word.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/last-taking time/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/last-taking time/gloss.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/last-taking time/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/last-taking time/gloss.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/last-taking time/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/last-taking time/example.mp3"
+    },
+    {
+      "id": 1339,
+      "lemma": "last (taking time)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/last-taking time/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/last-taking time/example.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/lie-tell a lie/word.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/lie-tell a lie/word.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/lie-tell a lie/gloss.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/lie-tell a lie/gloss.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/lie-tell a lie/example.mp3"
+    },
+    {
+      "id": 2175,
+      "lemma": "lie (tell a lie)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/lie-tell a lie/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/lie-tell a lie/example.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-from the sun/a lamp/word.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/word.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/light-from the sun/a lamp/word.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-from the sun/a lamp/gloss.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/light-from the sun/a lamp/gloss.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-from the sun/a lamp/example.mp3"
+    },
+    {
+      "id": 1356,
+      "lemma": "light (from the sun/a lamp)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/light-from the sun/a lamp/example.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/light-from the sun/a lamp/example.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/light-not heavy/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-not heavy/word.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/light-not heavy/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/light-not heavy/word.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/light-not heavy/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-not heavy/gloss.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/light-not heavy/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/light-not heavy/gloss.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/light-not heavy/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/light-not heavy/example.mp3"
+    },
+    {
+      "id": 1357,
+      "lemma": "light (not heavy)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/light-not heavy/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/light-not heavy/example.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/like-find sb/sth pleasant/word.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/like-find sb/sth pleasant/word.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/like-find sb/sth pleasant/gloss.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/like-find sb/sth pleasant/gloss.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/like-find sb/sth pleasant/example.mp3"
+    },
+    {
+      "id": 2176,
+      "lemma": "like (find sb/sth pleasant)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/like-find sb/sth pleasant/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/like-find sb/sth pleasant/example.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/live-about broadcasting/word.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/live-about broadcasting/word.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/live-about broadcasting/gloss.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/live-about broadcasting/gloss.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/live-about broadcasting/example.mp3"
+    },
+    {
+      "id": 2181,
+      "lemma": "live (about broadcasting)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/live-about broadcasting/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/live-about broadcasting/example.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/ma'am/word.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/word.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/ma'am/gloss.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/gloss.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/ma'am/example.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/example.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/mine-belongs to me/word.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "elementary/mine-belongs to me/word.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/mine-belongs to me/gloss.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "elementary/mine-belongs to me/gloss.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/mine-belongs to me/example.mp3"
+    },
+    {
+      "id": 1394,
+      "lemma": "mine (belongs to me)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/mine-belongs to me/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "elementary/mine-belongs to me/example.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/mine-hole in the ground/word.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/word.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/mine-hole in the ground/word.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/mine-hole in the ground/gloss.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/mine-hole in the ground/gloss.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/mine-hole in the ground/example.mp3"
+    },
+    {
+      "id": 2204,
+      "lemma": "mine (hole in the ground)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/mine-hole in the ground/example.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "intermediate/mine-hole in the ground/example.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/next to/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/next to/word.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/next to/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/next to/word.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/next to/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/next to/gloss.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/next to/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/next to/gloss.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/next to/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/next to/example.mp3"
+    },
+    {
+      "id": 514,
+      "lemma": "next to",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/next to/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/next to/example.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/no one/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/no one/word.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/no one/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/no one/word.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/no one/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/no one/gloss.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/no one/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/no one/gloss.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/no one/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "starter/no one/example.mp3"
+    },
+    {
+      "id": 521,
+      "lemma": "no one",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/no one/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "starter/no one/example.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/o'clock/word.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/word.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/o'clock/gloss.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/gloss.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/o'clock/example.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/example.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/plus-about adding/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/plus-about adding/word.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/plus-about adding/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/plus-about adding/word.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/plus-about adding/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/plus-about adding/gloss.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/plus-about adding/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/plus-about adding/gloss.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/plus-about adding/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/plus-about adding/example.mp3"
+    },
+    {
+      "id": 2277,
+      "lemma": "plus (about adding)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/plus-about adding/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/plus-about adding/example.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/race-of people/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/race-of people/word.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/race-of people/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/race-of people/word.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/race-of people/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/race-of people/gloss.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/race-of people/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/race-of people/gloss.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/race-of people/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/race-of people/example.mp3"
+    },
+    {
+      "id": 2337,
+      "lemma": "race (of people)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/race-of people/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/race-of people/example.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/rest-remaining part/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/rest-remaining part/word.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/rest-remaining part/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/rest-remaining part/word.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/rest-remaining part/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/rest-remaining part/gloss.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/rest-remaining part/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/rest-remaining part/gloss.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/rest-remaining part/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/rest-remaining part/example.mp3"
+    },
+    {
+      "id": 1548,
+      "lemma": "rest (remaining part)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/rest-remaining part/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/rest-remaining part/example.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "word",
+      "url": "http://localhost:4000/upper/résumé/word.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/word.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "gloss",
+      "url": "http://localhost:4000/upper/résumé/gloss.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/gloss.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "example",
+      "url": "http://localhost:4000/upper/résumé/example.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/example.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/ring-to wear on the finger/word.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/word.mp3",
+      "error": "특수 문자 포함:  ,  ,  ,  ",
+      "originalPath": "intermediate/ring-to wear on the finger/word.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/ring-to wear on the finger/gloss.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ,  ,  ",
+      "originalPath": "intermediate/ring-to wear on the finger/gloss.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/ring-to wear on the finger/example.mp3"
+    },
+    {
+      "id": 2380,
+      "lemma": "ring (to wear on the finger)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/ring-to wear on the finger/example.mp3",
+      "error": "특수 문자 포함:  ,  ,  ,  ",
+      "originalPath": "intermediate/ring-to wear on the finger/example.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/row-a horizontal line/word.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/row-a horizontal line/word.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/row-a horizontal line/gloss.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/row-a horizontal line/gloss.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/row-a horizontal line/example.mp3"
+    },
+    {
+      "id": 2387,
+      "lemma": "row (a horizontal line)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/row-a horizontal line/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/row-a horizontal line/example.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/second-next after the first/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/second-next after the first/word.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/second-next after the first/word.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/second-next after the first/word.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/second-next after the first/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/second-next after the first/gloss.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/second-next after the first/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/second-next after the first/gloss.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/second-next after the first/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/second-next after the first/example.mp3"
+    },
+    {
+      "id": 1583,
+      "lemma": "second (next after the first)",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/second-next after the first/example.mp3",
+      "error": "특수 문자 포함:  ,  ,  ",
+      "originalPath": "elementary/second-next after the first/example.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-piece of wood/word.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/stick-piece of wood/word.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-piece of wood/gloss.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/stick-piece of wood/gloss.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-piece of wood/example.mp3"
+    },
+    {
+      "id": 2455,
+      "lemma": "stick (piece of wood)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/stick-piece of wood/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "intermediate/stick-piece of wood/example.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-push into/attach/word.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/stick-push into/attach/word.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-push into/attach/gloss.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/stick-push into/attach/gloss.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/stick-push into/attach/example.mp3"
+    },
+    {
+      "id": 2454,
+      "lemma": "stick (push into/attach)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/stick-push into/attach/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/stick-push into/attach/example.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "word",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-long narrow piece/word.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "word",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-long narrow piece/word.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "gloss",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-long narrow piece/gloss.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "gloss",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-long narrow piece/gloss.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "example",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-long narrow piece/example.mp3"
+    },
+    {
+      "id": 5166,
+      "lemma": "strip (long narrow piece)",
+      "levelCEFR": "C1",
+      "type": "example",
+      "url": "http://localhost:4000/advanced/strip-long narrow piece/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-long narrow piece/example.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "word",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-remove clothes/a layer/word.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "word",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/word.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-remove clothes/a layer/word.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "gloss",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-remove clothes/a layer/gloss.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "gloss",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/gloss.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-remove clothes/a layer/gloss.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "example",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "advanced/strip-remove clothes/a layer/example.mp3"
+    },
+    {
+      "id": 5167,
+      "lemma": "strip (remove clothes/a layer)",
+      "levelCEFR": "C1",
+      "type": "example",
+      "url": "http://localhost:4000/advanced/strip-remove clothes/a layer/example.mp3",
+      "error": "특수 문자 포함:  ,  ",
+      "originalPath": "advanced/strip-remove clothes/a layer/example.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/upside down/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/upside down/word.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/upside down/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/upside down/word.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/upside down/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/upside down/gloss.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/upside down/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/upside down/gloss.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/upside down/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/upside down/example.mp3"
+    },
+    {
+      "id": 8807,
+      "lemma": "upside down",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/upside down/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/upside down/example.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-accustomed to/word.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-accustomed to/word.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-accustomed to/gloss.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-accustomed to/gloss.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-accustomed to/example.mp3"
+    },
+    {
+      "id": 2539,
+      "lemma": "used (accustomed to)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/used-accustomed to/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-accustomed to/example.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/used-not new/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-not new/word.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "word",
+      "url": "http://localhost:4000/intermediate/used-not new/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-not new/word.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/used-not new/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-not new/gloss.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "gloss",
+      "url": "http://localhost:4000/intermediate/used-not new/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-not new/gloss.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/used-not new/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "intermediate/used-not new/example.mp3"
+    },
+    {
+      "id": 2540,
+      "lemma": "used (not new)",
+      "levelCEFR": "B1",
+      "type": "example",
+      "url": "http://localhost:4000/intermediate/used-not new/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "intermediate/used-not new/example.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/used to/word.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/used to/word.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/used to/word.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/used to/word.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/used to/gloss.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/used to/gloss.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/used to/gloss.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/used to/gloss.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/used to/example.mp3",
+      "error": "인코딩되지 않은 공백",
+      "originalPath": "elementary/used to/example.mp3"
+    },
+    {
+      "id": 1730,
+      "lemma": "used to",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/used to/example.mp3",
+      "error": "특수 문자 포함:  ",
+      "originalPath": "elementary/used to/example.mp3"
+    }
+  ],
+  "errorSummary": [
+    {
+      "errorType": "인코딩되지 않은 공백",
+      "count": 87
+    },
+    {
+      "errorType": "특수 문자 포함:  ",
+      "count": 51
+    },
+    {
+      "errorType": "특수 문자 포함:  ,  ,  ",
+      "count": 12
+    },
+    {
+      "errorType": "특수 문자 포함: é",
+      "count": 3
+    },
+    {
+      "errorType": "특수 문자 포함:  ,  ",
+      "count": 21
+    },
+    {
+      "errorType": "특수 문자 포함: '",
+      "count": 6
+    },
+    {
+      "errorType": "특수 문자 포함: é, é",
+      "count": 3
+    },
+    {
+      "errorType": "특수 문자 포함:  ,  ,  ,  ",
+      "count": 3
+    }
+  ]
+}

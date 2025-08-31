@@ -1,0 +1,129 @@
+{
+  "totalTested": 9777,
+  "failedCount": 12,
+  "timestamp": "2025-08-31T13:33:00.450Z",
+  "failedAudios": [
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "word",
+      "url": "http://localhost:4000/upper/entrée/word.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/word.mp3"
+    },
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "gloss",
+      "url": "http://localhost:4000/upper/entrée/gloss.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/gloss.mp3"
+    },
+    {
+      "id": 9243,
+      "lemma": "entrée",
+      "levelCEFR": "B2",
+      "type": "example",
+      "url": "http://localhost:4000/upper/entrée/example.mp3",
+      "error": "특수 문자 포함: é",
+      "originalPath": "upper/entrée/example.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "word",
+      "url": "http://localhost:4000/elementary/ma'am/word.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/word.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "gloss",
+      "url": "http://localhost:4000/elementary/ma'am/gloss.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/gloss.mp3"
+    },
+    {
+      "id": 8999,
+      "lemma": "ma'am",
+      "levelCEFR": "A2",
+      "type": "example",
+      "url": "http://localhost:4000/elementary/ma'am/example.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "elementary/ma'am/example.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "word",
+      "url": "http://localhost:4000/starter/o'clock/word.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/word.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "gloss",
+      "url": "http://localhost:4000/starter/o'clock/gloss.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/gloss.mp3"
+    },
+    {
+      "id": 534,
+      "lemma": "o'clock",
+      "levelCEFR": "A1",
+      "type": "example",
+      "url": "http://localhost:4000/starter/o'clock/example.mp3",
+      "error": "특수 문자 포함: '",
+      "originalPath": "starter/o'clock/example.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "word",
+      "url": "http://localhost:4000/upper/résumé/word.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/word.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "gloss",
+      "url": "http://localhost:4000/upper/résumé/gloss.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/gloss.mp3"
+    },
+    {
+      "id": 3848,
+      "lemma": "résumé",
+      "levelCEFR": "B2",
+      "type": "example",
+      "url": "http://localhost:4000/upper/résumé/example.mp3",
+      "error": "특수 문자 포함: é, é",
+      "originalPath": "upper/résumé/example.mp3"
+    }
+  ],
+  "errorSummary": [
+    {
+      "errorType": "특수 문자 포함: é",
+      "count": 3
+    },
+    {
+      "errorType": "특수 문자 포함: '",
+      "count": 6
+    },
+    {
+      "errorType": "특수 문자 포함: é, é",
+      "count": 3
+    }
+  ]
+}

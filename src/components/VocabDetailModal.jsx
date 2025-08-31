@@ -10,9 +10,45 @@ function safeFileName(str) {
   return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
 }
 
+// String similarity function (Levenshtein distance-based)
+function stringSimilarity(str1, str2) {
+  if (!str1 || !str2) return 0;
+  
+  const s1 = str1.toLowerCase();
+  const s2 = str2.toLowerCase();
+  
+  if (s1 === s2) return 1;
+  
+  const len1 = s1.length;
+  const len2 = s2.length;
+  
+  if (len1 === 0) return len2 === 0 ? 1 : 0;
+  if (len2 === 0) return 0;
+  
+  const matrix = Array(len2 + 1).fill(null).map(() => Array(len1 + 1).fill(null));
+  
+  for (let i = 0; i <= len1; i++) matrix[0][i] = i;
+  for (let j = 0; j <= len2; j++) matrix[j][0] = j;
+  
+  for (let j = 1; j <= len2; j++) {
+    for (let i = 1; i <= len1; i++) {
+      const cost = s1[i - 1] === s2[j - 1] ? 0 : 1;
+      matrix[j][i] = Math.min(
+        matrix[j - 1][i] + 1,
+        matrix[j][i - 1] + 1,
+        matrix[j - 1][i - 1] + cost
+      );
+    }
+  }
+  
+  const maxLen = Math.max(len1, len2);
+  return (maxLen - matrix[len2][len1]) / maxLen;
+}
+
 // audioLocal 데이터를 파싱하고 경로를 수정하는 통합 함수
 function parseAudioLocal(audioLocal) {
   if (!audioLocal) return null;
+  
   
   let audioData = null;
   
@@ -49,7 +85,7 @@ function parseAudioLocal(audioLocal) {
       'rock-music': 'rock (music)',
       'rock-stone': 'rock (stone)',
       'light-not-heavy': 'light (not heavy)',
-      'light-from-the-sun': 'light (from the sun/a lamp)',
+      'light-from-the-sun': 'light (from the suna lamp)',
       'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
       'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
       'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
@@ -66,6 +102,11 @@ function parseAudioLocal(audioLocal) {
     
     // 특별한 경우들을 먼저 처리
     const specialMappings = {
+      // Light (from the sun/a lamp) 매핑 - 가장 중요!
+      'elementary/light-from the sun/a lamp/word.mp3': 'elementary/light (from the suna lamp)/word.mp3',
+      'elementary/light-from the sun/a lamp/gloss.mp3': 'elementary/light (from the suna lamp)/gloss.mp3',
+      'elementary/light-from the sun/a lamp/example.mp3': 'elementary/light (from the suna lamp)/example.mp3',
+      
       'advanced/strip-remove clothes/a layer/word.mp3': 'advanced/strip (remove clothesa layer)/word.mp3',
       'advanced/strip-remove clothes/a layer/gloss.mp3': 'advanced/strip (remove clothesa layer)/gloss.mp3',
       'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip (remove clothesa layer)/example.mp3',
@@ -90,6 +131,32 @@ function parseAudioLocal(audioLocal) {
         }
       }
     });
+    
+  }
+  
+  // URL 안전하게 인코딩 (공백, 괄호, 슬래시 등)
+  if (audioData) {
+    const encodeAudioPath = (path) => {
+      if (!path) return path;
+      
+      // 경로의 각 세그먼트를 개별적으로 인코딩
+      const segments = path.split('/');
+      const encodedSegments = segments.map(segment => {
+        // 파일명이나 폴더명에 특수문자가 있으면 인코딩
+        return segment
+          .replace(/ /g, '%20')           // 공백
+          .replace(/\(/g, '%28')          // 왼쪽 괄호
+          .replace(/\)/g, '%29')          // 오른쪽 괄호;
+      });
+      
+      return encodedSegments.join('/');
+    };
+    
+    // 모든 오디오 경로를 안전하게 인코딩
+    for (const [key, path] of Object.entries(audioData)) {
+      audioData[key] = encodeAudioPath(path);
+    }
+    
   }
   
   return audioData;
@@ -298,6 +365,8 @@ export default function VocabDetailModal({
   playingAudio,
   onAddSRS,
 }) {
+  console.log('🐛 [VocabDetailModal] vocab.lemma:', vocab.lemma);
+  console.log('🐛 [VocabDetailModal] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
   const dictentry = vocab?.dictentry || {};
   
   // Parse examples if it's a string - handle all possible cases
@@ -357,8 +426,9 @@ export default function VocabDetailModal({
                   // cefr_vocabs.json의 audio 경로 사용
                   const audioData = parseAudioLocal(dictentry.audioLocal);
                   
-                  // 상세 보기 상단 오디오는 gloss 경로 사용
-                  const glossAudioPath = audioData?.gloss;
+                  // 상세 보기 상단 오디오는 gloss 경로 사용 (숙어/구동사는 example)
+                  const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                  const glossAudioPath = isIdiomOrPhrasal ? audioData?.example : audioData?.gloss;
                   
                   if (glossAudioPath && onPlayUrl) {
                     // 절대 경로로 변환
@@ -415,7 +485,7 @@ export default function VocabDetailModal({
                         const exampleAudioPath = audioData?.example;
                         
                         // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
-                        const isIdiomOrPhrasal = vocab.source === 'idiom';
+                        const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
                         
                         console.log('Audio button check:', { exampleAudioPath, isIdiomOrPhrasal, vocabSource: vocab.source });
                         
@@ -454,23 +524,45 @@ export default function VocabDetailModal({
                           // 다양한 소스에서 영어 예문 찾기
                           let englishExample = '';
                           
+                          console.log('Starting English example search for:', vocab.lemma);
+                          console.log('vocab.example:', vocab.example);
+                          console.log('exampleExample:', exampleExample);
+                          
                           // 1. vocab.example에서 직접 찾기 (CEFR 데이터의 주요 소스)
                           if (vocab.example) {
                             englishExample = vocab.example;
+                            console.log('Found english example from vocab.example:', englishExample);
                           }
                           // 1.1. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열)
                           else if (vocab.dictentry && vocab.dictentry.examples) {
+                            console.log('Checking vocab.dictentry.examples for en field');
                             const exampleEntry = vocab.dictentry.examples.find(ex => ex.kind === 'example' && ex.en);
+                            console.log('Found exampleEntry with en field:', exampleEntry);
                             if (exampleEntry) {
                               englishExample = exampleEntry.en;
+                              console.log('Found english example from dictentry.examples:', englishExample);
                             }
-                          }
-                          // 1.5. chirpScript에서 영어 예문 추출 (CEFR 데이터)
-                          else if (exampleExample && exampleExample.chirpScript) {
-                            // "예문은 I need a pen to write this down. 이것을" 패턴에서 영어 부분 추출
-                            const match = exampleExample.chirpScript.match(/예문은\s+([^.]+\.)/);
-                            if (match) {
-                              englishExample = match[1].trim();
+                            // 1.5. dictentry.examples에서 찾지 못했으면 chirpScript에서 영어 예문 추출 (CEFR 데이터)
+                            else if (exampleExample && exampleExample.chirpScript) {
+                              console.log('Processing chirpScript:', exampleExample.chirpScript);
+                              // "예문은 I need a pen to write this down. 이것을" 패턴에서 영어 부분 추출
+                              let match = exampleExample.chirpScript.match(/예문은\s+([^.]+\.)/);
+                              console.log('First pattern match:', match);
+                              if (match) {
+                                englishExample = match[1].trim();
+                                console.log('Found english example (pattern 1):', englishExample);
+                              } else {
+                                // "What is the book about? 그 책은" 패턴에서 영어 부분 추출
+                                // 영어 문장 다음에 공백이 있고 한글이 나오는 패턴을 찾음
+                                match = exampleExample.chirpScript.match(/([A-Z][^가-힣]*[?!.])\s+[가-힣]/);
+                                console.log('Second pattern match:', match);
+                                if (match) {
+                                  englishExample = match[1].trim();
+                                  console.log('Found english example (pattern 2):', englishExample);
+                                } else {
+                                  console.log('No pattern matched for chirpScript');
+                                }
+                              }
                             }
                           }
                           // 2. exampleExample.en에서 찾기
@@ -525,7 +617,7 @@ export default function VocabDetailModal({
                               // 사용법 오디오 버튼
                               const dictentry = vocab.dictentry;
                               const audioData = parseAudioLocal(dictentry?.audioLocal);
-                              const isIdiomOrPhrasal = vocab.source === 'idiom';
+                              const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
                               
                               // 숙어/구동사의 경우 example 오디오를 사용법에서 재생
                               const usageAudioPath = isIdiomOrPhrasal ? audioData?.example : audioData?.gloss;

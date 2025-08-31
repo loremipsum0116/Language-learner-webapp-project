@@ -232,7 +232,7 @@ router.get('/idioms-phrasal', async (req, res) => {
     
     const where = { 
       pos: pos,
-      source: 'idiom' // Only get idioms/phrasal verbs
+      source: 'idiom_migration' // Only get idioms/phrasal verbs
     };
     
     // Add search filter if provided

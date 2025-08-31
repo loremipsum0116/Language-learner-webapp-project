@@ -183,7 +183,7 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                         </div>
                     </div>
                     <Pron ipa={vocab.ipa} ipaKo={vocab.ipa ? vocab.ipaKo : null} />
-                    <div className="card-subtitle text-muted">{vocab.ipa ? '' : koGloss}</div>
+                    <div className="card-subtitle text-muted">{koGloss}</div>
                 </div>
                 <div className="card-footer d-flex gap-2 justify-content-between align-items-center">
                     <div className="d-flex align-items-center">

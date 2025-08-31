@@ -61,7 +61,8 @@
       "Bash(GENERATE_SOURCEMAP=false npm start)",
       "Bash(netstat:*)",
       "Bash(PORT=3001 npm start)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(move:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
