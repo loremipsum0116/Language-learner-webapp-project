@@ -204,25 +204,31 @@ function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                                 + SRS
                             </button>
                         </div>
-                        <button
-                            className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center ms-2"
-                            style={{ width: '32px', height: '32px' }}
-                            onClick={(e) => { e.stopPropagation(); onPlayAudio(vocab); }}
-                            disabled={isEnriching}
-                            title="음성 듣기"
-                        >
-                            {isEnriching ? (
-                                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                            ) : isPlaying ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
-                                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
-                                </svg>
-                            ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
-                                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
-                                </svg>
-                            )}
-                        </button>
+                        {/* Show play button only for idioms/phrasal verbs OR regular vocab with audio */}
+                        {((vocab.source === 'idiom_migration') || (!vocab.source || vocab.source !== 'idiom_migration')) && (
+                            <button
+                                className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center ms-2"
+                                style={{ width: '32px', height: '32px' }}
+                                onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    onPlayAudio(vocab);
+                                }}
+                                disabled={isEnriching}
+                                title={vocab.source === 'idiom_migration' ? '숙어/구동사 듣기' : '음성 듣기'}
+                            >
+                                {isEnriching ? (
+                                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                ) : isPlaying ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
+                                        <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                                    </svg>
+                                ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
+                                        <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                                    </svg>
+                                )}
+                            </button>
+                        )}
                     </div>
                     {isAdmin && (
                         <button
@@ -596,6 +602,82 @@ export default function VocabList() {
             setPlayingAudio({ type, id });
         }).catch(e => {
             console.error("오디오 재생 실패:", e, fullUrl);
+            
+            // 폴백: 다른 폴더에서 실패한 경우 idiom/phrasal_verb 폴더에서 시도
+            if (fullUrl.includes('/intermediate/') || fullUrl.includes('/advanced/') || fullUrl.includes('/starter/') || fullUrl.includes('/phrasal_verb/') || fullUrl.includes('/idiom/')) {
+                const pathParts = fullUrl.split('/');
+                const fileName = pathParts[pathParts.length - 2]; // a_stones_throw
+                const audioType = pathParts[pathParts.length - 1]; // word.mp3
+                
+                // phrasal_verb에서 실패한 경우 idiom으로, idiom에서 실패한 경우 phrasal_verb로 폴백
+                const isFromPhrasalVerb = fullUrl.includes('/phrasal_verb/');
+                const isFromIdiom = fullUrl.includes('/idiom/');
+                
+                let fallbackUrl;
+                if (isFromPhrasalVerb) {
+                    // phrasal_verb에서 실패 -> idiom 폴더 시도
+                    if (audioType === 'word.mp3') {
+                        fallbackUrl = `/idiom/${fileName}.mp3`;
+                    } else if (audioType === 'gloss.mp3') {
+                        fallbackUrl = `/idiom/${fileName}_gloss.mp3`;
+                    } else if (audioType === 'example.mp3') {
+                        fallbackUrl = `/idiom/${fileName}_example.mp3`;
+                    }
+                } else {
+                    // 일반 폴더나 idiom에서 실패 -> phrasal_verb 폴더 시도
+                    if (audioType === 'word.mp3') {
+                        fallbackUrl = `/phrasal_verb/${fileName}.mp3`;
+                    } else if (audioType === 'gloss.mp3') {
+                        fallbackUrl = `/phrasal_verb/${fileName}_gloss.mp3`;
+                    } else if (audioType === 'example.mp3') {
+                        fallbackUrl = `/phrasal_verb/${fileName}_example.mp3`;
+                    }
+                    
+                    // phrasal_verb에서도 실패하면 idiom 시도
+                    if (!isFromIdiom) {
+                        const secondFallbackUrl = fallbackUrl ? fallbackUrl.replace('/phrasal_verb/', '/idiom/') : null;
+                        
+                        if (fallbackUrl) {
+                            console.log('🔄 Trying phrasal_verb fallback URL:', fallbackUrl);
+                            const fallbackAudio = new Audio(fallbackUrl);
+                            fallbackAudio.play().then(() => {
+                                audioRef.current = fallbackAudio;
+                                setPlayingAudio({ type, id });
+                            }).catch(fallbackError => {
+                                if (secondFallbackUrl) {
+                                    console.log('🔄 Trying idiom fallback URL:', secondFallbackUrl);
+                                    const secondFallbackAudio = new Audio(secondFallbackUrl);
+                                    secondFallbackAudio.play().then(() => {
+                                        audioRef.current = secondFallbackAudio;
+                                        setPlayingAudio({ type, id });
+                                    }).catch(secondFallbackError => {
+                                        console.error("모든 폴백 오디오 재생 실패:", secondFallbackError);
+                                        setPlayingAudio(null);
+                                    });
+                                } else {
+                                    setPlayingAudio(null);
+                                }
+                            });
+                            return;
+                        }
+                    }
+                }
+                
+                if (fallbackUrl) {
+                    const folderName = isFromPhrasalVerb ? 'idiom' : 'phrasal_verb';
+                    console.log(`🔄 Trying ${folderName} fallback URL:`, fallbackUrl);
+                    const fallbackAudio = new Audio(fallbackUrl);
+                    fallbackAudio.play().then(() => {
+                        audioRef.current = fallbackAudio;
+                        setPlayingAudio({ type, id });
+                    }).catch(fallbackError => {
+                        console.error(`${folderName} 폴백 오디오 재생 실패:`, fallbackError);
+                        setPlayingAudio(null);
+                    });
+                    return;
+                }
+            }
+            
             setPlayingAudio(null);
         });
     };
@@ -803,6 +885,13 @@ export default function VocabList() {
 
     // Smart file name matching based on known patterns (same as VocabDetailModal)
     async function getSmartAudioFileName(lemma, pos, level) {
+        // 특수문자가 포함된 lemma의 경우 정리된 파일명으로 변환
+        if (lemma && (lemma.includes(' ') || lemma.includes('-') || lemma.includes("'"))) {
+            const cleanLemma = lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            console.log('🔧 [DEBUG] getSmartAudioFileName cleaned lemma:', lemma, '->', cleanLemma);
+            return cleanLemma;
+        }
+        
         // 실제 파일 목록을 가져와서 매칭 (API 실패시 하드코딩된 목록 사용)
         let availableFiles = await fetchAudioFiles(level);
         
@@ -878,21 +967,28 @@ export default function VocabList() {
                     audioData = JSON.parse(vocab.dictentry.audioLocal);
                 } else if (typeof vocab.dictentry.audioLocal === 'string') {
                     const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                    console.log('🔍 [DEBUG] playGlossAudio basePath:', basePath);
+                    // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
+                    const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
+                    console.log('🔍 [DEBUG] playGlossAudio isIdiomOrPhrasal:', isIdiomOrPhrasal);
                     audioData = { 
-                        word: `${basePath}/word.mp3`, 
-                        gloss: `${basePath}/gloss.mp3`,
-                        example: `${basePath}/example.mp3` 
+                        word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
+                        gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
+                        example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
                     };
+                    console.log('🔍 [DEBUG] playGlossAudio generated audioData:', audioData);
                 } else {
                     audioData = vocab.dictentry.audioLocal;
                 }
             } catch (e) {
                 console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
                 const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
+                const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
                 audioData = { 
-                    word: `${basePath}/word.mp3`, 
-                    gloss: `${basePath}/gloss.mp3`,
-                    example: `${basePath}/example.mp3` 
+                    word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
+                    gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
+                    example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
                 };
             }
         }
@@ -949,6 +1045,32 @@ export default function VocabList() {
     };
 
     const playVocabAudio = async (vocab) => {
+        console.log('🔍 [DEBUG] playVocabAudio vocab.source:', vocab.source, 'lemma:', vocab.lemma);
+        // Check if this is an idiom/phrasal verb first
+        if (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) {
+            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            
+            // category에서 "구동사" 여부 확인 또는 source로 판단
+            // 알려진 phrasal verb들을 직접 매핑
+            const knownPhrasalVerbs = [
+              'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
+              'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
+              'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
+              'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
+              'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
+            ];
+            
+            const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
+                                 (vocab.category && vocab.category.includes('구동사')) ||
+                                 knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
+            
+            const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+            const audioPath = `/${folderName}/${cleanLemma}.mp3`;  // word 오디오는 _example.mp3가 아닌 .mp3
+            console.log('Playing idiom/phrasal word audio from path:', audioPath, 'category:', vocab.category, 'isPhrasalVerb:', isPhrasalVerb);
+            playUrl(audioPath, 'vocab', vocab.id);
+            return;
+        }
+        
         // 단어 자체 발음: cefr_vocabs.json의 audio.word 경로 우선 사용
         console.log('🔍 [DEBUG] playVocabAudio called with vocab:', vocab.lemma);
         console.log('🔍 [DEBUG] vocab.dictentry:', vocab.dictentry);
@@ -976,10 +1098,12 @@ export default function VocabList() {
                 } else if (typeof vocab.dictentry.audioLocal === 'string') {
                     // 단순한 경로 문자열인 경우, 적절한 경로들 생성
                     const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                    // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
+                    const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
                     audioData = { 
-                        word: `${basePath}/word.mp3`, 
-                        gloss: `${basePath}/gloss.mp3`,
-                        example: `${basePath}/example.mp3` 
+                        word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
+                        gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
+                        example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
                     };
                     console.log('🔍 [DEBUG] Treated as simple string, created audioData:', audioData);
                 } else {
@@ -990,10 +1114,12 @@ export default function VocabList() {
                 console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
                 // 파싱 실패 시 단순한 경로로 처리
                 const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
+                // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
+                const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
                 audioData = { 
-                    word: `${basePath}/word.mp3`, 
-                    gloss: `${basePath}/gloss.mp3`,
-                    example: `${basePath}/example.mp3` 
+                    word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
+                    gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
+                    example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
                 };
             }
         }
@@ -1011,12 +1137,19 @@ export default function VocabList() {
                 'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip (remove clothesa layer)/example.mp3',
                 'advanced/strip-long narrow piece/word.mp3': 'advanced/strip (long narrow piece)/word.mp3',
                 'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip (long narrow piece)/gloss.mp3',
-                'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3'
+                'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3',
+                "idiom/for_what_it's_worth/gloss.mp3": 'idiom/for_what_it_s_worth_gloss.mp3',
+                "idiom/for_what_it's_worth/word.mp3": 'idiom/for_what_it_s_worth.mp3',
+                "idiom/for_what_it's_worth/example.mp3": 'idiom/for_what_it_s_worth_example.mp3'
             };
             
             if (specialMappings[wordAudioPath]) {
                 wordAudioPath = specialMappings[wordAudioPath];
                 console.log('🔧 [DEBUG] Special mapping applied:', wordAudioPath);
+            } else if (wordAudioPath.includes('gloss.mp3') && (wordAudioPath.includes('idiom/') || wordAudioPath.includes('phrasal/') || wordAudioPath.includes('phrasal_verb/'))) {
+                // 숙어 및 구동사의 gloss.mp3 파일에 대해 하이픈을 언더스코어로 변환
+                wordAudioPath = wordAudioPath.replace(/-/g, '_');
+                console.log('🔧 [DEBUG] Hyphen to underscore conversion for gloss.mp3:', wordAudioPath);
             } else {
                 // 일반적인 경로 변환
                 const pathParts = wordAudioPath.split('/');
@@ -1084,11 +1217,27 @@ export default function VocabList() {
     // 예문 전용 오디오 재생 함수 추가
     const playExampleOnlyAudio = async (vocab) => {
         // 숙어/구동사인 경우 특별 처리
-        if (vocab.source === 'idiom_migration' && vocab.lemma) {
-            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_');
-            const idiomAudioPath = `/idiom/${cleanLemma}_example.mp3`;
-            console.log('Playing idiom audio from path:', idiomAudioPath);
-            playUrl(idiomAudioPath, 'example', vocab.id);
+        if ((vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) && vocab.lemma) {
+            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            
+            // category에서 "구동사" 여부 확인 또는 source로 판단
+            // 알려진 phrasal verb들을 직접 매핑
+            const knownPhrasalVerbs = [
+              'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
+              'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
+              'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
+              'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
+              'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
+            ];
+            
+            const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
+                                 (vocab.category && vocab.category.includes('구동사')) ||
+                                 knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
+            
+            const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+            const audioPath = `/${folderName}/${cleanLemma}_example.mp3`;
+            console.log('Playing idiom/phrasal example audio from path:', audioPath, 'category:', vocab.category, 'isPhrasalVerb:', isPhrasalVerb);
+            playUrl(audioPath, 'example', vocab.id);
             return;
         }
         

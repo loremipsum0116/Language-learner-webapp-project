@@ -11,10 +11,16 @@ const VocabCard = ({
   onClick, 
   className = '',
   showProgress = true,
-  size = 'medium'
+  size = 'medium',
+  onPlayAudio = null,
+  playingAudio = null
 }) => {
   const isCardMastered = card?.isMastered;
   const masterCycles = card?.masterCycles || 0;
+  
+  // Check if this is an idiom or phrasal verb
+  const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+  const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
   
   const getStageInfo = () => {
     if (isCardMastered) {
@@ -180,6 +186,33 @@ const VocabCard = ({
             )}
           </div>
         </div>
+        
+        {/* Play button for idioms and phrasal verbs */}
+        {isIdiomOrPhrasal && onPlayAudio && (
+          <button
+            className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors duration-200 flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              onPlayAudio(vocab);
+            }}
+            title="오디오 재생"
+          >
+            <svg 
+              xmlns="http://www.w3.org/2000/svg" 
+              width="16" 
+              height="16" 
+              fill="currentColor" 
+              className={`bi ${isPlaying ? 'bi-pause-fill' : 'bi-play-fill'} text-blue-600`} 
+              viewBox="0 0 16 16"
+            >
+              {isPlaying ? (
+                <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+              ) : (
+                <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+              )}
+            </svg>
+          </button>
+        )}
       </div>
       
       {/* 발음 표시 */}

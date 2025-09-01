@@ -426,9 +426,35 @@ export default function VocabDetailModal({
                   // cefr_vocabs.json의 audio 경로 사용
                   const audioData = parseAudioLocal(dictentry.audioLocal);
                   
-                  // 상세 보기 상단 오디오는 gloss 경로 사용 (숙어/구동사는 example)
-                  const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
-                  const glossAudioPath = isIdiomOrPhrasal ? audioData?.example : audioData?.gloss;
+                  // 상세 보기 상단 오디오는 gloss 경로 사용
+                  const isIdiomOrPhrasal = vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")));
+                  let glossAudioPath = null;
+                  
+                  if (isIdiomOrPhrasal) {
+                    // 숙어/구동사 구분: category 정보나 source 정보로 판단
+                    const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+                    
+                    // category에서 "구동사" 여부 확인 또는 source로 판단
+                    // 알려진 phrasal verb들을 직접 매핑
+                    const knownPhrasalVerbs = [
+                      'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
+                      'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
+                      'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
+                      'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
+                      'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
+                    ];
+                    
+                    const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
+                                         (vocab.category && vocab.category.includes('구동사')) ||
+                                         knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
+                    
+                    const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+                    glossAudioPath = `/${folderName}/${cleanLemma}_gloss.mp3`;
+                    console.log('🔍 [VocabDetailModal] Folder decision:', vocab.lemma, '->', folderName, 'category:', vocab.category);
+                  } else {
+                    // 일반 단어의 경우 audioData.gloss 사용
+                    glossAudioPath = audioData?.gloss;
+                  }
                   
                   if (glossAudioPath && onPlayUrl) {
                     // 절대 경로로 변환
