@@ -33,34 +33,58 @@ const cefrToFolder = {
 };
 
 // 현재 cefr_vocabs.json 오디오 경로 생성
-const getCurrentAudioPath = (vocab) => {
-    console.log('[AUDIO DEBUG] getCurrentAudioPath called with vocab.pos:', vocab.pos, 'vocab.source:', vocab.source, 'vocab.levelCEFR:', vocab.levelCEFR);
+const getCurrentAudioPath = (vocab, isGlossMode = false) => {
+    console.log('[AUDIO DEBUG] getCurrentAudioPath called with vocab.pos:', vocab.pos, 'vocab.source:', vocab.source, 'vocab.levelCEFR:', vocab.levelCEFR, 'isGlossMode:', isGlossMode);
 
     // 1. vocab.vocab.dictentry.audioLocal 데이터 우선 사용
     const audioData = vocab.vocab?.dictentry?.audioLocal ? JSON.parse(vocab.vocab.dictentry.audioLocal) : null;
-    const exampleAudioPath = audioData?.example;
+    const audioPath = isGlossMode ? audioData?.gloss : audioData?.example;
 
-    if (exampleAudioPath) {
-        console.log('[AUDIO DEBUG] Using audioLocal path:', exampleAudioPath);
+    if (audioPath) {
+        console.log('[AUDIO DEBUG] Using audioLocal path:', audioPath);
         // 절대 경로로 변환
-        return exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
+        return audioPath.startsWith('/') ? audioPath : `/${audioPath}`;
     }
 
-    // 2. 숙어/구동사인 경우 레거시 방식과 동일하게 처리
+    // 2. 숙어/구동사인 경우 idiom/phrasal_verb 폴더 사용
     if (vocab.source === 'idiom_migration' || vocab.pos === 'idiom') {
         console.log('[AUDIO DEBUG] Detected idiom, processing...');
-        const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const lemma = vocab.lemma || vocab.question;
         if (lemma) {
-            console.log('[AUDIO DEBUG] Using idiom path for:', lemma, '→', `/${folderName}/${safeFileName(lemma)}/example.mp3`);
-            return `/${folderName}/${safeFileName(lemma)}/example.mp3`;
+            const cleanLemma = lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            
+            // category 또는 알려진 phrasal verb로 폴더 결정
+            const knownPhrasalVerbs = [
+              'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
+              'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
+              'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
+              'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
+              'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
+            ];
+            
+            const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
+                                 (vocab.category && vocab.category.includes('구동사')) ||
+                                 knownPhrasalVerbs.includes(lemma.toLowerCase());
+            
+            const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+            
+            if (isGlossMode) {
+                const path = `/${folderName}/${cleanLemma}_gloss.mp3`;
+                console.log('[AUDIO DEBUG] Using idiom/phrasal gloss path:', path);
+                return path;
+            } else {
+                const path = `/${folderName}/${cleanLemma}_example.mp3`;
+                console.log('[AUDIO DEBUG] Using idiom/phrasal example path:', path);
+                return path;
+            }
         }
     }
 
     // 3. 폴백: 레거시 방식
     console.log('[AUDIO DEBUG] Using legacy path');
     const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
-    return `/${folderName}/${safeFileName(vocab.question)}/example.mp3`;
+    const audioType = isGlossMode ? 'gloss' : 'example';
+    return `/${folderName}/${safeFileName(vocab.question)}/${audioType}.mp3`;
 };
 
 const getPosBadgeColor = (pos) => {
@@ -116,6 +140,7 @@ export default function LearnVocab() {
     const folderIdParam = query.get('folderId');
     const selectedItemsParam = query.get('selectedItems');
     const quizTypeParam = query.get('quizType'); // 퀴즈 유형 파라미터 추가
+    const glossModeParam = query.get('gloss'); // gloss 모드 파라미터 추가
 
     // 공통 상태
     const [loading, setLoading] = useState(true);
@@ -641,7 +666,7 @@ export default function LearnVocab() {
             audioPlayCountRef.current = 0;
             setAudioPlayCount(0);
 
-            const localAudioPath = getCurrentAudioPath(current);
+            const localAudioPath = getCurrentAudioPath(current, glossModeParam === '1');
             console.log('[AUDIO DEBUG] Current vocab object:', JSON.stringify(current, null, 2));
             console.log('[AUDIO DEBUG] vocab.lemma:', current.lemma, 'vocab.question:', current.question);
             console.log('[AUDIO DEBUG] vocab.source:', current.source, 'vocab.pos:', current.pos);
@@ -2050,7 +2075,7 @@ export default function LearnVocab() {
                                     }
 
                                     // 오디오 재생 재개를 위한 이벤트 리스너 설정
-                                    const localAudioPath = getCurrentAudioPath(current);
+                                    const localAudioPath = getCurrentAudioPath(current, glossModeParam === '1');
 
                                     // 기존 이벤트 리스너 제거
                                     el.removeEventListener('play', el._currentPlayHandler);

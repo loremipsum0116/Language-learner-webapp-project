@@ -122,6 +122,10 @@ export default function SrsFolderDetail() {
     const [filterMode, setFilterMode] = useState('all'); // 'all', 'review', 'learning', 'frozen', 'stage', 'wrong'
     const [flippedCards, setFlippedCards] = useState(new Set()); // 뒤집힌 카드들의 ID 저장
     
+    // 학습 모드 선택 모달 관련 state
+    const [learningModeModalOpen, setLearningModeModalOpen] = useState(false);
+    const [selectedItemIds, setSelectedItemIds] = useState([]);
+    
     // 필터 변경 시 선택 상태 초기화
     const handleFilterChange = (newFilter) => {
         setFilterMode(newFilter);
@@ -246,6 +250,14 @@ export default function SrsFolderDetail() {
             return;
         }
         
+        // 학습 모드 선택 모달 열기
+        const selectedItemIdsArray = Array.from(selectedIds);
+        setSelectedItemIds(selectedItemIdsArray);
+        setLearningModeModalOpen(true);
+    };
+    
+    // 학습 모드에 따른 학습 시작
+    const handleStartSrsLearning = async (mode) => {
         try {
             // 선택된 카드 ID들을 미리 준비하고 localStorage에 저장
             const selectedItems = items.filter(item => selectedIds.has(item.folderItemId ?? item.id));
@@ -265,15 +277,19 @@ export default function SrsFolderDetail() {
             localStorage.setItem('pendingAcceleration', JSON.stringify(accelerationData));
             console.log('[ACCELERATION SETUP] Saved to localStorage:', accelerationData);
             
-            // 기존 자동학습 모드로 이동
-            const selectedItemIds = Array.from(selectedIds).join(',');
-            const learnUrl = `/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${selectedItemIds}`;
+            // gloss 모드에 따른 URL 생성
+            const selectedItemIdsString = selectedItemIds.join(',');
+            const glossParam = mode === 'gloss' ? '&gloss=1' : '';
+            const learnUrl = `/learn/vocab?mode=flash&auto=1&folderId=${folder.id}&selectedItems=${selectedItemIdsString}${glossParam}`;
             
             navigate(learnUrl);
             
         } catch (e) {
             console.error('자동학습 시작 실패:', e);
             alert(`자동학습 시작 실패: ${e?.message || "서버 오류"}`);
+        } finally {
+            setLearningModeModalOpen(false);
+            setSelectedItemIds([]);
         }
     };
 
@@ -1373,6 +1389,56 @@ export default function SrsFolderDetail() {
                             </div>
                         );
                     })}
+                </div>
+            )}
+
+            {/* 학습 모드 선택 모달 */}
+            {learningModeModalOpen && (
+                <div className="modal show d-block" tabIndex="-1" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">학습 모드 선택</h5>
+                                <button type="button" className="btn-close" onClick={() => setLearningModeModalOpen(false)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="mb-4">선택한 {selectedItemIds.length}개 단어의 학습 방식을 선택해주세요.</p>
+                                
+                                <div className="d-grid gap-3">
+                                    <button 
+                                        className="btn btn-outline-primary btn-lg text-start p-3"
+                                        onClick={() => handleStartSrsLearning('example')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3 fs-2">📖</div>
+                                            <div>
+                                                <div className="fw-bold">예문 음성 학습</div>
+                                                <small className="text-muted">영단어, 예문, 예문 해석에 대해 AI가 상세하게 읽어줍니다.</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    
+                                    <button 
+                                        className="btn btn-outline-success btn-lg text-start p-3"
+                                        onClick={() => handleStartSrsLearning('gloss')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3 fs-2">🔊</div>
+                                            <div>
+                                                <div className="fw-bold">단어 뜻 음성 학습</div>
+                                                <small className="text-muted">영단어, 뜻에 대해 AI가 읽어줍니다.</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setLearningModeModalOpen(false)}>
+                                    취소
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             )}
         </main>

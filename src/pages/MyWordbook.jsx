@@ -102,6 +102,10 @@ export default function MyWordbook() {
     // SRS 폴더 선택 모달 관련 state
     const [pickerOpen, setPickerOpen] = useState(false);
     const [pickerIds, setPickerIds] = useState([]);
+    
+    // 학습 모드 선택 모달 관련 state
+    const [learningModeModalOpen, setLearningModeModalOpen] = useState(false);
+    const [selectedVocabIds, setSelectedVocabIds] = useState([]);
 
     const handleFlashSelected = () => {
         const ids = Array.from(selectedIds);
@@ -115,7 +119,18 @@ export default function MyWordbook() {
             alert('학습할 단어를 선택하세요.');
             return;
         }
-        navigate(`/learn/vocab?ids=${ids.join(',')}&mode=flash&auto=1`);
+        
+        // 학습 모드 선택 모달 열기
+        setSelectedVocabIds(ids);
+        setLearningModeModalOpen(true);
+    };
+    
+    // 학습 모드에 따른 학습 시작
+    const handleStartLearning = (mode) => {
+        const glossParam = mode === 'gloss' ? '&gloss=1' : '';
+        navigate(`/learn/vocab?ids=${selectedVocabIds.join(',')}&mode=flash&auto=1${glossParam}`);
+        setLearningModeModalOpen(false);
+        setSelectedVocabIds([]);
     };
 
     const readFilterFromURL = useCallback(() => {
@@ -713,6 +728,56 @@ export default function MyWordbook() {
                     setSelectedIds(new Set());
                 }}
             />
+
+            {/* 학습 모드 선택 모달 */}
+            {learningModeModalOpen && (
+                <div className="modal show d-block" tabIndex="-1" style={{backgroundColor: 'rgba(0,0,0,0.5)'}}>
+                    <div className="modal-dialog modal-dialog-centered">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title">학습 모드 선택</h5>
+                                <button type="button" className="btn-close" onClick={() => setLearningModeModalOpen(false)}></button>
+                            </div>
+                            <div className="modal-body">
+                                <p className="mb-4">선택한 {selectedVocabIds.length}개 단어의 학습 방식을 선택해주세요.</p>
+                                
+                                <div className="d-grid gap-3">
+                                    <button 
+                                        className="btn btn-outline-primary btn-lg text-start p-3"
+                                        onClick={() => handleStartLearning('example')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3 fs-2">📖</div>
+                                            <div>
+                                                <div className="fw-bold">예문 음성 학습</div>
+                                                <small className="text-muted">영단어, 예문, 예문 해석에 대해 AI가 상세하게 읽어줍니다.</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                    
+                                    <button 
+                                        className="btn btn-outline-success btn-lg text-start p-3"
+                                        onClick={() => handleStartLearning('gloss')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3 fs-2">🔊</div>
+                                            <div>
+                                                <div className="fw-bold">단어 뜻 음성 학습</div>
+                                                <small className="text-muted">영단어, 뜻에 대해 AI가 읽어줍니다.</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" onClick={() => setLearningModeModalOpen(false)}>
+                                    취소
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     );
 }
