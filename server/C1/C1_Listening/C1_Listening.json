@@ -1478,7 +1478,7 @@
     {
         "id": "B2_L_124",
         "topic": "A podcast about history",
-        "script": "The Enigma machine was a cipher device used by the German military during World War II. The breaking of the Enigma code by Allied cryptographers was a crucial factor in the outcome of the war.",
+        "script": "The Enigma machine was a cipher device used by the English military during World War II. The breaking of the Enigma code by Allied cryptographers was a crucial factor in the outcome of the war.",
         "question": "What was the significance of breaking the Enigma code?",
         "options": {
             "A": "It was a major technological achievement.",

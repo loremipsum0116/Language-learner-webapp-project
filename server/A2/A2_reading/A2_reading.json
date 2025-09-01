@@ -337,12 +337,12 @@
   },
   {
     "id": 29,
-    "passage": "I am learning a new language, German. I take a class twice a week. I also use an app on my phone to practice vocabulary. It is challenging, but I think it's important to learn about other cultures.",
-    "question": "How does he practice German vocabulary?",
+    "passage": "I am learning a new language, English. I take a class twice a week. I also use an app on my phone to practice vocabulary. It is challenging, but I think it's important to learn about other cultures.",
+    "question": "How does he practice English vocabulary?",
     "options": {
-      "A": "By reading German books.",
+      "A": "By reading English books.",
       "B": "By using an app on his phone.",
-      "C": "By talking to German people."
+      "C": "By talking to English people."
     },
     "answer": "B",
     "explanation_ko": "지문에서 'I also use an app on my phone to practice vocabulary.'라고 어휘 연습을 위해 휴대폰 앱을 사용한다고 했습니다."
@@ -793,7 +793,7 @@
   },
   {
     "id": 67,
-    "passage": "My company sent me to a conference in Berlin last month. It was my first time in Germany. I attended many interesting talks and met people from all over the world. In the evening, I explored the city and tried some German food.",
+    "passage": "My company sent me to a conference in Berlin last month. It was my first time in Englishy. I attended many interesting talks and met people from all over the world. In the evening, I explored the city and tried some English food.",
     "question": "Why did he go to Berlin?",
     "options": {
       "A": "For a vacation.",

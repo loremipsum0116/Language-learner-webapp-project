@@ -354,7 +354,7 @@
         "question": "Which languages can the speaker speak?",
         "options": {
             "A": "English and Spanish",
-            "B": "French and German",
+            "B": "French and English",
             "C": "English and French"
         },
         "answer": "C"

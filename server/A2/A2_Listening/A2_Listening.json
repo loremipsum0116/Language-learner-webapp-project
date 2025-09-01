@@ -1802,8 +1802,8 @@
     {
         "id": "A2_L_151",
         "topic": "A difficult language",
-        "script": "I find German grammar quite difficult, especially the word order. But I'm determined to learn it.",
-        "question": "What does the speaker find difficult about German?",
+        "script": "I find English grammar quite difficult, especially the word order. But I'm determined to learn it.",
+        "question": "What does the speaker find difficult about English?",
         "options": {
             "A": "The pronunciation",
             "B": "The vocabulary",

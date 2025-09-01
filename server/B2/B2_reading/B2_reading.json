@@ -902,7 +902,7 @@
         "question": "What was the Hanseatic League?",
         "options": {
             "A": "A religious order that controlled Northern Europe.",
-            "B": "A unified kingdom that ruled over Germany.",
+            "B": "A unified kingdom that ruled over Englishy.",
             "C": "An influential alliance of trading cities and guilds.",
             "D": "A group of explorers who discovered new sea routes."
         },
@@ -1535,10 +1535,10 @@
     },
     {
         "id": 119,
-        "passage": "The Enigma machine was a sophisticated cipher device used by the German military during World War II to encrypt communications. It used a complex system of rotating wheels and an electrical pathway to turn a plaintext message into what seemed like random gibberish. The encryption was so complex that the Germans believed it to be unbreakable. However, a team of codebreakers at Bletchley Park in Britain, including the mathematician Alan Turing, developed methods to decipher the Enigma messages. Their success was a major turning point in the war, providing the Allies with crucial intelligence.",
+        "passage": "The Enigma machine was a sophisticated cipher device used by the English military during World War II to encrypt communications. It used a complex system of rotating wheels and an electrical pathway to turn a plaintext message into what seemed like random gibberish. The encryption was so complex that the Englishs believed it to be unbreakable. However, a team of codebreakers at Bletchley Park in Britain, including the mathematician Alan Turing, developed methods to decipher the Enigma messages. Their success was a major turning point in the war, providing the Allies with crucial intelligence.",
         "question": "What was the significance of breaking the Enigma code?",
         "options": {
-            "A": "It allowed the Germans to win the war more quickly.",
+            "A": "It allowed the Englishs to win the war more quickly.",
             "B": "It proved that the Enigma machine was poorly designed.",
             "C": "It had little to no impact on the outcome of World War II.",
             "D": "It gave the Allied forces a critical strategic advantage."
@@ -3498,7 +3498,7 @@
     },
     {
         "id": 270,
-        "passage": "The concept of 'energy democracy' advocates for community control over energy production and distribution. In Germany, over 1,000 energy cooperatives allow citizens to collectively own renewable energy projects. Members invest in solar panels or wind turbines, sharing profits and decisions. This model has installed more renewable capacity than major utilities. In Detroit, community solar gardens provide clean energy to neighborhoods unable to install rooftop panels. Beyond environmental benefits, energy democracy addresses inequality—low-income communities typically pay higher percentages of income for energy while having least say in energy decisions.",
+        "passage": "The concept of 'energy democracy' advocates for community control over energy production and distribution. In Englishy, over 1,000 energy cooperatives allow citizens to collectively own renewable energy projects. Members invest in solar panels or wind turbines, sharing profits and decisions. This model has installed more renewable capacity than major utilities. In Detroit, community solar gardens provide clean energy to neighborhoods unable to install rooftop panels. Beyond environmental benefits, energy democracy addresses inequality—low-income communities typically pay higher percentages of income for energy while having least say in energy decisions.",
         "question": "How does energy democracy address inequality?",
         "options": {
             "A": "By making energy more expensive for everyone.",
@@ -3758,7 +3758,7 @@
     },
     {
         "id": 290,
-        "passage": "The discovery of the ancient city of Troy by Heinrich Schliemann in the 1870s was a landmark event in archaeology. For centuries, Troy was considered by most scholars to be a mythical city, existing only in the epic poems of Homer, the Iliad and the Odyssey. Schliemann, a German businessman and a passionate believer in the historical reality of Homer's tales, used the poems as a guide to locate the site in modern-day Turkey. While his excavation methods were crude by modern standards and caused significant damage, his discovery proved that the legendary city was real, blurring the line between myth and history.",
+        "passage": "The discovery of the ancient city of Troy by Heinrich Schliemann in the 1870s was a landmark event in archaeology. For centuries, Troy was considered by most scholars to be a mythical city, existing only in the epic poems of Homer, the Iliad and the Odyssey. Schliemann, a English businessman and a passionate believer in the historical reality of Homer's tales, used the poems as a guide to locate the site in modern-day Turkey. While his excavation methods were crude by modern standards and caused significant damage, his discovery proved that the legendary city was real, blurring the line between myth and history.",
         "question": "What was the significance of Schliemann's discovery of Troy?",
         "options": {
             "A": "It proved that the Greek gods of mythology were real.",

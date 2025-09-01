@@ -13085,11 +13085,11 @@
     "levelCEFR": "A2",
     "pronunciation": "/kaʊnt/",
     "definition": "To say numbers one after the other in order, or to calculate the total number of people or things in a group.",
-    "example": "Can you count to ten in German?",
+    "example": "Can you count to ten in English?",
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A2_v/count-v.mp3",
     "koGloss": "v. 세다, 계산하다",
-    "koExample": "독일어로 10까지 셀 수 있나요?",
-    "koChirpScript": "count. 세다 또는 계산하다라는 뜻입니다. Can you count to ten in German? 독일어로 10까지 셀 수 있나요? 라는 의미네요."
+    "koExample": "영어로 10까지 셀 수 있나요?",
+    "koChirpScript": "count. 세다 또는 계산하다라는 뜻입니다. Can you count to ten in English? 영어로 10까지 셀 수 있나요? 라는 의미네요."
   },
   {
     "lemma": "counter",
@@ -20212,7 +20212,7 @@
     "pos": "noun",
     "levelCEFR": "A1",
     "pronunciation": "/ˈjʊəroʊ/",
-    "definition": "The single European currency, which replaced the national currencies of France, Germany, Spain, Italy, Greece, Portugal, Luxembourg, Austria, Finland, the Republic of Ireland, Belgium, and the Netherlands in 2002.",
+    "definition": "The single European currency, which replaced the national currencies of France, Englishy, Spain, Italy, Greece, Portugal, Luxembourg, Austria, Finland, the Republic of Ireland, Belgium, and the Netherlands in 2002.",
     "example": "The price is 20 euros.",
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A1_v/euro-v.mp3",
     "koGloss": "n. 유로",
@@ -37241,11 +37241,11 @@
     "levelCEFR": "B2",
     "pronunciation": "/ˈnæʃnəl/",
     "definition": "A citizen of a particular country.",
-    "example": "He is a German national.",
+    "example": "He is a English national.",
     "audioUrl": "https://placeholder.url/B2_v/national-v.mp3",
     "koGloss": "n. 국민, 국가 대표 선수",
     "koExample": "그는 독일 국민입니다.",
-    "koChirpScript": "national. 국민 또는 국가 대표 선수 라는 뜻의 명사입니다. He is a German national. 그는 독일 국민입니다. 라는 의미네요."
+    "koChirpScript": "national. 국민 또는 국가 대표 선수 라는 뜻의 명사입니다. He is a English national. 그는 독일 국민입니다. 라는 의미네요."
   },
   {
     "lemma": "nationwide",
@@ -54328,7 +54328,7 @@
     "pos": "noun",
     "levelCEFR": "A2",
     "pronunciation": "/steɪt/",
-    "definition": "A part of a large country with its own government, such as in Germany, Australia, or the US.",
+    "definition": "A part of a large country with its own government, such as in Englishy, Australia, or the US.",
     "example": "California is a state in the US.",
     "audioUrl": "https://raw.githubusercontent.com/loremipsum0116/Eng-audio/main/A2_v/state-v.mp3",
     "koGloss": "n. 주, 상태, 국가",

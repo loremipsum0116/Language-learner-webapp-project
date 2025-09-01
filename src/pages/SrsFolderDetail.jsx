@@ -1190,7 +1190,7 @@ export default function SrsFolderDetail() {
                                                                                             korean: ex.ko
                                                                                         });
                                                                                     }
-                                                                                    // 독일어 예문 (de/german 필드) - 기존 로직 유지
+                                                                                    // English example sentences - maintain existing logic
                                                                                     else if (ex.de && ex.ko) {
                                                                                         examples.push({
                                                                                             english: ex.de,
