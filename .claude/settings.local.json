@@ -62,7 +62,8 @@
       "Bash(netstat:*)",
       "Bash(PORT=3001 npm start)",
       "Bash(ls:*)",
-      "Bash(move:*)"
+      "Bash(move:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
