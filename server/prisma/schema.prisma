@@ -213,6 +213,7 @@ model user {
   nextOverdueAlarm DateTime?
   category         category[]
   dailystudystat   dailystudystat[]
+  refreshToken     refreshToken[]
   srscard          srscard[]
   srsfolder        srsfolder[]
   tutorlog         tutorlog[]
@@ -339,4 +340,25 @@ model listeningRecord {
   @@unique([userId, questionId, level])
   @@index([userId, level])
   @@map("listening_records")
+}
+
+model refreshToken {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  token       String   @unique
+  deviceId    String?
+  deviceName  String?
+  userAgent   String?
+  ipAddress   String?
+  expiresAt   DateTime
+  createdAt   DateTime @default(now())
+  lastUsedAt  DateTime @default(now())
+  isRevoked   Boolean  @default(false)
+  revokedAt   DateTime?
+  user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([token])
+  @@index([expiresAt])
+  @@map("refresh_tokens")
 }

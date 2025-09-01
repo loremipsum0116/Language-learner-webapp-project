@@ -1,7 +1,7 @@
 // server/middlewares/auth.js
-const jwt = require('jsonwebtoken');
+const jwtService = require('../services/jwtService');
 
-// JWT는 httpOnly 쿠키 'token'에 있다고 가정(또는 Authorization 헤더 허용)
+// Enhanced authentication middleware with refresh token support
 module.exports = function auth(req, res, next) {
   try {
     console.log('[AUTH] Checking request to:', req.path, 'method:', req.method);
@@ -17,27 +17,54 @@ module.exports = function auth(req, res, next) {
       console.log('[AUTH] Skipping auth for public endpoint:', req.path);
       return next();
     }
-    const bearer = req.headers.authorization;
-    const token =
-      (req.cookies && req.cookies.token) ||
-      (bearer && bearer.startsWith('Bearer ') ? bearer.slice(7) : null);
+
+    // Extract access token from request (cookie or Authorization header)
+    const token = jwtService.extractToken(req, 'access');
 
     if (!token) {
-      console.log('[AUTH] No token found, blocking request to:', req.path);
-      return res.status(401).json({ ok: false, error: 'Unauthorized' });
+      console.log('[AUTH] No access token found, blocking request to:', req.path);
+      return res.status(401).json({ 
+        ok: false, 
+        error: 'Unauthorized',
+        code: 'NO_TOKEN'
+      });
     }
 
-    const payload = jwt.verify(token, process.env.JWT_SECRET);
+    // Verify access token using JWT service
+    const payload = jwtService.verifyAccessToken(token);
+    
     req.user = { 
       id: payload.id, 
       email: payload.email,
       role: payload.role || 'USER' 
     };
+
+    // Check if token is near expiry and add header for client to refresh
+    if (jwtService.isTokenNearExpiry(payload)) {
+      res.setHeader('X-Token-Refresh-Suggested', 'true');
+      console.log('[AUTH] Token near expiry, suggesting refresh for user:', req.user.id);
+    }
+
     console.log('[AUTH] User authenticated:', req.user);
     return next();
   } catch (err) {
     console.error('[AUTH] Token verification failed:', err.message);
     console.error('[AUTH] Request path:', req.path);
-    return res.status(401).json({ ok: false, error: 'Invalid token' });
+    
+    // Determine the type of error for better client handling
+    let errorCode = 'INVALID_TOKEN';
+    let statusCode = 401;
+    
+    if (err.message.includes('expired')) {
+      errorCode = 'TOKEN_EXPIRED';
+    } else if (err.message.includes('Invalid')) {
+      errorCode = 'INVALID_TOKEN';
+    }
+
+    return res.status(statusCode).json({ 
+      ok: false, 
+      error: err.message || 'Authentication failed',
+      code: errorCode
+    });
   }
 };
