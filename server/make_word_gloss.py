@@ -3,7 +3,13 @@
 """
 JSON(배열/단일)로부터 <level>/<lemma>/{word,gloss}.mp3 생성(항상 덮어쓰기).
 
-요구사항:
+변동 사항(신규 스키마 대응):
+- lemma → idiom(우선) 또는 기존 lemma 지원 (둘 다 없으면 term/word 키 탐색)
+- categories → category(문자열)도 지원 (레벨 태그 추출)
+- koGloss → koChirpScript(우선) 또는 korean_meaning, 기존 koGloss 순으로 사용
+- audio: { word, gloss } 경로가 제공되면, 기본 경로에 더해 해당 경로로도 '추가 저장' (선택 기능)
+
+요구사항(기존 유지):
 - 보이스: 모든 합성(en/KR 모두) en-US(Chirp3 HD) 사용.
   - 남성: en-US-Chirp3-HD-Charon
   - 여성: en-US-Chirp3-HD-Laomedeia
@@ -74,10 +80,10 @@ LEVEL_MAP = [
 
 # ===== 유틸 =====
 def normalize_spaces(s: str) -> str:
-    return re.sub(r"\s+", " ", (s or "").strip())
+    return re.sub(r"\\s+", " ", (s or "").strip())
 
 def sanitize_filename(name: str) -> str:
-    name = re.sub(r'[\\/*?:"<>|]', "", str(name or ""))
+    name = re.sub(r'[\\\\/*?:"<>|]', "", str(name or ""))
     return name.strip().lower() or "unnamed"
 
 def loudness_normalize(seg: AudioSegment, target_dbfs: float) -> AudioSegment:
@@ -121,9 +127,79 @@ def clean_ko_gloss(text: str) -> str:
         return ""
     s = normalize_spaces(text)
     s = s.replace("~", "무엇무엇")
-    s = re.sub(r"\b(?:adj|adv|n|v|vt|vi|prep|conj|pron|art|int|interj|aux|det|num)\.\s*", "", s, flags=re.I)
+    s = re.sub(r"\\b(?:adj|adv|n|v|vt|vi|prep|conj|pron|art|int|interj|aux|det|num)\\.\\s*", "", s, flags=re.I)
     s = normalize_spaces(s).strip(" ;,·")
     return s
+
+# ===== 신구 스키마 어댑터 =====
+def _norm_key(k: Any) -> str:
+    return str(k or "").strip().lower()
+
+def _first_nonempty_str(v: Any) -> str:
+    if isinstance(v, str) and v.strip():
+        return v.strip()
+    return ""
+
+def extract_field_anywhere(obj: Any, key_aliases: List[str]) -> str:
+    """Dict/list를 재귀 탐색하며 key_aliases(소문자 비교) 중 첫 번째 비어있지 않은 문자열 값을 반환."""
+    aliases = set(_norm_key(k) for k in key_aliases)
+    # 1) dict top-level direct hit
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            if _norm_key(k) in aliases:
+                s = _first_nonempty_str(v)
+                if s:
+                    return s
+    # 2) scan dict values
+    if isinstance(obj, dict):
+        for v in obj.values():
+            s = extract_field_anywhere(v, key_aliases)
+            if s:
+                return s
+    # 3) scan list
+    if isinstance(obj, list):
+        for v in obj:
+            s = extract_field_anywhere(v, key_aliases)
+            if s:
+                return s
+    return ""
+
+def get_lemma_like(it: Dict[str, Any]) -> str:
+    # 우선순위: idiom, lemma, term, word, expression, phrase, headword, title
+    return extract_field_anywhere(it, [
+        "idiom","lemma","term","word","expression","phrase","headword","title"
+    ])
+def get_categories_like(it: Dict[str, Any]) -> Any:
+    # categories, category, level(s), tag(s) 등에서 추출 시도(문자열/리스트 모두 허용)
+    for key in ["categories","category","levels","level","tags","tag"]:
+        if key in it and it.get(key):
+            return it.get(key)
+    # 중첩 구조에서도 탐색
+    s = extract_field_anywhere(it, ["categories","category","levels","level","tags","tag"])
+    return s
+def get_kogloss_like(it: Dict[str, Any]) -> str:
+    # 우선순위: koChirpScript → korean_meaning → koGloss → usage_context_korean(보조) → ""
+    val = extract_field_anywhere(it, ["koChirpScript","korean_meaning","koGloss","usage_context_korean"])
+    return val.strip()
+def get_audio_paths(it: Dict[str, Any]) -> Dict[str, Optional[str]]:
+    # 기본: audio { word, gloss }
+    a = None
+    if isinstance(it, dict) and "audio" in it and isinstance(it["audio"], dict):
+        a = it["audio"]
+    else:
+        # 중첩에서도 탐색
+        cand = extract_field_anywhere(it, ["audio"])
+        if isinstance(cand, dict):
+            a = cand
+    a = a or {}
+    # 보조 키도 허용
+    word_p = a.get("word") or a.get("word_path") or a.get("wordMp3")
+    gloss_p = a.get("gloss") or a.get("gloss_path") or a.get("glossMp3")
+    return {"word": word_p, "gloss": gloss_p}
+def ensure_parent_dir(path: str) -> None:
+    d = os.path.dirname(os.path.normpath(path))
+    if d and not os.path.exists(d):
+        os.makedirs(d, exist_ok=True)
 
 # ===== 성별 순환 & 보이스 매핑 =====
 def is_male(index_zero_based: int) -> bool:
@@ -208,7 +284,7 @@ def synthesize_with_commas_try_voices(tts: texttospeech.TextToSpeechClient,
     if not text:
         return AudioSegment.silent(duration=0)
 
-    parts = [p.strip() for p in re.split(r"[,\uFF0C]", text) if p.strip()]
+    parts = [p.strip() for p in re.split(r"[,\\uFF0C]", text) if p.strip()]
     for idx_voice, vname in enumerate([v for v in voices if v]):
         silence = AudioSegment.silent(duration=comma_gap_ms)
         merged = AudioSegment.empty()
@@ -254,18 +330,19 @@ def process(json_path: str) -> None:
     print(f"    KO defaults: male={KO_MALE_NEURAL}, female={KO_FEMALE_NEURAL}")
     print(f"    KO forced:   Charon→{KO_NEURAL_FOR_CHARON}, Laomedeia→{KO_NEURAL_FOR_LAOMEDEIA}")
     print(f"    gaps: gloss={GLOSS_GAP_MS}ms, comma={COMMA_GAP_MS}ms")
-    print("📝 모드: word=en-US(Chirp3 HD), gloss=ko-KR(Neural2), 성별 순환(남→여→남…), 덮어쓰기\n")
+    print("📝 모드: word=en-US(Chirp3 HD), gloss=ko-KR(Neural2), 성별 순환(남→여→남…), 덮어쓰기\\n")
 
     last_saved: Optional[str] = None
     fails: List[str] = []
 
     for i, it in enumerate(items):
-        lemma = (it.get("lemma") or "").strip()
-        categories = it.get("categories")
-        ko_gloss_raw = it.get("koGloss") or ""
+        lemma = get_lemma_like(it)
+        categories = get_categories_like(it)
+        ko_gloss_raw = get_kogloss_like(it)
+        audio_paths = get_audio_paths(it)
 
         if not lemma:
-            print(f"[{i+1}/{total}] 건너뜀: lemma 없음")
+            print(f"[{i+1}/{total}] 건너뜀: idiom 키 미검출 → keys={list(it.keys())[:8]}")
             continue
 
         # 경로
@@ -273,7 +350,7 @@ def process(json_path: str) -> None:
             paths = build_output_paths(categories, lemma)
         except ValueError as ve:
             if str(ve) == "LEVEL_TAG_MISSING":
-                print(f"[{i+1}/{total}] '{lemma}' ❌ 레벨 태그 미검출 → 처리 중단")
+                print(f"[{i+1}/{total}] '{lemma}' ❌ 레벨 태그 미검출(category/categories) → 처리 중단")
                 try:
                     with open("마지막 생성 단어.txt", "w", encoding="utf-8") as f:
                         f.write((last_saved or '').strip())
@@ -281,7 +358,7 @@ def process(json_path: str) -> None:
                     pass
                 return
             print(f"[{i+1}/{total}] '{lemma}' 경로 오류: {ve}")
-            fails.append(f"{lemma}\tPATH_ERROR:{ve}")
+            fails.append(f"{lemma}\\tPATH_ERROR:{ve}")
             continue
 
         v = voices_for_index(i)
@@ -291,20 +368,26 @@ def process(json_path: str) -> None:
         word_seg = synthesize_lang_try_voices(tts, lemma, "en-US", [v["en"]])
         if word_seg is None or len(word_seg) == 0:
             print("  ❌ word 합성 실패")
-            fails.append(f"{lemma}\tWORD_SYNTH_FAIL:{v['en']}")
+            fails.append(f"{lemma}\\tWORD_SYNTH_FAIL:{v['en']}")
             continue
         try:
             word_seg.export(paths["word"], format="mp3")
             print("  ✅ word.mp3 저장(덮어쓰기)")
+            # 추가 저장: audio.word (옵션)
+            if audio_paths.get("word"):
+                alt_path = os.path.normpath(audio_paths["word"])
+                ensure_parent_dir(alt_path)
+                word_seg.export(alt_path, format="mp3")
+                print(f"    ↪︎ 추가 저장: {alt_path}")
         except Exception as e:
             print(f"  ⚠️ word 저장 실패: {e}")
-            fails.append(f"{lemma}\tWORD_SAVE_FAIL:{e}")
+            fails.append(f"{lemma}\\tWORD_SAVE_FAIL:{e}")
             continue
 
         # 2) gloss.mp3 = word + GLOSS_GAP_MS + koGloss(ko-KR), 콤마마다 COMMA_GAP_MS
         ko_gloss = clean_ko_gloss(ko_gloss_raw)
         if not ko_gloss:
-            print("  ⚠️ koGloss 비어있음 → gloss 생략")
+            print("  ⚠️ koGloss 비어있음(koChirpScript/korean_meaning/koGloss 모두 비어있음) → gloss 생략")
             last_saved = lemma
             continue
 
@@ -313,7 +396,7 @@ def process(json_path: str) -> None:
 
         ko_seg = synthesize_with_commas_try_voices(tts, ko_gloss, "ko-KR", COMMA_GAP_MS, ko_candidates)
         if ko_seg is None or len(ko_seg) == 0:
-            fails.append(f"{lemma}\tKOGLOSS_SYNTH_FAIL:{'|'.join(ko_candidates)}")
+            fails.append(f"{lemma}\\tKOGLOSS_SYNTH_FAIL:{'|'.join(ko_candidates)}")
             continue
 
         gloss_seg = word_seg + AudioSegment.silent(duration=GLOSS_GAP_MS) + ko_seg
@@ -322,10 +405,16 @@ def process(json_path: str) -> None:
         try:
             gloss_seg.export(paths["gloss"], format="mp3")
             print("  ✅ gloss.mp3 저장(덮어쓰기)")
+            # 추가 저장: audio.gloss (옵션)
+            if audio_paths.get("gloss"):
+                alt_path = os.path.normpath(audio_paths["gloss"])
+                ensure_parent_dir(alt_path)
+                gloss_seg.export(alt_path, format="mp3")
+                print(f"    ↪︎ 추가 저장: {alt_path}")
             last_saved = lemma
         except Exception as e:
             print(f"  ⚠️ gloss 저장 실패: {e}")
-            fails.append(f"{lemma}\tGLOSS_SAVE_FAIL:{e}")
+            fails.append(f"{lemma}\\tGLOSS_SAVE_FAIL:{e}")
             continue
 
     # 마무리
@@ -337,11 +426,11 @@ def process(json_path: str) -> None:
 
     if fails:
         with open("생성 실패 목록.txt", "w", encoding="utf-8") as f:
-            f.write("\n".join(fails) + "\n")
-        print(f"\n⚠️ 실패 {len(fails)}건 → '생성 실패 목록.txt' 기록")
+            f.write("\\n".join(fails) + "\\n")
+        print(f"\\n⚠️ 실패 {len(fails)}건 → '생성 실패 목록.txt' 기록")
     else:
-        print("\n✅ 모든 항목 처리 완료(실패 없음)")
+        print("\\n✅ 모든 항목 처리 완료(실패 없음)")
 
 if __name__ == "__main__":
-    json_file = sys.argv[1] if len(sys.argv) > 1 else "cefr_vocabs.json"
+    json_file = sys.argv[1] if len(sys.argv) > 1 else "idiom.json"
     process(json_file)
