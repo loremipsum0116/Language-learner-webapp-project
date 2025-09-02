@@ -27,7 +27,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:contract:consumer": "jest --config jest.config.contracts.js --testPathPattern=\"src/tests/contracts\" --testNamePattern=\"consumer\" --no-cache --clearCache",
+    "test:contract:consumer": "jest --config jest.config.contracts.js",
     "test:contract:all": "npm run test:contract:consumer",
     "analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
     "performance:audit": "npm run build && npm run analyze",
