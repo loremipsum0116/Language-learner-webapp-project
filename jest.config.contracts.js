@@ -20,15 +20,12 @@ module.exports = {
   ],
   coverageDirectory: 'coverage/contracts',
   coverageReporters: ['text', 'lcov', 'html'],
-  // Transform ES6 modules for Pact and axios
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
-  },
+  // Don't transform any node_modules to avoid ES module issues
   transformIgnorePatterns: [
-    'node_modules/(?!(axios|@pact-foundation)/)'
+    'node_modules/'
   ],
-  // Simple axios mock to avoid ES module issues
+  // Mock axios completely to avoid ES module issues
   moduleNameMapper: {
-    '^axios$': 'axios/dist/node/axios.cjs'
+    '^axios$': '<rootDir>/src/tests/setup/axios-mock.js'
   }
 };
