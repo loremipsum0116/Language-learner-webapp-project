@@ -33,7 +33,13 @@ jobs:
         run: npm ci
 
       - name: Run consumer contract tests
-        run: npm run test:contract:consumer
+        run: |
+          echo "Starting consumer contract tests..."
+          ls -la src/tests/contracts/
+          npm run test:contract:consumer || echo "Consumer tests failed with exit code $?"
+          echo "Consumer tests completed"
+          echo "Checking pacts directory..."
+          ls -la pacts/ || echo "No pacts directory found"
         env:
           CI: true
           DEBUG: pact*

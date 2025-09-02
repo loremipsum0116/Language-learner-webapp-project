@@ -16,7 +16,7 @@
     "cleanup": "node tools/cleanup_wiki_entries.js",
     "test": "dotenv -e .env.test -- jest",
     "test:ts": "dotenv -e .env.test -- jest --preset ts-jest",
-    "test:contract:provider": "dotenv -e .env.test -- jest --testPathPattern=contracts --testNamePattern=pact",
+    "test:contract:provider": "dotenv -e .env.test -- jest --testPathPatterns=contracts --testNamePattern=pact",
     "test:contract:all": "npm run test:contract:provider",
     "db:test:migrate": "dotenv -e .env.test -- npx prisma migrate deploy",
     "lint": "tsc --noEmit",
