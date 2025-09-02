@@ -27,11 +27,10 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(axios|@pact-foundation|node-fetch)/)'
+    'node_modules/(?!(axios|@pact-foundation)/)'
   ],
   // Smart mocks that allow Pact mock server requests through
   moduleNameMapper: {
-    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
-    '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
+    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js'
   }
 };

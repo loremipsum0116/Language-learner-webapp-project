@@ -37,37 +37,32 @@ const VocabAPI = {
   },
 
   addVocabulary: async (token, vocabData) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab`, {
-      method: 'POST',
+    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/vocab`, vocabData, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(vocabData),
+      }
     });
-    return response.json();
+    return response.data;
   },
 
   updateVocabulary: async (token, vocabId, vocabData) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab/${vocabId}`, {
-      method: 'PUT',
+    const response = await axios.put(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, vocabData, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(vocabData),
+      }
     });
-    return response.json();
+    return response.data;
   },
 
   deleteVocabulary: async (token, vocabId) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab/${vocabId}`, {
-      method: 'DELETE',
+    const response = await axios.delete(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
-      },
+      }
     });
-    return response.json();
+    return response.data;
   }
 };
 

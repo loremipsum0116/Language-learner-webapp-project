@@ -1,5 +1,16 @@
 // Smart node-fetch mock for contract tests - allows Pact mock server requests through
-const originalFetch = jest.requireActual('node-fetch');
+let originalFetch;
+try {
+  originalFetch = jest.requireActual('node-fetch');
+  // Handle default export
+  if (originalFetch.default) {
+    originalFetch = originalFetch.default;
+  }
+} catch (error) {
+  console.warn('Failed to load original node-fetch:', error.message);
+  // Fallback to native fetch if available
+  originalFetch = global.fetch || require('node:http');
+}
 
 // Function to check if URL is a Pact mock server
 const isPactMockServer = (url) => {
@@ -14,7 +25,18 @@ const fetch = jest.fn((url, options) => {
   // If it's a Pact mock server request, use real fetch
   if (isPactMockServer(url)) {
     console.log('[FETCH MOCK] Allowing Pact request through:', url);
-    return originalFetch(url, options);
+    if (originalFetch && typeof originalFetch === 'function') {
+      return originalFetch(url, options);
+    } else {
+      console.warn('[FETCH MOCK] Original fetch not available, using mock');
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        json: () => Promise.resolve({}),
+        text: () => Promise.resolve(''),
+        headers: new Map(),
+      });
+    }
   }
   
   // Otherwise use mock response

@@ -2,7 +2,7 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
-const fetch = require('node-fetch');
+const axios = require('axios');
 const { getNextAvailablePort } = require('../setup/port-utils');
 
 // Mock SRS (Spaced Repetition System) API client
@@ -11,50 +11,45 @@ let mockServerPort;
 const SRSAPI = {
   getReviewItems: async (token, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    const url = `http://localhost:${mockServerPort}/api/v1/srs/reviews${queryString ? `?${queryString}` : ''}`;
+    const url = `http://127.0.0.1:${mockServerPort}/api/v1/srs/reviews${queryString ? `?${queryString}` : ''}`;
     
-    const response = await fetch(url, {
-      method: 'GET',
+    const response = await axios.get(url, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
-    return response.json();
+    return response.data;
   },
 
   submitReview: async (token, reviewData) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/reviews`, {
-      method: 'POST',
+    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/srs/reviews`, reviewData, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(reviewData),
+      }
     });
-    return response.json();
+    return response.data;
   },
 
   getStudyStats: async (token, userId) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/stats/${userId}`, {
-      method: 'GET',
+    const response = await axios.get(`http://127.0.0.1:${mockServerPort}/api/v1/srs/stats/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      },
+      }
     });
-    return response.json();
+    return response.data;
   },
 
   resetItem: async (token, itemId) => {
-    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/items/${itemId}/reset`, {
-      method: 'POST',
+    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/srs/items/${itemId}/reset`, {}, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      },
+      }
     });
-    return response.json();
+    return response.data;
   }
 };
 
