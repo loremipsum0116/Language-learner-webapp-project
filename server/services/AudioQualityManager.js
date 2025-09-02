@@ -660,7 +660,6 @@ class AudioQualityManager {
       console.error('Failed to save batch analysis report:', error);
     }
   }
-}
 
   /**
    * 관리자용 리포트 조회
