@@ -3,8 +3,7 @@ module.exports = {
   displayName: 'Contract Tests',
   testEnvironment: 'node',
   testMatch: [
-    '**/src/tests/contracts/**/*.test.js',
-    '**/tests/contracts/**/*.test.js'
+    '**/src/tests/contracts/**/*.test.js'
   ],
   setupFilesAfterEnv: [
     '<rootDir>/src/tests/setup/contracts.js'
@@ -20,12 +19,24 @@ module.exports = {
   ],
   coverageDirectory: 'coverage/contracts',
   coverageReporters: ['text', 'lcov', 'html'],
-  // Don't transform any node_modules to avoid ES module issues
+  // Transform configuration
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
+  },
   transformIgnorePatterns: [
-    'node_modules/'
+    'node_modules/(?!(@pact-foundation|axios)/)'
   ],
-  // Mock axios completely to avoid ES module issues
+  // Mock both axios and node-fetch to avoid ES module issues
   moduleNameMapper: {
-    '^axios$': '<rootDir>/src/tests/setup/axios-mock.js'
+    '^axios$': '<rootDir>/src/tests/setup/axios-mock.js',
+    '^node-fetch$': '<rootDir>/src/tests/setup/axios-mock.js'
+  },
+  // Force CommonJS for this config
+  preset: undefined,
+  extensionsToTreatAsEsm: [],
+  globals: {
+    'ts-jest': {
+      useESM: false
+    }
   }
 };
