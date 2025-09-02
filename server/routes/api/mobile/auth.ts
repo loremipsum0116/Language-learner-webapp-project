@@ -3,7 +3,7 @@ import express, { Request, Response } from 'express';
 import authService from '../../../services/authService';
 // import refreshTokenService from '../../../services/refreshTokenService';
 import jwtService from '../../../services/jwtService';
-import { DeviceInfo, LoginRequest, LoginResponse, RegisterRequest, UserWithoutPassword } from '../../../types';
+import { DeviceInfo, LoginRequest, LoginResponse, RegisterRequest, UserWithoutPassword } from '@language-learner/core';
 
 const router = express.Router();
 

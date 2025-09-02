@@ -25,6 +25,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@language-learner/core": "file:./packages/core",
     "@google-cloud/text-to-speech": "^6.2.0",
     "@google/genai": "^1.15.0",
     "@prisma/client": "^6.13.0",

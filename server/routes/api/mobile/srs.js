@@ -13,6 +13,7 @@ const {
   restartMasteredFolder
 } = require('../../../services/srsService');
 
+
 // 모바일 최적화된 SRS 상태 조회
 router.get('/status', async (req, res) => {
   try {

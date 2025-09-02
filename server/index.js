@@ -6,6 +6,24 @@ const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
 
+// --- 압축 및 최적화 미들웨어 임포트 ---
+const {
+  advancedCompression,
+  apiResponseOptimization,
+  contentTypeOptimization,
+  responseSizeMonitoring,
+  apiCacheOptimization,
+  brotliCompression
+} = require('./middleware/compression');
+
+const {
+  preCompressedStatic,
+  audioOptimization,
+  imageOptimization,
+  jsonFileOptimization,
+  staticFileLogging
+} = require('./middleware/staticCompression');
+
 // --- 라우터 임포트 ---
 const authRoutes = require('./routes/auth');
 const learnRoutes = require('./routes/learn');
@@ -75,27 +93,27 @@ app.get('/test-static', (req, res) => {
 app.use('/starter', (req, res, next) => {
   console.log('[STATIC] starter audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'starter')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'starter')));
 
 app.use('/elementary', (req, res, next) => {
   console.log('[STATIC] elementary audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'elementary')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'elementary')));
 
 app.use('/intermediate', (req, res, next) => {
   console.log('[STATIC] intermediate audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'intermediate')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'intermediate')));
 
 app.use('/upper', (req, res, next) => {
   console.log('[STATIC] upper audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'upper')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'upper')));
 
 app.use('/advanced', (req, res, next) => {
   console.log('[STATIC] advanced audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'advanced')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'advanced')));
 
 // === 기존 정적 파일 서빙 (최우선) ===
 console.log('Setting up A1 audio:', path.join(__dirname, 'A1', 'audio'));
@@ -107,32 +125,32 @@ console.log('Setting up C2 audio:', path.join(__dirname, 'C2', 'audio'));
 app.use('/A1/audio', (req, res, next) => {
   console.log('[STATIC] A1 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'A1', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'A1', 'audio')));
 
 app.use('/A2/audio', (req, res, next) => {
   console.log('[STATIC] A2 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'A2', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'A2', 'audio')));
 
 app.use('/B1/audio', (req, res, next) => {
   console.log('[STATIC] B1 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'B1', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'B1', 'audio')));
 
 app.use('/B2/audio', (req, res, next) => {
   console.log('[STATIC] B2 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'B2', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'B2', 'audio')));
 
 app.use('/C1/audio', (req, res, next) => {
   console.log('[STATIC] C1 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'C1', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'C1', 'audio')));
 
 app.use('/C2/audio', (req, res, next) => {
   console.log('[STATIC] C2 audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'C2', 'audio')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'C2', 'audio')));
 
 // 숙어/구동사 오디오 서빙 (인증 불필요)
 app.use('/idiom', (req, res, next) => {
@@ -150,17 +168,28 @@ app.use('/idiom', (req, res, next) => {
 app.use('/phrasal_verb', (req, res, next) => {
   console.log('[STATIC] phrasal_verb audio request:', req.path);
   next();
-}, express.static(path.join(__dirname, 'phrasal_verb')));
+}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'phrasal_verb')));
 
-// 비디오 파일 서빙
-app.use('/api/video', express.static(path.join(__dirname, 'out')));
+// 비디오 파일 서빙 - 압축 최적화 적용
+app.use('/api/video', staticFileLogging, preCompressedStatic(path.join(__dirname, 'out')));
+
+// === 압축 및 최적화 미들웨어 (최우선 적용) ===
+app.use(advancedCompression);
+app.use(contentTypeOptimization);
+app.use(responseSizeMonitoring);
+app.use(brotliCompression);
 
 // CORS 설정을 정적 파일보다 먼저 적용
 app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use(express.json());
+// 정적 파일 최적화 적용
+app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '10mb' })); // JSON 크기 제한 증가
 app.use(cookieParser());
+
+// === API 응답 최적화 ===
+app.use(apiResponseOptimization);
+app.use(apiCacheOptimization);
 
 // === API 버전 관리 미들웨어 ===
 app.use(detectApiVersion);
