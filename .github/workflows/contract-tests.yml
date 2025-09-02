@@ -36,6 +36,7 @@ jobs:
         run: npm run test:contract:consumer
         env:
           CI: true
+          DEBUG: pact*
 
       - name: Upload consumer contract artifacts
         uses: actions/upload-artifact@v4
@@ -43,8 +44,8 @@ jobs:
         with:
           name: pact-contracts
           path: |
-            pacts/*.json
-            logs/*.log
+            pacts/
+            logs/
           retention-days: 7
 
       - name: Publish contracts to Pact Broker
@@ -111,7 +112,7 @@ jobs:
       - name: Setup test database
         run: |
           cd server
-          npm run db:test:migrate
+          npx prisma migrate reset --force --skip-seed
         env:
           DATABASE_URL: mysql://test:test@localhost:3306/language_learner_test
 
