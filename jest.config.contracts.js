@@ -2,6 +2,7 @@
 module.exports = {
   displayName: 'Contract Tests',
   testEnvironment: 'node',
+  preset: 'jest-environment-node',
   testMatch: [
     '**/src/tests/contracts/**/*.test.js',
     '**/tests/contracts/**/*.test.js'
@@ -26,6 +27,10 @@ module.exports = {
     '^.+\\.(js|jsx)$': 'babel-jest'
   },
   transformIgnorePatterns: [
-    'node_modules/(?!(@pact-foundation|node-fetch)/)'
-  ]
+    'node_modules/(?!(axios|@pact-foundation|node-fetch)/)'
+  ],
+  moduleNameMapper: {
+    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
+    '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
+  }
 };
