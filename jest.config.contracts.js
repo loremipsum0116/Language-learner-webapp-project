@@ -19,24 +19,8 @@ module.exports = {
   ],
   coverageDirectory: 'coverage/contracts',
   coverageReporters: ['text', 'lcov', 'html'],
-  // Transform configuration
-  transform: {
-    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
-  },
-  transformIgnorePatterns: [
-    'node_modules/(?!(@pact-foundation|axios)/)'
-  ],
-  // Mock both axios and node-fetch to avoid ES module issues
-  moduleNameMapper: {
-    '^axios$': '<rootDir>/src/tests/setup/axios-mock.js',
-    '^node-fetch$': '<rootDir>/src/tests/setup/axios-mock.js'
-  },
-  // Force CommonJS for this config
-  preset: undefined,
-  extensionsToTreatAsEsm: [],
-  globals: {
-    'ts-jest': {
-      useESM: false
-    }
-  }
+  // Clear and simple configuration - axios 0.27.2 is CommonJS
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true
 };
