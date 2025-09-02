@@ -21,22 +21,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache node modules
+        uses: actions/cache@v4
+        id: cache-npm
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/package-lock.json
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('package-lock.json') }}
 
       - name: Install dependencies
-        run: |
-          cd web
-          npm ci
+        if: steps.cache-npm.outputs.cache-hit != 'true'
+        run: npm ci
 
       - name: Run consumer contract tests
-        run: |
-          cd web
-          npm run test:contract:consumer
+        run: npm run test:contract:consumer
         env:
           CI: true
 
@@ -45,13 +42,12 @@ jobs:
         if: success()
         with:
           name: pact-contracts
-          path: web/pacts/*.json
+          path: pacts/*.json
           retention-days: 7
 
       - name: Publish contracts to Pact Broker
         if: github.ref == 'refs/heads/main' && env.PACT_BROKER_BASE_URL != ''
         run: |
-          cd web
           npx pact-broker publish pacts --consumer-app-version=${{ github.sha }} --branch=${{ github.ref_name }}
 
   provider-contract-tests:
@@ -88,34 +84,35 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache server node modules
+        uses: actions/cache@v4
+        id: cache-server-npm
         with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'npm'
-          cache-dependency-path: web/server/package-lock.json
+          path: server/node_modules
+          key: ${{ runner.os }}-server-npm-${{ hashFiles('server/package-lock.json') }}
 
       - name: Install server dependencies
+        if: steps.cache-server-npm.outputs.cache-hit != 'true'
         run: |
-          cd web/server
+          cd server
           npm ci
 
       - name: Download consumer contracts
         uses: actions/download-artifact@v4
         with:
           name: pact-contracts
-          path: web/pacts
+          path: pacts
 
       - name: Setup test database
         run: |
-          cd web/server
+          cd server
           npm run db:test:migrate
         env:
           DATABASE_URL: postgresql://test:test@localhost:5432/language_learner_test
 
       - name: Run provider contract tests
         run: |
-          cd web/server
+          cd server
           npm run test:contract:provider
         env:
           CI: true
@@ -127,7 +124,7 @@ jobs:
       - name: Publish provider verification results
         if: env.PACT_BROKER_BASE_URL != ''
         run: |
-          cd web/server
+          cd server
           # Verification results are published automatically by Pact during test execution
           echo "Provider verification results published to Pact Broker"
 
