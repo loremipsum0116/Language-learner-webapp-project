@@ -1,8 +1,14 @@
-// server/middlewares/auth.js
-const jwtService = require('../services/jwtService');
+// server/middleware/auth.ts
+import { Request, Response, NextFunction } from 'express';
+import jwtService from '../services/jwtService';
+import { UserWithoutPassword, JwtPayload } from '../types';
+
+interface AuthError extends Error {
+  code?: string;
+}
 
 // Enhanced authentication middleware with refresh token support
-module.exports = function auth(req, res, next) {
+export default function auth(req: Request, res: Response, next: NextFunction): Response | void {
   try {
     console.log('[AUTH] Checking request to:', req.path, 'method:', req.method);
     
@@ -31,23 +37,23 @@ module.exports = function auth(req, res, next) {
     }
 
     // Verify access token using JWT service
-    const payload = jwtService.verifyAccessToken(token);
+    const payload: JwtPayload = jwtService.verifyAccessToken(token);
     
     req.user = { 
-      id: payload.id, 
+      id: payload.userId, 
       email: payload.email,
-      role: payload.role || 'USER' 
-    };
+      role: payload.role || 'user' 
+    } as UserWithoutPassword;
 
     // Check if token is near expiry and add header for client to refresh
-    if (jwtService.isTokenNearExpiry(payload)) {
+    if (jwtService.isTokenNearExpiry(payload as any)) {
       res.setHeader('X-Token-Refresh-Suggested', 'true');
       console.log('[AUTH] Token near expiry, suggesting refresh for user:', req.user.id);
     }
 
     console.log('[AUTH] User authenticated:', req.user);
     return next();
-  } catch (err) {
+  } catch (err: any) {
     console.error('[AUTH] Token verification failed:', err.message);
     console.error('[AUTH] Request path:', req.path);
     
@@ -67,4 +73,4 @@ module.exports = function auth(req, res, next) {
       code: errorCode
     });
   }
-};
+}

@@ -392,18 +392,6 @@ export default function App() {
           } 
         />
         <Route 
-          path="/tutor" 
-          element={
-            <>
-              <Header />
-              <div className="main-content">
-                <Placeholder title="튜터" />
-              </div>
-              <Footer />
-            </>
-          } 
-        />
-        <Route 
           path="/dict" 
           element={
             <>

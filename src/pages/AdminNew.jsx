@@ -439,7 +439,7 @@ export default function AdminNew() {
             {/* 리포트 */}
             {tab === "reports" && (
                 <>
-                    <SectionHeader title="리포트" desc="시스템 성능 지표, 사용자 활동, 튜터 사용 통계를 확인합니다." />
+                    <SectionHeader title="리포트" desc="시스템 성능 지표, 사용자 활동 통계를 확인합니다." />
                     <div className="d-flex gap-2 mb-3">
                         <button 
                             className="btn btn-primary" 
@@ -454,13 +454,6 @@ export default function AdminNew() {
                             disabled={loadingReports}
                         >
                             성능 리포트
-                        </button>
-                        <button 
-                            className="btn btn-outline-primary" 
-                            onClick={() => loadReports('tutor')}
-                            disabled={loadingReports}
-                        >
-                            튜터 리포트
                         </button>
                         <button 
                             className="btn btn-outline-primary" 
@@ -533,37 +526,6 @@ export default function AdminNew() {
                                 </>
                             )}
                             
-                            {reports.tutor && (
-                                <>
-                                    <div className="col-md-6">
-                                        <div className="card h-100">
-                                            <div className="card-body">
-                                                <h6 className="card-title">튜터 사용 (최근 7일)</h6>
-                                                <ul className="mb-0 small">
-                                                    <li>총 세션: {reports.tutor.weeklyStats.totalSessions}회</li>
-                                                    <li>평균 토큰/세션: {reports.tutor.weeklyStats.avgTokensPerSession}</li>
-                                                    <li>총 비용: ${reports.tutor.weeklyStats.totalCost}</li>
-                                                    <li>에러율: {reports.tutor.weeklyStats.errorRate}%</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-md-6">
-                                        <div className="card h-100">
-                                            <div className="card-body">
-                                                <h6 className="card-title">일별 통계</h6>
-                                                <div className="small">
-                                                    {reports.tutor.dailyBreakdown.slice(0, 3).map((day, i) => (
-                                                        <div key={i}>
-                                                            {new Date(day.date).toLocaleDateString()}: {day.sessions}세션 (${day.cost})
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </>
-                            )}
                             
                             {reports.users && (
                                 <div className="col-12">
@@ -613,7 +575,7 @@ export default function AdminNew() {
             {/* 로그 */}
             {tab === "logs" && (
                 <>
-                    <SectionHeader title="로그" desc="시스템 활동, 튜터 사용, 사용자 활동 로그를 확인합니다." />
+                    <SectionHeader title="로그" desc="시스템 활동, 사용자 활동 로그를 확인합니다." />
                     <div className="d-flex gap-2 mb-3">
                         <button 
                             className="btn btn-primary" 
@@ -621,13 +583,6 @@ export default function AdminNew() {
                             disabled={loadingLogs}
                         >
                             {loadingLogs ? '로딩 중...' : '전체 로그'}
-                        </button>
-                        <button 
-                            className="btn btn-outline-primary" 
-                            onClick={() => loadLogs('tutor')}
-                            disabled={loadingLogs}
-                        >
-                            튜터 로그
                         </button>
                         <button 
                             className="btn btn-outline-primary" 
@@ -666,7 +621,6 @@ export default function AdminNew() {
                                                     <td>
                                                         <span className={`badge bg-${
                                                             log.type === 'error' ? 'danger' : 
-                                                            log.type === 'tutor' ? 'primary' : 
                                                             'secondary'
                                                         }`}>
                                                             {log.type}

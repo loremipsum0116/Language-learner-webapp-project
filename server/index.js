@@ -35,10 +35,34 @@ const adminRoutes = require('./routes/admin');
 
 // --- 미들웨어 임포트 ---
 const authMiddleware = require('./middleware/auth');
+const { 
+  detectApiVersion, 
+  validateApiVersion, 
+  deprecationWarning, 
+  formatApiResponse,
+  generateApiDocs 
+} = require('./middleware/apiVersion');
+
+// --- API 버전 라우터 임포트 ---
+const apiV1Router = require('./routes/api/v1');
+const mobileRouter = require('./routes/api/mobile');
 
 const app = express();
 
 console.log('[STARTUP] Express app created, setting up routes...');
+
+// === API 문서화 (임시로 다른 경로 사용) ===
+app.get('/api-docs', (req, res) => {
+  console.log('[API DOCS] /api-docs route hit - immediate response');
+  const { generateApiDocs } = require('./middleware/apiVersion');
+  generateApiDocs([1])(req, res);
+});
+
+app.get('/docs/api-info', (req, res) => {
+  console.log('[API DOCS] /docs/api-info route hit - immediate response'); 
+  const { generateApiDocs } = require('./middleware/apiVersion');
+  generateApiDocs([1])(req, res);
+});
 
 // === 정적 파일 서빙 (최우선) ===
 // Test route for debugging
@@ -138,7 +162,16 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cookieParser());
 
-// --- 인증 불필요 라우트 ---
+// === API 버전 관리 미들웨어 ===
+app.use(detectApiVersion);
+app.use(validateApiVersion([1])); // 현재 v1만 지원
+app.use(deprecationWarning);
+app.use(formatApiResponse);
+
+// === 새로운 버전 관리 API (v1) ===
+app.use('/api/v1', apiV1Router);
+
+// --- 인증 불필요 라우트 (Legacy - 하위 호환성 유지) ---
 app.use('/auth', authRoutes);
 app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // 시간 가속 API (인증 불필요)
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
@@ -224,6 +257,9 @@ app.get('/api/vocab/vocab-by-pos', async (req, res) => {
 
 app.use('/api/vocab', vocabRoutes); // Vocab API for unified idiom/phrasal verb access (인증 불필요)
 
+// === 모바일 전용 API (인증 불필요 엔드포인트 포함) ===
+app.use('/api/mobile', mobileRouter);
+
 // 오디오 파일 목록 API (인증 불필요)
 app.get('/audio-files/:level', (req, res) => {
   try {
@@ -246,7 +282,17 @@ app.get('/audio-files/:level', (req, res) => {
 });
 
 // --- 이 지점부터 인증 필요 ---
-app.use(authMiddleware);
+app.use((req, res, next) => {
+  // Skip auth for API documentation endpoints
+  if (req.path === '/api' || req.path === '/docs/api') {
+    return next();
+  }
+  // Skip auth for mobile API (handled internally)
+  if (req.path.startsWith('/api/mobile')) {
+    return next();
+  }
+  return authMiddleware(req, res, next);
+});
 
 // --- SRS 보강 라우터(기존 srs.js 유지하면서 확장/오버라이드) ---
 // app.use(srsFlatExt);            // POST /srs/folders/create 제공

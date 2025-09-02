@@ -64,49 +64,6 @@ function AudioPlayer({ src, license, attribution }) {
   );
 }
 
-/**
- * 페르소나 폼 (로컬 저장)
- * level/tone/address 는 /tutor 요청 시 사용
- */
-function PersonaForm({ value, onChange }) {
-  const [level, setLevel] = useState(value?.level || "A2");
-  const [tone, setTone] = useState(value?.tone || "formal");
-  const [address, setAddress] = useState(value?.address || "formal");
-
-  useEffect(() => {
-    onChange?.({ level, tone, address });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [level, tone, address]);
-
-  return (
-    <form className="row g-2" aria-label="Tutor persona form">
-      <div className="col-md-4">
-        <label className="form-label">CEFR</label>
-        <select className="form-select" value={level} onChange={(e) => setLevel(e.target.value)}>
-          {["A1", "A2", "B1", "B2", "C1"].map((lv) => (
-            <option key={lv} value={lv}>
-              {lv}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="col-md-4">
-        <label className="form-label">톤</label>
-        <select className="form-select" value={tone} onChange={(e) => setTone(e.target.value)}>
-          <option value="formal">격식</option>
-          <option value="friendly">친근</option>
-        </select>
-      </div>
-      <div className="col-md-4">
-        <label className="form-label">호칭</label>
-        <select className="form-select" value={address} onChange={(e) => setAddress(e.target.value)}>
-          <option value="formal">formal</option>
-          <option value="casual">casual</option>
-        </select>
-      </div>
-    </form>
-  );
-}
 
 /**
  * 근거(Refs) Drawer
@@ -301,102 +258,6 @@ function DictQuickPanel() {
 }
 
 
-/**
- * 튜터 퀵챗 (POST /tutor/chat)
- */
-function TutorQuickChat({ persona }) {
-  const [prompt, setPrompt] = useState("");
-  const [resp, setResp] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState(null);
-  const [lat, setLat] = useState(null);
-
-  const send = async (e) => {
-    e?.preventDefault();
-    if (!prompt.trim()) return;
-    setLoading(true);
-    setErr(null);
-    setResp(null);
-    try {
-      const data = await fetchJSON(
-        `/tutor/chat`, // API_BASE is prepended by the imported fetchJSON
-        withCreds({
-          method: "POST",
-          body: JSON.stringify({
-            mode: "chat",
-            persona: persona || { level: "A2", tone: "formal", address: "formal" },
-            contextTags: [],
-            prompt: prompt.trim(),
-          }),
-        })
-      );
-      setResp(data?.data || data);
-      setLat(data._latencyMs);
-    } catch (e2) {
-      setErr(e2);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
-    <div className="card h-100 vocabulary-card">
-      <div className="card-body">
-        <h5 className="card-title">🤖 AI English Tutor</h5>
-        <form className="d-flex gap-2" onSubmit={send}>
-          <input
-            className="form-control"
-            placeholder="예: I am going to the movies tomorrow. Please review grammar."
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            aria-label="tutor prompt"
-          />
-          <button className="btn btn-primary" type="submit" disabled={loading}>
-            {loading ? (
-              <>
-                <span className="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
-                🤖 전송 중...
-              </>
-            ) : (
-              "📨 전송"
-            )}
-          </button>
-          <Link className="btn btn-link" to="/tutor" aria-label="open tutor page">
-            전체 열기 →
-          </Link>
-        </form>
-        {err && err.status === 401 && (
-          <div className="alert alert-danmoosae mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
-        )}
-        {resp && (
-          <div className="mt-3">
-            <div className="mb-2">
-              <strong lang="en">DE</strong>
-              <div className="border rounded p-2" lang="en">
-                {resp.de_answer}
-              </div>
-            </div>
-            {resp.ko_explain && (
-              <div className="mb-2">
-                <strong>KO</strong>
-                <div className="border rounded p-2">{resp.ko_explain}</div>
-              </div>
-            )}
-            {Array.isArray(resp.tips) && resp.tips.length > 0 && (
-              <ul className="mb-2">
-                {resp.tips.slice(0, 3).map((t, i) => (
-                  <li key={i}>{t}</li>
-                ))}
-              </ul>
-            )}
-            <RefDrawer refs={resp.refs} />
-            {lat !== null && <div className="form-text mt-1">API {lat}ms</div>}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 /**
  * 리딩 티저: /reading/list
@@ -565,40 +426,11 @@ function DashboardWidget() {
  * 홈(메인) 페이지
  */
 export default function Home() {
-  const { user, updateProfile } = useAuth();
+  const { user } = useAuth();
   const [authErr, setAuthErr] = useState(null);
-  const [persona, setPersona] = useState({ level: "A2", tone: "formal", address: "formal" });
   
   // 운영자 체크
   const isAdmin = user?.email === 'super@root.com';
-  useEffect(() => {
-    if (user?.profile) {
-      setPersona((prev) => ({
-        ...prev,
-        ...user.profile,
-      }));
-    }
-  }, [user]);
-  const [saving, setSaving] = useState(false);
-  const [saveMsg, setSaveMsg] = useState(null);
-
-  async function onSavePersona() {
-    setSaving(true);
-    setSaveMsg(null);
-    try {
-      await updateProfile({
-        level: persona.level,
-        tone: persona.tone,
-        address: persona.address,
-      });
-      setSaveMsg("저장됨");
-      setTimeout(() => setSaveMsg(null), 1500);
-    } catch (e) {
-      setSaveMsg("저장 실패");
-    } finally {
-      setSaving(false);
-    }
-  }
 
   useEffect(() => {
     let mounted = true;
@@ -614,9 +446,6 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("persona", JSON.stringify(persona || {}));
-  }, [persona]);
 
   return (
     <div className="home-container">
@@ -628,14 +457,11 @@ export default function Home() {
         </h1>
         <p className="hero-subtitle">
           SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
-          <strong>🤖 AI 영어 튜터</strong>와 <strong>🔊 음성 사전</strong>을 경험해보세요.
+          <strong>🔊 음성 사전</strong>을 경험해보세요.
         </p>
         <div className="hero-actions">
           <Link className="hero-btn hero-btn-primary" to="/srs">
             🎆 오늘 학습 시작
-          </Link>
-          <Link className="hero-btn hero-btn-secondary" to="/tutor">
-            🤖 AI 튜터
           </Link>
           <Link className="hero-btn hero-btn-outline" to="/dict">
             📚 사전 검색
@@ -691,34 +517,6 @@ export default function Home() {
           <div className="widget-title">📚 사전 검색</div>
           <div className="widget-content">
             <DictQuickPanel />
-          </div>
-        </div>
-        
-        <div className="widget-card">
-          <div className="widget-title">⚙️ 튜터 설정</div>
-          <div className="widget-content">
-            <PersonaForm value={persona} onChange={setPersona} />
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: '1rem' }}>
-              <button 
-                className="hero-btn hero-btn-primary" 
-                onClick={onSavePersona} 
-                disabled={saving}
-                style={{ fontSize: '0.9rem', padding: '0.5rem 1rem' }}
-              >
-                {saving ? "저장 중…" : "프로필 저장"}
-              </button>
-              {saveMsg && <span style={{ color: 'green', fontSize: '0.9rem' }}>{saveMsg}</span>}
-            </div>
-            <div style={{ fontSize: '0.8rem', color: 'var(--color-slate)', marginTop: '0.5rem' }}>
-              이 설정은 로컬에 저장됩니다.
-            </div>
-          </div>
-        </div>
-
-        <div className="widget-card" style={{ gridColumn: 'span 2' }}>
-          <div className="widget-title">🤖 AI English Tutor</div>
-          <div className="widget-content">
-            <TutorQuickChat persona={persona} />
           </div>
         </div>
         
@@ -830,9 +628,6 @@ export default function Home() {
           </Link>
           <Link className="quick-link" to="/read/1">
             /read/:id
-          </Link>
-          <Link className="quick-link" to="/tutor">
-            /tutor
           </Link>
           <Link className="quick-link" to="/dict">
             /dict

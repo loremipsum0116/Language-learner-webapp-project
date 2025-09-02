@@ -181,20 +181,6 @@ model srsfolderitem {
   @@index([vocabId], map: "SrsFolderItem_vocabId_fkey")
 }
 
-model tutorlog {
-  id        Int      @id @default(autoincrement())
-  userId    Int
-  mode      String
-  input     String
-  output    String
-  tokens    Int?
-  cost      Float?
-  refs      Json?
-  createdAt DateTime @default(now())
-  user      user     @relation(fields: [userId], references: [id], map: "TutorLog_userId_fkey")
-
-  @@index([userId], map: "TutorLog_userId_fkey")
-}
 
 model user {
   id               Int              @id @default(autoincrement())
@@ -216,7 +202,6 @@ model user {
   refreshToken     refreshToken[]
   srscard          srscard[]
   srsfolder        srsfolder[]
-  tutorlog         tutorlog[]
   uservocab        uservocab[]
   wronganswer      wronganswer[]
 }

@@ -502,15 +502,6 @@ export default function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    <div className="col-md-6">
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">AI 튜터</h5>
-                                <p className="card-text text-muted">AI와 자유롭게 대화하며 영어 실력을 향상시키세요.</p>
-                                <Link to="/tutor" className="btn btn-outline-secondary">튜터와 대화</Link>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 

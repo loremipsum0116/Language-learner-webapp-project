@@ -52,8 +52,8 @@ const LandingPage = () => {
                   단무새와 함께하는 English Learning
                 </h1>
                 <p className="lead text-muted mb-4">
-                  AI-powered personalized learning for mastering English<br/>
-                  AI 기반 맞춤형 학습으로 영어를 완벽하게 마스터하세요
+                  과학적인 간격 반복 학습으로 영어를 완벽하게 마스터하세요<br/>
+                  Scientific spaced repetition system for mastering English
                 </p>
                 
                 <div className="d-flex gap-3 justify-content-center mb-5">
@@ -98,11 +98,11 @@ const LandingPage = () => {
                 <div className="col-md-4">
                   <div className="card h-100 text-center border-0 shadow-sm">
                     <div className="card-body p-4">
-                      <i className="bi bi-brain text-primary mb-3" style={{fontSize: '3rem'}}></i>
-                      <h5 className="card-title fw-bold">Smart AI Learning</h5>
+                      <i className="bi bi-book text-primary mb-3" style={{fontSize: '3rem'}}></i>
+                      <h5 className="card-title fw-bold">Personalized Learning</h5>
                       <p className="card-text">
-                        Personalized curriculum based on your learning patterns<br/>
-                        <small className="text-muted">당신의 학습 패턴에 맞춘 AI 커리큘럼</small>
+                        Adaptive curriculum based on your progress<br/>
+                        <small className="text-muted">당신의 진도에 맞춘 맞춤형 커리큘럼</small>
                       </p>
                     </div>
                   </div>

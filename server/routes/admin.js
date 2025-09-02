@@ -686,7 +686,7 @@ router.post('/validate', auth, adminOnly, async (req, res) => {
 // GET /admin/reports - 시스템 리포트
 router.get('/reports', auth, adminOnly, async (req, res) => {
     try {
-        const { type } = req.query; // 'performance', 'tutor', 'users', 'all'
+        const { type } = req.query; // 'performance', 'users', 'all'
         
         const reports = {};
         
@@ -744,63 +744,6 @@ router.get('/reports', auth, adminOnly, async (req, res) => {
             };
         }
 
-        if (type === 'tutor' || type === 'all') {
-            // 튜터 사용 통계
-            const tutorStats = await prisma.tutorlog.aggregate({
-                where: {
-                    createdAt: {
-                        gte: weekAgo
-                    }
-                },
-                _count: {
-                    id: true
-                },
-                _avg: {
-                    tokens: true,
-                    cost: true
-                },
-                _sum: {
-                    tokens: true,
-                    cost: true
-                }
-            });
-
-            const sessionsPerDay = await prisma.$queryRaw`
-                SELECT 
-                    DATE(createdAt) as date,
-                    COUNT(*) as sessions,
-                    AVG(tokens) as avgTokens,
-                    SUM(cost) as totalCost
-                FROM tutorlog 
-                WHERE createdAt >= DATE_SUB(NOW(), INTERVAL 7 DAY)
-                GROUP BY DATE(createdAt)
-                ORDER BY date DESC
-            `;
-
-            // 에러율 계산 (비용이 0인 것은 에러로 간주)
-            const errorCount = await prisma.tutorlog.count({
-                where: {
-                    createdAt: { gte: weekAgo },
-                    cost: 0
-                }
-            });
-
-            reports.tutor = {
-                weeklyStats: {
-                    totalSessions: tutorStats._count.id || 0,
-                    avgTokensPerSession: Math.round(tutorStats._avg.tokens || 0),
-                    totalTokens: tutorStats._sum.tokens || 0,
-                    totalCost: Number(tutorStats._sum.cost || 0).toFixed(4),
-                    errorRate: tutorStats._count.id > 0 ? ((errorCount / tutorStats._count.id) * 100).toFixed(1) : 0
-                },
-                dailyBreakdown: sessionsPerDay.map(day => ({
-                    date: day.date,
-                    sessions: Number(day.sessions),
-                    avgTokens: Math.round(Number(day.avgTokens || 0)),
-                    cost: Number(day.totalCost || 0).toFixed(4)
-                }))
-            };
-        }
 
         if (type === 'users' || type === 'all') {
             // 사용자 활동 통계
@@ -863,36 +806,6 @@ router.get('/logs', auth, adminOnly, async (req, res) => {
         
         const logs = [];
         
-        // 튜터 로그
-        if (!type || type === 'tutor') {
-            const tutorLogs = await prisma.tutorlog.findMany({
-                take: parseInt(limit),
-                skip: parseInt(offset),
-                orderBy: { createdAt: 'desc' },
-                include: {
-                    user: {
-                        select: { email: true }
-                    }
-                }
-            });
-
-            tutorLogs.forEach(log => {
-                logs.push({
-                    timestamp: log.createdAt,
-                    type: 'tutor',
-                    level: log.cost === 0 ? 'ERROR' : 'INFO',
-                    message: `Tutor ${log.mode} session - ${log.tokens || 0} tokens, $${(log.cost || 0).toFixed(4)}`,
-                    user: log.user.email,
-                    data: {
-                        mode: log.mode,
-                        tokens: log.tokens,
-                        cost: log.cost,
-                        inputLength: log.input?.length || 0,
-                        outputLength: log.output?.length || 0
-                    }
-                });
-            });
-        }
 
         // 사용자 활동 로그 (최근 로그인 등)
         if (!type || type === 'user_activity') {
@@ -925,37 +838,6 @@ router.get('/logs', auth, adminOnly, async (req, res) => {
             });
         }
 
-        // 시스템 에러 로그 (튜터 실패)
-        if (!type || type === 'errors') {
-            const errorLogs = await prisma.tutorlog.findMany({
-                where: {
-                    cost: 0
-                },
-                take: parseInt(limit),
-                skip: parseInt(offset),
-                orderBy: { createdAt: 'desc' },
-                include: {
-                    user: {
-                        select: { email: true }
-                    }
-                }
-            });
-
-            errorLogs.forEach(log => {
-                logs.push({
-                    timestamp: log.createdAt,
-                    type: 'error',
-                    level: 'ERROR',
-                    message: `Tutor ${log.mode} failed - no cost recorded`,
-                    user: log.user.email,
-                    data: {
-                        mode: log.mode,
-                        inputLength: log.input?.length || 0,
-                        outputLength: log.output?.length || 0
-                    }
-                });
-            });
-        }
 
         // 시간순 정렬
         logs.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
