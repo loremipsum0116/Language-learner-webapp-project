@@ -10,15 +10,19 @@ let mockServerPort;
 const AuthAPI = {
   login: async (credentials) => {
     const axios = require('axios');
+    const url = `http://localhost:${mockServerPort}/api/v1/auth/login`;
+    console.log(`Making login request to: ${url} with credentials:`, credentials);
+    
     try {
-      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/login`, credentials, {
+      const response = await axios.post(url, credentials, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
+      console.log('Login response:', response.data);
       return response.data;
     } catch (error) {
-      console.error('Login error:', error.response?.data);
+      console.error('Login error:', error.response?.data || error.message);
       return error.response?.data;
     }
   },
@@ -65,9 +69,15 @@ describe('Auth API Consumer Contract Tests', () => {
       port: mockServerPort,
       log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
       dir: path.resolve(process.cwd(), 'pacts'),
-      logLevel: 'INFO',
+      logLevel: 'DEBUG',
     });
+    
+    console.log(`Setting up Pact provider on port ${mockServerPort}`);
     await provider.setup();
+    console.log(`Pact provider setup completed on port ${mockServerPort}`);
+    
+    // Wait a bit for the mock server to be fully ready
+    await new Promise(resolve => setTimeout(resolve, 100));
   });
 
   afterAll(async () => {
@@ -91,6 +101,7 @@ describe('Auth API Consumer Contract Tests', () => {
         refreshToken: like('refresh.token.here')
       };
 
+      console.log('Adding interaction to Pact provider...');
       await provider.addInteraction({
         state: 'user exists with valid credentials',
         uponReceiving: 'a login request with valid credentials',
@@ -113,11 +124,16 @@ describe('Auth API Consumer Contract Tests', () => {
           body: expectedResponse
         }
       });
+      console.log('Interaction added successfully');
+      
+      // Give a moment for the interaction to be registered
+      await new Promise(resolve => setTimeout(resolve, 50));
 
       const result = await AuthAPI.login({
         email: 'test@example.com',
         password: 'validPassword123'
       });
+      console.log('API call result:', result);
 
       expect(result.success).toBe(true);
       expect(result.user.email).toBe('test@example.com');

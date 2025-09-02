@@ -1,7 +1,8 @@
 // Port allocation utility for contract tests
 const net = require('net');
 
-let currentPort = 4000;
+// Start from a higher port range to avoid common conflicts
+let currentPort = 8000;
 
 /**
  * Find an available port starting from a given port number
@@ -34,9 +35,10 @@ const findAvailablePort = (startPort = currentPort) => {
  * @returns {Promise<number>} Next available port
  */
 const getNextAvailablePort = async () => {
-  currentPort += 1;
+  // Add random offset to avoid predictable conflicts
+  currentPort += Math.floor(Math.random() * 10) + 1;
   const port = await findAvailablePort(currentPort);
-  currentPort = port;
+  currentPort = port + 1;
   return port;
 };
 
@@ -44,7 +46,7 @@ const getNextAvailablePort = async () => {
  * Reset port counter (useful for test isolation)
  */
 const resetPortCounter = () => {
-  currentPort = 4000;
+  currentPort = 8000;
 };
 
 module.exports = {
