@@ -2,7 +2,6 @@
 module.exports = {
   displayName: 'Contract Tests',
   testEnvironment: 'node',
-  preset: 'jest-environment-node',
   testMatch: [
     '**/src/tests/contracts/**/*.test.js',
     '**/tests/contracts/**/*.test.js'
@@ -30,9 +29,9 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(axios|@pact-foundation|node-fetch)/)'
   ],
-  // Remove axios mock for contract tests to allow Pact HTTP handling
-  // moduleNameMapper: {
-  //   '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
-  //   '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
-  // }
+  // Smart mocks that allow Pact mock server requests through
+  moduleNameMapper: {
+    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
+    '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
+  }
 };
