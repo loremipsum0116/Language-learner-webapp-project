@@ -59,19 +59,20 @@ jobs:
     if: always()
     
     services:
-      postgres:
-        image: postgres:15
+      mysql:
+        image: mysql:8.0
         env:
-          POSTGRES_PASSWORD: test
-          POSTGRES_USER: test
-          POSTGRES_DB: language_learner_test
+          MYSQL_ROOT_PASSWORD: test
+          MYSQL_DATABASE: language_learner_test
+          MYSQL_USER: test
+          MYSQL_PASSWORD: test
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
         ports:
-          - 5432:5432
+          - 3306:3306
 
       redis:
         image: redis:7-alpine
@@ -112,7 +113,7 @@ jobs:
           cd server
           npm run db:test:migrate
         env:
-          DATABASE_URL: postgresql://test:test@localhost:5432/language_learner_test
+          DATABASE_URL: mysql://test:test@localhost:3306/language_learner_test
 
       - name: Run provider contract tests
         run: |
@@ -120,7 +121,7 @@ jobs:
           npm run test:contract:provider
         env:
           CI: true
-          DATABASE_URL: postgresql://test:test@localhost:5432/language_learner_test
+          DATABASE_URL: mysql://test:test@localhost:3306/language_learner_test
           REDIS_URL: redis://localhost:6379
           JWT_SECRET: test_jwt_secret
           JWT_REFRESH_SECRET: test_refresh_secret
