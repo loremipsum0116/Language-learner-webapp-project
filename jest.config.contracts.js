@@ -20,17 +20,15 @@ module.exports = {
   ],
   coverageDirectory: 'coverage/contracts',
   coverageReporters: ['text', 'lcov', 'html'],
-  // Node.js environment for contract tests
-  testEnvironment: 'node',
-  // Transform ES6 modules for Pact
+  // Transform ES6 modules for Pact and axios
   transform: {
-    '^.+\\.(js|jsx)$': 'babel-jest'
+    '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest'
   },
   transformIgnorePatterns: [
     'node_modules/(?!(axios|@pact-foundation)/)'
   ],
-  // Smart mocks that allow Pact mock server requests through
+  // Simple axios mock to avoid ES module issues
   moduleNameMapper: {
-    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js'
+    '^axios$': 'axios/dist/node/axios.cjs'
   }
 };

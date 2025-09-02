@@ -2,8 +2,46 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
-const axios = require('axios');
+const http = require('http');
 const { getNextAvailablePort } = require('../setup/port-utils');
+
+// Helper function for HTTP requests
+const makeHttpRequest = (url, options = {}) => {
+  return new Promise((resolve, reject) => {
+    const parsedUrl = new URL(url);
+    const reqOptions = {
+      hostname: parsedUrl.hostname,
+      port: parsedUrl.port,
+      path: parsedUrl.pathname + parsedUrl.search,
+      method: options.method || 'GET',
+      headers: options.headers || {}
+    };
+
+    const req = http.request(reqOptions, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const response = {
+            status: res.statusCode,
+            data: data ? JSON.parse(data) : {}
+          };
+          resolve(response);
+        } catch (error) {
+          resolve({ status: res.statusCode, data: data });
+        }
+      });
+    });
+
+    req.on('error', reject);
+    
+    if (options.body) {
+      req.write(JSON.stringify(options.body));
+    }
+    
+    req.end();
+  });
+};
 
 // Mock Vocabulary API client
 let mockServerPort;
@@ -18,11 +56,11 @@ const VocabAPI = {
     console.log(`Query string: ${queryString}`);
     
     try {
-      const response = await axios.get(url, {
+      const response = await makeHttpRequest(url, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
-        },
+        }
       });
       
       console.log(`Response status: ${response.status}`);
@@ -30,34 +68,37 @@ const VocabAPI = {
       return response.data;
     } catch (error) {
       console.error('Error in getVocabulary:', error);
-      console.error('Error response:', error.response?.data);
-      console.error('Error status:', error.response?.status);
       throw error;
     }
   },
 
   addVocabulary: async (token, vocabData) => {
-    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/vocab`, vocabData, {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/vocab`, {
+      method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      }
+      },
+      body: vocabData
     });
     return response.data;
   },
 
   updateVocabulary: async (token, vocabId, vocabData) => {
-    const response = await axios.put(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, vocabData, {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, {
+      method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      }
+      },
+      body: vocabData
     });
     return response.data;
   },
 
   deleteVocabulary: async (token, vocabId) => {
-    const response = await axios.delete(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/vocab/${vocabId}`, {
+      method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
       }
@@ -180,7 +221,7 @@ describe('Vocabulary API Consumer Contract Tests', () => {
         const directUrl = `http://127.0.0.1:${mockServerPort}/api/v1/vocab?page=1&limit=20`;
         console.log('Direct URL:', directUrl);
         
-        const directResponse = await axios.get(directUrl);
+        const directResponse = await makeHttpRequest(directUrl);
         console.log('Direct response status:', directResponse.status);
         console.log('Direct response data:', directResponse.data);
         

@@ -2,22 +2,62 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
+const http = require('http');
 const { getNextAvailablePort } = require('../setup/port-utils');
 
-// Mock API client using axios-like interface for testing
+// Helper function for HTTP requests
+const makeHttpRequest = (url, options = {}) => {
+  return new Promise((resolve, reject) => {
+    const parsedUrl = new URL(url);
+    const reqOptions = {
+      hostname: parsedUrl.hostname,
+      port: parsedUrl.port,
+      path: parsedUrl.pathname + parsedUrl.search,
+      method: options.method || 'GET',
+      headers: options.headers || {}
+    };
+
+    const req = http.request(reqOptions, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const response = {
+            status: res.statusCode,
+            data: data ? JSON.parse(data) : {}
+          };
+          resolve(response);
+        } catch (error) {
+          resolve({ status: res.statusCode, data: data });
+        }
+      });
+    });
+
+    req.on('error', reject);
+    
+    if (options.body) {
+      req.write(JSON.stringify(options.body));
+    }
+    
+    req.end();
+  });
+};
+
+// Mock API client using native HTTP for testing
 let mockServerPort;
 
 const AuthAPI = {
   login: async (credentials) => {
-    const axios = require('axios');
-    const url = `http://localhost:${mockServerPort}/api/v1/auth/login`;
+    const url = `http://127.0.0.1:${mockServerPort}/api/v1/auth/login`;
     console.log(`Making login request to: ${url} with credentials:`, credentials);
     
     try {
-      const response = await axios.post(url, credentials, {
+      const response = await makeHttpRequest(url, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: credentials
       });
       console.log('Login response:', response.data);
       return response.data;
@@ -28,32 +68,34 @@ const AuthAPI = {
   },
 
   register: async (userData) => {
-    const axios = require('axios');
     try {
-      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/register`, userData, {
+      const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/auth/register`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: userData
       });
       return response.data;
     } catch (error) {
-      console.error('Register error:', error.response?.data);
-      return error.response?.data;
+      console.error('Register error:', error);
+      throw error;
     }
   },
 
   refreshToken: async (refreshToken) => {
-    const axios = require('axios');
     try {
-      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/refresh`, { refreshToken }, {
+      const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/auth/refresh`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: { refreshToken }
       });
       return response.data;
     } catch (error) {
-      console.error('Refresh token error:', error.response?.data);
-      return error.response?.data;
+      console.error('Refresh token error:', error);
+      throw error;
     }
   }
 };

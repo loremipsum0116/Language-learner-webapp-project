@@ -2,8 +2,46 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
-const axios = require('axios');
+const http = require('http');
 const { getNextAvailablePort } = require('../setup/port-utils');
+
+// Helper function for HTTP requests
+const makeHttpRequest = (url, options = {}) => {
+  return new Promise((resolve, reject) => {
+    const parsedUrl = new URL(url);
+    const reqOptions = {
+      hostname: parsedUrl.hostname,
+      port: parsedUrl.port,
+      path: parsedUrl.pathname + parsedUrl.search,
+      method: options.method || 'GET',
+      headers: options.headers || {}
+    };
+
+    const req = http.request(reqOptions, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        try {
+          const response = {
+            status: res.statusCode,
+            data: data ? JSON.parse(data) : {}
+          };
+          resolve(response);
+        } catch (error) {
+          resolve({ status: res.statusCode, data: data });
+        }
+      });
+    });
+
+    req.on('error', reject);
+    
+    if (options.body) {
+      req.write(JSON.stringify(options.body));
+    }
+    
+    req.end();
+  });
+};
 
 // Mock SRS (Spaced Repetition System) API client
 let mockServerPort;
@@ -13,17 +51,7 @@ const SRSAPI = {
     const queryString = new URLSearchParams(params).toString();
     const url = `http://127.0.0.1:${mockServerPort}/api/v1/srs/reviews${queryString ? `?${queryString}` : ''}`;
     
-    const response = await axios.get(url, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
-  },
-
-  submitReview: async (token, reviewData) => {
-    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/srs/reviews`, reviewData, {
+    const response = await makeHttpRequest(url, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -32,8 +60,20 @@ const SRSAPI = {
     return response.data;
   },
 
+  submitReview: async (token, reviewData) => {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/srs/reviews`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: reviewData
+    });
+    return response.data;
+  },
+
   getStudyStats: async (token, userId) => {
-    const response = await axios.get(`http://127.0.0.1:${mockServerPort}/api/v1/srs/stats/${userId}`, {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/srs/stats/${userId}`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -43,11 +83,13 @@ const SRSAPI = {
   },
 
   resetItem: async (token, itemId) => {
-    const response = await axios.post(`http://127.0.0.1:${mockServerPort}/api/v1/srs/items/${itemId}/reset`, {}, {
+    const response = await makeHttpRequest(`http://127.0.0.1:${mockServerPort}/api/v1/srs/items/${itemId}/reset`, {
+      method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
-      }
+      },
+      body: {}
     });
     return response.data;
   }
