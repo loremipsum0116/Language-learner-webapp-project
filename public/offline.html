@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>언어 학습 앱 - 오프라인</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .container {
+            text-align: center;
+            max-width: 500px;
+            padding: 2rem;
+        }
+        .icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .retry-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        .retry-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+        .features {
+            margin-top: 3rem;
+            text-align: left;
+        }
+        .feature {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+        .feature-icon {
+            margin-right: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">📚</div>
+        <h1>오프라인 상태입니다</h1>
+        <p>인터넷 연결을 확인하고 다시 시도해주세요. 일부 기능은 오프라인에서도 사용할 수 있습니다.</p>
+        
+        <button class="retry-btn" onclick="location.reload()">
+            다시 시도
+        </button>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">💾</span>
+                <span>캐시된 단어장 보기</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📖</span>
+                <span>이전에 학습한 내용 복습</span>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🔄</span>
+                <span>온라인 복구 시 자동 동기화</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check for connectivity and auto-reload when back online
+        window.addEventListener('online', () => {
+            location.reload();
+        });
+        
+        // Show current connectivity status
+        if (!navigator.onLine) {
+            console.log('Currently offline');
+        }
+    </script>
+</body>
+</html>

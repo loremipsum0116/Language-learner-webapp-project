@@ -16,6 +16,8 @@
     "cleanup": "node tools/cleanup_wiki_entries.js",
     "test": "dotenv -e .env.test -- jest",
     "test:ts": "dotenv -e .env.test -- jest --preset ts-jest",
+    "test:contract:provider": "dotenv -e .env.test -- jest --testPathPattern=contracts --testNamePattern=pact",
+    "test:contract:all": "npm run test:contract:provider",
     "db:test:migrate": "dotenv -e .env.test -- npx prisma migrate deploy",
     "lint": "tsc --noEmit",
     "eject": "react-scripts eject"
@@ -25,9 +27,9 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@language-learner/core": "file:./packages/core",
     "@google-cloud/text-to-speech": "^6.2.0",
     "@google/genai": "^1.15.0",
+    "@language-learner/core": "file:./packages/core",
     "@prisma/client": "^6.13.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
@@ -44,12 +46,15 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "multer": "^2.0.2",
+    "node-cache": "^5.1.2",
     "node-cron": "^4.2.1",
     "react-toastify": "^11.0.5",
     "redis": "^5.8.0",
     "stream-json": "^1.9.1"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "^15.0.1",
+    "@pact-foundation/pact-node": "^10.18.0",
     "@types/bcrypt": "^6.0.0",
     "@types/compression": "^1.8.1",
     "@types/cookie-parser": "^1.4.9",

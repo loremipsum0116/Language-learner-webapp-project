@@ -1,5 +1,5 @@
 // src/context/AuthContext.jsx
-import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
 import { fetchJSON, withCreds, isAbortError } from "../api/client";
 
 const AuthContext = createContext(null);
@@ -86,8 +86,17 @@ export function AuthProvider({ children }) {
         setSrsIds(new Set());
     }, []);
     
-    // ✅ 2. value 객체에 register 함수 추가
-    const value = { user, loading, login, logout, register, srsIds, refreshSrsIds, handleTokenExpiration };
+    // ✅ 2. value 객체에 register 함수 추가 - useMemo로 최적화
+    const value = useMemo(() => ({
+        user, 
+        loading, 
+        login, 
+        logout, 
+        register, 
+        srsIds, 
+        refreshSrsIds, 
+        handleTokenExpiration
+    }), [user, loading, login, logout, register, srsIds, refreshSrsIds, handleTokenExpiration]);
 
     useEffect(() => {
         globalAuthContext = value;
