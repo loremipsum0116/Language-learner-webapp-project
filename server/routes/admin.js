@@ -6,7 +6,7 @@ const auth = require('../middleware/auth');
 const adminOnly = require('../middleware/adminOnly');
 const { prisma } = require('../lib/prismaClient');
 const multer = require('multer');
-const { parse } = require('csv-parse/sync');
+const { parse } = require('csv-parse');
 const fs = require('fs');
 const path = require('path');
 

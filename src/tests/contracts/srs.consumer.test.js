@@ -3,12 +3,15 @@ const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
 const fetch = require('node-fetch');
+const { getNextAvailablePort } = require('../setup/port-utils');
 
 // Mock SRS (Spaced Repetition System) API client
+let mockServerPort;
+
 const SRSAPI = {
   getReviewItems: async (token, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    const url = `http://localhost:1234/api/v1/srs/reviews${queryString ? `?${queryString}` : ''}`;
+    const url = `http://localhost:${mockServerPort}/api/v1/srs/reviews${queryString ? `?${queryString}` : ''}`;
     
     const response = await fetch(url, {
       method: 'GET',
@@ -21,7 +24,7 @@ const SRSAPI = {
   },
 
   submitReview: async (token, reviewData) => {
-    const response = await fetch('http://localhost:1234/api/v1/srs/reviews', {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/reviews`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -33,7 +36,7 @@ const SRSAPI = {
   },
 
   getStudyStats: async (token, userId) => {
-    const response = await fetch(`http://localhost:1234/api/v1/srs/stats/${userId}`, {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/stats/${userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -44,7 +47,7 @@ const SRSAPI = {
   },
 
   resetItem: async (token, itemId) => {
-    const response = await fetch(`http://localhost:1234/api/v1/srs/items/${itemId}/reset`, {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/srs/items/${itemId}/reset`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -56,16 +59,18 @@ const SRSAPI = {
 };
 
 describe('SRS API Consumer Contract Tests', () => {
-  const provider = new Pact({
-    consumer: 'Language-Learner-Client',
-    provider: 'Language-Learner-API',
-    port: 1234,
-    log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
-    dir: path.resolve(process.cwd(), 'pacts'),
-    logLevel: 'INFO',
-  });
+  let provider;
 
   beforeAll(async () => {
+    mockServerPort = await getNextAvailablePort();
+    provider = new Pact({
+      consumer: 'Language-Learner-Client',
+      provider: 'Language-Learner-API',
+      port: mockServerPort,
+      log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
+      dir: path.resolve(process.cwd(), 'pacts'),
+      logLevel: 'INFO',
+    });
     await provider.setup();
   });
 

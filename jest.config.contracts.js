@@ -12,6 +12,7 @@ module.exports = {
   ],
   testTimeout: 30000, // Pact tests may take longer
   verbose: true,
+  maxWorkers: 1, // Run tests sequentially to avoid port conflicts
   collectCoverageFrom: [
     'src/**/*.js',
     '!src/tests/**',
@@ -29,8 +30,9 @@ module.exports = {
   transformIgnorePatterns: [
     'node_modules/(?!(axios|@pact-foundation|node-fetch)/)'
   ],
-  moduleNameMapper: {
-    '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
-    '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
-  }
+  // Remove axios mock for contract tests to allow Pact HTTP handling
+  // moduleNameMapper: {
+  //   '^axios$': '<rootDir>/src/tests/setup/__mocks__/axios.js',
+  //   '^node-fetch$': '<rootDir>/src/tests/setup/__mocks__/node-fetch.js'
+  // }
 };

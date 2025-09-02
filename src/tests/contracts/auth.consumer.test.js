@@ -2,51 +2,71 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
+const { getNextAvailablePort } = require('../setup/port-utils');
 
 // Mock API client using axios-like interface for testing
+let mockServerPort;
+
 const AuthAPI = {
   login: async (credentials) => {
     const axios = require('axios');
-    const response = await axios.post('http://localhost:1234/api/v1/auth/login', credentials, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
+    try {
+      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/login`, credentials, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Login error:', error.response?.data);
+      return error.response?.data;
+    }
   },
 
   register: async (userData) => {
     const axios = require('axios');
-    const response = await axios.post('http://localhost:1234/api/v1/auth/register', userData, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
+    try {
+      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/register`, userData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Register error:', error.response?.data);
+      return error.response?.data;
+    }
   },
 
   refreshToken: async (refreshToken) => {
     const axios = require('axios');
-    const response = await axios.post('http://localhost:1234/api/v1/auth/refresh', { refreshToken }, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
+    try {
+      const response = await axios.post(`http://localhost:${mockServerPort}/api/v1/auth/refresh`, { refreshToken }, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Refresh token error:', error.response?.data);
+      return error.response?.data;
+    }
   }
 };
 
 describe('Auth API Consumer Contract Tests', () => {
-  const provider = new Pact({
-    consumer: 'Language-Learner-Client',
-    provider: 'Language-Learner-API',
-    port: 1234,
-    log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
-    dir: path.resolve(process.cwd(), 'pacts'),
-    logLevel: 'INFO',
-  });
+  let provider;
 
   beforeAll(async () => {
+    mockServerPort = await getNextAvailablePort();
+    provider = new Pact({
+      consumer: 'Language-Learner-Client',
+      provider: 'Language-Learner-API',
+      port: mockServerPort,
+      log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
+      dir: path.resolve(process.cwd(), 'pacts'),
+      logLevel: 'INFO',
+    });
     await provider.setup();
   });
 

@@ -3,12 +3,15 @@ const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
 const fetch = require('node-fetch');
+const { getNextAvailablePort } = require('../setup/port-utils');
 
 // Mock Vocabulary API client
+let mockServerPort;
+
 const VocabAPI = {
   getVocabulary: async (token, params = {}) => {
     const queryString = new URLSearchParams(params).toString();
-    const url = `http://localhost:1234/api/v1/vocab${queryString ? `?${queryString}` : ''}`;
+    const url = `http://localhost:${mockServerPort}/api/v1/vocab${queryString ? `?${queryString}` : ''}`;
     
     const response = await fetch(url, {
       method: 'GET',
@@ -21,7 +24,7 @@ const VocabAPI = {
   },
 
   addVocabulary: async (token, vocabData) => {
-    const response = await fetch('http://localhost:1234/api/v1/vocab', {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -33,7 +36,7 @@ const VocabAPI = {
   },
 
   updateVocabulary: async (token, vocabId, vocabData) => {
-    const response = await fetch(`http://localhost:1234/api/v1/vocab/${vocabId}`, {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab/${vocabId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -45,7 +48,7 @@ const VocabAPI = {
   },
 
   deleteVocabulary: async (token, vocabId) => {
-    const response = await fetch(`http://localhost:1234/api/v1/vocab/${vocabId}`, {
+    const response = await fetch(`http://localhost:${mockServerPort}/api/v1/vocab/${vocabId}`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -56,16 +59,18 @@ const VocabAPI = {
 };
 
 describe('Vocabulary API Consumer Contract Tests', () => {
-  const provider = new Pact({
-    consumer: 'Language-Learner-Client',
-    provider: 'Language-Learner-API',
-    port: 1234,
-    log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
-    dir: path.resolve(process.cwd(), 'pacts'),
-    logLevel: 'INFO',
-  });
+  let provider;
 
   beforeAll(async () => {
+    mockServerPort = await getNextAvailablePort();
+    provider = new Pact({
+      consumer: 'Language-Learner-Client',
+      provider: 'Language-Learner-API',
+      port: mockServerPort,
+      log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
+      dir: path.resolve(process.cwd(), 'pacts'),
+      logLevel: 'INFO',
+    });
     await provider.setup();
   });
 
