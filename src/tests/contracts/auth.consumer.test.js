@@ -70,6 +70,7 @@ describe('Auth API Consumer Contract Tests', () => {
       log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
       dir: path.resolve(process.cwd(), 'pacts'),
       logLevel: 'DEBUG',
+      spec: 2
     });
     
     console.log(`Setting up Pact provider on port ${mockServerPort}`);
@@ -77,15 +78,31 @@ describe('Auth API Consumer Contract Tests', () => {
     console.log(`Pact provider setup completed on port ${mockServerPort}`);
     
     // Wait a bit for the mock server to be fully ready
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise(resolve => setTimeout(resolve, 200));
   });
 
   afterAll(async () => {
-    await provider.finalize();
+    try {
+      console.log('Finalizing Pact provider...');
+      await provider.finalize();
+      console.log('Pact provider finalized successfully');
+    } catch (error) {
+      console.error('Error finalizing Pact provider:', error);
+    }
+  });
+
+  beforeEach(async () => {
+    // Clear any previous interactions
+    await provider.removeInteractions();
   });
 
   afterEach(async () => {
-    await provider.verify();
+    try {
+      await provider.verify();
+    } catch (error) {
+      console.error('Pact verification failed:', error.message);
+      throw error;
+    }
   });
 
   describe('User Login', () => {

@@ -2,7 +2,7 @@
 const { Pact } = require('@pact-foundation/pact');
 const { like, eachLike } = require('@pact-foundation/pact/src/dsl/matchers');
 const path = require('path');
-const fetch = require('node-fetch');
+const axios = require('axios');
 const { getNextAvailablePort } = require('../setup/port-utils');
 
 // Mock Vocabulary API client
@@ -13,14 +13,27 @@ const VocabAPI = {
     const queryString = new URLSearchParams(params).toString();
     const url = `http://localhost:${mockServerPort}/api/v1/vocab${queryString ? `?${queryString}` : ''}`;
     
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.json();
+    console.log(`Making request to: ${url}`);
+    console.log(`With params:`, params);
+    console.log(`Query string: ${queryString}`);
+    
+    try {
+      const response = await axios.get(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+      
+      console.log(`Response status: ${response.status}`);
+      console.log(`Response data:`, response.data);
+      return response.data;
+    } catch (error) {
+      console.error('Error in getVocabulary:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+      throw error;
+    }
   },
 
   addVocabulary: async (token, vocabData) => {
@@ -69,21 +82,47 @@ describe('Vocabulary API Consumer Contract Tests', () => {
       port: mockServerPort,
       log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
       dir: path.resolve(process.cwd(), 'pacts'),
-      logLevel: 'INFO',
+      logLevel: 'DEBUG',
+      spec: 2
     });
+    
+    console.log(`Setting up Pact provider on port ${mockServerPort}`);
     await provider.setup();
+    console.log(`Pact provider setup completed on port ${mockServerPort}`);
+    
+    // Wait for mock server to be ready
+    await new Promise(resolve => setTimeout(resolve, 200));
   });
 
   afterAll(async () => {
-    await provider.finalize();
+    try {
+      console.log('Finalizing Pact provider...');
+      await provider.finalize();
+      console.log('Pact provider finalized successfully');
+    } catch (error) {
+      console.error('Error finalizing Pact provider:', error);
+    }
+  });
+
+  beforeEach(async () => {
+    // Clear any previous interactions
+    await provider.removeInteractions();
   });
 
   afterEach(async () => {
-    await provider.verify();
+    try {
+      await provider.verify();
+    } catch (error) {
+      console.error('Pact verification failed:', error.message);
+      throw error;
+    }
   });
 
   describe('Get Vocabulary', () => {
     it('should retrieve vocabulary list successfully', async () => {
+      console.log('Test case started');
+      console.log('Mock server port:', mockServerPort);
+      
       const expectedResponse = {
         success: true,
         data: eachLike({
@@ -106,34 +145,63 @@ describe('Vocabulary API Consumer Contract Tests', () => {
         }
       };
 
-      await provider.addInteraction({
-        state: 'vocabulary exists',
-        uponReceiving: 'a request for vocabulary list',
-        withRequest: {
-          method: 'GET',
-          path: '/api/v1/vocab',
-          headers: {
-            'Authorization': like('Bearer valid.jwt.token'),
-            'Content-Type': 'application/json',
+      console.log('About to add interaction to provider...');
+      
+      try {
+        await provider.addInteraction({
+          state: 'vocabulary exists',
+          uponReceiving: 'a request for vocabulary list',
+          withRequest: {
+            method: 'GET',
+            path: '/api/v1/vocab',
+            headers: {
+              'Authorization': 'Bearer valid.jwt.token',
+              'Content-Type': 'application/json',
+            },
+            query: {
+              page: '1',
+              limit: '20'
+            }
           },
-          query: {
-            page: '1',
-            limit: '20'
+          willRespondWith: {
+            status: 200,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: expectedResponse
           }
-        },
-        willRespondWith: {
-          status: 200,
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: expectedResponse
-        }
-      });
+        });
+        
+        console.log('Interaction added successfully to provider');
+      } catch (error) {
+        console.error('Error adding interaction:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw error;
+      }
+      
+      // Wait for interaction to be registered
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      const result = await VocabAPI.getVocabulary('valid.jwt.token', {
-        page: '1',
-        limit: '20'
-      });
+      console.log('About to call VocabAPI.getVocabulary...');
+      let result;
+      
+      try {
+        result = await VocabAPI.getVocabulary('valid.jwt.token', {
+          page: '1',
+          limit: '20'
+        });
+        
+        console.log('API call completed successfully');
+        console.log('API call result:', result);
+        console.log('Result type:', typeof result);
+        console.log('Result keys:', result ? Object.keys(result) : 'result is falsy');
+      } catch (error) {
+        console.error('Error during API call:', error);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        throw error;
+      }
 
       expect(result.success).toBe(true);
       expect(result.data).toHaveLength(1);

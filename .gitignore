@@ -22,3 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 nul
+
+# Contract testing artifacts
+/pacts
+/logs
+
+# Temporary web build
+/web

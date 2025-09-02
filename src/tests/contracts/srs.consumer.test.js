@@ -69,17 +69,40 @@ describe('SRS API Consumer Contract Tests', () => {
       port: mockServerPort,
       log: path.resolve(process.cwd(), 'logs', 'mockserver-integration.log'),
       dir: path.resolve(process.cwd(), 'pacts'),
-      logLevel: 'INFO',
+      logLevel: 'DEBUG',
+      spec: 2
     });
+    
+    console.log(`Setting up Pact provider on port ${mockServerPort}`);
     await provider.setup();
+    console.log(`Pact provider setup completed on port ${mockServerPort}`);
+    
+    // Wait for mock server to be ready
+    await new Promise(resolve => setTimeout(resolve, 200));
   });
 
   afterAll(async () => {
-    await provider.finalize();
+    try {
+      console.log('Finalizing Pact provider...');
+      await provider.finalize();
+      console.log('Pact provider finalized successfully');
+    } catch (error) {
+      console.error('Error finalizing Pact provider:', error);
+    }
+  });
+
+  beforeEach(async () => {
+    // Clear any previous interactions
+    await provider.removeInteractions();
   });
 
   afterEach(async () => {
-    await provider.verify();
+    try {
+      await provider.verify();
+    } catch (error) {
+      console.error('Pact verification failed:', error.message);
+      throw error;
+    }
   });
 
   describe('Get Review Items', () => {

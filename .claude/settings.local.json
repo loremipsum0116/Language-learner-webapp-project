@@ -63,7 +63,9 @@
       "Bash(PORT=3001 npm start)",
       "Bash(ls:*)",
       "Bash(move:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(npx jest:*)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Language-learner-webapp-project\\debug-pact.js\")"
     ],
     "deny": [],
     "defaultMode": "acceptEdits",
