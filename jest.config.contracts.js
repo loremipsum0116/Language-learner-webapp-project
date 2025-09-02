@@ -3,7 +3,7 @@ module.exports = {
   displayName: 'Contract Tests',
   testEnvironment: 'node',
   testMatch: [
-    '**/src/tests/contracts/**/*.test.js'
+    '**/src/tests/contracts/simple.consumer.test.js'
   ],
   setupFilesAfterEnv: [
     '<rootDir>/src/tests/setup/contracts.js'

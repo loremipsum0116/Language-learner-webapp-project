@@ -112,7 +112,7 @@ jobs:
       - name: Setup test database
         run: |
           cd server
-          npx prisma migrate reset --force --skip-seed
+          npx prisma db push --force-reset
         env:
           DATABASE_URL: mysql://test:test@localhost:3306/language_learner_test
 
