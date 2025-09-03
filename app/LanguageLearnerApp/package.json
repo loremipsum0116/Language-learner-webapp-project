@@ -22,9 +22,10 @@
     "@react-navigation/native": "^7.1.17",
     "@react-navigation/stack": "^7.4.8",
     "@reduxjs/toolkit": "^2.9.0",
+    "@tsconfig/react-native": "^3.0.6",
     "react": "19.1.0",
+    "react-dom": "^19.1.1",
     "react-native": "0.81.1",
-    "react-native-audio-recorder-player": "^4.4.1",
     "react-native-chart-kit": "^6.12.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.28.0",
@@ -37,6 +38,8 @@
     "react-native-sqlite-storage": "^6.0.1",
     "react-native-svg": "^15.12.1",
     "react-native-vector-icons": "^10.3.0",
+    "react-native-web": "^0.21.1",
+    "react-native-worklets": "^0.5.0",
     "react-redux": "^9.2.0"
   },
   "devDependencies": {

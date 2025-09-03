@@ -4,6 +4,8 @@
 
     <application
         android:usesCleartextTraffic="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
         tools:targetApi="28"
-        tools:ignore="GoogleAppIndexingWarning"/>
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:appComponentFactory"/>
 </manifest>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Learner App - Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #2196F3, #21CBF3);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .app-container {
+            max-width: 375px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            min-height: 600px;
+        }
+        
+        .header {
+            background: #2196F3;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+        
+        .main-menu {
+            padding: 30px 20px;
+        }
+        
+        .menu-item {
+            background: #f8f9fa;
+            margin: 15px 0;
+            padding: 20px;
+            border-radius: 12px;
+            border: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .menu-item:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .menu-item .icon {
+            font-size: 24px;
+            margin-right: 15px;
+            width: 40px;
+            text-align: center;
+        }
+        
+        .menu-item .content h3 {
+            color: #333;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+        
+        .menu-item .content p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .demo-note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px;
+            text-align: center;
+        }
+        
+        .demo-note p {
+            color: #856404;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="header">
+            <h1>Language Learner</h1>
+            <p>모바일 언어 학습 앱</p>
+        </div>
+        
+        <div class="demo-note">
+            <p>📱 안드로이드 에뮬레이터에서 실행 중</p>
+        </div>
+        
+        <div class="main-menu">
+            <button class="menu-item" onclick="alert('학습 시작!')">
+                <div class="icon">📚</div>
+                <div class="content">
+                    <h3>학습 시작</h3>
+                    <p>새로운 언어 학습을 시작하세요</p>
+                </div>
+            </button>
+            
+            <button class="menu-item" onclick="alert('진행상황 확인!')">
+                <div class="icon">📊</div>
+                <div class="content">
+                    <h3>진행 상황</h3>
+                    <p>학습 통계와 달성도를 확인하세요</p>
+                </div>
+            </button>
+            
+            <button class="menu-item" onclick="alert('단어장 열기!')">
+                <div class="icon">📖</div>
+                <div class="content">
+                    <h3>단어장</h3>
+                    <p>저장된 단어와 표현을 복습하세요</p>
+                </div>
+            </button>
+            
+            <button class="menu-item" onclick="alert('설정 메뉴!')">
+                <div class="icon">⚙️</div>
+                <div class="content">
+                    <h3>설정</h3>
+                    <p>앱 환경설정과 계정 관리</p>
+                </div>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // 간단한 인터랙션 추가
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Language Learner App Demo 로드됨');
+            
+            // 터치 피드백 시뮬레이션
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                
+                item.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
