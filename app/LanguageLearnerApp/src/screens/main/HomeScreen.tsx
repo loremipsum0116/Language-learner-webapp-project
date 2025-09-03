@@ -1,7 +1,7 @@
 // src/screens/main/HomeScreen.tsx
-// 홈 대시보드 화면 (React Native 버전)
+// 홈 대시보드 화면 (React Native 버전) - Web Home.jsx 기반 리팩토링
 
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,99 +11,397 @@ import {
   RefreshControl,
   TouchableOpacity,
   ActivityIndicator,
+  TextInput,
+  Alert,
+  Image,
+  Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Ionicons } from '@expo/vector-icons';
+import { Audio } from 'expo-av';
 import { useAuth } from '../../hooks/useAuth';
-import { AlertBanner, LoadingSpinner } from '../../components/common';
-import { FadeInView, SlideInView } from '../../components/animations';
-import RainbowStar from '../../components/RainbowStar';
+import { apiClient } from '../../services/apiClient';
 import { MainTabsParamList } from '../../types/navigation';
 
 type Props = NativeStackScreenProps<MainTabsParamList, 'Home'>;
 
-interface DashboardStats {
+const { width } = Dimensions.get('window');
+
+interface AudioPlayerProps {
+  src?: string;
+  license?: string;
+  attribution?: string;
+}
+
+interface DictEntry {
+  lemma: string;
+  pos: string;
+  ipa?: string;
+  audio?: string;
+  license?: string;
+  attribution?: string;
+  examples: Array<{
+    de: string;
+    ko?: string;
+    cefr?: string;
+  }>;
+}
+
+interface SrsStats {
   srsQueue: number;
-  odatNote: number;
   masteredWords: number;
+  streakDays: number;
+  studiedToday: number;
 }
 
-interface AlarmInfo {
-  totalDue: number;
-  nextAlarmAtKst: string | null;
-}
-
-interface SrsStatus {
-  shouldShowAlarm: boolean;
-  overdueCount: number;
-  alarmInfo?: {
-    currentPeriod: string;
-    nextAlarmAtKst: string;
-    minutesToNextAlarm: number;
-    periodProgress: number;
-  };
-}
-
-interface StreakInfo {
-  currentStreak: number;
-  longestStreak: number;
-  dailyQuizCount: number;
-  todayStudied: boolean;
-}
-
-interface StatCardProps {
+interface ReadingItem {
+  id: string;
   title: string;
-  value: number;
-  icon: string;
-  loading: boolean;
-  onPress?: () => void;
-  color?: string;
+  levelCEFR: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ 
-  title, 
-  value, 
-  icon, 
-  loading, 
-  onPress,
-  color = '#3b82f6'
-}) => (
-  <TouchableOpacity
-    style={[styles.statCard, { borderLeftColor: color }]}
-    onPress={onPress}
-    activeOpacity={0.7}
-    disabled={!onPress}
-  >
-    <View style={styles.statCardContent}>
-      <View style={styles.statIcon}>
-        <Text style={styles.statIconText}>{icon}</Text>
+// Audio Player Component
+const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, license, attribution }) => {
+  const [sound, setSound] = useState<Audio.Sound>();
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1.0);
+
+  const playSound = async () => {
+    try {
+      if (!src) return;
+      
+      if (sound) {
+        await sound.unloadAsync();
+      }
+      
+      const { sound: newSound } = await Audio.Sound.createAsync(
+        { uri: src },
+        { shouldPlay: true, rate: playbackRate }
+      );
+      
+      setSound(newSound);
+      setIsPlaying(true);
+      
+      newSound.setOnPlaybackStatusUpdate((status) => {
+        if (status.isLoaded && status.didJustFinish) {
+          setIsPlaying(false);
+        }
+      });
+    } catch (error) {
+      console.error('Error playing sound:', error);
+    }
+  };
+
+  const changePlaybackRate = async (rate: number) => {
+    setPlaybackRate(rate);
+    if (sound) {
+      await sound.setRateAsync(rate, true);
+    }
+  };
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
+
+  if (!src) return null;
+
+  return (
+    <View style={styles.audioPlayer}>
+      <TouchableOpacity style={styles.playButton} onPress={playSound}>
+        <Ionicons 
+          name={isPlaying ? "pause" : "play"} 
+          size={20} 
+          color="#007AFF" 
+        />
+      </TouchableOpacity>
+      
+      <View style={styles.speedControls}>
+        <Text style={styles.speedLabel}>속도:</Text>
+        {[0.75, 1.0, 1.25].map((rate) => (
+          <TouchableOpacity
+            key={rate}
+            style={[
+              styles.speedButton,
+              playbackRate === rate && styles.speedButtonActive
+            ]}
+            onPress={() => changePlaybackRate(rate)}
+          >
+            <Text style={[
+              styles.speedButtonText,
+              playbackRate === rate && styles.speedButtonTextActive
+            ]}>
+              {rate.toFixed(2)}×
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
-      <View style={styles.statInfo}>
-        <Text style={styles.statTitle}>{title}</Text>
-        {loading ? (
-          <ActivityIndicator size="small" color={color} />
-        ) : (
-          <Text style={[styles.statValue, { color }]}>{value}</Text>
-        )}
+      
+      {(license || attribution) && (
+        <Text style={styles.attribution}>
+          {license ? `License: ${license}` : ''} {attribution ? ` | © ${attribution}` : ''}
+        </Text>
+      )}
+    </View>
+  );
+};
+
+// SRS Widget Component
+const SrsWidget: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [count, setCount] = useState<number | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSrsData = async () => {
+      try {
+        const response = await apiClient.get('/srs/available');
+        const data = Array.isArray(response.data) ? response.data : [];
+        setCount(data.length);
+      } catch (err) {
+        console.error('Failed to fetch SRS data:', err);
+        setError('SRS 데이터를 불러올 수 없습니다');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSrsData();
+  }, []);
+
+  const handleStartReview = async () => {
+    try {
+      const response = await apiClient.get('/srs/available');
+      const data = Array.isArray(response.data) ? response.data : [];
+      
+      if (data.length > 0) {
+        const vocabIds = data
+          .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+          .filter(Boolean);
+        
+        if (vocabIds.length > 0) {
+          navigation.navigate('Quiz', { 
+            mode: 'srs',
+            vocabIds: vocabIds.join(',')
+          });
+        } else {
+          Alert.alert('알림', '복습할 단어가 없습니다.');
+        }
+      } else {
+        Alert.alert('알림', '복습할 카드가 없습니다.');
+      }
+    } catch (error) {
+      console.error('Failed to start review:', error);
+      Alert.alert('오류', '복습을 시작할 수 없습니다.');
+    }
+  };
+
+  if (loading) {
+    return (
+      <View style={styles.widgetCard}>
+        <ActivityIndicator size="small" color="#007AFF" />
+        <Text style={styles.loadingText}>로딩 중...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.widgetCard}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.widgetCard}>
+      <View style={styles.widgetHeader}>
+        <Image source={require('../../../assets/danmoosae.png')} style={styles.widgetIcon} />
+        <Text style={styles.widgetTitle}>오늘의 SRS</Text>
+      </View>
+      <Text style={styles.reviewCount}>복습 대기: {count}개</Text>
+      <TouchableOpacity style={styles.startButton} onPress={handleStartReview}>
+        <Text style={styles.startButtonText}>복습 시작</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+// Dictionary Quick Panel Component
+const DictQuickPanel: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [query, setQuery] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [entries, setEntries] = useState<DictEntry[]>([]);
+
+  const onSearch = async () => {
+    if (!query.trim()) return;
+    
+    setLoading(true);
+    try {
+      const response = await apiClient.get(`/dict/search?q=${encodeURIComponent(query.trim())}`);
+      const data = response.data?.entries || response.entries || [];
+      setEntries(data);
+    } catch (error) {
+      console.error('Dictionary search failed:', error);
+      Alert.alert('오류', '사전 검색에 실패했습니다.');
+      setEntries([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <View style={styles.widgetCard}>
+      <Text style={styles.widgetTitle}>📚 사전 검색</Text>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.searchInput}
+          placeholder="영어 또는 한국어 뜻 검색"
+          value={query}
+          onChangeText={setQuery}
+          onSubmitEditing={onSearch}
+        />
+        <TouchableOpacity 
+          style={styles.searchButton} 
+          onPress={onSearch}
+          disabled={loading}
+        >
+          <Ionicons 
+            name="search" 
+            size={20} 
+            color={loading ? "#666" : "#007AFF"} 
+          />
+        </TouchableOpacity>
+      </View>
+      
+      {entries.slice(0, 2).map((entry, idx) => (
+        <View key={idx} style={styles.dictEntry}>
+          <View style={styles.dictHeader}>
+            <Text style={styles.dictLemma}>{entry.lemma}</Text>
+            <Text style={styles.dictPos}>{entry.pos}</Text>
+          </View>
+          {entry.ipa && (
+            <Text style={styles.dictIpa}>/{entry.ipa}/</Text>
+          )}
+          <AudioPlayer 
+            src={entry.audio} 
+            license={entry.license} 
+            attribution={entry.attribution} 
+          />
+          {entry.examples && entry.examples.length > 0 && (
+            <View style={styles.examples}>
+              {entry.examples.slice(0, 1).map((example, i) => (
+                <View key={i} style={styles.example}>
+                  <Text style={styles.exampleEn}>{example.de}</Text>
+                  {example.ko && (
+                    <Text style={styles.exampleKo}>— {example.ko}</Text>
+                  )}
+                </View>
+              ))}
+            </View>
+          )}
+        </View>
+      ))}
+      
+      <TouchableOpacity 
+        style={styles.detailButton}
+        onPress={() => navigation.navigate('Dictionary')}
+      >
+        <Text style={styles.detailButtonText}>상세 보기 →</Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+// Dashboard Widget Component
+const DashboardWidget: React.FC<{ navigation: any }> = ({ navigation }) => {
+  const [stats, setStats] = useState<SrsStats>({
+    srsQueue: 0,
+    masteredWords: 0,
+    streakDays: 0,
+    studiedToday: 0
+  });
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [srsQueueRes, masteredCardsRes, streakRes] = await Promise.all([
+          apiClient.get('/srs/available'),
+          apiClient.get('/srs/mastered-cards'),
+          apiClient.get('/srs/streak')
+        ]);
+
+        const masteredData = Array.isArray(masteredCardsRes.data) ? masteredCardsRes.data : [];
+        const streakData = streakRes.data || {};
+        
+        setStats({
+          srsQueue: Array.isArray(srsQueueRes.data) ? srsQueueRes.data.length : 0,
+          masteredWords: masteredData.length,
+          streakDays: streakData.streak || 0,
+          studiedToday: streakData.dailyQuizCount || 0
+        });
+      } catch (err) {
+        console.error('Dashboard widget data loading failed:', err);
+        setError('통계를 불러올 수 없습니다');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.widgetCard}>
+        <ActivityIndicator size="small" color="#007AFF" />
+        <Text style={styles.loadingText}>로딩 중...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.widgetCard}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.widgetCard}>
+      <Text style={styles.widgetTitle}>📊 학습 통계</Text>
+      <View style={styles.statsGrid}>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>{stats.srsQueue}</Text>
+          <Text style={styles.statLabel}>복습 대기</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>{stats.masteredWords}</Text>
+          <Text style={styles.statLabel}>마스터</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>{stats.streakDays}</Text>
+          <Text style={styles.statLabel}>연속일</Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statNumber}>{stats.studiedToday}</Text>
+          <Text style={styles.statLabel}>오늘</Text>
+        </View>
       </View>
     </View>
-  </TouchableOpacity>
-);
+  );
+};
 
 const HomeScreen: React.FC<Props> = ({ navigation }) => {
   const { user } = useAuth();
-  
-  const [stats, setStats] = useState<DashboardStats>({
-    srsQueue: 0,
-    odatNote: 0,
-    masteredWords: 0
-  });
-  
-  const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [alarm, setAlarm] = useState<AlarmInfo>({ totalDue: 0, nextAlarmAtKst: null });
-  const [srsStatus, setSrsStatus] = useState<SrsStatus | null>(null);
-  const [streakInfo, setStreakInfo] = useState<StreakInfo | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const isAdmin = user?.email === 'super@root.com';
 
   const fetchDashboardData = useCallback(async (isRefresh = false) => {
     try {
@@ -112,42 +410,47 @@ const HomeScreen: React.FC<Props> = ({ navigation }) => {
       }
       setError(null);
 
-      // TODO: Replace with actual API calls using React Native networking
-      // Simulating API calls for now
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Fetch real data from server using the API client
+      const [dashboardData, srsStatusData, userProfile] = await Promise.all([
+        apiClient.srs.getDashboard(),
+        apiClient.srs.getStatus(),
+        apiClient.user.profile()
+      ]);
 
-      // Mock data - replace with actual API calls
-      const mockStats = {
-        srsQueue: 15,
-        odatNote: 3,
-        masteredWords: 127
+      // Process dashboard stats
+      const srsQueue = (dashboardData as any)?.totalDue || 0;
+      const odatNote = (dashboardData as any)?.odatNotes || 0;
+      const masteredWords = (dashboardData as any)?.masteredCount || 0;
+
+      setStats({
+        srsQueue,
+        odatNote,
+        masteredWords
+      });
+
+      // Process alarm info
+      const alarmData = {
+        totalDue: srsQueue,
+        nextAlarmAtKst: (srsStatusData as any)?.nextReview || null
       };
+      setAlarm(alarmData);
 
-      const mockAlarm = {
-        totalDue: 8,
-        nextAlarmAtKst: '2024-01-15 14:30'
+      // Process SRS status
+      const statusData: SrsStatus = {
+        shouldShowAlarm: srsQueue > 0,
+        overdueCount: (srsStatusData as any)?.overdueCount || 0,
+        alarmInfo: (srsStatusData as any)?.alarmInfo
       };
+      setSrsStatus(statusData);
 
-      const mockSrsStatus = {
-        shouldShowAlarm: true,
-        overdueCount: 5,
-        alarmInfo: {
-          currentPeriod: '4시간',
-          nextAlarmAtKst: '2024-01-15 15:00',
-          minutesToNextAlarm: 23,
-          periodProgress: 75
-        }
+      // Process streak info from user profile
+      const streakData: StreakInfo = {
+        currentStreak: (userProfile as any)?.stats?.currentStreak || 0,
+        longestStreak: (userProfile as any)?.stats?.longestStreak || 0,
+        dailyQuizCount: (userProfile as any)?.stats?.todayCount || 0,
+        todayStudied: (userProfile as any)?.stats?.todayStudied || false
       };
-
-      const mockStreakInfo = {
-        currentStreak: 7,
-        longestStreak: 21,
-        dailyQuizCount: 12,
-        todayStudied: true
-      };
-
-      setStats(mockStats);
-      setAlarm(mockAlarm);
+      setStreakInfo(streakData);
       setSrsStatus(mockSrsStatus);
       setStreakInfo(mockStreakInfo);
 

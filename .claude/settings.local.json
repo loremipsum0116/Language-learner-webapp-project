@@ -63,7 +63,9 @@
       "Bash(start http://localhost:8084)",
       "Bash(start http://localhost:19000)",
       "Read(c:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Language-learner-webapp-project\\app\\LanguageLearnerApp\\src\\navigation/**)",
-      "Bash(start:*)"
+      "Bash(start:*)",
+      "Bash(rd:*)",
+      "Bash(del metro.config.js)"
     ],
     "deny": [],
     "ask": []

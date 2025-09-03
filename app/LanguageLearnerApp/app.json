@@ -1,4 +1,12 @@
 {
-  "name": "LanguageLearnerApp",
-  "displayName": "LanguageLearnerApp"
+  "expo": {
+    "name": "Language Learner",
+    "slug": "language-learner-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "platforms": ["ios", "android"],
+    "jsEngine": "jsc",
+    "sdkVersion": "51.0.0"
+  }
 }

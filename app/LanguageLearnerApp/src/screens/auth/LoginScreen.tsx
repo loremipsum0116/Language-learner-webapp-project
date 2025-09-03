@@ -1,7 +1,7 @@
 // src/screens/auth/LoginScreen.tsx
-// 로그인 화면 (React Native 버전)
+// 로그인 화면 (React Native 버전) - Web Login.jsx 기반 리팩토링
 
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   View,
   Text,
@@ -17,9 +17,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { useAuth } from '../../hooks/useAuth';
-import { Button, AlertBanner } from '../../components/common';
-import { FadeInView } from '../../components/animations';
-import { AuthStackParamList } from '../../types/navigation';
+import { RootStackParamList } from '../../navigation/types';
 
 type Props = NativeStackScreenProps<AuthStackParamList, 'Login'>;
 
