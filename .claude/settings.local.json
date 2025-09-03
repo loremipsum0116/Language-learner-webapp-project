@@ -15,7 +15,14 @@
       "Bash(pnpm -r ls --depth=0)",
       "Bash(pnpm prisma generate:*)",
       "Bash(pnpm --filter @language-learner/backend dev)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(pnpm test:*)",
+      "Bash(pnpm --filter @language-learner/backend test:coverage)",
+      "Bash(grep:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)"
     ],
     "deny": [],
     "ask": []
