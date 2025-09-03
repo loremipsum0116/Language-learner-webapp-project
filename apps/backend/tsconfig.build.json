@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "sourceMap": false,
+    "removeComments": true
+  },
+  "include": [
+    "*.js",
+    "lib/**/*.js",
+    "services/**/*.js",
+    "routes/**/*.js",
+    "middleware/**/*.js",
+    "utils/**/*.js",
+    "types/**/*.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts",
+    "**/*.test.js",
+    "**/*.spec.ts",
+    "**/*.spec.js",
+    "test/**/*",
+    "tests/**/*",
+    "jest.config.js",
+    "seed-*.js",
+    "debug-*.js",
+    "test-*.js",
+    "check-*.js",
+    "migrate*.js",
+    "tools/**/*",
+    "integrations/**/*",
+    "packages/**/*",
+    "dist/**/*"
+  ]
+}

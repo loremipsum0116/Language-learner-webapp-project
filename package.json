@@ -1,68 +1,54 @@
 {
-  "name": "english-learner",
-  "version": "0.1.0",
+  "name": "language-learner-monorepo",
+  "version": "1.0.0",
+  "description": "Language learning application monorepo",
   "private": true,
-  "dependencies": {
-    "@google/genai": "^1.15.0",
-    "@google/generative-ai": "^0.24.1",
-    "@language-learner/core": "file:./server/packages/core",
-    "@testing-library/dom": "^10.4.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "bootstrap": "^5.3.7",
-    "bootstrap-icons": "^1.13.1",
-    "cookie-parser": "^1.4.7",
-    "dayjs": "^1.11.13",
-    "jsonwebtoken": "^9.0.2",
-    "lodash": "^4.17.21",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
-    "react-router-dom": "^7.7.1",
-    "react-scripts": "5.0.1",
-    "react-toastify": "^11.0.5",
-    "stream-json": "^1.9.1",
-    "web-vitals": "^2.1.4"
+  "packageManager": "pnpm@9.5.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:contract:consumer": "jest --config jest.config.contracts.js",
-    "test:contract:all": "npm run test:contract:consumer",
-    "analyze": "npm run build && npx webpack-bundle-analyzer build/static/js/*.js",
-    "performance:audit": "npm run build && npm run analyze",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "test": "turbo test",
+    "test:watch": "turbo test:watch",
+    "test:coverage": "turbo test:coverage",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,md}\"",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build && changeset publish",
+    "db:migrate": "turbo db:migrate",
+    "db:seed": "turbo db:seed",
+    "prepare": "husky install"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.3",
-    "@babel/preset-env": "^7.28.3",
-    "@pact-foundation/pact": "^15.0.1",
-    "@testing-library/jest-dom": "^6.8.0",
-    "axios": "^0.27.2",
-    "babel-jest": "^30.1.2",
-    "cors": "^2.8.5",
-    "dotenv-cli": "^10.0.0",
-    "node-cache": "^5.1.2",
-    "node-fetch": "^3.3.2",
-    "supertest": "^7.1.4",
-    "webpack-bundle-analyzer": "^4.10.2"
-  }
+    "@changesets/cli": "^2.27.1",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5",
+    "turbo": "^2.0.9",
+    "typescript": "^5.4.5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
+  },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
 }

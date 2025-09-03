@@ -1,0 +1,100 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/.env*",
+        "!**/coverage/**",
+        "!**/dist/**",
+        "!**/build/**",
+        "!**/.turbo/**"
+      ],
+      "outputs": ["build/**", "dist/**", ".next/**", "!.next/cache/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/.env*",
+        "!**/coverage/**",
+        "!**/build/**",
+        "!**/.turbo/**"
+      ],
+      "outputs": ["coverage/**"],
+      "outputLogs": "new-only"
+    },
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "test:coverage": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/.env*",
+        "!**/build/**",
+        "!**/.turbo/**"
+      ],
+      "outputs": ["coverage/**"],
+      "outputLogs": "full"
+    },
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/.env*",
+        "!**/coverage/**",
+        "!**/build/**",
+        "!**/.turbo/**"
+      ],
+      "outputLogs": "new-only"
+    },
+    "type-check": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        "!**/.env*",
+        "!**/coverage/**",
+        "!**/build/**",
+        "!**/.turbo/**"
+      ],
+      "outputLogs": "new-only"
+    },
+    "clean": {
+      "cache": false
+    },
+    "db:migrate": {
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "db:seed": {
+      "cache": false,
+      "dependsOn": ["db:migrate"]
+    }
+  },
+  "globalDependencies": [
+    ".env",
+    ".env.local",
+    ".env.production",
+    ".env.development",
+    "tsconfig.json",
+    "package.json",
+    "pnpm-workspace.yaml",
+    "turbo.json"
+  ],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "PORT",
+    "DATABASE_URL",
+    "JWT_SECRET",
+    "REDIS_URL"
+  ]
+}
