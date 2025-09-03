@@ -14,6 +14,15 @@ import StudyScreen from '../screens/main/StudyScreen';
 import ProgressScreen from '../screens/progress/ProgressScreen';
 import SettingsScreen from '../screens/settings/SettingsScreen';
 
+// New Feature Screens
+import QuizScreen from '../screens/QuizScreen';
+import ReadingScreen from '../screens/ReadingScreen';
+import ListeningScreen from '../screens/ListeningScreen';
+import DictionaryScreen from '../screens/DictionaryScreen';
+import ExamVocabScreen from '../screens/ExamVocabScreen';
+import IdiomsScreen from '../screens/IdiomsScreen';
+import WordbookScreen from '../screens/WordbookScreen';
+
 const Tab = createBottomTabNavigator<TabNavigatorParamList>();
 
 // Tab Icon Component

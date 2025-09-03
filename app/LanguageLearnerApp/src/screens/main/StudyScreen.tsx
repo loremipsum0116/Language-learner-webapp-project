@@ -394,17 +394,65 @@ const StudyScreen: React.FC<Props> = ({ navigation, route }) => {
           <View style={styles.completedActions}>
             <TouchableOpacity
               style={[styles.actionButton, styles.primaryButton]}
-              onPress={() => navigation.navigate('Vocabulary')}
+              onPress={() => navigation.navigate('Quiz')}
               activeOpacity={0.7}
             >
-              <Text style={styles.actionButtonText}>+ 단어 추가</Text>
+              <Text style={styles.actionButtonText}>📝 퀴즈</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.primaryButton]}
+              onPress={() => navigation.navigate('Reading')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.actionButtonText}>📖 읽기</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.primaryButton]}
+              onPress={() => navigation.navigate('Listening')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.actionButtonText}>🎧 듣기</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.completedActions}>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.secondaryButton]}
+              onPress={() => navigation.navigate('Dictionary')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>📖 사전</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.secondaryButton]}
+              onPress={() => navigation.navigate('ExamVocab')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>📚 시험</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.secondaryButton]}
+              onPress={() => navigation.navigate('Idioms')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>💭 숙어</Text>
+            </TouchableOpacity>
+          </View>
+          
+          <View style={styles.completedActions}>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.secondaryButton]}
+              onPress={() => navigation.navigate('Wordbook')}
+              activeOpacity={0.7}
+            >
+              <Text style={styles.secondaryButtonText}>📚 단어장</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionButton, styles.secondaryButton]}
               onPress={() => navigation.navigate('Home')}
               activeOpacity={0.7}
             >
-              <Text style={styles.secondaryButtonText}>대시보드</Text>
+              <Text style={styles.secondaryButtonText}>🏠 홈</Text>
             </TouchableOpacity>
           </View>
         </FadeInView>
@@ -604,6 +652,9 @@ const styles = StyleSheet.create({
   completedActions: {
     flexDirection: 'row',
     gap: 12,
+    marginBottom: 12,
+    justifyContent: 'center',
+    flexWrap: 'wrap',
   },
   actionButton: {
     paddingVertical: 12,

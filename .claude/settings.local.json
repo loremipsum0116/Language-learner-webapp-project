@@ -29,7 +29,8 @@
       "Bash(npx @react-native-community/cli init:*)",
       "Bash(rmdir:*)",
       "Bash(tree:*)",
-      "Bash(pod install:*)"
+      "Bash(pod install:*)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []
