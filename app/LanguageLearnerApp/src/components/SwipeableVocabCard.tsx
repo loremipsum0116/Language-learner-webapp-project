@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import {useTheme} from '../context/ThemeContext';
 import VocabCard from './VocabCard';
+import { useHapticFeedback, HapticType } from '../services/HapticFeedbackService';
 
 const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
@@ -52,6 +53,7 @@ export const SwipeableVocabCard: React.FC<SwipeableVocabCardProps> = ({
   style,
 }) => {
   const {colors} = useTheme();
+  const { cardSwipe, correctAnswer, wrongAnswer } = useHapticFeedback();
   const [isSwipeHintVisible, setIsSwipeHintVisible] = useState(false);
   
   // 애니메이션 값들
@@ -217,20 +219,25 @@ export const SwipeableVocabCard: React.FC<SwipeableVocabCardProps> = ({
   const executeSwipeAnimation = (direction: 'left' | 'right' | 'up' | 'down', dx: number, dy: number) => {
     let endX = 0, endY = 0, rotation = 0;
 
+    // 햅틱 피드백 실행
     switch (direction) {
       case 'right':
         endX = screenWidth + 100;
         rotation = 15;
+        cardSwipe(); // 기본 스와이프 피드백
         break;
       case 'left':
         endX = -screenWidth - 100;
         rotation = -15;
+        cardSwipe(); // 기본 스와이프 피드백
         break;
       case 'up':
         endY = -screenHeight - 100;
+        correctAnswer(); // 알고 있음 = 정답
         break;
       case 'down':
         endY = screenHeight + 100;
+        wrongAnswer(); // 모름 = 오답
         break;
     }
 

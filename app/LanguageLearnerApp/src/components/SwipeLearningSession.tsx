@@ -12,6 +12,7 @@ import {useTheme} from '../context/ThemeContext';
 import SwipeableVocabCard from './SwipeableVocabCard';
 import VolumeControl from './VolumeControl';
 import {useFocusEffect} from '@react-navigation/native';
+import { useHapticFeedback } from '../services/HapticFeedbackService';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -54,6 +55,7 @@ export const SwipeLearningSession: React.FC<SwipeLearningSessionProps> = ({
   onExit,
 }) => {
   const {colors} = useTheme();
+  const { achievement, levelUp, correctStreak: hapticCorrectStreak, masterComplete, importantAction } = useHapticFeedback();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [studiedCards, setStudiedCards] = useState<StudyCard[]>([]);
   const [isFlipped, setIsFlipped] = useState(false);
@@ -68,6 +70,7 @@ export const SwipeLearningSession: React.FC<SwipeLearningSessionProps> = ({
   // 자동 학습 모드 관련
   const [isAutoMode, setIsAutoMode] = useState(config.autoMode || false);
   const [isPaused, setIsPaused] = useState(false);
+  const [correctStreak, setCorrectStreak] = useState(0);
   const autoTimer = useRef<NodeJS.Timeout>();
   const flipTimer = useRef<NodeJS.Timeout>();
   const audioRef = useRef<any>();
@@ -205,7 +208,8 @@ export const SwipeLearningSession: React.FC<SwipeLearningSessionProps> = ({
         nextCardOpacity.setValue(0.5);
       });
     } else {
-      // 모든 카드 완료
+      // 모든 카드 완료 - 성취 햅틱 피드백
+      achievement();
       handleSessionComplete();
     }
   };
@@ -220,6 +224,9 @@ export const SwipeLearningSession: React.FC<SwipeLearningSessionProps> = ({
   };
 
   const triggerSurpriseQuiz = () => {
+    // 깜짝 퀴즈 시작 - 중요한 액션 햅틱
+    importantAction();
+    
     // 최근 학습한 10장에서 3장 랜덤 선택
     const recentCards = studiedCards.slice(-10);
     const quizCards = recentCards
@@ -339,12 +346,18 @@ export const SwipeLearningSession: React.FC<SwipeLearningSessionProps> = ({
         goToPreviousCard();
         break;
       case 'right':
+        setCorrectStreak(0); // 스킵 시 연속 정답 초기화
         goToNextCard('skipped');
         break;
       case 'up':
+        // 연속 정답 증가 및 햅틱 피드백
+        const newStreak = correctStreak + 1;
+        setCorrectStreak(newStreak);
+        hapticCorrectStreak(newStreak); // 햅틱 피드백 실행
         goToNextCard('known');
         break;
       case 'down':
+        setCorrectStreak(0); // 오답 시 연속 정답 초기화
         goToNextCard('unknown');
         break;
     }

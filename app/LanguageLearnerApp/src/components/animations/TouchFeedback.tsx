@@ -3,6 +3,7 @@
 
 import React, { useRef } from 'react';
 import { Animated, TouchableWithoutFeedback, ViewStyle } from 'react-native';
+import { useHapticFeedback, HapticType } from '../../services/HapticFeedbackService';
 
 interface TouchFeedbackProps {
   children: React.ReactNode;
@@ -12,6 +13,9 @@ interface TouchFeedbackProps {
   disabled?: boolean;
   scaleValue?: number;
   duration?: number;
+  hapticType?: HapticType;
+  enableHaptic?: boolean;
+  hapticOnLongPress?: HapticType;
 }
 
 const TouchFeedback: React.FC<TouchFeedbackProps> = ({
@@ -22,8 +26,12 @@ const TouchFeedback: React.FC<TouchFeedbackProps> = ({
   disabled = false,
   scaleValue = 0.95,
   duration = 100,
+  hapticType = HapticType.BUTTON_PRESS,
+  enableHaptic = true,
+  hapticOnLongPress = HapticType.LONG_PRESS,
 }) => {
   const scaleAnim = useRef(new Animated.Value(1)).current;
+  const { trigger } = useHapticFeedback();
 
   const handlePressIn = () => {
     if (disabled) return;
@@ -43,10 +51,24 @@ const TouchFeedback: React.FC<TouchFeedbackProps> = ({
     }).start();
   };
 
+  const handlePress = () => {
+    if (enableHaptic && !disabled) {
+      trigger(hapticType);
+    }
+    onPress?.();
+  };
+
+  const handleLongPress = () => {
+    if (enableHaptic && !disabled) {
+      trigger(hapticOnLongPress);
+    }
+    onLongPress?.();
+  };
+
   return (
     <TouchableWithoutFeedback
-      onPress={onPress}
-      onLongPress={onLongPress}
+      onPress={handlePress}
+      onLongPress={handleLongPress}
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       disabled={disabled}

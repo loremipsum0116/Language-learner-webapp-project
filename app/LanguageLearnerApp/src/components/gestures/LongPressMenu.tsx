@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { useThemedStyles, useColors } from '../../context/ThemeContext';
 import { Theme } from '../../theme';
+import { useHapticFeedback, HapticType } from '../../services/HapticFeedbackService';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
@@ -59,6 +60,7 @@ export const LongPressMenu: React.FC<LongPressMenuProps> = ({
 }) => {
   const styles = useThemedStyles(createStyles);
   const colors = useColors();
+  const { longPress: hapticLongPress, buttonPress } = useHapticFeedback();
   
   const [menuVisible, setMenuVisible] = useState(false);
   const [menuPosition, setMenuPosition] = useState<MenuPosition>({ x: 0, y: 0 });
@@ -97,11 +99,7 @@ export const LongPressMenu: React.FC<LongPressMenuProps> = ({
       
       // 햅틱 피드백
       if (hapticFeedback) {
-        if (Platform.OS === 'ios') {
-          Vibration.vibrate();
-        } else {
-          Vibration.vibrate(50);
-        }
+        hapticLongPress();
       }
       
       // 메뉴 애니메이션
@@ -239,11 +237,17 @@ export const LongPressMenu: React.FC<LongPressMenuProps> = ({
 
   // 메뉴 옵션 선택 처리
   const handleOptionPress = useCallback((option: MenuOption) => {
+    if (option.destructive) {
+      // 위험한 액션은 강한 피드백
+      buttonPress(); // 중간 강도 피드백 사용
+    } else {
+      buttonPress();
+    }
     hideMenu();
     setTimeout(() => {
       option.onPress();
     }, 100);
-  }, [hideMenu]);
+  }, [hideMenu, buttonPress]);
 
   return (
     <>
@@ -384,11 +388,17 @@ export const QuickActionButton: React.FC<{
 }> = ({ title, icon, onPress, color, size = 'medium' }) => {
   const styles = useThemedStyles(createStyles);
   const colors = useColors();
+  const { buttonPress } = useHapticFeedback();
   
   const sizeStyles = {
     small: { width: 60, height: 60, fontSize: 16 },
     medium: { width: 80, height: 80, fontSize: 20 },
     large: { width: 100, height: 100, fontSize: 24 },
+  };
+
+  const handlePress = () => {
+    buttonPress();
+    onPress();
   };
 
   return (
@@ -397,7 +407,7 @@ export const QuickActionButton: React.FC<{
         width: sizeStyles[size].width,
         height: sizeStyles[size].height,
       }]}
-      onPress={onPress}
+      onPress={handlePress}
     >
       <Text style={[
         styles.quickActionIcon,

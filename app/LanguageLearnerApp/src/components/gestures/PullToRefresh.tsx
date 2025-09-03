@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useThemedStyles, useColors } from '../../context/ThemeContext';
 import { Theme } from '../../theme';
+import { useHapticFeedback } from '../../services/HapticFeedbackService';
 
 const { height: screenHeight } = Dimensions.get('window');
 const PULL_THRESHOLD = 80;
@@ -49,6 +50,7 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
 }) => {
   const styles = useThemedStyles(createStyles);
   const colors = useColors();
+  const { pullToRefresh } = useHapticFeedback();
   
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [pullDistance, setPullDistance] = useState(0);
@@ -62,6 +64,9 @@ export const PullToRefresh: React.FC<PullToRefreshProps> = ({
   // 새로고침 실행
   const handleRefresh = useCallback(async () => {
     if (isRefreshing || !enabled) return;
+    
+    // 햅틱 피드백
+    pullToRefresh();
     
     setIsRefreshing(true);
     
