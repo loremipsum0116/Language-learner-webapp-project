@@ -22,7 +22,14 @@
       "Bash(pnpm --filter @language-learner/backend test:coverage)",
       "Bash(grep:*)",
       "Bash(mkdir:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(npx react-native:*)",
+      "Bash(npx @react-native-community/cli init:*)",
+      "Bash(rmdir:*)",
+      "Bash(tree:*)",
+      "Bash(pod install:*)"
     ],
     "deny": [],
     "ask": []
