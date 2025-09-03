@@ -8,3 +8,13 @@
 #   http://developer.android.com/guide/developing/tools/proguard.html
 
 # Add any project specific keep options here:
+
+# React Native Reanimated
+-keep class com.swmansion.reanimated.** { *; }
+-keep class com.facebook.react.turbomodule.** { *; }
+
+# React Native Vector Icons
+-keep class **.R$drawable { *; }
+
+# React Native Push Notifications
+-keep class com.dieam.reactnativepushnotification.** { *; }

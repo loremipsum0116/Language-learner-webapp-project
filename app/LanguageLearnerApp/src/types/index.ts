@@ -23,14 +23,20 @@ export interface Vocab {
   id: number;
   lemma: string;
   pos: string;
-  levelCEFR: string;
+  levelCEFR?: string;
+  ko_gloss?: string;
+  source?: string;
   frequency?: number;
+  dictMeta?: {
+    ipa?: string;
+    ipaKo?: string;
+  };
   dictentry?: DictEntry;
 }
 
 export interface DictEntry {
-  id: number;
-  vocabId: number;
+  id?: number;
+  vocabId?: number;
   definition?: string;
   pronunciation?: string;
   audioLocal?: string;
@@ -38,10 +44,11 @@ export interface DictEntry {
 }
 
 export interface Example {
-  id: number;
+  id?: number;
   kind: 'gloss' | 'example' | 'usage';
-  en: string;
+  en?: string;
   ko?: string;
+  chirpScript?: string;
 }
 
 export interface AuthState {
@@ -104,4 +111,109 @@ export interface StudySession {
   completedAt?: Date;
   accuracy?: number;
   totalTime?: number;
+}
+
+// Component-specific types
+export interface Card {
+  id: number;
+  stage: number;
+  isMastered: boolean;
+  masterCycles: number;
+  masteredAt?: string;
+  correctTotal: number;
+  wrongTotal: number;
+  isOverdue: boolean;
+  overdueDeadline?: string;
+  frozenUntil?: string;
+  waitingUntil?: string;
+  isFromWrongAnswer: boolean;
+  folderId?: number;
+  cardId?: number;
+}
+
+export interface VocabCardProps {
+  vocab: Vocab;
+  card?: Card | null;
+  onPress?: () => void;
+  style?: any;
+  showProgress?: boolean;
+  size?: 'medium' | 'large';
+  onPlayAudio?: (vocab: Vocab) => void;
+  playingAudio?: {
+    type: string;
+    id: number;
+  } | null;
+}
+
+export interface RainbowStarProps {
+  size?: 'small' | 'medium' | 'large' | 'xl';
+  cycles?: number;
+  style?: any;
+  animated?: boolean;
+  tooltip?: boolean;
+}
+
+export interface PronProps {
+  ipa?: string;
+  ipaKo?: string;
+}
+
+export interface QuizItem {
+  question: string;
+  answer: string;
+  options?: string[];
+  pron?: {
+    ipa?: string;
+    ipaKo?: string;
+  };
+  folderId?: number;
+  cardId?: number;
+}
+
+export interface MiniQuizProps {
+  batch: QuizItem[];
+  onDone: () => void;
+  folderId?: number;
+  isReviewQuiz?: boolean;
+}
+
+export type SeverityLevel = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+
+export interface ReportType {
+  value: string;
+  label: string;
+  description: string;
+}
+
+export interface CardReportModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  vocabId: number;
+  vocabLemma: string;
+  onReportSubmitted?: () => void;
+}
+
+// Common UI Component Props
+export interface ButtonProps {
+  title: string;
+  onPress: () => void;
+  variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info';
+  size?: 'small' | 'medium' | 'large';
+  disabled?: boolean;
+  loading?: boolean;
+  style?: any;
+}
+
+export interface LoadingSpinnerProps {
+  size?: 'small' | 'medium' | 'large';
+  color?: string;
+  style?: any;
+}
+
+export interface AlertBannerProps {
+  type: 'info' | 'success' | 'warning' | 'error';
+  title?: string;
+  message: string;
+  onClose?: () => void;
+  style?: any;
 }
