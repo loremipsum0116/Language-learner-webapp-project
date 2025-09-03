@@ -11,6 +11,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
 import RootNavigator from './src/navigation/RootNavigator';
+import { NavigationGestureProvider } from './src/components/gestures';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -18,11 +19,20 @@ function App(): React.JSX.Element {
   return (
     <Provider store={store}>
       <SafeAreaProvider>
-        <StatusBar
-          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-          backgroundColor={isDarkMode ? '#1a1a1a' : '#2196F3'}
-        />
-        <RootNavigator />
+        <NavigationGestureProvider
+          initialConfig={{
+            enableSwipeBack: true,
+            enablePullToRefresh: true,
+            enableLongPress: true,
+            hapticFeedback: true,
+          }}
+        >
+          <StatusBar
+            barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+            backgroundColor={isDarkMode ? '#1a1a1a' : '#2196F3'}
+          />
+          <RootNavigator />
+        </NavigationGestureProvider>
       </SafeAreaProvider>
     </Provider>
   );
