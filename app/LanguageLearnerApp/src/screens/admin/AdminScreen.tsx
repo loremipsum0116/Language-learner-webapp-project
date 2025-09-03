@@ -31,6 +31,11 @@ import { AlertBanner, LoadingSpinner, Button } from '../../components/common';
 import { FadeInView, SlideInView } from '../../components/animations';
 import { haptics } from '../../utils/haptics';
 import { AdminStackParamList } from '../../types/navigation';
+import AdminNotificationAnalytics, {
+  AdminNotificationStats,
+  NotificationHealthMetric,
+  UserEngagementInsight,
+} from '../../services/AdminNotificationAnalytics';
 
 type Props = NativeStackScreenProps<AdminStackParamList, 'AdminDashboard'>;
 
@@ -82,6 +87,9 @@ interface DashboardData {
     userGrowth: number[];
     cardDistribution: { name: string; value: number; color: string }[];
   };
+  notificationStats?: AdminNotificationStats;
+  healthMetrics?: NotificationHealthMetric[];
+  userInsights?: UserEngagementInsight[];
 }
 
 interface StatCardProps {
@@ -144,6 +152,14 @@ const AdminScreen: React.FC<Props> = ({ navigation }) => {
       // TODO: Replace with actual API call
       await new Promise(resolve => setTimeout(resolve, 1000));
 
+      // Load notification analytics
+      await AdminNotificationAnalytics.initialize();
+      const [notificationStats, healthMetrics, userInsights] = await Promise.all([
+        AdminNotificationAnalytics.getOverviewStats(),
+        AdminNotificationAnalytics.getHealthMetrics(),
+        AdminNotificationAnalytics.getUserEngagementInsights(),
+      ]);
+
       // Mock data with chart information
       const mockData: DashboardData = {
         stats: {
@@ -182,6 +198,9 @@ const AdminScreen: React.FC<Props> = ({ navigation }) => {
             { name: 'Wrong Answers', value: 3421, color: '#f59e0b' },
           ],
         },
+        notificationStats,
+        healthMetrics,
+        userInsights,
       };
 
       setDashboardData(mockData);
@@ -463,6 +482,116 @@ const AdminScreen: React.FC<Props> = ({ navigation }) => {
               />
             </View>
           </SlideInView>
+
+          {/* Notification Statistics */}
+          {dashboardData?.notificationStats && (
+            <SlideInView direction="up" delay={150} style={styles.notificationSection}>
+              <Text style={styles.sectionTitle}>📱 알림 통계</Text>
+              <View style={styles.statsGrid}>
+                <StatCard
+                  title="총 알림 발송"
+                  value={dashboardData.notificationStats.totalNotificationsSent}
+                  icon="📬"
+                  color="#8b5cf6"
+                />
+                <StatCard
+                  title="활성 사용자"
+                  value={dashboardData.notificationStats.totalUsersWithNotifications}
+                  subtitle="알림 수신 중"
+                  icon="👤"
+                  color="#06b6d4"
+                />
+                <StatCard
+                  title="참여율"
+                  value={Math.round(dashboardData.notificationStats.globalEngagementRate)}
+                  subtitle={`${dashboardData.notificationStats.globalEngagementRate.toFixed(1)}%`}
+                  icon="📊"
+                  color="#10b981"
+                />
+                <StatCard
+                  title="응답 시간"
+                  value={Math.round(dashboardData.notificationStats.averageResponseTime / 60)}
+                  subtitle="분"
+                  icon="⏱️"
+                  color="#f59e0b"
+                />
+              </View>
+              
+              {/* User Segmentation */}
+              <View style={styles.segmentationCard}>
+                <Text style={styles.cardTitle}>👥 사용자 세그먼테이션</Text>
+                <View style={styles.segmentationStats}>
+                  <View style={styles.segmentationItem}>
+                    <View style={[styles.segmentIndicator, { backgroundColor: '#10b981' }]} />
+                    <Text style={styles.segmentLabel}>고참여 사용자</Text>
+                    <Text style={styles.segmentValue}>
+                      {dashboardData.notificationStats.userSegmentation.highlyEngaged}
+                    </Text>
+                  </View>
+                  <View style={styles.segmentationItem}>
+                    <View style={[styles.segmentIndicator, { backgroundColor: '#3b82f6' }]} />
+                    <Text style={styles.segmentLabel}>보통 참여 사용자</Text>
+                    <Text style={styles.segmentValue}>
+                      {dashboardData.notificationStats.userSegmentation.moderatelyEngaged}
+                    </Text>
+                  </View>
+                  <View style={styles.segmentationItem}>
+                    <View style={[styles.segmentIndicator, { backgroundColor: '#f59e0b' }]} />
+                    <Text style={styles.segmentLabel}>저참여 사용자</Text>
+                    <Text style={styles.segmentValue}>
+                      {dashboardData.notificationStats.userSegmentation.lowEngaged}
+                    </Text>
+                  </View>
+                  <View style={styles.segmentationItem}>
+                    <View style={[styles.segmentIndicator, { backgroundColor: '#ef4444' }]} />
+                    <Text style={styles.segmentLabel}>비활성 사용자</Text>
+                    <Text style={styles.segmentValue}>
+                      {dashboardData.notificationStats.userSegmentation.inactive}
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </SlideInView>
+          )}
+
+          {/* System Health */}
+          {dashboardData?.healthMetrics && (
+            <SlideInView direction="up" delay={200} style={styles.healthSection}>
+              <Text style={styles.sectionTitle}>🔋 시스템 상태</Text>
+              <View style={styles.healthGrid}>
+                {dashboardData.healthMetrics.map((metric, index) => (
+                  <View key={metric.metric} style={styles.healthCard}>
+                    <View style={styles.healthHeader}>
+                      <Text style={styles.healthTitle}>{metric.metric}</Text>
+                      <View style={[
+                        styles.healthStatus,
+                        { backgroundColor: 
+                          metric.status === 'healthy' ? '#10b981' :
+                          metric.status === 'warning' ? '#f59e0b' : '#ef4444'
+                        }
+                      ]}>
+                        <Text style={styles.healthStatusText}>
+                          {metric.status === 'healthy' ? '정상' :
+                           metric.status === 'warning' ? '주의' : '위험'}
+                        </Text>
+                      </View>
+                    </View>
+                    <Text style={styles.healthValue}>
+                      {metric.value.toFixed(1)}
+                      {metric.metric.includes('Rate') || metric.metric.includes('율') ? '%' : ''}
+                    </Text>
+                    <Text style={styles.healthDescription}>{metric.description}</Text>
+                    <View style={styles.healthTrend}>
+                      <Text style={styles.healthTrendText}>
+                        {metric.trend === 'improving' ? '📈 개선중' :
+                         metric.trend === 'declining' ? '📉 하락중' : '➡️ 안정'}
+                      </Text>
+                    </View>
+                  </View>
+                ))}
+              </View>
+            </SlideInView>
+          )}
 
           {/* Charts Section */}
           <SlideInView direction="up" delay={200} style={styles.chartSection}>
@@ -823,6 +952,110 @@ const styles = StyleSheet.create({
     color: '#9ca3af',
     fontSize: 14,
     paddingVertical: 20,
+  },
+  notificationSection: {
+    marginBottom: 24,
+  },
+  segmentationCard: {
+    backgroundColor: 'white',
+    marginHorizontal: 16,
+    marginTop: 16,
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+    marginBottom: 16,
+  },
+  segmentationStats: {
+    gap: 12,
+  },
+  segmentationItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  segmentIndicator: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+    marginRight: 12,
+  },
+  segmentLabel: {
+    flex: 1,
+    fontSize: 14,
+    color: '#374151',
+  },
+  segmentValue: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+    minWidth: 40,
+    textAlign: 'right',
+  },
+  healthSection: {
+    marginBottom: 24,
+  },
+  healthGrid: {
+    paddingHorizontal: 16,
+    gap: 12,
+  },
+  healthCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  healthHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  healthTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+    flex: 1,
+  },
+  healthStatus: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 12,
+  },
+  healthStatusText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: 'white',
+  },
+  healthValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#1f2937',
+    marginBottom: 4,
+  },
+  healthDescription: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginBottom: 8,
+  },
+  healthTrend: {
+    alignItems: 'flex-start',
+  },
+  healthTrendText: {
+    fontSize: 12,
+    color: '#374151',
   },
 });
 

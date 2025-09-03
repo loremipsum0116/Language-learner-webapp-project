@@ -10,8 +10,12 @@
     "test": "jest"
   },
   "dependencies": {
+    "@notifee/react-native": "^9.1.8",
     "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/datetimepicker": "^8.4.4",
     "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-firebase/app": "^23.2.2",
+    "@react-native-firebase/messaging": "^23.2.2",
     "@react-native/new-app-screen": "0.81.1",
     "@react-navigation/bottom-tabs": "^7.4.7",
     "@react-navigation/native": "^7.1.17",
@@ -19,6 +23,7 @@
     "@reduxjs/toolkit": "^2.9.0",
     "react": "19.1.0",
     "react-native": "0.81.1",
+    "react-native-chart-kit": "^6.12.0",
     "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.28.0",
     "react-native-push-notification": "^8.1.1",
@@ -27,6 +32,7 @@
     "react-native-screens": "^4.15.4",
     "react-native-sound": "^0.12.0",
     "react-native-sqlite-storage": "^6.0.1",
+    "react-native-svg": "^15.12.1",
     "react-native-vector-icons": "^10.3.0",
     "react-redux": "^9.2.0"
   },
