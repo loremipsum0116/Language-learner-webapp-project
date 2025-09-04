@@ -73,7 +73,8 @@
       "mcp__ide__getDiagnostics",
       "Bash(sed:*)",
       "Bash(del nul)",
-      "Bash(rm:*)"
+      "Bash(rm:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []

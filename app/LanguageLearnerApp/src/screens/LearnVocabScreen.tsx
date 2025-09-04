@@ -14,7 +14,7 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Alert,
+  Alert,1
   ActivityIndicator,
   Dimensions,
   BackHandler,
@@ -26,9 +26,9 @@ import _ from 'lodash';
 
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
-import { StudyStackParamList } from '../navigation/types';
+import { RootStackParamList } from '../navigation/types';
 
-type Props = NativeStackScreenProps<StudyStackParamList, 'LearnVocab'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'LearnVocab'>;
 
 const { width, height } = Dimensions.get('window');
 
@@ -141,7 +141,6 @@ interface VocabCard {
   levelCEFR?: string;
   source?: string;
   category?: string;
-  folderId?: string | number;
   vocab?: {
     dictentry?: any;
     dictMeta?: any;
@@ -149,8 +148,6 @@ interface VocabCard {
   };
   contextSentence?: string;
   contextTranslation?: string;
-  wordOptions?: string[];
-  options?: string[];
 }
 
 interface SurpriseQuiz {
@@ -161,12 +158,7 @@ interface SurpriseQuiz {
     options: string[];
   }>;
   currentQ: number;
-  answers: Array<{
-    question: string;
-    selected: string;
-    correct: string;
-    isCorrect: boolean;
-  }>;
+  answers: string[];
   showFeedback: boolean;
   selectedAnswer: string | null;
 }
@@ -195,7 +187,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
   const [modeForBatch, setModeForBatch] = useState('flash');
 
   // 기존 모드 상태
-  const [queue, setQueue] = useState<VocabCard[]>(() => (route.params as any)?.initialQueue ?? []);
+  const [queue, setQueue] = useState<VocabCard[]>(() => route.params?.initialQueue ?? []);
   const [idx, setIdx] = useState(0);
   const [userAnswer, setAnswer] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<any>(null);
@@ -466,10 +458,10 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
     try {
       let fetchedQueue: VocabCard[] = [];
       
-      if ((route.params as any)?.initialQueue) {
+      if (route.params?.initialQueue) {
         // 다른 화면에서 전달받은 데이터 사용
         console.log('[LOAD DEBUG] Using initialQueue from navigation');
-        fetchedQueue = (route.params as any).initialQueue;
+        fetchedQueue = route.params.initialQueue;
       } else if (mode === 'batch') {
         // 배치 모드 데이터 로드
         const response = await apiClient.get('/learn/batch');
@@ -621,13 +613,13 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
       const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
 
       // 깜짝 퀴즈 문제 생성
-      const quizQuestions = selectedCards.filter(card => card).map(card => {
+      const quizQuestions = selectedCards.map(card => {
         const otherAnswers = queue
-          .filter(q => q.vocabId !== card!.vocabId)
+          .filter(q => q.vocabId !== card.vocabId)
           .map(q => q.answer);
 
         const wrongOptions = _.sampleSize(otherAnswers, 3);
-        const uniqueOptions = _.uniq([card!.answer, ...wrongOptions]);
+        const uniqueOptions = _.uniq([card.answer, ...wrongOptions]);
         while (uniqueOptions.length < 4) {
           uniqueOptions.push(`기타 선택지 ${uniqueOptions.length}`);
         }
@@ -635,8 +627,8 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
         const allOptions = _.shuffle(uniqueOptions.slice(0, 4));
 
         return {
-          question: card!.question,
-          correctAnswer: card!.answer,
+          question: card.question,
+          correctAnswer: card.answer,
           options: allOptions,
           vocabId: card.vocabId
         };
@@ -670,8 +662,6 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
   // 깜짝 퀴즈 핸들러
   const handleSurpriseQuizAnswer = (selectedAnswer: string) => {
     const currentQuestion = surpriseQuiz.questions[surpriseQuiz.currentQ];
-    if (!currentQuestion) return;
-    
     const isCorrect = selectedAnswer === currentQuestion.correctAnswer;
 
     // 피드백 표시
@@ -681,12 +671,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
       selectedAnswer: selectedAnswer
     }));
 
-    const newAnswers: Array<{
-      question: string;
-      selected: string;
-      correct: string;
-      isCorrect: boolean;
-    }> = [...surpriseQuiz.answers, {
+    const newAnswers = [...surpriseQuiz.answers, {
       question: currentQuestion.question,
       selected: selectedAnswer,
       correct: currentQuestion.correctAnswer,
@@ -752,17 +737,17 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
         const lastTenCards = allStudiedCards.slice(-10);
         const selectedCards = _.sampleSize(lastTenCards, Math.min(3, lastTenCards.length));
 
-        const quizQuestions = selectedCards.filter(card => card).map(card => {
+        const quizQuestions = selectedCards.map(card => {
           const otherAnswers = currentBatch
-            .filter(q => q.vocabId !== card!.vocabId)
+            .filter(q => q.vocabId !== card.vocabId)
             .map(q => q.answer);
 
           const wrongAnswers = _.sampleSize(otherAnswers, 3);
-          const allOptions = [card!.answer, ...wrongAnswers];
+          const allOptions = [card.answer, ...wrongAnswers];
 
           return {
-            question: card!.question,
-            correctAnswer: card!.answer,
+            question: card.question,
+            correctAnswer: card.answer,
             options: _.shuffle(allOptions)
           };
         });
@@ -812,11 +797,11 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
       let cardIds: number[] = [];
 
       if (mode === 'batch' && currentBatch.length > 0) {
-        vocabIds = currentBatch.map(it => it.vocabId).filter((id): id is number => Boolean(id));
-        cardIds = currentBatch.map(it => it.cardId).filter((id): id is number => Boolean(id));
+        vocabIds = currentBatch.map(it => it.vocabId).filter(Boolean);
+        cardIds = currentBatch.map(it => it.cardId).filter(Boolean);
       } else {
-        vocabIds = queueData.map(it => it.vocabId).filter((id): id is number => Boolean(id));
-        cardIds = queueData.map(it => it.cardId).filter((id): id is number => Boolean(id));
+        vocabIds = queueData.map(it => it.vocabId).filter(Boolean);
+        cardIds = queueData.map(it => it.cardId).filter(Boolean);
       }
 
       if (vocabIds.length || cardIds.length) {
@@ -1210,7 +1195,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
               style={styles.backToFolderButton}
               onPress={() => navigation.goBack()}
             >
-              <Text style={styles.backToFolderButtonText}>← 돌아가기</Text>
+              <Text style={styles.backToFolderButtonText}← 돌아가기</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
