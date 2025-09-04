@@ -65,7 +65,15 @@
       "Read(c:\\Users\\sst70\\OneDrive\\바탕 화면\\Node\\Language-learner-webapp-project\\app\\LanguageLearnerApp\\src\\navigation/**)",
       "Bash(start:*)",
       "Bash(rd:*)",
-      "Bash(del metro.config.js)"
+      "Bash(del metro.config.js)",
+      "Bash(powershell:*)",
+      "Bash(taskkill:*)",
+      "Bash(npx expo install:*)",
+      "Bash(npm run web:*)",
+      "mcp__ide__getDiagnostics",
+      "Bash(sed:*)",
+      "Bash(del nul)",
+      "Bash(rm:*)"
     ],
     "deny": [],
     "ask": []

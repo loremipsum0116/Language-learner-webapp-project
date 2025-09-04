@@ -16,6 +16,11 @@ export type AuthStackParamList = {
 // Study Stack Params
 export type StudyStackParamList = {
   StudyMode: undefined;
+  LearnVocab: { 
+    folderId?: string; 
+    initialQueue?: any[];
+    quizType?: string;
+  };
   SrsQuiz: { folderId?: string; reviewMode?: boolean };
   VocabDetail: { vocabId: number; cardId?: number };
   QuizResult: { 

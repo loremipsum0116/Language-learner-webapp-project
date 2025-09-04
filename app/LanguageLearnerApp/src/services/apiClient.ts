@@ -444,6 +444,33 @@ class ApiClient {
         body: progress 
       }),
   };
+
+  // Generic methods for backward compatibility
+  get<T = any>(endpoint: string, config?: Omit<RequestConfig, 'method'>): Promise<T> {
+    return this.request<T>(endpoint, { ...config, method: 'GET' });
+  }
+
+  post<T = any>(endpoint: string, body?: any, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<T> {
+    return this.request<T>(endpoint, { ...config, method: 'POST', body });
+  }
+
+  put<T = any>(endpoint: string, body?: any, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<T> {
+    return this.request<T>(endpoint, { ...config, method: 'PUT', body });
+  }
+
+  patch<T = any>(endpoint: string, body?: any, config?: Omit<RequestConfig, 'method' | 'body'>): Promise<T> {
+    return this.request<T>(endpoint, { ...config, method: 'PATCH', body });
+  }
+
+  delete<T = any>(endpoint: string, config?: Omit<RequestConfig, 'method'>): Promise<T> {
+    return this.request<T>(endpoint, { ...config, method: 'DELETE' });
+  }
+
+  // For axios-like compatibility
+  defaults = {
+    timeout: 8000,
+    baseURL: this.baseUrl,
+  };
 }
 
 export const apiClient = new ApiClient(BASE_URL);

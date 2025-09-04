@@ -9,111 +9,34 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// Import simple screens for Expo Go compatibility
-import SimpleDictionaryScreen from './src/screens/SimpleDictionaryScreen';
-import SimpleWordbookScreen from './src/screens/SimpleWordbookScreen';
-import {
-  ReadingPlaceholder,
-  ListeningPlaceholder,
-  QuizPlaceholder,
-  SrsPlaceholder,
-} from './src/screens/PlaceholderScreen';
+// Import all refactored screens
+import HomeScreen from './src/screens/HomeScreen';
+import LandingPageScreen from './src/screens/LandingPageScreen';
+import DictionaryScreen from './src/screens/DictionaryScreen';
+import GrammarHubScreen from './src/screens/GrammarHubScreen';
+import GrammarQuizScreen from './src/screens/GrammarQuizScreen';
+import LearnStartScreen from './src/screens/LearnStartScreen';
+import LearnVocabPlaceholder from './src/screens/LearnVocabPlaceholder';
+import ListeningListScreen from './src/screens/ListeningListScreen';
+import ListeningPracticeScreen from './src/screens/ListeningPracticeScreen';
+import MasteredWordsScreen from './src/screens/MasteredWordsScreen';
+import MiniQuizScreen from './src/screens/MiniQuizScreen';
+import SrsParentFolderScreen from './src/screens/srs/SrsParentFolderScreen';
+import ReadingListScreen from './src/screens/reading/ReadingListScreen';
+import ReadingReviewScreen from './src/screens/reading/ReadingReviewScreen';
+import LoginScreen from './src/screens/auth/LoginScreen';
+import LogoutScreen from './src/screens/auth/LogoutScreen';
 
-// Import context providers
+// Import context providers (create simple ones if needed)
 import { AuthProvider } from './src/context/SimpleAuthContext';
 import { ThemeProvider } from './src/context/SimpleThemeContext';
 
 // Simple main navigation stack
 const Stack = createNativeStackNavigator();
 
-// Simple home screen for navigation
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+// Import simple components
+import { View, Text } from 'react-native';
 
-const HomeScreen = ({ navigation }: any) => {
-  const menuItems = [
-    { title: '🔍 사전', subtitle: '영어 단어 검색', screen: 'Dictionary' },
-    { title: '📚 내 단어장', subtitle: '저장된 단어 관리', screen: 'Wordbook' },
-    { title: '🎯 SRS 학습', subtitle: '간격 반복 시스템', screen: 'SrsDashboard' },
-    { title: '📖 리딩', subtitle: '독해 연습', screen: 'Reading' },
-    { title: '🎧 리스닝', subtitle: '듣기 연습', screen: 'Listening' },
-    { title: '🧠 퀴즈', subtitle: '문법 및 어휘 퀴즈', screen: 'Quiz' },
-  ];
-
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Language Learner</Text>
-        <Text style={styles.subtitle}>영어 학습 앱</Text>
-      </View>
-      
-      <View style={styles.menuContainer}>
-        {menuItems.map((item, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles.menuItem}
-            onPress={() => navigation.navigate(item.screen)}
-          >
-            <Text style={styles.menuTitle}>{item.title}</Text>
-            <Text style={styles.menuSubtitle}>{item.subtitle}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </ScrollView>
-  );
-};
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f8fafc',
-  },
-  contentContainer: {
-    padding: 20,
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 32,
-    paddingTop: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    color: '#6b7280',
-  },
-  menuContainer: {
-    gap: 16,
-  },
-  menuItem: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 20,
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  menuTitle: {
-    fontSize: 20,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 4,
-  },
-  menuSubtitle: {
-    fontSize: 14,
-    color: '#6b7280',
-  },
-});
 
 export default function App() {
   return (
@@ -143,34 +66,79 @@ export default function App() {
                 }} 
               />
               <Stack.Screen 
+                name="LandingPage" 
+                component={LandingPageScreen} 
+                options={{ title: '시작하기' }} 
+              />
+              <Stack.Screen 
                 name="Dictionary" 
-                component={SimpleDictionaryScreen} 
+                component={DictionaryScreen} 
                 options={{ title: '사전' }} 
               />
               <Stack.Screen 
-                name="Wordbook" 
-                component={SimpleWordbookScreen} 
-                options={{ title: '내 단어장' }} 
+                name="GrammarHub" 
+                component={GrammarHubScreen} 
+                options={{ title: '문법 허브' }} 
               />
               <Stack.Screen 
-                name="SrsDashboard" 
-                component={SrsPlaceholder} 
+                name="GrammarQuiz" 
+                component={GrammarQuizScreen} 
+                options={{ title: '문법 퀴즈' }} 
+              />
+              <Stack.Screen 
+                name="LearnStart" 
+                component={LearnStartScreen} 
+                options={{ title: '학습 시작' }} 
+              />
+              <Stack.Screen 
+                name="LearnVocab" 
+                component={LearnVocabPlaceholder} 
+                options={{ title: '단어 학습' }} 
+              />
+              <Stack.Screen 
+                name="ListeningList" 
+                component={ListeningListScreen} 
+                options={{ title: '듣기 목록' }} 
+              />
+              <Stack.Screen 
+                name="ListeningPractice" 
+                component={ListeningPracticeScreen} 
+                options={{ title: '듣기 연습' }} 
+              />
+              <Stack.Screen 
+                name="MasteredWords" 
+                component={MasteredWordsScreen} 
+                options={{ title: '마스터된 단어' }} 
+              />
+              <Stack.Screen 
+                name="MiniQuiz" 
+                component={MiniQuizScreen} 
+                options={{ title: '미니 퀴즈' }} 
+              />
+              <Stack.Screen 
+                name="SRS" 
+                component={SrsParentFolderScreen} 
                 options={{ title: 'SRS 학습' }} 
               />
               <Stack.Screen 
-                name="Reading" 
-                component={ReadingPlaceholder} 
-                options={{ title: '리딩' }} 
+                name="ReadingList" 
+                component={ReadingListScreen} 
+                options={{ title: '독해 목록' }} 
               />
               <Stack.Screen 
-                name="Listening" 
-                component={ListeningPlaceholder} 
-                options={{ title: '리스닝' }} 
+                name="ReadingReview" 
+                component={ReadingReviewScreen} 
+                options={{ title: '독해 리뷰' }} 
               />
               <Stack.Screen 
-                name="Quiz" 
-                component={QuizPlaceholder} 
-                options={{ title: '퀴즈' }} 
+                name="Login" 
+                component={LoginScreen} 
+                options={{ title: '로그인' }} 
+              />
+              <Stack.Screen 
+                name="Logout" 
+                component={LogoutScreen} 
+                options={{ title: '로그아웃' }} 
               />
             </Stack.Navigator>
           </NavigationContainer>

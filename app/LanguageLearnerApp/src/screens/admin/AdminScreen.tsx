@@ -1,5 +1,8 @@
-// src/screens/admin/AdminScreen.tsx
-// 관리자 대시보드 화면 (React Native 버전) - 차트 및 테이블뷰 최적화
+/*
+  AdminScreen.tsx — React Native 버전
+  ------------------------------------------------------------
+  웹 AdminDashboard.jsx를 모바일 앱에 맞게 리팩토링
+*/
 
 import React, { useEffect, useState, useCallback } from 'react';
 import {

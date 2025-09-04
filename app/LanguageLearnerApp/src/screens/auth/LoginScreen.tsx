@@ -1,5 +1,8 @@
-// src/screens/auth/LoginScreen.tsx
-// 로그인 화면 (React Native 버전) - Web Login.jsx 기반 리팩토링
+/*
+  LoginScreen.tsx — React Native 버전
+  ------------------------------------------------------------
+  웹 Login.jsx를 모바일 앱에 맞게 리팩토링
+*/
 
 import React, { useMemo, useState } from 'react';
 import {
