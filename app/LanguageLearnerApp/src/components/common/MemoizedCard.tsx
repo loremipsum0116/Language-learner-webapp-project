@@ -1,7 +1,7 @@
 // MemoizedCard.tsx - 메모이제이션된 카드 컴포넌트
 import React, { memo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ViewStyle } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import OptimizedImage from './OptimizedImage';
 import { useRenderPerformance } from '../../utils/performance';
 
@@ -79,7 +79,7 @@ const MemoizedCard = memo<MemoizedCardProps>(({
             <Text style={styles.badgeText}>{data.badge}</Text>
           </View>
         )}
-        <Ionicons name="chevron-forward" size={20} color="#ccc" />
+        <Icon name="chevron-forward" size={20} color="#ccc" />
       </View>
     </TouchableOpacity>
   );

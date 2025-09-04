@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Audio } from 'expo-av';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
@@ -98,7 +98,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, license, attribution }) 
   return (
     <View style={styles.audioPlayer}>
       <TouchableOpacity style={styles.playButton} onPress={playSound}>
-        <Ionicons 
+        <Icon 
           name={isPlaying ? "pause" : "play"} 
           size={20} 
           color="#007AFF" 

@@ -2,11 +2,14 @@
 require Pod::Executable.execute_command('node', ['-p',
   'require.resolve(
     "react-native/scripts/react_native_pods.rb",
-    {paths: [process.argv[1]]},
+    {paths: [process.argv[1]]}
   )', __dir__]).strip
 
-platform :ios, '13.0'
+platform :ios, '15.0'
 prepare_react_native_project!
+
+# Disable new architecture completely
+ENV['RCT_NEW_ARCH_ENABLED'] = '0'
 
 # Firebase requires use_frameworks
 use_frameworks! :linkage => :static
@@ -18,7 +21,10 @@ target 'LanguageLearnerApp' do
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
-    :app_path => "#{Pod::Config.instance.installation_root}/.."
+    :app_path => "#{Pod::Config.instance.installation_root}/..",
+    # Disable new architecture completely
+    :fabric_enabled => false,
+    :hermes_enabled => true
   )
 
   post_install do |installer|
@@ -33,7 +39,7 @@ target 'LanguageLearnerApp' do
     # Fix for Firebase and React Native compatibility
     installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '15.0'
       end
     end
   end

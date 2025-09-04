@@ -14,14 +14,14 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Alert,1
+  Alert,
   ActivityIndicator,
   Dimensions,
   BackHandler,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Audio } from 'expo-av';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import _ from 'lodash';
 
 import { useAuth } from '../hooks/useAuth';
@@ -1195,7 +1195,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
               style={styles.backToFolderButton}
               onPress={() => navigation.goBack()}
             >
-              <Text style={styles.backToFolderButtonText}← 돌아가기</Text>
+              <Text style={styles.backToFolderButtonText}>← 돌아가기</Text>
             </TouchableOpacity>
           </View>
         </ScrollView>
@@ -1477,7 +1477,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
                 setAuto((a) => !a);
               }}
             >
-              <Ionicons 
+              <Icon 
                 name={auto ? "pause" : "play"} 
                 size={18} 
                 color="#007AFF" 
@@ -1494,7 +1494,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
                   style={styles.settingsButtonSmall}
                   onPress={() => setShowSettings(true)}
                 >
-                  <Ionicons name="settings-outline" size={12} color="#666" />
+                  <Icon name="settings-outline" size={12} color="#666" />
                 </TouchableOpacity>
               </View>
             )}
@@ -1861,14 +1861,14 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
             navigation.goBack();
           }}
         >
-          <Ionicons name="arrow-back" size={24} color="#007AFF" />
+          <Icon name="arrow-back" size={24} color="#007AFF" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>단어 학습</Text>
         <TouchableOpacity 
           style={styles.settingsButton}
           onPress={() => setShowSettings(true)}
         >
-          <Ionicons name="settings-outline" size={24} color="#007AFF" />
+          <Icon name="settings-outline" size={24} color="#007AFF" />
         </TouchableOpacity>
       </View>
 
@@ -1901,7 +1901,7 @@ export default function LearnVocabScreen({ navigation, route }: Props) {
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>자동학습 설정</Text>
               <TouchableOpacity onPress={() => setShowSettings(false)}>
-                <Ionicons name="close" size={24} color="#666" />
+                <Icon name="close" size={24} color="#666" />
               </TouchableOpacity>
             </View>
             <View style={styles.modalBody}>

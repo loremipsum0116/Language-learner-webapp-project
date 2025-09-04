@@ -18,7 +18,7 @@ import {
   FlatList,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../hooks/useAuth';
 import { apiClient } from '../../services/apiClient';
 import { RootStackParamList } from '../../navigation/types';
@@ -278,7 +278,7 @@ export default function AdminNewScreen({ navigation }: Props) {
               desc="모바일 앱에서는 파일 업로드가 제한됩니다. 웹 버전을 이용해주세요." 
             />
             <View style={styles.uploadCard}>
-              <Ionicons name="cloud-upload" size={48} color="#6b7280" />
+              <Icon name="cloud-upload" size={48} color="#6b7280" />
               <Text style={styles.uploadTitle}>파일 업로드</Text>
               <Text style={styles.uploadDesc}>
                 CSV(어휘), JSON(문법/리딩) 파일 업로드는 웹 브라우저에서 이용하실 수 있습니다.

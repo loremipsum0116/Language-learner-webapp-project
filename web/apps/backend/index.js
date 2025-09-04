@@ -88,6 +88,217 @@ app.get('/docs/api-info', (req, res) => {
   generateApiDocs([1])(req, res);
 });
 
+// === SIMPLE VOCAB ENDPOINT (NO MIDDLEWARE) ===
+app.get('/simple-vocab', async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    
+    const { limit = 5, levelCEFR = 'A1' } = req.query;
+    const limitInt = Math.min(parseInt(limit), 50);
+    
+    console.log(`[SIMPLE-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
+    
+    const vocabs = await prisma.vocab.findMany({
+      where: {
+        languageId: 1,
+        levelCEFR: levelCEFR,
+      },
+      take: limitInt,
+      orderBy: { lemma: 'asc' },
+      include: {
+        dictentry: {
+          select: {
+            ipa: true,
+            examples: true
+          }
+        }
+      }
+    });
+    
+    const simplifiedVocabs = vocabs.map(vocab => {
+      let primaryGloss = '';
+      
+      if (vocab.dictentry?.examples && Array.isArray(vocab.dictentry.examples)) {
+        const glossExample = vocab.dictentry.examples.find(ex => ex.kind === 'gloss');
+        if (glossExample && glossExample.ko) {
+          primaryGloss = glossExample.ko.substring(0, 50);
+        }
+      }
+      
+      return {
+        id: vocab.id,
+        lemma: vocab.lemma,
+        pos: vocab.pos,
+        levelCEFR: vocab.levelCEFR,
+        ko_gloss: primaryGloss || `뜻: ${vocab.lemma}`,
+        ipa: vocab.dictentry?.ipa || ''
+      };
+    });
+    
+    await prisma.$disconnect();
+    
+    res.writeHead(200, { 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(JSON.stringify({
+      success: true,
+      count: simplifiedVocabs.length,
+      data: simplifiedVocabs
+    }));
+    
+  } catch (error) {
+    console.error('[SIMPLE-VOCAB] Error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message }));
+  }
+});
+
+// === SIMPLE EXAM CATEGORIES ENDPOINT (NO MIDDLEWARE) ===
+app.get('/simple-exam-categories', async (req, res) => {
+  try {
+    console.log('[SIMPLE-EXAM] Fetching exam categories');
+    
+    // Return basic exam categories without database query to avoid issues
+    const categories = [
+      { name: 'toeic', displayName: 'TOEIC' },
+      { name: 'toefl', displayName: 'TOEFL' },
+      { name: 'ielts', displayName: 'IELTS' },
+      { name: 'basic', displayName: '기초 단어' }
+    ];
+    
+    res.writeHead(200, { 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(JSON.stringify({
+      success: true,
+      data: categories
+    }));
+    
+  } catch (error) {
+    console.error('[SIMPLE-EXAM] Error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message }));
+  }
+});
+
+// === SIMPLE VOCAB DETAIL ENDPOINT (NO MIDDLEWARE) ===
+app.get('/simple-vocab-detail/:id', async (req, res) => {
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    
+    const vocabId = parseInt(req.params.id);
+    console.log(`[SIMPLE-VOCAB-DETAIL] Fetching details for vocab ID: ${vocabId}`);
+    
+    const vocab = await prisma.vocab.findUnique({
+      where: { id: vocabId },
+      include: {
+        dictentry: {
+          select: {
+            ipa: true,
+            examples: true,
+            audioUrl: true,
+            audioLocal: true,
+            attribution: true,
+            license: true
+          }
+        }
+      }
+    });
+    
+    if (!vocab) {
+      await prisma.$disconnect();
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ success: false, error: 'Vocabulary not found' }));
+      return;
+    }
+    
+    // Process examples to extract Korean gloss and examples
+    let koGloss = '';
+    let koExample = '';
+    let enExample = '';
+    
+    if (vocab.dictentry?.examples && Array.isArray(vocab.dictentry.examples)) {
+      const glossItem = vocab.dictentry.examples.find(ex => ex.kind === 'gloss');
+      const exampleItem = vocab.dictentry.examples.find(ex => ex.kind === 'example');
+      
+      if (glossItem && glossItem.ko) {
+        koGloss = glossItem.ko;
+      }
+      
+      if (exampleItem) {
+        if (exampleItem.ko) koExample = exampleItem.ko;
+        if (exampleItem.en) enExample = exampleItem.en;
+      }
+    }
+    
+    const detailData = {
+      id: vocab.id,
+      lemma: vocab.lemma,
+      pos: vocab.pos,
+      levelCEFR: vocab.levelCEFR,
+      ko_gloss: koGloss || `뜻: ${vocab.lemma}`,
+      ipa: vocab.dictentry?.ipa || '',
+      ko_example: koExample,
+      en_example: enExample,
+      audio_url: vocab.dictentry?.audioUrl,
+      audio_local: vocab.dictentry?.audioLocal,
+      source: vocab.source || 'cefr_vocabs',
+      attribution: vocab.dictentry?.attribution,
+      license: vocab.dictentry?.license
+    };
+    
+    await prisma.$disconnect();
+    
+    res.writeHead(200, { 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(JSON.stringify({
+      success: true,
+      data: detailData
+    }));
+    
+  } catch (error) {
+    console.error('[SIMPLE-VOCAB-DETAIL] Error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message }));
+  }
+});
+
+// === SIMPLE AUDIO FILES ENDPOINT (NO MIDDLEWARE) ===
+app.get('/simple-audio-files/:level', async (req, res) => {
+  try {
+    const level = req.params.level;
+    console.log(`[SIMPLE-AUDIO] Fetching audio files for level: ${level}`);
+    
+    // Return basic audio file structure without complex processing
+    const audioFiles = [
+      { name: 'sample1.mp3', path: `/${level}/audio/sample1.mp3` },
+      { name: 'sample2.mp3', path: `/${level}/audio/sample2.mp3` },
+      { name: 'sample3.mp3', path: `/${level}/audio/sample3.mp3` }
+    ];
+    
+    res.writeHead(200, { 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(JSON.stringify({
+      success: true,
+      level: level,
+      files: audioFiles
+    }));
+    
+  } catch (error) {
+    console.error('[SIMPLE-AUDIO] Error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message }));
+  }
+});
+
 // === 정적 파일 서빙 (최우선) ===
 // Test route for debugging
 app.get('/test-static', (req, res) => {
@@ -220,6 +431,7 @@ app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API
 app.use('/api/idiom', require('./routes/idiom_working')); // Idiom API (인증 불필요) - Working version from test server
+app.use('/test-vocab', require('./routes/test-vocab')); // Simple vocab API for mobile app testing
 // Vocab-by-pos endpoint for idiom/phrasal verb integration (unauthenticated)
 app.get('/api/vocab/vocab-by-pos', async (req, res) => {
   try {

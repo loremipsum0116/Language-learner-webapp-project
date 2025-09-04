@@ -19,7 +19,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
@@ -90,7 +90,7 @@ const RainbowStar: React.FC<RainbowStarProps> = ({
       { width: starSize, height: starSize },
       animated && styles.rainbowStarAnimated
     ]}>
-      <Ionicons name="star" size={starSize} color="#FFD700" />
+      <Icon name="star" size={starSize} color="#FFD700" />
       {cycles > 1 && (
         <View style={styles.cyclesBadge}>
           <Text style={styles.cyclesText}>{cycles}</Text>
@@ -325,7 +325,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
       <View style={styles.controlsContainer}>
         {/* Search Input */}
         <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#666" style={styles.searchIcon} />
+          <Icon name="search" size={20} color="#666" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="마스터한 단어 검색..."
@@ -338,7 +338,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
               onPress={() => handleSearch('')}
               style={styles.clearButton}
             >
-              <Ionicons name="close-circle" size={20} color="#666" />
+              <Icon name="close-circle" size={20} color="#666" />
             </TouchableOpacity>
           )}
         </View>
@@ -380,7 +380,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
             onPress={() => handleSortOrder(sortOrder === 'desc' ? 'asc' : 'desc')}
             activeOpacity={0.7}
           >
-            <Ionicons 
+            <Icon 
               name={sortOrder === 'desc' ? 'arrow-down' : 'arrow-up'} 
               size={16} 
               color="#007AFF" 
@@ -419,7 +419,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
           disabled={currentPage === 0}
           activeOpacity={0.7}
         >
-          <Ionicons name="chevron-back" size={20} color={currentPage === 0 ? '#ccc' : '#007AFF'} />
+          <Icon name="chevron-back" size={20} color={currentPage === 0 ? '#ccc' : '#007AFF'} />
           <Text style={[
             styles.paginationButtonText,
             currentPage === 0 && styles.paginationButtonTextDisabled
@@ -449,7 +449,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
           ]}>
             다음
           </Text>
-          <Ionicons 
+          <Icon 
             name="chevron-forward" 
             size={20} 
             color={!masteredData.pagination.hasMore ? '#ccc' : '#007AFF'} 
@@ -479,7 +479,7 @@ export default function MasteredWordsScreen({ navigation }: Props) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.7}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         
         <View style={styles.headerContent}>

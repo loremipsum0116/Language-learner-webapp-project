@@ -1,5 +1,5 @@
-import { storage } from '@/utils';
-import { API_URL } from '@/config';
+import { storage } from '../utils';
+import { API_URL } from '../config';
 
 const BASE_URL = API_URL;
 

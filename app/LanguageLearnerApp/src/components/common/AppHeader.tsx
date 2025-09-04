@@ -11,10 +11,9 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   SafeAreaView,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../../hooks/useAuth';
 
 interface AppHeaderProps {
@@ -54,15 +53,13 @@ export default function AppHeader({
               onPress={handleBackPress}
               activeOpacity={0.7}
             >
-              <Ionicons name="arrow-back" size={24} color="#333" />
+              <Icon name="arrow-back" size={24} color="#333" />
             </TouchableOpacity>
           ) : (
             <View style={styles.logoContainer}>
-              <Image
-                source={require('../../../assets/danmoosae.png')}
-                style={styles.logo}
-                resizeMode="contain"
-              />
+              <View style={styles.logoPlaceholder}>
+                <Text style={styles.logoEmoji}>🦆</Text>
+              </View>
               <Text style={styles.brandText}>단무새</Text>
             </View>
           )}
@@ -81,7 +78,7 @@ export default function AppHeader({
               onPress={() => navigation?.navigate('Profile')}
               activeOpacity={0.7}
             >
-              <Ionicons 
+              <Icon 
                 name={isLoggedIn ? "person-circle" : "menu"} 
                 size={24} 
                 color="#333" 
@@ -127,9 +124,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 4,
   },
-  logo: {
+  logoPlaceholder: {
     width: 32,
     height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoEmoji: {
+    fontSize: 24,
   },
   brandText: {
     fontSize: 18,

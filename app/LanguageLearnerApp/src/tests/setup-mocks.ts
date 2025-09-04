@@ -28,13 +28,6 @@ NativeModules.RNCNetInfo = {
   removeListeners: jest.fn(),
 };
 
-// RNSound Mock
-NativeModules.RNSound = {
-  playSoundFile: jest.fn(),
-  prepareSound: jest.fn(),
-  playSound: jest.fn(),
-  stopSound: jest.fn(),
-};
 
 // AsyncStorage Module Mock
 NativeModules.RNCAsyncStorage = {

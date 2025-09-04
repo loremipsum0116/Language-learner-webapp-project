@@ -84,6 +84,7 @@ async function seedVocabFromCefrJson(vocabData) {
         // Vocab 찾기 또는 생성
         let vocab = await prisma.vocab.findFirst({
             where: {
+                languageId: 1, // English language ID
                 lemma: vocabData.lemma,
                 pos: vocabData.pos || 'unknown'
             }
@@ -102,6 +103,7 @@ async function seedVocabFromCefrJson(vocabData) {
             // 새 vocab 생성
             vocab = await prisma.vocab.create({
                 data: {
+                    languageId: 1, // English language ID from basic seeding
                     lemma: vocabData.lemma,
                     pos: vocabData.pos || 'unknown',
                     levelCEFR: cefrLevel || 'A1',

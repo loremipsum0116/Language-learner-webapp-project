@@ -16,7 +16,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
 
@@ -228,7 +228,7 @@ export default function GrammarQuizScreen({ route, navigation }: Props) {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <Ionicons name="arrow-back" size={24} color="#333" />
+            <Icon name="arrow-back" size={24} color="#333" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>{topic.title}</Text>
           <View style={styles.headerRight} />
@@ -352,7 +352,7 @@ export default function GrammarQuizScreen({ route, navigation }: Props) {
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>{topic.title}</Text>
         <View style={styles.questionCounter}>

@@ -379,7 +379,7 @@ export default function HomeScreen({ navigation }: Props) {
               
               <TouchableOpacity
                 style={[styles.heroButton, styles.heroButtonOutline]}
-                onPress={() => navigation.navigate('MyWordbook')}
+                onPress={() => navigation.navigate('VocabList')}
                 activeOpacity={0.8}
               >
                 <Text style={styles.heroButtonOutlineText}>📖 단어장</Text>

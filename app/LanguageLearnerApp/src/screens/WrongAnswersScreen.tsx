@@ -20,7 +20,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
@@ -659,7 +659,7 @@ export default function WrongAnswersScreen({ navigation }: Props) {
             onPress={() => hasRealId && handleSelectItem(actualId)}
             disabled={!hasRealId}
           >
-            <Ionicons
+            <Icon
               name={isSelected ? 'checkbox' : 'square-outline'}
               size={24}
               color={hasRealId ? (isSelected ? '#007AFF' : '#8E8E93') : '#CCC'}
@@ -1129,7 +1129,7 @@ export default function WrongAnswersScreen({ navigation }: Props) {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#007AFF" />
+            <Icon name="arrow-back" size={24} color="#007AFF" />
           </TouchableOpacity>
           <View>
             <Text style={styles.headerTitle}>📝 오답노트</Text>

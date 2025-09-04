@@ -22,7 +22,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Audio } from 'expo-av';
 
 import { useAuth } from '../hooks/useAuth';
@@ -253,7 +253,7 @@ const SrsCardItem: React.FC<SrsCardItemProps> = ({
         style={styles.checkboxContainer}
         onPress={() => onToggleSelect(card.id)}
       >
-        <Ionicons 
+        <Icon 
           name={isSelected ? 'checkbox' : 'square-outline'} 
           size={24} 
           color={isSelected ? '#007AFF' : '#8E8E93'} 
@@ -298,7 +298,7 @@ const SrsCardItem: React.FC<SrsCardItemProps> = ({
         style={styles.audioButton}
         onPress={() => onPlayAudio(card)}
       >
-        <Ionicons 
+        <Icon 
           name={isPlaying ? 'pause' : 'play'} 
           size={16} 
           color="#0dcaf0" 
@@ -930,7 +930,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#007AFF" />
+            <Icon name="arrow-back" size={24} color="#007AFF" />
           </TouchableOpacity>
           <View>
             <Text style={styles.headerTitle}>
@@ -948,7 +948,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
             style={styles.settingsButton}
             onPress={() => setSettingsModalOpen(true)}
           >
-            <Ionicons name="settings-outline" size={20} color="#666" />
+            <Icon name="settings-outline" size={20} color="#666" />
           </TouchableOpacity>
         </View>
       </View>
@@ -1078,7 +1078,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
       {/* 검색 및 정렬 */}
       <View style={styles.filterContainer}>
         <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
+          <Icon name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="단어 또는 뜻으로 검색"
@@ -1093,7 +1093,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
           onPress={() => setSettingsModalOpen(true)}
         >
           <Text style={styles.sortButtonText}>정렬</Text>
-          <Ionicons name="chevron-down" size={16} color="#666" />
+          <Icon name="chevron-down" size={16} color="#666" />
         </TouchableOpacity>
       </View>
 
@@ -1147,7 +1147,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>설정</Text>
             <TouchableOpacity onPress={() => setSettingsModalOpen(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
 
@@ -1179,7 +1179,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
                     {option.label}
                   </Text>
                   {sortBy === option.key && (
-                    <Ionicons name="checkmark" size={20} color="#007AFF" />
+                    <Icon name="checkmark" size={20} color="#007AFF" />
                   )}
                 </TouchableOpacity>
               ))}
@@ -1199,7 +1199,7 @@ export default function SrsFolderDetailScreen({ route, navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>일괄 작업</Text>
             <TouchableOpacity onPress={() => setBulkActionsModalOpen(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
 

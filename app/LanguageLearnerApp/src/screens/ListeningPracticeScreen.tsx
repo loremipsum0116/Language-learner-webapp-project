@@ -17,7 +17,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Audio, AVPlaybackStatus } from 'expo-av';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
@@ -77,7 +77,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({
       disabled={disabled || isPlaying}
       activeOpacity={0.7}
     >
-      <Ionicons 
+      <Icon 
         name={isPlaying ? "volume-high" : "play"} 
         size={24} 
         color={isPlaying ? "#666" : "#007AFF"} 
@@ -506,7 +506,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Ionicons name="headset" size={64} color="#666" />
+          <Icon name="headset" size={64} color="#666" />
           <Text style={styles.errorTitle}>리스닝 연습</Text>
           <Text style={styles.errorMessage}>{error}</Text>
           <Text style={styles.errorSubMessage}>현재 A1 레벨만 이용 가능합니다.</Text>
@@ -526,7 +526,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Ionicons name="musical-notes" size={64} color="#666" />
+          <Icon name="musical-notes" size={64} color="#666" />
           <Text style={styles.errorTitle}>🎧 {level} 리스닝 연습</Text>
           <Text style={styles.errorMessage}>리스닝 문제가 없습니다.</Text>
         </View>
@@ -547,7 +547,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.7}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         
         <View style={styles.headerContent}>
@@ -606,7 +606,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
             onPress={toggleScript}
             activeOpacity={0.7}
           >
-            <Ionicons name="document-text" size={20} color={showScript ? "white" : "#007AFF"} />
+            <Icon name="document-text" size={20} color={showScript ? "white" : "#007AFF"} />
             <Text style={[
               styles.scriptToggleText,
               showScript && styles.scriptToggleTextActive
@@ -679,7 +679,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
             disabled={currentQuestion === 0}
             activeOpacity={0.7}
           >
-            <Ionicons name="chevron-back" size={20} color={currentQuestion === 0 ? "#ccc" : "#666"} />
+            <Icon name="chevron-back" size={20} color={currentQuestion === 0 ? "#ccc" : "#666"} />
             <Text style={[
               styles.navButtonText,
               currentQuestion === 0 && styles.navButtonTextDisabled
@@ -700,7 +700,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
             ]}>
               다음
             </Text>
-            <Ionicons name="chevron-forward" size={20} color={currentQuestion === listeningData.length - 1 ? "#ccc" : "#666"} />
+            <Icon name="chevron-forward" size={20} color={currentQuestion === listeningData.length - 1 ? "#ccc" : "#666"} />
           </TouchableOpacity>
         </View>
         
@@ -738,7 +738,7 @@ export default function ListeningPracticeScreen({ route, navigation }: Props) {
             onPress={handleRestart}
             activeOpacity={0.7}
           >
-            <Ionicons name="refresh" size={16} color="#f59e0b" />
+            <Icon name="refresh" size={16} color="#f59e0b" />
             <Text style={styles.restartButtonText}>처음부터</Text>
           </TouchableOpacity>
         </View>

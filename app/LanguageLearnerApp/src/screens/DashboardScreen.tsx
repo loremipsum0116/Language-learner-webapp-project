@@ -19,7 +19,7 @@ import {
   Alert,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
@@ -67,7 +67,7 @@ function StatCard({ title, value, icon, onPress, loading, showDetails, onDetails
         {showDetails && (
           <TouchableOpacity style={styles.detailsButton} onPress={onDetailsPress}>
             <Text style={styles.detailsButtonText}>상세보기</Text>
-            <Ionicons name="chevron-down" size={12} color="#666" />
+            <Icon name="chevron-down" size={12} color="#666" />
           </TouchableOpacity>
         )}
       </View>
@@ -361,14 +361,14 @@ export default function DashboardScreen({ navigation }: Props) {
               title="오늘 학습할 카드"
               value={stats.srsQueue}
               loading={loading}
-              icon={<Ionicons name="layers" size={24} color="#007AFF" />}
+              icon={<Icon name="layers" size={24} color="#007AFF" />}
               onPress={startSrsLearning}
             />
             <StatCard
               title="오답 노트 단어"
               value={stats.odatNote}
               loading={loading}
-              icon={<Ionicons name="journal" size={24} color="#dc3545" />}
+              icon={<Icon name="journal" size={24} color="#dc3545" />}
               onPress={() => navigation.navigate('WrongAnswers')}
             />
           </View>
@@ -377,7 +377,7 @@ export default function DashboardScreen({ navigation }: Props) {
               title="마스터 한 단어"
               value={stats.masteredWords}
               loading={loading}
-              icon={<Ionicons name="trophy" size={24} color="#ffc107" />}
+              icon={<Icon name="trophy" size={24} color="#ffc107" />}
               showDetails={stats.masteredWords > 0}
               onDetailsPress={() => setShowMasteredDetails(true)}
             />
@@ -443,7 +443,7 @@ export default function DashboardScreen({ navigation }: Props) {
                       📊 오늘 학습: {totalAttempts}회 | 오답율: {errorRate}%
                       {isEstimated && ' (추정)'}
                     </Text>
-                    <Ionicons name="chevron-down" size={12} color="#666" />
+                    <Icon name="chevron-down" size={12} color="#666" />
                   </TouchableOpacity>
                 </>
               ) : (
@@ -501,7 +501,7 @@ export default function DashboardScreen({ navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>🏆 마스터한 단어들</Text>
             <TouchableOpacity onPress={() => setShowMasteredDetails(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
@@ -538,7 +538,7 @@ export default function DashboardScreen({ navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>📊 오늘 학습한 단어들</Text>
             <TouchableOpacity onPress={() => setShowStudyDetails(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>

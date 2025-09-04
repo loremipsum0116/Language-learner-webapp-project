@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo, ReactNode } from 'react';
 import { apiClient } from '../services/apiClient';
-import { storage } from '@/utils';
+import { storage } from '../utils';
 
 interface User {
   id: number;
@@ -45,7 +45,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       }
     } catch (error: any) {
       setUser(null);
-      if (error?.status !== 401 && error?.name !== 'AbortError') {
+      // Only log errors that are not network connectivity issues or 401s
+      if (error?.status !== 401 && error?.name !== 'AbortError' && !error?.message?.includes('Network request failed')) {
         console.error('Failed to fetch user:', error);
       }
     }
@@ -62,7 +63,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
       const data = (response as any)?.data || response;
       setSrsIds(new Set((data || []).map((card: any) => card.vocabId)));
     } catch (error: any) {
-      if (error?.name !== 'AbortError') {
+      // Only log errors that are not network connectivity issues
+      if (error?.name !== 'AbortError' && !error?.message?.includes('Network request failed')) {
         console.error('Failed to refresh SRS IDs:', error);
       }
     }

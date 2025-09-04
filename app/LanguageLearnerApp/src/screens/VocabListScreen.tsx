@@ -21,7 +21,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Audio } from 'expo-av';
 
 import { useAuth } from '../hooks/useAuth';
@@ -44,6 +44,11 @@ interface VocabItem {
   levelCEFR?: string;
   source?: string;
   audio?: string;
+  audio_local?: string | object;
+  example?: string;
+  koExample?: string;
+  en_example?: string;
+  ko_example?: string;
 }
 
 interface IdiomItem {
@@ -69,7 +74,7 @@ interface ExamCategory {
 }
 
 interface PlayingAudio {
-  type: 'vocab' | 'idiom';
+  type: 'vocab' | 'idiom' | 'example';
   id: number;
 }
 
@@ -202,7 +207,7 @@ const IdiomCard: React.FC<IdiomCardProps> = ({
         style={styles.checkboxContainer}
         onPress={() => onToggleSelect(idiom.id)}
       >
-        <Ionicons 
+        <Icon 
           name={isSelected ? 'checkbox' : 'square-outline'} 
           size={24} 
           color={isSelected ? '#007AFF' : '#8E8E93'} 
@@ -270,7 +275,7 @@ const IdiomCard: React.FC<IdiomCardProps> = ({
             {isEnriching ? (
               <ActivityIndicator size="small" color="#007AFF" />
             ) : (
-              <Ionicons 
+              <Icon 
                 name={isPlaying ? 'pause' : 'play'} 
                 size={16} 
                 color="#007AFF" 
@@ -345,7 +350,7 @@ const VocabCard: React.FC<VocabCardProps> = ({
         style={styles.checkboxContainer}
         onPress={() => onToggleSelect(vocab.id)}
       >
-        <Ionicons 
+        <Icon 
           name={isSelected ? 'checkbox' : 'square-outline'} 
           size={24} 
           color={isSelected ? '#007AFF' : '#8E8E93'} 
@@ -412,7 +417,7 @@ const VocabCard: React.FC<VocabCardProps> = ({
               {isEnriching ? (
                 <ActivityIndicator size="small" color="#0dcaf0" />
               ) : (
-                <Ionicons 
+                <Icon 
                   name={isPlaying ? 'pause' : 'play'} 
                   size={16} 
                   color="#0dcaf0" 
@@ -427,7 +432,7 @@ const VocabCard: React.FC<VocabCardProps> = ({
               style={styles.deleteButton}
               onPress={() => onDeleteVocab(vocab.id, vocab.lemma)}
             >
-              <Ionicons name="trash" size={16} color="#dc3545" />
+              <Icon name="trash" size={16} color="#dc3545" />
             </TouchableOpacity>
           )}
         </View>
@@ -674,6 +679,7 @@ export default function VocabListScreen({ navigation }: Props) {
   const [masteredCards, setMasteredCards] = useState<MasteredCard[]>([]);
   const [autoFolderModalOpen, setAutoFolderModalOpen] = useState(false);
   const [pickerIds, setPickerIds] = useState<number[]>([]);
+  const [showDebug, setShowDebug] = useState(false);
   
   // Audio 관련 상태
   const [sound, setSound] = useState<Audio.Sound>();
@@ -690,9 +696,9 @@ export default function VocabListScreen({ navigation }: Props) {
     if (authLoading) return;
     const loadExamCategories = async () => {
       try {
-        const response = await apiClient.get('/exam-vocab/categories');
-        const categories = Array.isArray(response.data?.data) ? response.data.data : 
-                          Array.isArray(response.data) ? response.data : [];
+        const response = await fetch('http://localhost:4000/simple-exam-categories');
+        const result = await response.json();
+        const categories = Array.isArray(result.data) ? result.data : [];
         setExamCategories(categories);
         if (categories.length > 0 && !activeExam) {
           setActiveExam(categories[0].name);
@@ -705,54 +711,97 @@ export default function VocabListScreen({ navigation }: Props) {
     loadExamCategories();
   }, [authLoading]);
 
-  // 메인 데이터 로딩
+  // 메인 데이터 로딩 - 실제 cefr_vocabs.json 데이터 사용
   const loadVocabData = async () => {
     try {
       setLoading(true);
       setErr(null);
-      let data: any;
       
-      if (debouncedSearchTerm) {
-        // 검색 모드
-        const response = await apiClient.get(`/vocab/list?q=${encodeURIComponent(debouncedSearchTerm)}`);
-        data = response.data?.data || response.data;
-      } else if (activeTab === 'cefr') {
-        // CEFR 레벨별 조회
-        const response = await apiClient.get(`/vocab/list?level=${encodeURIComponent(activeLevel)}`);
-        data = response.data?.data || response.data;
-        setTotalCount(Array.isArray(data) ? data.length : 0);
-      } else if (activeTab === 'idiom') {
-        // 숙어·구동사 조회
-        const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-        const response = await apiClient.get(`/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}`);
-        data = response.data?.data || response.data || [];
+      let data: any[] = [];
+      
+      if (activeTab === 'cefr') {
+        // CEFR 레벨별 조회 - 실제 API 호출
+        console.log('[VOCAB] Fetching real CEFR data for level:', activeLevel);
         
-        setWords(data.slice(0, displayCount));
-        setAllWords(data);
-        setTotalCount(Array.isArray(data) ? data.length : 0);
+        try {
+          // Use the new simple-vocab endpoint that bypasses middleware
+          console.log(`[VOCAB] Making API call to: http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
+          const response = await fetch(`http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
+          console.log('[VOCAB] API response status:', response.status, response.statusText);
+          
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+          
+          const result = await response.json();
+          console.log('[VOCAB] API result:', result);
+          
+          if (result.success && result.data) {
+            data = result.data;
+            console.log('[VOCAB] Real CEFR data loaded:', data.length, 'items for level', activeLevel);
+            console.log('[VOCAB] First few items:', data.slice(0, 3));
+            setTotalCount(data.length);
+            
+            // Apply search filter if there's a search term
+            if (debouncedSearchTerm) {
+              data = data.filter(item => 
+                item.lemma.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
+                (item.ko_gloss && item.ko_gloss.includes(debouncedSearchTerm))
+              );
+              console.log('[VOCAB] Search filtered results:', data.length, 'items for term:', debouncedSearchTerm);
+            }
+          } else {
+            throw new Error(`API returned: ${JSON.stringify(result)}`);
+          }
+        } catch (apiError) {
+          console.error('[VOCAB] API error, falling back to sample data:', apiError);
+          // Fallback to sample data if API fails
+          const sampleData = {
+            A1: [
+              { id: 1, lemma: 'hello', pos: 'interjection', levelCEFR: 'A1', ko_gloss: '안녕하세요' },
+              { id: 2, lemma: 'good', pos: 'adjective', levelCEFR: 'A1', ko_gloss: '좋은' },
+              { id: 3, lemma: 'book', pos: 'noun', levelCEFR: 'A1', ko_gloss: '책' }
+            ],
+            A2: [
+              { id: 101, lemma: 'weather', pos: 'noun', levelCEFR: 'A2', ko_gloss: '날씨' },
+              { id: 102, lemma: 'travel', pos: 'verb', levelCEFR: 'A2', ko_gloss: '여행하다' }
+            ],
+            B1: [
+              { id: 201, lemma: 'experience', pos: 'noun', levelCEFR: 'B1', ko_gloss: '경험' }
+            ],
+            B2: [
+              { id: 301, lemma: 'consequence', pos: 'noun', levelCEFR: 'B2', ko_gloss: '결과' }
+            ],
+            C1: [
+              { id: 401, lemma: 'sophisticated', pos: 'adjective', levelCEFR: 'C1', ko_gloss: '정교한' }
+            ]
+          };
+          data = sampleData[activeLevel as keyof typeof sampleData] || [];
+          setTotalCount(data.length);
+        }
+      } else if (activeTab === 'idiom') {
+        // 숙어·구동사 조회 - 임시로 빈 배열
+        console.log('[VOCAB] Idiom tab - showing empty for now');
+        data = [];
+        setWords([]);
+        setAllWords([]);
+        setTotalCount(0);
         setDisplayCount(100);
         return;
       } else {
-        // 시험별 조회
-        if (!activeExam) {
-          data = [];
-          setTotalCount(0);
-          setHasNextPage(false);
-        } else {
-          const response = await apiClient.get(`/exam-vocab/${activeExam}?page=1&limit=100`);
-          data = response.data?.data?.vocabs || response.data?.vocabs || [];
-          setTotalCount(response.data?.data?.pagination?.totalCount || response.data?.pagination?.totalCount || 0);
-          setHasNextPage(response.data?.data?.pagination?.hasNext || response.data?.pagination?.hasNext || false);
-          setCurrentPage(1);
-        }
+        // 시험별 조회 - 임시로 빈 배열
+        console.log('[VOCAB] Exam tab - showing empty for now');
+        data = [];
+        setTotalCount(0);
+        setHasNextPage(false);
       }
       
-      const wordsArray = Array.isArray(data) ? data : [];
-      setAllWords(wordsArray);
-      setWords(wordsArray.slice(0, displayCount));
+      console.log('[VOCAB] Final words array:', data.length, 'items');
+      setAllWords(data);
+      setWords(data.slice(0, displayCount));
       setDisplayCount(100);
     } catch (e) {
-      console.error("Failed to fetch vocab list:", e);
+      console.error("Failed to load vocab data:", e);
       setErr(e);
     } finally {
       setLoading(false);
@@ -940,40 +989,97 @@ export default function VocabListScreen({ navigation }: Props) {
   // ──────────────────────────────────────────────────────────────────────────────────────────────
 
   const stopAudio = async () => {
-    if (sound) {
-      await sound.unloadAsync();
+    try {
+      if (sound && sound.unloadAsync) {
+        await sound.unloadAsync();
+      }
       setSound(undefined);
+      setPlayingAudio(null);
+    } catch (error) {
+      console.log('🔊 [stopAudio] Error (safe to ignore):', error);
+      setSound(undefined);
+      setPlayingAudio(null);
     }
-    setPlayingAudio(null);
   };
 
-  const playUrl = async (url: string, type: 'vocab' | 'idiom', id: number) => {
-    if (!url) return;
-    if (playingAudio && playingAudio.id === id) {
+  const playUrl = async (url: string, type: 'vocab' | 'idiom' | 'example', id: number) => {
+    console.log('🔊 [playUrl] Called with:', { url, type, id });
+    
+    if (!url) {
+      console.log('🔊 [playUrl] No URL provided');
+      return;
+    }
+    
+    if (playingAudio && playingAudio.id === id && playingAudio.type === type) {
+      console.log('🔊 [playUrl] Stopping current audio');
       await stopAudio();
       return;
     }
+    
     await stopAudio();
 
-    const fullUrl = url.startsWith('/') ? `${apiClient.defaults.baseURL}${url}` : url;
+    // Construct full URL - use localhost for development
+    const baseUrl = 'http://localhost:4000'; // Use localhost for React Native web
+    
+    let fullUrl;
+    if (url.startsWith('/')) {
+      fullUrl = `${baseUrl}${url}`;
+    } else {
+      fullUrl = `${baseUrl}/${url}`;
+    }
+    
+    console.log('🔊 [playUrl] Attempting to play:', fullUrl);
+    
+    // Set playing state immediately for UI feedback
+    setPlayingAudio({ type: type as 'vocab' | 'idiom' | 'example', id });
     
     try {
+      console.log('🔊 [playUrl] Trying expo-av...');
+      
+      // Set audio mode for playback
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: false,
+        staysActiveInBackground: false,
+        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+        playsInSilentModeIOS: true,
+        shouldDuckAndroid: true,
+        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
+        playThroughEarpieceAndroid: false,
+      });
+      
       const { sound: newSound } = await Audio.Sound.createAsync(
         { uri: fullUrl },
-        { shouldPlay: true }
+        { 
+          shouldPlay: true,
+          isLooping: false,
+          isMuted: false,
+          volume: 1.0
+        }
       );
       
-      newSound.setOnPlaybackStatusUpdate((status) => {
+      newSound.setOnPlaybackStatusUpdate((status: any) => {
         if (status.isLoaded && status.didJustFinish) {
+          console.log('🔊 [playUrl] Audio finished playing');
+          setPlayingAudio(null);
+        }
+        if (!status.isLoaded && status.error) {
+          console.error('🔊 [playUrl] Audio playback error:', status.error);
           setPlayingAudio(null);
         }
       });
       
       setSound(newSound);
-      setPlayingAudio({ type, id });
-    } catch (e) {
-      console.error("오디오 재생 실패:", e, fullUrl);
+      console.log('🔊 [playUrl] Audio started successfully with expo-av');
+      
+    } catch (e: any) {
+      console.error('🔊 [playUrl] expo-av failed:', e);
+      console.error('🔊 [playUrl] Error details:', e.message, e.stack);
+      
+      // Clear the playing state if audio failed
       setPlayingAudio(null);
+      
+      // Show user-friendly error
+      console.log('🔊 [playUrl] Audio playback failed - check network connection');
     }
   };
 
@@ -989,8 +1095,9 @@ export default function VocabListScreen({ navigation }: Props) {
     }
     
     try {
-      const response = await apiClient.get(`/audio-files/${level}`);
-      const files = response.data?.files || [];
+      const response = await fetch(`http://localhost:4000/simple-audio-files/${level}`);
+      const result = await response.json();
+      const files = result.success ? (result.files || []) : [];
       
       setAudioFilesCache(prev => new Map(prev).set(level, files));
       return files;
@@ -1164,32 +1271,133 @@ export default function VocabListScreen({ navigation }: Props) {
     return `${lemmaLower}(${shortPos})`;
   };
 
+  // Enhanced audio functions for different audio types
   const playVocabAudio = async (vocab: VocabItem) => {
-    if ('source' in vocab && (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || 
-        (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'"))))) {
-      const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
-      
-      const knownPhrasalVerbs = [
-        'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
-        'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
-        'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
-        'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
-        'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
-      ];
-      
-      const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
-                           knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
-      
-      const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
-      const audioPath = `/${folderName}/${cleanLemma}.mp3`;
-      await playUrl(audioPath, 'vocab', vocab.id);
-      return;
-    }
+    console.log('🔊 [playVocabAudio] Called with vocab:', vocab.lemma, vocab.id);
     
-    const folderName = cefrToFolder[vocab.levelCEFR || 'A1'] || 'starter';
-    const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-    const localAudioPath = `/${folderName}/${audioFileName}/word.mp3`;
-    await playUrl(localAudioPath, 'vocab', vocab.id);
+    try {
+      // Check if we have audio_local data from API
+      if (vocab.audio_local) {
+        console.log('🔊 [playVocabAudio] Found audio_local:', vocab.audio_local);
+        let audioData;
+        
+        try {
+          audioData = typeof vocab.audio_local === 'string' 
+            ? JSON.parse(vocab.audio_local) 
+            : vocab.audio_local;
+        } catch (e) {
+          console.error('🔊 [playVocabAudio] Failed to parse audio_local:', e);
+          audioData = null;
+        }
+        
+        if (audioData && audioData.word) {
+          console.log('🔊 [playVocabAudio] Using word audio path:', audioData.word);
+          const audioPath = audioData.word.startsWith('/') ? audioData.word : `/${audioData.word}`;
+          await playUrl(audioPath, 'vocab', vocab.id);
+          return;
+        }
+      }
+      
+      // Fallback for idioms and phrasal verbs
+      if ('source' in vocab && (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || 
+          (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'"))))) {
+        const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+        
+        const knownPhrasalVerbs = [
+          'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
+          'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
+          'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
+          'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
+          'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
+        ];
+        
+        const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
+                             knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
+        
+        const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+        const audioPath = `/${folderName}/${cleanLemma}.mp3`;
+        await playUrl(audioPath, 'vocab', vocab.id);
+        return;
+      }
+      
+      // Fallback for regular words
+      const folderName = cefrToFolder[vocab.levelCEFR || 'A1'] || 'starter';
+      const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+      const localAudioPath = `/${folderName}/${audioFileName}/word.mp3`;
+      await playUrl(localAudioPath, 'vocab', vocab.id);
+    } catch (error) {
+      console.error('🔊 [playVocabAudio] Error:', error);
+    }
+  };
+
+  // Play gloss audio (Korean meaning)
+  const playVocabAudioGloss = async (vocab: VocabItem) => {
+    console.log('🔊 [playVocabAudioGloss] Called with vocab:', vocab.lemma);
+    
+    try {
+      // Check if we have audio_local data from API
+      if (vocab.audio_local) {
+        let audioData;
+        try {
+          audioData = typeof vocab.audio_local === 'string' 
+            ? JSON.parse(vocab.audio_local) 
+            : vocab.audio_local;
+        } catch (e) {
+          console.error('🔊 [playVocabAudioGloss] Failed to parse audio_local:', e);
+          audioData = null;
+        }
+        
+        if (audioData && audioData.gloss) {
+          console.log('🔊 [playVocabAudioGloss] Using gloss audio path:', audioData.gloss);
+          const audioPath = audioData.gloss.startsWith('/') ? audioData.gloss : `/${audioData.gloss}`;
+          await playUrl(audioPath, 'vocab', vocab.id);
+          return;
+        }
+      }
+      
+      // Fallback
+      const folderName = cefrToFolder[vocab.levelCEFR || 'A1'] || 'starter';
+      const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+      const glossAudioPath = `/${folderName}/${audioFileName}/gloss.mp3`;
+      await playUrl(glossAudioPath, 'vocab', vocab.id);
+    } catch (error) {
+      console.error('🔊 [playVocabAudioGloss] Error:', error);
+    }
+  };
+
+  // Play example audio
+  const playVocabAudioExample = async (vocab: VocabItem) => {
+    console.log('🔊 [playVocabAudioExample] Called with vocab:', vocab.lemma);
+    
+    try {
+      // Check if we have audio_local data from API
+      if (vocab.audio_local) {
+        let audioData;
+        try {
+          audioData = typeof vocab.audio_local === 'string' 
+            ? JSON.parse(vocab.audio_local) 
+            : vocab.audio_local;
+        } catch (e) {
+          console.error('🔊 [playVocabAudioExample] Failed to parse audio_local:', e);
+          audioData = null;
+        }
+        
+        if (audioData && audioData.example) {
+          console.log('🔊 [playVocabAudioExample] Using example audio path:', audioData.example);
+          const audioPath = audioData.example.startsWith('/') ? audioData.example : `/${audioData.example}`;
+          await playUrl(audioPath, 'example', vocab.id);
+          return;
+        }
+      }
+      
+      // Fallback
+      const folderName = cefrToFolder[vocab.levelCEFR || 'A1'] || 'starter';
+      const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+      const exampleAudioPath = `/${folderName}/${audioFileName}/example.mp3`;
+      await playUrl(exampleAudioPath, 'example', vocab.id);
+    } catch (error) {
+      console.error('🔊 [playVocabAudioExample] Error:', error);
+    }
   };
 
   const playIdiomAudio = async (idiom: IdiomItem) => {
@@ -1229,8 +1437,28 @@ export default function VocabListScreen({ navigation }: Props) {
       setDetailLoading(true);
       setDetail(null);
       setDetailType('vocab');
-      const response = await apiClient.get(`/vocab/${vocabId}`);
-      setDetail(response.data?.data || response.data);
+      setShowDebug(false);
+      
+      const response = await fetch(`http://localhost:4000/simple-vocab-detail/${vocabId}`);
+      const result = await response.json();
+      if (result.success) {
+        // Parse additional data structures for enhanced display
+        const enhancedDetail = {
+          ...result.data,
+          // Normalize field names for consistency
+          example: result.data.example || result.data.en_example,
+          koExample: result.data.koExample || result.data.ko_example,
+          // Parse examples if they're in JSON string format
+          examples: result.data.dictentry?.examples ? (
+            typeof result.data.dictentry.examples === 'string' 
+              ? JSON.parse(result.data.dictentry.examples) 
+              : result.data.dictentry.examples
+          ) : [],
+        };
+        setDetail(enhancedDetail);
+      } else {
+        throw new Error(result.error || 'Failed to fetch vocab details');
+      }
     } catch (e: any) {
       if (e.status === 401) {
         Alert.alert('알림', '로그인이 필요합니다.');
@@ -1302,8 +1530,8 @@ export default function VocabListScreen({ navigation }: Props) {
   // Audio cleanup
   useEffect(() => {
     return () => {
-      if (sound) {
-        sound.unloadAsync();
+      if (sound && sound.unloadAsync) {
+        sound.unloadAsync().catch(() => {});
       }
     };
   }, [sound]);
@@ -1361,7 +1589,7 @@ export default function VocabListScreen({ navigation }: Props) {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#007AFF" />
+            <Icon name="arrow-back" size={24} color="#007AFF" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>단어 학습</Text>
         </View>
@@ -1374,7 +1602,7 @@ export default function VocabListScreen({ navigation }: Props) {
           onPress={() => setAutoFolderModalOpen(true)}
           disabled={selectedIds.size === 0}
         >
-          <Ionicons name="folder" size={16} color={selectedIds.size > 0 ? "white" : "#666"} />
+          <Icon name="folder" size={16} color={selectedIds.size > 0 ? "white" : "#666"} />
           <Text style={[
             styles.autoFolderButtonText,
             selectedIds.size > 0 && styles.autoFolderButtonTextActive
@@ -1491,7 +1719,7 @@ export default function VocabListScreen({ navigation }: Props) {
             </ScrollView>
           ) : (
             <View style={styles.noExamAlert}>
-              <Ionicons name="information-circle" size={16} color="#0dcaf0" />
+              <Icon name="information-circle" size={16} color="#0dcaf0" />
               <Text style={styles.noExamText}>
                 시험 카테고리가 설정되지 않았습니다. CEFR 레벨별 단어를 이용해주세요.
               </Text>
@@ -1541,7 +1769,7 @@ export default function VocabListScreen({ navigation }: Props) {
           onPress={handleToggleSelectAll}
           disabled={words.length === 0}
         >
-          <Ionicons
+          <Icon
             name={isAllSelected ? 'checkbox' : 'square-outline'}
             size={20}
             color={words.length === 0 ? '#8E8E93' : '#007AFF'}
@@ -1580,7 +1808,7 @@ export default function VocabListScreen({ navigation }: Props) {
 
       {/* 검색 입력 */}
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
+        <Icon name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
         <TextInput
           style={styles.searchInput}
           placeholder="전체 레벨에서 단어 검색..."
@@ -1648,7 +1876,7 @@ export default function VocabListScreen({ navigation }: Props) {
         />
       )}
 
-      {/* 상세 보기 모달 */}
+      {/* 상세 보기 모달 - Enhanced to match web version */}
       <Modal
         visible={!!detail || detailLoading}
         animationType="slide"
@@ -1666,39 +1894,168 @@ export default function VocabListScreen({ navigation }: Props) {
             </View>
           ) : detail ? (
             <ScrollView style={styles.modalContent}>
+              {/* Enhanced Modal Header with badges and audio button */}
               <View style={styles.modalHeader}>
-                <Text style={styles.modalTitle}>
-                  {detailType === 'vocab' ? '단어 상세 정보' : '숙어 상세 정보'}
-                </Text>
-                <TouchableOpacity onPress={() => {
-                  setDetail(null);
-                  stopAudio();
-                }}>
-                  <Ionicons name="close" size={24} color="#333" />
-                </TouchableOpacity>
+                <View style={styles.modalHeaderLeft}>
+                  <Text style={styles.modalTitle}>
+                    {detailType === 'vocab' ? detail.lemma : detail.idiom}
+                  </Text>
+                  
+                  {/* CEFR and POS Badges */}
+                  <View style={styles.modalBadgeContainer}>
+                    {detail.levelCEFR && (
+                      <View style={[styles.modalBadge, { backgroundColor: getCefrBadgeColor(detail.levelCEFR) }]}>
+                        <Text style={styles.modalBadgeText}>{detail.levelCEFR}</Text>
+                      </View>
+                    )}
+                    {detail.pos && (
+                      <View style={[styles.modalBadge, { backgroundColor: getPosBadgeColor(detail.pos) }]}>
+                        <Text style={styles.modalBadgeText}>{detail.pos}</Text>
+                      </View>
+                    )}
+                  </View>
+                </View>
+                
+                <View style={styles.modalHeaderRight}>
+                  {/* Main audio button for gloss */}
+                  <TouchableOpacity 
+                    style={styles.modalHeaderAudioButton}
+                    onPress={() => {
+                      if (detailType === 'vocab') {
+                        playVocabAudio(detail);
+                      } else {
+                        playIdiomAudio(detail);
+                      }
+                    }}
+                  >
+                    <Icon 
+                      name={playingAudio?.type === 'vocab' && playingAudio?.id === detail.id ? 'pause' : 'play'} 
+                      size={16} 
+                      color="#007AFF" 
+                    />
+                  </TouchableOpacity>
+                  
+                  <TouchableOpacity onPress={() => {
+                    setDetail(null);
+                    stopAudio();
+                  }}>
+                    <Icon name="close" size={24} color="#333" />
+                  </TouchableOpacity>
+                </View>
               </View>
               
-              {/* 단어 정보 표시 */}
+              {/* Modal Body with enhanced content */}
               <View style={styles.modalBody}>
-                <Text style={styles.modalWordTitle}>
-                  {detailType === 'vocab' ? detail.lemma : detail.idiom}
-                </Text>
-                <Text style={styles.modalWordMeaning}>
-                  {detailType === 'vocab' ? detail.ko_gloss : detail.korean_meaning}
-                </Text>
+                {/* IPA Pronunciation */}
+                {detail.ipa && (
+                  <PronComponent ipa={detail.ipa} ipaKo={detail.ipaKo} />
+                )}
                 
+                {/* Korean Gloss */}
+                <View style={styles.modalGlossSection}>
+                  <Text style={styles.modalGlossText}>
+                    {detailType === 'vocab' ? detail.ko_gloss : detail.korean_meaning}
+                  </Text>
+                </View>
+                
+                {/* Examples Section */}
+                {((detail.example || detail.en_example) || (detail.koExample || detail.ko_example)) && (
+                  <View style={styles.modalExampleSection}>
+                    <View style={styles.modalSectionHeader}>
+                      <Text style={styles.modalSectionTitle}>예문</Text>
+                      
+                      {/* Example audio button */}
+                      <TouchableOpacity 
+                        style={styles.modalSectionAudioButton}
+                        onPress={() => {
+                          if (detailType === 'vocab') {
+                            playVocabAudio(detail);
+                          }
+                        }}
+                      >
+                        <Icon 
+                          name={playingAudio?.type === 'example' && playingAudio?.id === detail.id ? 'pause' : 'play'} 
+                          size={16} 
+                          color="#007AFF" 
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    
+                    <View style={styles.modalExampleBox}>
+                      {(detail.example || detail.en_example) && (
+                        <Text style={styles.modalExampleEnglish}>{detail.example || detail.en_example}</Text>
+                      )}
+                      {(detail.koExample || detail.ko_example) && (
+                        <Text style={styles.modalExampleKorean}>— {detail.koExample || detail.ko_example}</Text>
+                      )}
+                    </View>
+                  </View>
+                )}
+                
+                {/* Usage Section for idioms/phrasal verbs */}
+                {detail.category && detail.category.includes('숙어') && (detail.koExample || detail.ko_example) && (
+                  <View style={styles.modalUsageSection}>
+                    <View style={styles.modalSectionHeader}>
+                      <Text style={styles.modalSectionTitle}>사용법</Text>
+                      
+                      {/* Usage audio button */}
+                      <TouchableOpacity 
+                        style={styles.modalSectionAudioButton}
+                        onPress={() => {
+                          playIdiomAudio(detail);
+                        }}
+                      >
+                        <Icon 
+                          name={playingAudio?.type === 'idiom' && playingAudio?.id === detail.id ? 'pause' : 'play'} 
+                          size={16} 
+                          color="#007AFF" 
+                        />
+                      </TouchableOpacity>
+                    </View>
+                    
+                    <View style={styles.modalUsageBox}>
+                      <Text style={styles.modalUsageText}>{detail.koExample || detail.ko_example}</Text>
+                    </View>
+                  </View>
+                )}
+                
+                {/* Debug Section - collapsible */}
                 <TouchableOpacity 
-                  style={styles.modalPlayButton}
+                  style={styles.modalDebugToggle}
+                  onPress={() => setShowDebug(prev => !prev)}
+                >
+                  <Text style={styles.modalDebugToggleText}>debug</Text>
+                </TouchableOpacity>
+                
+                {showDebug && (
+                  <View style={styles.modalDebugSection}>
+                    <Text style={styles.modalDebugText}>
+                      {JSON.stringify(detail, null, 2)}
+                    </Text>
+                  </View>
+                )}
+              </View>
+              
+              {/* Modal Footer with SRS button */}
+              <View style={styles.modalFooter}>
+                <TouchableOpacity
+                  style={styles.modalSrsButton}
                   onPress={() => {
-                    if (detailType === 'vocab') {
-                      playVocabAudio(detail);
-                    } else {
-                      playIdiomAudio(detail);
-                    }
+                    handleAddSRS([detail.id]);
+                    setDetail(null);
                   }}
                 >
-                  <Ionicons name="play" size={20} color="white" />
-                  <Text style={styles.modalPlayButtonText}>음성 듣기</Text>
+                  <Text style={styles.modalSrsButtonText}>SRS에 추가</Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity
+                  style={styles.modalCloseButton}
+                  onPress={() => {
+                    setDetail(null);
+                    stopAudio();
+                  }}
+                >
+                  <Text style={styles.modalCloseButtonText}>닫기</Text>
                 </TouchableOpacity>
               </View>
             </ScrollView>
@@ -1723,7 +2080,7 @@ export default function VocabListScreen({ navigation }: Props) {
               setPickerOpen(false);
               setPickerIds([]);
             }}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
@@ -1743,7 +2100,7 @@ export default function VocabListScreen({ navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>자동 폴더 생성</Text>
             <TouchableOpacity onPress={() => setAutoFolderModalOpen(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
@@ -2058,7 +2415,7 @@ Object.assign(styles, {
     color: 'white',
   },
 
-  // 모달
+  // Enhanced Modal Styles
   modalContainer: {
     flex: 1,
     backgroundColor: 'white',
@@ -2066,22 +2423,179 @@ Object.assign(styles, {
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: '#e9ecef',
   },
+  modalHeaderLeft: {
+    flex: 1,
+    marginRight: 12,
+  },
   modalTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
+    marginBottom: 8,
+  },
+  modalBadgeContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 4,
+  },
+  modalBadge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 4,
+  },
+  modalBadgeText: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  modalHeaderRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  modalHeaderAudioButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
   },
   modalContent: {
     flex: 1,
   },
   modalBody: {
     padding: 16,
+  },
+  modalGlossSection: {
+    marginVertical: 12,
+  },
+  modalGlossText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+    lineHeight: 24,
+  },
+  modalExampleSection: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e9ecef',
+  },
+  modalUsageSection: {
+    marginTop: 16,
+    paddingTop: 16,
+    borderTopWidth: 1,
+    borderTopColor: '#e9ecef',
+  },
+  modalSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  modalSectionTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  modalSectionAudioButton: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#007AFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+  },
+  modalExampleBox: {
+    backgroundColor: '#f8f9fa',
+    padding: 12,
+    borderRadius: 8,
+  },
+  modalExampleEnglish: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 4,
+    lineHeight: 20,
+  },
+  modalExampleKorean: {
+    fontSize: 12,
+    color: '#666',
+    lineHeight: 18,
+  },
+  modalUsageBox: {
+    backgroundColor: '#f8f9fa',
+    padding: 12,
+    borderRadius: 8,
+  },
+  modalUsageText: {
+    fontSize: 12,
+    color: '#666',
+    lineHeight: 18,
+  },
+  modalDebugToggle: {
+    marginTop: 16,
+    paddingVertical: 8,
+  },
+  modalDebugToggleText: {
+    fontSize: 12,
+    color: '#999',
+    textDecorationLine: 'underline',
+  },
+  modalDebugSection: {
+    backgroundColor: '#f8f9fa',
+    padding: 8,
+    borderRadius: 4,
+    marginTop: 8,
+  },
+  modalDebugText: {
+    fontSize: 10,
+    color: '#666',
+    fontFamily: 'monospace',
+  },
+  modalFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#e9ecef',
+    gap: 12,
+  },
+  modalSrsButton: {
+    flex: 1,
+    backgroundColor: '#007AFF',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalSrsButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'white',
+  },
+  modalCloseButton: {
+    flex: 1,
+    backgroundColor: '#6c757d',
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  modalCloseButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'white',
   },
   modalLoadingContainer: {
     flex: 1,
@@ -2092,32 +2606,6 @@ Object.assign(styles, {
     fontSize: 16,
     color: '#666',
     marginTop: 12,
-  },
-  modalWordTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
-  },
-  modalWordMeaning: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 20,
-    lineHeight: 24,
-  },
-  modalPlayButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 12,
-    backgroundColor: '#007AFF',
-    borderRadius: 8,
-  },
-  modalPlayButtonText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: 'white',
   },
 
   // 임시 텍스트

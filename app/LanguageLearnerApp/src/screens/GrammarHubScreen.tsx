@@ -15,7 +15,7 @@ import {
   FlatList,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { RootStackParamList } from '../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'GrammarHub'>;
@@ -85,7 +85,7 @@ const LevelSection: React.FC<LevelSectionProps> = ({ level, topics, navigation }
         <Text style={styles.topicDescription}>{item.description}</Text>
         <View style={styles.topicFooter}>
           <Text style={styles.startButtonText}>학습 시작</Text>
-          <Ionicons name="arrow-forward" size={16} color="#007AFF" />
+          <Icon name="arrow-forward" size={16} color="#007AFF" />
         </View>
       </View>
     </TouchableOpacity>

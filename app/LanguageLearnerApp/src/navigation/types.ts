@@ -75,16 +75,26 @@ export type MainStackParamList = {
   };
 };
 
-// Root Stack Params (최상위 네비게이터)
+// Root Stack Params (최상위 네비게이터 - App.tsx와 일치)
 export type RootStackParamList = {
-  Splash: undefined;
-  Onboarding: undefined;
-  App: undefined; // Main Stack
-  // Deep linking params
-  DeepLink: {
-    screen: string;
-    params?: any;
-  };
+  Home: undefined;
+  LandingPage: undefined;
+  Dictionary: undefined;
+  GrammarHub: undefined;
+  GrammarQuiz: undefined;
+  LearnStart: undefined;
+  LearnVocab: undefined;
+  ListeningList: undefined;
+  ListeningPractice: undefined;
+  MasteredWords: undefined;
+  MiniQuiz: undefined;
+  SRS: undefined;
+  ReadingList: undefined;
+  ReadingReview: undefined;
+  Login: undefined;
+  Logout: undefined;
+  VocabList: undefined;
+  MyWordbook: undefined;
 };
 
 // Screen Props Types

@@ -17,7 +17,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Audio } from 'expo-av';
 import { useAuth } from '../../hooks/useAuth';
 import { apiClient } from '../../services/apiClient';
@@ -112,7 +112,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ src, license, attribution }) 
   return (
     <View style={styles.audioPlayer}>
       <TouchableOpacity style={styles.playButton} onPress={playSound}>
-        <Ionicons 
+        <Icon 
           name={isPlaying ? "pause" : "play"} 
           size={20} 
           color="#007AFF" 
@@ -219,7 +219,7 @@ const SrsWidget: React.FC<{ navigation: any }> = ({ navigation }) => {
   return (
     <View style={styles.widgetCard}>
       <View style={styles.widgetHeader}>
-        <Image source={require('../../../assets/danmoosae.png')} style={styles.widgetIcon} />
+        <Text style={styles.widgetIconEmoji}>🦆</Text>
         <Text style={styles.widgetTitle}>오늘의 SRS</Text>
       </View>
       <Text style={styles.reviewCount}>복습 대기: {count}개</Text>
@@ -269,7 +269,7 @@ const DictQuickPanel: React.FC<{ navigation: any }> = ({ navigation }) => {
           onPress={onSearch}
           disabled={loading}
         >
-          <Ionicons 
+          <Icon 
             name="search" 
             size={20} 
             color={loading ? "#666" : "#007AFF"} 
@@ -857,6 +857,49 @@ const styles = StyleSheet.create({
   },
   actionButtonText: {
     fontSize: 16,
+    fontWeight: '600',
+    color: 'white',
+  },
+  widgetCard: {
+    backgroundColor: 'white',
+    borderRadius: 12,
+    padding: 16,
+    marginHorizontal: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  widgetHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  widgetIconEmoji: {
+    fontSize: 20,
+    marginRight: 8,
+  },
+  widgetTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#1f2937',
+  },
+  reviewCount: {
+    fontSize: 14,
+    color: '#6b7280',
+    marginBottom: 12,
+  },
+  startButton: {
+    backgroundColor: '#3b82f6',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+    alignSelf: 'flex-start',
+  },
+  startButtonText: {
+    fontSize: 14,
     fontWeight: '600',
     color: 'white',
   },

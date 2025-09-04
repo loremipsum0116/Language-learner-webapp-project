@@ -15,7 +15,7 @@ import {
   Alert,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
 
@@ -60,7 +60,7 @@ export default function LearnStartScreen({ navigation }: Props) {
             onPress={() => navigation.goBack()}
             activeOpacity={0.7}
           >
-            <Ionicons name="arrow-back" size={24} color="#333" />
+            <Icon name="arrow-back" size={24} color="#333" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>SRS 학습 시작</Text>
           <View style={styles.headerRight} />
@@ -72,7 +72,7 @@ export default function LearnStartScreen({ navigation }: Props) {
           {error && (
             <View style={styles.errorContainer}>
               <View style={styles.errorAlert}>
-                <Ionicons name="warning" size={20} color="#dc3545" />
+                <Icon name="warning" size={20} color="#dc3545" />
                 <Text style={styles.errorText}>{error}</Text>
               </View>
             </View>
@@ -81,7 +81,7 @@ export default function LearnStartScreen({ navigation }: Props) {
           {/* Info Card */}
           <View style={styles.infoCard}>
             <View style={styles.infoIconContainer}>
-              <Ionicons name="school" size={48} color="#007AFF" />
+              <Icon name="school" size={48} color="#007AFF" />
             </View>
             
             <Text style={styles.infoTitle}>스마트 학습 시작</Text>
@@ -93,15 +93,15 @@ export default function LearnStartScreen({ navigation }: Props) {
             {/* Learning Benefits */}
             <View style={styles.benefitsList}>
               <View style={styles.benefitItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#10b981" />
+                <Icon name="checkmark-circle" size={20} color="#10b981" />
                 <Text style={styles.benefitText}>적응형 학습 알고리즘</Text>
               </View>
               <View style={styles.benefitItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#10b981" />
+                <Icon name="checkmark-circle" size={20} color="#10b981" />
                 <Text style={styles.benefitText}>개인별 맞춤 진도 조절</Text>
               </View>
               <View style={styles.benefitItem}>
-                <Ionicons name="checkmark-circle" size={20} color="#10b981" />
+                <Icon name="checkmark-circle" size={20} color="#10b981" />
                 <Text style={styles.benefitText}>과학적인 간격 반복</Text>
               </View>
             </View>
@@ -122,7 +122,7 @@ export default function LearnStartScreen({ navigation }: Props) {
                 </View>
               ) : (
                 <View style={styles.buttonContent}>
-                  <Ionicons name="play-circle" size={24} color="white" />
+                  <Icon name="play-circle" size={24} color="white" />
                   <Text style={styles.primaryButtonText}>자동 학습 시작</Text>
                 </View>
               )}
@@ -135,7 +135,7 @@ export default function LearnStartScreen({ navigation }: Props) {
               activeOpacity={0.8}
             >
               <View style={styles.buttonContent}>
-                <Ionicons name="book" size={24} color="#007AFF" />
+                <Icon name="book" size={24} color="#007AFF" />
                 <Text style={styles.secondaryButtonText}>
                   내 단어장에서 선택하여 학습
                 </Text>
@@ -150,9 +150,9 @@ export default function LearnStartScreen({ navigation }: Props) {
               onPress={() => navigation.navigate('SrsDashboard')}
               activeOpacity={0.7}
             >
-              <Ionicons name="analytics" size={20} color="#666" />
+              <Icon name="analytics" size={20} color="#666" />
               <Text style={styles.optionButtonText}>학습 통계 보기</Text>
-              <Ionicons name="chevron-forward" size={20} color="#666" />
+              <Icon name="chevron-forward" size={20} color="#666" />
             </TouchableOpacity>
             
             <TouchableOpacity 
@@ -160,9 +160,9 @@ export default function LearnStartScreen({ navigation }: Props) {
               onPress={() => navigation.navigate('WrongAnswers')}
               activeOpacity={0.7}
             >
-              <Ionicons name="refresh-circle" size={20} color="#666" />
+              <Icon name="refresh-circle" size={20} color="#666" />
               <Text style={styles.optionButtonText}>오답노트 복습</Text>
-              <Ionicons name="chevron-forward" size={20} color="#666" />
+              <Icon name="chevron-forward" size={20} color="#666" />
             </TouchableOpacity>
           </View>
         </View>

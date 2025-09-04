@@ -17,7 +17,7 @@ import {
   Alert,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Video, ResizeMode } from 'expo-av';
 import { useAuth } from '../hooks/useAuth';
 import { RootStackParamList } from '../navigation/types';
@@ -27,7 +27,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'LandingPage'>;
 const { width, height } = Dimensions.get('window');
 
 interface FeatureCardProps {
-  icon: keyof typeof Ionicons.glyphMap;
+  icon: string;
   title: string;
   description: string;
   subtitle: string;
@@ -36,7 +36,7 @@ interface FeatureCardProps {
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, subtitle }) => (
   <View style={styles.featureCard}>
     <View style={styles.featureIconContainer}>
-      <Ionicons name={icon} size={48} color="#007AFF" />
+      <Icon name={icon} size={48} color="#007AFF" />
     </View>
     <Text style={styles.featureTitle}>{title}</Text>
     <Text style={styles.featureDescription}>{description}</Text>
@@ -85,11 +85,10 @@ export default function LandingPageScreen({ navigation }: Props) {
       >
         {/* Hero Section */}
         <View style={styles.heroSection}>
-          <Image 
-            source={require('../../assets/danmoosae.png')} 
-            style={styles.heroImage}
-            resizeMode="contain"
-          />
+          <View style={styles.placeholderImage}>
+            <Text style={styles.placeholderText}>🦆</Text>
+            <Text style={styles.placeholderSubText}>단무새</Text>
+          </View>
           <Text style={styles.heroTitle}>
             단무새와 함께하는{'\n'}English Learning
           </Text>
@@ -107,7 +106,7 @@ export default function LandingPageScreen({ navigation }: Props) {
               onPress={handleGetStarted}
               activeOpacity={0.8}
             >
-              <Ionicons name="rocket" size={20} color="white" style={styles.buttonIcon} />
+              <Icon name="rocket" size={20} color="white" style={styles.buttonIcon} />
               <Text style={styles.primaryButtonText}>Start Learning</Text>
             </TouchableOpacity>
             
@@ -116,7 +115,7 @@ export default function LandingPageScreen({ navigation }: Props) {
               onPress={handleSkip}
               activeOpacity={0.8}
             >
-              <Ionicons name="eye" size={20} color="#007AFF" style={styles.buttonIcon} />
+              <Icon name="eye" size={20} color="#007AFF" style={styles.buttonIcon} />
               <Text style={styles.secondaryButtonText}>Explore Demo</Text>
             </TouchableOpacity>
           </View>
@@ -147,7 +146,7 @@ export default function LandingPageScreen({ navigation }: Props) {
             >
               {!videoStatus.isPlaying && (
                 <View style={styles.playButton}>
-                  <Ionicons name="play" size={40} color="white" />
+                  <Icon name="play" size={40} color="white" />
                 </View>
               )}
             </TouchableOpacity>
@@ -191,7 +190,7 @@ export default function LandingPageScreen({ navigation }: Props) {
             activeOpacity={0.7}
           >
             <Text style={styles.skipButtonText}>Skip Intro</Text>
-            <Ionicons name="arrow-forward" size={16} color="#666" style={{ marginLeft: 4 }} />
+            <Icon name="arrow-forward" size={16} color="#666" style={{ marginLeft: 4 }} />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -219,6 +218,26 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     marginBottom: 24,
+  },
+  placeholderImage: {
+    width: 100,
+    height: 100,
+    marginBottom: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#4CAF50',
+  },
+  placeholderText: {
+    fontSize: 40,
+    marginBottom: 4,
+  },
+  placeholderSubText: {
+    fontSize: 12,
+    color: '#4CAF50',
+    fontWeight: 'bold',
   },
   heroTitle: {
     fontSize: 28,

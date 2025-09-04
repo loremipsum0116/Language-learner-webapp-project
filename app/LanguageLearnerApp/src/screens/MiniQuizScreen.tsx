@@ -15,7 +15,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
 
@@ -112,7 +112,7 @@ export default function MiniQuizScreen({ route, navigation }: Props) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.7}
         >
-          <Ionicons name="close" size={24} color="#333" />
+          <Icon name="close" size={24} color="#333" />
         </TouchableOpacity>
         
         <View style={styles.headerContent}>
@@ -196,7 +196,7 @@ export default function MiniQuizScreen({ route, navigation }: Props) {
             feedback.status === 'pass' ? styles.feedbackCardCorrect : styles.feedbackCardIncorrect
           ]}>
             <View style={styles.feedbackHeader}>
-              <Ionicons
+              <Icon
                 name={feedback.status === 'pass' ? 'checkmark-circle' : 'close-circle'}
                 size={32}
                 color={feedback.status === 'pass' ? '#10b981' : '#ef4444'}
@@ -223,7 +223,7 @@ export default function MiniQuizScreen({ route, navigation }: Props) {
             <Text style={styles.nextButtonText}>
               {currentIndex < batch.length - 1 ? '다음 문제' : '퀴즈 완료'}
             </Text>
-            <Ionicons name="arrow-forward" size={20} color="white" />
+            <Icon name="arrow-forward" size={20} color="white" />
           </TouchableOpacity>
         </View>
       )}

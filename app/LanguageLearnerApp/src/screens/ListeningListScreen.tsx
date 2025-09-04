@@ -18,7 +18,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
 
@@ -110,7 +110,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
           styles.checkboxInner,
           isSelected && styles.checkboxSelected
         ]}>
-          {isSelected && <Ionicons name="checkmark" size={16} color="white" />}
+          {isSelected && <Icon name="checkmark" size={16} color="white" />}
         </View>
       </TouchableOpacity>
       
@@ -126,7 +126,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
         onPress={() => onStartSingle(index)}
         activeOpacity={0.7}
       >
-        <Ionicons name="play" size={20} color="#007AFF" />
+        <Icon name="play" size={20} color="#007AFF" />
       </TouchableOpacity>
     </View>
     
@@ -426,7 +426,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Ionicons name="headset" size={64} color="#666" />
+          <Icon name="headset" size={64} color="#666" />
           <Text style={styles.errorTitle}>리스닝 연습</Text>
           <Text style={styles.errorMessage}>{error}</Text>
           <Text style={styles.errorSubMessage}>현재 A1 레벨만 이용 가능합니다.</Text>
@@ -464,7 +464,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
           onPress={() => navigation.goBack()}
           activeOpacity={0.7}
         >
-          <Ionicons name="arrow-back" size={24} color="#333" />
+          <Icon name="arrow-back" size={24} color="#333" />
         </TouchableOpacity>
         
         <View style={styles.headerContent}>
@@ -507,7 +507,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
               selectedQuestions.size === listeningData.length && listeningData.length > 0 && styles.selectAllCheckboxActive
             ]}>
               {selectedQuestions.size === listeningData.length && listeningData.length > 0 && (
-                <Ionicons name="checkmark" size={16} color="white" />
+                <Icon name="checkmark" size={16} color="white" />
               )}
             </View>
             <Text style={styles.selectAllText}>
@@ -520,7 +520,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
             onPress={handleSelectWrongAnswers}
             activeOpacity={0.7}
           >
-            <Ionicons name="close-circle" size={16} color="#dc3545" />
+            <Icon name="close-circle" size={16} color="#dc3545" />
             <Text style={styles.wrongAnswersButtonText}>오답만 선택</Text>
           </TouchableOpacity>
         </View>
@@ -555,7 +555,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
         }
         ListEmptyComponent={() => (
           <View style={styles.emptyContainer}>
-            <Ionicons name="musical-notes" size={64} color="#ccc" />
+            <Icon name="musical-notes" size={64} color="#ccc" />
             <Text style={styles.emptyText}>리스닝 문제가 없습니다.</Text>
           </View>
         )}
@@ -569,7 +569,7 @@ export default function ListeningListScreen({ route, navigation }: Props) {
             onPress={handleStartSelectedQuestions}
             activeOpacity={0.8}
           >
-            <Ionicons name="rocket" size={20} color="white" />
+            <Icon name="rocket" size={20} color="white" />
             <Text style={styles.bottomStartButtonText}>
               선택한 문제들 학습 시작
             </Text>

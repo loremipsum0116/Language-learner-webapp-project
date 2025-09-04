@@ -22,7 +22,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Ionicons } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { Audio } from 'expo-av';
 
 import { useAuth } from '../hooks/useAuth';
@@ -233,7 +233,7 @@ const WordCard: React.FC<WordCardProps> = ({
         style={styles.checkboxContainer}
         onPress={() => onToggleSelect(item.vocabId)}
       >
-        <Ionicons 
+        <Icon 
           name={isSelected ? 'checkbox' : 'square-outline'} 
           size={24} 
           color={isSelected ? '#007AFF' : '#8E8E93'} 
@@ -296,7 +296,7 @@ const WordCard: React.FC<WordCardProps> = ({
           style={styles.audioButton}
           onPress={() => onPlayAudio(item)}
         >
-          <Ionicons 
+          <Icon 
             name={isPlaying ? 'pause' : 'play'} 
             size={16} 
             color="#0dcaf0" 
@@ -938,7 +938,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back" size={24} color="#007AFF" />
+            <Icon name="arrow-back" size={24} color="#007AFF" />
           </TouchableOpacity>
           <Text style={styles.headerTitle}>내 단어장</Text>
         </View>
@@ -1065,7 +1065,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
 
           {/* 검색 입력 */}
           <View style={styles.searchContainer}>
-            <Ionicons name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
+            <Icon name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
             <TextInput
               style={styles.searchInput}
               placeholder="내 단어장에서 검색 (단어 또는 뜻)"
@@ -1165,7 +1165,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
                   setDetail(null);
                   stopAudio();
                 }}>
-                  <Ionicons name="close" size={24} color="#333" />
+                  <Icon name="close" size={24} color="#333" />
                 </TouchableOpacity>
               </View>
               
@@ -1177,7 +1177,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
                   style={styles.modalPlayButton}
                   onPress={() => playVocabAudio({ vocab: detail } as WordbookItem)}
                 >
-                  <Ionicons name="play" size={20} color="white" />
+                  <Icon name="play" size={20} color="white" />
                   <Text style={styles.modalPlayButtonText}>음성 듣기</Text>
                 </TouchableOpacity>
               </View>
@@ -1197,7 +1197,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>폴더 이동</Text>
             <TouchableOpacity onPress={() => setMoveModalOpen(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <ScrollView style={styles.modalContent}>
@@ -1234,7 +1234,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>학습 모드 선택</Text>
             <TouchableOpacity onPress={() => setLearningModeModalOpen(false)}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalContent}>
@@ -1294,7 +1294,7 @@ export default function MyWordbookScreen({ navigation }: Props) {
               setPickerOpen(false);
               setPickerIds([]);
             }}>
-              <Ionicons name="close" size={24} color="#333" />
+              <Icon name="close" size={24} color="#333" />
             </TouchableOpacity>
           </View>
           <View style={styles.modalBody}>
