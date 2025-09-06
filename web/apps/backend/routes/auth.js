@@ -1,6 +1,6 @@
 // server/routes/auth.js
 const express = require('express');
-const bcrypt = require('bcrypt'); // bcryptjs 대신 bcrypt 사용
+const bcrypt = require('bcryptjs'); // Using bcryptjs instead of bcrypt
 const { prisma } = require('../lib/prismaClient');
 const { ok, fail } = require('../lib/resp'); // 응답 헬퍼 사용
 const jwtService = require('../services/jwtService');
