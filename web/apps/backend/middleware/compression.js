@@ -65,6 +65,11 @@ const apiResponseOptimization = (req, res, next) => {
       return originalJson.call(this, data);
     }
     
+    // Skip optimization for mobile endpoints due to large response sizes
+    if (req.path.startsWith('/api/mobile/')) {
+      return originalJson.call(this, data);
+    }
+    
     // Network-aware optimization
     const networkType = req.headers['x-network-type'];
     const optimizeForSlowNetwork = ['slow-2g', '2g', '3g'].includes(networkType);
@@ -113,8 +118,15 @@ function optimizeApiResponse(data, options = {}) {
     return data;
   }
   
-  // Deep clone to avoid mutating original data
-  const optimized = JSON.parse(JSON.stringify(data));
+  // Safe deep clone with error handling for large objects
+  let optimized;
+  try {
+    optimized = JSON.parse(JSON.stringify(data));
+  } catch (error) {
+    console.warn('[COMPRESSION] Failed to clone large response object, returning original:', error.message);
+    // For very large objects that can't be stringified, return original data
+    return data;
+  }
   
   return optimizeObject(optimized, options);
 }

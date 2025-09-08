@@ -9,13 +9,39 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-community/netinfo": "^11.4.1",
+    "@react-native-masked-view/masked-view": "^0.3.2",
+    "@react-navigation/bottom-tabs": "^7.4.7",
+    "@react-navigation/native": "^7.1.17",
+    "@react-navigation/stack": "^7.4.8",
+    "@shopify/flash-list": "^2.0.3",
+    "@types/react": "~19.0.10",
+    "dayjs": "^1.11.18",
     "expo": "~53.0.22",
+    "expo-av": "~15.1.7",
+    "expo-device": "~7.1.4",
+    "expo-file-system": "~18.1.11",
+    "expo-haptics": "~14.1.4",
+    "expo-linear-gradient": "^14.1.5",
+    "expo-speech": "~13.1.7",
     "expo-status-bar": "~2.2.3",
+    "lodash": "^4.17.21",
     "react": "19.0.0",
-    "react-native": "0.79.6"
+    "react-native": "0.79.6",
+    "react-native-gesture-handler": "^2.28.0",
+    "react-native-linear-gradient": "^2.8.3",
+    "react-native-reanimated": "^4.1.0",
+    "react-native-safe-area-context": "^5.6.1",
+    "react-native-screens": "^4.16.0",
+    "react-native-vector-icons": "^10.3.0",
+    "react-native-worklets": "^0.5.0",
+    "typescript": "~5.8.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@react-native-community/cli": "^20.0.1",
+    "babel-plugin-module-resolver": "^5.0.2"
   },
   "private": true
 }

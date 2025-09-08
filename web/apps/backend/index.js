@@ -90,6 +90,8 @@ app.get('/docs/api-info', (req, res) => {
 
 // === SIMPLE VOCAB ENDPOINT (NO MIDDLEWARE) ===
 app.get('/simple-vocab', async (req, res) => {
+  console.log('>>>>>>> SIMPLE-VOCAB ENDPOINT HIT! <<<<<<<');
+  console.log('Query params:', req.query);
   try {
     const { PrismaClient } = require('@prisma/client');
     const prisma = new PrismaClient();
@@ -101,7 +103,7 @@ app.get('/simple-vocab', async (req, res) => {
     
     const vocabs = await prisma.vocab.findMany({
       where: {
-        languageId: 1,
+        language: { code: 'en' },
         levelCEFR: levelCEFR,
       },
       take: limitInt,
@@ -112,17 +114,32 @@ app.get('/simple-vocab', async (req, res) => {
             ipa: true,
             examples: true
           }
+        },
+        translations: {
+          where: { language: { code: 'ko' } }
         }
       }
     });
     
+    console.log(`[DEBUG] Found ${vocabs.length} vocabs`);
+    
     const simplifiedVocabs = vocabs.map(vocab => {
-      let primaryGloss = '';
+      // Get Korean translation from VocabTranslation table
+      let koGloss = '';
+      if (vocab.translations && vocab.translations.length > 0) {
+        koGloss = vocab.translations[0].translation;
+        console.log(`[DEBUG] ${vocab.lemma} -> ${koGloss}`);
+      }
       
-      if (vocab.dictentry?.examples && Array.isArray(vocab.dictentry.examples)) {
-        const glossExample = vocab.dictentry.examples.find(ex => ex.kind === 'gloss');
-        if (glossExample && glossExample.ko) {
-          primaryGloss = glossExample.ko.substring(0, 50);
+      // Parse examples from dictentry
+      let examples = [];
+      if (vocab.dictentry?.examples) {
+        try {
+          examples = typeof vocab.dictentry.examples === 'string' 
+            ? JSON.parse(vocab.dictentry.examples)
+            : vocab.dictentry.examples;
+        } catch (e) {
+          examples = [];
         }
       }
       
@@ -131,8 +148,10 @@ app.get('/simple-vocab', async (req, res) => {
         lemma: vocab.lemma,
         pos: vocab.pos,
         levelCEFR: vocab.levelCEFR,
-        ko_gloss: primaryGloss || `뜻: ${vocab.lemma}`,
-        ipa: vocab.dictentry?.ipa || ''
+        ko_gloss: koGloss || `뜻: ${vocab.lemma}`,
+        ipa: vocab.dictentry?.ipa || '',
+        example: examples[0]?.text || '',
+        koExample: examples[0]?.translation || ''
       };
     });
     
@@ -205,6 +224,16 @@ app.get('/simple-vocab-detail/:id', async (req, res) => {
             attribution: true,
             license: true
           }
+        },
+        translations: {
+          include: {
+            language: {
+              select: {
+                code: true,
+                name: true
+              }
+            }
+          }
         }
       }
     });
@@ -216,23 +245,39 @@ app.get('/simple-vocab-detail/:id', async (req, res) => {
       return;
     }
     
-    // Process examples to extract Korean gloss and examples
+    // Get Korean translation from VocabTranslation table (same as simple-vocab endpoint)
     let koGloss = '';
-    let koExample = '';
-    let enExample = '';
+    if (vocab.translations && vocab.translations.length > 0) {
+      const koreanTranslation = vocab.translations.find(t => t.language.code === 'ko');
+      if (koreanTranslation) {
+        koGloss = koreanTranslation.translation;
+      }
+    }
     
-    if (vocab.dictentry?.examples && Array.isArray(vocab.dictentry.examples)) {
-      const glossItem = vocab.dictentry.examples.find(ex => ex.kind === 'gloss');
-      const exampleItem = vocab.dictentry.examples.find(ex => ex.kind === 'example');
-      
-      if (glossItem && glossItem.ko) {
-        koGloss = glossItem.ko;
+    // Parse examples from dictentry (same as simple-vocab endpoint)
+    let examples = [];
+    console.log(`[SIMPLE-VOCAB-DETAIL] Raw dictentry.examples:`, vocab.dictentry?.examples);
+    if (vocab.dictentry?.examples) {
+      try {
+        examples = typeof vocab.dictentry.examples === 'string' 
+          ? JSON.parse(vocab.dictentry.examples)
+          : vocab.dictentry.examples;
+        console.log(`[SIMPLE-VOCAB-DETAIL] Parsed examples:`, examples);
+      } catch (e) {
+        console.log(`[SIMPLE-VOCAB-DETAIL] Failed to parse examples:`, e.message);
+        examples = [];
       }
-      
-      if (exampleItem) {
-        if (exampleItem.ko) koExample = exampleItem.ko;
-        if (exampleItem.en) enExample = exampleItem.en;
-      }
+    } else {
+      console.log(`[SIMPLE-VOCAB-DETAIL] No dictentry.examples found`);
+    }
+    
+    let enExample = '';
+    let koExample = '';
+    
+    if (Array.isArray(examples) && examples.length > 0) {
+      // Use same logic as simple-vocab endpoint
+      enExample = examples[0]?.text || '';
+      koExample = examples[0]?.translation || '';
     }
     
     const detailData = {
@@ -250,6 +295,12 @@ app.get('/simple-vocab-detail/:id', async (req, res) => {
       attribution: vocab.dictentry?.attribution,
       license: vocab.dictentry?.license
     };
+    
+    console.log(`[SIMPLE-VOCAB-DETAIL] Returning data for ${vocab.lemma}:`, {
+      ko_gloss: detailData.ko_gloss,
+      en_example: detailData.en_example,
+      ko_example: detailData.ko_example
+    });
     
     await prisma.$disconnect();
     
@@ -294,6 +345,34 @@ app.get('/simple-audio-files/:level', async (req, res) => {
     
   } catch (error) {
     console.error('[SIMPLE-AUDIO] Error:', error);
+    res.writeHead(500, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ success: false, error: error.message }));
+  }
+});
+
+// === SIMPLE SRS AVAILABLE ENDPOINT (NO MIDDLEWARE) ===
+app.get('/srs/available', (req, res) => {
+  try {
+    console.log('[SIMPLE-SRS] Fetching available SRS data');
+    
+    // Return simple mock data to prevent crashes
+    const srsData = {
+      cardsAvailable: 0,
+      cardsReady: 0,
+      nextReviewTime: null
+    };
+    
+    res.writeHead(200, { 
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    });
+    res.end(JSON.stringify({
+      success: true,
+      data: srsData
+    }));
+    
+  } catch (error) {
+    console.error('[SIMPLE-SRS] Error:', error);
     res.writeHead(500, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: false, error: error.message }));
   }

@@ -43,8 +43,8 @@ import examVocabRoutes from './routes/examVocab';
 import autoFolderRoutes from './routes/autoFolder';
 
 // (선택) 대시보드 오버라이드/Flat 확장 라우터
-import srsFlatExt from './routes/srs-flat-extensions';
-import srsDashOverride from './routes/srs-dashboard-override';
+// import srsFlatExt from './routes/srs-flat-extensions';
+// import srsDashOverride from './routes/srs-dashboard-override';
 
 // 타임머신 라우터
 import { router as timeMachineRouter } from './routes/timeMachine';
@@ -192,6 +192,180 @@ app.use('/api/mobile', mobileRouter);
 // API 문서 엔드포인트
 app.get('/docs/api', generateApiDocs([1]));
 
+// Debug endpoint to test data
+app.get('/debug-vocab', async (req: Request, res: Response) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+  
+  try {
+    const vocab = await prisma.vocab.findFirst({
+      where: {
+        language: { code: 'en' },
+        levelCEFR: 'A1',
+        lemma: 'a'
+      },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { language: { code: 'ko' } }
+        }
+      }
+    });
+    
+    console.log('Debug vocab data:', JSON.stringify(vocab, null, 2));
+    res.json(vocab);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
+// Simple vocab endpoint for mobile app (no auth required)
+app.get('/simple-vocab', async (req: Request, res: Response) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+  
+  try {
+    const { levelCEFR, limit = 100 } = req.query;
+    
+    console.log('[SIMPLE-VOCAB] Request params:', { levelCEFR, limit });
+    
+    const vocabs = await prisma.vocab.findMany({
+      where: {
+        language: { code: 'en' },
+        ...(levelCEFR ? { levelCEFR: levelCEFR as string } : {})
+      },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { language: { code: 'ko' } }
+        }
+      },
+      take: parseInt(limit as string, 10)
+    });
+    
+    // Transform data to match expected format
+    const formattedVocabs = vocabs.map((vocab: any) => {
+      // Parse examples if they're in JSON format
+      let examples = [];
+      if (vocab.dictentry?.examples) {
+        try {
+          examples = typeof vocab.dictentry.examples === 'string' 
+            ? JSON.parse(vocab.dictentry.examples)
+            : vocab.dictentry.examples;
+        } catch (e) {
+          examples = [];
+        }
+      }
+      
+      // Debug logging to see what we have
+      console.log(`[DEBUG] Vocab ${vocab.lemma}:`, {
+        translations: vocab.translations,
+        translation: vocab.translations[0]?.translation,
+        dictentry_koGloss: vocab.dictentry?.koGloss
+      });
+      
+      return {
+        id: vocab.id,
+        lemma: vocab.lemma,
+        pos: vocab.pos,
+        levelCEFR: vocab.levelCEFR,
+        ipa: vocab.dictentry?.ipa,
+        ipaKo: vocab.dictentry?.ipaKo,
+        ko_gloss: vocab.translations[0]?.translation || vocab.dictentry?.koGloss || '',
+        definition: vocab.translations[0]?.definition || '',
+        example: examples[0]?.text || '',
+        koExample: examples[0]?.translation || '',
+        audio: vocab.dictentry?.audioUrl,
+        source: vocab.source,
+        count: vocabs.length
+      };
+    });
+    
+    res.json({
+      success: true,
+      data: formattedVocabs
+    });
+  } catch (error: any) {
+    console.error('[SIMPLE-VOCAB] Error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
+// Simple vocab detail endpoint
+app.get('/simple-vocab-detail/:id', async (req: Request, res: Response) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+  
+  try {
+    const vocabId = parseInt(req.params.id, 10);
+    
+    const vocab = await prisma.vocab.findUnique({
+      where: { id: vocabId },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { language: { code: 'ko' } }
+        }
+      }
+    });
+    
+    if (!vocab) {
+      return res.status(404).json({
+        success: false,
+        error: 'Vocabulary not found'
+      });
+    }
+    
+    // Parse examples if they're in JSON format
+    let examples = [];
+    if (vocab.dictentry?.examples) {
+      try {
+        examples = typeof vocab.dictentry.examples === 'string' 
+          ? JSON.parse(vocab.dictentry.examples)
+          : vocab.dictentry.examples;
+      } catch (e) {
+        examples = [];
+      }
+    }
+    
+    const formattedVocab = {
+      id: vocab.id,
+      lemma: vocab.lemma,
+      pos: vocab.pos,
+      levelCEFR: vocab.levelCEFR,
+      ipa: vocab.dictentry?.ipa,
+      ipaKo: vocab.dictentry?.ipaKo,
+      ko_gloss: vocab.translations[0]?.translation || '',
+      definition: vocab.translations[0]?.definition || '',
+      example: examples[0]?.text || '',
+      koExample: examples[0]?.translation || '',
+      audio: vocab.dictentry?.audioUrl,
+      source: vocab.source,
+      dictentry: vocab.dictentry
+    };
+    
+    res.json({
+      success: true,
+      data: formattedVocab
+    });
+  } catch (error: any) {
+    console.error('[SIMPLE-VOCAB-DETAIL] Error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
 // --- 글로벌 인증 미들웨어 ---
 app.use((req: Request, res: Response, next: NextFunction) => {
   // Skip auth for mobile API (handled internally)
@@ -202,6 +376,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   // Skip auth for specific public routes
   const publicRoutes = [
     '/auth', '/dict', '/exam-vocab', '/api/reading', '/api/listening', 
+    '/simple-vocab', '/simple-vocab-detail', 
     '/api/idiom', '/time-accelerator', '/docs', '/static-test',
     '/api/v1', '/api/video'
   ];
@@ -230,12 +405,12 @@ app.use('/admin', adminRoutes);
 app.use('/auto-folder', autoFolderRoutes);
 app.use('/', userRoutes); // User routes는 root level에 마운트
 
-// SRS 대시보드 오버라이드 및 Flat 확장 (인증 필요)
-app.use('/srs-flat-ext', srsFlatExt);
-app.use('/srs-dashboard-override', srsDashOverride);
+// SRS 대시보드 오버라이드 및 Flat 확장 (인증 필요) - 현재 비활성화
+// app.use('/srs-flat-ext', srsFlatExt);
+// app.use('/srs-dashboard-override', srsDashOverride);
 
 // --- 404 핸들러 ---
-app.use('*', (req: Request, res: Response) => {
+app.use((req: Request, res: Response) => {
   console.log(`[404] Route not found: ${req.method} ${req.originalUrl}`);
   res.status(404).json({
     data: null,
@@ -270,8 +445,8 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 
 const PORT = process.env.PORT || 4000;
 
-app.listen(PORT, () => {
-  console.log(`API listening on port ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`API listening on port ${PORT} (all interfaces)`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`CORS Origins: ${process.env.CORS_ORIGIN || 'http://localhost:3000,http://localhost:3001'}`);
 });
