@@ -1036,15 +1036,10 @@ export default function VocabListScreen({ navigation }: Props) {
     try {
       console.log('🔊 [playUrl] Trying expo-av...');
       
-      // Set audio mode for playback
+      // Set basic audio mode for playback
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: false,
-        staysActiveInBackground: false,
-        interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
         playsInSilentModeIOS: true,
-        shouldDuckAndroid: true,
-        interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DO_NOT_MIX,
-        playThroughEarpieceAndroid: false,
       });
       
       const { sound: newSound } = await Audio.Sound.createAsync(
