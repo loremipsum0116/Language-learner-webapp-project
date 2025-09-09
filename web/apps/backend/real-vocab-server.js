@@ -34,16 +34,36 @@ app.get('/simple-vocab', async (req, res) => {
   console.log('Query params:', req.query);
   
   try {
-    const { limit = 500, levelCEFR = 'A1' } = req.query;
-    const limitInt = Math.min(parseInt(limit), 500);
+    const { limit = 500, levelCEFR = 'A1', exam } = req.query;
+    const limitInt = Math.min(parseInt(limit), 50000);
     
-    console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
+    let whereClause = {
+      language: { code: 'en' }
+    };
+    
+    if (exam) {
+      // If exam parameter is provided, filter by exam category using proper relations
+      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for exam: ${exam}`);
+      whereClause.vocabexamcategory = {
+        some: {
+          examCategory: {
+            name: exam
+          }
+        }
+      };
+    } else {
+      // Default CEFR level filtering
+      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
+      whereClause.levelCEFR = levelCEFR;
+    }
+    
+    // Get total count first
+    const totalCount = await prisma.vocab.count({
+      where: whereClause
+    });
     
     const vocabs = await prisma.vocab.findMany({
-      where: {
-        language: { code: 'en' },
-        levelCEFR: levelCEFR,
-      },
+      where: whereClause,
       take: limitInt,
       orderBy: { lemma: 'asc' },
       include: {
@@ -57,7 +77,7 @@ app.get('/simple-vocab', async (req, res) => {
       }
     });
     
-    console.log(`[REAL-VOCAB] Found ${vocabs.length} vocabs`);
+    console.log(`[REAL-VOCAB] Found ${vocabs.length} vocabs out of ${totalCount} total`);
     
     const simplifiedVocabs = vocabs.map(vocab => {
       let koGloss = '';
@@ -119,7 +139,7 @@ app.get('/simple-vocab', async (req, res) => {
     
     res.json({
       success: true,
-      count: simplifiedVocabs.length,
+      count: totalCount,
       data: simplifiedVocabs
     });
     
@@ -243,15 +263,24 @@ app.get('/simple-exam-categories', async (req, res) => {
   console.log('[REAL-VOCAB] Exam categories requested');
   
   try {
-    // Return some basic exam categories
+    // Get actual exam categories from database
+    const examCategories = await prisma.examcategory.findMany({
+      orderBy: { name: 'asc' }
+    });
+    
+    const formattedCategories = examCategories.map(category => ({
+      id: category.id,
+      name: category.name,
+      count: category.totalWords,
+      description: category.description,
+      examType: category.name // For compatibility with mobile app
+    }));
+    
+    console.log(`[REAL-VOCAB] Returning ${formattedCategories.length} exam categories`);
+    
     res.json({
       success: true,
-      data: [
-        { id: 1, name: 'TOEIC', count: 500 },
-        { id: 2, name: 'TOEFL', count: 400 },
-        { id: 3, name: 'IELTS', count: 350 },
-        { id: 4, name: '수능', count: 300 }
-      ]
+      data: formattedCategories
     });
   } catch (error) {
     console.error('[REAL-VOCAB] Exam categories error:', error);

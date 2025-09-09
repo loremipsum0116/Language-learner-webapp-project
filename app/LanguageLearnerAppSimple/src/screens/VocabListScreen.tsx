@@ -27,6 +27,7 @@ import { Audio } from 'expo-av';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
+import { API_URL } from '../config';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'VocabList'>;
 
@@ -696,7 +697,7 @@ export default function VocabListScreen({ navigation }: Props) {
     if (authLoading) return;
     const loadExamCategories = async () => {
       try {
-        const response = await fetch('http://localhost:4000/simple-exam-categories');
+        const response = await fetch(`${API_URL}/simple-exam-categories`);
         const result = await response.json();
         const categories = Array.isArray(result.data) ? result.data : [];
         setExamCategories(categories);
@@ -725,8 +726,8 @@ export default function VocabListScreen({ navigation }: Props) {
         
         try {
           // Use the new simple-vocab endpoint that bypasses middleware
-          console.log(`[VOCAB] Making API call to: http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
-          const response = await fetch(`http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
+          console.log(`[VOCAB] Making API call to: ${API_URL}/simple-vocab?levelCEFR=${activeLevel}&limit=10000`);
+          const response = await fetch(`${API_URL}/simple-vocab?levelCEFR=${activeLevel}&limit=10000`);
           console.log('[VOCAB] API response status:', response.status, response.statusText);
           
           if (!response.ok) {
@@ -740,7 +741,7 @@ export default function VocabListScreen({ navigation }: Props) {
             data = result.data;
             console.log('[VOCAB] Real CEFR data loaded:', data.length, 'items for level', activeLevel);
             console.log('[VOCAB] First few items:', data.slice(0, 3));
-            setTotalCount(data.length);
+            setTotalCount(result.count || data.length);
             
             // Apply search filter if there's a search term
             if (debouncedSearchTerm) {
@@ -789,10 +790,55 @@ export default function VocabListScreen({ navigation }: Props) {
         setDisplayCount(100);
         return;
       } else {
-        // 시험별 조회 - 임시로 빈 배열
-        console.log('[VOCAB] Exam tab - showing empty for now');
-        data = [];
-        setTotalCount(0);
+        // 시험별 조회
+        console.log('[VOCAB] Exam tab - fetching exam-specific vocab for:', activeExam);
+        if (activeExam) {
+          try {
+            // API call to fetch exam-specific vocabulary
+            const response = await fetch(`${API_URL}/simple-vocab?exam=${activeExam}&limit=10000`);
+            const result = await response.json();
+            
+            if (result.success && result.data) {
+              data = result.data;
+              setTotalCount(result.count || data.length);
+            } else {
+              // If no exam-specific endpoint, use filtered CEFR data
+              console.log('[VOCAB] No exam-specific endpoint, using sample data');
+              // For now, show some sample exam vocabulary
+              const examSampleData: { [key: string]: VocabItem[] } = {
+                'TOEIC': [
+                  { id: 501, lemma: 'business', pos: 'noun', levelCEFR: 'B1', ko_gloss: '사업, 비즈니스' },
+                  { id: 502, lemma: 'meeting', pos: 'noun', levelCEFR: 'A2', ko_gloss: '회의' },
+                  { id: 503, lemma: 'schedule', pos: 'noun', levelCEFR: 'B1', ko_gloss: '일정' }
+                ],
+                'TOEFL': [
+                  { id: 601, lemma: 'academic', pos: 'adjective', levelCEFR: 'B2', ko_gloss: '학문적인' },
+                  { id: 602, lemma: 'research', pos: 'noun', levelCEFR: 'B1', ko_gloss: '연구' },
+                  { id: 603, lemma: 'hypothesis', pos: 'noun', levelCEFR: 'C1', ko_gloss: '가설' }
+                ],
+                'IELTS': [
+                  { id: 701, lemma: 'environment', pos: 'noun', levelCEFR: 'B1', ko_gloss: '환경' },
+                  { id: 702, lemma: 'society', pos: 'noun', levelCEFR: 'B1', ko_gloss: '사회' },
+                  { id: 703, lemma: 'culture', pos: 'noun', levelCEFR: 'B1', ko_gloss: '문화' }
+                ],
+                '수능': [
+                  { id: 801, lemma: 'essential', pos: 'adjective', levelCEFR: 'B2', ko_gloss: '필수적인' },
+                  { id: 802, lemma: 'significant', pos: 'adjective', levelCEFR: 'B2', ko_gloss: '중요한' },
+                  { id: 803, lemma: 'analyze', pos: 'verb', levelCEFR: 'B2', ko_gloss: '분석하다' }
+                ]
+              };
+              data = examSampleData[activeExam] || [];
+              setTotalCount(data.length);
+            }
+          } catch (error) {
+            console.error('[VOCAB] Error fetching exam vocab:', error);
+            data = [];
+            setTotalCount(0);
+          }
+        } else {
+          data = [];
+          setTotalCount(0);
+        }
         setHasNextPage(false);
       }
       
@@ -900,66 +946,52 @@ export default function VocabListScreen({ navigation }: Props) {
   };
 
   const isAllSelected = useMemo(() => {
-    if (activeTab === 'exam') {
-      const actualMaxCount = Math.min(totalCount, allWords.length || totalCount);
-      return selectedIds.size > 0 && selectedIds.size >= actualMaxCount - 1;
-    } else if (activeTab === 'idiom') {
-      if (words.length === 0) return false;
-      return words.every(word => selectedIds.has(word.id));
-    } else {
-      if (words.length === 0) return false;
-      return words.every(word => selectedIds.has(word.id));
-    }
-  }, [words, selectedIds, activeTab, totalCount, allWords.length]);
+    if (totalCount === 0) return false;
+    const result = selectedIds.size > 0 && selectedIds.size === totalCount;
+    console.log('[IS-ALL-SELECTED]', { selectedSize: selectedIds.size, totalCount, result });
+    return result;
+  }, [selectedIds, totalCount]);
 
   const handleToggleSelectAll = async () => {
-    if (activeTab === 'exam' && !isAllSelected) {
-      try {
-        setLoading(true);
-        const response = await apiClient.get(`/exam-vocab/${activeExam}?limit=${totalCount}`);
-        const allVocabIds = response.data?.data?.vocabs?.map((v: any) => v.id) || 
-                           response.data?.vocabs?.map((v: any) => v.id) || [];
-        setSelectedIds(new Set(allVocabIds));
-      } catch (error) {
-        console.error('Failed to select all words:', error);
-        const newSelected = new Set(selectedIds);
-        words.forEach(word => newSelected.add(word.id));
-        setSelectedIds(newSelected);
-      } finally {
-        setLoading(false);
-      }
-    } else if (activeTab === 'cefr' && !isAllSelected) {
-      try {
-        setLoading(true);
-        const response = await apiClient.get(`/vocab/list?level=${encodeURIComponent(activeLevel)}`);
-        const allVocabData = response.data?.data || response.data || [];
-        const allVocabIds = allVocabData.map((v: any) => v.id) || [];
-        setSelectedIds(new Set(allVocabIds));
-      } catch (error) {
-        console.error('Failed to select all words:', error);
-        const newSelected = new Set(selectedIds);
-        words.forEach(word => newSelected.add(word.id));
-        setSelectedIds(newSelected);
-      } finally {
-        setLoading(false);
-      }
-    } else if (activeTab === 'idiom' && !isAllSelected) {
-      try {
-        setLoading(true);
+    console.log('[SELECT-ALL] Button clicked:', { isAllSelected, totalCount, selectedIds: selectedIds.size });
+    
+    if (isAllSelected) {
+      // Deselect all
+      console.log('[SELECT-ALL] Deselecting all');
+      setSelectedIds(new Set());
+      return;
+    }
+    
+    // Select all - fetch all words in current category
+    console.log('[SELECT-ALL] Selecting all for:', { activeTab, activeLevel, activeExam, totalCount });
+    try {
+      setLoading(true);
+      let allIds: number[] = [];
+      
+      if (activeTab === 'exam') {
+        const response = await fetch(`${API_URL}/simple-vocab?exam=${encodeURIComponent(activeExam)}&limit=${totalCount}`);
+        const result = await response.json();
+        allIds = result.data?.map((v: any) => v.id) || [];
+      } else if (activeTab === 'cefr') {
+        const response = await fetch(`${API_URL}/simple-vocab?levelCEFR=${encodeURIComponent(activeLevel)}&limit=${totalCount}`);
+        const result = await response.json();
+        allIds = result.data?.map((v: any) => v.id) || [];
+      } else if (activeTab === 'idiom') {
         const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
         const response = await apiClient.get(`/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=`);
-        const allIdiomIds = response.data?.data?.map((item: any) => item.id) || 
-                           response.data?.map((item: any) => item.id) || [];
-        setSelectedIds(new Set(allIdiomIds));
-      } catch (error) {
-        console.error('Failed to select all idioms:', error);
-        const allWordIds = words.map(word => word.id);
-        setSelectedIds(new Set(allWordIds));
-      } finally {
-        setLoading(false);
+        allIds = response.data?.data?.map((item: any) => item.id) || 
+                 response.data?.map((item: any) => item.id) || [];
       }
-    } else {
-      setSelectedIds(new Set());
+      
+      console.log('[SELECT-ALL] Setting selected IDs:', allIds.length);
+      setSelectedIds(new Set(allIds));
+    } catch (error) {
+      console.error('Failed to select all words:', error);
+      // Fallback: select only currently visible words
+      const visibleIds = allWords.length > 0 ? allWords.map(word => word.id) : words.map(word => word.id);
+      setSelectedIds(new Set(visibleIds));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -987,6 +1019,49 @@ export default function VocabListScreen({ navigation }: Props) {
   // ──────────────────────────────────────────────────────────────────────────────────────────────
   // 오디오 관련 함수들 (Part 2/3)
   // ──────────────────────────────────────────────────────────────────────────────────────────────
+
+  // 경로 매핑 - 웹 앱과 동일한 로직
+  const pathMappings: { [key: string]: string } = {
+    'bank-money': 'bank (money)',
+    'bank-river': 'bank (river)',
+    'rock-music': 'rock (music)',
+    'rock-stone': 'rock (stone)',
+    'light-not-heavy': 'light (not heavy)',
+    'light-from-the-sun': 'light (from the suna lamp)',
+    'last-taking-time': 'last (taking time)',
+  };
+
+  // 오디오 경로 변환 함수 - 웹 앱과 동일한 로직
+  const transformAudioPath = (path: string): string => {
+    if (!path) return path;
+    
+    // 경로 매핑 적용
+    let transformedPath = path;
+    Object.entries(pathMappings).forEach(([from, to]) => {
+      if (transformedPath.includes(from)) {
+        transformedPath = transformedPath.replace(from, to);
+      }
+    });
+    
+    return transformedPath;
+  };
+
+  // URL 인코딩 함수 - 웹 앱과 동일한 로직
+  const encodeAudioPath = (path: string): string => {
+    if (!path) return path;
+    
+    // 각 경로 세그먼트를 개별적으로 인코딩
+    const segments = path.split('/');
+    const encodedSegments = segments.map(segment => {
+      // 파일/폴더 이름의 특수문자 인코딩
+      return segment
+        .replace(/ /g, '%20')           // 공백
+        .replace(/\(/g, '%28')          // 왼쪽 괄호
+        .replace(/\)/g, '%29');         // 오른쪽 괄호
+    });
+    
+    return encodedSegments.join('/');
+  };
 
   const stopAudio = async () => {
     try {
@@ -1019,15 +1094,24 @@ export default function VocabListScreen({ navigation }: Props) {
     await stopAudio();
 
     // Construct full URL - use localhost for development
-    const baseUrl = 'http://localhost:4000'; // Use localhost for iOS Simulator
+    const baseUrl = API_URL; // Use configured API URL
+    
+    // 1. 경로 매핑 적용 (bank-money -> bank (money) 등)
+    const transformedUrl = transformAudioPath(url);
+    
+    // 2. URL 인코딩 적용 (괄호, 공백 등 특수문자 처리)
+    const encodedUrl = encodeAudioPath(transformedUrl);
     
     let fullUrl;
-    if (url.startsWith('/')) {
-      fullUrl = `${baseUrl}${url}`;
+    if (encodedUrl.startsWith('/')) {
+      fullUrl = `${baseUrl}${encodedUrl}`;
     } else {
-      fullUrl = `${baseUrl}/${url}`;
+      fullUrl = `${baseUrl}/${encodedUrl}`;
     }
     
+    console.log('🔊 [playUrl] Original URL:', url);
+    console.log('🔊 [playUrl] Transformed URL:', transformedUrl);
+    console.log('🔊 [playUrl] Encoded URL:', encodedUrl);
     console.log('🔊 [playUrl] Attempting to play:', fullUrl);
     
     // Set playing state immediately for UI feedback
@@ -1090,7 +1174,7 @@ export default function VocabListScreen({ navigation }: Props) {
     }
     
     try {
-      const response = await fetch(`http://localhost:4000/simple-audio-files/${level}`);
+      const response = await fetch(`${API_URL}/simple-audio-files/${level}`);
       const result = await response.json();
       const files = result.success ? (result.files || []) : [];
       
@@ -1434,7 +1518,7 @@ export default function VocabListScreen({ navigation }: Props) {
       setDetailType('vocab');
       setShowDebug(false);
       
-      const response = await fetch(`http://localhost:4000/simple-vocab-detail/${vocabId}`);
+      const response = await fetch(`${API_URL}/simple-vocab-detail/${vocabId}`);
       const result = await response.json();
       if (result.success) {
         // Parse additional data structures for enhanced display
@@ -1765,7 +1849,7 @@ export default function VocabListScreen({ navigation }: Props) {
           disabled={words.length === 0}
         >
           <Icon
-            name={isAllSelected ? 'checkbox' : 'square-outline'}
+            name={isAllSelected ? 'checkbox' : 'checkbox-outline'}
             size={20}
             color={words.length === 0 ? '#8E8E93' : '#007AFF'}
           />

@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { API_URL } from '../config';
 import { Video, ResizeMode } from 'expo-av';
 import { useAuth } from '../hooks/useAuth';
 import { RootStackParamList } from '../navigation/types';
@@ -127,7 +128,7 @@ export default function LandingPageScreen({ navigation }: Props) {
             <Video
               style={styles.video}
               source={{
-                uri: 'http://localhost:4000/api/video/final_23sec_video.mp4',
+                uri: `${API_URL}/api/video/final_23sec_video.mp4`,
               }}
               shouldPlay={false}
               useNativeControls
