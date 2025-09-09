@@ -97,7 +97,7 @@ app.get('/simple-vocab', async (req, res) => {
     const prisma = new PrismaClient();
     
     const { limit = 5, levelCEFR = 'A1' } = req.query;
-    const limitInt = Math.min(parseInt(limit), 50);
+    const limitInt = Math.min(parseInt(limit), 20); // Reduced limit to avoid timeouts
     
     console.log(`[SIMPLE-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
     
@@ -124,12 +124,9 @@ app.get('/simple-vocab', async (req, res) => {
     console.log(`[DEBUG] Found ${vocabs.length} vocabs`);
     
     const simplifiedVocabs = vocabs.map(vocab => {
-      // Get Korean translation from VocabTranslation table
       let koGloss = '';
-      if (vocab.translations && vocab.translations.length > 0) {
-        koGloss = vocab.translations[0].translation;
-        console.log(`[DEBUG] ${vocab.lemma} -> ${koGloss}`);
-      }
+      let enExample = '';
+      let koExample = '';
       
       // Parse examples from dictentry
       let examples = [];
@@ -143,6 +140,25 @@ app.get('/simple-vocab', async (req, res) => {
         }
       }
       
+      // Extract gloss and example from examples array
+      if (Array.isArray(examples)) {
+        const glossEntry = examples.find(ex => ex.kind === 'gloss');
+        const exampleEntry = examples.find(ex => ex.kind === 'example');
+        
+        if (glossEntry) {
+          koGloss = glossEntry.ko || '';
+        }
+        if (exampleEntry) {
+          enExample = exampleEntry.en || '';
+          koExample = exampleEntry.ko || '';
+        }
+      }
+      
+      // Fallback to translations if no gloss found
+      if (!koGloss && vocab.translations && vocab.translations.length > 0) {
+        koGloss = vocab.translations[0].translation;
+      }
+      
       return {
         id: vocab.id,
         lemma: vocab.lemma,
@@ -150,8 +166,8 @@ app.get('/simple-vocab', async (req, res) => {
         levelCEFR: vocab.levelCEFR,
         ko_gloss: koGloss || `뜻: ${vocab.lemma}`,
         ipa: vocab.dictentry?.ipa || '',
-        example: examples[0]?.text || '',
-        koExample: examples[0]?.translation || ''
+        example: enExample,
+        koExample: koExample
       };
     });
     

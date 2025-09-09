@@ -696,7 +696,7 @@ export default function VocabListScreen({ navigation }: Props) {
     if (authLoading) return;
     const loadExamCategories = async () => {
       try {
-        const response = await fetch('http://172.27.81.203:4000/simple-exam-categories');
+        const response = await fetch('http://localhost:4000/simple-exam-categories');
         const result = await response.json();
         const categories = Array.isArray(result.data) ? result.data : [];
         setExamCategories(categories);
@@ -725,8 +725,8 @@ export default function VocabListScreen({ navigation }: Props) {
         
         try {
           // Use the new simple-vocab endpoint that bypasses middleware
-          console.log(`[VOCAB] Making API call to: http://172.27.81.203:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
-          const response = await fetch(`http://172.27.81.203:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
+          console.log(`[VOCAB] Making API call to: http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
+          const response = await fetch(`http://localhost:4000/simple-vocab?levelCEFR=${activeLevel}&limit=500`);
           console.log('[VOCAB] API response status:', response.status, response.statusText);
           
           if (!response.ok) {
@@ -1019,7 +1019,7 @@ export default function VocabListScreen({ navigation }: Props) {
     await stopAudio();
 
     // Construct full URL - use localhost for development
-    const baseUrl = 'http://172.27.81.203:4000'; // Use Mac IP for React Native device
+    const baseUrl = 'http://localhost:4000'; // Use localhost for iOS Simulator
     
     let fullUrl;
     if (url.startsWith('/')) {
@@ -1090,7 +1090,7 @@ export default function VocabListScreen({ navigation }: Props) {
     }
     
     try {
-      const response = await fetch(`http://172.27.81.203:4000/simple-audio-files/${level}`);
+      const response = await fetch(`http://localhost:4000/simple-audio-files/${level}`);
       const result = await response.json();
       const files = result.success ? (result.files || []) : [];
       
@@ -1434,7 +1434,7 @@ export default function VocabListScreen({ navigation }: Props) {
       setDetailType('vocab');
       setShowDebug(false);
       
-      const response = await fetch(`http://172.27.81.203:4000/simple-vocab-detail/${vocabId}`);
+      const response = await fetch(`http://localhost:4000/simple-vocab-detail/${vocabId}`);
       const result = await response.json();
       if (result.success) {
         // Parse additional data structures for enhanced display
@@ -1917,7 +1917,7 @@ export default function VocabListScreen({ navigation }: Props) {
                     style={styles.modalHeaderAudioButton}
                     onPress={() => {
                       if (detailType === 'vocab') {
-                        playVocabAudio(detail);
+                        playVocabAudioGloss(detail);
                       } else {
                         playIdiomAudio(detail);
                       }
@@ -1964,7 +1964,7 @@ export default function VocabListScreen({ navigation }: Props) {
                         style={styles.modalSectionAudioButton}
                         onPress={() => {
                           if (detailType === 'vocab') {
-                            playVocabAudio(detail);
+                            playVocabAudioExample(detail);
                           }
                         }}
                       >
