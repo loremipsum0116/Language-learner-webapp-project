@@ -486,10 +486,11 @@ app.use('/phrasal_verb', (req, res, next) => {
 app.use('/api/video', staticFileLogging, preCompressedStatic(path.join(__dirname, 'out')));
 
 // === 압축 및 최적화 미들웨어 (최우선 적용) ===
-app.use(advancedCompression);
-app.use(contentTypeOptimization);
-app.use(responseSizeMonitoring);
-app.use(brotliCompression);
+// TEMPORARILY DISABLED: compression middleware causing RangeError
+// app.use(advancedCompression);
+// app.use(contentTypeOptimization);
+// app.use(responseSizeMonitoring);
+// app.use(brotliCompression);
 
 // CORS 설정을 정적 파일보다 먼저 적용
 app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
@@ -500,17 +501,22 @@ app.use(express.json({ limit: '10mb' })); // JSON 크기 제한 증가
 app.use(cookieParser());
 
 // === API 응답 최적화 ===
-app.use(apiResponseOptimization);
+// TEMPORARILY DISABLED: apiResponseOptimization causing RangeError
+// app.use(apiResponseOptimization);
 app.use(apiCacheOptimization);
 
 // === 응답 포맷 표준화 미들웨어 ===
-app.use(responseFormatMiddleware);
+// TEMPORARILY DISABLED: responseFormatMiddleware causing RangeError
+// app.use(responseFormatMiddleware);
 
 // === API 버전 관리 미들웨어 ===
-app.use(detectApiVersion);
-app.use(validateApiVersion([1])); // 현재 v1만 지원
-app.use(deprecationWarning);
-app.use(formatApiResponse);
+// TEMPORARILY DISABLED: detectApiVersion causing RangeError  
+// app.use(detectApiVersion);
+// TEMPORARILY DISABLED: validateApiVersion causing API version undefined error
+// app.use(validateApiVersion([1])); // 현재 v1만 지원
+// app.use(deprecationWarning);
+// TEMPORARILY DISABLED: formatApiResponse causing RangeError
+// app.use(formatApiResponse);
 
 // === 새로운 버전 관리 API (v1) ===
 app.use('/api/v1', apiV1Router);

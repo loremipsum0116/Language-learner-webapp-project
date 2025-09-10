@@ -111,9 +111,15 @@ function optimizeApiResponse(data, options = {}) {
   // Safe deep clone with error handling for large objects
   let optimized;
   try {
+    // Check if data is too large to stringify (common cause of RangeError)
+    const dataSize = JSON.stringify(data).length;
+    if (dataSize > 500000000) { // 500MB limit
+      console.warn('[COMPRESSION] Response too large to optimize, returning original');
+      return data;
+    }
     optimized = JSON.parse(JSON.stringify(data));
   } catch (error) {
-    console.warn('[COMPRESSION] Failed to clone large response object, returning original:', error.message);
+    console.warn('[COMPRESSION] Failed to clone response object, returning original:', error.message);
     // For very large objects that can't be stringified, return original data
     return data;
   }
@@ -264,12 +270,9 @@ const brotliCompression = (req, res, next) => {
       req.headers['user-agent'] && 
       !req.headers['user-agent'].includes('curl')) {
     
-    // Enable Brotli for text-based content
-    const originalJson = res.json;
-    res.json = function(data) {
-      res.set('Content-Encoding', 'br');
-      return originalJson.call(this, data);
-    };
+    // Set header hint for Brotli support, but don't override res.json
+    // Let the main compression middleware handle it
+    res.set('X-Brotli-Supported', 'true');
   }
   
   next();

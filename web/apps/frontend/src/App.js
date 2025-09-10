@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from "react-router-dom";
 import Header from "./pages/Header";
 import Footer from "./components/Footer";
-import Home from "./pages/Home";
+import HomeEn from "./pages/Home_en";
+import HomeJp from "./pages/Home_jp";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LearnVocab from "./pages/LearnVocab";
@@ -55,7 +56,19 @@ export default function App() {
             <>
               <Header />
               <div className="main-content">
-                <Home />
+                <HomeEn />
+              </div>
+              <Footer />
+            </>
+          } 
+        />
+        <Route 
+          path="/home-jp" 
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <HomeJp />
               </div>
               <Footer />
             </>

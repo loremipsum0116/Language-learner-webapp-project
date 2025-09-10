@@ -203,7 +203,9 @@
       "Bash(EXPO_USE_TOOLS=1 npx expo run:ios --device)",
       "Read(//private/var/db/lockdown/**)",
       "Bash(npx expo prebuild:*)",
-      "Bash(top:*)"
+      "Bash(top:*)",
+      "Bash(DISABLE_ESLINT_PLUGIN=true npm start)",
+      "Bash(DISABLE_ESLINT_PLUGIN=true pnpm start)"
     ],
     "deny": [],
     "ask": []

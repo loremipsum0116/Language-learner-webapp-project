@@ -1,28 +1,71 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
-import "./Home.css";
+import LanguageSwitcher from "../components/LanguageSwitcher";
+import "./Home_jp.css";
 
 /**
- * English special characters virtual keypad (common symbols)
- * props.onInsert(char) 로 입력 타겟에 삽입
+ * Japanese special characters virtual keypad (hiragana/katakana/symbols)
+ * props.onInsert(char) で入力ターゲットに挿入
  */
-function EnglishKeypad({ onInsert }) {
-  const keys = ["'", '"', "!", "?", ";", ":", "&", "-"];
+function JapaneseKeypad({ onInsert }) {
+  const hiragana = ["あ", "い", "う", "え", "お", "ん", "っ", "ー"];
+  const katakana = ["ア", "イ", "ウ", "エ", "オ", "ン", "ッ", "ー"];
+  const symbols = ["。", "、", "？", "！", "・", "「", "」", "〜"];
+  
   return (
-    <div className="d-flex gap-2 my-2" role="group" aria-label="English punctuation keypad">
-      {keys.map((k) => (
-        <button
-          key={k}
-          type="button"
-          className="btn btn-outline-secondary btn-sm"
-          onClick={() => onInsert(k)}
-          aria-label={`insert ${k}`}
-        >
-          {k}
-        </button>
-      ))}
+    <div className="japanese-keypad my-2">
+      <div className="keypad-section">
+        <label className="keypad-label">ひらがな</label>
+        <div className="d-flex gap-2 flex-wrap" role="group" aria-label="Hiragana keypad">
+          {hiragana.map((k) => (
+            <button
+              key={k}
+              type="button"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={() => onInsert(k)}
+              aria-label={`insert ${k}`}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="keypad-section mt-2">
+        <label className="keypad-label">カタカナ</label>
+        <div className="d-flex gap-2 flex-wrap" role="group" aria-label="Katakana keypad">
+          {katakana.map((k) => (
+            <button
+              key={k}
+              type="button"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={() => onInsert(k)}
+              aria-label={`insert ${k}`}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+      </div>
+      
+      <div className="keypad-section mt-2">
+        <label className="keypad-label">記号</label>
+        <div className="d-flex gap-2 flex-wrap" role="group" aria-label="Japanese symbols keypad">
+          {symbols.map((k) => (
+            <button
+              key={k}
+              type="button"
+              className="btn btn-outline-secondary btn-sm"
+              onClick={() => onInsert(k)}
+              aria-label={`insert ${k}`}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
@@ -64,7 +107,6 @@ function AudioPlayer({ src, license, attribution }) {
   );
 }
 
-
 /**
  * 근거(Refs) Drawer
  */
@@ -97,11 +139,11 @@ function SrsWidget() {
     let mounted = true;
     (async () => {
         try {
-            // overdue 상태인 모든 카드 조회
+            // overdue 状態のすべてのカードを照会
             const availableData = await fetchJSON(`/srs/available`, withCreds());
             if (!mounted) return;
             
-            // overdue 카드 수 카운트
+            // overdue カード数カウント
             let count = 0;
             if (Array.isArray(availableData?.data)) {
                 count = availableData.data.length;
@@ -122,48 +164,48 @@ function SrsWidget() {
     <div className="card h-100 vocabulary-card">
       <div className="card-body">
         <h5 className="card-title d-flex align-items-center gap-1">
-          <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
-          오늘의 SRS
+          <img src="/sakura.png" alt="" style={{ height: '24px', width: 'auto' }} />
+          今日のSRS
         </h5>
         {err && err.status === 401 ? (
-          <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
+          <div className="alert alert-warning">セッション満了: <Link to="/login">再ログイン</Link></div>
         ) : count === null ? (
           <div className="placeholder-glow">
             <span className="placeholder col-6"></span>
           </div>
         ) : (
           <>
-            <p className="card-text">복습 대기: <strong>{count}</strong> 개</p>
+            <p className="card-text">復習待機: <strong>{count}</strong> 個</p>
             {lat !== null && <div className="form-text">API {lat}ms</div>}
             <button 
               className="btn btn-primary" 
               onClick={async () => {
                 try {
-                  // 모든 overdue 카드의 vocabId 조회
+                  // すべてのoverdueカードのvocabId照会
                   const availableData = await fetchJSON(`/srs/available`, withCreds());
                   
                   if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
-                    // overdue 카드들의 vocabId 추출
+                    // overdueカードからvocabId抽出
                     const vocabIds = availableData.data
                       .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
                       .filter(Boolean);
                     
                     if (vocabIds.length > 0) {
-                      // learn/vocab 시스템으로 리다이렉트 (전체 overdue 모드)
+                      // learn/vocab システムにリダイレクト (全体overdueモード)
                       window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
                     } else {
-                      alert('복습할 단어가 없습니다.');
+                      alert('復習する単語がありません。');
                     }
                   } else {
-                    alert('복습할 카드가 없습니다.');
+                    alert('復習するカードがありません。');
                   }
                 } catch (error) {
                   console.error('Failed to fetch overdue cards:', error);
-                  alert('복습 카드를 불러오는 중 오류가 발생했습니다.');
+                  alert('復習カードの読み込み中にエラーが発生しました。');
                 }
               }}
             >
-              복습 시작
+              復習開始
             </button>
           </>
         )}
@@ -173,7 +215,7 @@ function SrsWidget() {
 }
 
 /**
- * 사전 검색 퀵패널 (GET /dict/search)
+ * 辞書検索クイックパネル (GET /dict/search)
  */
 function DictQuickPanel() {
   const [q, setQ] = useState("");
@@ -200,29 +242,48 @@ function DictQuickPanel() {
     }
   };
 
+  // 日本語入力用のキーパッド挿入
+  const insertChar = (char) => {
+    if (inputRef.current) {
+      const start = inputRef.current.selectionStart;
+      const end = inputRef.current.selectionEnd;
+      const newValue = q.slice(0, start) + char + q.slice(end);
+      setQ(newValue);
+      
+      // カーソル位置を設定
+      setTimeout(() => {
+        inputRef.current.selectionStart = inputRef.current.selectionEnd = start + char.length;
+        inputRef.current.focus();
+      }, 0);
+    }
+  };
+
   return (
     <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">📚 사전 검색</h5>
+        <h5 className="card-title">📚 辞書検索</h5>
         <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="dictionary search">
           <input
             ref={inputRef}
             className="form-control"
-            // ▼▼▼ placeholder 수정 ▼▼▼
-            placeholder="영어 또는 한국어 뜻 검색"
+            placeholder="日本語または韓国語の意味検索"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="query"
           />
           <button className="btn btn-outline-primary" type="submit" disabled={loading}>
-            {loading ? "🔍 검색 중..." : "🔍 검색"}
+            {loading ? "🔍 検索中..." : "🔍 検索"}
           </button>
           <Link className="btn btn-link" to="/dict" aria-label="open dictionary page">
-            상세 보기 →
+            詳細表示 →
           </Link>
         </form>
+        
+        {/* 日本語キーパッド追加 */}
+        <JapaneseKeypad onInsert={insertChar} />
+        
         {err && err.status === 401 && (
-          <div className="alert alert-danmoosae mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
+          <div className="alert alert-sakura mt-2">セッション満了: <Link to="/login">再ログイン</Link></div>
         )}
         {lat !== null && (
           <div className="form-text mt-1">
@@ -242,9 +303,9 @@ function DictQuickPanel() {
                 <ul className="mb-0">
                   {e.examples.slice(0, 2).map((ex, i) => (
                     <li key={i}>
-                      <span lang="en">{ex.de}</span>
+                      <span lang="ja">{ex.de}</span>
                       {ex.ko ? <span> — {ex.ko}</span> : null}
-                      {ex.cefr ? <small className="text-muted"> ({ex.cefr})</small> : null}
+                      {ex.jlpt ? <small className="text-muted"> (JLPT {ex.jlpt})</small> : null}
                     </li>
                   ))}
                 </ul>
@@ -257,10 +318,8 @@ function DictQuickPanel() {
   );
 }
 
-
-
 /**
- * 리딩 티저: /reading/list
+ * リーディングティーザー: /reading/list
  */
 function ReadingTeaser() {
   const [list, setList] = useState([]);
@@ -283,22 +342,22 @@ function ReadingTeaser() {
   return (
     <div className="card h-100 vocabulary-card">
       <div className="card-body">
-        <h5 className="card-title">📜 리딩</h5>
+        <h5 className="card-title">📜 読解練習</h5>
         {err && err.status === 401 ? (
-          <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
+          <div className="alert alert-warning">セッション満了: <Link to="/login">再ログイン</Link></div>
         ) : (
           <ul className="mb-2">
             {list.slice(0, 3).map((r) => (
               <li key={r.id}>
                 <Link to={`/read/${r.id}`}>{r.title}</Link>{" "}
-                <small className="text-muted">({r.levelCEFR})</small>
+                <small className="text-muted">(JLPT {r.levelJLPT || 'N5'})</small>
               </li>
             ))}
-            {list.length === 0 && <li className="text-muted">콘텐츠 준비 중</li>}
+            {list.length === 0 && <li className="text-muted">コンテンツ準備中</li>}
           </ul>
         )}
         <Link className="btn btn-outline-secondary btn-sm" to="/read/1">
-          샘플 열기
+          サンプルを開く
         </Link>
       </div>
     </div>
@@ -306,7 +365,7 @@ function ReadingTeaser() {
 }
 
 /**
- * 대시보드 위젯: 실제 백엔드 데이터를 사용한 학습 통계
+ * ダッシュボードウィジェット: 実際のバックエンドデータを使用した学習統計
  */
 function DashboardWidget() {
   const [stats, setStats] = useState({
@@ -325,7 +384,7 @@ function DashboardWidget() {
       try {
         setLoading(true);
 
-        // Dashboard.jsx와 동일한 API 호출
+        // Dashboard.jsxと同じAPI呼び出し
         const [srsQueueRes, masteredCardsRes, streakRes] = await Promise.all([
           fetchJSON('/srs/available', withCreds({ signal: ac.signal })),
           fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal })),
@@ -360,7 +419,7 @@ function DashboardWidget() {
     return (
       <div className="dashboard-loading-compact">
         <div className="spinner-compact"></div>
-        <span>로딩 중...</span>
+        <span>読み込み中...</span>
       </div>
     );
   }
@@ -369,9 +428,9 @@ function DashboardWidget() {
     return (
       <div className="dashboard-error-compact">
         <span>📊</span>
-        <p>통계를 불러올 수 없습니다</p>
+        <p>統計を読み込めません</p>
         {err.status === 401 && (
-          <Link to="/login" className="dashboard-login-link">다시 로그인</Link>
+          <Link to="/login" className="dashboard-login-link">再ログイン</Link>
         )}
       </div>
     );
@@ -384,7 +443,7 @@ function DashboardWidget() {
           <div className="stat-icon-compact">📚</div>
           <div className="stat-details-compact">
             <div className="stat-number-compact">{stats.srsQueue}</div>
-            <div className="stat-label-compact">복습 대기</div>
+            <div className="stat-label-compact">復習待機</div>
           </div>
         </div>
         
@@ -392,7 +451,7 @@ function DashboardWidget() {
           <div className="stat-icon-compact">🏆</div>
           <div className="stat-details-compact">
             <div className="stat-number-compact">{stats.masteredWords}</div>
-            <div className="stat-label-compact">마스터</div>
+            <div className="stat-label-compact">マスター</div>
           </div>
         </div>
         
@@ -400,7 +459,7 @@ function DashboardWidget() {
           <div className="stat-icon-compact">🔥</div>
           <div className="stat-details-compact">
             <div className="stat-number-compact">{stats.streakDays}</div>
-            <div className="stat-label-compact">연속일</div>
+            <div className="stat-label-compact">連続日</div>
           </div>
         </div>
 
@@ -408,14 +467,14 @@ function DashboardWidget() {
           <div className="stat-icon-compact">✨</div>
           <div className="stat-details-compact">
             <div className="stat-number-compact">{stats.studiedToday}</div>
-            <div className="stat-label-compact">오늘</div>
+            <div className="stat-label-compact">今日</div>
           </div>
         </div>
       </div>
       
       <div className="dashboard-actions-compact">
         <Link to="/dashboard" className="dashboard-btn-compact primary">
-          📊 상세 대시보드
+          📊 詳細ダッシュボード
         </Link>
       </div>
     </div>
@@ -423,13 +482,13 @@ function DashboardWidget() {
 }
 
 /**
- * 홈(메인) 페이지
+ * ホーム(メイン)ページ - 日本語版
  */
-export default function Home() {
+export default function HomeJP() {
   const { user } = useAuth();
   const [authErr, setAuthErr] = useState(null);
   
-  // 운영자 체크
+  // 管理者チェック
   const isAdmin = user?.email === 'super@root.com';
 
   useEffect(() => {
@@ -446,22 +505,24 @@ export default function Home() {
     };
   }, []);
 
-
   return (
-    <div className="home-container">
+    <div className="home-container japanese-theme">
+      {/* Language Switcher */}
+      <LanguageSwitcher />
+      
       {/* Hero Section */}
       <section className="hero-modern">
         <h1 className="hero-title">
-          <img src="/danmoosae.png" alt="" style={{ height: '48px', width: 'auto', marginRight: '0.5rem' }} />
-          단무새와 함께하는 영어 학습
+          <img src="/sakura.png" alt="" style={{ height: '48px', width: 'auto', marginRight: '0.5rem' }} />
+          桜と一緒に学ぶ日本語
         </h1>
         <p className="hero-subtitle">
-          SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
+          SRS 단어 학습, 문법 연습, 독해력을 한 곳에서! 아름다운 벚꽃과 함께{" "}
           <strong>🔊 음성 사전</strong>을 경험해보세요.
         </p>
         <div className="hero-actions">
           <Link className="hero-btn hero-btn-primary" to="/srs">
-            🎆 오늘 학습 시작
+            🌸 오늘 학습 시작
           </Link>
           <Link className="hero-btn hero-btn-outline" to="/dict">
             📚 사전 검색
@@ -505,7 +566,7 @@ export default function Home() {
       <section className="widgets-section">
         <div className="widget-card">
           <div className="widget-title">
-            <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
+            <img src="/sakura.png" alt="" style={{ height: '24px', width: 'auto' }} />
             오늘의 SRS
           </div>
           <div className="widget-content">
@@ -540,11 +601,11 @@ export default function Home() {
               <span className="learning-badge grammar">Grammar</span>
             </div>
             <p className="learning-description">
-              체계적인 영어 문법 학습으로 정확한 영어 구사력을 키워보세요.
+              체계적인 일본어 문법 학습으로 정확한 일본어 구사력을 키워보세요.
             </p>
             
             <div className="level-buttons">
-              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
                 <Link 
                   key={level}
                   to={`/learn/grammar?level=${level}`} 
@@ -560,10 +621,10 @@ export default function Home() {
             </Link>
           </div>
 
-          {/* 리딩 섹션 */}
+          {/* 독해 섹션 */}
           <div className="learning-card reading">
             <div className="learning-card-header">
-              <h3 className="learning-card-title">📖 리딩 연습</h3>
+              <h3 className="learning-card-title">📖 독해 연습</h3>
               <span className="learning-badge reading">Reading</span>
             </div>
             <p className="learning-description">
@@ -571,7 +632,7 @@ export default function Home() {
             </p>
             
             <div className="level-buttons">
-              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
                 <Link 
                   key={level}
                   to={`/reading?level=${level}`} 
@@ -583,14 +644,14 @@ export default function Home() {
             </div>
             
             <Link to="/reading" className="learning-main-btn reading">
-              전체 리딩 목록 보기 →
+              전체 독해 목록 보기 →
             </Link>
           </div>
 
-          {/* 리스닝 섹션 */}
+          {/* 청취 섹션 */}
           <div className="learning-card listening">
             <div className="learning-card-header">
-              <h3 className="learning-card-title">🎧 리스닝 연습</h3>
+              <h3 className="learning-card-title">🎧 청취 연습</h3>
               <span className="learning-badge listening">Listening</span>
             </div>
             <p className="learning-description">
@@ -598,7 +659,7 @@ export default function Home() {
             </p>
             
             <div className="level-buttons">
-              {["A1", "A2", "B1", "B2", "C1"].map((level) => (
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
                 <Link 
                   key={level}
                   to={`/listening/list?level=${level}`} 
@@ -610,7 +671,7 @@ export default function Home() {
             </div>
             
             <Link to="/listening" className="learning-main-btn listening">
-              전체 리스닝 목록 보기 →
+              전체 청취 목록 보기 →
             </Link>
           </div>
         </div>
@@ -638,7 +699,7 @@ export default function Home() {
         </div>
         <div className="tools-info">
           <ul>
-            <li>접근성: 모든 입력에 라벨/aria 제공, 가상 키보드(ä/ö/ü/ß) 제공.</li>
+            <li>접근성: 모든 입력에 라벨/aria 제공, 가상 키보드(ひらがな/カタカナ) 제공.</li>
             <li>보안: 모든 API 호출은 JWT HttpOnly 쿠키 포함(`credentials: "include"`).</li>
             <li>에러: 401 수신 시 로그인 안내. 다른 상태코드는 메시지 표시(개선 여지).</li>
             <li>성능: 주요 패널에 API 지연(ms) 표기. 캐시/ETag/Redis는 백엔드에서 구현.</li>

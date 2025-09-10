@@ -1,0 +1,90 @@
+/* LanguageSwitcher.css */
+
+.language-switcher {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 0.5rem;
+  border-radius: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  border: 2px solid rgba(244, 208, 63, 0.2);
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  background: transparent;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  font-weight: 600;
+}
+
+.lang-btn:hover {
+  background: rgba(244, 208, 63, 0.1);
+  transform: translateY(-1px);
+  border-color: rgba(244, 208, 63, 0.3);
+}
+
+.lang-btn.active {
+  background: linear-gradient(135deg, rgba(244, 208, 63, 0.2) 0%, rgba(127, 176, 105, 0.2) 100%);
+  border-color: var(--color-primary, #f4d03f);
+  box-shadow: 0 2px 8px rgba(244, 208, 63, 0.2);
+}
+
+.flag {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.lang-text {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .language-switcher {
+    top: 10px;
+    right: 10px;
+    padding: 0.375rem;
+  }
+  
+  .lang-btn {
+    padding: 0.375rem 0.5rem;
+  }
+  
+  .flag {
+    font-size: 1rem;
+  }
+  
+  .lang-text {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .language-switcher {
+    top: 5px;
+    right: 5px;
+  }
+  
+  .lang-text {
+    display: none;
+  }
+  
+  .lang-btn {
+    padding: 0.5rem;
+  }
+}

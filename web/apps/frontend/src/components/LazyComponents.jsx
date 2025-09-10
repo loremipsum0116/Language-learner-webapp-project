@@ -2,7 +2,7 @@
 import React, { lazy } from 'react';
 
 // Lazy load heavy pages
-export const LazyHome = lazy(() => import('../pages/Home'));
+export const LazyHome = lazy(() => import('../pages/Home_en'));
 export const LazyVocabList = lazy(() => import('../pages/VocabList'));
 export const LazyMyWordbook = lazy(() => import('../pages/MyWordbook'));
 export const LazySrsDashboard = lazy(() => import('../pages/SrsDashboard'));
