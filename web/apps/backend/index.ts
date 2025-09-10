@@ -227,9 +227,20 @@ app.get('/simple-vocab', async (req: Request, res: Response) => {
   const prisma = new PrismaClient();
   
   try {
-    const { levelCEFR, limit = 100 } = req.query;
+    const { levelCEFR, limit = 100, offset = 0 } = req.query;
     
-    console.log('[SIMPLE-VOCAB] Request params:', { levelCEFR, limit });
+    console.log('[SIMPLE-VOCAB] Request params:', { levelCEFR, limit, offset });
+    
+    const limitNum = parseInt(limit as string, 10);
+    const offsetNum = parseInt(offset as string, 10);
+    
+    // Get total count for pagination info
+    const totalCount = await prisma.vocab.count({
+      where: {
+        language: { code: 'en' },
+        ...(levelCEFR ? { levelCEFR: levelCEFR as string } : {})
+      }
+    });
     
     const vocabs = await prisma.vocab.findMany({
       where: {
@@ -242,7 +253,9 @@ app.get('/simple-vocab', async (req: Request, res: Response) => {
           where: { language: { code: 'ko' } }
         }
       },
-      take: parseInt(limit as string, 10)
+      take: limitNum,
+      skip: offsetNum,
+      orderBy: { id: 'asc' } // Consistent ordering for pagination
     });
     
     // Transform data to match expected format
@@ -275,17 +288,27 @@ app.get('/simple-vocab', async (req: Request, res: Response) => {
         ipaKo: vocab.dictentry?.ipaKo,
         ko_gloss: vocab.translations[0]?.translation || vocab.dictentry?.koGloss || '',
         definition: vocab.translations[0]?.definition || '',
-        example: examples[0]?.text || '',
-        koExample: examples[0]?.translation || '',
+        example: examples[0]?.en || examples[0]?.text || '',
+        koExample: examples[0]?.ko || examples[0]?.translation || '',
         audio: vocab.dictentry?.audioUrl,
         source: vocab.source,
-        count: vocabs.length
+        count: totalCount // Use total count, not current page count
       };
     });
     
+    const hasMore = offsetNum + limitNum < totalCount;
+    
     res.json({
       success: true,
-      data: formattedVocabs
+      data: formattedVocabs,
+      pagination: {
+        offset: offsetNum,
+        limit: limitNum,
+        total: totalCount,
+        hasMore: hasMore,
+        currentPage: Math.floor(offsetNum / limitNum) + 1,
+        totalPages: Math.ceil(totalCount / limitNum)
+      }
     });
   } catch (error: any) {
     console.error('[SIMPLE-VOCAB] Error:', error);
@@ -344,8 +367,8 @@ app.get('/simple-vocab-detail/:id', async (req: Request, res: Response) => {
       ipaKo: vocab.dictentry?.ipaKo,
       ko_gloss: vocab.translations[0]?.translation || '',
       definition: vocab.translations[0]?.definition || '',
-      example: examples[0]?.text || '',
-      koExample: examples[0]?.translation || '',
+      example: examples[0]?.en || examples[0]?.text || '',
+      koExample: examples[0]?.ko || examples[0]?.translation || '',
       audio: vocab.dictentry?.audioUrl,
       source: vocab.source,
       dictentry: vocab.dictentry
@@ -443,7 +466,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = parseInt(process.env.PORT || '4000', 10);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`API listening on port ${PORT} (all interfaces)`);

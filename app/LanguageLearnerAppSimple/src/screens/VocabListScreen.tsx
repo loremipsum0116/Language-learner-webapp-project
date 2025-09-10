@@ -663,6 +663,11 @@ export default function VocabListScreen({ navigation }: Props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [hasNextPage, setHasNextPage] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
+  // Infinite scroll pagination
+  const [currentOffset, setCurrentOffset] = useState(0);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const ITEMS_PER_PAGE = 100;
   const [myWordbookIds, setMyWordbookIds] = useState<Set<number>>(new Set());
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pendingVocabIds, setPendingVocabIds] = useState<number[]>([]);
@@ -712,22 +717,35 @@ export default function VocabListScreen({ navigation }: Props) {
     loadExamCategories();
   }, [authLoading]);
 
-  // 메인 데이터 로딩 - 실제 cefr_vocabs.json 데이터 사용
-  const loadVocabData = async () => {
+  // 메인 데이터 로딩 - 페이지네이션으로 초기 로드
+  const loadVocabData = async (reset: boolean = true) => {
     try {
-      setLoading(true);
+      if (reset) {
+        setLoading(true);
+        setCurrentOffset(0);
+        setWords([]);
+        setAllWords([]);
+        setHasMore(true);
+      } else {
+        setIsLoadingMore(true);
+      }
       setErr(null);
       
+      const offset = reset ? 0 : currentOffset;
+      console.log(`[VOCAB] Loading data with offset: ${offset}, reset: ${reset}`);
+      
       let data: any[] = [];
+      let totalCount = 0;
+      let hasMoreData = false;
       
       if (activeTab === 'cefr') {
-        // CEFR 레벨별 조회 - 실제 API 호출
-        console.log('[VOCAB] Fetching real CEFR data for level:', activeLevel);
+        // CEFR 레벨별 조회 - 페이지네이션 지원
+        console.log('[VOCAB] Fetching paginated CEFR data for level:', activeLevel);
         
         try {
-          // Use the new simple-vocab endpoint that bypasses middleware
-          console.log(`[VOCAB] Making API call to: ${API_URL}/simple-vocab?levelCEFR=${activeLevel}&limit=10000`);
-          const response = await fetch(`${API_URL}/simple-vocab?levelCEFR=${activeLevel}&limit=10000`);
+          const url = `${API_URL}/simple-vocab?levelCEFR=${activeLevel}&limit=${ITEMS_PER_PAGE}&offset=${offset}`;
+          console.log(`[VOCAB] Making API call to: ${url}`);
+          const response = await fetch(url);
           console.log('[VOCAB] API response status:', response.status, response.statusText);
           
           if (!response.ok) {
@@ -738,18 +756,15 @@ export default function VocabListScreen({ navigation }: Props) {
           console.log('[VOCAB] API result:', result);
           
           if (result.success && result.data) {
-            data = result.data;
-            console.log('[VOCAB] Real CEFR data loaded:', data.length, 'items for level', activeLevel);
-            console.log('[VOCAB] First few items:', data.slice(0, 3));
-            setTotalCount(result.count || data.length);
+            data = result.data.vocabs || result.data;
+            totalCount = result.pagination?.total || result.count || 0;
+            hasMoreData = result.pagination?.hasMore || result.hasMore || false;
+            console.log(`[VOCAB] CEFR data loaded: ${data.length} items, total: ${totalCount}, hasMore: ${hasMoreData}`);
             
             // Apply search filter if there's a search term
-            if (debouncedSearchTerm) {
-              data = data.filter(item => 
-                item.lemma.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-                (item.ko_gloss && item.ko_gloss.includes(debouncedSearchTerm))
-              );
-              console.log('[VOCAB] Search filtered results:', data.length, 'items for term:', debouncedSearchTerm);
+            if (debouncedSearchTerm && !reset) {
+              // For search, we need to handle differently - for now skip search in pagination
+              console.log('[VOCAB] Search filtering disabled during pagination');
             }
           } else {
             throw new Error(`API returned: ${JSON.stringify(result)}`);
@@ -778,29 +793,30 @@ export default function VocabListScreen({ navigation }: Props) {
             ]
           };
           data = sampleData[activeLevel as keyof typeof sampleData] || [];
-          setTotalCount(data.length);
+          totalCount = data.length;
+          hasMoreData = false;
         }
       } else if (activeTab === 'idiom') {
         // 숙어·구동사 조회 - 임시로 빈 배열
         console.log('[VOCAB] Idiom tab - showing empty for now');
         data = [];
-        setWords([]);
-        setAllWords([]);
-        setTotalCount(0);
-        setDisplayCount(100);
-        return;
+        totalCount = 0;
+        hasMoreData = false;
       } else {
-        // 시험별 조회
-        console.log('[VOCAB] Exam tab - fetching exam-specific vocab for:', activeExam);
+        // 시험별 조회 - 페이지네이션 지원
+        console.log('[VOCAB] Exam tab - fetching paginated exam-specific vocab for:', activeExam);
         if (activeExam) {
           try {
-            // API call to fetch exam-specific vocabulary
-            const response = await fetch(`${API_URL}/simple-vocab?exam=${activeExam}&limit=10000`);
+            const url = `${API_URL}/simple-vocab?exam=${activeExam}&limit=${ITEMS_PER_PAGE}&offset=${offset}`;
+            console.log(`[VOCAB] Making exam API call to: ${url}`);
+            const response = await fetch(url);
             const result = await response.json();
             
             if (result.success && result.data) {
-              data = result.data;
-              setTotalCount(result.count || data.length);
+              data = result.data.vocabs || result.data;
+              totalCount = result.pagination?.total || result.count || 0;
+              hasMoreData = result.pagination?.hasMore || result.hasMore || false;
+              console.log(`[VOCAB] Exam data loaded: ${data.length} items, total: ${totalCount}, hasMore: ${hasMoreData}`);
             } else {
               // If no exam-specific endpoint, use filtered CEFR data
               console.log('[VOCAB] No exam-specific endpoint, using sample data');
@@ -828,30 +844,57 @@ export default function VocabListScreen({ navigation }: Props) {
                 ]
               };
               data = examSampleData[activeExam] || [];
-              setTotalCount(data.length);
+              totalCount = data.length;
+              hasMoreData = false;
             }
           } catch (error) {
             console.error('[VOCAB] Error fetching exam vocab:', error);
             data = [];
-            setTotalCount(0);
+            totalCount = 0;
+            hasMoreData = false;
           }
         } else {
           data = [];
-          setTotalCount(0);
+          totalCount = 0;
+          hasMoreData = false;
         }
         setHasNextPage(false);
       }
       
       console.log('[VOCAB] Final words array:', data.length, 'items');
-      setAllWords(data);
-      setWords(data.slice(0, displayCount));
-      setDisplayCount(100);
+      
+      // Update state based on reset flag
+      if (reset) {
+        setAllWords(data);
+        setWords(data);
+        setTotalCount(totalCount);
+        setCurrentOffset(ITEMS_PER_PAGE);
+      } else {
+        // 중복 제거를 위한 로직 추가
+        setAllWords(prev => {
+          const existingIds = new Set(prev.map(item => item.id));
+          const newData = data.filter(item => !existingIds.has(item.id));
+          return [...prev, ...newData];
+        });
+        setWords(prev => {
+          const existingIds = new Set(prev.map(item => item.id));
+          const newData = data.filter(item => !existingIds.has(item.id));
+          return [...prev, ...newData];
+        });
+        setCurrentOffset(prev => prev + data.length);
+      }
+      
+      // hasMore 로직 개선
+      const shouldHaveMore = data.length === ITEMS_PER_PAGE && (hasMoreData !== false);
+      setHasMore(shouldHaveMore);
+      console.log('[VOCAB] Set hasMore to:', shouldHaveMore, 'data length:', data.length, 'hasMoreData:', hasMoreData);
     } catch (e) {
       console.error("Failed to load vocab data:", e);
       setErr(e);
     } finally {
       setLoading(false);
       setRefreshing(false);
+      setIsLoadingMore(false);
     }
   };
 
@@ -861,10 +904,7 @@ export default function VocabListScreen({ navigation }: Props) {
     }
   }, [activeLevel, activeTab, activeExam, activeIdiomCategory, debouncedSearchTerm, authLoading]);
 
-  // displayCount 변경 시 words 업데이트
-  useEffect(() => {
-    setWords(allWords.slice(0, displayCount));
-  }, [allWords, displayCount]);
+  // displayCount는 더 이상 사용하지 않음 - 무한스크롤로 대체
 
   // 내 단어장 ID 로드
   useEffect(() => {
@@ -1579,27 +1619,24 @@ export default function VocabListScreen({ navigation }: Props) {
     setPickerOpen(true);
   };
 
-  const handleLoadMore = async () => {
-    if (!hasNextPage || loading || activeTab !== 'exam' || !activeExam) return;
+  // Infinite scroll load more function
+  const loadMore = async () => {
+    if (!hasMore || isLoadingMore || loading) {
+      console.log('[VOCAB] Load more skipped - hasMore:', hasMore, 'isLoadingMore:', isLoadingMore, 'loading:', loading);
+      return;
+    }
     
+    console.log('[VOCAB] Loading more data...');
+    setIsLoadingMore(true);
     try {
-      setLoading(true);
-      const nextPage = currentPage + 1;
-      const response = await apiClient.get(`/exam-vocab/${activeExam}?page=${nextPage}&limit=100`);
-      const newVocabs = response.data?.data?.vocabs || response.data?.vocabs || [];
-      
-      setAllWords(prev => [...prev, ...newVocabs]);
-      setWords(prev => [...prev, ...newVocabs]);
-      
-      setCurrentPage(nextPage);
-      setHasNextPage(response.data?.data?.pagination?.hasNext || response.data?.pagination?.hasNext || false);
-      
+      await loadVocabData(false);
     } catch (error) {
-      console.error('Failed to load more words:', error);
+      console.error('[VOCAB] Load more failed:', error);
     } finally {
-      setLoading(false);
+      setIsLoadingMore(false);
     }
   };
+
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -1933,24 +1970,27 @@ export default function VocabListScreen({ navigation }: Props) {
           }
           contentContainerStyle={styles.listContainer}
           showsVerticalScrollIndicator={false}
+          onEndReached={loadMore}
+          onEndReachedThreshold={0.3}
           ListFooterComponent={
-            // 더 보기 버튼
-            !loading && !err && hasNextPage && activeTab === 'exam' ? (
-              <TouchableOpacity style={styles.loadMoreButton} onPress={handleLoadMore}>
-                <Text style={styles.loadMoreButtonText}>
-                  더 보기 ({totalCount - allWords.length}개 더)
+            isLoadingMore ? (
+              <View style={styles.loadMoreButton}>
+                <ActivityIndicator size="small" color="#007AFF" />
+                <Text style={styles.loadMoreButtonText}>더 불러오는 중...</Text>
+              </View>
+            ) : !loading && !err && !hasMore && words.length > 0 ? (
+              <View style={styles.loadMoreButton}>
+                <Text style={[styles.loadMoreButtonText, { color: '#999' }]}>
+                  모든 단어를 불러왔습니다
                 </Text>
-              </TouchableOpacity>
-            ) : !loading && !err && (activeTab === 'cefr' || activeTab === 'idiom') && allWords.length > displayCount ? (
-              <TouchableOpacity 
-                style={styles.loadMoreButton} 
-                onPress={() => setDisplayCount(prev => prev + 100)}
-              >
-                <Text style={styles.loadMoreButtonText}>
-                  더 보기 ({allWords.length - displayCount}개 더)
+              </View>
+            ) : !hasMore ? null : (
+              <View style={styles.loadMoreButton}>
+                <Text style={[styles.loadMoreButtonText, { color: '#999' }]}>
+                  스크롤하여 더 보기
                 </Text>
-              </TouchableOpacity>
-            ) : null
+              </View>
+            )
           }
         />
       )}

@@ -34,8 +34,9 @@ app.get('/simple-vocab', async (req, res) => {
   console.log('Query params:', req.query);
   
   try {
-    const { limit = 500, levelCEFR = 'A1', exam } = req.query;
-    const limitInt = Math.min(parseInt(limit), 50000);
+    const { limit = 100, offset = 0, levelCEFR = 'A1', exam } = req.query;
+    const limitInt = Math.min(parseInt(limit), 1000); // Max 1000 per request
+    const offsetInt = Math.max(parseInt(offset), 0);
     
     let whereClause = {
       language: { code: 'en' }
@@ -43,7 +44,7 @@ app.get('/simple-vocab', async (req, res) => {
     
     if (exam) {
       // If exam parameter is provided, filter by exam category using proper relations
-      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for exam: ${exam}`);
+      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for exam: ${exam} (offset: ${offsetInt})`);
       whereClause.vocabexamcategory = {
         some: {
           examCategory: {
@@ -53,7 +54,7 @@ app.get('/simple-vocab', async (req, res) => {
       };
     } else {
       // Default CEFR level filtering
-      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
+      console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR} (offset: ${offsetInt})`);
       whereClause.levelCEFR = levelCEFR;
     }
     
@@ -65,6 +66,7 @@ app.get('/simple-vocab', async (req, res) => {
     const vocabs = await prisma.vocab.findMany({
       where: whereClause,
       take: limitInt,
+      skip: offsetInt,
       orderBy: { lemma: 'asc' },
       include: {
         dictentry: {
@@ -135,11 +137,14 @@ app.get('/simple-vocab', async (req, res) => {
       };
     });
     
-    console.log(`[REAL-VOCAB] Returning ${simplifiedVocabs.length} vocabs`);
+    console.log(`[REAL-VOCAB] Returning ${simplifiedVocabs.length} vocabs out of ${totalCount} total (offset: ${offsetInt})`);
     
     res.json({
       success: true,
       count: totalCount,
+      offset: offsetInt,
+      limit: limitInt,
+      hasMore: offsetInt + limitInt < totalCount,
       data: simplifiedVocabs
     });
     

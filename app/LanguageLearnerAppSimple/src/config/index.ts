@@ -5,7 +5,7 @@ const DEV_CONFIG = {
   // Use localhost for iOS simulator, Mac IP for device
   API_URL: Platform.OS === 'android' 
     ? 'http://10.0.2.2:4000' 
-    : 'http://localhost:4000',
+    : 'http://172.30.163.194:4000', // Changed to Mac's IP for real device
   APP_VERSION: '1.0.0',
   ENVIRONMENT: 'development',
 };

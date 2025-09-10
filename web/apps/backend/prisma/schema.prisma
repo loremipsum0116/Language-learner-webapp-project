@@ -181,7 +181,6 @@ model srsfolderitem {
   @@index([vocabId], map: "SrsFolderItem_vocabId_fkey")
 }
 
-
 model user {
   id               Int              @id @default(autoincrement())
   email            String           @unique(map: "User_email_key")
@@ -197,21 +196,18 @@ model user {
   hasOverdueCards  Boolean          @default(false)
   lastOverdueCheck DateTime?
   nextOverdueAlarm DateTime?
-  
-  // Personalized SRS data
-  personalizedSRS  Json?            // PersonalizedSRS object
-  learningProfile  Json?            // LearningProfile object
-  
+  personalizedSRS  Json?
+  learningProfile  Json?
+  cardReports      CardReport[]
   category         category[]
   dailystudystat   dailystudystat[]
   refreshToken     refreshToken[]
   srscard          srscard[]
   srsfolder        srsfolder[]
+  studySessions    StudySession[]
+  userLanguages    UserLanguage[]
   uservocab        uservocab[]
   wronganswer      wronganswer[]
-  userLanguages    UserLanguage[]
-  cardReports      CardReport[]
-  studySessions    StudySession[]
 }
 
 model uservocab {
@@ -235,43 +231,41 @@ model uservocab {
 }
 
 model Language {
-  id         Int      @id @default(autoincrement())
-  code       String   @unique // "en", "de", "ja", "zh", "fr", "ko" etc
-  name       String   // "English", "German", "Japanese", etc
-  nativeName String   // "English", "Deutsch", "日本語", etc
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-
-  vocabs          vocab[]
-  userLanguages   UserLanguage[]
-  translations    VocabTranslation[]
-  audioSources    AudioSource[]
+  id            Int                @id @default(autoincrement())
+  code          String             @unique
+  name          String
+  nativeName    String
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  audioSources  AudioSource[]
+  userLanguages UserLanguage[]
+  vocabs        vocab[]
+  translations  VocabTranslation[]
 
   @@map("languages")
 }
 
 model vocab {
   id                Int                 @id @default(autoincrement())
-  languageId        Int                 // Language reference
+  languageId        Int
   lemma             String
   pos               String
   plural            String?
   levelCEFR         String?
-  levelJLPT         String?             // For Japanese: N1, N2, N3, N4, N5
-  levelHSK          String?             // For Chinese: HSK1-HSK6
-  levelDELF         String?             // For French: A1-C2
+  levelJLPT         String?
+  levelHSK          String?
+  levelDELF         String?
   freq              Int?
   source            String?
-  
-  language          Language            @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  reports           CardReport[]
   dictentry         dictentry?
   srsfolderitem     srsfolderitem[]
   uservocab         uservocab[]
+  language          Language            @relation(fields: [languageId], references: [id], onDelete: Cascade)
   vocabexamcategory vocabexamcategory[]
-  wronganswer       wronganswer[]
   translations      VocabTranslation[]
-  reports           CardReport[]
+  wronganswer       wronganswer[]
 
   @@index([lemma], map: "Vocab_lemma_idx")
   @@index([source], map: "Vocab_source_idx")
@@ -363,118 +357,118 @@ model listeningRecord {
 }
 
 model UserLanguage {
-  id           Int      @id @default(autoincrement())
-  userId       Int
-  languageId   Int
-  isNative     Boolean  @default(false)
-  proficiency  String   @default("A1") // CEFR level: A1, A2, B1, B2, C1, C2
-  isLearning   Boolean  @default(true)
-  startedAt    DateTime @default(now())
-  lastStudied  DateTime?
-  totalStudyTime Int    @default(0) // minutes
-  
-  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  language     Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
+  id             Int       @id @default(autoincrement())
+  userId         Int
+  languageId     Int
+  isNative       Boolean   @default(false)
+  proficiency    String    @default("A1")
+  isLearning     Boolean   @default(true)
+  startedAt      DateTime  @default(now())
+  lastStudied    DateTime?
+  totalStudyTime Int       @default(0)
+  language       Language  @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  user           user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([userId, languageId])
+  @@index([languageId], map: "user_languages_languageId_fkey")
   @@map("user_languages")
 }
 
 model VocabTranslation {
-  id           Int      @id @default(autoincrement())
-  vocabId      Int
-  languageId   Int      // Target language
-  translation  String
-  definition   String?
-  examples     Json?    // Array of example sentences
-  confidence   Float    @default(1.0) // AI confidence score 0-1
-  isVerified   Boolean  @default(false) // Human verified
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
-  vocab        vocab    @relation(fields: [vocabId], references: [id], onDelete: Cascade)
-  language     Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
+  id          Int      @id @default(autoincrement())
+  vocabId     Int
+  languageId  Int
+  translation String
+  definition  String?
+  examples    Json?
+  confidence  Float    @default(1)
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  language    Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+  vocab       vocab    @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+
   @@unique([vocabId, languageId])
+  @@index([languageId], map: "vocab_translations_languageId_fkey")
   @@map("vocab_translations")
 }
 
 model CardReport {
-  id           Int      @id @default(autoincrement())
-  userId       Int
-  vocabId      Int
-  reportType   String   // "AUDIO_QUALITY", "WRONG_TRANSLATION", "INAPPROPRIATE", "OTHER"
-  description  String?
-  severity     String   @default("MEDIUM") // "LOW", "MEDIUM", "HIGH", "CRITICAL"
-  status       String   @default("PENDING") // "PENDING", "INVESTIGATING", "RESOLVED", "REJECTED"
-  frequency    Int      @default(1) // How many times this card was reported
-  metadata     Json?    // Additional context data
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  resolvedAt   DateTime?
-  resolvedBy   Int?     // Admin user ID
-  resolution   String?  // Resolution notes
-  
-  user         user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  vocab        vocab    @relation(fields: [vocabId], references: [id], onDelete: Cascade)
-  
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  vocabId     Int
+  reportType  String
+  description String?
+  severity    String    @default("MEDIUM")
+  status      String    @default("PENDING")
+  frequency   Int       @default(1)
+  metadata    Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  resolvedAt  DateTime?
+  resolvedBy  Int?
+  resolution  String?
+  user        user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  vocab       vocab     @relation(fields: [vocabId], references: [id], onDelete: Cascade)
+
   @@index([status, severity])
   @@index([reportType])
   @@index([createdAt])
+  @@index([userId], map: "card_reports_userId_fkey")
+  @@index([vocabId], map: "card_reports_vocabId_fkey")
   @@map("card_reports")
 }
 
 model AudioSource {
-  id           Int      @id @default(autoincrement())
-  languageId   Int
-  provider     String   // "TTS_GOOGLE", "TTS_AZURE", "HUMAN_NATIVE", "AI_GENERATED"
-  quality      String   @default("MEDIUM") // "LOW", "MEDIUM", "HIGH", "PREMIUM"
-  voice        String?  // Voice identifier
-  speed        Float    @default(1.0) // Playback speed
-  isActive     Boolean  @default(true)
-  priority     Int      @default(50) // 0-100, higher = preferred
-  metadata     Json?    // Provider-specific settings
-  createdAt    DateTime @default(now())
-  
-  language     Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
-  
+  id         Int      @id @default(autoincrement())
+  languageId Int
+  provider   String
+  quality    String   @default("MEDIUM")
+  voice      String?
+  speed      Float    @default(1)
+  isActive   Boolean  @default(true)
+  priority   Int      @default(50)
+  metadata   Json?
+  createdAt  DateTime @default(now())
+  language   Language @relation(fields: [languageId], references: [id], onDelete: Cascade)
+
+  @@index([languageId], map: "audio_sources_languageId_fkey")
   @@map("audio_sources")
 }
 
 model StudySession {
-  id                 Int      @id @default(autoincrement())
-  userId             Int
-  sessionType        String   // "SRS_REVIEW", "NEW_CARDS", "WRONG_ANSWERS", "FREE_STUDY"
-  cardsStudied       Int      @default(0)
-  cardsCorrect       Int      @default(0)
-  averageResponseTime Float?   // seconds
-  totalStudyTime     Int      @default(0) // seconds
-  startedAt          DateTime @default(now())
-  completedAt        DateTime?
-  deviceType         String?  // "mobile", "desktop", "tablet"
-  studyContext       Json?    // StudyContext data
-  performance        Json?    // Detailed performance metrics
-  
-  user               user     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
+  id                  Int       @id @default(autoincrement())
+  userId              Int
+  sessionType         String
+  cardsStudied        Int       @default(0)
+  cardsCorrect        Int       @default(0)
+  averageResponseTime Float?
+  totalStudyTime      Int       @default(0)
+  startedAt           DateTime  @default(now())
+  completedAt         DateTime?
+  deviceType          String?
+  studyContext        Json?
+  performance         Json?
+  user                user      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@index([userId, startedAt])
   @@map("study_sessions")
 }
 
 model refreshToken {
-  id          Int      @id @default(autoincrement())
-  userId      Int
-  token       String   @unique
-  deviceId    String?
-  deviceName  String?
-  userAgent   String?
-  ipAddress   String?
-  expiresAt   DateTime
-  createdAt   DateTime @default(now())
-  lastUsedAt  DateTime @default(now())
-  isRevoked   Boolean  @default(false)
-  revokedAt   DateTime?
-  user        user     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         Int       @id @default(autoincrement())
+  userId     Int
+  token      String    @unique
+  deviceId   String?
+  deviceName String?
+  userAgent  String?
+  ipAddress  String?
+  expiresAt  DateTime
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime  @default(now())
+  isRevoked  Boolean   @default(false)
+  revokedAt  DateTime?
+  user       user      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([token])

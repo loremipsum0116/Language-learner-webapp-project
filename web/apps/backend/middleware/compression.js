@@ -38,18 +38,8 @@ const advancedCompression = compression({
            compression.filter(req, res);
   },
   
-  // Custom compression strategy based on content size
-  strategy: (req, res) => {
-    const contentLength = res.getHeader('Content-Length');
-    
-    if (contentLength && parseInt(contentLength) > 50000) {
-      // Large content: use maximum compression
-      return zlib.constants.Z_DEFAULT_STRATEGY;
-    } else {
-      // Small content: prioritize speed
-      return zlib.constants.Z_FILTERED;
-    }
-  }
+  // Use default compression strategy
+  strategy: zlib.constants.Z_DEFAULT_STRATEGY
 });
 
 /**

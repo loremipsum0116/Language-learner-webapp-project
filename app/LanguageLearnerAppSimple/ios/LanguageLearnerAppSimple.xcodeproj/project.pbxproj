@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020C4C8807D2A1301AF17810 /* libPods-LanguageLearnerAppSimple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FB6FCC55C11D17400084C15 /* libPods-LanguageLearnerAppSimple.a */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		172214EBE05C643678772E9E /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CAA98BE2914A1D5D495E3C94 /* PrivacyInfo.xcprivacy */; };
+		3C09142FF66343C62ABF4727 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA521995E9236DBE2D1782A /* ExpoModulesProvider.swift */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
-		69A0C1029BFF0D6A7A6DDFA1 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26B3485371854DF8ED1AE99C /* ExpoModulesProvider.swift */; };
-		91CA33A11C7F60D7D0E4C8D6 /* libPods-LanguageLearnerAppSimple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EDECC8F1FC0FBAB3FAEDA68 /* libPods-LanguageLearnerAppSimple.a */; };
+		741500DCAED864B43A9F2018 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 64E9A86D0083B2ECB5C148CE /* PrivacyInfo.xcprivacy */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
 		F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11748412D0307B40044C1D9 /* AppDelegate.swift */; };
 /* End PBXBuildFile section */
@@ -20,13 +20,13 @@
 		13B07F961A680F5B00A75B9A /* LanguageLearnerAppSimple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LanguageLearnerAppSimple.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = LanguageLearnerAppSimple/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = LanguageLearnerAppSimple/Info.plist; sourceTree = "<group>"; };
-		26B3485371854DF8ED1AE99C /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-LanguageLearnerAppSimple/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
-		2B42722E80A818A17D112B28 /* Pods-LanguageLearnerAppSimple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LanguageLearnerAppSimple.debug.xcconfig"; path = "Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple.debug.xcconfig"; sourceTree = "<group>"; };
-		2EDECC8F1FC0FBAB3FAEDA68 /* libPods-LanguageLearnerAppSimple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LanguageLearnerAppSimple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3EA521995E9236DBE2D1782A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-LanguageLearnerAppSimple/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
+		515C3514D0274FF000AF2FBC /* Pods-LanguageLearnerAppSimple.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LanguageLearnerAppSimple.debug.xcconfig"; path = "Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple.debug.xcconfig"; sourceTree = "<group>"; };
+		64E9A86D0083B2ECB5C148CE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = LanguageLearnerAppSimple/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		7FB6FCC55C11D17400084C15 /* libPods-LanguageLearnerAppSimple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LanguageLearnerAppSimple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = LanguageLearnerAppSimple/SplashScreen.storyboard; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
-		CAA98BE2914A1D5D495E3C94 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = LanguageLearnerAppSimple/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		D9F659D66F54766FC585F945 /* Pods-LanguageLearnerAppSimple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LanguageLearnerAppSimple.release.xcconfig"; path = "Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple.release.xcconfig"; sourceTree = "<group>"; };
+		E59F1200A16479C1F9C8CB05 /* Pods-LanguageLearnerAppSimple.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LanguageLearnerAppSimple.release.xcconfig"; path = "Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F11748412D0307B40044C1D9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = LanguageLearnerAppSimple/AppDelegate.swift; sourceTree = "<group>"; };
 		F11748442D0722820044C1D9 /* LanguageLearnerAppSimple-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "LanguageLearnerAppSimple-Bridging-Header.h"; path = "LanguageLearnerAppSimple/LanguageLearnerAppSimple-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -37,13 +37,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91CA33A11C7F60D7D0E4C8D6 /* libPods-LanguageLearnerAppSimple.a in Frameworks */,
+				020C4C8807D2A1301AF17810 /* libPods-LanguageLearnerAppSimple.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D44F2BB4B3CCD205CC600F7 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				E66E05C6105A7EB606DD72BE /* LanguageLearnerAppSimple */,
+			);
+			name = ExpoModulesProviders;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* LanguageLearnerAppSimple */ = {
 			isa = PBXGroup;
 			children = (
@@ -53,7 +61,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */,
-				CAA98BE2914A1D5D495E3C94 /* PrivacyInfo.xcprivacy */,
+				64E9A86D0083B2ECB5C148CE /* PrivacyInfo.xcprivacy */,
 			);
 			name = LanguageLearnerAppSimple;
 			sourceTree = "<group>";
@@ -62,19 +70,9 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				2EDECC8F1FC0FBAB3FAEDA68 /* libPods-LanguageLearnerAppSimple.a */,
+				7FB6FCC55C11D17400084C15 /* libPods-LanguageLearnerAppSimple.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		6DFDB912F86015F409C685E4 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2B42722E80A818A17D112B28 /* Pods-LanguageLearnerAppSimple.debug.xcconfig */,
-				D9F659D66F54766FC585F945 /* Pods-LanguageLearnerAppSimple.release.xcconfig */,
-			);
-			name = Pods;
-			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -91,8 +89,8 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
-				6DFDB912F86015F409C685E4 /* Pods */,
-				BC68EF21A55B65A3B9CE57A2 /* ExpoModulesProviders */,
+				E773A989580B7D8DC8CDE34C /* Pods */,
+				0D44F2BB4B3CCD205CC600F7 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -116,20 +114,21 @@
 			path = LanguageLearnerAppSimple/Supporting;
 			sourceTree = "<group>";
 		};
-		BC68EF21A55B65A3B9CE57A2 /* ExpoModulesProviders */ = {
+		E66E05C6105A7EB606DD72BE /* LanguageLearnerAppSimple */ = {
 			isa = PBXGroup;
 			children = (
-				EC20574B9FD1D60BC6EDFF5B /* LanguageLearnerAppSimple */,
-			);
-			name = ExpoModulesProviders;
-			sourceTree = "<group>";
-		};
-		EC20574B9FD1D60BC6EDFF5B /* LanguageLearnerAppSimple */ = {
-			isa = PBXGroup;
-			children = (
-				26B3485371854DF8ED1AE99C /* ExpoModulesProvider.swift */,
+				3EA521995E9236DBE2D1782A /* ExpoModulesProvider.swift */,
 			);
 			name = LanguageLearnerAppSimple;
+			sourceTree = "<group>";
+		};
+		E773A989580B7D8DC8CDE34C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				515C3514D0274FF000AF2FBC /* Pods-LanguageLearnerAppSimple.debug.xcconfig */,
+				E59F1200A16479C1F9C8CB05 /* Pods-LanguageLearnerAppSimple.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,13 +139,13 @@
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "LanguageLearnerAppSimple" */;
 			buildPhases = (
 				08A4A3CD28434E44B6B9DE2E /* [CP] Check Pods Manifest.lock */,
-				97967DC89F86577E09DA8AFB /* [Expo] Configure project */,
+				8EC78974952645F18E1B62AC /* [Expo] Configure project */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */,
-				2D468CC295F1A1ABE8ED4EA8 /* [CP] Embed Pods Frameworks */,
+				F809D3631A723E9DB070D9FC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -166,9 +165,7 @@
 				LastUpgradeCheck = 1130;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 4L73TDWT3X;
 						LastSwiftMigration = 1250;
-						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -198,7 +195,7 @@
 				BB2F792D24A3F905000567C9 /* Expo.plist in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
-				172214EBE05C643678772E9E /* PrivacyInfo.xcprivacy in Resources */,
+				741500DCAED864B43A9F2018 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -240,24 +237,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		2D468CC295F1A1ABE8ED4EA8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		800E24972A6A228C8D4807E9 /* [CP] Copy Pods Resources */ = {
@@ -334,7 +313,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		97967DC89F86577E09DA8AFB /* [Expo] Configure project */ = {
+		8EC78974952645F18E1B62AC /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -353,6 +332,24 @@
 			shellPath = /bin/sh;
 			shellScript = "# This script configures Expo modules and generates the modules provider file.\nbash -l -c \"./Pods/Target\\ Support\\ Files/Pods-LanguageLearnerAppSimple/expo-configure-project.sh\"\n";
 		};
+		F809D3631A723E9DB070D9FC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple-frameworks.sh",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/hermes-engine/Pre-built/hermes.framework/hermes",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/hermes.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-LanguageLearnerAppSimple/Pods-LanguageLearnerAppSimple-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -361,7 +358,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F11748422D0307B40044C1D9 /* AppDelegate.swift in Sources */,
-				69A0C1029BFF0D6A7A6DDFA1 /* ExpoModulesProvider.swift in Sources */,
+				3C09142FF66343C62ABF4727 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -370,13 +367,11 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2B42722E80A818A17D112B28 /* Pods-LanguageLearnerAppSimple.debug.xcconfig */;
+			baseConfigurationReference = 515C3514D0274FF000AF2FBC /* Pods-LanguageLearnerAppSimple.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LanguageLearnerAppSimple/LanguageLearnerAppSimple.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4L73TDWT3X;
 				ENABLE_BITCODE = NO;
@@ -409,13 +404,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D9F659D66F54766FC585F945 /* Pods-LanguageLearnerAppSimple.release.xcconfig */;
+			baseConfigurationReference = E59F1200A16479C1F9C8CB05 /* Pods-LanguageLearnerAppSimple.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = LanguageLearnerAppSimple/LanguageLearnerAppSimple.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4L73TDWT3X;
 				INFOPLIST_FILE = LanguageLearnerAppSimple/Info.plist;

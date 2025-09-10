@@ -1,0 +1,6 @@
+openai-whisper==20231117
+anthropic==0.26.1
+tqdm==4.66.4
+numpy
+torch
+ffmpeg-python
