@@ -120,12 +120,12 @@ function SrsWidget() {
   }, []);
 
   return (
-    <div className="card h-100 vocabulary-card">
-      <div className="card-body">
-        <h5 className="card-title d-flex align-items-center gap-1">
-          <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
-          오늘의 SRS
-        </h5>
+    <div className="widget-card">
+      <div className="widget-title">
+        <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
+        오늘의 SRS
+      </div>
+      <div className="widget-content">
         {err && err.status === 401 ? (
           <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
         ) : count === null ? (
@@ -202,9 +202,9 @@ function DictQuickPanel() {
   };
 
   return (
-    <div className="card h-100 vocabulary-card">
-      <div className="card-body">
-        <h5 className="card-title">📚 사전 검색</h5>
+    <div className="widget-card">
+      <div className="widget-title">📚 사전 검색</div>
+      <div className="widget-content">
         <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="dictionary search">
           <input
             ref={inputRef}
@@ -282,9 +282,9 @@ function ReadingTeaser() {
     };
   }, []);
   return (
-    <div className="card h-100 vocabulary-card">
-      <div className="card-body">
-        <h5 className="card-title">📜 리딩</h5>
+    <div className="widget-card">
+      <div className="widget-title">📜 리딩</div>
+      <div className="widget-content">
         {err && err.status === 401 ? (
           <div className="alert alert-warning">세션 만료: <Link to="/login">다시 로그인</Link></div>
         ) : (
@@ -357,29 +357,25 @@ function DashboardWidget() {
     return () => ac.abort();
   }, []);
 
-  if (loading) {
-    return (
-      <div className="dashboard-loading-compact">
-        <div className="spinner-compact"></div>
-        <span>로딩 중...</span>
-      </div>
-    );
-  }
-
-  if (err) {
-    return (
-      <div className="dashboard-error-compact">
-        <span>📊</span>
-        <p>통계를 불러올 수 없습니다</p>
-        {err.status === 401 && (
-          <Link to="/login" className="dashboard-login-link">다시 로그인</Link>
-        )}
-      </div>
-    );
-  }
-
   return (
-    <div className="dashboard-content-compact">
+    <div className="widget-card">
+      <div className="widget-title">📊 학습 대시보드</div>
+      <div className="widget-content">
+        {loading ? (
+          <div className="dashboard-loading-compact">
+            <div className="spinner-compact"></div>
+            <span>로딩 중...</span>
+          </div>
+        ) : err ? (
+          <div className="dashboard-error-compact">
+            <span>📊</span>
+            <p>통계를 불러올 수 없습니다</p>
+            {err.status === 401 && (
+              <Link to="/login" className="dashboard-login-link">다시 로그인</Link>
+            )}
+          </div>
+        ) : (
+          <div className="dashboard-content-compact">
       <div className="dashboard-stats-compact">
         <div className="stat-item-compact">
           <div className="stat-icon-compact">📚</div>
@@ -418,6 +414,9 @@ function DashboardWidget() {
         <Link to="/dashboard" className="dashboard-btn-compact primary">
           📊 상세 대시보드
         </Link>
+      </div>
+    </div>
+        )}
       </div>
     </div>
   );
@@ -507,29 +506,11 @@ export default function Home() {
 
       {/* Widget Section */}
       <section className="widgets-section">
-        <div className="widget-card">
-          <div className="widget-title">
-            <img src="/danmoosae.png" alt="" style={{ height: '24px', width: 'auto' }} />
-            오늘의 SRS
-          </div>
-          <div className="widget-content">
-            <SrsWidget />
-          </div>
-        </div>
+        <SrsWidget />
         
-        <div className="widget-card">
-          <div className="widget-title">📚 사전 검색</div>
-          <div className="widget-content">
-            <DictQuickPanel />
-          </div>
-        </div>
+        <DictQuickPanel />
         
-        <div className="widget-card">
-          <div className="widget-title">📊 학습 대시보드</div>
-          <div className="widget-content">
-            <DashboardWidget />
-          </div>
-        </div>
+        <DashboardWidget />
       </section>
 
       {/* Learning Areas Section */}

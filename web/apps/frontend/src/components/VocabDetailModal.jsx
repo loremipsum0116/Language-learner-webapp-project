@@ -78,84 +78,28 @@ function parseAudioLocal(audioLocal) {
     };
   }
   
-  // 경로 수정: 하이픈을 괄호로 변환
+  // Convert parentheses to hyphens in paths to match actual folder structure
   if (audioData) {
-    const pathMappings = {
-      'bank-money': 'bank (money)',
-      'rock-music': 'rock (music)',
-      'rock-stone': 'rock (stone)',
-      'light-not-heavy': 'light (not heavy)',
-      'light-from-the-sun': 'light (from the suna lamp)',
-      'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
-      'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
-      'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
-      'rest-remaining part': 'rest (remaining part)', // JSON에 공백이 포함된 경우
-      'like-find sb/sth pleasant': 'like (find sbsth pleasant)', // 복잡한 경우 (슬래시 제거)
-      'strip-remove clothes/a layer': 'strip (remove clothesa layer)', // 슬래시와 공백이 모두 제거된 경우
-      'last-final': 'last (final)',
-      'mine-belongs-to-me': 'mine (belongs to me)',
-      'bear-animal': 'bear (animal)',
-      'race-competition': 'race (competition)',
-      'rest-remaining-part': 'rest (remaining part)',
-      'rest-sleeprelax': 'rest (sleep/relax)'
-    };
-    
-    // 특별한 경우들을 먼저 처리
-    const specialMappings = {
-      // Light (from the sun/a lamp) 매핑 - 가장 중요!
-      'elementary/light-from the sun/a lamp/word.mp3': 'elementary/light (from the suna lamp)/word.mp3',
-      'elementary/light-from the sun/a lamp/gloss.mp3': 'elementary/light (from the suna lamp)/gloss.mp3',
-      'elementary/light-from the sun/a lamp/example.mp3': 'elementary/light (from the suna lamp)/example.mp3',
+    const convertPath = (path) => {
+      if (!path) return path;
+      let converted = path.replace(/\s*\([^)]*\)/g, (match) => {
+        const content = match.replace(/[()]/g, '').trim();
+        if (!content) return '';
+        const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+        return cleaned ? '-' + cleaned : '';
+      })
+      .replace(/'/g, '');
       
-      'advanced/strip-remove clothes/a layer/word.mp3': 'advanced/strip (remove clothesa layer)/word.mp3',
-      'advanced/strip-remove clothes/a layer/gloss.mp3': 'advanced/strip (remove clothesa layer)/gloss.mp3',
-      'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip (remove clothesa layer)/example.mp3',
-      'advanced/strip-long narrow piece/word.mp3': 'advanced/strip (long narrow piece)/word.mp3',
-      'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip (long narrow piece)/gloss.mp3',
-      'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3'
+      // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+      converted = converted.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+      return converted;
     };
     
     ['word', 'gloss', 'example'].forEach(type => {
       if (audioData[type]) {
-        // 특별 매핑 먼저 확인
-        if (specialMappings[audioData[type]]) {
-          audioData[type] = specialMappings[audioData[type]];
-        } else if (audioData[type].includes('-') || audioData[type].includes(' ')) {
-          const pathParts = audioData[type].split('/');
-          if (pathParts.length >= 3) {
-            const folderName = pathParts[1];
-            if (pathMappings[folderName]) {
-              audioData[type] = `${pathParts[0]}/${pathMappings[folderName]}/${pathParts[2]}`;
-            }
-          }
-        }
+        audioData[type] = convertPath(audioData[type]);
       }
     });
-    
-  }
-  
-  // URL 안전하게 인코딩 (공백, 괄호, 슬래시 등)
-  if (audioData) {
-    const encodeAudioPath = (path) => {
-      if (!path) return path;
-      
-      // 경로의 각 세그먼트를 개별적으로 인코딩
-      const segments = path.split('/');
-      const encodedSegments = segments.map(segment => {
-        // 파일명이나 폴더명에 특수문자가 있으면 인코딩
-        return segment
-          .replace(/ /g, '%20')           // 공백
-          .replace(/\(/g, '%28')          // 왼쪽 괄호
-          .replace(/\)/g, '%29')          // 오른쪽 괄호;
-      });
-      
-      return encodedSegments.join('/');
-    };
-    
-    // 모든 오디오 경로를 안전하게 인코딩
-    for (const [key, path] of Object.entries(audioData)) {
-      audioData[key] = encodeAudioPath(path);
-    }
     
   }
   
@@ -431,26 +375,31 @@ export default function VocabDetailModal({
                   let glossAudioPath = null;
                   
                   if (isIdiomOrPhrasal) {
-                    // 숙어/구동사 구분: category 정보나 source 정보로 판단
-                    const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+                    // Use unified folder structure based on CEFR level
+                    const cefrToFolder = {
+                      'A1': 'starter',
+                      'A2': 'elementary', 
+                      'B1': 'intermediate',
+                      'B2': 'upper',
+                      'C1': 'advanced',
+                      'C2': 'advanced'
+                    };
                     
-                    // category에서 "구동사" 여부 확인 또는 source로 판단
-                    // 알려진 phrasal verb들을 직접 매핑
-                    const knownPhrasalVerbs = [
-                      'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
-                      'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
-                      'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
-                      'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
-                      'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
-                    ];
+                    let cleanLemma = vocab.lemma.toLowerCase()
+                      .replace(/\s*\([^)]*\)/g, (match) => {
+                        const content = match.replace(/[()]/g, '').trim();
+                        if (!content) return '';
+                        const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                        return cleaned ? '-' + cleaned : '';
+                      })
+                      .replace(/'/g, '');
                     
-                    const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
-                                         (vocab.category && vocab.category.includes('구동사')) ||
-                                         knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
+                    // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+                    cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
                     
-                    const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
-                    glossAudioPath = `/${folderName}/${cleanLemma}_gloss.mp3`;
-                    console.log('🔍 [VocabDetailModal] Folder decision:', vocab.lemma, '->', folderName, 'category:', vocab.category);
+                    const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+                    glossAudioPath = `/${folderName}/${cleanLemma}/gloss.mp3`;
+                    console.log('🔍 [VocabDetailModal] Using unified folder structure:', vocab.lemma, '->', folderName, 'cleanLemma:', cleanLemma);
                   } else {
                     // 일반 단어의 경우 audioData.gloss 사용
                     glossAudioPath = audioData?.gloss;

@@ -222,6 +222,15 @@ const VocabCard = ({
         </div>
       )}
       
+      {/* 뜻 정보 표시 */}
+      {vocab.ko_gloss && (
+        <div className="mb-2">
+          <p className="text-sm text-gray-700 bg-gray-50 p-2 rounded">
+            {vocab.ko_gloss}
+          </p>
+        </div>
+      )}
+      
       {/* 진행 상태 표시 */}
       {showProgress && (
         <div className="flex flex-wrap items-center gap-2 mt-3">

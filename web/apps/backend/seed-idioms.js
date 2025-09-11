@@ -1,137 +1,207 @@
-const fs = require('fs');
-const path = require('path');
+// seed-idioms.js
+// 숙어/구동사 데이터를 idioms 테이블에서 vocab 테이블로 통합하는 시딩 스크립트
+
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
 
-async function seedIdioms() {
+async function migrateIdiomsToVocab() {
+    console.log('🔄 Starting idiom migration to vocab table...');
+    
     try {
-        console.log('🚀 Starting idiom seeding process...');
+        // 1. 기존 idioms 데이터 조회
+        const idioms = await prisma.idiom.findMany();
+        console.log(`📊 Found ${idioms.length} idioms to migrate`);
         
-        // idiom.json 파일 읽기
-        const idiomsPath = path.join(__dirname, 'idiom.json');
-        const idiomsData = JSON.parse(fs.readFileSync(idiomsPath, 'utf8'));
-        
-        console.log(`📚 Found ${idiomsData.length} idioms to process`);
-        
-        // 기존 데이터 확인
-        const existingCount = await prisma.$queryRaw`SELECT COUNT(*) as count FROM idioms`;
-        console.log(`📊 Current idioms in database: ${existingCount[0].count}`);
-        
-        if (existingCount[0].count > 0) {
-            console.log('⚠️  Database already contains idioms. Clearing existing data...');
-            await prisma.$executeRaw`DELETE FROM idioms`;
-            await prisma.$executeRaw`ALTER TABLE idioms AUTO_INCREMENT = 1`;
-            console.log('🧹 Existing data cleared');
+        if (idioms.length === 0) {
+            console.log('ℹ️  No idioms found to migrate');
+            return;
         }
-        
-        // 배치로 나누어 처리 (한 번에 너무 많이 하면 메모리 부족 가능성)
-        const batchSize = 100;
-        let processed = 0;
-        let successful = 0;
-        let failed = 0;
-        
-        for (let i = 0; i < idiomsData.length; i += batchSize) {
-            const batch = idiomsData.slice(i, i + batchSize);
-            const batchNumber = Math.floor(i / batchSize) + 1;
-            const totalBatches = Math.ceil(idiomsData.length / batchSize);
-            
-            console.log(`📦 Processing batch ${batchNumber}/${totalBatches} (${batch.length} items)...`);
-            
-            for (const idiomData of batch) {
-                try {
-                    // 오디오 경로 처리
-                    const audioWord = idiomData.audio?.word || null;
-                    const audioGloss = idiomData.audio?.gloss || null;
-                    const audioExample = idiomData.audio?.example || null;
-                    
-                    await prisma.$executeRaw`
-                        INSERT INTO idioms (
-                            idiom,
-                            korean_meaning,
-                            usage_context_korean,
-                            category,
-                            koChirpScript,
-                            audioWord,
-                            audioGloss,
-                            audioExample,
-                            example_sentence,
-                            ko_example_sentence,
-                            createdAt,
-                            updatedAt
-                        ) VALUES (
-                            ${idiomData.idiom},
-                            ${idiomData.korean_meaning || null},
-                            ${idiomData.usage_context_korean || null},
-                            ${idiomData.category || null},
-                            ${idiomData.koChirpScript || null},
-                            ${audioWord},
-                            ${audioGloss},
-                            ${audioExample},
-                            ${idiomData.example || null},
-                            ${idiomData.koExample || null},
-                            NOW(),
-                            NOW()
-                        )
-                    `;
-                    
-                    successful++;
-                } catch (error) {
-                    console.error(`❌ Failed to insert idiom "${idiomData.idiom}":`, error.message);
-                    failed++;
+
+        let migratedCount = 0;
+        let skippedCount = 0;
+        let updatedCount = 0;
+
+        for (const idiom of idioms) {
+            try {
+                // CEFR 레벨 추출 (category에서)
+                let cefrLevel = 'B1'; // 기본값
+                if (idiom.category) {
+                    const match = idiom.category.match(/(A[12]|B[12]|C[12])/);
+                    if (match) {
+                        cefrLevel = match[1];
+                    }
                 }
-                
-                processed++;
-                
-                // 진행률 표시
-                if (processed % 50 === 0) {
-                    const progress = ((processed / idiomsData.length) * 100).toFixed(1);
-                    console.log(`⏳ Progress: ${processed}/${idiomsData.length} (${progress}%)`);
+
+                // pos 결정 (숙어 vs 구동사)
+                const pos = idiom.category?.includes('구동사') ? 'phrasal verb' : 'idiom';
+
+                // 이미 존재하는 vocab 확인 (lemma와 pos로)
+                const existingVocab = await prisma.vocab.findFirst({
+                    where: {
+                        lemma: idiom.idiom,
+                        pos: pos,
+                        source: 'idiom_migration'
+                    }
+                });
+
+                if (existingVocab) {
+                    // 기존 레코드가 있으면 업데이트
+                    await prisma.vocab.update({
+                        where: { id: existingVocab.id },
+                        data: {
+                            levelCEFR: cefrLevel,
+                            source: 'idiom_migration'
+                        }
+                    });
+
+                    // dictentry 업데이트
+                    const existingDictEntry = await prisma.dictentry.findUnique({
+                        where: { vocabId: existingVocab.id }
+                    });
+
+                    const audioData = {
+                        word: idiom.audioWord,
+                        gloss: idiom.audioGloss,
+                        example: idiom.audioExample
+                    };
+
+                    const examples = [
+                        {
+                            ko: idiom.korean_meaning || '',
+                            kind: 'gloss',
+                            source: 'idiom_migration'
+                        },
+                        {
+                            en: idiom.example_sentence || '',
+                            ko: idiom.ko_example_sentence || '',
+                            kind: 'example',
+                            source: 'idiom_migration',
+                            chirpScript: idiom.koChirpScript || ''
+                        },
+                        {
+                            ko: idiom.usage_context_korean || '',
+                            kind: 'usage',
+                            source: 'idiom_migration'
+                        }
+                    ].filter(ex => ex.ko || ex.en); // 빈 예시 제거
+
+                    if (existingDictEntry) {
+                        await prisma.dictentry.update({
+                            where: { vocabId: existingVocab.id },
+                            data: {
+                                audioLocal: JSON.stringify(audioData),
+                                examples: examples,
+                                sourceUrl: 'idiom_migration'
+                            }
+                        });
+                    } else {
+                        await prisma.dictentry.create({
+                            data: {
+                                vocabId: existingVocab.id,
+                                audioLocal: JSON.stringify(audioData),
+                                examples: examples,
+                                sourceUrl: 'idiom_migration'
+                            }
+                        });
+                    }
+
+                    updatedCount++;
+                    console.log(`🔄 Updated existing vocab: ${idiom.idiom} (${pos})`);
+                } else {
+                    // 새 vocab 레코드 생성
+                    const newVocab = await prisma.vocab.create({
+                        data: {
+                            lemma: idiom.idiom,
+                            pos: pos,
+                            levelCEFR: cefrLevel,
+                            source: 'idiom_migration'
+                        }
+                    });
+
+                    // dictentry 생성
+                    const audioData = {
+                        word: idiom.audioWord,
+                        gloss: idiom.audioGloss,
+                        example: idiom.audioExample
+                    };
+
+                    const examples = [
+                        {
+                            ko: idiom.korean_meaning || '',
+                            kind: 'gloss',
+                            source: 'idiom_migration'
+                        },
+                        {
+                            en: idiom.example_sentence || '',
+                            ko: idiom.ko_example_sentence || '',
+                            kind: 'example',
+                            source: 'idiom_migration',
+                            chirpScript: idiom.koChirpScript || ''
+                        },
+                        {
+                            ko: idiom.usage_context_korean || '',
+                            kind: 'usage',
+                            source: 'idiom_migration'
+                        }
+                    ].filter(ex => ex.ko || ex.en); // 빈 예시 제거
+
+                    await prisma.dictentry.create({
+                        data: {
+                            vocabId: newVocab.id,
+                            audioLocal: JSON.stringify(audioData),
+                            examples: examples,
+                            sourceUrl: 'idiom_migration'
+                        }
+                    });
+
+                    migratedCount++;
+                    console.log(`✅ Migrated: ${idiom.idiom} (${pos}) -> vocab.id: ${newVocab.id}`);
                 }
+
+            } catch (error) {
+                console.error(`❌ Error migrating idiom '${idiom.idiom}':`, error.message);
+                skippedCount++;
             }
         }
-        
-        // 최종 결과 확인
-        const finalCount = await prisma.$queryRaw`SELECT COUNT(*) as count FROM idioms`;
-        
-        console.log('\n🎉 Idiom seeding completed!');
-        console.log(`📊 Final Statistics:`);
-        console.log(`   - Total processed: ${processed}`);
-        console.log(`   - Successfully inserted: ${successful}`);
-        console.log(`   - Failed: ${failed}`);
-        console.log(`   - Database count: ${finalCount[0].count}`);
-        
-        // 샘플 데이터 확인
-        const sampleIdioms = await prisma.$queryRaw`
-            SELECT idiom, korean_meaning, category 
-            FROM idioms 
-            LIMIT 5
-        `;
-        
-        console.log('\n📝 Sample data:');
-        sampleIdioms.forEach((idiom, index) => {
-            console.log(`   ${index + 1}. ${idiom.idiom} - ${idiom.korean_meaning} (${idiom.category})`);
+
+        console.log('\n📊 Migration Summary:');
+        console.log(`✅ Migrated: ${migratedCount} new vocab records`);
+        console.log(`🔄 Updated: ${updatedCount} existing vocab records`);
+        console.log(`⚠️  Skipped: ${skippedCount} due to errors`);
+        console.log(`📋 Total processed: ${idioms.length} idioms`);
+
+        // 마이그레이션된 데이터 검증
+        const migratedVocabs = await prisma.vocab.count({
+            where: {
+                source: 'idiom_migration'
+            }
         });
-        
+
+        console.log(`\n🔍 Verification: Found ${migratedVocabs} vocab records with source 'idiom_migration'`);
+
+        console.log('\n✅ Idiom migration completed successfully!');
+        console.log('\nℹ️  Note: The original idioms table is preserved for backup. You can drop it manually after verifying the migration.');
+
     } catch (error) {
-        console.error('💥 Fatal error during seeding:', error);
+        console.error('❌ Migration failed:', error);
+        throw error;
     } finally {
         await prisma.$disconnect();
-        console.log('🔌 Database connection closed');
     }
 }
 
-// 스크립트 실행
+// 실행
 if (require.main === module) {
-    seedIdioms()
+    migrateIdiomsToVocab()
         .then(() => {
-            console.log('✅ Seeding process completed successfully');
+            console.log('🎉 Migration script completed');
             process.exit(0);
         })
         .catch((error) => {
-            console.error('💀 Seeding process failed:', error);
+            console.error('💥 Migration script failed:', error);
             process.exit(1);
         });
 }
 
-module.exports = seedIdioms;
+module.exports = { migrateIdiomsToVocab };

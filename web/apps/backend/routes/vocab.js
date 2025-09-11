@@ -31,19 +31,40 @@ router.get('/list', async (req, res) => {
     
     console.log('DEBUG /list: Found vocabs:', vocabs.length);
     
-    // Get dictentries separately for all vocabs
+    // Get dictentries for all vocabs
     const vocabIds = vocabs.map(v => v.id);
     const dictentries = await prisma.dictentry.findMany({
       where: { vocabId: { in: vocabIds } }
     });
+    
+    // VocabTranslation 테이블 확인
+    let vocabTranslations = [];
+    try {
+      vocabTranslations = await prisma.vocabTranslation.findMany({
+        where: { 
+          vocabId: { in: vocabIds.slice(0, 10) }, // 처음 10개만 테스트
+          language: { code: 'ko' }
+        },
+        include: {
+          language: true
+        }
+      });
+      console.log('DEBUG /list: Found VocabTranslations:', vocabTranslations.length);
+      if (vocabTranslations.length > 0) {
+        console.log('DEBUG /list: First VocabTranslation:', JSON.stringify(vocabTranslations[0], null, 2));
+      }
+    } catch (e) {
+      console.log('DEBUG /list: VocabTranslation error:', e.message);
+    }
     
     console.log('DEBUG /list: Found dictentries:', dictentries.length);
     if (dictentries.length > 0) {
       console.log('DEBUG /list: First dictentry:', JSON.stringify(dictentries[0], null, 2));
     }
     
-    // Create a map for quick lookup
+    // Create map for quick lookup
     const dictMap = new Map();
+    
     dictentries.forEach(d => {
       // Parse examples if it's a string
       let parsedExamples = d.examples;
@@ -63,28 +84,30 @@ router.get('/list', async (req, res) => {
       const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
       
       console.log(`DEBUG /list: Vocab ${v.lemma} (${v.id}) - dictentry found:`, !!dictentry);
-      if (dictentry) {
-        console.log(`DEBUG /list: Examples length:`, rawMeanings.length);
-        if (rawMeanings.length > 0) {
-          console.log(`DEBUG /list: First example:`, JSON.stringify(rawMeanings[0]));
+      console.log(`DEBUG /list: Vocab ${v.lemma} (${v.id}) - rawMeanings length:`, rawMeanings.length);
+      if (rawMeanings.length > 0) {
+        console.log(`DEBUG /list: Vocab ${v.lemma} - first example:`, JSON.stringify(rawMeanings[0], null, 2));
+      }
+      
+      // Korean gloss 추출 (examples에서)
+      let primaryGloss = null;
+      
+      // 1. examples에서 gloss kind 찾기 (실제 단어 뜻)
+      if (rawMeanings.length > 0) {
+        const glossExample = rawMeanings.find(ex => ex.kind === 'gloss' && ex.ko && ex.ko.trim());
+        if (glossExample && glossExample.ko) {
+          primaryGloss = glossExample.ko;
+          console.log(`DEBUG /list: Vocab ${v.lemma} - gloss from gloss kind:`, primaryGloss);
         }
       }
       
-      // CEFR 데이터 구조에서 Korean gloss 추출
-      let primaryGloss = null;
-      
-      // CEFR 구조: examples[].ko (gloss kind)
-      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
-      if (glossExample && glossExample.ko) {
-        primaryGloss = glossExample.ko;
-      }
-      
-      // 만약 gloss가 없다면 ipaKo 사용 (fallback)
+      // 2. ipaKo 사용 (fallback)
       if (!primaryGloss && dictentry?.ipaKo) {
         primaryGloss = dictentry.ipaKo;
+        console.log(`DEBUG /list: Vocab ${v.lemma} - gloss from ipaKo:`, primaryGloss);
       }
       
-      console.log(`DEBUG /list: Vocab ${v.lemma} - primaryGloss:`, primaryGloss);
+      console.log(`DEBUG /list: Vocab ${v.lemma} - final primaryGloss:`, primaryGloss);
       
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,

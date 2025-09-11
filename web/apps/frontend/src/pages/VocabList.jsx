@@ -602,89 +602,27 @@ export default function VocabList() {
             setPlayingAudio({ type, id });
         }).catch(e => {
             console.error("오디오 재생 실패:", e, fullUrl);
-            
-            // 폴백: 다른 폴더에서 실패한 경우 idiom/phrasal_verb 폴더에서 시도
-            if (fullUrl.includes('/intermediate/') || fullUrl.includes('/advanced/') || fullUrl.includes('/starter/') || fullUrl.includes('/phrasal_verb/') || fullUrl.includes('/idiom/')) {
-                const pathParts = fullUrl.split('/');
-                const fileName = pathParts[pathParts.length - 2]; // a_stones_throw
-                const audioType = pathParts[pathParts.length - 1]; // word.mp3
-                
-                // phrasal_verb에서 실패한 경우 idiom으로, idiom에서 실패한 경우 phrasal_verb로 폴백
-                const isFromPhrasalVerb = fullUrl.includes('/phrasal_verb/');
-                const isFromIdiom = fullUrl.includes('/idiom/');
-                
-                let fallbackUrl;
-                if (isFromPhrasalVerb) {
-                    // phrasal_verb에서 실패 -> idiom 폴더 시도
-                    if (audioType === 'word.mp3') {
-                        fallbackUrl = `/idiom/${fileName}.mp3`;
-                    } else if (audioType === 'gloss.mp3') {
-                        fallbackUrl = `/idiom/${fileName}_gloss.mp3`;
-                    } else if (audioType === 'example.mp3') {
-                        fallbackUrl = `/idiom/${fileName}_example.mp3`;
-                    }
-                } else {
-                    // 일반 폴더나 idiom에서 실패 -> phrasal_verb 폴더 시도
-                    if (audioType === 'word.mp3') {
-                        fallbackUrl = `/phrasal_verb/${fileName}.mp3`;
-                    } else if (audioType === 'gloss.mp3') {
-                        fallbackUrl = `/phrasal_verb/${fileName}_gloss.mp3`;
-                    } else if (audioType === 'example.mp3') {
-                        fallbackUrl = `/phrasal_verb/${fileName}_example.mp3`;
-                    }
-                    
-                    // phrasal_verb에서도 실패하면 idiom 시도
-                    if (!isFromIdiom) {
-                        const secondFallbackUrl = fallbackUrl ? fallbackUrl.replace('/phrasal_verb/', '/idiom/') : null;
-                        
-                        if (fallbackUrl) {
-                            console.log('🔄 Trying phrasal_verb fallback URL:', fallbackUrl);
-                            const fallbackAudio = new Audio(fallbackUrl);
-                            fallbackAudio.play().then(() => {
-                                audioRef.current = fallbackAudio;
-                                setPlayingAudio({ type, id });
-                            }).catch(fallbackError => {
-                                if (secondFallbackUrl) {
-                                    console.log('🔄 Trying idiom fallback URL:', secondFallbackUrl);
-                                    const secondFallbackAudio = new Audio(secondFallbackUrl);
-                                    secondFallbackAudio.play().then(() => {
-                                        audioRef.current = secondFallbackAudio;
-                                        setPlayingAudio({ type, id });
-                                    }).catch(secondFallbackError => {
-                                        console.error("모든 폴백 오디오 재생 실패:", secondFallbackError);
-                                        setPlayingAudio(null);
-                                    });
-                                } else {
-                                    setPlayingAudio(null);
-                                }
-                            });
-                            return;
-                        }
-                    }
-                }
-                
-                if (fallbackUrl) {
-                    const folderName = isFromPhrasalVerb ? 'idiom' : 'phrasal_verb';
-                    console.log(`🔄 Trying ${folderName} fallback URL:`, fallbackUrl);
-                    const fallbackAudio = new Audio(fallbackUrl);
-                    fallbackAudio.play().then(() => {
-                        audioRef.current = fallbackAudio;
-                        setPlayingAudio({ type, id });
-                    }).catch(fallbackError => {
-                        console.error(`${folderName} 폴백 오디오 재생 실패:`, fallbackError);
-                        setPlayingAudio(null);
-                    });
-                    return;
-                }
-            }
-            
             setPlayingAudio(null);
         });
     };
 
     const safeFileName = (str) => {
         if (!str) return '';
-        return encodeURIComponent(str.toLowerCase().replace(/\s+/g, '_'));
+        // Convert to match actual folder structure with all hyphens:
+        // "bank (money)" -> "bank-money" 
+        // "close (near in distance)" -> "close-near-in-distance"
+        // "light (from the sun/a lamp)" -> "light-from-the-suna-lamp"
+        return str.toLowerCase()
+            .replace(/\s*\([^)]*\)/g, (match) => {
+                // Remove parentheses and process content
+                const content = match.replace(/[()]/g, '').trim();
+                if (!content) return '';
+                
+                // Replace slashes and special chars with spaces first, then convert all spaces to hyphens
+                const cleaned = content.replace(/[\/\\]/g, ' ').replace(/\s+/g, '-');
+                return '-' + cleaned;
+            })
+            .replace(/'/g, '');
     };
 
     // String similarity function (Levenshtein distance-based)
@@ -887,7 +825,27 @@ export default function VocabList() {
     async function getSmartAudioFileName(lemma, pos, level) {
         // 특수문자가 포함된 lemma의 경우 정리된 파일명으로 변환
         if (lemma && (lemma.includes(' ') || lemma.includes('-') || lemma.includes("'"))) {
-            const cleanLemma = lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            // Convert to match actual folder structure:
+            // "bank (money)" -> "bank-money" 
+            // "lie (tell a lie)" -> "lie-tell-a-lie"
+            // "light (not heavy)" -> "light-not-heavy"
+            // "light (from the sun/a lamp)" -> "light-from-the-suna-lamp"
+            let cleanLemma = lemma.toLowerCase()
+                .replace(/\s*\([^)]*\)/g, (match) => {
+                    // Remove parentheses and process content
+                    const content = match.replace(/[()]/g, '').trim();
+                    if (!content) return '';
+                    
+                    // Replace slashes and special chars properly to match actual folder structure
+                    // "from the sun/a lamp" → "from-the-suna-lamp"
+                    const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                    return cleaned ? '-' + cleaned : '';
+                })
+                .replace(/'/g, '');
+            
+            // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+            cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+            
             console.log('🔧 [DEBUG] getSmartAudioFileName cleaned lemma:', lemma, '->', cleanLemma);
             return cleanLemma;
         }
@@ -1003,17 +961,19 @@ export default function VocabList() {
                 const fileName = pathParts[2];
                 
                 const pathMappings = {
-                    'bank-money': 'bank (money)',
+                    'bank-money': 'bank-money',
                     'rock-music': 'rock (music)',
                     'rock-stone': 'rock (stone)',
-                    'light-not-heavy': 'light (not heavy)',
-                    'light-from-the-sun': 'light (from the sun/a lamp)',
-                    'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
-                    'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
-                    'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
-                    'rest-remaining part': 'rest (remaining part)', // JSON에 공백이 포함된 경우
-                    'like-find sb/sth pleasant': 'like (find sbsth pleasant)', // 복잡한 경우 (슬래시 제거)
-                    'strip-remove clothes/a layer': 'strip (remove clothesa layer)', // 슬래시와 공백이 모두 제거된 경우
+                    'light-not-heavy': 'light-not-heavy',
+                    'light-from-the-sun': 'light-from-the-suna-lamp',
+                    'light-from-the-suna-lamp': 'light-from-the-suna-lamp',
+                    'close-near-in-distance': 'close-near-in-distance',
+                    'last-taking time': 'last (taking time)',
+                    'last-taking-time': 'last (taking time)',
+                    'light-not-heavy': 'light-not-heavy',
+                    'rest-remaining part': 'rest (remaining part)',
+                    'like-find sb/sth pleasant': 'like (find sbsth pleasant)',
+                    'strip-remove clothes/a layer': 'strip (remove clothesa layer)',
                     'last-final': 'last (final)',
                     'mine-belongs-to-me': 'mine (belongs to me)',
                     'bear-animal': 'bear (animal)',
@@ -1039,7 +999,7 @@ export default function VocabList() {
         // 폴백: 로컬 오디오 사용 (gloss.mp3)
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${folderName}/${audioFileName}/gloss.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName.trim()}/gloss.mp3`;
         console.log('⚠️ Playing GLOSS audio from local path:', localAudioPath);
         playUrl(localAudioPath, 'vocab', vocab.id);
     };
@@ -1048,7 +1008,25 @@ export default function VocabList() {
         console.log('🔍 [DEBUG] playVocabAudio vocab.source:', vocab.source, 'lemma:', vocab.lemma);
         // Check if this is an idiom/phrasal verb first
         if (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) {
-            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            // Convert to match actual folder structure:
+            // "bank (money)" -> "bank-money" 
+            // "lie (tell a lie)" -> "lie-tell a lie"
+            // "light (from the sun/a lamp)" -> "light-from the suna lamp"
+            let cleanLemma = vocab.lemma.toLowerCase()
+                .replace(/\s*\([^)]*\)/g, (match) => {
+                    // Remove parentheses and process content
+                    const content = match.replace(/[()]/g, '').trim();
+                    if (!content) return '';
+                    
+                    // Replace slashes and special chars properly to match actual folder structure
+                    // "from the sun/a lamp" → "from-the-suna-lamp"
+                    const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                    return cleaned ? '-' + cleaned : '';
+                })
+                .replace(/'/g, '');
+            
+            // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+            cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
             
             // category에서 "구동사" 여부 확인 또는 source로 판단
             // 알려진 phrasal verb들을 직접 매핑
@@ -1060,13 +1038,11 @@ export default function VocabList() {
               'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
             ];
             
-            const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
-                                 (vocab.category && vocab.category.includes('구동사')) ||
-                                 knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
-            
-            const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
-            const audioPath = `/${folderName}/${cleanLemma}.mp3`;  // word 오디오는 _example.mp3가 아닌 .mp3
-            console.log('Playing idiom/phrasal word audio from path:', audioPath, 'category:', vocab.category, 'isPhrasalVerb:', isPhrasalVerb);
+            // Use unified folder structure based on CEFR level instead of separate idiom/phrasal_verb folders
+            const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+            const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+            const audioPath = `/${folderName}/${audioFileName.trim()}/word.mp3`;
+            console.log('Playing special vocab word audio from unified path:', audioPath, 'category:', vocab.category);
             playUrl(audioPath, 'vocab', vocab.id);
             return;
         }
@@ -1075,16 +1051,6 @@ export default function VocabList() {
         console.log('🔍 [DEBUG] playVocabAudio called with vocab:', vocab.lemma);
         console.log('🔍 [DEBUG] vocab.dictentry:', vocab.dictentry);
         console.log('🔍 [DEBUG] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
-        
-        // CEFR 레벨을 실제 폴더명으로 매핑
-        const cefrToFolder = {
-            'A1': 'starter',
-            'A2': 'elementary', 
-            'B1': 'intermediate',
-            'B2': 'upper',
-            'C1': 'advanced',
-            'C2': 'advanced'
-        };
         
         // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
         let audioData = null;
@@ -1138,9 +1104,6 @@ export default function VocabList() {
                 'advanced/strip-long narrow piece/word.mp3': 'advanced/strip (long narrow piece)/word.mp3',
                 'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip (long narrow piece)/gloss.mp3',
                 'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3',
-                "idiom/for_what_it's_worth/gloss.mp3": 'idiom/for_what_it_s_worth_gloss.mp3',
-                "idiom/for_what_it's_worth/word.mp3": 'idiom/for_what_it_s_worth.mp3',
-                "idiom/for_what_it's_worth/example.mp3": 'idiom/for_what_it_s_worth_example.mp3'
             };
             
             if (specialMappings[wordAudioPath]) {
@@ -1157,18 +1120,19 @@ export default function VocabList() {
                     const folderName = pathParts[1];
                     const fileName = pathParts[2];
                     
-                    // 하이픈을 공백과 괄호로 변환하는 매핑
                     const pathMappings = {
-                        'bank-money': 'bank (money)',
+                        'bank-money': 'bank-money',
                         'rock-music': 'rock (music)',
                         'rock-stone': 'rock (stone)',
-                        'light-not-heavy': 'light (not heavy)',
-                        'light-from-the-sun': 'light (from the sun/a lamp)',
-                        'last-taking time': 'last (taking time)', // JSON에 공백이 포함된 경우
-                        'last-taking-time': 'last (taking time)', // 완전히 하이픈으로 된 경우
-                        'light-not heavy': 'light (not heavy)', // JSON에 공백이 포함된 경우
-                        'rest-remaining part': 'rest (remaining part)', // JSON에 공백이 포함된 경우
-                        'like-find sb/sth pleasant': 'like (find sbsth pleasant)', // 복잡한 경우 (슬래시 제거)
+                        'light-not-heavy': 'light-not-heavy',
+                        'light-from-the-sun': 'light-from-the-suna-lamp',
+                        'light-from-the-suna-lamp': 'light-from-the-suna-lamp',
+                        'close-near-in-distance': 'close-near-in-distance',
+                        'last-taking time': 'last (taking time)',
+                        'last-taking-time': 'last (taking time)',
+                        'light-not-heavy': 'light-not-heavy',
+                        'rest-remaining part': 'rest (remaining part)',
+                        'like-find sb/sth pleasant': 'like (find sbsth pleasant)',
                         'last-final': 'last (final)',
                         'mine-belongs-to-me': 'mine (belongs to me)',
                         'bear-animal': 'bear (animal)',
@@ -1208,7 +1172,7 @@ export default function VocabList() {
         // 3. 로컬 오디오 사용 (단어 발음용) - word.mp3 사용
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${folderName}/${audioFileName}/word.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName.trim()}/word.mp3`;
         console.log('⚠️ Playing WORD audio from local path (no audioUrl found):', localAudioPath);
         console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'vocab', vocab.id);
@@ -1218,7 +1182,25 @@ export default function VocabList() {
     const playExampleOnlyAudio = async (vocab) => {
         // 숙어/구동사인 경우 특별 처리
         if ((vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) && vocab.lemma) {
-            const cleanLemma = vocab.lemma.toLowerCase().replace(/\s+/g, '_').replace(/-/g, '_').replace(/'/g, '');
+            // Convert to match actual folder structure:
+            // "bank (money)" -> "bank-money" 
+            // "lie (tell a lie)" -> "lie-tell a lie"
+            // "light (from the sun/a lamp)" -> "light-from the suna lamp"
+            let cleanLemma = vocab.lemma.toLowerCase()
+                .replace(/\s*\([^)]*\)/g, (match) => {
+                    // Remove parentheses and process content
+                    const content = match.replace(/[()]/g, '').trim();
+                    if (!content) return '';
+                    
+                    // Replace slashes and special chars properly to match actual folder structure
+                    // "from the sun/a lamp" → "from-the-suna-lamp"
+                    const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                    return cleaned ? '-' + cleaned : '';
+                })
+                .replace(/'/g, '');
+            
+            // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+            cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
             
             // category에서 "구동사" 여부 확인 또는 source로 판단
             // 알려진 phrasal verb들을 직접 매핑
@@ -1230,13 +1212,11 @@ export default function VocabList() {
               'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
             ];
             
-            const isPhrasalVerb = vocab.source === 'phrasal_verb_migration' || 
-                                 (vocab.category && vocab.category.includes('구동사')) ||
-                                 knownPhrasalVerbs.includes(vocab.lemma.toLowerCase());
-            
-            const folderName = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
-            const audioPath = `/${folderName}/${cleanLemma}_example.mp3`;
-            console.log('Playing idiom/phrasal example audio from path:', audioPath, 'category:', vocab.category, 'isPhrasalVerb:', isPhrasalVerb);
+            // Use unified folder structure based on CEFR level instead of separate idiom/phrasal_verb folders
+            const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+            const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+            const audioPath = `/${folderName}/${audioFileName.trim()}/example.mp3`;
+            console.log('Playing special vocab example audio from unified path:', audioPath, 'category:', vocab.category);
             playUrl(audioPath, 'example', vocab.id);
             return;
         }
@@ -1244,7 +1224,7 @@ export default function VocabList() {
         // 일반 단어는 기존 로직 사용
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
         const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-        const localAudioPath = `/${folderName}/${audioFileName}/example.mp3`;
+        const localAudioPath = `/${folderName}/${audioFileName.trim()}/example.mp3`;
         console.log('Playing example audio from local path:', localAudioPath);
         console.log('🎯 Matched audio file:', audioFileName);
         playUrl(localAudioPath, 'example', vocab.id);

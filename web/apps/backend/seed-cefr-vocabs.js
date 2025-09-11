@@ -122,6 +122,7 @@ async function seedVocabFromCefrJson(vocabData) {
             {
                 kind: 'example',
                 ko: vocabData.koExample || '',
+                en: vocabData.example || '',
                 chirpScript: vocabData.koChirpScript || '',
                 source: 'cefr_vocabs'
             }

@@ -175,7 +175,7 @@ app.get('/simple-vocab', async (req, res) => {
     
     res.writeHead(200, { 
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*', // Handled by CORS middleware
     });
     res.end(JSON.stringify({
       success: true,
@@ -205,7 +205,7 @@ app.get('/simple-exam-categories', async (req, res) => {
     
     res.writeHead(200, { 
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*', // Handled by CORS middleware
     });
     res.end(JSON.stringify({
       success: true,
@@ -322,7 +322,7 @@ app.get('/simple-vocab-detail/:id', async (req, res) => {
     
     res.writeHead(200, { 
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*', // Handled by CORS middleware
     });
     res.end(JSON.stringify({
       success: true,
@@ -351,7 +351,7 @@ app.get('/simple-audio-files/:level', async (req, res) => {
     
     res.writeHead(200, { 
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': '*', // Handled by CORS middleware
     });
     res.end(JSON.stringify({
       success: true,
@@ -378,10 +378,18 @@ app.get('/srs/available', (req, res) => {
       nextReviewTime: null
     };
     
-    res.writeHead(200, { 
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    });
+    // Add CORS headers manually for this endpoint
+    const origin = req.headers.origin;
+    const headers = {
+      'Content-Type': 'application/json'
+    };
+    
+    if (origin === 'http://localhost:3000' || origin === 'http://localhost:3001') {
+      headers['Access-Control-Allow-Origin'] = origin;
+      headers['Access-Control-Allow-Credentials'] = 'true';
+    }
+    
+    res.writeHead(200, headers);
     res.end(JSON.stringify({
       success: true,
       data: srsData
@@ -467,13 +475,7 @@ app.use('/C2/audio', (req, res, next) => {
 // 숙어/구동사 오디오 서빙 (인증 불필요)
 app.use('/idiom', (req, res, next) => {
   console.log('[STATIC] idiom audio request:', req.path);
-  // CORS 헤더 직접 설정
-  const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  // CORS handled by global middleware
   next();
 }, express.static(path.join(__dirname, 'idiom')));
 
@@ -493,7 +495,40 @@ app.use('/api/video', staticFileLogging, preCompressedStatic(path.join(__dirname
 // app.use(brotliCompression);
 
 // CORS 설정을 정적 파일보다 먼저 적용
-app.use(cors({ origin: process.env.CORS_ORIGIN || ['http://localhost:3000', 'http://localhost:3001'], credentials: true }));
+const corsOptions = {
+  origin: function (origin, callback) {
+    const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  exposedHeaders: ['Content-Type', 'Authorization']
+};
+app.use(cors(corsOptions));
+
+// 추가 CORS 헤더 보장 미들웨어
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
+  
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    return res.sendStatus(204);
+  }
+  
+  next();
+});
 
 // 정적 파일 최적화 적용
 app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
@@ -618,17 +653,44 @@ app.use('/api/mobile', mobileRouter);
 app.get('/audio-files/:level', (req, res) => {
   try {
     const level = req.params.level; // A1, A2 등
-    const audioDir = path.join(__dirname, level, 'audio');
+    
+    // CEFR 레벨을 실제 폴더명으로 매핑
+    const levelToFolder = {
+      'A1': 'starter',
+      'A2': 'elementary', 
+      'B1': 'intermediate',
+      'B2': 'upper',
+      'C1': 'advanced',
+      'C2': 'advanced'
+    };
+    
+    const folderName = levelToFolder[level] || 'starter';
+    const audioDir = path.join(__dirname, folderName);
     
     if (!fs.existsSync(audioDir)) {
-      return res.status(404).json({ error: `Audio directory for ${level} not found` });
+      return res.status(404).json({ error: `Audio directory for ${level} (${folderName}) not found` });
     }
     
-    const files = fs.readdirSync(audioDir)
-      .filter(file => file.endsWith('.mp3'))
-      .sort();
+    // 폴더 내의 모든 하위 디렉토리를 검색하여 MP3 파일 찾기
+    const files = [];
     
-    res.json({ files });
+    function collectMp3Files(dir) {
+      const items = fs.readdirSync(dir);
+      for (const item of items) {
+        const fullPath = path.join(dir, item);
+        const stat = fs.statSync(fullPath);
+        
+        if (stat.isDirectory()) {
+          collectMp3Files(fullPath); // 재귀적으로 하위 디렉토리 검색
+        } else if (item.endsWith('.mp3')) {
+          files.push(item);
+        }
+      }
+    }
+    
+    collectMp3Files(audioDir);
+    
+    res.json({ files: files.sort() });
   } catch (error) {
     console.error('Error reading audio files:', error);
     res.status(500).json({ error: 'Failed to read audio files' });
