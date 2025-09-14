@@ -37,25 +37,24 @@ router.get('/list', async (req, res) => {
       where: { vocabId: { in: vocabIds } }
     });
     
-    // VocabTranslation 테이블 확인
-    let vocabTranslations = [];
-    try {
-      vocabTranslations = await prisma.vocabTranslation.findMany({
-        where: { 
-          vocabId: { in: vocabIds.slice(0, 10) }, // 처음 10개만 테스트
-          language: { code: 'ko' }
-        },
-        include: {
-          language: true
-        }
-      });
-      console.log('DEBUG /list: Found VocabTranslations:', vocabTranslations.length);
-      if (vocabTranslations.length > 0) {
-        console.log('DEBUG /list: First VocabTranslation:', JSON.stringify(vocabTranslations[0], null, 2));
+    // VocabTranslation 테이블에서 한국어 번역 가져오기
+    const vocabTranslations = await prisma.vocabTranslation.findMany({
+      where: {
+        vocabId: { in: vocabIds },
+        language: { code: 'ko' }
+      },
+      include: {
+        language: true
       }
-    } catch (e) {
-      console.log('DEBUG /list: VocabTranslation error:', e.message);
-    }
+    });
+
+    // VocabTranslation을 vocabId로 매핑
+    const translationMap = new Map();
+    vocabTranslations.forEach(t => {
+      translationMap.set(t.vocabId, t.translation);
+    });
+
+    console.log('DEBUG /list: Found VocabTranslations:', vocabTranslations.length);
     
     console.log('DEBUG /list: Found dictentries:', dictentries.length);
     if (dictentries.length > 0) {
@@ -82,32 +81,25 @@ router.get('/list', async (req, res) => {
     const items = vocabs.map(v => {
       const dictentry = dictMap.get(v.id);
       const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
-      
-      console.log(`DEBUG /list: Vocab ${v.lemma} (${v.id}) - dictentry found:`, !!dictentry);
-      console.log(`DEBUG /list: Vocab ${v.lemma} (${v.id}) - rawMeanings length:`, rawMeanings.length);
-      if (rawMeanings.length > 0) {
-        console.log(`DEBUG /list: Vocab ${v.lemma} - first example:`, JSON.stringify(rawMeanings[0], null, 2));
-      }
-      
-      // Korean gloss 추출 (examples에서)
-      let primaryGloss = null;
-      
-      // 1. examples에서 gloss kind 찾기 (실제 단어 뜻)
-      if (rawMeanings.length > 0) {
-        const glossExample = rawMeanings.find(ex => ex.kind === 'gloss' && ex.ko && ex.ko.trim());
-        if (glossExample && glossExample.ko) {
-          primaryGloss = glossExample.ko;
-          console.log(`DEBUG /list: Vocab ${v.lemma} - gloss from gloss kind:`, primaryGloss);
+
+      // Korean gloss 추출 - VocabTranslation 테이블 우선
+      let primaryGloss = translationMap.get(v.id) || null;
+
+      // VocabTranslation에 없으면 기존 방식 시도
+      if (!primaryGloss) {
+        // 1. examples에서 gloss kind 찾기 (실제 단어 뜻)
+        if (rawMeanings.length > 0) {
+          const glossExample = rawMeanings.find(ex => ex.kind === 'gloss' && ex.ko && ex.ko.trim());
+          if (glossExample && glossExample.ko) {
+            primaryGloss = glossExample.ko;
+          }
+        }
+
+        // 2. ipaKo 사용 (fallback)
+        if (!primaryGloss && dictentry?.ipaKo) {
+          primaryGloss = dictentry.ipaKo;
         }
       }
-      
-      // 2. ipaKo 사용 (fallback)
-      if (!primaryGloss && dictentry?.ipaKo) {
-        primaryGloss = dictentry.ipaKo;
-        console.log(`DEBUG /list: Vocab ${v.lemma} - gloss from ipaKo:`, primaryGloss);
-      }
-      
-      console.log(`DEBUG /list: Vocab ${v.lemma} - final primaryGloss:`, primaryGloss);
       
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,
@@ -146,7 +138,7 @@ router.get('/search', async (req, res) => {
     });
     
     console.log('DEBUG: Found vocabs without include:', vocabs.length);
-    
+
     // Get dictentry separately to debug the relationship
     if (vocabs.length > 0) {
       const dictentries = await prisma.dictentry.findMany({
@@ -155,6 +147,24 @@ router.get('/search', async (req, res) => {
       console.log('DEBUG: Found dictentries for first vocab:', dictentries.length);
       console.log('DEBUG: First dictentry:', JSON.stringify(dictentries[0], null, 2));
     }
+
+    // VocabTranslation 테이블에서 한국어 번역 가져오기
+    const vocabIds = vocabs.map(v => v.id);
+    const vocabTranslations = await prisma.vocabTranslation.findMany({
+      where: {
+        vocabId: { in: vocabIds },
+        language: { code: 'ko' }
+      },
+      include: {
+        language: true
+      }
+    });
+
+    // VocabTranslation을 vocabId로 매핑
+    const translationMap = new Map();
+    vocabTranslations.forEach(t => {
+      translationMap.set(t.vocabId, t.translation);
+    });
 
     const data = vocabs.map(v => {
       const rawMeanings = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
@@ -196,21 +206,24 @@ router.get('/search', async (req, res) => {
           meanings.push(best);
         }
       }
-      
-      // CEFR 데이터 구조에서 Korean gloss 추출
-      let primaryGloss = null;
-      
-      // CEFR 구조: examples[].ko (gloss kind)
-      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
-      if (glossExample && glossExample.ko) {
-        primaryGloss = glossExample.ko;
+
+      // Korean gloss 추출 - VocabTranslation 테이블 우선
+      let primaryGloss = translationMap.get(v.id) || null;
+
+      // VocabTranslation에 없으면 기존 방식 시도
+      if (!primaryGloss) {
+        // CEFR 구조: examples[].ko (gloss kind)
+        const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+        if (glossExample && glossExample.ko) {
+          primaryGloss = glossExample.ko;
+        }
+
+        // 만약 gloss가 없다면 첫 번째 example의 ko 사용
+        if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
+          primaryGloss = rawMeanings[0].ko;
+        }
       }
-      
-      // 만약 gloss가 없다면 첫 번째 example의 ko 사용
-      if (!primaryGloss && rawMeanings.length > 0 && rawMeanings[0].ko) {
-        primaryGloss = rawMeanings[0].ko;
-      }
-      
+
       // 기존 복잡한 구조도 지원 (backward compatibility) - 실제로 meanings 배열 생성 안함
       // if (!primaryGloss && meanings.length > 0 && meanings[0].definitions?.length > 0) {
       //   primaryGloss = meanings[0].definitions[0].ko_def || null;
@@ -298,15 +311,36 @@ router.get('/idioms-phrasal', async (req, res) => {
       dictMap.set(d.vocabId, { ...d, examples: parsedExamples });
     });
 
+    // VocabTranslation 테이블에서 한국어 번역 가져오기
+    const vocabTranslations = await prisma.vocabTranslation.findMany({
+      where: {
+        vocabId: { in: vocabIds },
+        language: { code: 'ko' }
+      },
+      include: {
+        language: true
+      }
+    });
+
+    // VocabTranslation을 vocabId로 매핑
+    const translationMap = new Map();
+    vocabTranslations.forEach(t => {
+      translationMap.set(t.vocabId, t.translation);
+    });
+
     const items = vocabs.map(v => {
       const dictentry = dictMap.get(v.id);
       const rawMeanings = Array.isArray(dictentry?.examples) ? dictentry.examples : [];
-      
-      // Extract Korean gloss from examples
-      let primaryGloss = null;
-      const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
-      if (glossExample && glossExample.ko) {
-        primaryGloss = glossExample.ko;
+
+      // Korean gloss 추출 - VocabTranslation 테이블 우선
+      let primaryGloss = translationMap.get(v.id) || null;
+
+      // VocabTranslation에 없으면 기존 방식 시도
+      if (!primaryGloss) {
+        const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
+        if (glossExample && glossExample.ko) {
+          primaryGloss = glossExample.ko;
+        }
       }
       
       // Extract English example and Korean example
@@ -398,11 +432,23 @@ router.get('/:id', async (req, res) => {
         dictentry.examples = [];
       }
     }
-    
+
+    // VocabTranslation 테이블에서 한국어 번역 가져오기
+    const vocabTranslation = await prisma.vocabTranslation.findFirst({
+      where: {
+        vocabId: vocabId,
+        language: { code: 'ko' }
+      },
+      include: {
+        language: true
+      }
+    });
+
     // Combine the results
     const result = {
       ...vocab,
-      dictentry: dictentry || null
+      dictentry: dictentry || null,
+      ko_gloss: vocabTranslation?.translation || null
     };
     
     return res.json({ data: result });

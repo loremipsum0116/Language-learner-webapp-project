@@ -503,9 +503,18 @@ export default function LearnVocab() {
         setTimeout(() => {
             if (!el) return; // Check again in case ref changed
             el.loop = !!loop;
-            el.src = url.startsWith('/') ? `${API_BASE}${url}` : url;
+
+            // URL 경로의 각 세그먼트를 개별적으로 인코딩
+            let encodedUrl = url;
+            if (url.startsWith('/')) {
+                const pathSegments = url.split('/').filter(segment => segment);
+                const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+                encodedUrl = '/' + encodedSegments.join('/');
+            }
+
+            el.src = encodedUrl.startsWith('/') ? `${API_BASE}${encodedUrl}` : encodedUrl;
             try { el.load(); } catch { }
-            el.play().catch((e) => console.error('오디오 재생 실패:', e));
+            el.play().catch((e) => console.error('오디오 재생 실패:', e, el.src));
         }, 10); // Very small delay to avoid play/pause conflict
     };
 

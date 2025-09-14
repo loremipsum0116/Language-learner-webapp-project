@@ -111,29 +111,50 @@ router.get('/:examName', async (req, res) => {
             totalCountResult = [{ total: BigInt(category[0].totalWords) }];
         }
 
+        // VocabTranslation 테이블에서 한국어 번역 가져오기
+        const vocabIds = vocabsRaw.map(v => Number(v.id));
+        const vocabTranslations = vocabIds.length > 0 ? await prisma.vocabTranslation.findMany({
+            where: {
+                vocabId: { in: vocabIds },
+                language: { code: 'ko' }
+            },
+            include: {
+                language: true
+            }
+        }) : [];
+
+        // VocabTranslation을 vocabId로 매핑
+        const translationMap = new Map();
+        vocabTranslations.forEach(t => {
+            translationMap.set(t.vocabId, t.translation);
+        });
+
         // BigInt 변환 및 ko_gloss 추출
         const vocabs = vocabsRaw.map(vocab => {
             const rawExamples = Array.isArray(vocab.examples) ? vocab.examples : [];
-            
-            // CEFR 데이터 구조에서 Korean gloss 추출
-            let primaryGloss = null;
-            
-            // CEFR 구조: examples[].ko (gloss kind)
-            const glossExample = rawExamples.find(ex => ex.kind === 'gloss');
-            if (glossExample && glossExample.ko) {
-                primaryGloss = glossExample.ko;
+
+            // Korean gloss 추출 - VocabTranslation 테이블 우선
+            let primaryGloss = translationMap.get(Number(vocab.id)) || null;
+
+            // VocabTranslation에 없으면 기존 방식 시도
+            if (!primaryGloss) {
+                // CEFR 구조: examples[].ko (gloss kind)
+                const glossExample = rawExamples.find(ex => ex.kind === 'gloss');
+                if (glossExample && glossExample.ko) {
+                    primaryGloss = glossExample.ko;
+                }
+
+                // 만약 gloss가 없다면 첫 번째 example의 ko 사용 (하지만 이건 예문이므로 사용하지 않음)
+                // if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].ko) {
+                //     primaryGloss = rawExamples[0].ko;
+                // }
+
+                // 기존 복잡한 구조도 지원 (backward compatibility)
+                if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].definitions?.length > 0) {
+                    primaryGloss = rawExamples[0].definitions[0].ko_def || null;
+                }
             }
-            
-            // 만약 gloss가 없다면 첫 번째 example의 ko 사용
-            if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].ko) {
-                primaryGloss = rawExamples[0].ko;
-            }
-            
-            // 기존 복잡한 구조도 지원 (backward compatibility)
-            if (!primaryGloss && rawExamples.length > 0 && rawExamples[0].definitions?.length > 0) {
-                primaryGloss = rawExamples[0].definitions[0].ko_def || null;
-            }
-            
+
             return {
                 ...vocab,
                 id: Number(vocab.id),

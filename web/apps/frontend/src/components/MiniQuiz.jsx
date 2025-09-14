@@ -111,12 +111,21 @@ export default function LearnVocab() {
     const playUrl = (url) => {
         stopAudio();
         if (!url) return;
-        const src = url.startsWith('/') ? `${API_BASE}${url}` : url;
+
+        // URL 경로의 각 세그먼트를 개별적으로 인코딩
+        let encodedUrl = url;
+        if (url.startsWith('/')) {
+            const pathSegments = url.split('/').filter(segment => segment);
+            const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+            encodedUrl = '/' + encodedSegments.join('/');
+        }
+
+        const src = encodedUrl.startsWith('/') ? `${API_BASE}${encodedUrl}` : encodedUrl;
         const audio = new Audio(src);
         if ((mode === 'flash' || idsParam) && auto) {
             audio.loop = true;
         }
-        audio.play().then(() => { audioRef.current = audio; }).catch(e => { console.error("Audio playback failed:", e); });
+        audio.play().then(() => { audioRef.current = audio; }).catch(e => { console.error("Audio playback failed:", e, src); });
     };
 
     useEffect(() => {

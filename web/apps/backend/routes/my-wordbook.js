@@ -41,27 +41,49 @@ router.get('/', async (req, res) => {
             }
         }) : [];
 
+        // VocabTranslation 테이블에서 한국어 번역 가져오기
+        const vocabTranslations = vocabIds.length > 0 ? await prisma.vocabTranslation.findMany({
+            where: {
+                vocabId: { in: vocabIds },
+                language: { code: 'ko' }
+            },
+            include: {
+                language: true
+            }
+        }) : [];
+
         // SRS 카드 정보 매핑
         const srsCardMap = new Map(srsCards.map(card => [card.itemId, card]));
+
+        // VocabTranslation을 vocabId로 매핑
+        const translationMap = new Map();
+        vocabTranslations.forEach(t => {
+            translationMap.set(t.vocabId, t.translation);
+        });
 
         const processedItems = items.map(item => {
             if (!item.vocab) return item;
             const examples = item.vocab.dictentry?.examples || [];
-            let gloss = null;
-            
-            // 우선순위: CEFR vocabs의 gloss > 기존 definitions
-            const glossExample = examples.find(ex => ex.kind === 'gloss');
-            if (glossExample && glossExample.ko) {
-                gloss = glossExample.ko;
-            } else if (examples[0]?.definitions?.[0]) {
-                gloss = examples[0].definitions[0].ko_def || null;
+
+            // Korean gloss 추출 - VocabTranslation 테이블 우선
+            let gloss = translationMap.get(item.vocabId) || null;
+
+            // VocabTranslation에 없으면 기존 방식 시도
+            if (!gloss) {
+                // 우선순위: CEFR vocabs의 gloss > 기존 definitions
+                const glossExample = examples.find(ex => ex.kind === 'gloss');
+                if (glossExample && glossExample.ko) {
+                    gloss = glossExample.ko;
+                } else if (examples[0]?.definitions?.[0]) {
+                    gloss = examples[0].definitions[0].ko_def || null;
+                }
             }
-            
+
             // SRS 카드 정보 포함
             const srsCard = srsCardMap.get(item.vocabId);
-            
-            return { 
-                ...item, 
+
+            return {
+                ...item,
                 vocab: { ...item.vocab, ko_gloss: gloss },
                 srsCard: srsCard || null
             };
@@ -85,9 +107,10 @@ router.post('/add', async (req, res) => {
         const userId = req.user.id;
         const id = parseInt(vocabId);
 
-        const existing = await prisma.uservocab.findUnique({
+        const existing = await prisma.uservocab.findFirst({
             where: {
-                userId_vocabId: { userId, vocabId: id }
+                userId: userId,
+                vocabId: id
             }
         });
 

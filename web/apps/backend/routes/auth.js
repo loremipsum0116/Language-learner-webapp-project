@@ -41,15 +41,37 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+    console.log('[LOGIN DEBUG] Received login request');
+    console.log('[LOGIN DEBUG] Request body:', req.body);
+    console.log('[LOGIN DEBUG] Request headers:', req.headers);
+
     const { email, password } = req.body;
-    if (!email || !password) return fail(res, 400, 'email and password required');
+    if (!email || !password) {
+        console.log('[LOGIN DEBUG] Missing email or password');
+        return fail(res, 400, 'email and password required');
+    }
+
+    console.log('[LOGIN DEBUG] Email:', email);
+    console.log('[LOGIN DEBUG] Password length:', password?.length);
 
     try {
         const user = await prisma.user.findUnique({ where: { email: email.toLowerCase().trim() } });
-        if (!user) return fail(res, 401, 'invalid credentials');
+        console.log('[LOGIN DEBUG] User found:', !!user);
+        console.log('[LOGIN DEBUG] User details:', user ? { id: user.id, email: user.email, role: user.role } : null);
+
+        if (!user) {
+            console.log('[LOGIN DEBUG] User not found');
+            return fail(res, 401, 'invalid credentials');
+        }
 
         const okPw = await bcrypt.compare(password, user.passwordHash);
-        if (!okPw) return fail(res, 401, 'invalid credentials');
+        console.log('[LOGIN DEBUG] Password comparison result:', okPw);
+        console.log('[LOGIN DEBUG] Stored hash (first 20 chars):', user.passwordHash?.substring(0, 20));
+
+        if (!okPw) {
+            console.log('[LOGIN DEBUG] Password comparison failed');
+            return fail(res, 401, 'invalid credentials');
+        }
 
         // Generate token pair with device info
         const deviceInfo = jwtService.getDeviceInfo(req);

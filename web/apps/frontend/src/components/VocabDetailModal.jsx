@@ -82,25 +82,49 @@ function parseAudioLocal(audioLocal) {
   if (audioData) {
     const convertPath = (path) => {
       if (!path) return path;
-      let converted = path.replace(/\s*\([^)]*\)/g, (match) => {
+
+      console.log('🔧 Converting path:', path);
+
+      // Special case for known problematic paths - more comprehensive
+      if (path.includes('light-from-the-sun/a-lamp') || path.includes('light (from the sun/a lamp)')) {
+        const fixed = path.replace(/light-from-the-sun\/a-lamp|light \(from the sun\/a lamp\)/g, 'light-from-the-suna-lamp');
+        console.log('🔧 Fixed light path:', path, '->', fixed);
+        return fixed;
+      }
+
+      // Handle other slash-containing parentheses
+      let converted = path;
+
+      // First handle parentheses with slashes inside
+      converted = converted.replace(/\s*\([^)]*\/[^)]*\)/g, (match) => {
+        const content = match.replace(/[()]/g, '').trim();
+        if (!content) return '';
+        const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+        return cleaned ? '-' + cleaned : '';
+      });
+
+      // Then handle regular parentheses
+      converted = converted.replace(/\s*\([^)]*\)/g, (match) => {
         const content = match.replace(/[()]/g, '').trim();
         if (!content) return '';
         const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
         return cleaned ? '-' + cleaned : '';
       })
       .replace(/'/g, '');
-      
+
       // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
       converted = converted.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+
+      console.log('🔧 Converted path:', path, '->', converted);
       return converted;
     };
-    
+
     ['word', 'gloss', 'example'].forEach(type => {
       if (audioData[type]) {
         audioData[type] = convertPath(audioData[type]);
       }
     });
-    
+
   }
   
   return audioData;
@@ -123,7 +147,7 @@ function getBestMatchingFileName(lemma, pos, availableFiles) {
     'rock (music)': 'rock (music)',
     'rock (stone)': 'rock (stone)(n)',
     'light (not heavy)': 'light (not heavy)(adj)',
-    'light (from the sun/a lamp)': 'light (from the suna lamp)(v)',
+    'light (from the sun/a lamp)': 'light-from-the-suna-lamp', // 실제 폴더명
     'last (taking time)': 'last (taking time)(v)',
     'last (final)': 'last (final)(unknown)',
     'mine (belongs to me)': 'mine (belongs to me)(pron)',
@@ -228,7 +252,7 @@ function getSmartAudioFileName(lemma, pos) {
     'rock (music)': 'rock (music)',
     'rock (stone)': 'rock (stone)(n)',
     'light (not heavy)': 'light (not heavy)(adj)',
-    'light (from the sun/a lamp)': 'light (from the sun)',
+    'light (from the sun/a lamp)': 'light-from-the-suna-lamp', // 실제 폴더명
     'last (taking time)': 'last (taking time)(v)',
     'last (final)': 'last (final)',
     'mine (belongs to me)': 'mine (belongs to me)',
@@ -238,7 +262,7 @@ function getSmartAudioFileName(lemma, pos) {
     'rest (remaining part)': 'rest (remaining part)',
     'rest (sleep/relax)': 'rest (sleeprelax)(unkown)', // Note: actual file has typo "unkown"
     'second (next after the first)': 'second (next after the first)',
-    
+
     // Additional mappings for common patterns
     'used to': 'used to',
     'have': 'have',
@@ -438,17 +462,19 @@ export default function VocabDetailModal({
           <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <Pron ipa={dictentry.ipa} ipaKo={dictentry.ipaKo} />
 
+            {/* 한국어 뜻 표시 */}
+            {vocab.ko_gloss && (
+              <div className="mb-3">
+                <div className="ps-2 mt-2">
+                  <p className="mb-1">
+                    <strong>{vocab.ko_gloss}</strong>
+                  </p>
+                </div>
+              </div>
+            )}
+
             {glossExample || exampleExample ? (
-              <div className="mt-3">
-                {glossExample && (
-                  <div className="mb-3">
-                    <div className="ps-2 mt-2">
-                      <p className="mb-1">
-                        <strong>{glossExample.ko}</strong>
-                      </p>
-                    </div>
-                  </div>
-                )}
+              <div className="mt-3">{/* 기존 코드 계속 */}
                 
                 {((exampleExample && exampleExample.ko) || vocab.example || vocab.koExample) && (
                   <div className="mt-3 border-top pt-3">
@@ -456,8 +482,11 @@ export default function VocabDetailModal({
                       <h6 className="fw-bold mb-0">예문</h6>
                       {(() => {
                         // cefr_vocabs.json의 audio.example 경로 사용 (예문 제목 옆 버튼)
+                        console.log(`🔍 [${vocab.lemma}] Original audioLocal:`, dictentry.audioLocal);
                         const audioData = parseAudioLocal(dictentry.audioLocal);
+                        console.log(`🔍 [${vocab.lemma}] Parsed audioData:`, audioData);
                         const exampleAudioPath = audioData?.example;
+                        console.log(`🔍 [${vocab.lemma}] Example path:`, exampleAudioPath);
                         
                         // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
                         const isIdiomOrPhrasal = vocab.source === 'idiom_migration';

@@ -48,10 +48,16 @@ export async function fetchJSON(url, opts = {}, timeoutMs = 8000) {
 
     const latency = Math.round(performance.now() - t0);
     if (res.status === 401) {
-      const authContext = getGlobalAuthContext();
-      if (authContext && authContext.handleTokenExpiration) {
-        authContext.handleTokenExpiration();
+      // Don't auto-handle 401 for login/register endpoints - they need to handle their own auth failures
+      const isAuthEndpoint = url.includes('/auth/login') || url.includes('/auth/register');
+
+      if (!isAuthEndpoint) {
+        const authContext = getGlobalAuthContext();
+        if (authContext && authContext.handleTokenExpiration) {
+          authContext.handleTokenExpiration();
+        }
       }
+
       const err = new Error("Unauthorized");
       err.status = 401;
       err.latency = latency;

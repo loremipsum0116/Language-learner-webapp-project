@@ -1,6 +1,6 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from "react";
-import { fetchJSON, withCreds, isAbortError } from "../api/client";
+import { fetchJSON, withCreds, isAbortError, API_BASE } from "../api/client";
 
 const AuthContext = createContext(null);
 
@@ -57,8 +57,44 @@ export function AuthProvider({ children }) {
     }, [user, refreshSrsIds]);
 
     const login = async (email, password) => {
-        await fetchJSON("/auth/login", withCreds({ method: "POST", body: JSON.stringify({ email, password }) }));
-        await refreshUser();
+        console.log('[LOGIN DEBUG] Attempting login with:', { email, passwordLength: password?.length });
+        console.log('[LOGIN DEBUG] API_BASE:', API_BASE);
+
+        try {
+            // Use raw fetch to bypass the 401 handling in fetchJSON
+            const response = await fetch(`${API_BASE}/auth/login`, {
+                method: "POST",
+                credentials: "include",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password })
+            });
+
+            console.log('[LOGIN DEBUG] Raw response status:', response.status);
+            console.log('[LOGIN DEBUG] Raw response headers:', [...response.headers.entries()]);
+
+            if (response.status === 401) {
+                const errorText = await response.text();
+                console.log('[LOGIN DEBUG] 401 response body:', errorText);
+                const err = new Error("Invalid credentials");
+                err.status = 401;
+                throw err;
+            }
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.log('[LOGIN DEBUG] Error response body:', errorText);
+                const err = new Error(`HTTP ${response.status}`);
+                err.status = response.status;
+                throw err;
+            }
+
+            const data = await response.json();
+            console.log('[LOGIN DEBUG] Login successful:', data);
+            await refreshUser();
+        } catch (error) {
+            console.error('[LOGIN DEBUG] Login failed:', error);
+            throw error;
+        }
     };
 
     // ✅ 1. register 함수 정의

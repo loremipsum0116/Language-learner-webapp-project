@@ -2,6 +2,7 @@
 const { PrismaClient } = require('@prisma/client');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '..', 'web', 'apps', 'backend', '.env') });
 
 const prisma = new PrismaClient();
 
@@ -10,7 +11,7 @@ async function main() {
     console.log('🌱 Starting FIXED CEFR vocab seeding...');
 
     // Read the cefr_vocabs.json file
-    const cefrPath = path.join(__dirname, 'cefr_vocabs.json');
+    const cefrPath = path.join(__dirname, '..', 'web', 'apps', 'backend', 'cefr_vocabs.json');
     
     if (!fs.existsSync(cefrPath)) {
       console.error('❌ cefr_vocabs.json not found!');
@@ -42,7 +43,8 @@ async function main() {
         data: {
           code: 'en',
           name: 'English',
-          nativeName: 'English'
+          nativeName: 'English',
+          isActive: true
         }
       });
       console.log('✅ Created English language entry');
@@ -60,7 +62,8 @@ async function main() {
         data: {
           code: 'ko',
           name: 'Korean',
-          nativeName: '한국어'
+          nativeName: '한국어',
+          isActive: true
         }
       });
       console.log('✅ Created Korean language entry');

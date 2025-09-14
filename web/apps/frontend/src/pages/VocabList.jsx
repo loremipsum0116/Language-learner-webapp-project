@@ -594,7 +594,49 @@ export default function VocabList() {
             return;
         }
         stopAudio();
-        const fullUrl = url.startsWith('/') ? `${API_BASE}${url}` : url;
+
+        // Special mappings for specific problematic paths
+        const specialMappings = {
+            'advanced/strip-remove-clothes/a-layer/example.mp3': 'advanced/strip-remove-clothesa-layer/example.mp3',
+            'intermediate/stick-push-into/attach/example.mp3': 'intermediate/stick-push-intoattach/example.mp3',
+            'advanced/strip-remove-clothes/a-layer/us.mp3': 'advanced/strip-remove-clothesa-layer/us.mp3',
+            'intermediate/stick-push-into/attach/us.mp3': 'intermediate/stick-push-intoattach/us.mp3',
+            'elementary/light-from-the-sun/a-lamp/example.mp3': 'elementary/light-from-the-suna-lamp/example.mp3',
+            'elementary/light-from-the-sun/a-lamp/word.mp3': 'elementary/light-from-the-suna-lamp/word.mp3',
+            'elementary/light-from-the-sun/a-lamp/gloss.mp3': 'elementary/light-from-the-suna-lamp/gloss.mp3',
+            'intermediate/like-find-sb/sth-pleasant/example.mp3': 'intermediate/like-find-sbsth-pleasant/example.mp3',
+            'intermediate/like-find-sb/sth-pleasant/word.mp3': 'intermediate/like-find-sbsth-pleasant/word.mp3',
+            'intermediate/like-find-sb/sth-pleasant/gloss.mp3': 'intermediate/like-find-sbsth-pleasant/gloss.mp3',
+            'elementary/rest-sleep/relax/example.mp3': 'elementary/rest-sleeprelax/example.mp3',
+            'elementary/rest-sleep/relax/word.mp3': 'elementary/rest-sleeprelax/word.mp3',
+            'elementary/rest-sleep/relax/gloss.mp3': 'elementary/rest-sleeprelax/gloss.mp3'
+        };
+
+        // Apply special mappings first
+        let mappedUrl = url;
+        if (url.startsWith('/')) {
+            const pathWithoutSlash = url.substring(1);
+            if (specialMappings[pathWithoutSlash]) {
+                mappedUrl = '/' + specialMappings[pathWithoutSlash];
+                console.log('[AUDIO DEBUG] Applied special mapping:', url, '->', mappedUrl);
+            }
+        }
+
+        // URL 경로의 각 세그먼트를 개별적으로 인코딩
+        let encodedUrl = mappedUrl;
+        if (mappedUrl.startsWith('/')) {
+            const pathSegments = mappedUrl.split('/').filter(segment => segment);
+            console.log('[AUDIO DEBUG] Original URL:', url);
+            console.log('[AUDIO DEBUG] Mapped URL:', mappedUrl);
+            console.log('[AUDIO DEBUG] Path segments:', pathSegments);
+            const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+            console.log('[AUDIO DEBUG] Encoded segments:', encodedSegments);
+            encodedUrl = '/' + encodedSegments.join('/');
+            console.log('[AUDIO DEBUG] Final encoded URL:', encodedUrl);
+        }
+
+        const fullUrl = encodedUrl.startsWith('/') ? `${API_BASE}${encodedUrl}` : encodedUrl;
+        console.log('[AUDIO DEBUG] Full URL:', fullUrl);
         const newAudio = new Audio(fullUrl);
         newAudio.onended = () => setPlayingAudio(null);
         newAudio.play().then(() => {
@@ -693,8 +735,8 @@ export default function VocabList() {
             'rest (remaining part)': 'rest (remaining part)',
             'rest (sleep/relax)': 'rest (sleeprelax)(unkown)', // Note: actual file has typo "unkown"
             'second (next after the first)': 'second (next after the first)',
-            'strip (remove clothes/a layer)': 'strip (remove clothesa layer)', // 복잡한 C1 케이스
-            'strip (long narrow piece)': 'strip (long narrow piece)', // C1 케이스
+            'strip (remove clothes/a layer)': 'strip-remove-clothesa-layer', // 복잡한 C1 케이스
+            'strip (long narrow piece)': 'strip-long-narrow-piece', // C1 케이스
             
             // Additional mappings for common patterns
             'used to': 'used to',
@@ -881,8 +923,8 @@ export default function VocabList() {
                 'race (competition).mp3',
                 'second (next after the first).mp3',
                 'bank (money).mp3', // A1에서도 매칭되도록 추가
-                'strip (remove clothesa layer).mp3', // C1 복잡한 경우
-                'strip (long narrow piece).mp3', // C1 케이스
+                'strip-remove-clothesa-layer.mp3', // C1 복잡한 경우
+                'strip-long-narrow-piece.mp3', // C1 케이스
                 
                 // Additional common words (ACTUAL A2 files)
                 'used to.mp3',
@@ -973,7 +1015,7 @@ export default function VocabList() {
                     'light-not-heavy': 'light-not-heavy',
                     'rest-remaining part': 'rest (remaining part)',
                     'like-find sb/sth pleasant': 'like (find sbsth pleasant)',
-                    'strip-remove clothes/a layer': 'strip (remove clothesa layer)',
+                    'strip-remove clothes/a layer': 'strip-remove-clothesa-layer',
                     'last-final': 'last (final)',
                     'mine-belongs-to-me': 'mine (belongs to me)',
                     'bear-animal': 'bear (animal)',
@@ -1098,12 +1140,12 @@ export default function VocabList() {
             
             // 특별한 경우들을 먼저 처리
             const specialMappings = {
-                'advanced/strip-remove clothes/a layer/word.mp3': 'advanced/strip (remove clothesa layer)/word.mp3',
-                'advanced/strip-remove clothes/a layer/gloss.mp3': 'advanced/strip (remove clothesa layer)/gloss.mp3',
-                'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip (remove clothesa layer)/example.mp3',
-                'advanced/strip-long narrow piece/word.mp3': 'advanced/strip (long narrow piece)/word.mp3',
-                'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip (long narrow piece)/gloss.mp3',
-                'advanced/strip-long narrow piece/example.mp3': 'advanced/strip (long narrow piece)/example.mp3',
+                'advanced/strip-remove clothes/a layer/word.mp3': 'advanced/strip-remove-clothesa-layer/word.mp3',
+                'advanced/strip-remove clothes/a layer/gloss.mp3': 'advanced/strip-remove-clothesa-layer/gloss.mp3',
+                'advanced/strip-remove clothes/a layer/example.mp3': 'advanced/strip-remove-clothesa-layer/example.mp3',
+                'advanced/strip-long narrow piece/word.mp3': 'advanced/strip-long-narrow-piece/word.mp3',
+                'advanced/strip-long narrow piece/gloss.mp3': 'advanced/strip-long-narrow-piece/gloss.mp3',
+                'advanced/strip-long narrow piece/example.mp3': 'advanced/strip-long-narrow-piece/example.mp3',
             };
             
             if (specialMappings[wordAudioPath]) {

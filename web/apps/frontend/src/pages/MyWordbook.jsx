@@ -233,11 +233,19 @@ export default function MyWordbook() {
 
         stopAudio();
 
-        el.src = url.startsWith('/') ? `${API_BASE}${url}` : url;
+        // URL 경로의 각 세그먼트를 개별적으로 인코딩
+        let encodedUrl = url;
+        if (url.startsWith('/')) {
+            const pathSegments = url.split('/').filter(segment => segment);
+            const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+            encodedUrl = '/' + encodedSegments.join('/');
+        }
+
+        el.src = encodedUrl.startsWith('/') ? `${API_BASE}${encodedUrl}` : encodedUrl;
         el.play().then(() => {
             setPlayingAudio({ type, id });
         }).catch(e => {
-            console.error("오디오 재생 실패:", e);
+            console.error("오디오 재생 실패:", e, el.src);
             setPlayingAudio(null);
         });
 
@@ -264,9 +272,9 @@ export default function MyWordbook() {
             'C2': 'advanced'
         };
         
-        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
+        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선) - word.mp3 우선
         const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
-        const wordAudioPath = audioData?.example || audioData?.word;
+        const wordAudioPath = audioData?.word || audioData?.example;
         
         if (wordAudioPath) {
             // 절대 경로로 변환
@@ -282,9 +290,9 @@ export default function MyWordbook() {
             return;
         }
         
-        // 3. 레거시 로컬 오디오 패스 생성 (최종 폴백)
+        // 3. 레거시 로컬 오디오 패스 생성 (최종 폴백) - word.mp3 사용
         const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
-        const localAudioPath = `/${folderName}/${safeFileName(vocab.lemma)}/example.mp3`;
+        const localAudioPath = `/${folderName}/${safeFileName(vocab.lemma)}/word.mp3`;
         playUrl(localAudioPath, 'vocab', vocab.id);
     };
 

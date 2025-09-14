@@ -205,7 +205,16 @@
       "Bash(npx expo prebuild:*)",
       "Bash(top:*)",
       "Bash(DISABLE_ESLINT_PLUGIN=true npm start)",
-      "Bash(DISABLE_ESLINT_PLUGIN=true pnpm start)"
+      "Bash(DISABLE_ESLINT_PLUGIN=true pnpm start)",
+      "Bash(pnpm --filter @language-learner/backend install)",
+      "Bash(set DATABASE_URL=\"mysql://root:tlagustjr!23@127.0.0.1:3306/mysql\")",
+      "Bash(npx dotenv -e .env -- npx tsx prisma/seed-cefr-vocabs.ts:*)",
+      "Bash(npx dotenv -e .env -- npx prisma db push:*)",
+      "Bash(pnpm --filter @language-learner/frontend install)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"그럽시디\" npx dotenv -e .env -- npx prisma db push --force-reset --accept-data-loss)",
+      "Bash(npx dotenv -e .env -- npx tsx prisma/seed-cefr-vocabs-fixed.ts:*)",
+      "Read(//c/Users/sst70/**)",
+      "Bash(pnpm dev:*)"
     ],
     "deny": [],
     "ask": []
