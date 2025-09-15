@@ -38,25 +38,12 @@ const getPosBadgeColor = (pos) => {
 
 // IdiomCard component
 function IdiomCard({ idiom, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, isSelected, onToggleSelect, playingAudio }) {
-    const koGloss = idiom.korean_meaning || '뜻 정보 없음';
+    const koGloss = idiom.meaning || idiom.korean_meaning || idiom.ko_gloss || '뜻 정보 없음';
     const isEnriching = enrichingId === idiom.id;
     const isPlaying = playingAudio?.type === 'idiom' && playingAudio?.id === idiom.id;
     
-    // 레벨 정보 추출 (예: "중급, 숙어" -> "중급")
-    const level = idiom.category?.split(',')[0]?.trim() || '';
-    
-    // CEFR 레벨로 변환
-    const cefrLevel = (() => {
-        switch(level) {
-            case '입문': return 'A1';
-            case '기초': return 'A2';
-            case '중급': return 'B1';
-            case '중상급': return 'B2';
-            case '고급': case '상급': return 'C1';
-            case '최고급': return 'C2';
-            default: return level;
-        }
-    })();
+    // API에서 직접 CEFR 레벨을 제공함
+    const cefrLevel = idiom.levelCEFR;
 
     return (
         <div className="col-md-6 col-lg-4 mb-3">
@@ -76,11 +63,11 @@ function IdiomCard({ idiom, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
                     style={{ cursor: 'pointer' }}
                 >
                     <div className="d-flex align-items-center mb-1">
-                        <h5 className="card-title mb-0 me-2" lang="en">{idiom.idiom}</h5>
+                        <h5 className="card-title mb-0 me-2" lang="en">{idiom.lemma}</h5>
                         <div className="d-flex gap-1">
-                            {cefrLevel && <span className={`badge ${getCefrBadgeColor(cefrLevel)}`}>{cefrLevel}</span>}
-                            <span className={`badge ${idiom.category?.includes('숙어') ? 'bg-success' : 'bg-info'} fst-italic`}>
-                                {idiom.category?.includes('숙어') ? '숙어' : '구동사'}
+                            {idiom.levelCEFR && <span className={`badge ${getCefrBadgeColor(idiom.levelCEFR)}`}>{idiom.levelCEFR}</span>}
+                            <span className={`badge ${idiom.pos === 'idiom' ? 'bg-success' : 'bg-info'} fst-italic`}>
+                                {idiom.pos === 'idiom' ? '숙어' : '구동사'}
                             </span>
                         </div>
                     </div>
@@ -133,7 +120,7 @@ function IdiomCard({ idiom, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, i
 
 // VocabCard component (updated with RainbowStar support)
 function VocabCard({ vocab, onOpenDetail, onAddWordbook, onAddSRS, inWordbook, inSRS, onPlayAudio, enrichingId, onDeleteVocab, isAdmin, isSelected, onToggleSelect, playingAudio, masteredCards }) {
-    const koGloss = vocab.ko_gloss || '뜻 정보 없음';
+    const koGloss = vocab.meaning || vocab.ko_gloss || '뜻 정보 없음';
     const isEnriching = enrichingId === vocab.id;
     const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
     const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
@@ -357,9 +344,9 @@ export default function VocabList() {
                 } else if (activeTab === 'idiom') {
                     // 숙어·구동사 조회 - 이제 vocab 테이블에서 조회
                     const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-                    url = `/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}`;
+                    url = `/api/simple-vocab?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}&limit=1000`;
                     console.log('🔍 [IDIOM UNIFIED] Calling API:', url);
-                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                    const response = await fetchJSON(url, { signal: ac.signal });
                     console.log('📥 [IDIOM UNIFIED] API Response:', response);
                     data = response.data || [];
                     console.log('📋 [IDIOM UNIFIED] Data length:', Array.isArray(data) ? data.length : 'Not array');
@@ -367,7 +354,7 @@ export default function VocabList() {
                     setWords(data.slice(0, displayCount));
                     setAllWords(data);
                     setTotalCount(Array.isArray(data) ? data.length : 0);
-                    setDisplayCount(100); // 새로운 데이터 로드 시 초기화
+                    setDisplayCount(data.length); // 전체 데이터 표시
                     return; // 숙어 탭에서는 여기서 종료
                 } else if (activeTab === 'japanese') {
                     // 일본어 JLPT 레벨별 조회
@@ -552,7 +539,7 @@ export default function VocabList() {
             try {
                 setLoading(true);
                 const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-                const response = await fetchJSON(`/vocab/idioms-phrasal?pos=${encodeURIComponent(posType)}&search=`, withCreds());
+                const response = await fetchJSON(`/api/simple-vocab?pos=${encodeURIComponent(posType)}&search=&limit=1000`);
                 const allIdiomIds = response.data?.map(item => item.id) || [];
                 console.log(`🔍 [IDIOM SELECT ALL] Found ${allIdiomIds.length} ${posType}s to select`);
                 setSelectedIds(new Set(allIdiomIds));
@@ -617,6 +604,22 @@ export default function VocabList() {
             'elementary/light-from-the-sun/a-lamp/example.mp3': 'elementary/light-from-the-suna-lamp/example.mp3',
             'elementary/light-from-the-sun/a-lamp/word.mp3': 'elementary/light-from-the-suna-lamp/word.mp3',
             'elementary/light-from-the-sun/a-lamp/gloss.mp3': 'elementary/light-from-the-suna-lamp/gloss.mp3',
+            // Also handle paths with spaces instead of hyphens
+            'elementary/light-from the sun/a lamp/example.mp3': 'elementary/light-from-the-suna-lamp/example.mp3',
+            'elementary/light-from the sun/a lamp/word.mp3': 'elementary/light-from-the-suna-lamp/word.mp3',
+            'elementary/light-from the sun/a lamp/gloss.mp3': 'elementary/light-from-the-suna-lamp/gloss.mp3',
+            'intermediate/plus-about adding/example.mp3': 'intermediate/plus-aboutadding/example.mp3',
+            'intermediate/plus-about adding/word.mp3': 'intermediate/plus-aboutadding/word.mp3',
+            'intermediate/plus-about adding/gloss.mp3': 'intermediate/plus-aboutadding/gloss.mp3',
+            'elementary/rest-remaining part/example.mp3': 'elementary/rest-remaining-part/example.mp3',
+            'elementary/rest-remaining part/word.mp3': 'elementary/rest-remaining-part/word.mp3',
+            'elementary/rest-remaining part/gloss.mp3': 'elementary/rest-remaining-part/gloss.mp3',
+            'elementary/light-not heavy/example.mp3': 'elementary/light-not-heavy/example.mp3',
+            'elementary/light-not heavy/word.mp3': 'elementary/light-not-heavy/word.mp3',
+            'elementary/light-not heavy/gloss.mp3': 'elementary/light-not-heavy/gloss.mp3',
+            'intermediate/lie-tell a lie/example.mp3': 'intermediate/lie-tell-a-lie/example.mp3',
+            'intermediate/lie-tell a lie/word.mp3': 'intermediate/lie-tell-a-lie/word.mp3',
+            'intermediate/lie-tell a lie/gloss.mp3': 'intermediate/lie-tell-a-lie/gloss.mp3',
             'intermediate/like-find-sb/sth-pleasant/example.mp3': 'intermediate/like-find-sbsth-pleasant/example.mp3',
             'intermediate/like-find-sb/sth-pleasant/word.mp3': 'intermediate/like-find-sbsth-pleasant/word.mp3',
             'intermediate/like-find-sb/sth-pleasant/gloss.mp3': 'intermediate/like-find-sbsth-pleasant/gloss.mp3',
@@ -632,6 +635,19 @@ export default function VocabList() {
             if (specialMappings[pathWithoutSlash]) {
                 mappedUrl = '/' + specialMappings[pathWithoutSlash];
                 console.log('[AUDIO DEBUG] Applied special mapping:', url, '->', mappedUrl);
+            } else {
+                // Apply general pattern for all paths with spaces
+                // Pattern: level/word-phrase with spaces/file.mp3 -> level/word-phrase-with-spaces/file.mp3
+                const parts = pathWithoutSlash.split('/');
+                if (parts.length === 3) {
+                    const [level, wordPart, file] = parts;
+                    // Replace all spaces with hyphens in the word part
+                    const fixedWordPart = wordPart.replace(/\s+/g, '-');
+                    if (fixedWordPart !== wordPart) {
+                        mappedUrl = `/${level}/${fixedWordPart}/${file}`;
+                        console.log('[AUDIO DEBUG] Applied general space-to-hyphen mapping:', url, '->', mappedUrl);
+                    }
+                }
             }
         }
 
@@ -664,20 +680,21 @@ export default function VocabList() {
     const safeFileName = (str) => {
         if (!str) return '';
         // Convert to match actual folder structure with all hyphens:
-        // "bank (money)" -> "bank-money" 
+        // "bank (money)" -> "bank-money"
         // "close (near in distance)" -> "close-near-in-distance"
-        // "light (from the sun/a lamp)" -> "light-from-the-suna-lamp"
+        // "light (from the sun/a lamp)" -> "light-from-the-sun-a-lamp"
         return str.toLowerCase()
             .replace(/\s*\([^)]*\)/g, (match) => {
                 // Remove parentheses and process content
                 const content = match.replace(/[()]/g, '').trim();
                 if (!content) return '';
-                
+
                 // Replace slashes and special chars with spaces first, then convert all spaces to hyphens
                 const cleaned = content.replace(/[\/\\]/g, ' ').replace(/\s+/g, '-');
                 return '-' + cleaned;
             })
-            .replace(/'/g, '');
+            .replace(/'/g, '')
+            .replace(/\s+/g, '-'); // Convert all remaining spaces to hyphens
     };
 
     // String similarity function (Levenshtein distance-based)
@@ -1062,44 +1079,41 @@ export default function VocabList() {
     const playVocabAudio = async (vocab) => {
         console.log('🔍 [DEBUG] playVocabAudio vocab.source:', vocab.source, 'lemma:', vocab.lemma);
         // Check if this is an idiom/phrasal verb first
-        if (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) {
-            // Convert to match actual folder structure:
-            // "bank (money)" -> "bank-money" 
-            // "lie (tell a lie)" -> "lie-tell a lie"
-            // "light (from the sun/a lamp)" -> "light-from the suna lamp"
-            let cleanLemma = vocab.lemma.toLowerCase()
-                .replace(/\s*\([^)]*\)/g, (match) => {
-                    // Remove parentheses and process content
-                    const content = match.replace(/[()]/g, '').trim();
-                    if (!content) return '';
-                    
-                    // Replace slashes and special chars properly to match actual folder structure
-                    // "from the sun/a lamp" → "from-the-suna-lamp"
-                    const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
-                    return cleaned ? '-' + cleaned : '';
-                })
-                .replace(/'/g, '');
-            
-            // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
-            cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
-            
-            // category에서 "구동사" 여부 확인 또는 source로 판단
-            // 알려진 phrasal verb들을 직접 매핑
-            const knownPhrasalVerbs = [
-              'ask around', 'ask around for', 'ask out', 'ask for', 'ask in', 'ask over', 'ask after',
-              'work through', 'work out', 'work up', 'work on', 'work off', 'break down', 'break up', 
-              'break out', 'break in', 'break away', 'break through', 'come up', 'come down', 'come out',
-              'go through', 'go out', 'go up', 'go down', 'put up', 'put down', 'put off', 'put on',
-              'get up', 'get down', 'get out', 'get through', 'turn on', 'turn off', 'turn up', 'turn down'
-            ];
-            
-            // Use unified folder structure based on CEFR level instead of separate idiom/phrasal_verb folders
-            const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
-            const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
-            const audioPath = `/${folderName}/${audioFileName.trim()}/word.mp3`;
-            console.log('Playing special vocab word audio from unified path:', audioPath, 'category:', vocab.category);
-            playUrl(audioPath, 'vocab', vocab.id);
-            return;
+        if (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || vocab.pos === 'idiom' || vocab.pos === 'phrasal_verb' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) {
+            // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용
+            const audioUrl = vocab.audioUrl || vocab.dictentry?.audioUrl || vocab.audio;
+            if (audioUrl) {
+                // audioUrl을 그대로 사용 (예: "idiom/a_stones_throw.mp3")
+                const audioPath = `/${audioUrl}`;
+                console.log('🔍 [playVocabAudio] Using database audio for idiom/phrasal:', vocab.lemma, '->', audioPath);
+                playUrl(audioPath, 'vocab', vocab.id);
+                return;
+            } else {
+                // Fallback: Use unified folder structure based on CEFR level
+                let cleanLemma = vocab.lemma.toLowerCase()
+                    .replace(/\s*\([^)]*\)/g, (match) => {
+                        // Remove parentheses and process content
+                        const content = match.replace(/[()]/g, '').trim();
+                        if (!content) return '';
+
+                        // Replace slashes and special chars properly to match actual folder structure
+                        // "from the sun/a lamp" → "from-the-suna-lamp"
+                        const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                        return cleaned ? '-' + cleaned : '';
+                    })
+                    .replace(/'/g, '');
+
+                // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+                cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+
+                // Use unified folder structure based on CEFR level instead of separate idiom/phrasal_verb folders
+                const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+                const audioFileName = await getSmartAudioFileName(vocab.lemma, vocab.pos, vocab.levelCEFR);
+                const audioPath = `/${folderName}/${audioFileName.trim()}/word.mp3`;
+                console.log('🔍 [playVocabAudio] Fallback to folder structure:', vocab.lemma, '->', folderName, 'audioPath:', audioPath);
+                playUrl(audioPath, 'vocab', vocab.id);
+                return;
+            }
         }
         
         // 단어 자체 발음: cefr_vocabs.json의 audio.word 경로 우선 사용
@@ -1305,7 +1319,7 @@ export default function VocabList() {
     const handleOpenDetail = async (vocabId) => {
         try {
             setDetailLoading(true); setDetail(null); setDetailType('vocab');
-            const { data } = await fetchJSON(`/vocab/${vocabId}`, withCreds());
+            const { data } = await fetchJSON(`/api/vocab/${vocabId}`, withCreds());
             setDetail(data);
         } catch (e) {
             if (e.status === 401) alert('로그인이 필요합니다.');

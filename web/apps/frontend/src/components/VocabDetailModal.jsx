@@ -361,6 +361,7 @@ export default function VocabDetailModal({
   // CEFR 데이터 구조를 위한 간소화된 처리
   const glossExample = rawMeanings.find(ex => ex.kind === 'gloss');
   const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
+  console.log('[EXAMPLE SETUP] exampleExample:', exampleExample);
   
   const uniquePosList = [...new Set(vocab.pos ? vocab.pos.split(',').map(p => p.trim()) : [])];
   const isVocabPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
@@ -372,8 +373,15 @@ export default function VocabDetailModal({
         <div className="modal-content">
           <div className="modal-header">
             <div className="d-flex align-items-center flex-wrap">
-              {/* Japanese vocabulary display with furigana */}
-              {vocab.kana ? (
+              {/* Check if it's actually Japanese (not just having kana field) */}
+              {(() => {
+                // CEFR English words have IPA pronunciation in kana field, so check source or language
+                const isJapanese = vocab.kana &&
+                  !vocab.kana.startsWith('/') && // Not IPA pronunciation
+                  (vocab.source === 'jlpt' || vocab.source === 'jlpt_vocabs' || vocab.levelJLPT);
+
+                if (isJapanese) {
+                  return (
                 <div className="d-flex align-items-center me-2">
                   {vocab.lemma && vocab.lemma !== vocab.kana ? (
                     (() => {
@@ -422,9 +430,12 @@ export default function VocabDetailModal({
                     <h4 className="modal-title mb-0 me-2" lang="ja">{vocab.kana}</h4>
                   )}
                 </div>
-              ) : (
-                <h4 className="modal-title mb-0 me-2" lang="en">{vocab?.lemma}</h4>
-              )}
+                  );
+                } else {
+                  // English vocabulary
+                  return <h4 className="modal-title mb-0 me-2" lang="en">{vocab?.lemma}</h4>;
+                }
+              })()}
               <div className="d-flex gap-1">
                 {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
                 {vocab.levelJLPT && <span className={`badge bg-success`}>{vocab.levelJLPT}</span>}
@@ -452,31 +463,40 @@ export default function VocabDetailModal({
                   let glossAudioPath = null;
                   
                   if (isIdiomOrPhrasal) {
-                    // Use unified folder structure based on CEFR level
-                    const cefrToFolder = {
-                      'A1': 'starter',
-                      'A2': 'elementary', 
-                      'B1': 'intermediate',
-                      'B2': 'upper',
-                      'C1': 'advanced',
-                      'C2': 'advanced'
-                    };
-                    
-                    let cleanLemma = vocab.lemma.toLowerCase()
-                      .replace(/\s*\([^)]*\)/g, (match) => {
-                        const content = match.replace(/[()]/g, '').trim();
-                        if (!content) return '';
-                        const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
-                        return cleaned ? '-' + cleaned : '';
-                      })
-                      .replace(/'/g, '');
-                    
-                    // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
-                    cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
-                    
-                    const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
-                    glossAudioPath = `/${folderName}/${cleanLemma}/gloss.mp3`;
-                    console.log('🔍 [VocabDetailModal] Using unified folder structure:', vocab.lemma, '->', folderName, 'cleanLemma:', cleanLemma);
+                    // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용
+                    if (vocab.dictentry?.audioUrl) {
+                      // audioUrl이 이미 파일명만 있는 경우 (예: "idiom/a_stones_throw.mp3")
+                      // gloss 버전으로 변환
+                      const baseUrl = vocab.dictentry.audioUrl.replace('.mp3', '_gloss.mp3');
+                      glossAudioPath = `/${baseUrl}`;
+                      console.log('🔍 [VocabDetailModal] Using database audioUrl for idiom/phrasal:', vocab.lemma, '->', glossAudioPath);
+                    } else {
+                      // Fallback: Use unified folder structure based on CEFR level
+                      const cefrToFolder = {
+                        'A1': 'starter',
+                        'A2': 'elementary',
+                        'B1': 'intermediate',
+                        'B2': 'upper',
+                        'C1': 'advanced',
+                        'C2': 'advanced'
+                      };
+
+                      let cleanLemma = vocab.lemma.toLowerCase()
+                        .replace(/\s*\([^)]*\)/g, (match) => {
+                          const content = match.replace(/[()]/g, '').trim();
+                          if (!content) return '';
+                          const cleaned = content.replace(/[\/\\]/g, '').replace(/\s+/g, '-').trim();
+                          return cleaned ? '-' + cleaned : '';
+                        })
+                        .replace(/'/g, '');
+
+                      // Ensure ALL remaining spaces are converted to hyphens and clean up multiple hyphens
+                      cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
+
+                      const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
+                      glossAudioPath = `/${folderName}/${cleanLemma}/gloss.mp3`;
+                      console.log('🔍 [VocabDetailModal] Fallback to folder structure:', vocab.lemma, '->', folderName, 'cleanLemma:', cleanLemma);
+                    }
                   } else {
                     // 일반 단어의 경우 audioData.gloss 사용
                     glossAudioPath = audioData?.gloss;
@@ -549,7 +569,24 @@ export default function VocabDetailModal({
             {(glossExample || exampleExample || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample) ? (
               <div className="mt-3">{/* 기존 코드 계속 */}
 
-                {((exampleExample && exampleExample.ko) || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample) && (
+                {(() => {
+                  // Debug: Check what example data is available
+                  console.log(`[EXAMPLE DEBUG] Checking examples for ${vocab.lemma}:`);
+                  console.log('  - vocab.dictentry?.examples:', vocab.dictentry?.examples);
+
+                  // Check if examples exist in different formats
+                  const hasExamples = (
+                    (exampleExample && exampleExample.ko) ||
+                    vocab.example ||
+                    vocab.koExample ||
+                    vocab.dictentry?.examples?.example ||
+                    vocab.dictentry?.examples?.koExample ||
+                    (Array.isArray(vocab.dictentry?.examples) && vocab.dictentry.examples.length > 0)
+                  );
+
+                  console.log(`  - hasExamples: ${hasExamples}`);
+                  return hasExamples;
+                })() && (
                   <div className="mt-3 border-top pt-3">
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <h6 className="fw-bold mb-0">예문</h6>
@@ -614,8 +651,14 @@ export default function VocabDetailModal({
                           let exampleText = '';
                           let koreanTranslation = '';
 
-                          // For Japanese vocabulary (has kana field)
-                          if (vocab.kana) {
+                          // Check if it's actually Japanese (not just having kana field)
+                          // CEFR English words have IPA pronunciation in kana field, so check source or language
+                          const isJapanese = vocab.kana &&
+                            !vocab.kana.startsWith('/') && // Not IPA pronunciation
+                            (vocab.source === 'jlpt' || vocab.source === 'jlpt_vocabs' || vocab.levelJLPT);
+
+                          // For Japanese vocabulary
+                          if (isJapanese) {
                             // Try multiple sources for Japanese examples
                             exampleText = vocab.example || vocab.dictentry?.examples?.example;
                             // Priority: 1) vocab.koExample, 2) dictentry.examples.koExample, 3) fallback to English translation
@@ -648,21 +691,31 @@ export default function VocabDetailModal({
                             console.log('vocab.example:', vocab.example);
                             console.log('exampleExample:', exampleExample);
 
-                            // 1. vocab.example에서 직접 찾기 (CEFR 데이터의 주요 소스)
-                            if (vocab.example) {
+                            // 1. exampleExample에서 직접 찾기 (CEFR 데이터가 있을 때)
+                            console.log('Checking exampleExample for English vocab:', exampleExample);
+                            if (exampleExample && exampleExample.en) {
+                              exampleText = exampleExample.en;
+                              console.log('Found english example from exampleExample:', exampleText);
+                            }
+                            // 2. vocab.example에서 찾기 (보조 소스)
+                            else if (vocab.example) {
                               exampleText = vocab.example;
                               console.log('Found english example from vocab.example:', exampleText);
                             }
-                            // 1.1. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열 또는 객체)
+                            // 3. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열 또는 객체)
                             else if (vocab.dictentry && vocab.dictentry.examples) {
-                              console.log('Checking vocab.dictentry.examples for en field');
+                              console.log('Checking vocab.dictentry.examples:', vocab.dictentry.examples);
                               // Check if examples is an array or object
                               if (Array.isArray(vocab.dictentry.examples)) {
+                                console.log('dictentry.examples is array with length:', vocab.dictentry.examples.length);
+                                console.log('First example:', vocab.dictentry.examples[0]);
                                 const exampleEntry = vocab.dictentry.examples.find(ex => ex.kind === 'example' && ex.en);
                                 console.log('Found exampleEntry with en field:', exampleEntry);
                                 if (exampleEntry) {
                                   exampleText = exampleEntry.en;
+                                  koreanTranslation = exampleEntry.ko;
                                   console.log('Found english example from dictentry.examples:', exampleText);
+                                  console.log('Found korean translation from dictentry.examples:', koreanTranslation);
                                 }
                               } else if (typeof vocab.dictentry.examples === 'object') {
                                 // For Japanese vocab where examples is an object
@@ -719,6 +772,8 @@ export default function VocabDetailModal({
                             }
 
                             koreanTranslation = vocab.koExample || exampleExample?.ko;
+                            console.log('Final exampleText:', exampleText);
+                            console.log('Final koreanTranslation:', koreanTranslation);
                           }
 
 

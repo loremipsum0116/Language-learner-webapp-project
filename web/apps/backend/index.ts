@@ -75,6 +75,81 @@ app.get('/static-test', (req: Request, res: Response) => {
   res.json({ message: 'Static routing works', timestamp: new Date().toISOString() });
 });
 
+// IMPORTANT: Add this simple phrasal verb endpoint at the very beginning (before all middlewares)
+app.get('/api/simple-phrasal-idioms', async (req: Request, res: Response) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+
+  try {
+    console.log('🔥 [SIMPLE PHRASAL] Request received:', req.query);
+    const { pos, search } = req.query;
+
+    // Map frontend pos parameter to database values
+    const posMapping: {[key: string]: string} = {
+      'idiom': 'idiom',
+      'phrasal verb': 'phrasal_verb'
+    };
+
+    const dbPos = posMapping[pos as string] || pos;
+    const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+    console.log('🔥 [SIMPLE PHRASAL] Mapped values:', { dbPos, dbSource });
+
+    const where: any = {
+      pos: dbPos,
+      source: dbSource
+    };
+
+    if (search && (search as string).trim().length > 0) {
+      where.lemma = {
+        contains: (search as string).trim()
+      };
+    }
+
+    console.log('🔥 [SIMPLE PHRASAL] Query where:', where);
+
+    const vocabs = await prisma.vocab.findMany({
+      where,
+      include: {
+        translations: {
+          include: { language: true }
+        },
+        dictentry: true
+      }
+    });
+
+    console.log(`🔥 [SIMPLE PHRASAL] Found ${vocabs.length} results`);
+
+    const formattedData = vocabs.map((vocab: any) => {
+      const koreanTranslation = vocab.translations.find((t: any) => t.language.code === 'ko');
+
+      return {
+        id: vocab.id,
+        lemma: vocab.lemma,
+        pos: vocab.pos,
+        levelCEFR: vocab.levelCEFR,
+        ko_gloss: koreanTranslation?.translation || '',
+        definition: koreanTranslation?.definition || '',
+        audio: vocab.dictentry?.audioUrl,
+        source: vocab.source
+      };
+    });
+
+    res.json({
+      success: true,
+      data: formattedData
+    });
+  } catch (error: any) {
+    console.error('❌ [SIMPLE PHRASAL] Error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
 // vocabs_example.py로 생성된 레벨별 오디오 라우팅 (인증 불필요)
 app.use('/starter', (req: Request, res: Response, next: NextFunction) => {
   console.log('[STATIC] starter audio request:', req.path);
@@ -185,6 +260,8 @@ app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API (인증 불필요)
 app.use('/api/idiom', require('./routes/idiom_working'));
+app.use('/api/vocab', vocabRoutes);  // Vocab API (인증 불필요)
+
 
 // === 모바일 API (별도 인증 처리) ===
 app.use('/api/mobile', mobileRouter);
@@ -221,15 +298,267 @@ app.get('/debug-vocab', async (req: Request, res: Response) => {
   }
 });
 
+// API version of simple vocab endpoint (no auth required)
+app.get('/api/simple-vocab', async (req: Request, res: Response) => {
+  const { PrismaClient } = require('@prisma/client');
+  const prisma = new PrismaClient();
+
+  try {
+    const { levelCEFR, limit = 100, offset = 0, pos, search } = req.query;
+
+    console.log('[API/SIMPLE-VOCAB] Request params:', { levelCEFR, limit, offset, pos, search });
+
+    // Handle idioms and phrasal verbs
+    if (pos) {
+      console.log('🔥 [API/SIMPLE-VOCAB] Processing idioms/phrasal verbs with pos:', pos);
+
+      // Map frontend pos parameter to database values
+      const posMapping: {[key: string]: string} = {
+        'idiom': 'idiom',
+        'phrasal verb': 'phrasal_verb'
+      };
+
+      const dbPos = posMapping[pos as string] || pos;
+      const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+      console.log('🔥 [API/SIMPLE-VOCAB] Mapped values:', { dbPos, dbSource });
+
+      const where: any = {
+        pos: dbPos,
+        source: dbSource
+      };
+
+      if (search && (search as string).trim().length > 0) {
+        where.lemma = {
+          contains: (search as string).trim()
+        };
+      }
+
+      console.log('🔥 [API/SIMPLE-VOCAB] Query where:', where);
+
+      // Get total count first
+      const totalCount = await prisma.vocab.count({ where });
+      console.log(`🔥 [API/SIMPLE-VOCAB] Total count: ${totalCount}`);
+
+      // Apply limit and offset for actual data (higher default for idioms/phrasal verbs)
+      const defaultLimit = pos ? 1000 : 100;
+      const limitNum = Math.min(parseInt(limit as string, 10) || defaultLimit, 1000);
+      const offsetNum = parseInt(offset as string, 10) || 0;
+
+      const vocabs = await prisma.vocab.findMany({
+        where,
+        take: limitNum,
+        skip: offsetNum,
+        include: {
+          translations: {
+            include: { language: true }
+          },
+          dictentry: true
+        }
+      });
+
+      console.log(`🔥 [API/SIMPLE-VOCAB] Found ${vocabs.length} results (limit: ${limitNum}, offset: ${offsetNum})`);
+
+      const formattedData = vocabs.map((vocab: any) => {
+        const koreanTranslation = vocab.translations.find((t: any) => t.language.code === 'ko');
+
+        // Extract examples for meaning
+        let examples = [];
+        let meaning = '';
+
+        if (vocab.dictentry?.examples) {
+          try {
+            examples = typeof vocab.dictentry.examples === 'string'
+              ? JSON.parse(vocab.dictentry.examples)
+              : vocab.dictentry.examples;
+
+            // Find Korean meaning from examples
+            const glossExample = examples.find((ex: any) => ex.kind === 'gloss');
+            if (glossExample?.ko) {
+              meaning = glossExample.ko;
+            }
+          } catch (e) {
+            examples = [];
+          }
+        }
+
+        return {
+          id: vocab.id,
+          lemma: vocab.lemma,
+          pos: vocab.pos,
+          levelCEFR: vocab.levelCEFR,
+          meaning: meaning || koreanTranslation?.translation || '',
+          ko_gloss: koreanTranslation?.translation || '',
+          definition: koreanTranslation?.definition || '',
+          audioUrl: vocab.dictentry?.audioUrl,
+          examples: examples,
+          source: vocab.source
+        };
+      });
+
+      return res.json({
+        success: true,
+        data: formattedData,
+        total: totalCount,
+        limit: limitNum,
+        offset: offsetNum,
+        hasMore: (offsetNum + limitNum) < totalCount,
+        pos: pos,
+        search: search || ''
+      });
+    }
+
+    // Handle regular vocab (rest of the original logic)
+    const limitNum = parseInt(limit as string, 10);
+    const offsetNum = parseInt(offset as string, 10);
+
+    const totalCount = await prisma.vocab.count({
+      where: {
+        language: { code: 'en' },
+        ...(levelCEFR ? { levelCEFR: levelCEFR as string } : {})
+      }
+    });
+
+    const vocabs = await prisma.vocab.findMany({
+      where: {
+        language: { code: 'en' },
+        ...(levelCEFR ? { levelCEFR: levelCEFR as string } : {})
+      },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { language: { code: 'ko' } }
+        }
+      },
+      take: limitNum,
+      skip: offsetNum,
+      orderBy: { id: 'asc' }
+    });
+
+    const formattedVocabs = vocabs.map((vocab: any) => {
+      let examples = [];
+      if (vocab.dictentry?.examples) {
+        try {
+          examples = typeof vocab.dictentry.examples === 'string'
+            ? JSON.parse(vocab.dictentry.examples)
+            : vocab.dictentry.examples;
+        } catch (e) {
+          examples = [];
+        }
+      }
+
+      return {
+        id: vocab.id,
+        lemma: vocab.lemma,
+        pos: vocab.pos,
+        levelCEFR: vocab.levelCEFR,
+        ipa: vocab.dictentry?.ipa,
+        ipaKo: vocab.dictentry?.ipaKo,
+        ko_gloss: vocab.translations[0]?.translation || vocab.dictentry?.koGloss || '',
+        definition: vocab.translations[0]?.definition || '',
+        example: examples[0]?.en || examples[0]?.text || '',
+        koExample: examples[0]?.ko || examples[0]?.translation || '',
+        audio: vocab.dictentry?.audioUrl,
+        source: vocab.source,
+        count: totalCount
+      };
+    });
+
+    const hasMore = offsetNum + limitNum < totalCount;
+
+    res.json({
+      success: true,
+      data: formattedVocabs,
+      pagination: {
+        offset: offsetNum,
+        limit: limitNum,
+        total: totalCount,
+        hasMore: hasMore,
+        currentPage: Math.floor(offsetNum / limitNum) + 1,
+        totalPages: Math.ceil(totalCount / limitNum)
+      }
+    });
+  } catch (error: any) {
+    console.error('[API/SIMPLE-VOCAB] Error:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  } finally {
+    await prisma.$disconnect();
+  }
+});
+
 // Simple vocab endpoint for mobile app (no auth required)
 app.get('/simple-vocab', async (req: Request, res: Response) => {
   const { PrismaClient } = require('@prisma/client');
   const prisma = new PrismaClient();
-  
+
   try {
-    const { levelCEFR, limit = 100, offset = 0 } = req.query;
-    
-    console.log('[SIMPLE-VOCAB] Request params:', { levelCEFR, limit, offset });
+    const { levelCEFR, limit = 100, offset = 0, pos, search } = req.query;
+
+    console.log('[SIMPLE-VOCAB] Request params:', { levelCEFR, limit, offset, pos, search });
+
+    // Handle idioms and phrasal verbs
+    if (pos) {
+      console.log('🔥 [SIMPLE-VOCAB] Processing idioms/phrasal verbs with pos:', pos);
+
+      // Map frontend pos parameter to database values
+      const posMapping: {[key: string]: string} = {
+        'idiom': 'idiom',
+        'phrasal verb': 'phrasal_verb'
+      };
+
+      const dbPos = posMapping[pos as string] || pos;
+      const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+      console.log('🔥 [SIMPLE-VOCAB] Mapped values:', { dbPos, dbSource });
+
+      const where: any = {
+        pos: dbPos,
+        source: dbSource
+      };
+
+      if (search && (search as string).trim().length > 0) {
+        where.lemma = {
+          contains: (search as string).trim()
+        };
+      }
+
+      console.log('🔥 [SIMPLE-VOCAB] Query where:', where);
+
+      const vocabs = await prisma.vocab.findMany({
+        where,
+        include: {
+          translations: {
+            include: { language: true }
+          },
+          dictentry: true
+        }
+      });
+
+      console.log(`🔥 [SIMPLE-VOCAB] Found ${vocabs.length} results`);
+
+      const formattedData = vocabs.map((vocab: any) => {
+        const koreanTranslation = vocab.translations.find((t: any) => t.language.code === 'ko');
+
+        return {
+          id: vocab.id,
+          lemma: vocab.lemma,
+          pos: vocab.pos,
+          levelCEFR: vocab.levelCEFR,
+          ko_gloss: koreanTranslation?.translation || '',
+          definition: koreanTranslation?.definition || '',
+          audio: vocab.dictentry?.audioUrl,
+          source: vocab.source
+        };
+      });
+
+      return res.json({
+        success: true,
+        data: formattedData
+      });
+    }
     
     const limitNum = parseInt(limit as string, 10);
     const offsetNum = parseInt(offset as string, 10);
@@ -391,32 +720,36 @@ app.get('/simple-vocab-detail/:id', async (req: Request, res: Response) => {
 
 // --- 글로벌 인증 미들웨어 ---
 app.use((req: Request, res: Response, next: NextFunction) => {
+  console.log('[GLOBAL-AUTH] Checking request to:', req.path, 'method:', req.method);
+
   // Skip auth for mobile API (handled internally)
   if (req.path.startsWith('/api/mobile')) {
+    console.log('[GLOBAL-AUTH] Skipping auth for mobile API:', req.path);
     return next();
   }
 
   // Skip auth for specific public routes
   const publicRoutes = [
-    '/auth', '/dict', '/exam-vocab', '/api/reading', '/api/listening', 
-    '/simple-vocab', '/simple-vocab-detail', 
-    '/api/idiom', '/time-accelerator', '/docs', '/static-test',
-    '/api/v1', '/api/video'
+    '/auth', '/dict', '/exam-vocab', '/api/reading', '/api/listening',
+    '/simple-vocab', '/simple-vocab-detail', '/api/simple-phrasal-idioms', '/api/simple-vocab',
+    '/api/idiom', '/api/vocab', '/time-accelerator', '/docs', '/static-test',
+    '/api/video', '/immediate-test', '/api/immediate-test'
   ];
-  
+
   const isPublicRoute = publicRoutes.some(route => req.path.startsWith(route));
-  
+
   if (isPublicRoute) {
+    console.log('[GLOBAL-AUTH] Skipping auth for public route:', req.path);
     return next();
   }
-  
+
+  console.log('[GLOBAL-AUTH] Applying auth middleware for:', req.path);
   // Apply auth middleware for other routes
   return authMiddleware(req, res, next);
 });
 
 // --- 인증 필요 라우트 ---
 app.use('/learn', learnRoutes);
-app.use('/vocab', vocabRoutes);
 app.use('/quiz', quizRoutes);
 app.use('/srs', srsRoutes);
 app.use('/categories', categoryRoutes);
