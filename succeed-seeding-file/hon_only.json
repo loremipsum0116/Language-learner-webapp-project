@@ -1,0 +1,22 @@
+[
+  {
+    "lemma": "本",
+    "kana": "ほん",
+    "romaji": "hon",
+    "pos": "noun",
+    "categories": "N5, JLPT",
+    "koGloss": "n. 책",
+    "koExample": "책을 읽어요.",
+    "koChirpScript": "ほん. 책이라는 뜻의 명사입니다. ほんをよみます. 책을 읽어요라는 의미네요.",
+    "example": "本を読みます",
+    "exampleKana": "ほんをよみます",
+    "kanji": "本",
+    "onyomi": "ホン",
+    "kunyomi": "もと",
+    "audio": {
+      "word": "jlpt/n5/hon/word.mp3",
+      "gloss": "jlpt/n5/hon/gloss.mp3",
+      "example": "jlpt/n5/hon/example.mp3"
+    }
+  }
+]
