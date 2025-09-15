@@ -21,7 +21,7 @@ const getPosBadgeColor = (pos) => {
     case 'adjective': return 'bg-warning text-dark';
     case 'adverb': return 'bg-info text-dark';
     case 'pronoun': return 'bg-purple text-white';
-    case 'interjection': return 'bg-pink text-white';
+    case 'interjection': return 'bg-pink text-dark';
     default: return 'bg-secondary';
   }
 };
@@ -105,14 +105,26 @@ export default function JapaneseVocabCard({
             <span className="badge bg-warning text-dark">마스터</span>
           </div>
         )}
-        <div className="card-header d-flex justify-content-end p-1">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            checked={isSelected}
-            onChange={(e) => { e.stopPropagation(); onToggleSelect(vocab.id); }}
-            title="단어 선택"
-          />
+        <div className="card-header d-flex justify-content-end align-items-center p-1">
+          <div className="d-flex gap-1 align-items-center">
+            {vocab.pos && (
+              <span className={`badge ${getPosBadgeColor(vocab.pos)} fst-italic`}>
+                {vocab.pos}
+              </span>
+            )}
+            {vocab.levelJLPT && (
+              <span className={`badge ${getJlptBadgeColor(vocab.levelJLPT)}`}>
+                {vocab.levelJLPT}
+              </span>
+            )}
+            <input
+              className="form-check-input ms-2"
+              type="checkbox"
+              checked={isSelected}
+              onChange={(e) => { e.stopPropagation(); onToggleSelect(vocab.id); }}
+              title="단어 선택"
+            />
+          </div>
         </div>
         <div
           className="card-body card-clickable pt-0"
@@ -128,19 +140,6 @@ export default function JapaneseVocabCard({
               {vocab.romaji}
             </div>
           )}
-
-          <div className="d-flex justify-content-center gap-1 mb-2">
-            {vocab.levelJLPT && (
-              <span className={`badge ${getJlptBadgeColor(vocab.levelJLPT)}`}>
-                {vocab.levelJLPT}
-              </span>
-            )}
-            {vocab.pos && (
-              <span className={`badge ${getPosBadgeColor(vocab.pos)} fst-italic`}>
-                {vocab.pos}
-              </span>
-            )}
-          </div>
 
           <div className="card-subtitle text-muted text-center">
             {koGloss}

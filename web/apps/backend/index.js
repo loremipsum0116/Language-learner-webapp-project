@@ -75,6 +75,15 @@ const app = express();
 
 console.log('[STARTUP] Express app created, setting up routes...');
 
+// TEST ENDPOINTS - Very early in the middleware stack
+app.get('/immediate-test', (req, res) => {
+  res.json({ message: 'Immediate test working!', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/immediate-test', (req, res) => {
+  res.json({ message: 'Immediate API test working!', timestamp: new Date().toISOString() });
+});
+
 // === API 문서화 (임시로 다른 경로 사용) ===
 app.get('/api-docs', (req, res) => {
   console.log('[API DOCS] /api-docs route hit - immediate response');
@@ -95,12 +104,104 @@ app.get('/simple-vocab', async (req, res) => {
   try {
     const { PrismaClient } = require('@prisma/client');
     const prisma = new PrismaClient();
-    
-    const { limit = 5, levelCEFR = 'A1' } = req.query;
-    const limitInt = Math.min(parseInt(limit), 20); // Reduced limit to avoid timeouts
-    
+
+    const { limit = 100, levelCEFR = 'A1', pos, search } = req.query;
+    const limitInt = Math.min(parseInt(limit), 1000);
+
+    console.log(`[SIMPLE-VOCAB] Request params:`, { levelCEFR, limit, pos, search });
+
+    // Handle idioms and phrasal verbs
+    if (pos) {
+      console.log('🔥 [SIMPLE-VOCAB] Processing idioms/phrasal verbs with pos:', pos);
+
+      const posMapping = {
+        'idiom': 'idiom',
+        'phrasal verb': 'phrasal_verb'
+      };
+
+      const dbPos = posMapping[pos] || pos;
+      const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+      console.log('🔍 [SIMPLE-VOCAB] Mapped values:', { pos, dbPos, dbSource });
+
+      let whereClause = {
+        pos: dbPos,
+        source: dbSource,
+        language: { code: 'en' }
+      };
+
+      // Add search filter if provided
+      if (search && search.trim()) {
+        whereClause.lemma = {
+          contains: search.trim()
+        };
+      }
+
+      console.log('📋 [SIMPLE-VOCAB] Where clause:', JSON.stringify(whereClause, null, 2));
+
+      const vocabs = await prisma.vocab.findMany({
+        where: whereClause,
+        take: limitInt,
+        orderBy: { lemma: 'asc' },
+        include: {
+          dictentry: {
+            select: {
+              ipa: true,
+              examples: true,
+              audioUrl: true
+            }
+          },
+          translations: {
+            where: { language: { code: 'ko' } },
+            select: {
+              translation: true
+            }
+          }
+        }
+      });
+
+      console.log(`🎯 [SIMPLE-VOCAB] Found ${vocabs.length} ${pos} items`);
+
+      const transformedData = vocabs.map(vocab => {
+        const dictentry = vocab.dictentry || {};
+        const koTranslation = vocab.translations[0];
+        const examples = dictentry.examples || [];
+
+        let example = '';
+        let koExample = '';
+
+        if (examples.length > 0) {
+          if (examples[0].en) {
+            example = examples[0].en;
+            koExample = examples[0].ko || '';
+          } else if (typeof examples[0] === 'string') {
+            example = examples[0];
+          }
+        }
+
+        return {
+          id: vocab.id,
+          lemma: vocab.lemma,
+          pos: vocab.pos,
+          levelCEFR: vocab.levelCEFR || 'A1',
+          ko_gloss: koTranslation ? koTranslation.translation : '번역 없음',
+          ipa: dictentry.ipa || '',
+          example: example,
+          koExample: koExample,
+          audioUrl: dictentry.audioUrl
+        };
+      });
+
+      return res.json({
+        success: true,
+        count: transformedData.length,
+        data: transformedData
+      });
+    }
+
+    // Original logic for regular vocabulary
     console.log(`[SIMPLE-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR}`);
-    
+
     const vocabs = await prisma.vocab.findMany({
       where: {
         language: { code: 'en' },
@@ -189,6 +290,7 @@ app.get('/simple-vocab', async (req, res) => {
     res.end(JSON.stringify({ success: false, error: error.message }));
   }
 });
+
 
 // === SIMPLE EXAM CATEGORIES ENDPOINT (NO MIDDLEWARE) ===
 app.get('/simple-exam-categories', async (req, res) => {
@@ -553,6 +655,121 @@ app.use(apiCacheOptimization);
 // TEMPORARILY DISABLED: formatApiResponse causing RangeError
 // app.use(formatApiResponse);
 
+// Simple vocab endpoint for idioms/phrasal verbs (must be before other API routes)
+app.get('/api/simple-vocab', async (req, res) => {
+  console.log('>>>>>>> API/SIMPLE-VOCAB ENDPOINT HIT! <<<<<<<');
+  console.log('Query params:', req.query);
+  try {
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+
+    const { limit = 100, levelCEFR = 'A1', pos, search } = req.query;
+    console.log('Extracted params:', { limit, levelCEFR, pos, search });
+
+    if (pos) {
+      const posMapping = {
+        'idiom': 'idiom',
+        'phrasal verb': 'phrasal_verb'
+      };
+      const dbPos = posMapping[pos] || pos;
+      const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+      console.log(`Querying for pos: ${dbPos}, source: ${dbSource}`);
+
+      let whereClause = {
+        pos: dbPos,
+        source: dbSource,
+        language: { code: 'en' }
+      };
+
+      if (search && search.trim()) {
+        whereClause.lemma = { contains: search.trim() };
+        console.log('Adding search filter:', search.trim());
+      }
+
+      console.log('Final where clause:', JSON.stringify(whereClause, null, 2));
+
+      const vocabData = await prisma.vocab.findMany({
+        where: whereClause,
+        include: {
+          language: true,
+          translations: {
+            include: { language: true }
+          },
+          dictentry: true
+        },
+        take: parseInt(limit)
+      });
+
+      console.log(`Found ${vocabData.length} vocab items`);
+
+      if (vocabData.length === 0) {
+        return res.json({
+          success: true,
+          data: [],
+          message: `No ${pos} found${search ? ` for search: "${search}"` : ''}`,
+          total: 0
+        });
+      }
+
+      const transformedData = vocabData.map(vocab => {
+        const koreanTranslation = vocab.translations.find(t => t.language.code === 'ko');
+
+        let examples = [];
+        if (vocab.dictentry && vocab.dictentry.examples) {
+          examples = Array.isArray(vocab.dictentry.examples)
+            ? vocab.dictentry.examples
+            : JSON.parse(vocab.dictentry.examples || '[]');
+        }
+
+        return {
+          id: vocab.id,
+          lemma: vocab.lemma,
+          pos: vocab.pos,
+          levelCEFR: vocab.levelCEFR,
+          meaning: koreanTranslation ? koreanTranslation.translation : '',
+          audioUrl: vocab.dictentry ? vocab.dictentry.audioUrl : null,
+          examples: examples,
+          source: vocab.source
+        };
+      });
+
+      console.log(`Returning ${transformedData.length} transformed items`);
+
+      await prisma.$disconnect();
+
+      return res.json({
+        success: true,
+        data: transformedData,
+        total: transformedData.length,
+        pos: pos,
+        search: search || ''
+      });
+    }
+
+    await prisma.$disconnect();
+    res.json({
+      success: false,
+      error: 'pos parameter is required'
+    });
+
+  } catch (error) {
+    console.error('Error in /api/simple-vocab:', error);
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+app.get('/test-endpoint', (req, res) => {
+  res.json({ message: 'Test endpoint working!', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/test-public', (req, res) => {
+  res.json({ message: 'Public test endpoint working!', timestamp: new Date().toISOString() });
+});
+
 // === 새로운 버전 관리 API (v1) ===
 app.use('/api/v1', apiV1Router);
 
@@ -705,6 +922,14 @@ app.use((req, res, next) => {
   }
   // Skip auth for mobile API (handled internally)
   if (req.path.startsWith('/api/mobile')) {
+    return next();
+  }
+  // Skip auth for simple-vocab API (public idioms/phrasal verbs)
+  if (req.path.startsWith('/api/simple-vocab')) {
+    return next();
+  }
+  // Skip auth for test API
+  if (req.path.startsWith('/api/test')) {
     return next();
   }
   return authMiddleware(req, res, next);

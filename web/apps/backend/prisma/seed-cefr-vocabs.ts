@@ -25,7 +25,7 @@ async function main() {
   console.log('Starting CEFR vocabulary seeding...');
 
   // Read the JSON file
-  const jsonPath = path.join(__dirname, '..', 'cefr_vocabs.json');
+  const jsonPath = path.join(__dirname, '..', '..', '..', '..', 'succeed-seeding-file', 'cefr_vocabs.json');
   const rawData = fs.readFileSync(jsonPath, 'utf-8');
   const vocabs: CefrVocab[] = JSON.parse(rawData);
 

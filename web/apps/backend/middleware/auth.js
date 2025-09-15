@@ -7,16 +7,20 @@ module.exports = function auth(req, res, next) {
     console.log('[AUTH] Checking request to:', req.path, 'method:', req.method);
     
     // 오디오 파일, 공개 vocab 요청, API 문서는 인증 제외
-    if (req.path.includes('/audio/') || req.path.includes('/audio-files/') || 
+    if (req.path.includes('/audio/') || req.path.includes('/audio-files/') ||
         req.path.startsWith('/vocab/list') || req.path.startsWith('/vocab/test') ||
         req.path.startsWith('/vocab/vocab-by-pos') ||
         req.path.startsWith('/exam-vocab/categories') || req.path.startsWith('/api/idiom') ||
+        req.path.startsWith('/api/simple-vocab') || req.path.startsWith('/static-test') ||
+        req.path.startsWith('/immediate-test') || req.path.startsWith('/api/immediate-test') ||
         req.path.startsWith('/starter/') || req.path.startsWith('/elementary/') ||
         req.path.startsWith('/intermediate/') || req.path.startsWith('/upper/') ||
         req.path.startsWith('/advanced/') || req.path === '/api' || req.path.startsWith('/docs/api')) {
       console.log('[AUTH] Skipping auth for public endpoint:', req.path);
       return next();
     }
+
+    console.log('[AUTH] Auth middleware called but not skipped for path:', req.path);
 
     // Extract access token from request (cookie or Authorization header)
     const token = jwtService.extractToken(req, 'access');

@@ -973,6 +973,41 @@ export default function SrsFolderDetail() {
                                                                 console.log(`[CARD FLIP DEBUG] ${lemma} dictentry.examples detailed:`, JSON.stringify(v.dictentry.examples, null, 2));
                                                             }
                                                             
+                                                            // 일본어 단어 예문 처리 추가
+                                                            if (v?.languageId === 3 || v?.language?.code === 'ja' || lemma === 'ありがとう') {
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - Processing Japanese word`);
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - vocab data:`, v);
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - dictentry:`, v?.dictentry);
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - examples:`, v?.dictentry?.examples);
+
+                                                                // 일본어 단어의 예문 처리
+                                                                const examples = v?.dictentry?.examples;
+                                                                if (examples) {
+                                                                    let parsedExamples = examples;
+                                                                    if (typeof examples === 'string') {
+                                                                        try {
+                                                                            parsedExamples = JSON.parse(examples);
+                                                                        } catch (e) {
+                                                                            console.warn(`[JAPANESE CARD] ${lemma} Failed to parse examples:`, e);
+                                                                        }
+                                                                    }
+
+                                                                    console.log(`[JAPANESE DEBUG] ${lemma} - parsedExamples:`, parsedExamples);
+
+                                                                    if (parsedExamples && parsedExamples.example) {
+                                                                        console.log(`[JAPANESE CARD SUCCESS] ${lemma} Using Japanese example:`, parsedExamples.example);
+                                                                        return (
+                                                                            <div className="mb-2 p-2 bg-light rounded">
+                                                                                <div className="fw-bold text-dark" lang="ja">{parsedExamples.example}</div>
+                                                                                {parsedExamples.koExample && (
+                                                                                    <div className="text-muted small">— {parsedExamples.koExample}</div>
+                                                                                )}
+                                                                            </div>
+                                                                        );
+                                                                    }
+                                                                }
+                                                            }
+
                                                             // 먼저 직접적인 example 필드 확인 (영어 단어장용)
                                                             if (v?.example && v?.koExample) {
                                                                 console.log(`[CARD FLIP SUCCESS] ${lemma} Using v.example:`, v.example);

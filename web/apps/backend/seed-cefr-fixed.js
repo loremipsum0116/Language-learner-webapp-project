@@ -11,7 +11,7 @@ async function main() {
     console.log('🌱 Starting FIXED CEFR vocab seeding...');
 
     // Read the cefr_vocabs.json file
-    const cefrPath = path.join(__dirname, 'cefr_vocabs.json');
+    const cefrPath = path.join(__dirname, '..', '..', '..', 'succeed-seeding-file', 'cefr_vocabs.json');
     
     if (!fs.existsSync(cefrPath)) {
       console.error('❌ cefr_vocabs.json not found!');
@@ -117,12 +117,12 @@ async function main() {
               attribution: 'CEFR Vocabs Dataset',
               examples: [
                 {
-                  kind: 'example', 
+                  kind: 'example',
                   en: item.example || '',
                   ko: item.koExample || '',
                   source: 'cefr_vocabs'
                 }
-              ].filter(ex => ex.ko || ex.en) // Only include non-empty examples
+              ].filter(ex => (ex.ko && ex.ko.trim()) || (ex.en && ex.en.trim())) // Only include non-empty examples
             }
           });
 

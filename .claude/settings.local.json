@@ -215,7 +215,15 @@
       "Bash(npx dotenv -e .env -- npx tsx prisma/seed-cefr-vocabs-fixed.ts:*)",
       "Read(//c/Users/sst70/**)",
       "Bash(pnpm dev:*)",
-      "Bash(PORT=3001 pnpm start)"
+      "Bash(PORT=3001 pnpm start)",
+      "Bash(npx dotenv -e .env -- npx tsx prisma/seed-jlpt-vocabs.ts:*)",
+      "Bash(pnpm --filter @language-learner/frontend start)",
+      "Bash(PORT=3001 pnpm --filter @language-learner/frontend start)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx tsx prisma/seed-cefr-vocabs.ts)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx prisma db push --force-reset --accept-data-loss)",
+      "Bash(copy:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" pnpm dotenv -e .env -- pnpm prisma db push --force-reset --accept-data-loss)",
+      "Bash(netstat:*)"
     ],
     "deny": [],
     "ask": []

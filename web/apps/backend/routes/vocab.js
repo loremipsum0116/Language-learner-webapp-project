@@ -3,9 +3,46 @@ const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 
+console.log('📊 [VOCAB ROUTER] vocab.js router loaded');
+
+// Add middleware to log all requests to this router
+router.use((req, res, next) => {
+  console.log(`🎯 [VOCAB ROUTER] Request: ${req.method} ${req.path} | Query:`, req.query);
+  next();
+});
+
 // Test endpoint
 router.get('/test', (req, res) => {
+  console.log('✅ [VOCAB TEST] Test endpoint hit');
   res.json({ message: 'vocab route works!' });
+});
+
+// Simple phrasal verb test
+router.get('/phrasal-test', async (req, res) => {
+  console.log('🔥 [PHRASAL TEST] Phrasal verb test endpoint hit');
+  try {
+    const phrasalVerbs = await prisma.vocab.findMany({
+      where: {
+        pos: 'phrasal_verb',
+        source: 'phrasal_verb_migration'
+      },
+      take: 5,
+      include: {
+        translations: {
+          include: { language: true }
+        }
+      }
+    });
+    console.log('🔥 [PHRASAL TEST] Found:', phrasalVerbs.length, 'phrasal verbs');
+    res.json({
+      message: 'phrasal verb test',
+      count: phrasalVerbs.length,
+      data: phrasalVerbs.slice(0,2)
+    });
+  } catch (error) {
+    console.error('❌ [PHRASAL TEST] Error:', error);
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // GET /vocab/list
@@ -18,7 +55,9 @@ router.get('/list', async (req, res) => {
     } else {
       where.levelCEFR = level || 'A1';
       // Exclude idioms and phrasal verbs from level-based vocabulary
-      where.source = { not: 'idiom' };
+      where.pos = {
+        notIn: ['idiom', 'phrasal_verb']
+      };
     }
     
     console.log('DEBUG /list: Query where:', JSON.stringify(where));
@@ -266,9 +305,18 @@ router.get('/idioms-phrasal', async (req, res) => {
       return res.status(400).json({ error: 'pos parameter is required' });
     }
     
-    const where = { 
-      pos: pos,
-      source: 'idiom_migration' // Only get idioms/phrasal verbs
+    // Map frontend pos parameter to database values
+    const posMapping = {
+      'idiom': 'idiom',
+      'phrasal verb': 'phrasal_verb'
+    };
+
+    const dbPos = posMapping[pos] || pos;
+    const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+
+    const where = {
+      pos: dbPos,
+      source: dbSource
     };
     
     // Add search filter if provided

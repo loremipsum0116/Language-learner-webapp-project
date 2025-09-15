@@ -36,7 +36,39 @@ const cefrToFolder = {
 const getCurrentAudioPath = (vocab, isGlossMode = false) => {
     console.log('[AUDIO DEBUG] getCurrentAudioPath called with vocab.pos:', vocab.pos, 'vocab.source:', vocab.source, 'vocab.levelCEFR:', vocab.levelCEFR, 'isGlossMode:', isGlossMode);
 
-    // 1. vocab.vocab.dictentry.audioLocal 데이터 우선 사용
+    // 1. 일본어 단어 처리 (languageId가 3이거나 kana 데이터가 있는 경우)
+    if (vocab.vocab?.languageId === 3 || vocab.kana || vocab.kanji || vocab.vocab?.language?.code === 'ja') {
+        console.log('[AUDIO DEBUG] Detected Japanese word:', vocab.lemma || vocab.question);
+
+        // dictentry.audioLocal에서 일본어 오디오 경로 확인
+        const audioLocalData = vocab.vocab?.dictentry?.audioLocal;
+        if (audioLocalData) {
+            let parsedAudio;
+            try {
+                parsedAudio = typeof audioLocalData === 'string' ? JSON.parse(audioLocalData) : audioLocalData;
+                const japaneseAudioPath = isGlossMode ? parsedAudio?.gloss : parsedAudio?.word;
+                if (japaneseAudioPath) {
+                    console.log('[AUDIO DEBUG] Using Japanese audioLocal path:', japaneseAudioPath);
+                    return japaneseAudioPath.startsWith('/') ? japaneseAudioPath : `/${japaneseAudioPath}`;
+                }
+            } catch (e) {
+                console.warn('[AUDIO DEBUG] Failed to parse Japanese audioLocal:', e);
+            }
+        }
+
+        // dictentry.audioUrl 확인
+        const audioUrl = vocab.vocab?.dictentry?.audioUrl;
+        if (audioUrl) {
+            console.log('[AUDIO DEBUG] Using Japanese audioUrl:', audioUrl);
+            return audioUrl.startsWith('/') ? audioUrl : `/${audioUrl}`;
+        }
+
+        // 일본어 오디오가 없으면 null 반환 (무음 처리)
+        console.log('[AUDIO DEBUG] No Japanese audio found for:', vocab.lemma || vocab.question);
+        return null;
+    }
+
+    // 2. vocab.vocab.dictentry.audioLocal 데이터 우선 사용 (영어 단어용)
     const audioData = vocab.vocab?.dictentry?.audioLocal ? JSON.parse(vocab.vocab.dictentry.audioLocal) : null;
     const audioPath = isGlossMode ? audioData?.gloss : audioData?.example;
 
@@ -494,7 +526,20 @@ export default function LearnVocab() {
 
     const playUrl = (url, { loop = false } = {}) => {
         const el = audioRef.current;
-        if (!el || !url) return; // ref가 아직 준비되지 않았으면 재생하지 않음
+        if (!el) return; // ref가 아직 준비되지 않았으면 재생하지 않음
+
+        // 일본어 단어에 오디오가 없는 경우 무음 처리
+        if (!url) {
+            console.log('[AUDIO DEBUG] No audio URL provided - simulating silent playback');
+            // 무음 상태로 2초 후 자동으로 ended 이벤트 발생시킴
+            setTimeout(() => {
+                if (el && el.onended) {
+                    console.log('[AUDIO DEBUG] Simulating audio ended event for silent playback');
+                    el.onended();
+                }
+            }, 2000);
+            return;
+        }
 
         // Stop current audio first
         stopAudio();
