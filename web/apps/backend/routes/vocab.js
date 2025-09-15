@@ -388,6 +388,106 @@ router.get('/idioms-phrasal', async (req, res) => {
   }
 });
 
+// GET /vocab/japanese-list - Get Japanese vocabulary by JLPT level (MUST BE BEFORE /:id)
+router.get('/japanese-list', async (req, res) => {
+  try {
+    const { level = 'N5', search } = req.query;
+
+    // Get Japanese language
+    const japaneseLanguage = await prisma.language.findUnique({
+      where: { code: 'ja' }
+    });
+
+    if (!japaneseLanguage) {
+      return res.status(404).json({ error: 'Japanese language not found' });
+    }
+
+    // Build query
+    const where = {
+      languageId: japaneseLanguage.id,
+      levelJLPT: level
+    };
+
+    if (search && search.trim()) {
+      where.OR = [
+        { lemma: { contains: search.trim() } }
+      ];
+    }
+
+    console.log('DEBUG /japanese-list: Query where:', JSON.stringify(where));
+
+    // Get Japanese vocabs
+    const vocabs = await prisma.vocab.findMany({
+      where,
+      include: {
+        dictentry: true,
+        translations: {
+          where: {
+            OR: [
+              { languageId: 2 }, // Korean
+              { languageId: 1 }  // English
+            ]
+          },
+          include: {
+            language: true
+          }
+        }
+      },
+      orderBy: { lemma: 'asc' }
+    });
+
+    console.log('DEBUG /japanese-list: Found vocabs:', vocabs.length);
+
+    // Format response
+    const items = vocabs.map(v => {
+      const dictentry = v.dictentry;
+      const koTranslation = v.translations.find(t => t.language.code === 'ko');
+      const enTranslation = v.translations.find(t => t.language.code === 'en');
+
+      // Parse examples from dictentry
+      let examples = {};
+      if (dictentry?.examples) {
+        if (typeof dictentry.examples === 'string') {
+          try {
+            examples = JSON.parse(dictentry.examples);
+          } catch (e) {
+            console.warn('Failed to parse examples for vocabId', v.id);
+          }
+        } else {
+          examples = dictentry.examples;
+        }
+      }
+
+      return {
+        id: v.id,
+        lemma: v.lemma,
+        pos: v.pos,
+        levelJLPT: v.levelJLPT,
+        kana: dictentry?.ipa || examples.kana || '',
+        romaji: dictentry?.ipaKo || examples.romaji || '',
+        kanji: examples.kanji || null,
+        onyomi: examples.onyomi || null,
+        kunyomi: examples.kunyomi || null,
+        ko_gloss: koTranslation?.translation || '',
+        en_gloss: enTranslation?.translation || '',
+        example: examples.example || '',
+        exampleKana: examples.exampleKana || '',
+        exampleTranslation: examples.exampleTranslation || '',
+        audio: dictentry?.audioUrl || null
+      };
+    });
+
+    res.json({
+      ok: true,
+      data: items
+    });
+
+  } catch (error) {
+    console.error('GET /vocab/japanese-list failed:', error);
+    res.status(500).json({ error: 'Failed to fetch Japanese vocabulary' });
+  }
+});
+
 // GET /vocab/:id  ← "/search" 아래에 둬야 함
 router.get('/:id', async (req, res) => {
   console.log('🔍 [VOCAB-ID] Route hit with param:', req.params.id);
@@ -444,13 +544,43 @@ router.get('/:id', async (req, res) => {
       }
     });
 
+    // Parse examples from dictentry for Japanese words
+    let examples = {};
+    if (dictentry?.examples) {
+      if (typeof dictentry.examples === 'string') {
+        try {
+          examples = JSON.parse(dictentry.examples);
+        } catch (e) {
+          console.warn('Failed to parse examples for vocabId', vocabId);
+        }
+      } else {
+        examples = dictentry.examples;
+      }
+    }
+
+    // Check if this is a Japanese word (has Japanese language ID or dictentry with kana/ipa)
+    const isJapanese = vocab.languageId === 3 || dictentry?.ipa || examples.kana;
+
     // Combine the results
     const result = {
       ...vocab,
       dictentry: dictentry || null,
       ko_gloss: vocabTranslation?.translation || null
     };
-    
+
+    // Add Japanese-specific fields if this is a Japanese word
+    if (isJapanese) {
+      result.kana = dictentry?.ipa || examples.kana || '';
+      result.romaji = dictentry?.ipaKo || examples.romaji || '';
+      result.kanji = examples.kanji || null;
+      result.onyomi = examples.onyomi || null;
+      result.kunyomi = examples.kunyomi || null;
+      result.example = examples.example || '';
+      result.koExample = examples.koExample || '';
+      result.exampleKana = examples.exampleKana || '';
+      result.exampleTranslation = examples.exampleTranslation || '';
+    }
+
     return res.json({ data: result });
   } catch (e) {
     console.error(`GET /vocab/${vocabId} failed:`, e);
@@ -665,6 +795,7 @@ router.get('/user/:userId', async (req, res) => {
     return res.status(500).json({ error: 'Failed to fetch user vocabulary' });
   }
 });
+
 
 
 module.exports = router;

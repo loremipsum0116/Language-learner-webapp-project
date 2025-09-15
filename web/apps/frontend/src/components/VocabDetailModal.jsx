@@ -372,9 +372,62 @@ export default function VocabDetailModal({
         <div className="modal-content">
           <div className="modal-header">
             <div className="d-flex align-items-center flex-wrap">
-              <h4 className="modal-title mb-0 me-2" lang="en">{vocab?.lemma}</h4>
+              {/* Japanese vocabulary display with furigana */}
+              {vocab.kana ? (
+                <div className="d-flex align-items-center me-2">
+                  {vocab.lemma && vocab.lemma !== vocab.kana ? (
+                    (() => {
+                      // Check if lemma contains any actual kanji characters
+                      const hasKanji = /[\u4e00-\u9faf]/.test(vocab.lemma);
+
+                      if (!hasKanji) {
+                        // No kanji characters, just display as text
+                        return <h4 className="modal-title mb-0 me-2" lang="ja">{vocab.lemma}</h4>;
+                      }
+
+                      // Simple approach for common patterns like 食べる (taberu)
+                      const match = vocab.lemma.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
+
+                      if (match) {
+                        const kanjiPart = match[1];  // e.g., "食"
+                        const hiraganaPart = match[2];  // e.g., "べる"
+
+                        // Find where hiragana part starts in kana reading
+                        const hiraganStartIndex = vocab.kana.indexOf(hiraganaPart);
+
+                        if (hiraganStartIndex > 0) {
+                          const kanjiReading = vocab.kana.slice(0, hiraganStartIndex);  // e.g., "た"
+
+                          return (
+                            <h4 className="modal-title mb-0 me-2" lang="ja">
+                              <ruby>
+                                {kanjiPart}
+                                <rt className="fs-6">{kanjiReading}</rt>
+                              </ruby>
+                              {hiraganaPart}
+                            </h4>
+                          );
+                        }
+                      }
+
+                      // Fallback to simple ruby for complex cases
+                      return (
+                        <ruby className="fs-4 me-2" lang="ja">
+                          {vocab.lemma}
+                          <rt className="fs-6">{vocab.kana}</rt>
+                        </ruby>
+                      );
+                    })()
+                  ) : (
+                    <h4 className="modal-title mb-0 me-2" lang="ja">{vocab.kana}</h4>
+                  )}
+                </div>
+              ) : (
+                <h4 className="modal-title mb-0 me-2" lang="en">{vocab?.lemma}</h4>
+              )}
               <div className="d-flex gap-1">
                 {vocab.levelCEFR && <span className={`badge ${getCefrBadgeColor(vocab.levelCEFR)}`}>{vocab.levelCEFR}</span>}
+                {vocab.levelJLPT && <span className={`badge bg-success`}>{vocab.levelJLPT}</span>}
                 {uniquePosList.map(p => (
                   p && p.toLowerCase() !== 'unk' && (
                     <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>
@@ -473,33 +526,65 @@ export default function VocabDetailModal({
               </div>
             )}
 
-            {glossExample || exampleExample ? (
+            {/* Japanese readings display - kun/on readings */}
+            {vocab.kana && vocab.dictentry && (vocab.dictentry.kunyomi || vocab.dictentry.onyomi) && (
+              <div className="mb-3 border-top pt-3">
+                <h6 className="fw-bold mb-2">한자 읽기</h6>
+                <div className="ps-2">
+                  {vocab.dictentry.onyomi && (
+                    <div className="mb-1">
+                      <span className="text-muted small">음독:</span> <span className="ms-1" lang="ja">{vocab.dictentry.onyomi}</span>
+                    </div>
+                  )}
+                  {vocab.dictentry.kunyomi && (
+                    <div className="mb-1">
+                      <span className="text-muted small">훈독:</span> <span className="ms-1" lang="ja">{vocab.dictentry.kunyomi}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Examples section - for both English and Japanese */}
+            {(glossExample || exampleExample || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample) ? (
               <div className="mt-3">{/* 기존 코드 계속 */}
-                
-                {((exampleExample && exampleExample.ko) || vocab.example || vocab.koExample) && (
+
+                {((exampleExample && exampleExample.ko) || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample) && (
                   <div className="mt-3 border-top pt-3">
                     <div className="d-flex align-items-center justify-content-between mb-2">
                       <h6 className="fw-bold mb-0">예문</h6>
                       {(() => {
-                        // cefr_vocabs.json의 audio.example 경로 사용 (예문 제목 옆 버튼)
-                        console.log(`🔍 [${vocab.lemma}] Original audioLocal:`, dictentry.audioLocal);
-                        const audioData = parseAudioLocal(dictentry.audioLocal);
-                        console.log(`🔍 [${vocab.lemma}] Parsed audioData:`, audioData);
-                        const exampleAudioPath = audioData?.example;
-                        console.log(`🔍 [${vocab.lemma}] Example path:`, exampleAudioPath);
-                        
-                        // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
-                        const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
-                        
-                        console.log('Audio button check:', { exampleAudioPath, isIdiomOrPhrasal, vocabSource: vocab.source });
-                        
-                        if (exampleAudioPath && !isIdiomOrPhrasal) {
+                        // Handle audio for both English and Japanese examples
+                        let exampleAudioPath = null;
+
+                        // For Japanese vocabulary (has kana field)
+                        if (vocab.kana && vocab.dictentry?.audioLocal) {
+                          try {
+                            const audioData = JSON.parse(vocab.dictentry.audioLocal);
+                            exampleAudioPath = audioData?.example;
+                          } catch (e) {
+                            console.warn('Failed to parse Japanese audio data:', e);
+                          }
+                        }
+                        // For English vocabulary
+                        else {
+                          const audioData = parseAudioLocal(dictentry.audioLocal);
+                          exampleAudioPath = audioData?.example;
+
+                          // 숙어/구동사의 경우 예문 오디오 버튼을 숨김 (사용법 섹션에서 재생)
+                          const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+                          if (isIdiomOrPhrasal) {
+                            exampleAudioPath = null;
+                          }
+                        }
+
+                        if (exampleAudioPath) {
                           return (
                             <button
                               className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
                               style={{ width: '32px', height: '32px' }}
-                              onClick={(e) => { 
-                                e.stopPropagation(); 
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 if (onPlayUrl) {
                                   // 절대 경로로 변환
                                   const absolutePath = exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
@@ -525,80 +610,128 @@ export default function VocabDetailModal({
                     <div className="mb-2 p-2 rounded bg-light">
                       <div className="me-2">
                         {(() => {
-                          // 다양한 소스에서 영어 예문 찾기
-                          let englishExample = '';
-                          
-                          console.log('Starting English example search for:', vocab.lemma);
-                          console.log('vocab.example:', vocab.example);
-                          console.log('exampleExample:', exampleExample);
-                          
-                          // 1. vocab.example에서 직접 찾기 (CEFR 데이터의 주요 소스)
-                          if (vocab.example) {
-                            englishExample = vocab.example;
-                            console.log('Found english example from vocab.example:', englishExample);
-                          }
-                          // 1.1. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열)
-                          else if (vocab.dictentry && vocab.dictentry.examples) {
-                            console.log('Checking vocab.dictentry.examples for en field');
-                            const exampleEntry = vocab.dictentry.examples.find(ex => ex.kind === 'example' && ex.en);
-                            console.log('Found exampleEntry with en field:', exampleEntry);
-                            if (exampleEntry) {
-                              englishExample = exampleEntry.en;
-                              console.log('Found english example from dictentry.examples:', englishExample);
+                          // Handle examples for both Japanese and English vocabulary
+                          let exampleText = '';
+                          let koreanTranslation = '';
+
+                          // For Japanese vocabulary (has kana field)
+                          if (vocab.kana) {
+                            // Try multiple sources for Japanese examples
+                            exampleText = vocab.example || vocab.dictentry?.examples?.example;
+                            // Priority: 1) vocab.koExample, 2) dictentry.examples.koExample, 3) fallback to English translation
+                            koreanTranslation = vocab.koExample || vocab.dictentry?.examples?.koExample || vocab.dictentry?.examples?.exampleTranslation;
+
+
+                            // If we have English translation but no Korean, provide a simple mapping for common phrases
+                            if (!vocab.koExample && !vocab.dictentry?.examples?.koExample && vocab.dictentry?.examples?.exampleTranslation) {
+                              const englishTranslation = vocab.dictentry.examples.exampleTranslation;
+                              // Simple mapping for common Japanese phrases
+                              const commonTranslations = {
+                                'Good morning': '좋은 아침입니다',
+                                'Good morning (polite)': '안녕하세요 (아침 인사)',
+                                'Hello': '안녕하세요',
+                                'Thank you': '감사합니다',
+                                'Thank you for helping': '도와주셔서 감사합니다',
+                                'Excuse me': '실례합니다',
+                                'I am a student': '저는 학생입니다',
+                                'Good night': '좋은 밤 되세요',
+                                'Goodbye': '안녕히 가세요'
+                              };
+
+                              koreanTranslation = commonTranslations[englishTranslation] || englishTranslation;
                             }
-                            // 1.5. dictentry.examples에서 찾지 못했으면 chirpScript에서 영어 예문 추출 (CEFR 데이터)
-                            else if (exampleExample && exampleExample.chirpScript) {
-                              console.log('Processing chirpScript:', exampleExample.chirpScript);
-                              // "예문은 I need a pen to write this down. 이것을" 패턴에서 영어 부분 추출
-                              let match = exampleExample.chirpScript.match(/예문은\s+([^.]+\.)/);
-                              console.log('First pattern match:', match);
-                              if (match) {
-                                englishExample = match[1].trim();
-                                console.log('Found english example (pattern 1):', englishExample);
-                              } else {
-                                // "What is the book about? 그 책은" 패턴에서 영어 부분 추출
-                                // 영어 문장 다음에 공백이 있고 한글이 나오는 패턴을 찾음
-                                match = exampleExample.chirpScript.match(/([A-Z][^가-힣]*[?!.])\s+[가-힣]/);
-                                console.log('Second pattern match:', match);
+                          }
+                          // For English vocabulary
+                          else {
+                            // 다양한 소스에서 영어 예문 찾기
+                            console.log('Starting English example search for:', vocab.lemma);
+                            console.log('vocab.example:', vocab.example);
+                            console.log('exampleExample:', exampleExample);
+
+                            // 1. vocab.example에서 직접 찾기 (CEFR 데이터의 주요 소스)
+                            if (vocab.example) {
+                              exampleText = vocab.example;
+                              console.log('Found english example from vocab.example:', exampleText);
+                            }
+                            // 1.1. 숙어/구동사 데이터에서 영어 예문 찾기 (dictentry.examples 배열 또는 객체)
+                            else if (vocab.dictentry && vocab.dictentry.examples) {
+                              console.log('Checking vocab.dictentry.examples for en field');
+                              // Check if examples is an array or object
+                              if (Array.isArray(vocab.dictentry.examples)) {
+                                const exampleEntry = vocab.dictentry.examples.find(ex => ex.kind === 'example' && ex.en);
+                                console.log('Found exampleEntry with en field:', exampleEntry);
+                                if (exampleEntry) {
+                                  exampleText = exampleEntry.en;
+                                  console.log('Found english example from dictentry.examples:', exampleText);
+                                }
+                              } else if (typeof vocab.dictentry.examples === 'object') {
+                                // For Japanese vocab where examples is an object
+                                if (vocab.dictentry.examples.example) {
+                                  exampleText = vocab.dictentry.examples.example;
+                                  console.log('Found example from dictentry.examples object:', exampleText);
+                                }
+                              }
+                              // 1.5. dictentry.examples에서 찾지 못했으면 chirpScript에서 영어 예문 추출 (CEFR 데이터)
+                              else if (exampleExample && exampleExample.chirpScript) {
+                                console.log('Processing chirpScript:', exampleExample.chirpScript);
+                                // "예문은 I need a pen to write this down. 이것을" 패턴에서 영어 부분 추출
+                                let match = exampleExample.chirpScript.match(/예문은\s+([^.]+\.)/);
+                                console.log('First pattern match:', match);
                                 if (match) {
-                                  englishExample = match[1].trim();
-                                  console.log('Found english example (pattern 2):', englishExample);
+                                  exampleText = match[1].trim();
+                                  console.log('Found english example (pattern 1):', exampleText);
                                 } else {
-                                  console.log('No pattern matched for chirpScript');
+                                  // "What is the book about? 그 책은" 패턴에서 영어 부분 추출
+                                  // 영어 문장 다음에 공백이 있고 한글이 나오는 패턴을 찾음
+                                  match = exampleExample.chirpScript.match(/([A-Z][^가-힣]*[?!.])\s+[가-힣]/);
+                                  console.log('Second pattern match:', match);
+                                  if (match) {
+                                    exampleText = match[1].trim();
+                                    console.log('Found english example (pattern 2):', exampleText);
+                                  } else {
+                                    console.log('No pattern matched for chirpScript');
+                                  }
                                 }
                               }
                             }
-                          }
-                          // 2. exampleExample.en에서 찾기
-                          else if (exampleExample.en) {
-                            englishExample = exampleExample.en;
-                          }
-                          // 3. exampleExample 자체가 문자열인 경우
-                          else if (typeof exampleExample === 'string') {
-                            englishExample = exampleExample;
-                          }
-                          // 4. definitions 내부의 examples에서 찾기
-                          else if (exampleExample.definitions) {
-                            for (const def of exampleExample.definitions) {
-                              if (def.examples && def.examples.length > 0) {
-                                // 첫 번째 예문이 객체인 경우 en 필드 사용, 문자열인 경우 그대로 사용
-                                const firstExample = def.examples[0];
-                                if (typeof firstExample === 'object' && firstExample.en) {
-                                  englishExample = firstExample.en;
-                                } else if (typeof firstExample === 'string') {
-                                  englishExample = firstExample;
+                            // 2. exampleExample.en에서 찾기
+                            else if (exampleExample?.en) {
+                              exampleText = exampleExample.en;
+                            }
+                            // 3. exampleExample 자체가 문자열인 경우
+                            else if (typeof exampleExample === 'string') {
+                              exampleText = exampleExample;
+                            }
+                            // 4. definitions 내부의 examples에서 찾기
+                            else if (exampleExample?.definitions) {
+                              for (const def of exampleExample.definitions) {
+                                if (def.examples && def.examples.length > 0) {
+                                  // 첫 번째 예문이 객체인 경우 en 필드 사용, 문자열인 경우 그대로 사용
+                                  const firstExample = def.examples[0];
+                                  if (typeof firstExample === 'object' && firstExample.en) {
+                                    exampleText = firstExample.en;
+                                  } else if (typeof firstExample === 'string') {
+                                    exampleText = firstExample;
+                                  }
+                                  break;
                                 }
-                                break;
                               }
                             }
+
+                            koreanTranslation = vocab.koExample || exampleExample?.ko;
                           }
-                          
+
+
                           return (
                             <>
-                              {englishExample && (
-                                <span lang="en" className="d-block fw-bold mb-1">{englishExample}</span>
+                              {exampleText && (
+                                <span className="d-block fw-bold mb-1" lang={vocab.kana ? "ja" : "en"}>
+                                  {exampleText}
+                                </span>
                               )}
-                              <span className="text-muted small">— {vocab.koExample || exampleExample.ko}</span>
+                              {koreanTranslation && (
+                                <span className="text-muted small">— {koreanTranslation}</span>
+                              )}
                             </>
                           );
                         })()}
@@ -610,7 +743,7 @@ export default function VocabDetailModal({
                 {/* 사용법 섹션 - 숙어/구동사용 */}
                 {(() => {
                   // dictentry.examples에서 usage 종류의 데이터 찾기
-                  if (vocab.dictentry && vocab.dictentry.examples) {
+                  if (vocab.dictentry && vocab.dictentry.examples && Array.isArray(vocab.dictentry.examples)) {
                     const usageEntry = vocab.dictentry.examples.find(ex => ex.kind === 'usage' && ex.ko);
                     if (usageEntry) {
                       return (
@@ -668,7 +801,10 @@ export default function VocabDetailModal({
                 
               </div>
             ) : (
-              <p className="text-muted mt-3">상세한 뜻 정보가 없습니다.</p>
+              // Only show "no detailed info" message for non-Japanese vocabulary without examples
+              !vocab.kana && !vocab.example && !vocab.koExample && !vocab.dictentry?.examples?.example && !vocab.dictentry?.examples?.koExample && (
+                <p className="text-muted mt-3">상세한 뜻 정보가 없습니다.</p>
+              )
             )}
 
             <details className="mt-3">

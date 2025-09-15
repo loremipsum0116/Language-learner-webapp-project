@@ -1873,7 +1873,59 @@ export default function LearnVocab() {
                                             .map((t) => <span key={t} className={`badge ${getPosBadgeColor(t)}`}>{t}</span>)}
                                     </div>
                                     <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />
-                                    <h2 className="display-4">{current.question}</h2>
+                                    <h2 className="display-4">
+                                    {current.kana && current.kanji ? (
+                                        (() => {
+                                            const kanji = current.kanji || current.question;
+                                            const kana = current.kana;
+
+                                            // Check if kanji contains any actual kanji characters
+                                            const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+                                            if (!hasKanji) {
+                                                // No kanji characters, just display as text
+                                                return <span lang="ja">{kanji}</span>;
+                                            }
+
+                                            // Simple approach for common patterns like 食べる (taberu)
+                                            const match = kanji.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
+
+                                            if (match) {
+                                                const kanjiPart = match[1];  // e.g., "食"
+                                                const hiraganaPart = match[2];  // e.g., "べる"
+
+                                                // Find where hiragana part starts in kana reading
+                                                const hiraganStartIndex = kana.indexOf(hiraganaPart);
+
+                                                if (hiraganStartIndex > 0) {
+                                                    const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
+
+                                                    return (
+                                                        <span lang="ja">
+                                                            <ruby>
+                                                                {kanjiPart}
+                                                                <rt>{kanjiReading}</rt>
+                                                            </ruby>
+                                                            {hiraganaPart}
+                                                        </span>
+                                                    );
+                                                }
+                                            }
+
+                                            // Fallback to simple ruby for complex cases
+                                            return (
+                                                <ruby lang="ja">
+                                                    {kanji}
+                                                    <rt>{kana}</rt>
+                                                </ruby>
+                                            );
+                                        })()
+                                    ) : current.kana ? (
+                                        <span lang="ja">{current.kana}</span>
+                                    ) : (
+                                        current.question
+                                    )}
+                                </h2>
                                 </>
                             ) : (
                                 <>
@@ -2276,7 +2328,59 @@ export default function LearnVocab() {
                                         .map((t) => <span key={t} className={`badge ${getPosBadgeColor(t)}`}>{t}</span>)}
                                 </div>
                                 <Pron ipa={current.pron?.ipa || currentPron?.ipa} ipaKo={current.pron?.ipaKo || currentPron?.ipaKo} />
-                                <h2 className="display-5 mb-3" lang="en">{current.question}</h2>
+                                <h2 className="display-5 mb-3">
+                                    {current.kana && current.kanji ? (
+                                        (() => {
+                                            const kanji = current.kanji || current.question;
+                                            const kana = current.kana;
+
+                                            // Check if kanji contains any actual kanji characters
+                                            const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+                                            if (!hasKanji) {
+                                                // No kanji characters, just display as text
+                                                return <span lang="ja">{kanji}</span>;
+                                            }
+
+                                            // Simple approach for common patterns like 食べる (taberu)
+                                            const match = kanji.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
+
+                                            if (match) {
+                                                const kanjiPart = match[1];  // e.g., "食"
+                                                const hiraganaPart = match[2];  // e.g., "べる"
+
+                                                // Find where hiragana part starts in kana reading
+                                                const hiraganStartIndex = kana.indexOf(hiraganaPart);
+
+                                                if (hiraganStartIndex > 0) {
+                                                    const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
+
+                                                    return (
+                                                        <span lang="ja">
+                                                            <ruby>
+                                                                {kanjiPart}
+                                                                <rt>{kanjiReading}</rt>
+                                                            </ruby>
+                                                            {hiraganaPart}
+                                                        </span>
+                                                    );
+                                                }
+                                            }
+
+                                            // Fallback to simple ruby for complex cases
+                                            return (
+                                                <ruby lang="ja">
+                                                    {kanji}
+                                                    <rt>{kana}</rt>
+                                                </ruby>
+                                            );
+                                        })()
+                                    ) : current.kana ? (
+                                        <span lang="ja">{current.kana}</span>
+                                    ) : (
+                                        <span lang="en">{current.question}</span>
+                                    )}
+                                </h2>
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻이 표시됩니다.</div>
                             </>
                         ) : (
@@ -2641,6 +2745,87 @@ export default function LearnVocab() {
 
                                                 // 2. current.options가 있는 경우 (기존 로직과 호환)
                                                 if (current.options && current.options.length > 0) {
+                                                    // 일본어 단어인 경우 특별 처리
+                                                    if (current.kana || current.kanji) {
+                                                        // 일본어 단어: 후리가나 + 훈독음독 + 의미로 구성된 선택지
+                                                        return current.options.map((opt, idx) => {
+                                                            // opt가 정답인지 확인
+                                                            const isCorrectOption = opt === current.answer;
+
+                                                            return (
+                                                                <button key={idx}
+                                                                    className={`btn btn-lg ${userAnswer === opt ? 'btn-primary' : 'btn-outline-primary'}`}
+                                                                    onClick={() => setAnswer(opt)}
+                                                                    disabled={isSubmitting}>
+                                                                    {isCorrectOption && (current.kana || current.kanji) ? (
+                                                                        <div className="text-start">
+                                                                            <div lang="ja" className="fs-5">
+                                                                                {current.kanji ? (
+                                                                                    (() => {
+                                                                                        const kanji = current.kanji;
+                                                                                        const kana = current.kana;
+
+                                                                                        // Check if kanji contains any actual kanji characters
+                                                                                        const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+                                                                                        if (!hasKanji) {
+                                                                                            // No kanji characters, just display as text
+                                                                                            return kanji;
+                                                                                        }
+
+                                                                                        // Simple approach for common patterns like 食べる (taberu)
+                                                                                        const match = kanji.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
+
+                                                                                        if (match) {
+                                                                                            const kanjiPart = match[1];  // e.g., "食"
+                                                                                            const hiraganaPart = match[2];  // e.g., "べる"
+
+                                                                                            // Find where hiragana part starts in kana reading
+                                                                                            const hiraganStartIndex = kana.indexOf(hiraganaPart);
+
+                                                                                            if (hiraganStartIndex > 0) {
+                                                                                                const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
+
+                                                                                                return (
+                                                                                                    <span>
+                                                                                                        <ruby>
+                                                                                                            {kanjiPart}
+                                                                                                            <rt className="fs-6">{kanjiReading}</rt>
+                                                                                                        </ruby>
+                                                                                                        {hiraganaPart}
+                                                                                                    </span>
+                                                                                                );
+                                                                                            }
+                                                                                        }
+
+                                                                                        // Fallback to simple ruby for complex cases
+                                                                                        return (
+                                                                                            <ruby>
+                                                                                                {kanji}
+                                                                                                <rt className="fs-6">{kana}</rt>
+                                                                                            </ruby>
+                                                                                        );
+                                                                                    })()
+                                                                                ) : (
+                                                                                    current.kana
+                                                                                )}
+                                                                            </div>
+                                                                            {current.onyomi && (
+                                                                                <div className="small text-muted">음독: {current.onyomi}</div>
+                                                                            )}
+                                                                            {current.kunyomi && (
+                                                                                <div className="small text-muted">훈독: {current.kunyomi}</div>
+                                                                            )}
+                                                                            <div className="small">{opt}</div>
+                                                                        </div>
+                                                                    ) : (
+                                                                        opt
+                                                                    )}
+                                                                </button>
+                                                            );
+                                                        });
+                                                    }
+
                                                     // 기존 options는 한국어 뜻이므로, 영단어로 변환 필요
                                                     // 여기서는 정답 영단어와 오답 영단어들을 생성
                                                     const correctAnswer = current.question || current.vocab?.lemma || 'unknown';

@@ -801,12 +801,18 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         lemma: true,
                         pos: true,
                         levelCEFR: true,
+                        languageId: true,
+                        levelJLPT: true,
                         dictentry: {
                             select: {
                                 ipa: true,
                                 ipaKo: true,
                                 examples: true
                             }
+                        },
+                        translations: {
+                            where: { languageId: 2 }, // Korean translations
+                            select: { translation: true }
                         }
                     }
                 });
@@ -866,6 +872,40 @@ router.get('/folders/:id/items', async (req, res, next) => {
         const quizItems = items.map(it => {
             const vid = it.vocabId ?? it.srscard?.itemId ?? null;
             const v = (vid && vocabMap.get(vid)) || null;
+
+            // Extract Korean translation for Japanese words
+            let ko_gloss = null;
+            if (v) {
+                const isJapanese = v?.languageId === 3;
+
+                // First try Korean translation from VocabTranslation table
+                if (v.translations && v.translations.length > 0) {
+                    ko_gloss = v.translations[0].translation;
+                }
+                // For Japanese words, try multiple fallback options
+                else if (isJapanese && v.dictentry?.examples) {
+                    // Try koExample from dictentry examples object
+                    if (typeof v.dictentry.examples === 'object' && v.dictentry.examples.koExample) {
+                        ko_gloss = v.dictentry.examples.koExample;
+                    }
+                    // Try parsing string format examples
+                    else if (typeof v.dictentry.examples === 'string') {
+                        try {
+                            const parsedExamples = JSON.parse(v.dictentry.examples);
+                            if (parsedExamples.koExample) {
+                                ko_gloss = parsedExamples.koExample;
+                            }
+                        } catch (e) {
+                            console.warn('Failed to parse dictentry.examples for Japanese vocab:', v.lemma, e);
+                        }
+                    }
+                }
+                // Fallback for English words (array format)
+                else if (!isJapanese && Array.isArray(v.dictentry?.examples)) {
+                    const glossExample = v.dictentry.examples.find((ex) => ex?.kind === 'gloss');
+                    ko_gloss = glossExample?.ko;
+                }
+            }
             
             // 디버깅: 전체 srscard 구조 확인
             console.log(`[DEBUG CARD STRUCTURE] Item ${it.id}:`, {
@@ -893,7 +933,9 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 wrongCount: it.wrongCount
             });
             
-            return {
+            // Add Japanese-specific fields if this is a Japanese word
+            const isJapanese = v?.languageId === 3;
+            const result = {
                 folderItemId: it.id,
                 cardId: it.cardId,
                 learned: it.learned,
@@ -920,14 +962,38 @@ router.get('/folders/:id/items', async (req, res, next) => {
                 isWrongAnswer: it.wrongCount > 0,
                 // SRS 카드 오답 대기중 상태 판단 (위에서 계산한 값 사용)
                 isWrongAnswerWaiting,
+                // Korean translation
+                ko_gloss: ko_gloss,
                 vocab: v ? {
                     id: v.id,
                     lemma: v.lemma,
                     pos: v.pos,
                     level: v.levelCEFR,
+                    languageId: v.languageId,
+                    levelJLPT: v.levelJLPT,
                     dictentry: v.dictentry || null,
                 } : null,
             };
+
+            // Add Japanese-specific fields if this is a Japanese word
+            if (isJapanese && v?.dictentry?.examples) {
+                let examples = {};
+                if (typeof v.dictentry.examples === 'object') {
+                    examples = v.dictentry.examples;
+                }
+
+                result.kana = v.dictentry?.ipa || examples.kana || '';
+                result.romaji = v.dictentry?.ipaKo || examples.romaji || '';
+                result.kanji = examples.kanji || null;
+                result.onyomi = examples.onyomi || null;
+                result.kunyomi = examples.kunyomi || null;
+                result.example = examples.example || '';
+                result.koExample = examples.koExample || '';
+                result.exampleKana = examples.exampleKana || '';
+                result.exampleTranslation = examples.exampleTranslation || '';
+            }
+
+            return result;
         });
 
         // 디버깅: overdue 카드들 로그
@@ -1972,22 +2038,83 @@ router.get('/all-cards', async (req, res) => {
         if (!cards.length) return ok(res, []);
 
         const vocabIds = cards.map((c) => c.itemId);
-        const vocabs = await prisma.vocab.findMany({ where: { id: { in: vocabIds } }, include: { dictentry: true } });
+        const vocabs = await prisma.vocab.findMany({
+            where: { id: { in: vocabIds } },
+            include: {
+                dictentry: true,
+                translations: {
+                    where: { languageId: 2 }, // Korean translations
+                    select: { translation: true }
+                }
+            }
+        });
         const map = new Map(vocabs.map((v) => [v.id, v]));
 
         const result = cards
-            .map((c) => ({
-                cardId: c.id,
-                vocabId: c.itemId,
-                lemma: map.get(c.itemId)?.lemma,
-                ko_gloss: Array.isArray(map.get(c.itemId)?.dictentry?.examples)
-                    ? map.get(c.itemId).dictentry.examples.find((ex) => ex?.kind === 'gloss')?.ko
-                    : null,
-                nextReviewAt: c.nextReviewAt,
-                stage: c.stage,
-                ipa: map.get(c.itemId)?.dictentry?.ipa,
-                ipaKo: map.get(c.itemId)?.dictentry?.ipaKo,
-            }))
+            .map((c) => {
+                const vocab = map.get(c.itemId);
+                let ko_gloss = null;
+
+                if (vocab) {
+                    const isJapanese = vocab?.languageId === 3;
+
+                    // First try Korean translation from VocabTranslation table
+                    if (vocab.translations && vocab.translations.length > 0) {
+                        ko_gloss = vocab.translations[0].translation;
+                    }
+                    // For Japanese words, try multiple fallback options
+                    else if (isJapanese && vocab.dictentry?.examples) {
+                        // Try koExample from dictentry examples object
+                        if (typeof vocab.dictentry.examples === 'object' && vocab.dictentry.examples.koExample) {
+                            ko_gloss = vocab.dictentry.examples.koExample;
+                        }
+                        // Try parsing string format examples
+                        else if (typeof vocab.dictentry.examples === 'string') {
+                            try {
+                                const parsedExamples = JSON.parse(vocab.dictentry.examples);
+                                if (parsedExamples.koExample) {
+                                    ko_gloss = parsedExamples.koExample;
+                                }
+                            } catch (e) {
+                                console.warn('Failed to parse dictentry.examples for Japanese vocab:', vocab.lemma, e);
+                            }
+                        }
+                    }
+                    // Fallback for English words (array format)
+                    else if (!isJapanese && Array.isArray(vocab.dictentry?.examples)) {
+                        const glossExample = vocab.dictentry.examples.find((ex) => ex?.kind === 'gloss');
+                        ko_gloss = glossExample?.ko;
+                    }
+                }
+
+                // Add Japanese-specific fields if this is a Japanese word
+                const isJapanese = vocab?.languageId === 3 || vocab?.dictentry?.ipa;
+                const result = {
+                    cardId: c.id,
+                    vocabId: c.itemId,
+                    lemma: vocab?.lemma,
+                    ko_gloss: ko_gloss,
+                    nextReviewAt: c.nextReviewAt,
+                    stage: c.stage,
+                    ipa: vocab?.dictentry?.ipa,
+                    ipaKo: vocab?.dictentry?.ipaKo,
+                };
+
+                if (isJapanese) {
+                    // Parse examples for Japanese words
+                    let examples = {};
+                    if (vocab.dictentry?.examples && typeof vocab.dictentry.examples === 'object') {
+                        examples = vocab.dictentry.examples;
+                    }
+
+                    result.kana = vocab.dictentry?.ipa || examples.kana || '';
+                    result.romaji = vocab.dictentry?.ipaKo || examples.romaji || '';
+                    result.kanji = examples.kanji || null;
+                    result.levelJLPT = vocab.levelJLPT || null;
+                }
+
+                return result;
+            })
             .filter((x) => x.lemma);
 
         return ok(res, result);

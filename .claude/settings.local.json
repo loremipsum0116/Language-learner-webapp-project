@@ -214,7 +214,8 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"그럽시디\" npx dotenv -e .env -- npx prisma db push --force-reset --accept-data-loss)",
       "Bash(npx dotenv -e .env -- npx tsx prisma/seed-cefr-vocabs-fixed.ts:*)",
       "Read(//c/Users/sst70/**)",
-      "Bash(pnpm dev:*)"
+      "Bash(pnpm dev:*)",
+      "Bash(PORT=3001 pnpm start)"
     ],
     "deny": [],
     "ask": []

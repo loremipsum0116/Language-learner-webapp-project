@@ -10,6 +10,7 @@ import { SrsApi } from '../api/srs';
 import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
 import RainbowStar from '../components/RainbowStar';
 import AutoFolderModal from '../components/AutoFolderModal';
+import JapaneseVocabCard from '../components/JapaneseVocabCard';
 
 // Helper functions (no changes)
 const getCefrBadgeColor = (level) => {
@@ -275,9 +276,10 @@ const cefrToFolder = {
 export default function VocabList() {
     const { user, srsIds, loading: authLoading, refreshSrsIds } = useAuth();
     const [activeLevel, setActiveLevel] = useState('A1');
-    const [activeTab, setActiveTab] = useState('cefr'); // 'cefr', 'exam', or 'idiom'
+    const [activeTab, setActiveTab] = useState('cefr'); // 'cefr', 'exam', 'idiom', or 'japanese'
     const [activeExam, setActiveExam] = useState('');
     const [activeIdiomCategory, setActiveIdiomCategory] = useState('숙어'); // '숙어' or '구동사'
+    const [activeJlptLevel, setActiveJlptLevel] = useState('N5'); // JLPT level
     const [examCategories, setExamCategories] = useState([]);
     const [words, setWords] = useState([]);
     const [allWords, setAllWords] = useState([]); // 전체 단어 리스트
@@ -361,12 +363,23 @@ export default function VocabList() {
                     console.log('📥 [IDIOM UNIFIED] API Response:', response);
                     data = response.data || [];
                     console.log('📋 [IDIOM UNIFIED] Data length:', Array.isArray(data) ? data.length : 'Not array');
-                    
+
                     setWords(data.slice(0, displayCount));
                     setAllWords(data);
                     setTotalCount(Array.isArray(data) ? data.length : 0);
                     setDisplayCount(100); // 새로운 데이터 로드 시 초기화
                     return; // 숙어 탭에서는 여기서 종료
+                } else if (activeTab === 'japanese') {
+                    // 일본어 JLPT 레벨별 조회
+                    url = `/vocab/japanese-list?level=${encodeURIComponent(activeJlptLevel)}`;
+                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
+                    data = response.data || [];
+
+                    setWords(data.slice(0, displayCount));
+                    setAllWords(data);
+                    setTotalCount(Array.isArray(data) ? data.length : 0);
+                    setDisplayCount(100); // 새로운 데이터 로드 시 초기화
+                    return; // 일본어 탭에서는 여기서 종료
                 } else {
                     // 시험별 조회
                     if (!activeExam) {
@@ -397,7 +410,7 @@ export default function VocabList() {
             }
         })();
         return () => ac.abort();
-    }, [activeLevel, activeTab, activeExam, activeIdiomCategory, debouncedSearchTerm, authLoading]);
+    }, [activeLevel, activeTab, activeExam, activeIdiomCategory, activeJlptLevel, debouncedSearchTerm, authLoading]);
 
     // displayCount 변경 시 words 업데이트
     useEffect(() => {
@@ -1452,11 +1465,11 @@ export default function VocabList() {
                         </button>
                     </li>
                     <li className="nav-item">
-                        <button 
+                        <button
                             className={`nav-link ${activeTab === 'idiom' ? 'active' : ''}`}
-                            onClick={() => { 
-                                setActiveTab('idiom'); 
-                                setSearchTerm(''); 
+                            onClick={() => {
+                                setActiveTab('idiom');
+                                setSearchTerm('');
                                 setSelectedIds(new Set()); // 선택된 단어 초기화
                                 setDisplayCount(100); // 표시 개수 초기화
                                 setCurrentPage(1); // 페이지 초기화
@@ -1464,6 +1477,21 @@ export default function VocabList() {
                             }}
                         >
                             숙어·구동사
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${activeTab === 'japanese' ? 'active' : ''}`}
+                            onClick={() => {
+                                setActiveTab('japanese');
+                                setSearchTerm('');
+                                setSelectedIds(new Set()); // 선택된 단어 초기화
+                                setDisplayCount(100); // 표시 개수 초기화
+                                setCurrentPage(1); // 페이지 초기화
+                                setHasNextPage(false); // 페이지네이션 상태 초기화
+                            }}
+                        >
+                            일본어
                         </button>
                     </li>
                 </ul>
@@ -1536,12 +1564,12 @@ export default function VocabList() {
                     <h4 className="m-0">숙어·구동사</h4>
                     <div className="btn-group">
                         {['숙어', '구동사'].map(category => (
-                            <button 
-                                key={category} 
-                                className={`btn btn-sm ${activeIdiomCategory === category ? 'btn-success' : 'btn-outline-success'}`} 
-                                onClick={() => { 
-                                    setSearchTerm(''); 
-                                    setActiveIdiomCategory(category); 
+                            <button
+                                key={category}
+                                className={`btn btn-sm ${activeIdiomCategory === category ? 'btn-success' : 'btn-outline-success'}`}
+                                onClick={() => {
+                                    setSearchTerm('');
+                                    setActiveIdiomCategory(category);
                                     setSelectedIds(new Set()); // 선택된 단어 초기화
                                     setDisplayCount(100); // 표시 개수 초기화
                                     setCurrentPage(1); // 페이지 초기화
@@ -1549,6 +1577,31 @@ export default function VocabList() {
                                 }}
                             >
                                 {category}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {/* 일본어 JLPT 레벨 탭 */}
+            {activeTab === 'japanese' && (
+                <div className="d-flex justify-content-between align-items-center mb-3">
+                    <h4 className="m-0">일본어 단어</h4>
+                    <div className="btn-group">
+                        {['N5', 'N4', 'N3', 'N2', 'N1'].map(level => (
+                            <button
+                                key={level}
+                                className={`btn btn-sm ${activeJlptLevel === level ? 'btn-danger' : 'btn-outline-danger'}`}
+                                onClick={() => {
+                                    setSearchTerm('');
+                                    setActiveJlptLevel(level);
+                                    setSelectedIds(new Set()); // 선택된 단어 초기화
+                                    setDisplayCount(100); // 표시 개수 초기화
+                                    setCurrentPage(1); // 페이지 초기화
+                                    setHasNextPage(false); // 페이지네이션 상태 초기화
+                                }}
+                            >
+                                {level}
                             </button>
                         ))}
                     </div>
@@ -1570,6 +1623,7 @@ export default function VocabList() {
                         {activeTab === 'exam' && totalCount > 0 && ` / ${totalCount}개 전체`}
                         {activeTab === 'cefr' && totalCount > 0 && ` / ${totalCount}개 전체`}
                         {activeTab === 'idiom' && totalCount > 0 && ` / ${totalCount}개 전체`}
+                        {activeTab === 'japanese' && totalCount > 0 && ` / ${totalCount}개 전체`}
                     </label>
                 </div>
                 <div className="d-flex gap-2">
@@ -1609,26 +1663,46 @@ export default function VocabList() {
                 </div>
             )}
             <div className="row">
-                {/* 모든 탭에서 통일된 VocabCard 사용 */}
-                {words.map(vocab => (
-                    <VocabCard
-                        key={vocab.id}
-                        vocab={vocab}
-                        onOpenDetail={handleOpenDetail}
-                        onAddWordbook={handleAddWordbook}
-                        onAddSRS={handleAddSRS}
-                        inWordbook={myWordbookIds.has(vocab.id)}
-                        inSRS={srsIds.has(vocab.id)}
-                        onPlayAudio={playVocabAudio}
-                        enrichingId={enrichingId}
-                        onDeleteVocab={handleDeleteVocab}
-                        isAdmin={isAdmin}
-                        isSelected={selectedIds.has(vocab.id)}
-                        onToggleSelect={handleToggleSelect}
-                        playingAudio={playingAudio}
-                        masteredCards={masteredCards}
-                    />
-                ))}
+                {/* 일본어 탭은 JapaneseVocabCard, 나머지는 VocabCard 사용 */}
+                {activeTab === 'japanese' ? (
+                    words.map(vocab => (
+                        <JapaneseVocabCard
+                            key={vocab.id}
+                            vocab={vocab}
+                            onOpenDetail={handleOpenDetail}
+                            onAddWordbook={handleAddWordbook}
+                            onAddSRS={handleAddSRS}
+                            inWordbook={myWordbookIds.has(vocab.id)}
+                            inSRS={srsIds.has(vocab.id)}
+                            onPlayAudio={playVocabAudio}
+                            enrichingId={enrichingId}
+                            isSelected={selectedIds.has(vocab.id)}
+                            onToggleSelect={handleToggleSelect}
+                            playingAudio={playingAudio}
+                            masteredCards={masteredCards}
+                        />
+                    ))
+                ) : (
+                    words.map(vocab => (
+                        <VocabCard
+                            key={vocab.id}
+                            vocab={vocab}
+                            onOpenDetail={handleOpenDetail}
+                            onAddWordbook={handleAddWordbook}
+                            onAddSRS={handleAddSRS}
+                            inWordbook={myWordbookIds.has(vocab.id)}
+                            inSRS={srsIds.has(vocab.id)}
+                            onPlayAudio={playVocabAudio}
+                            enrichingId={enrichingId}
+                            onDeleteVocab={handleDeleteVocab}
+                            isAdmin={isAdmin}
+                            isSelected={selectedIds.has(vocab.id)}
+                            onToggleSelect={handleToggleSelect}
+                            playingAudio={playingAudio}
+                            masteredCards={masteredCards}
+                        />
+                    ))
+                )}
             </div>
             
             {/* 더 보기 버튼 */}
