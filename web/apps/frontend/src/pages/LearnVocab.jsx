@@ -24,6 +24,103 @@ import { JapaneseQuizTypes } from '../types/japanese-quiz';
 // ───────────────────── 헬퍼 ─────────────────────
 const safeFileName = (s) => encodeURIComponent(String(s ?? ''));
 
+// Furigana display component - handles mixed kanji/hiragana (copied from JapaneseVocabCard)
+function FuriganaDisplay({ kanji, kana, className = "display-5 mb-3", style = { fontWeight: 'bold' } }) {
+    // Debug logging
+    console.log('FuriganaDisplay debug:', { kanji, kana });
+
+    // If no kanji text, return kana
+    if (!kanji) {
+        return <span className={className} lang="ja" style={style}>{kana || ''}</span>;
+    }
+
+    // If no kana provided, return kanji only
+    if (!kana) {
+        return <span className={className} lang="ja" style={style}>{kanji}</span>;
+    }
+
+    // If kanji and kana are the same, no need for furigana
+    if (kanji === kana) {
+        return <span className={className} lang="ja" style={style}>{kanji}</span>;
+    }
+
+    // Check if kanji contains any actual kanji characters
+    const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+    if (!hasKanji) {
+        // No kanji characters, just display the kanji text without furigana
+        return <span className={className} lang="ja" style={style}>{kanji}</span>;
+    }
+
+    // If the displayed text (kanji) is already in hiragana/katakana only, don't show furigana
+    const isKanjiAlreadyHiragana = /^[\u3040-\u309f\u30a0-\u30ff\s\u3000]+$/.test(kanji);
+    if (isKanjiAlreadyHiragana) {
+        return <span className={className} lang="ja" style={style}>{kanji}</span>;
+    }
+
+    // Enhanced parsing for mixed kanji/hiragana text
+    const result = [];
+    let kanaIndex = 0;
+
+    // Split kanji string into individual characters for precise control
+    for (let i = 0; i < kanji.length; i++) {
+        const char = kanji[i];
+
+        if (/[\u4e00-\u9faf]/.test(char)) {
+            // This is a kanji character - find its reading
+            let reading = '';
+
+            // Look ahead to find the next non-kanji character or end
+            let nextCharIndex = i + 1;
+            let nextChar = nextCharIndex < kanji.length ? kanji[nextCharIndex] : null;
+
+            if (nextChar && /[\u3040-\u309f\u30a0-\u30ff]/.test(nextChar)) {
+                // There's a hiragana after this kanji, find where it appears in kana
+                const nextCharIndexInKana = kana.indexOf(nextChar, kanaIndex);
+                if (nextCharIndexInKana > kanaIndex) {
+                    reading = kana.slice(kanaIndex, nextCharIndexInKana);
+                } else {
+                    // Edge case: take one character from kana
+                    reading = kana[kanaIndex] || '';
+                }
+            } else {
+                // This is either the last character or followed by another kanji
+                // For "お兄さん" case, we need to handle this carefully
+                if (nextChar && /[\u4e00-\u9faf]/.test(nextChar)) {
+                    // Followed by another kanji - take minimal reading
+                    reading = kana[kanaIndex] || '';
+                } else {
+                    // This is the last kanji, take remaining kana
+                    reading = kana.slice(kanaIndex);
+                }
+            }
+
+            // Special handling for common cases
+            if (char === '兄' && kanji === 'お兄さん' && kana === 'おにいさん') {
+                reading = 'にい'; // Specific reading for 兄 in お兄さん
+            }
+
+            result.push(
+                <ruby key={i} style={{ fontWeight: 'bold' }}>
+                    {char}
+                    <rt style={{ fontSize: '0.5em' }}>{reading}</rt>
+                </ruby>
+            );
+
+            kanaIndex += reading.length;
+        } else if (/[\u3040-\u309f\u30a0-\u30ff]/.test(char)) {
+            // This is hiragana/katakana - add as is
+            result.push(char);
+            kanaIndex++;
+        } else {
+            // Other characters (punctuation, etc.)
+            result.push(char);
+        }
+    }
+
+    return <span className={className} lang="ja" style={style}>{result}</span>;
+}
+
 // 언어 감지 함수
 const detectLanguageFromVocab = (vocab) => {
     if (!vocab) return 'en';
@@ -1058,7 +1155,7 @@ export default function LearnVocab() {
             const flip = setInterval(() => setFlipped((f) => !f), flipIntervalRef.current);
             return () => clearInterval(flip);
         }
-    }, [mode, auto, current?.vocabId, current?.cardId]); // lastCardId 의존성 제거로 중복 실행 방지
+    }, [mode, auto, current?.vocabId, current?.cardId, flipInterval]); // flipInterval 의존성 추가로 간격 변경 시 즉시 적용
 
     // 페이지 이탈 감지
     useEffect(() => {
@@ -2643,103 +2740,72 @@ export default function LearnVocab() {
                         onClick={() => setFlipped((f) => !f)}
                         style={{ minHeight: '45rem' }}
                     >
-                        {/* 재생횟수 표시 & 설정 버튼 - 카드 우측 상단 */}
-                        {auto && (
-                            <div
-                                className="position-absolute d-flex align-items-center gap-2"
-                                style={{ top: '10px', right: '10px' }}
-                            >
-                                <div className="bg-info text-white px-2 py-1 rounded small" style={{ fontSize: '0.75rem' }}>
-                                    재생횟수: {audioPlayCount}회
-                                </div>
-                                <button
-                                    className="btn btn-sm btn-outline-secondary p-1 d-flex align-items-center justify-content-center"
-                                    style={{ width: '24px', height: '24px', fontSize: '12px' }}
-                                    onClick={(e) => { e.stopPropagation(); setShowSettings(true); }}
-                                    title="자동학습 설정"
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
-                                    </svg>
-                                </button>
+                        {/* 레벨 & 품사 배지 - 카드 왼쪽 상단 */}
+                        <div className="position-absolute d-flex align-items-center gap-2" style={{ top: '10px', left: '10px' }}>
+                            {(() => {
+                                const level = current.vocab?.levelJLPT ?? current.vocab?.levelCEFR ?? current.vocab?.level ?? current.levelCEFR ?? current.levelJLPT ?? current.level;
+                                const pos = current.vocab?.pos ?? current.pos;
+                                return (
+                                    <>
+                                        {level && (
+                                            <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
+                                                {level}
+                                            </span>
+                                        )}
+                                        {pos && pos.toLowerCase() !== 'unk' && (
+                                            <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
+                                                {pos}
+                                            </span>
+                                        )}
+                                    </>
+                                );
+                            })()}
+                        </div>
+
+                        {/* 재생횟수 표시 & 설정 버튼 - 카드 우측 상단 (항상 표시) */}
+                        <div
+                            className="position-absolute d-flex align-items-center gap-2"
+                            style={{ top: '10px', right: '10px' }}
+                        >
+                            <div className="bg-info text-white px-2 py-1 rounded small" style={{ fontSize: '0.75rem' }}>
+                                재생횟수: {audioPlayCount}회
                             </div>
-                        )}
+                            <button
+                                className="btn btn-sm btn-outline-secondary p-1 d-flex align-items-center justify-content-center"
+                                style={{ width: '24px', height: '24px', fontSize: '12px' }}
+                                onClick={(e) => { e.stopPropagation(); setShowSettings(true); }}
+                                title="자동학습 설정"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M9.405 1.05c-.413-1.4-2.397-1.4-2.81 0l-.1.34a1.464 1.464 0 0 1-2.105.872l-.31-.17c-1.283-.698-2.686.705-1.987 1.987l.169.311c.446.82.023 1.841-.872 2.105l-.34.1c-1.4.413-1.4 2.397 0 2.81l.34.1a1.464 1.464 0 0 1 .872 2.105l-.17.31c-.698 1.283.705 2.686 1.987 1.987l.311-.169a1.464 1.464 0 0 1 2.105.872l.1.34c.413 1.4 2.397 1.4 2.81 0l.1-.34a1.464 1.464 0 0 1 2.105-.872l.31.17c1.283.698 2.686-.705 1.987-1.987l-.169-.311a1.464 1.464 0 0 1 .872-2.105l.34-.1c1.4-.413 1.4-2.397 0-2.81l-.34-.1a1.464 1.464 0 0 1-.872-2.105l.17-.31c.698-1.283-.705-2.686-1.987-1.987l-.311.169a1.464 1.464 0 0 1-2.105-.872l-.1-.34zM8 10.93a2.929 2.929 0 1 1 0-5.86 2.929 2.929 0 0 1 0 5.858z" />
+                                </svg>
+                            </button>
+                        </div>
                         {!flipped ? (
                             <>
-                                <div className="d-flex justify-content-center gap-2 mb-2">
-                                    {(() => {
-                                        const level = current.vocab?.levelJLPT ?? current.vocab?.levelCEFR ?? current.vocab?.level ?? current.levelCEFR ?? current.levelJLPT ?? current.level;
-                                        const pos = current.vocab?.pos ?? current.pos;
-                                        return (
-                                            <>
-                                                {level && (
-                                                    <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
-                                                        {level}
-                                                    </span>
-                                                )}
-                                                {pos && pos.toLowerCase() !== 'unk' && (
-                                                    <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
-                                                        {pos}
-                                                    </span>
-                                                )}
-                                            </>
-                                        );
-                                    })()}
-                                </div>
-                                <Pron ipa={current.pron?.ipa || currentPron?.ipa} ipaKo={current.pron?.ipaKo || currentPron?.ipaKo} />
-                                <h2 className="display-5 mb-3" style={{ fontWeight: 'bold' }}>
-                                    {current.kana && current.kanji ? (
-                                        (() => {
-                                            const kanji = current.kanji || current.question;
-                                            const kana = current.kana;
+                                {(() => {
+                                    // 로그에서 확인된 실제 데이터 구조 사용
+                                    const kanjiText = current.question; // "お兄さん"
+                                    const kanaText = current.pron?.ipa; // "おにいさん"
 
-                                            // Check if kanji contains any actual kanji characters
-                                            const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+                                    console.log('FuriganaDisplay data:', {
+                                        kanjiText,
+                                        kanaText
+                                    });
 
-                                            if (!hasKanji) {
-                                                // No kanji characters, just display as text
-                                                return <span lang="ja" style={{ fontWeight: 'bold' }}>{kanji}</span>;
-                                            }
-
-                                            // Simple approach for common patterns like 食べる (taberu)
-                                            const match = kanji.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
-
-                                            if (match) {
-                                                const kanjiPart = match[1];  // e.g., "食"
-                                                const hiraganaPart = match[2];  // e.g., "べる"
-
-                                                // Find where hiragana part starts in kana reading
-                                                const hiraganStartIndex = kana.indexOf(hiraganaPart);
-
-                                                if (hiraganStartIndex > 0) {
-                                                    const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
-
-                                                    return (
-                                                        <span lang="ja" style={{ fontWeight: 'bold' }}>
-                                                            <ruby style={{ fontWeight: 'bold' }}>
-                                                                {kanjiPart}
-                                                                <rt>{kanjiReading}</rt>
-                                                            </ruby>
-                                                            {hiraganaPart}
-                                                        </span>
-                                                    );
-                                                }
-                                            }
-
-                                            // Fallback to simple ruby for complex cases
-                                            return (
-                                                <ruby lang="ja" style={{ fontWeight: 'bold' }}>
-                                                    {kanji}
-                                                    <rt>{kana}</rt>
-                                                </ruby>
-                                            );
-                                        })()
-                                    ) : current.kana ? (
-                                        <span lang="ja" style={{ fontWeight: 'bold' }}>{current.kana}</span>
-                                    ) : (
-                                        <span lang="en">{current.question}</span>
-                                    )}
-                                </h2>
+                                    return (
+                                        <FuriganaDisplay
+                                            kanji={kanjiText}
+                                            kana={kanaText}
+                                        />
+                                    );
+                                })()}
+                                {/* 로마자만 표시 (히라가나 제거) */}
+                                <Pron
+                                    ipa={current.pron?.ipa || currentPron?.ipa}
+                                    ipaKo={current.pron?.ipaKo || currentPron?.ipaKo}
+                                    romaji={current.pron?.ipaKo || current.vocab?.dictentry?.examples?.romaji}
+                                />
                                 <div className="text-muted mt-2">카드를 클릭하면 뜻이 표시됩니다.</div>
                             </>
                         ) : (

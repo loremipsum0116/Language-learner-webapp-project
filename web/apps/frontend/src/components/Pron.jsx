@@ -2,12 +2,10 @@ export default function Pron({ ipa, ipaKo, hiragana, romaji }) {
   // 영어 발음과 일본어 발음 모두 지원
   if (!ipa && !ipaKo && !hiragana && !romaji) return null;
 
-  // 일본어 발음 정보가 있는 경우
-  if (hiragana || romaji) {
+  // 일본어 발음 정보가 있는 경우 (히라가나는 제거하고 로마자만 표시)
+  if (romaji) {
     return (
       <div className="text-muted small mt-1" style={{ lineHeight: 1.2 }}>
-        {hiragana && <span lang="ja">[{hiragana}]</span>}
-        {hiragana && romaji && <span className="mx-1">·</span>}
         {romaji && <span>{romaji}</span>}
       </div>
     );

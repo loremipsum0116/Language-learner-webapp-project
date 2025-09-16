@@ -74,8 +74,10 @@ export default function JapaneseQuiz({
     const [showSpellingWarning, setShowSpellingWarning] = useState(false);
 
     const currentQuiz = quizItems[currentIndex];
-    const isMultipleChoice = currentQuiz && isMultipleChoiceQuiz(currentQuiz.quizType);
-    const isInput = currentQuiz && isInputQuiz(currentQuiz.quizType);
+    // 혼합형 퀴즈의 경우 originalQuizType을 사용, 그렇지 않으면 quizType 사용
+    const actualQuizType = currentQuiz?.originalQuizType || currentQuiz?.quizType;
+    const isMultipleChoice = currentQuiz && isMultipleChoiceQuiz(actualQuizType);
+    const isInput = currentQuiz && isInputQuiz(actualQuizType);
 
     // 퀴즈 데이터 로드
     useEffect(() => {
@@ -247,7 +249,12 @@ export default function JapaneseQuiz({
 
             {/* 퀴즈 타입 설명 */}
             <div className="alert alert-info mb-3">
-                <small>{getQuizTypeDescription(quizType)}</small>
+                <small>
+                    {quizType === JapaneseQuizTypes.JP_MIXED && currentQuiz
+                        ? getQuizTypeDescription(actualQuizType)
+                        : getQuizTypeDescription(quizType)
+                    }
+                </small>
             </div>
 
             {/* 현재 문제 */}
@@ -276,7 +283,7 @@ export default function JapaneseQuiz({
                             </h2>
 
                             {/* 발음 정보 표시 (일본어 → 한국어 뜻 퀴즈에서) */}
-                            {currentQuiz.quizType === JapaneseQuizTypes.JP_WORD_TO_KO_MEANING && currentQuiz.pron && (
+                            {actualQuizType === JapaneseQuizTypes.JP_WORD_TO_KO_MEANING && currentQuiz.pron && (
                                 <div className="pronunciation-info mb-3">
                                     {currentQuiz.pron.hiragana && (
                                         <div className="text-muted">
@@ -338,8 +345,8 @@ export default function JapaneseQuiz({
 
                                 {isInput && (
                                     <div className="input-container">
-                                        {/* 예문 한국어 해석 표시 */}
-                                        {currentQuiz.contextTranslation && (
+                                        {/* 예문 한국어 해석 표시 (예문 모드일 때만) */}
+                                        {currentQuiz.useExample && currentQuiz.contextTranslation && (
                                             <div className="alert alert-light mb-3 text-center">
                                                 <small className="text-muted">
                                                     <strong>해석:</strong> {highlightAnswerInTranslation(
@@ -348,6 +355,7 @@ export default function JapaneseQuiz({
                                                 </small>
                                             </div>
                                         )}
+
 
                                         {/* 스펠링 경고 메시지 */}
                                         {showSpellingWarning && (
