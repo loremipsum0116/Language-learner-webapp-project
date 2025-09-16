@@ -232,7 +232,13 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx tsx seed-jlpt-vocabs.ts)",
       "Bash(xargs kill:*)",
       "Bash(pnpm --filter @language-learner/backend prisma studio:*)",
-      "Read(///**)"
+      "Read(///**)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-cefr-fixed.js)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-exam-categories.js)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-idioms-vocab.js)",
+      "Bash(del \"C:\\Users\\sst70\\OneDrive\\바탕 화면\\Language-learner\\web\\apps\\backend\\check-japanese-data.js\")",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx tsx ../../../succeed-seeding-file/seed-cefr-fixed.js)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node ../../../succeed-seeding-file/seed-idioms-vocab.js)"
     ],
     "deny": [],
     "ask": []

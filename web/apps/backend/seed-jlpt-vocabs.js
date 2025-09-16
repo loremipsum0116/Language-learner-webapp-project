@@ -108,7 +108,6 @@ async function main() {
           const vocab = await prisma.vocab.create({
             data: {
               lemma: item.lemma || '',
-              kana: item.kana || '',
               pos: item.pos || 'unknown',
               levelJLPT: 'N5', // All items in this file are N5
               languageId: japaneseLang.id,
@@ -132,7 +131,8 @@ async function main() {
           const dictentry = await prisma.dictentry.create({
             data: {
               vocabId: vocab.id,
-              ipa: item.romaji || null,
+              ipa: item.kana || null, // Store kana reading in ipa field
+              ipaKo: item.romaji || null, // Store romaji in ipaKo field
               audioUrl: null,
               audioLocal: item.audio ? JSON.stringify(item.audio) : null,
               license: 'JLPT N5 Vocabs Dataset',

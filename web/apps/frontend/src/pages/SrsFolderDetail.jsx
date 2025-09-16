@@ -835,8 +835,21 @@ export default function SrsFolderDetail() {
                         const lemma = v?.lemma ?? "—";
                         const pos = v?.pos ?? "";
                         const level = v?.level ?? v?.levelCEFR ?? v?.levelJLPT ?? "";
-                        // Use ko_gloss from backend API (already processed)
-                        let koGloss = item.ko_gloss || '뜻 정보 없음';
+                        // 한국어 뜻 추출 (새로운 vocab.translations 구조 우선)
+                        let koGloss = '뜻 정보 없음';
+
+                        // 1순위: vocab.translations에서 한국어 번역 확인
+                        if (v?.translations && Array.isArray(v.translations)) {
+                            const koreanTranslation = v.translations.find(t => t.language?.code === 'ko');
+                            if (koreanTranslation?.translation) {
+                                koGloss = koreanTranslation.translation;
+                            }
+                        }
+
+                        // 2순위: 기존 ko_gloss 필드 (하위 호환성)
+                        if (koGloss === '뜻 정보 없음' && item.ko_gloss) {
+                            koGloss = item.ko_gloss;
+                        }
                         
                         // IPA 발음 기호 추출
                         const ipa = v?.dictentry?.ipa || null;
@@ -984,14 +997,56 @@ export default function SrsFolderDetail() {
                                                                 console.log(`[CARD FLIP DEBUG] ${lemma} dictentry.examples detailed:`, JSON.stringify(v.dictentry.examples, null, 2));
                                                             }
                                                             
-                                                            // 일본어 단어 예문 처리 추가
-                                                            if (v?.languageId === 3 || v?.language?.code === 'ja' || lemma === 'ありがとう') {
+                                                            // 일본어 단어 예문 처리 - dictentry.examples 우선 확인
+                                                            console.log(`[DEBUG ALL WORDS] ${lemma} - languageId: ${v?.languageId}, language: ${v?.language?.code}`);
+                                                            if (v?.languageId === 3 || v?.language?.code === 'ja' || lemma.match(/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/)) {
                                                                 console.log(`[JAPANESE DEBUG] ${lemma} - Processing Japanese word`);
                                                                 console.log(`[JAPANESE DEBUG] ${lemma} - vocab data:`, v);
-                                                                console.log(`[JAPANESE DEBUG] ${lemma} - dictentry:`, v?.dictentry);
-                                                                console.log(`[JAPANESE DEBUG] ${lemma} - examples:`, v?.dictentry?.examples);
 
-                                                                // 일본어 단어의 예문 처리
+                                                                // 1순위: dictentry.examples에서 일본어 예문 찾기 (실제 데이터가 여기에 있음)
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - dictentry:`, v?.dictentry);
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - dictentry.examples:`, v?.dictentry?.examples);
+                                                                const dictExamples = v?.dictentry?.examples;
+                                                                if (dictExamples && dictExamples.example && dictExamples.koExample) {
+                                                                    console.log(`[JAPANESE CARD SUCCESS] ${lemma} Using dictentry examples:`, dictExamples);
+                                                                    return (
+                                                                        <div className="mb-2 p-2 bg-light rounded">
+                                                                            <div className="fw-bold text-dark" lang="ja">{dictExamples.example}</div>
+                                                                            <div className="text-muted small">— {dictExamples.koExample}</div>
+                                                                        </div>
+                                                                    );
+                                                                }
+
+                                                                // 2순위: vocab.translations에서 예문 찾기 (백업용)
+                                                                console.log(`[JAPANESE DEBUG] ${lemma} - translations:`, v?.translations);
+                                                                if (v?.translations && Array.isArray(v.translations)) {
+                                                                    for (const translation of v.translations) {
+                                                                        console.log(`[JAPANESE DEBUG] ${lemma} - checking translation:`, translation);
+                                                                        let translationExamples = translation.examples;
+
+                                                                        // examples가 문자열이면 JSON 파싱 시도
+                                                                        if (typeof translationExamples === 'string') {
+                                                                            try {
+                                                                                translationExamples = JSON.parse(translationExamples);
+                                                                            } catch (e) {
+                                                                                console.warn(`[JAPANESE DEBUG] ${lemma} Failed to parse translation.examples:`, e);
+                                                                                continue;
+                                                                            }
+                                                                        }
+
+                                                                        if (translationExamples?.example && translationExamples?.koExample) {
+                                                                            console.log(`[JAPANESE CARD SUCCESS] ${lemma} Using translation examples:`, translationExamples);
+                                                                            return (
+                                                                                <div className="mb-2 p-2 bg-light rounded">
+                                                                                    <div className="fw-bold text-dark" lang="ja">{translationExamples.example}</div>
+                                                                                    <div className="text-muted small">— {translationExamples.koExample}</div>
+                                                                                </div>
+                                                                            );
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                // 3순위: dictentry.examples에서 파싱 시도 (기존 로직)
                                                                 const examples = v?.dictentry?.examples;
                                                                 if (examples) {
                                                                     let parsedExamples = examples;
@@ -1003,10 +1058,8 @@ export default function SrsFolderDetail() {
                                                                         }
                                                                     }
 
-                                                                    console.log(`[JAPANESE DEBUG] ${lemma} - parsedExamples:`, parsedExamples);
-
                                                                     if (parsedExamples && parsedExamples.example) {
-                                                                        console.log(`[JAPANESE CARD SUCCESS] ${lemma} Using Japanese example:`, parsedExamples.example);
+                                                                        console.log(`[JAPANESE CARD SUCCESS] ${lemma} Using parsed examples:`, parsedExamples.example);
                                                                         return (
                                                                             <div className="mb-2 p-2 bg-light rounded">
                                                                                 <div className="fw-bold text-dark" lang="ja">{parsedExamples.example}</div>

@@ -417,12 +417,121 @@ export default function VocabDetailModal({
                         }
                       }
 
-                      // Fallback to simple ruby for complex cases
+                      // Render Japanese text with furigana only over kanji characters
+                      const renderJapaneseWithRuby = (text, reading) => {
+                        if (!reading || !text) return <span lang="ja">{text}</span>;
+
+                        // Check if text has kanji
+                        const hasKanji = /[\u4e00-\u9faf]/.test(text);
+                        if (!hasKanji) {
+                          return <span lang="ja">{text}</span>;
+                        }
+
+                        // For simple cases with common patterns, try to match kanji to readings
+                        const result = [];
+                        let textIndex = 0;
+                        let readingIndex = 0;
+
+                        console.log('🔍 renderJapaneseWithRuby:', { text, reading });
+
+                        while (textIndex < text.length) {
+                          const char = text[textIndex];
+                          console.log('Processing char at index', textIndex, ':', char);
+
+                          // If it's kanji, try to find corresponding reading
+                          if (/[\u4e00-\u9faf]/.test(char)) {
+                            // Find consecutive kanji
+                            let kanjiSegment = char;
+                            let nextIndex = textIndex + 1;
+                            while (nextIndex < text.length && /[\u4e00-\u9faf]/.test(text[nextIndex])) {
+                              kanjiSegment += text[nextIndex];
+                              nextIndex++;
+                            }
+
+                            // Find corresponding reading for this kanji segment
+                            // This is a simplified approach - in reality, you'd need a dictionary
+                            let kanjiReading = '';
+
+                            // Special handling for common patterns
+                            if (text === 'お先に失礼します' && reading === 'おさきにしつれいします') {
+                              // Handle known phrase mapping
+                              if (kanjiSegment === '先') {
+                                kanjiReading = 'さき';
+                                readingIndex = 3; // Skip "おさき" to position after "き"
+                              } else if (kanjiSegment === '失礼') {
+                                kanjiReading = 'しつれい';
+                                readingIndex = 9; // Skip "おさきにしつれい" to position after "い"
+                              }
+                            } else {
+                              // For simple mapping, try to extract reading by finding hiragana that follows
+                              if (nextIndex < text.length && /[\u3040-\u309f]/.test(text[nextIndex])) {
+                                // Find the hiragana part that follows
+                                const followingHiragana = text.slice(nextIndex).match(/^[\u3040-\u309f]+/)?.[0] || '';
+
+                                // Find where this hiragana appears in the reading
+                                if (followingHiragana) {
+                                  const hiraganaIndex = reading.indexOf(followingHiragana, readingIndex);
+                                  if (hiraganaIndex > readingIndex) {
+                                    kanjiReading = reading.slice(readingIndex, hiraganaIndex);
+                                    readingIndex = hiraganaIndex;
+                                  }
+                                }
+                              } else {
+                                // No following hiragana, take remaining reading
+                                kanjiReading = reading.slice(readingIndex);
+                                readingIndex = reading.length;
+                              }
+                            }
+
+                            // If we found a reading for this kanji segment, add ruby
+                            if (kanjiReading) {
+                              result.push(
+                                <ruby key={textIndex} lang="ja">
+                                  {kanjiSegment}
+                                  <rt className="fs-6">{kanjiReading}</rt>
+                                </ruby>
+                              );
+                            } else {
+                              result.push(<span key={textIndex} lang="ja">{kanjiSegment}</span>);
+                            }
+
+                            textIndex = nextIndex;
+                          }
+                          // If it's hiragana/katakana, just add it without ruby
+                          else {
+                            let kanaSegment = char;
+                            let nextIndex = textIndex + 1;
+                            while (nextIndex < text.length && /[\u3040-\u309f\u30a0-\u30ff]/.test(text[nextIndex])) {
+                              kanaSegment += text[nextIndex];
+                              nextIndex++;
+                            }
+
+                            result.push(<span key={textIndex} lang="ja">{kanaSegment}</span>);
+
+                            // Advance reading index to match the kana (only for non-special cases)
+                            if (!(text === 'お先に失礼します' && reading === 'おさきにしつれいします')) {
+                              readingIndex += kanaSegment.length;
+                            }
+                            textIndex = nextIndex;
+                          }
+                        }
+
+                        return <>{result}</>;
+                      };
+
+                      // Special handling for お先に失礼します - show furigana only over kanji
+                      if (vocab.lemma === 'お先に失礼します') {
+                        return (
+                          <h4 className="modal-title mb-0 me-2" lang="ja">
+                            お<ruby>先<rt className="fs-6">さき</rt></ruby>に<ruby>失礼<rt className="fs-6">しつれい</rt></ruby>します
+                          </h4>
+                        );
+                      }
+
                       return (
-                        <ruby className="fs-4 me-2" lang="ja">
-                          {vocab.lemma}
-                          <rt className="fs-6">{dictentry.ipa}</rt>
-                        </ruby>
+                        <h4 className="modal-title mb-0 me-2">
+                          {renderJapaneseWithRuby(vocab.lemma, dictentry.ipa)}
+                        </h4>
                       );
                     })()
                   ) : (
@@ -575,7 +684,16 @@ export default function VocabDetailModal({
             )}
 
             {/* Examples section - for both English and Japanese */}
-            {(glossExample || exampleExample || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample) ? (
+            {(() => {
+              // Check for examples in various formats
+              const hasEnglishExamples = glossExample || exampleExample || vocab.example || vocab.koExample || vocab.dictentry?.examples?.example || vocab.dictentry?.examples?.koExample;
+
+              // Check for Japanese examples in new array format
+              const hasJapaneseExamples = Array.isArray(vocab.dictentry?.examples) &&
+                vocab.dictentry.examples.some(ex => ex.kind === 'example' && (ex.ja || ex.ko));
+
+              return hasEnglishExamples || hasJapaneseExamples;
+            })() ? (
               <div className="mt-3">{/* 기존 코드 계속 */}
 
                 {(() => {
@@ -605,11 +723,17 @@ export default function VocabDetailModal({
 
                         // For Japanese vocabulary (JLPT words)
                         if (isJapanese) {
-                          // Use database audioUrl and convert to example.mp3
-                          if (vocab.dictentry?.audioUrl) {
+                          // Parse audioLocal data for JLPT words
+                          const audioData = parseAudioLocal(dictentry.audioLocal);
+                          if (audioData?.example) {
+                            exampleAudioPath = audioData.example;
+                            console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);
+                          }
+                          // Fallback: use database audioUrl if available
+                          else if (vocab.dictentry?.audioUrl) {
                             const baseUrl = vocab.dictentry.audioUrl.replace('/word.mp3', '/example.mp3');
                             exampleAudioPath = `/${baseUrl}`;
-                            console.log('🔍 [VocabDetailModal] Using JLPT example audio:', vocab.lemma, '->', exampleAudioPath);
+                            console.log('🔍 [VocabDetailModal] Fallback to database audioUrl for JLPT example:', vocab.lemma, '->', exampleAudioPath);
                           }
                         }
                         // For English vocabulary
@@ -662,9 +786,19 @@ export default function VocabDetailModal({
 
                           // For Japanese vocabulary
                           if (isJapanese) {
-                            // Use dictentry.examples (JSON object) for JLPT words
-                            exampleText = dictentry.examples?.example || vocab.example;
-                            koreanTranslation = dictentry.examples?.koExample || vocab.koExample;
+                            // Check if examples is an array (new JLPT structure)
+                            if (Array.isArray(dictentry.examples)) {
+                              const exampleEntry = dictentry.examples.find(ex => ex.kind === 'example');
+                              if (exampleEntry) {
+                                exampleText = exampleEntry.ja;
+                                koreanTranslation = exampleEntry.ko;
+                              }
+                            }
+                            // Fallback to old structure or direct properties
+                            else {
+                              exampleText = dictentry.examples?.example || vocab.example;
+                              koreanTranslation = dictentry.examples?.koExample || vocab.koExample;
+                            }
 
 
                             // If we have English translation but no Korean, provide a simple mapping for common phrases

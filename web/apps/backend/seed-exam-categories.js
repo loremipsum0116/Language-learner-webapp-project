@@ -7,10 +7,8 @@ async function seedExamCategories() {
   try {
     console.log('Starting exam categories seeding...');
     
-    // Read the cefr_vocabs.json file from succeed-seeding-file folder
-    const path = require('path');
-    const cefrPath = path.join(__dirname, '..', '..', '..', 'succeed-seeding-file', 'cefr_vocabs.json');
-    const vocabData = JSON.parse(fs.readFileSync(cefrPath, 'utf8'));
+    // Read the cefr_vocabs.json file
+    const vocabData = JSON.parse(fs.readFileSync('cefr_vocabs.json', 'utf8'));
     console.log(`Loaded ${vocabData.length} vocabulary items`);
     
     // Extract unique exam categories from the data

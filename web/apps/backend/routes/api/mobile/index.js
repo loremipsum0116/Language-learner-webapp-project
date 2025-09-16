@@ -14,6 +14,7 @@ const mobileSyncRouter = require('./sync');
 const mobileDeviceRouter = require('./device');
 const mobileVocabRouter = require('./vocab');
 const mobileAudioRouter = require('./audio');
+const odatNoteRouter = require('../../odat-note');
 
 // Mobile API 응답 포맷 미들웨어
 router.use((req, res, next) => {

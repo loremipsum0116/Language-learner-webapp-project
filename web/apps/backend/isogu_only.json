@@ -1,0 +1,21 @@
+[
+  {
+    "lemma": "急ぐ",
+    "kana": "いそぐ",
+    "romaji": "isogu",
+    "pos": "verb",
+    "categories": "N5, JLPT",
+    "koGloss": "v. 서두르다",
+    "koExample": "서두릅시다. 늦겠어요.",
+    "koChirpScript": "いそぐ。서두르다라는 뜻의 동사입니다。いそぎましょう。おくれますよ。서두릅시다, 늦겠어요라는 의미네요.",
+    "exampleKana": "いそぎましょう。おくれますよ。",
+    "kanji": "急",
+    "onyomi": "キュウ",
+    "kunyomi": "いそ(ぐ)",
+    "audio": {
+      "word": "jlpt/n5/isogu/word.mp3",
+      "gloss": "jlpt/n5/isogu/gloss.mp3",
+      "example": "jlpt/n5/isogu/example.mp3"
+    }
+  }
+]

@@ -551,10 +551,22 @@ export default function WrongAnswers() {
 
                           <p className="mb-2">
                             {(() => {
-                              // dictentry.examples에서 한국어 뜻 추출 (SrsFolderDetail과 동일한 로직)
                               let koGloss = "뜻 정보 없음";
+
                               try {
-                                if (wa.vocab.dictentry?.examples) {
+                                // 1순위: vocab.translations에서 한국어 번역 확인 (새로운 데이터 구조)
+                                if (wa.vocab?.translations && Array.isArray(wa.vocab.translations)) {
+                                  const koreanTranslation = wa.vocab.translations.find(t =>
+                                    t.language?.code === 'ko'
+                                  );
+                                  if (koreanTranslation?.translation) {
+                                    koGloss = koreanTranslation.translation;
+                                    return koGloss; // 찾았으면 즉시 반환
+                                  }
+                                }
+
+                                // 2순위: 기존 dictentry.examples 방식 (하위 호환성)
+                                if (wa.vocab?.dictentry?.examples) {
                                   let examples = wa.vocab.dictentry.examples;
 
                                   // 문자열인 경우에만 JSON 파싱
@@ -599,7 +611,7 @@ export default function WrongAnswers() {
                                   }
                                 }
                               } catch (e) {
-                                console.warn("Failed to parse examples:", e);
+                                console.warn("Failed to parse vocab meaning:", e);
                               }
                               return koGloss;
                             })()}

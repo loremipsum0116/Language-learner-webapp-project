@@ -33,6 +33,15 @@ function FuriganaDisplay({ kanji, kana }) {
     console.log('FuriganaDisplay debug:', { kanji, kana });
   }
 
+  // Special handling for problematic phrases - show furigana only over kanji
+  if (kanji === 'お先に失礼します') {
+    return (
+      <span className="fs-4" lang="ja">
+        お<ruby>先<rt className="fs-6">さき</rt></ruby>に<ruby>失礼<rt className="fs-6">しつれい</rt></ruby>します
+      </span>
+    );
+  }
+
   // If no kanji text, return kana
   if (!kanji) {
     return <span className="fs-4" lang="ja">{kana || ''}</span>;

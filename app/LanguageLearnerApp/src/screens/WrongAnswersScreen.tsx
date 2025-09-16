@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { useAuth } from '../hooks/useAuth';
 import { apiClient } from '../services/apiClient';
 import { RootStackParamList } from '../navigation/types';
+import { getVocabMeaning } from '../utils/vocabUtils';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'WrongAnswers'>;
 
@@ -854,50 +855,6 @@ export default function WrongAnswersScreen({ navigation }: Props) {
   };
 
   // 헬퍼 함수들
-  const getVocabMeaning = (vocab: WrongAnswerItem['vocab']): string => {
-    if (!vocab) return '뜻 정보 없음';
-    
-    let koGloss = '뜻 정보 없음';
-    try {
-      if (vocab.dictentry?.examples) {
-        const examples = Array.isArray(vocab.dictentry.examples)
-          ? vocab.dictentry.examples
-          : JSON.parse(vocab.dictentry.examples);
-
-        for (const ex of examples) {
-          if (ex?.definitions && Array.isArray(ex.definitions)) {
-            for (const def of ex.definitions) {
-              if (def?.ko_def) {
-                koGloss = def.ko_def;
-                break;
-              }
-              if (def?.ko) {
-                koGloss = def.ko;
-                break;
-              }
-              if (def?.koGloss) {
-                koGloss = def.koGloss;
-                break;
-              }
-            }
-            if (koGloss !== '뜻 정보 없음') break;
-          }
-          if (ex?.koGloss) {
-            koGloss = ex.koGloss;
-            break;
-          }
-          if (ex?.kind === 'gloss' && ex?.ko) {
-            koGloss = ex.ko;
-            break;
-          }
-        }
-      }
-    } catch (e) {
-      console.warn('Failed to parse examples:', e);
-    }
-    
-    return koGloss;
-  };
 
   const getQuestionNumber = (questionId?: string): string => {
     if (!questionId) return 'NaN';

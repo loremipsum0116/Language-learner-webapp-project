@@ -816,7 +816,10 @@ router.get('/folders/:id/items', async (req, res, next) => {
                         },
                         translations: {
                             where: { languageId: 2 }, // Korean translations
-                            select: { translation: true }
+                            select: {
+                                translation: true,
+                                examples: true
+                            }
                         }
                     }
                 });

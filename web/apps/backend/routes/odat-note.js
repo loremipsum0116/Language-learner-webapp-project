@@ -91,30 +91,57 @@ router.get('/list', async (req, res) => {
       itemType: type
     };
     
-    const wrongAnswers = await prisma.$queryRaw`
-      SELECT wa.*, v.lemma, v.pos, v.levelCEFR, 
-             de.ipa, de.ipaKo, de.examples,
-             sc.id as srsCardId, sc.stage, sc.nextReviewAt, sc.waitingUntil, 
-             sc.isOverdue, sc.overdueDeadline, sc.isFromWrongAnswer, sc.frozenUntil,
-             sc.isMastered, sc.masterCycles, sc.masteredAt, sc.correctTotal, sc.wrongTotal
-      FROM wronganswer wa
-      LEFT JOIN vocab v ON wa.vocabId = v.id
-      LEFT JOIN dictentry de ON v.id = de.vocabId
-      LEFT JOIN srscard sc ON sc.userId = wa.userId AND sc.itemType = 'vocab' AND sc.itemId = wa.vocabId
-        AND (wa.folderId IS NULL OR sc.folderId = wa.folderId)
-      WHERE wa.userId = ${req.user.id}
-        AND wa.isCompleted = false 
-        AND wa.itemType = ${type}
-      ORDER BY wa.attempts DESC, wa.wrongAt DESC
-      LIMIT 200
-    `;
+    // Raw SQL 쿼리를 Prisma ORM 쿼리로 변경하여 translations을 포함
+    const wrongAnswers = await prisma.wronganswer.findMany({
+      where: {
+        userId: req.user.id,
+        isCompleted: false,
+        itemType: type
+      },
+      include: {
+        vocab: {
+          include: {
+            dictentry: true,
+            translations: {
+              include: {
+                language: true
+              }
+            }
+          }
+        }
+      },
+      orderBy: [
+        { attempts: 'desc' },
+        { wrongAt: 'desc' }
+      ],
+      take: 200
+    });
+
+    // SRS 카드 정보를 별도로 조회
+    const vocabIds = wrongAnswers.filter(wa => wa.itemType === 'vocab').map(wa => wa.vocabId);
+    const srsCards = vocabIds.length > 0 ? await prisma.srscard.findMany({
+      where: {
+        userId: req.user.id,
+        itemType: 'vocab',
+        itemId: { in: vocabIds }
+      }
+    }) : [];
+
+    // SRS 카드를 vocabId별로 매핑
+    const srsCardMap = new Map();
+    srsCards.forEach(card => {
+      srsCardMap.set(card.itemId, card);
+    });
 
     const data = wrongAnswers.map((wa) => {
+      // SRS 카드 정보 가져오기
+      const srsCard = wa.itemType === 'vocab' ? srsCardMap.get(wa.vocabId) : null;
+
       // gloss 찾기(있으면)
       let gloss = null;
-      if (wa.examples) {
+      if (wa.vocab?.dictentry?.examples) {
         try {
-          const ex = Array.isArray(wa.examples) ? wa.examples : JSON.parse(wa.examples || '[]');
+          const ex = Array.isArray(wa.vocab.dictentry.examples) ? wa.vocab.dictentry.examples : JSON.parse(wa.vocab.dictentry.examples || '[]');
           const g = ex.find((e) => e && e.kind === 'gloss');
           if (g && typeof g.ko === 'string') gloss = g.ko;
         } catch (e) {
@@ -136,21 +163,21 @@ router.get('/list', async (req, res) => {
       };
 
       // SRS 카드 정보 추가 (vocab 타입에만 적용)
-      if (wa.itemType === 'vocab' && wa.srsCardId) {
+      if (wa.itemType === 'vocab' && srsCard) {
         result.srsCard = {
-          id: wa.srsCardId,
-          stage: wa.stage || 0,
-          nextReviewAt: wa.nextReviewAt,
-          waitingUntil: wa.waitingUntil,
-          isOverdue: Boolean(wa.isOverdue),
-          overdueDeadline: wa.overdueDeadline,
-          isFromWrongAnswer: Boolean(wa.isFromWrongAnswer),
-          frozenUntil: wa.frozenUntil,
-          isMastered: Boolean(wa.isMastered),
-          masterCycles: wa.masterCycles || 0,
-          masteredAt: wa.masteredAt,
-          correctTotal: wa.correctTotal || 0,
-          wrongTotal: wa.wrongTotal || 0
+          id: srsCard.id,
+          stage: srsCard.stage || 0,
+          nextReviewAt: srsCard.nextReviewAt,
+          waitingUntil: srsCard.waitingUntil,
+          isOverdue: Boolean(srsCard.isOverdue),
+          overdueDeadline: srsCard.overdueDeadline,
+          isFromWrongAnswer: Boolean(srsCard.isFromWrongAnswer),
+          frozenUntil: srsCard.frozenUntil,
+          isMastered: Boolean(srsCard.isMastered),
+          masterCycles: srsCard.masterCycles || 0,
+          masteredAt: srsCard.masteredAt,
+          correctTotal: srsCard.correctTotal || 0,
+          wrongTotal: srsCard.wrongTotal || 0
         };
       } else if (wa.itemType === 'vocab') {
         // SRS 카드가 없는 경우 null로 설정
@@ -160,27 +187,28 @@ router.get('/list', async (req, res) => {
       // 타입별 추가 정보
       if (wa.itemType === 'vocab') {
         result.vocabId = wa.vocabId;
-        result.lemma = wa.lemma ?? '';
-        result.pos = wa.pos ?? '';
-        result.levelCEFR = wa.levelCEFR ?? '';
-        result.ipa = wa.ipa ?? null;
-        result.ipaKo = wa.ipaKo ?? null;
+        result.lemma = wa.vocab?.lemma ?? '';
+        result.pos = wa.vocab?.pos ?? '';
+        result.levelCEFR = wa.vocab?.levelCEFR ?? '';
+        result.ipa = wa.vocab?.dictentry?.ipa ?? null;
+        result.ipaKo = wa.vocab?.dictentry?.ipaKo ?? null;
         result.ko_gloss = gloss;
-        
+
         // 오답노트 전용 횟수 추가 (attempts는 이미 오답노트 기록 횟수)
         result.totalWrongAttempts = wa.attempts || 0;
-        
-        // 프론트엔드가 기대하는 vocab 객체 구조 생성
+
+        // 프론트엔드가 기대하는 vocab 객체 구조 생성 (translations 포함)
         result.vocab = {
           id: wa.vocabId,
-          lemma: wa.lemma ?? '',
-          pos: wa.pos ?? '',
-          levelCEFR: wa.levelCEFR ?? '',
+          lemma: wa.vocab?.lemma ?? '',
+          pos: wa.vocab?.pos ?? '',
+          levelCEFR: wa.vocab?.levelCEFR ?? '',
           dictentry: {
-            ipa: wa.ipa ?? null,
-            ipaKo: wa.ipaKo ?? null,
-            examples: wa.examples
-          }
+            ipa: wa.vocab?.dictentry?.ipa ?? null,
+            ipaKo: wa.vocab?.dictentry?.ipaKo ?? null,
+            examples: wa.vocab?.dictentry?.examples
+          },
+          translations: wa.vocab?.translations || []
         };
       } else if (wa.itemType === 'grammar') {
         result.grammarId = wa.itemId;
