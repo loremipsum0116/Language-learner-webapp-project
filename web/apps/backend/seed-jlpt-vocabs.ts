@@ -31,7 +31,7 @@ async function main() {
   console.log('Starting JLPT vocabulary seeding...');
 
   // Read the JSON file
-  const jsonPath = path.join(__dirname, '..', '..', '..', 'succeed-seeding-file', 'jlpt_n5_vocabs.json');
+  const jsonPath = path.join(__dirname, 'jlpt_n5_vocabs.json');
   const rawData = fs.readFileSync(jsonPath, 'utf-8');
   const vocabs: JlptVocab[] = JSON.parse(rawData);
 
@@ -164,37 +164,39 @@ async function main() {
         }
       });
 
-      // Create or update English translation
-      await prisma.vocabTranslation.upsert({
-        where: {
-          vocabId_languageId: {
+      // Create or update English translation (only if we have valid translation data)
+      if (vocabData.definition) {
+        await prisma.vocabTranslation.upsert({
+          where: {
+            vocabId_languageId: {
+              vocabId: vocab.id,
+              languageId: englishLanguage.id
+            }
+          },
+          update: {
+            translation: vocabData.definition,
+            definition: vocabData.exampleTranslation || '',
+            examples: {
+              example: vocabData.example,
+              exampleKana: vocabData.exampleKana,
+              exampleTranslation: vocabData.exampleTranslation
+            },
+            isVerified: true
+          },
+          create: {
             vocabId: vocab.id,
-            languageId: englishLanguage.id
+            languageId: englishLanguage.id,
+            translation: vocabData.definition,
+            definition: vocabData.exampleTranslation || '',
+            examples: {
+              example: vocabData.example,
+              exampleKana: vocabData.exampleKana,
+              exampleTranslation: vocabData.exampleTranslation
+            },
+            isVerified: true
           }
-        },
-        update: {
-          translation: vocabData.definition,
-          definition: vocabData.exampleTranslation,
-          examples: {
-            example: vocabData.example,
-            exampleKana: vocabData.exampleKana,
-            exampleTranslation: vocabData.exampleTranslation
-          },
-          isVerified: true
-        },
-        create: {
-          vocabId: vocab.id,
-          languageId: englishLanguage.id,
-          translation: vocabData.definition,
-          definition: vocabData.exampleTranslation,
-          examples: {
-            example: vocabData.example,
-            exampleKana: vocabData.exampleKana,
-            exampleTranslation: vocabData.exampleTranslation
-          },
-          isVerified: true
-        }
-      });
+        });
+      }
 
       // Create or update dictionary entry with pronunciation and additional data
       await prisma.dictentry.upsert({

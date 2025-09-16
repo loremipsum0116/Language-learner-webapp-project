@@ -61,48 +61,44 @@ async function seedIdiomsAsVocab() {
 
     // Clear existing idiom and phrasal verb data
     console.log('🧹 Clearing existing idiom and phrasal verb data...');
-    const existingIdioms = await prisma.vocab.findMany({
+    const existingData = await prisma.vocab.findMany({
       where: {
-        OR: [
-          { source: 'idiom_migration' },
-          { source: 'phrasal_verb_migration' }
-        ]
+        source: { in: ['idiom_migration', 'phrasal_verb_migration'] }
       }
     });
 
-    if (existingIdioms.length > 0) {
+    if (existingData.length > 0) {
       // Delete related translations first
       await prisma.vocabTranslation.deleteMany({
         where: {
-          vocabId: { in: existingIdioms.map(v => v.id) }
+          vocabId: { in: existingData.map(v => v.id) }
         }
       });
 
       // Delete dict entries
       await prisma.dictentry.deleteMany({
         where: {
-          vocabId: { in: existingIdioms.map(v => v.id) }
+          vocabId: { in: existingData.map(v => v.id) }
         }
       });
 
       // Delete vocab entries
       await prisma.vocab.deleteMany({
         where: {
-          OR: [
-            { source: 'idiom_migration' },
-            { source: 'phrasal_verb_migration' }
-          ]
+          source: { in: ['idiom_migration', 'phrasal_verb_migration'] }
         }
       });
 
-      console.log(`✅ Cleared ${existingIdioms.length} existing idiom and phrasal verb entries`);
+      console.log(`✅ Cleared ${existingData.length} existing entries`);
     }
 
     let processed = 0;
     let successful = 0;
     let failed = 0;
+    let idiomsCount = 0;
+    let phrasalVerbsCount = 0;
 
-    console.log('📝 Processing idioms...');
+    console.log('📝 Processing idioms and phrasal verbs...');
 
     for (const idiom of idiomData) {
       try {
@@ -112,29 +108,37 @@ async function seedIdiomsAsVocab() {
           console.log(`⏳ Processed ${processed}/${idiomData.length} idioms...`);
         }
 
-        // Determine if it's an idiom or phrasal verb based on category and audio path
-        const isPhrasalVerb = idiom.category.includes('구동사') || idiom.audio?.word?.startsWith('phrasal_verb/');
+        // Determine if it's idiom or phrasal verb based on audio path
+        const isPhrasalVerb = idiom.audio?.word?.includes('phrasal_verb/');
         const pos = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
         const source = isPhrasalVerb ? 'phrasal_verb_migration' : 'idiom_migration';
 
-        // Extract CEFR level from category
-        const getCefrLevel = (categories) => {
-          if (!categories) return 'A1';
-          if (categories.includes('입문') || categories.includes('기초')) return 'A1';
-          if (categories.includes('초급')) return 'A2';
-          if (categories.includes('중급')) return 'B1';
-          if (categories.includes('중상급')) return 'B2';
-          if (categories.includes('고급') || categories.includes('상급')) return 'C1';
-          if (categories.includes('최고급')) return 'C2';
-          return 'A1'; // default
-        };
+        // Extract level from category field and map to CEFR
+        let levelCEFR = 'B1'; // Default level for idioms/phrasal verbs
+        if (idiom.category) {
+          if (idiom.category.includes('기초')) {
+            levelCEFR = 'A2';
+          } else if (idiom.category.includes('중급')) {
+            levelCEFR = 'B1';
+          } else if (idiom.category.includes('중상급')) {
+            levelCEFR = 'B2';
+          } else if (idiom.category.includes('고급')) {
+            levelCEFR = 'C1';
+          }
+        }
+
+        if (isPhrasalVerb) {
+          phrasalVerbsCount++;
+        } else {
+          idiomsCount++;
+        }
 
         // Create vocab entry
         const vocabEntry = await prisma.vocab.create({
           data: {
             lemma: idiom.idiom,
             pos: pos,
-            levelCEFR: getCefrLevel(idiom.category),
+            levelCEFR: levelCEFR,
             source: source,
             languageId: englishLang.id
           }
@@ -176,6 +180,7 @@ async function seedIdiomsAsVocab() {
             vocabId: vocabEntry.id,
             ipa: null,
             audioUrl: idiom.audio?.word || null,
+            audioLocal: idiom.audio ? JSON.stringify(idiom.audio) : null,
             examples: examples.length > 0 ? examples : null
           }
         });
@@ -188,11 +193,13 @@ async function seedIdiomsAsVocab() {
       }
     }
 
-    console.log('\n🎉 Idiom seeding completed!');
+    console.log('\n🎉 Idiom and phrasal verb seeding completed!');
     console.log(`📊 Final Statistics:`);
     console.log(`   - Total processed: ${processed}`);
     console.log(`   - Successfully inserted: ${successful}`);
     console.log(`   - Failed: ${failed}`);
+    console.log(`   - Idioms: ${idiomsCount}`);
+    console.log(`   - Phrasal verbs: ${phrasalVerbsCount}`);
 
     // Verify the results
     const idiomCount = await prisma.vocab.count({
@@ -203,9 +210,8 @@ async function seedIdiomsAsVocab() {
       where: { source: 'phrasal_verb_migration' }
     });
 
-    console.log(`   - Idioms in database: ${idiomCount}`);
-    console.log(`   - Phrasal verbs in database: ${phrasalVerbCount}`);
-    console.log(`   - Total: ${idiomCount + phrasalVerbCount}`);
+    console.log(`   - Database idiom count: ${idiomCount}`);
+    console.log(`   - Database phrasal verb count: ${phrasalVerbCount}`);
 
     // Show sample data
     const sampleIdioms = await prisma.vocab.findMany({
@@ -235,9 +241,9 @@ async function seedIdiomsAsVocab() {
     });
 
     console.log('\n📝 Sample phrasal verbs:');
-    samplePhrasalVerbs.forEach((phrasal, index) => {
-      const koreanTranslation = phrasal.translations.find(t => t.language.code === 'ko');
-      console.log(`   ${index + 1}. ${phrasal.lemma} - ${koreanTranslation?.translation || 'No translation'}`);
+    samplePhrasalVerbs.forEach((verb, index) => {
+      const koreanTranslation = verb.translations.find(t => t.language.code === 'ko');
+      console.log(`   ${index + 1}. ${verb.lemma} - ${koreanTranslation?.translation || 'No translation'}`);
     });
 
   } catch (error) {

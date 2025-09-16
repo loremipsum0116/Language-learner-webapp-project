@@ -1,0 +1,24 @@
+[
+  {
+    "lemma": "友人",
+    "kana": "ゆうじん",
+    "romaji": "yuujin",
+    "pos": "noun",
+    "categories": "N5, JLPT",
+    "definition": "friend",
+    "koGloss": "n. 친구, 벗",
+    "koExample": "좋은 친구가 있습니다.",
+    "koChirpScript": "友人. 친구라는 뜻의 명사입니다. いいゆうじんがいます. 좋은 친구가 있습니다라는 의미네요.",
+    "example": "いい友人がいます",
+    "exampleKana": "いいゆうじんがいます",
+    "exampleTranslation": "I have good friends.",
+    "kanji": "友人",
+    "onyomi": "ユウ, ジン",
+    "kunyomi": "とも, ひと",
+    "audio": {
+      "word": "jlpt/n5/yuujin/word.mp3",
+      "gloss": "jlpt/n5/yuujin/gloss.mp3",
+      "example": "jlpt/n5/yuujin/example.mp3"
+    }
+  }
+]

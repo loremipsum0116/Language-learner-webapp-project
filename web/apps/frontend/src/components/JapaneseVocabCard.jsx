@@ -28,52 +28,99 @@ const getPosBadgeColor = (pos) => {
 
 // Furigana display component - handles mixed kanji/hiragana
 function FuriganaDisplay({ kanji, kana }) {
-  // If no kanji, just return the kana
-  if (!kanji || kanji === kana) {
-    return <span className="fs-4" lang="ja">{kana}</span>;
+  // Debug logging
+  if (kanji?.includes('おさき') || kanji?.includes('ありがとう')) {
+    console.log('FuriganaDisplay debug:', { kanji, kana });
+  }
+
+  // If no kanji text, return kana
+  if (!kanji) {
+    return <span className="fs-4" lang="ja">{kana || ''}</span>;
+  }
+
+  // If kanji and kana are the same, no need for furigana
+  if (kanji === kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
   }
 
   // Check if kanji contains any actual kanji characters
   const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
 
   if (!hasKanji) {
-    // No kanji characters, just display as text
+    // No kanji characters, just display the kanji text without furigana
     return <span className="fs-4" lang="ja">{kanji}</span>;
   }
 
-  // Simple approach for common patterns like 食べる (taberu)
-  // Split the word at the boundary between kanji and hiragana
-  const match = kanji.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
+  // If the displayed text (kanji) is already in hiragana/katakana only, don't show furigana
+  const isKanjiAlreadyHiragana = /^[\u3040-\u309f\u30a0-\u30ff\s\u3000]+$/.test(kanji);
+  if (isKanjiAlreadyHiragana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
 
-  if (match) {
-    const kanjiPart = match[1];  // e.g., "食"
-    const hiraganaPart = match[2];  // e.g., "べる"
+  // Complex parsing for mixed kanji/hiragana text
+  const result = [];
+  let kanaIndex = 0;
 
-    // Find where hiragana part starts in kana reading
-    const hiraganStartIndex = kana.indexOf(hiraganaPart);
+  for (let i = 0; i < kanji.length; i++) {
+    const char = kanji[i];
 
-    if (hiraganStartIndex > 0) {
-      const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
+    // If it's a kanji character
+    if (/[\u4e00-\u9faf]/.test(char)) {
+      // Find the reading for this kanji
+      let reading = '';
 
-      return (
-        <span className="fs-4" lang="ja">
-          <ruby>
-            {kanjiPart}
-            <rt className="fs-6">{kanjiReading}</rt>
+      // Look ahead to find the next non-kanji character or end
+      let nextNonKanjiIndex = i + 1;
+      while (nextNonKanjiIndex < kanji.length && /[\u4e00-\u9faf]/.test(kanji[nextNonKanjiIndex])) {
+        nextNonKanjiIndex++;
+      }
+
+      if (nextNonKanjiIndex < kanji.length) {
+        // There's a hiragana part after this kanji sequence
+        const nextHiragana = kanji[nextNonKanjiIndex];
+        const nextHiraganaIndexInKana = kana.indexOf(nextHiragana, kanaIndex);
+
+        if (nextHiraganaIndexInKana > kanaIndex) {
+          const kanjiSequence = kanji.slice(i, nextNonKanjiIndex);
+          reading = kana.slice(kanaIndex, nextHiraganaIndexInKana);
+
+          result.push(
+            <ruby key={i}>
+              {kanjiSequence}
+              <rt className="fs-6">{reading}</rt>
+            </ruby>
+          );
+
+          kanaIndex = nextHiraganaIndexInKana;
+          i = nextNonKanjiIndex - 1; // -1 because the loop will increment
+          continue;
+        }
+      } else {
+        // This is the last kanji sequence
+        reading = kana.slice(kanaIndex);
+        const kanjiSequence = kanji.slice(i);
+
+        result.push(
+          <ruby key={i}>
+            {kanjiSequence}
+            <rt className="fs-6">{reading}</rt>
           </ruby>
-          {hiraganaPart}
-        </span>
-      );
+        );
+        break;
+      }
+    }
+    // If it's hiragana/katakana, add it directly
+    else if (/[\u3040-\u309f\u30a0-\u30ff]/.test(char)) {
+      result.push(char);
+      kanaIndex++;
+    }
+    // Other characters (spaces, punctuation)
+    else {
+      result.push(char);
     }
   }
 
-  // Fallback to simple ruby for complex cases
-  return (
-    <ruby className="fs-4" lang="ja">
-      {kanji}
-      <rt className="fs-6">{kana}</rt>
-    </ruby>
-  );
+  return <span className="fs-4" lang="ja">{result}</span>;
 }
 
 export default function JapaneseVocabCard({

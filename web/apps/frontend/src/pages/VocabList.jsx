@@ -551,6 +551,24 @@ export default function VocabList() {
             } finally {
                 setLoading(false);
             }
+        } else if (activeTab === 'japanese' && !isAllSelected) {
+            // 일본어 탭에서 전체 선택: 서버에서 모든 일본어 단어 ID 가져오기
+            try {
+                setLoading(true);
+                const response = await fetchJSON(`/vocab/japanese-list?level=${encodeURIComponent(activeJlptLevel)}`, withCreds());
+                if (response && Array.isArray(response.data)) {
+                    const allIds = response.data.map(vocab => vocab.id);
+                    console.log(`🔍 [JAPANESE SELECT ALL] Found ${allIds.length} Japanese vocabs to select`);
+                    setSelectedIds(new Set(allIds));
+                }
+            } catch (error) {
+                console.error('Failed to fetch all Japanese vocab IDs:', error);
+                // 실패 시 현재 페이지 단어들만 선택
+                const allWordIds = words.map(word => word.id);
+                setSelectedIds(new Set(allWordIds));
+            } finally {
+                setLoading(false);
+            }
         } else {
             // 선택 해제의 경우
             setSelectedIds(new Set());
@@ -1731,10 +1749,10 @@ export default function VocabList() {
                 </div>
             )}
             
-            {/* CEFR 레벨과 숙어·구동사에서 더 보기 버튼 표시 */}
-            {!loading && !err && (activeTab === 'cefr' || activeTab === 'idiom') && allWords.length > displayCount && (
+            {/* CEFR 레벨, 숙어·구동사, 일본어에서 더 보기 버튼 표시 */}
+            {!loading && !err && (activeTab === 'cefr' || activeTab === 'idiom' || activeTab === 'japanese') && allWords.length > displayCount && (
                 <div className="text-center mt-4">
-                    <button 
+                    <button
                         className="btn btn-outline-primary btn-lg"
                         onClick={() => setDisplayCount(prev => prev + 100)}
                     >

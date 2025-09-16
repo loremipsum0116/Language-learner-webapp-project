@@ -94,6 +94,28 @@ export default function IdiomDetailModal({
               <div className="mt-3 border-top pt-3">
                 <div className="d-flex align-items-center justify-content-between mb-2">
                   <h6 className="fw-bold mb-0">예문</h6>
+                  {audioData?.example && (
+                    <button
+                      className="btn btn-sm btn-outline-primary rounded-circle d-flex align-items-center justify-content-center"
+                      style={{ width: '32px', height: '32px' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (onPlayUrl) {
+                          onPlayUrl(`/${audioData.example}`, 'example', idiom.id);
+                        }
+                      }}
+                      aria-label="예문 오디오 재생"
+                      title="예문 듣기"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className={`bi ${isExamplePlaying ? 'bi-pause-fill' : 'bi-play-fill'}`} viewBox="0 0 16 16">
+                        {isExamplePlaying ? (
+                          <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                        ) : (
+                          <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                        )}
+                      </svg>
+                    </button>
+                  )}
                 </div>
                 <div className="mb-2 p-2 rounded bg-light">
                   <div className="me-2">

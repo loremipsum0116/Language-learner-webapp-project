@@ -219,3 +219,49 @@
 ✅ 전체 데이터 표시를 위한 displayCount 로직 수정
 
 **예상 결과**: 이제 프론트엔드를 새로고침하면 100개 제한이 해제되어 전체 숙어 및 구동사가 표시될 것입니다.
+
+🔧 **추가 수정 사항 - 숙어/구동사 분류 문제 해결 (2025-09-16 10:20)**:
+
+**새로운 문제 발견**:
+- 사용자 보고: "저번엔 숙어와 구동사가 제대로 구분되어 있었지만 지금은 모든 단어가 숙어 카테고리에 포함되어 있네요"
+- 데이터베이스 조사 결과: 모든 데이터가 `pos: 'idiom'`, `source: 'idiom_migration'`으로 저장됨
+- 구동사 데이터가 완전히 누락됨
+
+**문제 분석**:
+1. **데이터베이스 상태 확인**:
+   - `SELECT COUNT(*), pos, source FROM vocab WHERE source IN ('idiom_migration', 'phrasal_verb_migration') GROUP BY pos, source`
+   - 결과: `pos: 'idiom', source: 'idiom_migration', count: 1001` (구동사 없음)
+
+2. **idiom.json 파일 분석**:
+   - 오디오 경로로 분류 가능: `"idiom/..."` vs `"phrasal_verb/..."`
+   - 예시: `"word": "idiom/a_blessing_in_disguise.mp3"` (숙어)
+   - 예시: `"word": "phrasal_verb/rule_out.mp3"` (구동사)
+
+**해결 과정**:
+1. **시딩 스크립트 수정** (seed-idioms-vocab.js):
+   ```javascript
+   // 오디오 경로로 숙어/구동사 구분
+   const isPhrasalVerb = idiom.audio?.word?.includes('phrasal_verb/');
+   const pos = isPhrasalVerb ? 'phrasal_verb' : 'idiom';
+   const source = isPhrasalVerb ? 'phrasal_verb_migration' : 'idiom_migration';
+   ```
+
+2. **기존 데이터 정리 및 재시딩**:
+   - 기존 1001개 idiom_migration 데이터 삭제
+   - 오디오 경로 기준으로 분류하여 재시딩
+
+**최종 결과**: ✅
+- **총 처리**: 1001개 항목
+- **숙어**: 424개 (`pos: 'idiom'`, `source: 'idiom_migration'`)
+- **구동사**: 577개 (`pos: 'phrasal_verb'`, `source: 'phrasal_verb_migration'`)
+- **실패**: 0개
+
+**API 검증**:
+- 숙어 API: `http://localhost:4000/api/simple-vocab?pos=idiom` ✅ 424개
+- 구동사 API: `http://localhost:4000/api/simple-vocab?pos=phrasal%20verb` ✅ 577개
+
+**샘플 데이터**:
+- **숙어**: "a blessing in disguise" (전화위복), "a dime a dozen" (흔해 빠진)
+- **구동사**: "rule out" (배제하다), "ask around" (여기저기 알아보다)
+
+**결론**: 숙어와 구동사가 완전히 분리되어 저장되었으며, 프론트엔드에서 이제 올바른 카테고리 분류가 표시될 것입니다.
