@@ -31,6 +31,17 @@ const getCefrBadgeColor = (level) => {
     }
 };
 
+const getJlptBadgeColor = (level) => {
+    switch (level) {
+        case 'N5': return 'bg-success';
+        case 'N4': return 'bg-info text-dark';
+        case 'N3': return 'bg-warning text-dark';
+        case 'N2': return 'bg-primary';
+        case 'N1': return 'bg-dark';
+        default: return 'bg-secondary';
+    }
+};
+
 const getPosBadgeColor = (pos) => {
     if (!pos) return 'bg-secondary';
     switch (pos.toLowerCase().trim()) {
@@ -823,7 +834,7 @@ export default function SrsFolderDetail() {
                         const cardId = item.cardId; // For display key
                         const lemma = v?.lemma ?? "—";
                         const pos = v?.pos ?? "";
-                        const level = v?.level ?? v?.levelCEFR ?? "";
+                        const level = v?.level ?? v?.levelCEFR ?? v?.levelJLPT ?? "";
                         // Use ko_gloss from backend API (already processed)
                         let koGloss = item.ko_gloss || '뜻 정보 없음';
                         
@@ -939,7 +950,7 @@ export default function SrsFolderDetail() {
                                                         />
                                                     )}
                                                     <div className="d-flex gap-1 flex-wrap">
-                                                        {level && <span className={`badge ${getCefrBadgeColor(level)}`}>{level}</span>}
+                                                        {level && <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>{level}</span>}
                                                         {uniquePosList.map(p => (
                                                             p && p.toLowerCase() !== 'unk' && (
                                                                 <span key={p} className={`badge ${getPosBadgeColor(p)} fst-italic`}>

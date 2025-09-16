@@ -179,6 +179,29 @@ const getCurrentAudioPath = (vocab, isGlossMode = false) => {
     return `/${folderName}/${safeFileName(vocab.question)}/${audioType}.mp3`;
 };
 
+const getCefrBadgeColor = (level) => {
+    switch (level) {
+        case 'A1': return 'bg-danger';
+        case 'A2': return 'bg-warning text-dark';
+        case 'B1': return 'bg-success';
+        case 'B2': return 'bg-info text-dark';
+        case 'C1': return 'bg-primary';
+        case 'C2': return 'bg-dark';
+        default: return 'bg-secondary';
+    }
+};
+
+const getJlptBadgeColor = (level) => {
+    switch (level) {
+        case 'N5': return 'bg-success';
+        case 'N4': return 'bg-info text-dark';
+        case 'N3': return 'bg-warning text-dark';
+        case 'N2': return 'bg-primary';
+        case 'N1': return 'bg-dark';
+        default: return 'bg-secondary';
+    }
+};
+
 const getPosBadgeColor = (pos) => {
     switch ((pos || '').toLowerCase()) {
         case 'noun': return 'bg-primary';
@@ -2066,7 +2089,27 @@ export default function LearnVocab() {
                                 </>
                             ) : (
                                 <>
-                                    <h3 className="display-5 text-primary">{current.answer}</h3>
+                                    <h3 className="display-5 text-primary mb-2">{current.answer}</h3>
+                                    <div className="d-flex justify-content-center gap-1 mb-3">
+                                        {(() => {
+                                            const level = current.vocab?.levelJLPT ?? current.vocab?.levelCEFR ?? current.vocab?.level ?? current.levelCEFR ?? current.levelJLPT ?? current.level;
+                                            const pos = current.vocab?.pos ?? current.pos;
+                                            return (
+                                                <>
+                                                    {level && (
+                                                        <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
+                                                            {level}
+                                                        </span>
+                                                    )}
+                                                    {pos && pos.toLowerCase() !== 'unk' && (
+                                                        <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
+                                                            {pos}
+                                                        </span>
+                                                    )}
+                                                </>
+                                            );
+                                        })()}
+                                    </div>
                                     {/* 예문 표시 - 배치 모드에서도 동일한 로직 사용 */}
                                     {(() => {
                                         const examples = current.vocab?.dictentry?.examples || [];
@@ -2479,8 +2522,24 @@ export default function LearnVocab() {
                         {!flipped ? (
                             <>
                                 <div className="d-flex justify-content-center gap-2 mb-2">
-                                    {(current.pos || '').split(',').map((t) => t.trim()).filter((t) => t && t !== 'unk')
-                                        .map((t) => <span key={t} className={`badge ${getPosBadgeColor(t)}`}>{t}</span>)}
+                                    {(() => {
+                                        const level = current.vocab?.levelJLPT ?? current.vocab?.levelCEFR ?? current.vocab?.level ?? current.levelCEFR ?? current.levelJLPT ?? current.level;
+                                        const pos = current.vocab?.pos ?? current.pos;
+                                        return (
+                                            <>
+                                                {level && (
+                                                    <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
+                                                        {level}
+                                                    </span>
+                                                )}
+                                                {pos && pos.toLowerCase() !== 'unk' && (
+                                                    <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
+                                                        {pos}
+                                                    </span>
+                                                )}
+                                            </>
+                                        );
+                                    })()}
                                 </div>
                                 <Pron ipa={current.pron?.ipa || currentPron?.ipa} ipaKo={current.pron?.ipaKo || currentPron?.ipaKo} />
                                 <h2 className="display-5 mb-3">
@@ -2761,7 +2820,27 @@ export default function LearnVocab() {
 
                                         {/* 한국어 뜻 표시 */}
                                         <div className="mb-3 p-3 bg-light rounded">
-                                            <p className="h5 text-dark mb-0">💡 {current.answer || '뜻 정보 없음'}</p>
+                                            <p className="h5 text-dark mb-2">💡 {current.answer || '뜻 정보 없음'}</p>
+                                            <div className="d-flex justify-content-center gap-1">
+                                                {(() => {
+                                                    const level = current.vocab?.level ?? current.vocab?.levelCEFR ?? current.vocab?.levelJLPT ?? current.levelCEFR ?? current.levelJLPT;
+                                                    const pos = current.vocab?.pos ?? current.pos;
+                                                    return (
+                                                        <>
+                                                            {level && (
+                                                                <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
+                                                                    {level}
+                                                                </span>
+                                                            )}
+                                                            {pos && pos.toLowerCase() !== 'unk' && (
+                                                                <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
+                                                                    {pos}
+                                                                </span>
+                                                            )}
+                                                        </>
+                                                    );
+                                                })()}
+                                            </div>
                                         </div>
 
                                         {showSpellingWarning && (
@@ -3071,9 +3150,29 @@ export default function LearnVocab() {
                                 <div className="mb-4">
                                     <h4 className="text-primary mb-3">다음 영어 단어의 뜻을 선택하세요</h4>
                                     <div className="p-4 bg-light rounded">
-                                        <h2 className="display-6 text-center text-primary mb-0" lang="en">
+                                        <h2 className="display-6 text-center text-primary mb-2" lang="en">
                                             {current.question}
                                         </h2>
+                                        <div className="d-flex justify-content-center gap-1 mt-2">
+                                            {(() => {
+                                                const level = current.vocab?.level ?? current.vocab?.levelCEFR ?? current.vocab?.levelJLPT ?? current.levelCEFR ?? current.levelJLPT;
+                                                const pos = current.vocab?.pos ?? current.pos;
+                                                return (
+                                                    <>
+                                                        {level && (
+                                                            <span className={`badge ${level.startsWith('N') ? getJlptBadgeColor(level) : getCefrBadgeColor(level)}`}>
+                                                                {level}
+                                                            </span>
+                                                        )}
+                                                        {pos && pos.toLowerCase() !== 'unk' && (
+                                                            <span className={`badge ${getPosBadgeColor(pos)} fst-italic`}>
+                                                                {pos}
+                                                            </span>
+                                                        )}
+                                                    </>
+                                                );
+                                            })()}
+                                        </div>
                                     </div>
                                 </div>
                                 <Pron ipa={current.pron?.ipa} ipaKo={current.pron?.ipaKo} />

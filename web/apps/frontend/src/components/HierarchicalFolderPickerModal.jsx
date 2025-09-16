@@ -35,7 +35,11 @@ export default function HierarchicalFolderPickerModal({ show, onClose, onPick, p
       } catch (e) {
         console.error('[HierarchicalPicker] 상위폴더 목록 로드 실패:', e);
         if (alive) {
-          alert(`폴더 목록을 불러오지 못했습니다: ${e.message || '알 수 없는 오류'}`);
+          if (e.status === 401) {
+            alert('로그인이 필요합니다. 다시 로그인해주세요.');
+          } else {
+            alert(`폴더 목록을 불러오지 못했습니다: ${e.message || '알 수 없는 오류'}`);
+          }
           setParentFolders([]); // 빈 배열로 초기화
         }
       } finally {
