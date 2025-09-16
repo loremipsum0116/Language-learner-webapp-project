@@ -653,11 +653,11 @@ export default function VocabDetailModal({
 
 
             {/* 한국어 뜻 표시 */}
-            {(vocab.koGloss || glossExample?.ko) && (
+            {(vocab.koGloss || vocab.ko_gloss || glossExample?.ko) && (
               <div className="mb-3">
                 <div className="ps-2 mt-2">
                   <p className="mb-1">
-                    <strong>{vocab.koGloss || glossExample?.ko}</strong>
+                    <strong>{vocab.koGloss || vocab.ko_gloss || glossExample?.ko}</strong>
                   </p>
                 </div>
               </div>

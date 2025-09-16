@@ -32,7 +32,51 @@
   - 한국어 번역을 VocabTranslation 테이블에 저장
   - 예문과 사용법을 dictentry 테이블에 저장
 
-### 4. jlpt_n5_vocabs.json
+### 4. make_jlpt_audio.py
+- **용도**: JLPT 일본어 단어 오디오 생성
+- **데이터 소스**: jlpt_n5_vocabs.json
+- **출력**: jlpt/n5/{romaji}/ 폴더에 word.mp3, gloss.mp3, example.mp3
+- **특징** (2025-09-17 수정):
+  - **일본어**: ja-JP-Chirp3-HD 보이스 사용
+  - **한국어**: ko-KR-Neural2 보이스 사용 (기존 Chirp3에서 변경)
+  - **gloss.mp3**: 일본어 → 1초 대기 → 한국어 뜻 (괄호 완전 제거)
+  - **성별 순환**: 남성/여성 보이스 교대로 사용
+  - **품사 표시 자동 제거**: exp., v., n., adj. 등 제거
+- **주요 코드 변경**:
+  ```python
+  # 한국어 보이스 변경 (라인 47-49)
+  KO_MALE = os.getenv("KO_MALE", "ko-KR-Neural2-C")
+  KO_FEMALE = os.getenv("KO_FEMALE", "ko-KR-Neural2-B")
+
+  # 괄호 완전 제거 로직 (라인 121-122)
+  s = re.sub(r"[（(][^）)]*[）)]", "", s)  # 기존: 내용 유지 → 변경: 완전 제거
+
+  # 품사 표시 제거에 exp 추가 (라인 125)
+  s = re.sub(r"\b(?:exp|pron|n|v|adj|adv|...)\.\s*", "", s, flags=re.I)
+  ```
+
+### 5. remake_jlpt_gloss_only.py
+- **용도**: 기존 JLPT gloss.mp3 파일만 재생성
+- **특징**:
+  - 기존 word.mp3 재사용하여 gloss.mp3만 교체
+  - 새로운 음성 설정(Neural2) 적용
+  - 괄호 및 품사 표시 완전 제거
+  - 특정 단어들만 선별적으로 재생성 가능
+- **핵심 함수**:
+  ```python
+  def clean_ko_gloss_strict(text: str) -> str:
+      # 품사 표시 제거 (먼저 처리)
+      s = re.sub(r"\b(?:exp|pron|n|v|adj|adv|...)\.\s*", "", s, flags=re.I)
+
+      # 괄호 및 내용 완전 제거 (모든 종류)
+      s = re.sub(r"[（(【\[]([^）)】\]]*)[）)】\]]", "", s)
+      s = re.sub(r"[（(][^）)]*[）)]", "", s)
+
+      return normalize_spaces(s).strip(" ;,·")
+  ```
+- **사용법**: `python remake_jlpt_gloss_only.py test_words.json`
+
+### 6. jlpt_n5_vocabs.json
 - **용도**: JLPT N5 일본어 단어 데이터
 - **데이터 형식**: JSON 배열 (502개 항목)
 - **포함 정보**:
@@ -137,6 +181,19 @@
 7. **오디오 버튼 누락** (2025-09-17): JapaneseVocabCard에 재생 버튼 추가
 8. **구동사 탭 빈 결과 문제** (2025-09-17): 백엔드 API pos 매핑 오류 → 수정 완료
 9. **CEFR 레벨 Unknown 문제** (2025-09-17): 시딩 스크립트에서 category 기반 자동 매핑 구현
+10. **일본어 단어 상세보기 뜻 누락** (2025-09-17): 백엔드와 프론트엔드 필드명 불일치 해결
+    - **문제**: 백엔드 `ko_gloss` vs 프론트엔드 `koGloss` 필드명 차이
+    - **백엔드**: `web/apps/backend/routes/vocab.js:666` - `ko_gloss: vocabTranslation?.translation || null`
+    - **프론트엔드 수정**: `web/apps/frontend/src/components/VocabDetailModal.jsx:656,660`
+      ```jsx
+      // 수정 전
+      {(vocab.koGloss || glossExample?.ko) && (
+        <strong>{vocab.koGloss || glossExample?.ko}</strong>
+
+      // 수정 후
+      {(vocab.koGloss || vocab.ko_gloss || glossExample?.ko) && (
+        <strong>{vocab.koGloss || vocab.ko_gloss || glossExample?.ko}</strong>
+      ```
 
 ### 📂 관련 파일들
 
