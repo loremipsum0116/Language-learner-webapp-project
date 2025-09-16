@@ -634,6 +634,9 @@ app.use((req, res, next) => {
 
 // 정적 파일 최적화 적용
 app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
+
+// JLPT 오디오 파일 서빙
+app.use('/jlpt', staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'jlpt')));
 app.use(express.json({ limit: '10mb' })); // JSON 크기 제한 증가
 app.use(cookieParser());
 

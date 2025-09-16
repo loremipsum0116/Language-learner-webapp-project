@@ -15,7 +15,8 @@ module.exports = function auth(req, res, next) {
         req.path.startsWith('/immediate-test') || req.path.startsWith('/api/immediate-test') ||
         req.path.startsWith('/starter/') || req.path.startsWith('/elementary/') ||
         req.path.startsWith('/intermediate/') || req.path.startsWith('/upper/') ||
-        req.path.startsWith('/advanced/') || req.path === '/api' || req.path.startsWith('/docs/api')) {
+        req.path.startsWith('/advanced/') || req.path.startsWith('/jlpt/') ||
+        req.path === '/api' || req.path.startsWith('/docs/api')) {
       console.log('[AUTH] Skipping auth for public endpoint:', req.path);
       return next();
     }

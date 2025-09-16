@@ -9,7 +9,10 @@ const PORT = 4000;
 const prisma = new PrismaClient();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 app.use(express.json());
 
 // Serve static audio files
@@ -27,6 +30,11 @@ levelFolders.forEach(level => {
   app.use(`/${level}`, express.static(levelPath));
   console.log(`📁 Serving audio from: /${level} -> ${levelPath}`);
 });
+
+// Serve JLPT audio files
+const jlptPath = path.join(__dirname, 'jlpt');
+app.use('/jlpt', express.static(jlptPath));
+console.log(`📁 Serving JLPT audio from: /jlpt -> ${jlptPath}`);
 
 // Simple vocab endpoint with real data
 app.get('/simple-vocab', async (req, res) => {

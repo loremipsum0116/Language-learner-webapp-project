@@ -671,18 +671,22 @@ export default function VocabList() {
 
         // URL 경로의 각 세그먼트를 개별적으로 인코딩
         let encodedUrl = mappedUrl;
-        if (mappedUrl.startsWith('/')) {
-            const pathSegments = mappedUrl.split('/').filter(segment => segment);
-            console.log('[AUDIO DEBUG] Original URL:', url);
-            console.log('[AUDIO DEBUG] Mapped URL:', mappedUrl);
-            console.log('[AUDIO DEBUG] Path segments:', pathSegments);
-            const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
-            console.log('[AUDIO DEBUG] Encoded segments:', encodedSegments);
-            encodedUrl = '/' + encodedSegments.join('/');
-            console.log('[AUDIO DEBUG] Final encoded URL:', encodedUrl);
+
+        // If URL doesn't start with '/', add it
+        if (!mappedUrl.startsWith('/')) {
+            mappedUrl = '/' + mappedUrl;
         }
 
-        const fullUrl = encodedUrl.startsWith('/') ? `${API_BASE}${encodedUrl}` : encodedUrl;
+        const pathSegments = mappedUrl.split('/').filter(segment => segment);
+        console.log('[AUDIO DEBUG] Original URL:', url);
+        console.log('[AUDIO DEBUG] Mapped URL:', mappedUrl);
+        console.log('[AUDIO DEBUG] Path segments:', pathSegments);
+        const encodedSegments = pathSegments.map(segment => encodeURIComponent(segment));
+        console.log('[AUDIO DEBUG] Encoded segments:', encodedSegments);
+        encodedUrl = '/' + encodedSegments.join('/');
+        console.log('[AUDIO DEBUG] Final encoded URL:', encodedUrl);
+
+        const fullUrl = `${API_BASE}${encodedUrl}`;
         console.log('[AUDIO DEBUG] Full URL:', fullUrl);
         const newAudio = new Audio(fullUrl);
         newAudio.onended = () => setPlayingAudio(null);
