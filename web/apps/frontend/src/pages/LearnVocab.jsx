@@ -2044,7 +2044,7 @@ export default function LearnVocab() {
 
                                             if (!hasKanji) {
                                                 // No kanji characters, just display as text
-                                                return <span lang="ja">{kanji}</span>;
+                                                return <span lang="ja" style={{ fontWeight: 'bold' }}>{kanji}</span>;
                                             }
 
                                             // Simple approach for common patterns like 食べる (taberu)
@@ -2061,8 +2061,8 @@ export default function LearnVocab() {
                                                     const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
 
                                                     return (
-                                                        <span lang="ja">
-                                                            <ruby>
+                                                        <span lang="ja" style={{ fontWeight: 'bold' }}>
+                                                            <ruby style={{ fontWeight: 'bold' }}>
                                                                 {kanjiPart}
                                                                 <rt>{kanjiReading}</rt>
                                                             </ruby>
@@ -2074,14 +2074,14 @@ export default function LearnVocab() {
 
                                             // Fallback to simple ruby for complex cases
                                             return (
-                                                <ruby lang="ja">
+                                                <ruby lang="ja" style={{ fontWeight: 'bold' }}>
                                                     {kanji}
                                                     <rt>{kana}</rt>
                                                 </ruby>
                                             );
                                         })()
                                     ) : current.kana ? (
-                                        <span lang="ja">{current.kana}</span>
+                                        <span lang="ja" style={{ fontWeight: 'bold' }}>{current.kana}</span>
                                     ) : (
                                         current.question
                                     )}
@@ -2542,7 +2542,7 @@ export default function LearnVocab() {
                                     })()}
                                 </div>
                                 <Pron ipa={current.pron?.ipa || currentPron?.ipa} ipaKo={current.pron?.ipaKo || currentPron?.ipaKo} />
-                                <h2 className="display-5 mb-3">
+                                <h2 className="display-5 mb-3" style={{ fontWeight: 'bold' }}>
                                     {current.kana && current.kanji ? (
                                         (() => {
                                             const kanji = current.kanji || current.question;
@@ -2553,7 +2553,7 @@ export default function LearnVocab() {
 
                                             if (!hasKanji) {
                                                 // No kanji characters, just display as text
-                                                return <span lang="ja">{kanji}</span>;
+                                                return <span lang="ja" style={{ fontWeight: 'bold' }}>{kanji}</span>;
                                             }
 
                                             // Simple approach for common patterns like 食べる (taberu)
@@ -2570,8 +2570,8 @@ export default function LearnVocab() {
                                                     const kanjiReading = kana.slice(0, hiraganStartIndex);  // e.g., "た"
 
                                                     return (
-                                                        <span lang="ja">
-                                                            <ruby>
+                                                        <span lang="ja" style={{ fontWeight: 'bold' }}>
+                                                            <ruby style={{ fontWeight: 'bold' }}>
                                                                 {kanjiPart}
                                                                 <rt>{kanjiReading}</rt>
                                                             </ruby>
@@ -2583,14 +2583,14 @@ export default function LearnVocab() {
 
                                             // Fallback to simple ruby for complex cases
                                             return (
-                                                <ruby lang="ja">
+                                                <ruby lang="ja" style={{ fontWeight: 'bold' }}>
                                                     {kanji}
                                                     <rt>{kana}</rt>
                                                 </ruby>
                                             );
                                         })()
                                     ) : current.kana ? (
-                                        <span lang="ja">{current.kana}</span>
+                                        <span lang="ja" style={{ fontWeight: 'bold' }}>{current.kana}</span>
                                     ) : (
                                         <span lang="en">{current.question}</span>
                                     )}
@@ -3037,7 +3037,7 @@ export default function LearnVocab() {
 
                                                                                                 return (
                                                                                                     <span>
-                                                                                                        <ruby>
+                                                                                                        <ruby style={{ fontWeight: 'bold' }}>
                                                                                                             {kanjiPart}
                                                                                                             <rt className="fs-6">{kanjiReading}</rt>
                                                                                                         </ruby>
@@ -3049,7 +3049,7 @@ export default function LearnVocab() {
 
                                                                                         // Fallback to simple ruby for complex cases
                                                                                         return (
-                                                                                            <ruby>
+                                                                                            <ruby style={{ fontWeight: 'bold' }}>
                                                                                                 {kanji}
                                                                                                 <rt className="fs-6">{kana}</rt>
                                                                                             </ruby>
