@@ -329,14 +329,13 @@ export default function VocabList() {
                 setErr(null);
                 let url, data;
                 
-                if (debouncedSearchTerm) {
-                    // 검색 모드
-                    url = `/vocab/list?q=${encodeURIComponent(debouncedSearchTerm)}`;
-                    const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
-                    data = response.data;
-                } else if (activeTab === 'cefr') {
-                    // CEFR 레벨별 조회
-                    url = `/vocab/list?level=${encodeURIComponent(activeLevel)}`;
+                if (activeTab === 'cefr') {
+                    // CEFR 레벨별 조회 (검색 포함)
+                    if (debouncedSearchTerm) {
+                        url = `/vocab/list?level=${encodeURIComponent(activeLevel)}&q=${encodeURIComponent(debouncedSearchTerm)}`;
+                    } else {
+                        url = `/vocab/list?level=${encodeURIComponent(activeLevel)}`;
+                    }
                     const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                     data = response.data;
                     // CEFR 탭에서도 totalCount 설정
@@ -357,8 +356,12 @@ export default function VocabList() {
                     setDisplayCount(data.length); // 전체 데이터 표시
                     return; // 숙어 탭에서는 여기서 종료
                 } else if (activeTab === 'japanese') {
-                    // 일본어 JLPT 레벨별 조회
-                    url = `/vocab/japanese-list?level=${encodeURIComponent(activeJlptLevel)}`;
+                    // 일본어 JLPT 레벨별 조회 (검색 포함)
+                    if (debouncedSearchTerm) {
+                        url = `/vocab/japanese-list?level=${encodeURIComponent(activeJlptLevel)}&q=${encodeURIComponent(debouncedSearchTerm)}`;
+                    } else {
+                        url = `/vocab/japanese-list?level=${encodeURIComponent(activeJlptLevel)}`;
+                    }
                     const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                     data = response.data || [];
 
@@ -374,7 +377,7 @@ export default function VocabList() {
                         setTotalCount(0);
                         setHasNextPage(false);
                     } else {
-                        url = `/exam-vocab/${activeExam}?page=1&limit=100`;
+                        url = `/exam-vocab/${activeExam}?page=1&limit=100${debouncedSearchTerm ? `&search=${encodeURIComponent(debouncedSearchTerm)}` : ''}`;
                         const response = await fetchJSON(url, withCreds({ signal: ac.signal }));
                         data = response.data?.vocabs || [];
                         setTotalCount(response.data?.pagination?.totalCount || 0);
@@ -505,7 +508,7 @@ export default function VocabList() {
             // 시험별 탭에서 전체 선택: 서버에서 모든 단어 ID 가져오기
             try {
                 setLoading(true);
-                const response = await fetchJSON(`/exam-vocab/${activeExam}?limit=${totalCount}`, withCreds());
+                const response = await fetchJSON(`/exam-vocab/${activeExam}?limit=${totalCount}${debouncedSearchTerm ? `&search=${encodeURIComponent(debouncedSearchTerm)}` : ''}`, withCreds());
                 const allVocabIds = response.data?.vocabs?.map(v => v.id) || [];
                 setSelectedIds(new Set(allVocabIds));
             } catch (error) {
@@ -1431,7 +1434,7 @@ export default function VocabList() {
         try {
             setLoading(true);
             const nextPage = currentPage + 1;
-            const url = `/exam-vocab/${activeExam}?page=${nextPage}&limit=100`;
+            const url = `/exam-vocab/${activeExam}?page=${nextPage}&limit=100${debouncedSearchTerm ? `&search=${encodeURIComponent(debouncedSearchTerm)}` : ''}`;
             const response = await fetchJSON(url, withCreds());
             const newVocabs = response.data?.vocabs || [];
             

@@ -29,7 +29,7 @@ class PrismaVocabRepository extends IVocabRepository {
    */
   async findByLemma(lemma) {
     const vocabsData = await this.prisma.vocab.findMany({
-      where: { lemma: { equals: lemma, mode: 'insensitive' } },
+      where: { lemma: { equals: lemma } },
       include: { dictentry: true },
       orderBy: { lemma: 'asc' }
     });
@@ -45,7 +45,16 @@ class PrismaVocabRepository extends IVocabRepository {
     const where = {};
 
     if (search && search.trim()) {
-      where.lemma = { contains: search.trim(), mode: 'insensitive' };
+      // 영단어 또는 한국어 뜻으로 검색
+      where.OR = [
+        { lemma: { contains: search.trim() } },
+        { translations: { some: {
+          AND: [
+            { languageId: 2 }, // Korean language ID
+            { translation: { contains: search.trim() } }
+          ]
+        }}}
+      ];
     } else {
       where.levelCEFR = level;
     }
@@ -62,7 +71,12 @@ class PrismaVocabRepository extends IVocabRepository {
 
     const vocabsData = await this.prisma.vocab.findMany({
       where,
-      include: { dictentry: true },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { languageId: 2 } // Include Korean translations
+        }
+      },
       orderBy: { lemma: 'asc' },
       take: limit,
       skip: offset
@@ -79,7 +93,15 @@ class PrismaVocabRepository extends IVocabRepository {
     const where = { pos };
 
     if (search && search.trim()) {
-      where.lemma = { contains: search.trim(), mode: 'insensitive' };
+      where.OR = [
+        { lemma: { contains: search.trim() } },
+        { translations: { some: {
+          AND: [
+            { languageId: 2 }, // Korean language ID
+            { translation: { contains: search.trim() } }
+          ]
+        }}}
+      ];
     }
 
     if (source) {
@@ -88,7 +110,12 @@ class PrismaVocabRepository extends IVocabRepository {
 
     const vocabsData = await this.prisma.vocab.findMany({
       where,
-      include: { dictentry: true },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { languageId: 2 } // Include Korean translations
+        }
+      },
       orderBy: { lemma: 'asc' }
     });
 
@@ -109,12 +136,25 @@ class PrismaVocabRepository extends IVocabRepository {
     }
 
     if (search && search.trim()) {
-      where.lemma = { contains: search.trim(), mode: 'insensitive' };
+      where.OR = [
+        { lemma: { contains: search.trim() } },
+        { translations: { some: {
+          AND: [
+            { languageId: 2 }, // Korean language ID
+            { translation: { contains: search.trim() } }
+          ]
+        }}}
+      ];
     }
 
     const vocabsData = await this.prisma.vocab.findMany({
       where,
-      include: { dictentry: true },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { languageId: 2 } // Include Korean translations
+        }
+      },
       orderBy: { lemma: 'asc' }
     });
 
@@ -127,7 +167,15 @@ class PrismaVocabRepository extends IVocabRepository {
   async search(searchTerm, options = {}) {
     const { limit = 100, levels } = options;
     const where = {
-      lemma: { contains: searchTerm, mode: 'insensitive' }
+      OR: [
+        { lemma: { contains: searchTerm } },
+        { translations: { some: {
+          AND: [
+            { languageId: 2 }, // Korean language ID
+            { translation: { contains: searchTerm } }
+          ]
+        }}}
+      ]
     };
 
     if (levels && levels.length > 0) {
@@ -136,7 +184,12 @@ class PrismaVocabRepository extends IVocabRepository {
 
     const vocabsData = await this.prisma.vocab.findMany({
       where,
-      include: { dictentry: true },
+      include: {
+        dictentry: true,
+        translations: {
+          where: { languageId: 2 } // Include Korean translations
+        }
+      },
       orderBy: { lemma: 'asc' },
       take: limit
     });
@@ -152,7 +205,15 @@ class PrismaVocabRepository extends IVocabRepository {
     const where = {};
 
     if (search && search.trim()) {
-      where.lemma = { contains: search.trim(), mode: 'insensitive' };
+      where.OR = [
+        { lemma: { contains: search.trim() } },
+        { translations: { some: {
+          AND: [
+            { languageId: 2 }, // Korean language ID
+            { translation: { contains: search.trim() } }
+          ]
+        }}}
+      ];
     } else if (level) {
       where.levelCEFR = level;
     }
@@ -276,7 +337,7 @@ class PrismaVocabRepository extends IVocabRepository {
     }
     
     if (criteria.search) {
-      where.lemma = { contains: criteria.search, mode: 'insensitive' };
+      where.lemma = { contains: criteria.search };
     }
 
     return where;
@@ -287,14 +348,19 @@ class PrismaVocabRepository extends IVocabRepository {
    * @private
    */
   toDomainEntity(vocabData) {
+    // Get Korean translation if available
+    const koTranslation = vocabData.translations && vocabData.translations.find(t => t.languageId === 2);
+
     return new Vocab({
       id: vocabData.id,
       lemma: vocabData.lemma,
       pos: vocabData.pos,
       plural: vocabData.plural,
       levelCEFR: vocabData.levelCEFR,
+      levelJLPT: vocabData.levelJLPT, // Add JLPT level
       frequency: vocabData.freq,
       source: vocabData.source,
+      koGloss: koTranslation ? koTranslation.translation : null, // Add Korean translation
       dictEntry: vocabData.dictentry ? {
         ipa: vocabData.dictentry.ipa,
         ipaKo: vocabData.dictentry.ipaKo,

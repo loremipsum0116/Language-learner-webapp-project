@@ -336,6 +336,7 @@ export default function VocabDetailModal({
   console.log('🐛 [VocabDetailModal] vocab.lemma:', vocab.lemma);
   console.log('🐛 [VocabDetailModal] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
   const dictentry = vocab?.dictentry || {};
+  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
   
   // Parse examples if it's a string - handle all possible cases
   let rawMeanings = [];
@@ -373,17 +374,15 @@ export default function VocabDetailModal({
         <div className="modal-content">
           <div className="modal-header">
             <div className="d-flex align-items-center flex-wrap">
-              {/* Check if it's actually Japanese (not just having kana field) */}
+              {/* Check if it's actually Japanese based on new database structure */}
               {(() => {
-                // CEFR English words have IPA pronunciation in kana field, so check source or language
-                const isJapanese = vocab.kana &&
-                  !vocab.kana.startsWith('/') && // Not IPA pronunciation
-                  (vocab.source === 'jlpt' || vocab.source === 'jlpt_vocabs' || vocab.levelJLPT);
+                // Use levelJLPT or source to identify Japanese words
+                const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
 
                 if (isJapanese) {
                   return (
                 <div className="d-flex align-items-center me-2">
-                  {vocab.lemma && vocab.lemma !== vocab.kana ? (
+                  {vocab.lemma && vocab.lemma !== dictentry.ipa ? (
                     (() => {
                       // Check if lemma contains any actual kanji characters
                       const hasKanji = /[\u4e00-\u9faf]/.test(vocab.lemma);
@@ -396,15 +395,15 @@ export default function VocabDetailModal({
                       // Simple approach for common patterns like 食べる (taberu)
                       const match = vocab.lemma.match(/^([\u4e00-\u9faf]+)([\u3040-\u309f\u30a0-\u30ff]*)$/);
 
-                      if (match) {
+                      if (match && dictentry.ipa) {
                         const kanjiPart = match[1];  // e.g., "食"
                         const hiraganaPart = match[2];  // e.g., "べる"
 
                         // Find where hiragana part starts in kana reading
-                        const hiraganStartIndex = vocab.kana.indexOf(hiraganaPart);
+                        const hiraganStartIndex = dictentry.ipa.indexOf(hiraganaPart);
 
                         if (hiraganStartIndex > 0) {
-                          const kanjiReading = vocab.kana.slice(0, hiraganStartIndex);  // e.g., "た"
+                          const kanjiReading = dictentry.ipa.slice(0, hiraganStartIndex);  // e.g., "た"
 
                           return (
                             <h4 className="modal-title mb-0 me-2" lang="ja">
@@ -422,12 +421,12 @@ export default function VocabDetailModal({
                       return (
                         <ruby className="fs-4 me-2" lang="ja">
                           {vocab.lemma}
-                          <rt className="fs-6">{vocab.kana}</rt>
+                          <rt className="fs-6">{dictentry.ipa}</rt>
                         </ruby>
                       );
                     })()
                   ) : (
-                    <h4 className="modal-title mb-0 me-2" lang="ja">{vocab.kana}</h4>
+                    <h4 className="modal-title mb-0 me-2" lang="ja">{dictentry.ipa || vocab.lemma}</h4>
                   )}
                 </div>
                   );
@@ -459,10 +458,18 @@ export default function VocabDetailModal({
                   const audioData = parseAudioLocal(dictentry.audioLocal);
                   
                   // 상세 보기 상단 오디오는 gloss 경로 사용
+                  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
                   const isIdiomOrPhrasal = vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")));
                   let glossAudioPath = null;
-                  
-                  if (isIdiomOrPhrasal) {
+
+                  if (isJapanese) {
+                    // JLPT 단어의 경우 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
+                    if (vocab.dictentry?.audioUrl) {
+                      const baseUrl = vocab.dictentry.audioUrl.replace('/word.mp3', '/gloss.mp3');
+                      glossAudioPath = `/${baseUrl}`;
+                      console.log('🔍 [VocabDetailModal] Using JLPT gloss audio:', vocab.lemma, '->', glossAudioPath);
+                    }
+                  } else if (isIdiomOrPhrasal) {
                     // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용
                     if (vocab.dictentry?.audioUrl) {
                       // audioUrl이 이미 파일명만 있는 경우 (예: "idiom/a_stones_throw.mp3")
@@ -535,30 +542,32 @@ export default function VocabDetailModal({
           <div className="modal-body" style={{ maxHeight: '70vh', overflowY: 'auto' }}>
             <Pron ipa={dictentry.ipa} ipaKo={dictentry.ipaKo} />
 
+
             {/* 한국어 뜻 표시 */}
-            {vocab.ko_gloss && (
+            {(vocab.koGloss || glossExample?.ko) && (
               <div className="mb-3">
                 <div className="ps-2 mt-2">
                   <p className="mb-1">
-                    <strong>{vocab.ko_gloss}</strong>
+                    <strong>{vocab.koGloss || glossExample?.ko}</strong>
                   </p>
                 </div>
               </div>
             )}
 
             {/* Japanese readings display - kun/on readings */}
-            {vocab.kana && vocab.dictentry && (vocab.dictentry.kunyomi || vocab.dictentry.onyomi) && (
+            {isJapanese && dictentry.examples && (typeof dictentry.examples === 'object') &&
+             (dictentry.examples.kunyomi || dictentry.examples.onyomi) && (
               <div className="mb-3 border-top pt-3">
                 <h6 className="fw-bold mb-2">한자 읽기</h6>
                 <div className="ps-2">
-                  {vocab.dictentry.onyomi && (
+                  {dictentry.examples.onyomi && (
                     <div className="mb-1">
-                      <span className="text-muted small">음독:</span> <span className="ms-1" lang="ja">{vocab.dictentry.onyomi}</span>
+                      <span className="text-muted small">음독:</span> <span className="ms-1" lang="ja">{dictentry.examples.onyomi}</span>
                     </div>
                   )}
-                  {vocab.dictentry.kunyomi && (
+                  {dictentry.examples.kunyomi && (
                     <div className="mb-1">
-                      <span className="text-muted small">훈독:</span> <span className="ms-1" lang="ja">{vocab.dictentry.kunyomi}</span>
+                      <span className="text-muted small">훈독:</span> <span className="ms-1" lang="ja">{dictentry.examples.kunyomi}</span>
                     </div>
                   )}
                 </div>
@@ -594,13 +603,13 @@ export default function VocabDetailModal({
                         // Handle audio for both English and Japanese examples
                         let exampleAudioPath = null;
 
-                        // For Japanese vocabulary (has kana field)
-                        if (vocab.kana && vocab.dictentry?.audioLocal) {
-                          try {
-                            const audioData = JSON.parse(vocab.dictentry.audioLocal);
-                            exampleAudioPath = audioData?.example;
-                          } catch (e) {
-                            console.warn('Failed to parse Japanese audio data:', e);
+                        // For Japanese vocabulary (JLPT words)
+                        if (isJapanese) {
+                          // Use database audioUrl and convert to example.mp3
+                          if (vocab.dictentry?.audioUrl) {
+                            const baseUrl = vocab.dictentry.audioUrl.replace('/word.mp3', '/example.mp3');
+                            exampleAudioPath = `/${baseUrl}`;
+                            console.log('🔍 [VocabDetailModal] Using JLPT example audio:', vocab.lemma, '->', exampleAudioPath);
                           }
                         }
                         // For English vocabulary
@@ -651,18 +660,11 @@ export default function VocabDetailModal({
                           let exampleText = '';
                           let koreanTranslation = '';
 
-                          // Check if it's actually Japanese (not just having kana field)
-                          // CEFR English words have IPA pronunciation in kana field, so check source or language
-                          const isJapanese = vocab.kana &&
-                            !vocab.kana.startsWith('/') && // Not IPA pronunciation
-                            (vocab.source === 'jlpt' || vocab.source === 'jlpt_vocabs' || vocab.levelJLPT);
-
                           // For Japanese vocabulary
                           if (isJapanese) {
-                            // Try multiple sources for Japanese examples
-                            exampleText = vocab.example || vocab.dictentry?.examples?.example;
-                            // Priority: 1) vocab.koExample, 2) dictentry.examples.koExample, 3) fallback to English translation
-                            koreanTranslation = vocab.koExample || vocab.dictentry?.examples?.koExample || vocab.dictentry?.examples?.exampleTranslation;
+                            // Use dictentry.examples (JSON object) for JLPT words
+                            exampleText = dictentry.examples?.example || vocab.example;
+                            koreanTranslation = dictentry.examples?.koExample || vocab.koExample;
 
 
                             // If we have English translation but no Korean, provide a simple mapping for common phrases

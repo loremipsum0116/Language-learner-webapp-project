@@ -51,7 +51,38 @@ router.get('/list', async (req, res) => {
     const { level, q } = req.query;
     const where = {};
     if (q && q.trim()) {
-      where.lemma = { contains: q.trim() };
+      // Support both English lemma and Korean translation search
+      where.OR = [
+        { lemma: { contains: q.trim() } },
+        {
+          translations: {
+            some: {
+              AND: [
+                { languageId: 2 }, // Korean language ID
+                { translation: { contains: q.trim() } }
+              ]
+            }
+          }
+        }
+      ];
+
+      // If level is specified, also filter by level (for CEFR tab search)
+      if (level) {
+        where.AND = [
+          { OR: where.OR },
+          { levelCEFR: level }
+        ];
+        delete where.OR;
+      }
+
+      // Always exclude idioms and phrasal verbs
+      if (where.AND) {
+        where.AND.push({
+          pos: { notIn: ['idiom', 'phrasal_verb'] }
+        });
+      } else {
+        where.pos = { notIn: ['idiom', 'phrasal_verb'] };
+      }
     } else {
       where.levelCEFR = level || 'A1';
       // Exclude idioms and phrasal verbs from level-based vocabulary
@@ -439,7 +470,8 @@ router.get('/idioms-phrasal', async (req, res) => {
 // GET /vocab/japanese-list - Get Japanese vocabulary by JLPT level (MUST BE BEFORE /:id)
 router.get('/japanese-list', async (req, res) => {
   try {
-    const { level = 'N5', search } = req.query;
+    const { level = 'N5', search, q } = req.query;
+    const searchTerm = search || q;
 
     // Get Japanese language
     const japaneseLanguage = await prisma.language.findUnique({
@@ -451,15 +483,33 @@ router.get('/japanese-list', async (req, res) => {
     }
 
     // Build query
-    const where = {
+    let where = {
       languageId: japaneseLanguage.id,
       levelJLPT: level
     };
 
-    if (search && search.trim()) {
-      where.OR = [
-        { lemma: { contains: search.trim() } }
-      ];
+    if (searchTerm && searchTerm.trim()) {
+      where = {
+        AND: [
+          { languageId: japaneseLanguage.id },
+          { levelJLPT: level },
+          {
+            OR: [
+              { lemma: { contains: searchTerm.trim() } },
+              {
+                translations: {
+                  some: {
+                    AND: [
+                      { languageId: 2 }, // Korean language ID
+                      { translation: { contains: searchTerm.trim() } }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        ]
+      };
     }
 
     console.log('DEBUG /japanese-list: Query where:', JSON.stringify(where));

@@ -65,7 +65,7 @@ router.get('/:examName', async (req, res) => {
         if (search) {
             const searchPattern = `%${search}%`;
             vocabsRaw = await prisma.$queryRaw`
-                SELECT 
+                SELECT DISTINCT
                     v.*,
                     de.ipa,
                     de.audioUrl,
@@ -75,19 +75,21 @@ router.get('/:examName', async (req, res) => {
                 FROM vocab v
                 INNER JOIN vocab_exam_categories vec ON v.id = vec.vocabId
                 LEFT JOIN dictentry de ON v.id = de.vocabId
+                LEFT JOIN vocab_translations vt ON v.id = vt.vocabId AND vt.languageId = 2
                 WHERE vec.examCategoryId = ${categoryId}
-                AND v.lemma LIKE ${searchPattern}
-                ORDER BY vec.priority DESC, v.lemma ASC 
+                AND (v.lemma LIKE ${searchPattern} OR vt.translation LIKE ${searchPattern})
+                ORDER BY vec.priority DESC, v.lemma ASC
                 LIMIT ${limit} OFFSET ${offset}
             `;
 
             // 검색 시에는 실제 검색 결과 개수 사용
             totalCountResult = await prisma.$queryRaw`
-                SELECT COUNT(*) as total
+                SELECT COUNT(DISTINCT v.id) as total
                 FROM vocab v
                 INNER JOIN vocab_exam_categories vec ON v.id = vec.vocabId
+                LEFT JOIN vocab_translations vt ON v.id = vt.vocabId AND vt.languageId = 2
                 WHERE vec.examCategoryId = ${categoryId}
-                AND v.lemma LIKE ${searchPattern}
+                AND (v.lemma LIKE ${searchPattern} OR vt.translation LIKE ${searchPattern})
             `;
         } else {
             vocabsRaw = await prisma.$queryRaw`

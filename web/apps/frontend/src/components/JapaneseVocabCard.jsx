@@ -38,6 +38,11 @@ function FuriganaDisplay({ kanji, kana }) {
     return <span className="fs-4" lang="ja">{kana || ''}</span>;
   }
 
+  // If no kana provided, return kanji only
+  if (!kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
   // If kanji and kana are the same, no need for furigana
   if (kanji === kana) {
     return <span className="fs-4" lang="ja">{kanji}</span>;
@@ -179,7 +184,7 @@ export default function JapaneseVocabCard({
           style={{ cursor: 'pointer' }}
         >
           <div className="text-center mb-2">
-            <FuriganaDisplay kanji={vocab.lemma} kana={vocab.kana} />
+            <FuriganaDisplay kanji={vocab.lemma} kana={vocab.kana || vocab.ipa} />
           </div>
 
           {vocab.romaji && (

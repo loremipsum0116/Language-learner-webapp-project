@@ -42,26 +42,77 @@ app.get('/simple-vocab', async (req, res) => {
   console.log('Query params:', req.query);
   
   try {
-    const { limit = 100, offset = 0, levelCEFR = 'A1', exam } = req.query;
+    const { limit = 100, offset = 0, levelCEFR = 'A1', exam, search } = req.query;
     const limitInt = Math.min(parseInt(limit), 1000); // Max 1000 per request
     const offsetInt = Math.max(parseInt(offset), 0);
+
+    let whereClause = {};
+
+    // Handle search parameter for Korean or English search
+    if (search && search.trim()) {
+      console.log(`[REAL-VOCAB] Searching for: "${search}"`);
+      whereClause.OR = [
+        // Search in English lemma
+        {
+          AND: [
+            { language: { code: 'en' } },
+            { lemma: { contains: search.trim() } }
+          ]
+        },
+        // Search in Korean translations
+        {
+          translations: {
+            some: {
+              AND: [
+                { languageId: 2 }, // Korean language ID
+                { translation: { contains: search.trim() } }
+              ]
+            }
+          }
+        },
+        // Search in Japanese lemma
+        {
+          AND: [
+            { language: { code: 'ja' } },
+            { lemma: { contains: search.trim() } }
+          ]
+        }
+      ];
+    } else {
+      // Default filtering when no search
+      whereClause.language = { code: 'en' };
+    }
     
-    let whereClause = {
-      language: { code: 'en' }
-    };
-    
+    // Add additional filters for exam or CEFR level
     if (exam) {
       // If exam parameter is provided, filter by exam category using proper relations
       console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for exam: ${exam} (offset: ${offsetInt})`);
-      whereClause.vocabexamcategory = {
-        some: {
-          examCategory: {
-            name: exam
+      // Add exam filter to existing search condition
+      if (whereClause.OR) {
+        whereClause.AND = [
+          { OR: whereClause.OR },
+          {
+            vocabexamcategory: {
+              some: {
+                examCategory: {
+                  name: exam
+                }
+              }
+            }
           }
-        }
-      };
-    } else {
-      // Default CEFR level filtering
+        ];
+        delete whereClause.OR;
+      } else {
+        whereClause.vocabexamcategory = {
+          some: {
+            examCategory: {
+              name: exam
+            }
+          }
+        };
+      }
+    } else if (!search || !search.trim()) {
+      // Default CEFR level filtering only when no search
       console.log(`[REAL-VOCAB] Fetching ${limitInt} vocabs for level ${levelCEFR} (offset: ${offsetInt})`);
       whereClause.levelCEFR = levelCEFR;
     }
@@ -83,6 +134,9 @@ app.get('/simple-vocab', async (req, res) => {
             examples: true,
             audioLocal: true
           }
+        },
+        translations: {
+          where: { languageId: 2 } // Include Korean translations
         }
       }
     });
@@ -94,25 +148,30 @@ app.get('/simple-vocab', async (req, res) => {
       let enExample = '';
       let koExample = '';
       let audioLocal = null;
-      
+
+      // First try to get Korean translation from VocabTranslation table
+      if (vocab.translations && vocab.translations.length > 0) {
+        koGloss = vocab.translations[0].translation || '';
+      }
+
       // Parse examples from dictentry
       let examples = [];
       if (vocab.dictentry?.examples) {
         try {
-          examples = typeof vocab.dictentry.examples === 'string' 
+          examples = typeof vocab.dictentry.examples === 'string'
             ? JSON.parse(vocab.dictentry.examples)
             : vocab.dictentry.examples;
         } catch (e) {
           examples = [];
         }
       }
-      
-      // Extract gloss and example from examples array
+
+      // Extract gloss and example from examples array (fallback for older data)
       if (Array.isArray(examples)) {
         const glossEntry = examples.find(ex => ex.kind === 'gloss');
         const exampleEntry = examples.find(ex => ex.kind === 'example');
-        
-        if (glossEntry) {
+
+        if (glossEntry && !koGloss) {
           koGloss = glossEntry.ko || '';
         }
         if (exampleEntry) {

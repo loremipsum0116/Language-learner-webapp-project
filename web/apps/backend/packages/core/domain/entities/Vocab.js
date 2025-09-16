@@ -6,8 +6,10 @@ class Vocab {
     pos,
     plural = null,
     levelCEFR,
+    levelJLPT = null,
     frequency = null,
     source = null,
+    koGloss = null,
     dictEntry = null
   }) {
     this.id = id;
@@ -15,8 +17,10 @@ class Vocab {
     this.pos = pos; // part of speech
     this.plural = plural;
     this.levelCEFR = levelCEFR;
+    this.levelJLPT = levelJLPT; // JLPT level (N1-N5)
     this.frequency = frequency;
     this.source = source;
+    this.koGloss = koGloss; // Korean translation
     this.dictEntry = dictEntry;
   }
 
@@ -27,6 +31,10 @@ class Vocab {
 
   isPhrasalVerb() {
     return this.pos === 'phrasal_verb';
+  }
+
+  isJapanese() {
+    return this.levelJLPT || this.source === 'jlpt';
   }
 
   hasAudio() {

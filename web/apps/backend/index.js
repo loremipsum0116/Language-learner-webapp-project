@@ -686,8 +686,29 @@ app.get('/api/simple-vocab', async (req, res) => {
       };
 
       if (search && search.trim()) {
-        whereClause.lemma = { contains: search.trim() };
-        console.log('Adding search filter:', search.trim());
+        whereClause = {
+          AND: [
+            { pos: dbPos },
+            { source: dbSource },
+            { language: { code: 'en' } },
+            {
+              OR: [
+                { lemma: { contains: search.trim() } },
+                {
+                  translations: {
+                    some: {
+                      AND: [
+                        { language: { code: 'ko' } }, // Korean language
+                        { translation: { contains: search.trim() } }
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        };
+        console.log('Adding search filter (lemma or Korean translation):', search.trim());
       }
 
       console.log('Final where clause:', JSON.stringify(whereClause, null, 2));
