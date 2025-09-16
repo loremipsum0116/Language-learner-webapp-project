@@ -233,14 +233,66 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
         // 일본어 표시 형태 결정 - dictentry.examples에서 추출
         let questionText = vocab.lemma;
         let hiragana = null;
-        let romaji = vocab.dictentry?.ipa || null; // ipa 필드에 romaji 저장
+        let romaji = null;
 
         // examples에서 일본어 데이터 추출
+        console.log(`[JP-KO QUIZ] Processing vocab ${vocab.id} (${vocab.lemma})`);
+        console.log(`[JP-KO QUIZ] - dictentry:`, vocab.dictentry ? 'exists' : 'null');
+        console.log(`[JP-KO QUIZ] - dictentry.ipa:`, vocab.dictentry?.ipa);
+        console.log(`[JP-KO QUIZ] - dictentry.examples type:`, typeof vocab.dictentry?.examples);
+
         if (vocab.dictentry && vocab.dictentry.examples) {
-            const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
-            const japaneseExample = examples.find(ex => ex.ja);
-            if (japaneseExample && japaneseExample.ja) {
-                // 예문에서 첫 단어를 질문으로 사용할 수도 있음
+            let examples = vocab.dictentry.examples;
+            console.log(`[JP-KO QUIZ] Processing vocab ${vocab.id}, examples type: ${typeof examples}`);
+            console.log(`[JP-KO QUIZ] Raw examples:`, JSON.stringify(examples, null, 2));
+
+            // examples가 배열인지 객체인지 확인
+            if (Array.isArray(examples)) {
+                // 배열인 경우: 기존 로직
+                const japaneseExample = examples.find(ex => ex.ja);
+                if (japaneseExample) {
+                    if (japaneseExample.ja) {
+                        questionText = japaneseExample.ja;
+                    }
+                    if (japaneseExample.romaji) {
+                        romaji = japaneseExample.romaji;
+                    } else if (japaneseExample.pronunciation) {
+                        romaji = japaneseExample.pronunciation;
+                    }
+                    if (japaneseExample.hiragana) {
+                        hiragana = japaneseExample.hiragana;
+                    } else if (japaneseExample.kana) {
+                        hiragana = japaneseExample.kana;
+                    }
+                }
+            } else if (examples && typeof examples === 'object') {
+                // 객체인 경우: 직접 접근
+                if (examples.kanji) {
+                    questionText = examples.kanji;
+                } else if (examples.kana) {
+                    questionText = examples.kana;
+                }
+                // 로마자 추출
+                if (examples.romaji) {
+                    romaji = examples.romaji;
+                }
+                // 히라가나 추출
+                if (examples.kana) {
+                    hiragana = examples.kana;
+                }
+                console.log(`[JP-KO QUIZ] Object format - kanji: ${examples.kanji}, kana: ${examples.kana}, romaji: ${examples.romaji}`);
+            }
+
+            console.log(`[JP-KO QUIZ] Final result - question: ${questionText}, romaji: ${romaji}, hiragana: ${hiragana}`);
+        }
+
+        // 로마자가 없으면 ipa 필드에서 시도 (fallback)
+        if (!romaji && vocab.dictentry?.ipa) {
+            // ipa 필드가 일본어 문자가 아닌 로마자인지 확인
+            const ipaField = vocab.dictentry.ipa;
+            // 간단한 로마자 패턴 체크 (알파벳만 포함)
+            if (/^[a-zA-Z\s\-']+$/.test(ipaField)) {
+                romaji = ipaField;
             }
         }
 
@@ -303,17 +355,55 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
                     { source: 'jlpt_vocabs' }
                 ]
             },
+            include: {
+                dictentry: true
+            },
             take: 200
         }),
     ]);
 
     const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
 
-    // 일본어 단어들을 distractor로 수집
-    const distractorWords = new Set();
+    // 각 일본어 단어의 표시 형태와 로마자 정보를 함께 추출하는 함수
+    function getJapaneseDisplayInfo(vocab) {
+        let displayText = vocab.lemma;
+        let romaji = null;
+        let hiragana = null;
+
+        if (vocab.dictentry && vocab.dictentry.examples) {
+            const examples = vocab.dictentry.examples;
+            console.log(`[KO-JP QUIZ] Processing distractor vocab ${vocab.id}, examples type: ${typeof examples}`);
+
+            if (examples && typeof examples === 'object') {
+                // 표시할 일본어 단어 결정
+                if (examples.kanji) {
+                    displayText = examples.kanji;
+                } else if (examples.kana) {
+                    displayText = examples.kana;
+                }
+                // 로마자와 히라가나 추출
+                if (examples.romaji) {
+                    romaji = examples.romaji;
+                }
+                if (examples.kana) {
+                    hiragana = examples.kana;
+                }
+            }
+        }
+
+        return { displayText, romaji, hiragana };
+    }
+
+    // distractor용 일본어 단어들을 로마자 정보와 함께 수집
+    const distractorOptions = [];
     distractorPool.forEach(v => {
-        const word = v.lemma || v.kana || v.kanji;
-        if (word) distractorWords.add(word);
+        const info = getJapaneseDisplayInfo(v);
+        if (info.displayText) {
+            distractorOptions.push({
+                text: info.displayText,
+                romaji: info.romaji
+            });
+        }
     });
 
     const quizItems = [];
@@ -326,18 +416,31 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
         if (!koreanMeaning) continue;
 
         const questionText = koreanMeaning.split(';')[0].split(',')[0].trim();
-        const correctAnswer = vocab.lemma;
+        const correctInfo = getJapaneseDisplayInfo(vocab);
+        const correctAnswer = correctInfo.displayText;
+
+        console.log(`[KO-JP QUIZ] Processing vocab ${vocab.id}:`);
+        console.log(`[KO-JP QUIZ] Question: ${questionText}`);
+        console.log(`[KO-JP QUIZ] Correct answer: ${correctAnswer} (${correctInfo.romaji})`);
 
         // Distractor 선택 (정답 제외)
-        const availableDistractors = Array.from(distractorWords).filter(
-            word => word !== correctAnswer
+        const availableDistractors = distractorOptions.filter(
+            option => option.text !== correctAnswer
         );
         const wrongOptions = _.sampleSize(availableDistractors, 3);
-        const options = [correctAnswer, ...wrongOptions];
 
+        // 선택지를 로마자 정보와 함께 구성
+        const options = [
+            { text: correctAnswer, romaji: correctInfo.romaji },
+            ...wrongOptions
+        ];
+
+        // 선택지가 4개 미만일 경우 기본 distractor 추가
         while (options.length < 4) {
-            options.push("関連ない");
+            options.push({ text: "関連ない", romaji: null });
         }
+
+        console.log(`[KO-JP QUIZ] Final options:`, options);
 
         quizItems.push({
             cardId: cardIdMap.get(vocab.id) || null,
@@ -345,10 +448,11 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
             question: questionText,
             answer: correctAnswer,
             quizType: 'ko_meaning_to_jp_word',
-            options: shuffleArray(options),
+            options: shuffleArray(options), // 로마자 정보가 포함된 options
+            optionsWithRomaji: true, // 프론트엔드에 로마자 정보가 포함되어 있음을 알림
             pron: {
-                romaji: vocab.romaji || null,
-                hiragana: vocab.kana || null
+                romaji: correctInfo.romaji,
+                hiragana: correctInfo.hiragana
             },
             jlptLevel: vocab.levelJLPT,
             pos: vocab.pos,
@@ -373,7 +477,6 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
         prisma.vocab.findMany({
             where: {
                 id: { in: ids },
-                romaji: { not: null },
                 OR: [
                     { levelJLPT: { not: null } },
                     { source: 'jlpt_vocabs' }
@@ -394,13 +497,14 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
         prisma.vocab.findMany({
             where: {
                 id: { notIn: ids },
-                romaji: { not: null },
                 OR: [
                     { levelJLPT: { not: null } },
                     { source: 'jlpt_vocabs' }
                 ]
             },
-            select: { romaji: true },
+            include: {
+                dictentry: true
+            },
             take: 200
         }),
     ]);
@@ -410,15 +514,43 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
     // 로마자 발음들을 distractor로 수집
     const distractorRomaji = new Set();
     distractorPool.forEach(v => {
-        if (v.romaji) distractorRomaji.add(v.romaji);
+        if (v.dictentry && v.dictentry.examples && v.dictentry.examples.romaji) {
+            distractorRomaji.add(v.dictentry.examples.romaji);
+        }
     });
 
     const quizItems = [];
-    for (const vocab of vocabs) {
-        if (!vocab.romaji) continue;
+    console.log(`[JP ROMAJI QUIZ] Processing ${vocabs.length} vocabs`);
 
-        const questionText = vocab.lemma || vocab.kana || vocab.kanji;
-        const correctAnswer = vocab.romaji;
+    for (const vocab of vocabs) {
+        console.log(`[JP ROMAJI QUIZ] Processing vocab ID ${vocab.id}, lemma: ${vocab.lemma}`);
+
+        // dictentry.examples에서 로마자 추출
+        let romajiAnswer = null;
+        let japaneseLemma = vocab.lemma;
+
+        if (vocab.dictentry && vocab.dictentry.examples) {
+            const examples = vocab.dictentry.examples;
+            console.log(`[JP ROMAJI QUIZ] Found examples:`, examples);
+
+            if (examples.romaji) {
+                romajiAnswer = examples.romaji;
+                japaneseLemma = examples.kanji || examples.kana || vocab.lemma;
+                console.log(`[JP ROMAJI QUIZ] Found romaji: ${romajiAnswer}, ja: ${japaneseLemma}`);
+            } else {
+                console.log(`[JP ROMAJI QUIZ] No romaji found in examples`);
+            }
+        } else {
+            console.log(`[JP ROMAJI QUIZ] No dictentry.examples found`);
+        }
+
+        if (!romajiAnswer) {
+            console.log(`[JP ROMAJI QUIZ] Skipping vocab ${vocab.id} - no romaji`);
+            continue;
+        }
+
+        const questionText = japaneseLemma;
+        const correctAnswer = romajiAnswer;
 
         // Distractor 선택 (정답 제외)
         const availableDistractors = Array.from(distractorRomaji).filter(
@@ -488,24 +620,105 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
 
     const quizItems = [];
     for (const vocab of vocabs) {
-        // 예문이 있는지 확인 (JLPT 데이터에서 example 필드 사용)
-        const example = vocab.example || vocab.exampleKana;
-        if (!example) continue;
+        // dictentry.examples에서 예문 및 일본어 정보 추출
+        let targetExample = null;
+        let koExample = null; // 한국어 해석 추가
+        let targetWord = vocab.lemma;
+        let hiragana = null;
+        let romaji = null;
 
-        const targetWord = vocab.lemma || vocab.kana || vocab.kanji;
-        if (!example.includes(targetWord)) continue;
+        if (vocab.dictentry && vocab.dictentry.examples) {
+            const examples = vocab.dictentry.examples;
+            if (examples.example && examples.koExample) {
+                targetExample = examples.example;
+                koExample = examples.koExample; // 한국어 해석 저장
+                targetWord = examples.kanji || examples.kana || vocab.lemma;
+                hiragana = examples.kana || null;
+                romaji = examples.romaji || null;
+            }
+        }
 
-        // 빈칸 처리된 예문 생성
-        const contextBlank = example.replace(targetWord, '___');
+        if (!targetExample || !targetWord) continue;
+
+        // 빈칸 처리된 예문 생성 (모든 형태의 정답을 빈칸으로 처리)
+        let contextBlank = targetExample;
 
         // 허용되는 정답들 (한자, 히라가나, 로마자)
         const acceptableAnswers = [targetWord];
-        if (vocab.kana && vocab.kana !== targetWord) {
-            acceptableAnswers.push(vocab.kana);
+        if (hiragana && hiragana !== targetWord) {
+            acceptableAnswers.push(hiragana);
         }
-        if (vocab.romaji && vocab.romaji !== targetWord) {
-            acceptableAnswers.push(vocab.romaji);
+        if (romaji && romaji !== targetWord) {
+            acceptableAnswers.push(romaji);
         }
+
+        // vocab.lemma도 정답에 추가 (중복 제거)
+        if (vocab.lemma && !acceptableAnswers.includes(vocab.lemma)) {
+            acceptableAnswers.push(vocab.lemma);
+        }
+
+        // 모든 형태의 정답을 빈칸으로 교체 (긴 것부터 먼저 교체하여 부분 교체 방지)
+        const allAnswers = [...acceptableAnswers].sort((a, b) => b.length - a.length);
+        for (const answer of allAnswers) {
+            if (answer) {
+                // 정확한 단어 경계를 고려하여 교체 (부분 문자열 교체 방지)
+                const regex = new RegExp(answer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                contextBlank = contextBlank.replace(regex, '___');
+            }
+        }
+
+        // 한국어 번역 추출
+        const koreanTranslation = vocab.translations && vocab.translations[0]
+            ? vocab.translations[0].translation
+            : null;
+
+        // 한국어 해석에서 강조할 단어 찾기
+        let highlightedTranslation = koExample;
+        if (koExample && koreanTranslation) {
+            // 품사 정보 제거 (n., v., adj. 등)
+            const cleanedTranslation = koreanTranslation.replace(/^[a-zA-Z]+\.\s*/, '');
+
+            // 정답 번역에서 가능한 모든 의미 추출
+            const meanings = cleanedTranslation.split(/[,;\/]/).map(m => m.trim());
+
+            let foundMatch = false;
+            for (const meaning of meanings) {
+                if (meaning && koExample.includes(meaning)) {
+                    highlightedTranslation = koExample.replace(
+                        new RegExp(meaning.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                        `{{HIGHLIGHT_START}}${meaning}{{HIGHLIGHT_END}}`
+                    );
+                    foundMatch = true;
+                    break;
+                }
+            }
+
+            // 만약 직접 매칭되지 않으면 단어의 일부를 찾아보기
+            if (!foundMatch && cleanedTranslation.length >= 1) {
+                // 번역의 첫 글자라도 해석에 있는지 확인
+                const firstChar = cleanedTranslation.charAt(0);
+                if (koExample.includes(firstChar)) {
+                    highlightedTranslation = koExample.replace(
+                        new RegExp(firstChar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+                        `{{HIGHLIGHT_START}}${firstChar}{{HIGHLIGHT_END}}`
+                    );
+                }
+            }
+        }
+
+        // 디버깅: 데이터 로깅
+        console.log('Japanese Fill-in-Blank Quiz Item:', {
+            vocabId: vocab.id,
+            targetWord: targetWord,
+            contextTranslation: koExample,
+            answerTranslation: koreanTranslation,
+            cleanedTranslation: koreanTranslation ? koreanTranslation.replace(/^[a-zA-Z]+\.\s*/, '') : null,
+            highlightedTranslation: highlightedTranslation,
+            vocab: {
+                lemma: vocab.lemma,
+                translations: vocab.translations?.map(t => t.translation)
+            }
+        });
 
         quizItems.push({
             cardId: cardIdMap.get(vocab.id) || null,
@@ -513,12 +726,14 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
             question: contextBlank,
             answer: targetWord, // 기본 정답
             quizType: 'jp_fill_in_blank',
-            contextSentence: example,
+            contextSentence: targetExample,
             contextBlank: contextBlank,
+            contextTranslation: highlightedTranslation, // 강조 마킹이 포함된 한국어 해석
+            answerTranslation: koreanTranslation, // 정답의 한국어 번역
             acceptableAnswers: acceptableAnswers,
             pron: {
-                romaji: vocab.romaji || null,
-                hiragana: vocab.kana || null
+                romaji: romaji,
+                hiragana: hiragana
             },
             jlptLevel: vocab.levelJLPT,
             pos: vocab.pos,

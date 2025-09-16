@@ -4,6 +4,55 @@ import { JapaneseQuizTypes, isMultipleChoiceQuiz, isInputQuiz, getQuizTypeDescri
 import { fetchJSON, withCreds } from '../api/client';
 import { toast } from 'react-toastify';
 
+// JLPT 레벨 배지 색상 함수 (기존 JapaneseVocabCard와 동일)
+const getJlptBadgeColor = (level) => {
+    switch (level) {
+        case 'N5': return 'bg-success';
+        case 'N4': return 'bg-info';
+        case 'N3': return 'bg-warning text-dark';
+        case 'N2': return 'bg-danger';
+        case 'N1': return 'bg-dark';
+        default: return 'bg-secondary';
+    }
+};
+
+// 한국어 해석에서 정답 단어를 강조하는 함수
+const highlightAnswerInTranslation = (translation) => {
+    console.log('highlightAnswerInTranslation called with:', translation);
+
+    if (!translation) {
+        console.log('No translation, returning empty');
+        return '';
+    }
+
+    // 백엔드에서 전달된 강조 마킹을 처리
+    if (translation.includes('{{HIGHLIGHT_START}}') && translation.includes('{{HIGHLIGHT_END}}')) {
+        console.log('Found highlight markers, processing...');
+
+        const parts = translation.split('{{HIGHLIGHT_START}}');
+        const beforeHighlight = parts[0];
+
+        const remainingPart = parts[1];
+        const highlightParts = remainingPart.split('{{HIGHLIGHT_END}}');
+        const highlighted = highlightParts[0];
+        const afterHighlight = highlightParts[1] || '';
+
+        console.log('Highlight parts:', { beforeHighlight, highlighted, afterHighlight });
+
+        return (
+            <span>
+                {beforeHighlight}
+                <span style={{ color: 'red', fontWeight: 'bold' }}>{highlighted}</span>
+                {afterHighlight}
+            </span>
+        );
+    }
+
+    // 강조 마킹이 없으면 원본 반환
+    console.log('No highlight markers found, returning original');
+    return translation;
+};
+
 export default function JapaneseQuiz({
     vocabIds,
     quizType = JapaneseQuizTypes.JP_WORD_TO_KO_MEANING,
@@ -19,6 +68,11 @@ export default function JapaneseQuiz({
     const [loading, setLoading] = useState(true);
     const [score, setScore] = useState({ correct: 0, total: 0 });
 
+    // 스펠링 입력용 3번 기회 로직
+    const [attemptCount, setAttemptCount] = useState(0);
+    const [maxAttempts] = useState(3);
+    const [showSpellingWarning, setShowSpellingWarning] = useState(false);
+
     const currentQuiz = quizItems[currentIndex];
     const isMultipleChoice = currentQuiz && isMultipleChoiceQuiz(currentQuiz.quizType);
     const isInput = currentQuiz && isInputQuiz(currentQuiz.quizType);
@@ -27,6 +81,15 @@ export default function JapaneseQuiz({
     useEffect(() => {
         loadQuizData();
     }, [vocabIds, quizType]);
+
+    // 현재 문제가 변경될 때마다 스펠링 관련 상태 초기화
+    useEffect(() => {
+        setUserAnswer('');
+        setSelectedOption(null);
+        setAttemptCount(0);
+        setShowSpellingWarning(false);
+        setShowResult(false);
+    }, [currentIndex]);
 
     const loadQuizData = async () => {
         try {
@@ -65,8 +128,17 @@ export default function JapaneseQuiz({
         let correct = false;
 
         if (isMultipleChoice) {
-            finalAnswer = selectedOption;
+            // selectedOption이 객체인 경우 text 속성을 사용, 문자열인 경우 그대로 사용
+            if (typeof selectedOption === 'object' && selectedOption !== null) {
+                finalAnswer = selectedOption.text;
+            } else {
+                finalAnswer = selectedOption;
+            }
             correct = finalAnswer === currentQuiz.answer;
+
+            // 4지선다는 바로 결과 표시
+            setIsCorrect(correct);
+            setShowResult(true);
         } else if (isInput) {
             finalAnswer = userAnswer.trim();
             // 일본어 입력 퀴즈는 여러 정답 허용 (한자, 히라가나, 로마자)
@@ -74,10 +146,29 @@ export default function JapaneseQuiz({
                 ? currentQuiz.acceptableAnswers.some(acceptable =>
                     acceptable.toLowerCase() === finalAnswer.toLowerCase())
                 : finalAnswer.toLowerCase() === currentQuiz.answer.toLowerCase();
-        }
 
-        setIsCorrect(correct);
-        setShowResult(true);
+            if (correct) {
+                // 정답인 경우 바로 결과 표시
+                setIsCorrect(true);
+                setShowResult(true);
+                setShowSpellingWarning(false);
+            } else {
+                // 틀린 경우 시도 횟수 증가
+                const newAttemptCount = attemptCount + 1;
+                setAttemptCount(newAttemptCount);
+
+                if (newAttemptCount >= maxAttempts) {
+                    // 3번 모두 틀린 경우 오답 처리
+                    setIsCorrect(false);
+                    setShowResult(true);
+                    setShowSpellingWarning(false);
+                } else {
+                    // 아직 기회가 남은 경우 경고 표시
+                    setShowSpellingWarning(true);
+                    return; // 여기서 함수 종료 (SRS 기록하지 않음)
+                }
+            }
+        }
 
         // SRS 시스템에 답안 전송 (cardId가 있는 경우에만)
         if (currentQuiz.cardId) {
@@ -164,7 +255,22 @@ export default function JapaneseQuiz({
                 <div className="card shadow-sm">
                     <div className="card-body p-4">
                         {/* 문제 표시 */}
-                        <div className="question-section text-center mb-4">
+                        <div className="question-section text-center mb-4 position-relative">
+                            {/* JLPT 레벨 표시 - 오른쪽 위 */}
+                            {currentQuiz.jlptLevel && (
+                                <span
+                                    className={`badge ${getJlptBadgeColor(currentQuiz.jlptLevel)} position-absolute`}
+                                    style={{
+                                        top: '0',
+                                        right: '0',
+                                        fontSize: '0.75rem',
+                                        padding: '0.25rem 0.5rem'
+                                    }}
+                                >
+                                    {currentQuiz.jlptLevel}
+                                </span>
+                            )}
+
                             <h2 className="display-6 mb-3" lang="ja">
                                 {currentQuiz.question}
                             </h2>
@@ -184,11 +290,6 @@ export default function JapaneseQuiz({
                                     )}
                                 </div>
                             )}
-
-                            {/* JLPT 레벨 표시 */}
-                            {currentQuiz.jlptLevel && (
-                                <span className="badge bg-secondary mb-3">{currentQuiz.jlptLevel}</span>
-                            )}
                         </div>
 
                         {/* 답안 입력 영역 */}
@@ -196,17 +297,33 @@ export default function JapaneseQuiz({
                             <div className="answer-section">
                                 {isMultipleChoice && currentQuiz.options && (
                                     <div className="options-container">
-                                        {currentQuiz.options.map((option, index) => (
-                                            <button
-                                                key={index}
-                                                className={`btn btn-outline-primary w-100 mb-2 ${
-                                                    selectedOption === option ? 'active' : ''
-                                                }`}
-                                                onClick={() => setSelectedOption(option)}
-                                            >
-                                                {option}
-                                            </button>
-                                        ))}
+                                        {currentQuiz.options.map((option, index) => {
+                                            // option이 객체인 경우 (로마자 정보 포함) 또는 문자열인 경우 처리
+                                            const isObject = typeof option === 'object' && option !== null;
+                                            const optionText = isObject ? option.text : option;
+                                            const optionRomaji = isObject ? option.romaji : null;
+                                            const displayValue = isObject ? option : option; // 선택값으로 사용
+
+                                            return (
+                                                <button
+                                                    key={index}
+                                                    className={`btn btn-outline-primary w-100 mb-2 text-start ${
+                                                        selectedOption === displayValue ? 'active' : ''
+                                                    }`}
+                                                    onClick={() => setSelectedOption(displayValue)}
+                                                    style={{ paddingTop: '12px', paddingBottom: '12px' }}
+                                                >
+                                                    <div>
+                                                        <span className="fw-bold" lang="ja">{optionText}</span>
+                                                        {optionRomaji && (
+                                                            <div className="text-muted small mt-1">
+                                                                ({optionRomaji})
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </button>
+                                            );
+                                        })}
                                         <div className="text-center mt-3">
                                             <button
                                                 className="btn btn-success btn-lg"
@@ -221,10 +338,31 @@ export default function JapaneseQuiz({
 
                                 {isInput && (
                                     <div className="input-container">
+                                        {/* 예문 한국어 해석 표시 */}
+                                        {currentQuiz.contextTranslation && (
+                                            <div className="alert alert-light mb-3 text-center">
+                                                <small className="text-muted">
+                                                    <strong>해석:</strong> {highlightAnswerInTranslation(
+                                                        currentQuiz.contextTranslation
+                                                    )}
+                                                </small>
+                                            </div>
+                                        )}
+
+                                        {/* 스펠링 경고 메시지 */}
+                                        {showSpellingWarning && (
+                                            <div className="alert alert-warning mb-3">
+                                                <strong>⚠️ 다시 생각해보세요!</strong>
+                                                <div className="small mt-1">남은 기회: {maxAttempts - attemptCount}번</div>
+                                            </div>
+                                        )}
+
                                         <div className="mb-3">
                                             <input
                                                 type="text"
-                                                className="form-control form-control-lg text-center"
+                                                className={`form-control form-control-lg text-center ${
+                                                    showSpellingWarning ? 'border-warning' : ''
+                                                }`}
                                                 placeholder="답을 입력하세요 (한자, 히라가나, 또는 로마자)"
                                                 value={userAnswer}
                                                 onChange={(e) => setUserAnswer(e.target.value)}
