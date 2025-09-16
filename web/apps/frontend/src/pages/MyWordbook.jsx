@@ -273,7 +273,18 @@ export default function MyWordbook() {
         };
         
         // 1. cefr_vocabs.json의 audio 경로 사용 (최우선) - word.mp3 우선
-        const audioData = vocab.dictentry?.audioLocal ? JSON.parse(vocab.dictentry.audioLocal) : null;
+        let audioData = null;
+        if (vocab.dictentry?.audioLocal) {
+            try {
+                audioData = JSON.parse(vocab.dictentry.audioLocal);
+            } catch (e) {
+                // audioLocal이 JSON이 아닌 단순 문자열인 경우
+                const audioPath = vocab.dictentry.audioLocal;
+                if (audioPath && typeof audioPath === 'string') {
+                    audioData = { word: audioPath };
+                }
+            }
+        }
         const wordAudioPath = audioData?.word || audioData?.example;
         
         if (wordAudioPath) {
