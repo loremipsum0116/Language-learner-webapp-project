@@ -230,7 +230,8 @@
       "Bash(cp:*)",
       "Bash(npx dotenv -e:*)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx tsx seed-jlpt-vocabs.ts)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(pnpm --filter @language-learner/backend prisma studio:*)"
     ],
     "deny": [],
     "ask": []

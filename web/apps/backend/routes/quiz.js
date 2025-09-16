@@ -5,14 +5,17 @@ const dayjs = require('dayjs');
 const { prisma } = require('../lib/prismaClient');
 const { startOfKstDay, addKstDays } = require('../services/srsJobs');
 const { ok, fail } = require('../lib/resp'); // ok, fail 헬퍼 임포트
-const { generateMcqQuizItems } = require('../services/quizService'); // 퀴즈 생성 서비스 임포트
+const {
+    generateMcqQuizItems,
+    generateQuizByLanguageAndType,
+    detectLanguage
+} = require('../services/quizService'); // 퀴즈 생성 서비스 임포트
 const { addWrongAnswer } = require('../services/wrongAnswerService'); // 오답노트 서비스
 // ... (기존 require문들)
 
 // app.use('/quiz', auth, quizRoutes) 에서 auth 적용됨
 
 
-// ▼▼▼ 여기에 이 코드 블록을 추가하세요 ▼▼▼
 /*
  * @route   POST /quiz/by-vocab
  * @desc    주어진 vocabId 목록으로 즉석 퀴즈를 생성합니다. (내 단어장 -> 자동학습)
@@ -32,11 +35,122 @@ router.post('/by-vocab', async (req, res, next) => {
 
     } catch (e) {
         console.error('POST /quiz/by-vocab failed:', e);
-        // next(e)를 사용하거나 fail 헬퍼로 직접 응답할 수 있습니다.
         return fail(res, 500, 'Failed to create quiz by vocab IDs');
     }
 });
-// ▲▲▲ 여기까지 추가 ▲▲▲
+
+/*
+ * @route   POST /quiz/japanese
+ * @desc    일본어 전용 퀴즈를 생성합니다. (일본어 SRS 시스템)
+ * @access  Private
+ */
+router.post('/japanese', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { vocabIds, quizType = 'jp_word_to_ko_meaning' } = req.body;
+
+        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+            return fail(res, 400, 'vocabIds must be a non-empty array');
+        }
+
+        // 지원되는 일본어 퀴즈 타입 확인
+        const supportedTypes = [
+            'jp_word_to_ko_meaning',
+            'ko_meaning_to_jp_word',
+            'jp_word_to_romaji',
+            'jp_fill_in_blank',
+            'jp_mixed'
+        ];
+
+        if (!supportedTypes.includes(quizType)) {
+            return fail(res, 400, `Unsupported quiz type. Supported types: ${supportedTypes.join(', ')}`);
+        }
+
+        console.log(`[JAPANESE QUIZ] Generating ${quizType} quiz for vocabIds:`, vocabIds);
+
+        const quizItems = await generateQuizByLanguageAndType(
+            prisma,
+            userId,
+            vocabIds,
+            quizType,
+            'ja'
+        );
+
+        console.log(`[JAPANESE QUIZ] Generated ${quizItems.length} quiz items`);
+
+        return ok(res, {
+            quizItems,
+            quizType,
+            language: 'ja',
+            totalItems: quizItems.length
+        });
+
+    } catch (e) {
+        console.error('POST /quiz/japanese failed:', e);
+        return fail(res, 500, 'Failed to create Japanese quiz');
+    }
+});
+
+/*
+ * @route   POST /quiz/by-language
+ * @desc    언어별 퀴즈를 생성합니다. (언어 자동 감지 또는 명시)
+ * @access  Private
+ */
+router.post('/by-language', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { vocabIds, language, quizType } = req.body;
+
+        if (!Array.isArray(vocabIds) || vocabIds.length === 0) {
+            return fail(res, 400, 'vocabIds must be a non-empty array');
+        }
+
+        let detectedLanguage = language;
+
+        // 언어가 명시되지 않은 경우 첫 번째 단어로 언어 감지
+        if (!detectedLanguage && vocabIds.length > 0) {
+            const sampleVocab = await prisma.vocab.findFirst({
+                where: { id: vocabIds[0] },
+                select: { categories: true, kana: true, romaji: true }
+            });
+
+            if (sampleVocab) {
+                detectedLanguage = detectLanguage(sampleVocab);
+                console.log(`[QUIZ BY LANGUAGE] Detected language: ${detectedLanguage} for vocab ${vocabIds[0]}`);
+            }
+        }
+
+        // 기본값 설정
+        detectedLanguage = detectedLanguage || 'en';
+
+        // 퀴즈 타입 기본값 설정
+        let finalQuizType = quizType;
+        if (!finalQuizType) {
+            finalQuizType = detectedLanguage === 'ja' ? 'jp_word_to_ko_meaning' : 'mcq';
+        }
+
+        console.log(`[QUIZ BY LANGUAGE] Creating ${finalQuizType} quiz for language: ${detectedLanguage}`);
+
+        const quizItems = await generateQuizByLanguageAndType(
+            prisma,
+            userId,
+            vocabIds,
+            finalQuizType,
+            detectedLanguage
+        );
+
+        return ok(res, {
+            quizItems,
+            language: detectedLanguage,
+            quizType: finalQuizType,
+            totalItems: quizItems.length
+        });
+
+    } catch (e) {
+        console.error('POST /quiz/by-language failed:', e);
+        return fail(res, 500, 'Failed to create language-specific quiz');
+    }
+});
 
 router.post('/answer', async (req, res, next) => {
     try {

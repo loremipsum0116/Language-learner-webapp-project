@@ -18,9 +18,38 @@ import { fetchJSON, withCreds, API_BASE, isAbortError } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import Pron from '../components/Pron';
 import MiniQuiz from '../components/MiniQuiz';
+import JapaneseQuiz from '../components/JapaneseQuiz';
+import { JapaneseQuizTypes } from '../types/japanese-quiz';
 
 // ───────────────────── 헬퍼 ─────────────────────
 const safeFileName = (s) => encodeURIComponent(String(s ?? ''));
+
+// 언어 감지 함수
+const detectLanguageFromVocab = (vocab) => {
+    if (!vocab) return 'en';
+
+    // JLPT 레벨이 있으면 일본어
+    if (vocab.levelJLPT) {
+        return 'ja';
+    }
+
+    // source가 jlpt_vocabs이면 일본어
+    if (vocab.source === 'jlpt_vocabs') {
+        return 'ja';
+    }
+
+    // dictentry의 examples에 일본어 데이터가 있으면 일본어
+    if (vocab.dictentry && vocab.dictentry.examples) {
+        const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
+        const hasJapanese = examples.some(ex => ex.ja || ex.source === 'jlpt_vocabs');
+        if (hasJapanese) {
+            return 'ja';
+        }
+    }
+
+    // 기본값은 영어
+    return 'en';
+};
 
 // CEFR 레벨을 실제 폴더명으로 매핑
 const cefrToFolder = {
@@ -272,6 +301,7 @@ export default function LearnVocab() {
     const [idx, setIdx] = useState(0);
     const [userAnswer, setAnswer] = useState(null);
     const [feedback, setFeedback] = useState(null);
+    const [quizLanguage, setQuizLanguage] = useState('en'); // 퀴즈 언어 상태
     const [isSubmitting, setSubmitting] = useState(false);
     const [reloading, setReloading] = useState(false);
     const [reloadKey, forceReload] = useReducer((k) => k + 1, 0);
@@ -747,6 +777,22 @@ export default function LearnVocab() {
                     let fetched = Array.isArray(data) ? data : [];
                     if (mode === 'flash') fetched = shuffleArray(fetched);
                     setQueue(fetched);
+
+                    // 큐 전체에서 언어 감지 (일본어가 하나라도 있으면 일본어 퀴즈)
+                    if (fetched.length > 0) {
+                        let detectedLanguage = 'en';
+                        for (const item of fetched) {
+                            if (item.vocab) {
+                                const itemLanguage = detectLanguageFromVocab(item.vocab);
+                                if (itemLanguage === 'ja') {
+                                    detectedLanguage = 'ja';
+                                    break;
+                                }
+                            }
+                        }
+                        setQuizLanguage(detectedLanguage);
+                        console.log('[LearnVocab] Detected language:', detectedLanguage, 'from', fetched.length, 'items');
+                    }
 
                     // 플래시 모드에서 선택된 아이템들의 경우 allBatches도 설정
                     if (mode === 'flash' && folderIdParam && selectedItemsParam && fetched.length > 0) {
@@ -1814,68 +1860,142 @@ export default function LearnVocab() {
             navigate(currentUrl.pathname + currentUrl.search);
         };
 
+        const isJapaneseQuiz = quizLanguage === 'ja';
+
         return (
             <main className="container py-4" style={{ maxWidth: 720 }}>
                 <audio ref={audioRef} style={{ display: 'none' }} />
                 <div className="card">
                     <div className="card-header bg-primary text-white">
                         <h5 className="mb-0">📚 학습 유형 선택</h5>
+                        {isJapaneseQuiz && <span className="badge bg-warning text-dark ms-2">일본어</span>}
                     </div>
                     <div className="card-body p-4">
                         <p className="text-muted mb-4">원하는 학습 유형을 선택해주세요.</p>
 
                         <div className="d-grid gap-3">
-                            <button
-                                className="btn btn-outline-primary btn-lg text-start p-3"
-                                onClick={() => handleQuizTypeSelect('meaning')}
-                            >
-                                <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>📖</div>
-                                    <div>
-                                        <h6 className="mb-1">4지선다 (영단어 뜻 맞추기)</h6>
-                                        <small className="text-muted">영어 단어를 보고 한국어 뜻을 선택합니다</small>
-                                    </div>
-                                </div>
-                            </button>
+                            {isJapaneseQuiz ? (
+                                <>
+                                    <button
+                                        className="btn btn-outline-primary btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.JP_WORD_TO_KO_MEANING)}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>📖</div>
+                                            <div>
+                                                <h6 className="mb-1">4지선다 (일본어 → 한국어 뜻)</h6>
+                                                <small className="text-muted">일본어 단어를 보고 한국어 뜻을 선택합니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
 
-                            <button
-                                className="btn btn-outline-success btn-lg text-start p-3"
-                                onClick={() => handleQuizTypeSelect('context')}
-                            >
-                                <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>🔤</div>
-                                    <div>
-                                        <h6 className="mb-1">4지선다 (한국어 뜻 매칭)</h6>
-                                        <small className="text-muted">한국어 뜻을 보고 알맞은 영어 단어를 선택합니다</small>
-                                    </div>
-                                </div>
-                            </button>
+                                    <button
+                                        className="btn btn-outline-success btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.KO_MEANING_TO_JP_WORD)}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>🔤</div>
+                                            <div>
+                                                <h6 className="mb-1">4지선다 (한국어 뜻 → 일본어)</h6>
+                                                <small className="text-muted">한국어 뜻을 보고 알맞은 일본어 단어를 선택합니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
 
-                            <button
-                                className="btn btn-outline-info btn-lg text-start p-3"
-                                onClick={() => handleQuizTypeSelect('spelling')}
-                            >
-                                <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>✏️</div>
-                                    <div>
-                                        <h6 className="mb-1">스펠링 입력 (예문 직접 타이핑)</h6>
-                                        <small className="text-muted">예문의 빈칸에 영어 단어를 직접 입력합니다 (3번 기회)</small>
-                                    </div>
-                                </div>
-                            </button>
+                                    <button
+                                        className="btn btn-outline-info btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.JP_WORD_TO_ROMAJI)}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>🔊</div>
+                                            <div>
+                                                <h6 className="mb-1">4지선다 (일본어 → 로마자 발음)</h6>
+                                                <small className="text-muted">일본어 단어를 보고 로마자 발음을 선택합니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
 
-                            <button
-                                className="btn btn-outline-warning btn-lg text-start p-3"
-                                onClick={() => handleQuizTypeSelect('mixed')}
-                            >
-                                <div className="d-flex align-items-center">
-                                    <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
-                                    <div>
-                                        <h6 className="mb-1">혼합형</h6>
-                                        <small className="text-muted">영단어→한국어, 한국어→영단어, 스펠링 입력이 랜덤하게 출제됩니다</small>
-                                    </div>
-                                </div>
-                            </button>
+                                    <button
+                                        className="btn btn-outline-warning btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.JP_FILL_IN_BLANK)}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>✏️</div>
+                                            <div>
+                                                <h6 className="mb-1">스펠링 입력 (예문 직접 타이핑)</h6>
+                                                <small className="text-muted">예문의 빈칸에 일본어 단어를 직접 입력합니다 (한자/로마자 모두 정답 처리)</small>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        className="btn btn-outline-secondary btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.JP_MIXED)}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
+                                            <div>
+                                                <h6 className="mb-1">혼합형</h6>
+                                                <small className="text-muted">일본어→한국어, 한국어→일본어, 로마자 발음, 스펠링 입력이 랜덤하게 출제됩니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button
+                                        className="btn btn-outline-primary btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect('meaning')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>📖</div>
+                                            <div>
+                                                <h6 className="mb-1">4지선다 (영단어 뜻 맞추기)</h6>
+                                                <small className="text-muted">영어 단어를 보고 한국어 뜻을 선택합니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        className="btn btn-outline-success btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect('context')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>🔤</div>
+                                            <div>
+                                                <h6 className="mb-1">4지선다 (한국어 뜻 매칭)</h6>
+                                                <small className="text-muted">한국어 뜻을 보고 알맞은 영어 단어를 선택합니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        className="btn btn-outline-info btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect('spelling')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>✏️</div>
+                                            <div>
+                                                <h6 className="mb-1">스펠링 입력 (예문 직접 타이핑)</h6>
+                                                <small className="text-muted">예문의 빈칸에 영어 단어를 직접 입력합니다 (3번 기회)</small>
+                                            </div>
+                                        </div>
+                                    </button>
+
+                                    <button
+                                        className="btn btn-outline-warning btn-lg text-start p-3"
+                                        onClick={() => handleQuizTypeSelect('mixed')}
+                                    >
+                                        <div className="d-flex align-items-center">
+                                            <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
+                                            <div>
+                                                <h6 className="mb-1">혼합형</h6>
+                                                <small className="text-muted">영단어→한국어, 한국어→영단어, 스펠링 입력이 랜덤하게 출제됩니다</small>
+                                            </div>
+                                        </div>
+                                    </button>
+                                </>
+                            )}
                         </div>
 
                         <div className="mt-4 text-center">
@@ -1888,6 +2008,31 @@ export default function LearnVocab() {
                         </div>
                     </div>
                 </div>
+            </main>
+        );
+    }
+
+    // 일본어 퀴즈 렌더링 (일본어 퀴즈 타입이 선택된 경우)
+    if (quizLanguage === 'ja' && quizTypeParam && Object.values(JapaneseQuizTypes).includes(quizTypeParam)) {
+        const japaneseVocabIds = queue
+            .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja')
+            .map(item => item.vocabId);
+
+        const handleJapaneseQuizComplete = () => {
+            // 퀴즈 완료 후 처리 로직
+            navigate(folderIdParam ? `/srs/folder/${folderIdParam}` : '/srs');
+        };
+
+        return (
+            <main className="container py-4" style={{ maxWidth: 720 }}>
+                <audio ref={audioRef} style={{ display: 'none' }} />
+
+                <JapaneseQuiz
+                    vocabIds={japaneseVocabIds}
+                    quizType={quizTypeParam}
+                    onQuizComplete={handleJapaneseQuizComplete}
+                    folderId={folderIdParam}
+                />
             </main>
         );
     }

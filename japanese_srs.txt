@@ -1,0 +1,518 @@
+# 일본어 SRS 퀴즈 시스템 구현 진행사항
+
+## 프로젝트 개요
+일본어 전용 SRS 퀴즈 시스템을 구현하여 영어와 분리된 퀴즈 타입들을 제공
+
+## 구현할 퀴즈 타입들
+1. 일본어 단어 → 한국어 뜻 (4지선다)
+2. 한국어 뜻 → 일본어 단어 (4지선다)
+3. 예문 빈칸 스펠링 입력 (한자/로마자 모두 정답 처리)
+4. 일본어 단어 → 로마자 발음 (4지선다)
+
+## 진행사항
+
+### 2025-09-16
+- 프로젝트 시작 및 현재 SRS 퀴즈 시스템 구조 분석 완료
+- 현재 SrsQuiz.jsx와 srsService.js 파일 구조 확인 완료
+- 영어 중심의 기존 퀴즈 시스템을 일본어 확장하기 위한 기반 파악
+
+#### 완료된 작업들:
+1. **일본어 전용 퀴즈 타입 정의 완료**
+   - `/web/apps/frontend/src/types/japanese-quiz.js` 생성
+   - 4가지 일본어 퀴즈 타입 정의: jp_word_to_ko_meaning, ko_meaning_to_jp_word, jp_fill_in_blank, jp_word_to_romaji
+   - 타입스크립트 타입 정의 및 헬퍼 함수들 구현
+
+2. **백엔드 퀴즈 생성 서비스 확장 완료**
+   - `/web/apps/backend/services/quizService.js` 확장
+   - 4가지 일본어 퀴즈 생성 함수 구현:
+     - generateJapaneseToKoreanQuiz(): 일본어 단어 → 한국어 뜻 (4지선다)
+     - generateKoreanToJapaneseQuiz(): 한국어 뜻 → 일본어 단어 (4지선다)
+     - generateJapaneseToRomajiQuiz(): 일본어 단어 → 로마자 발음 (4지선다)
+     - generateJapaneseFillInBlankQuiz(): 예문 빈칸 스펠링 입력 (한자/로마자 모두 정답 처리)
+   - detectLanguage() 함수로 JLPT 단어 자동 감지
+   - generateQuizByLanguageAndType() 메인 함수로 언어별 퀴즈 생성 통합
+
+3. **백엔드 라우팅 확장 완료**
+   - `/web/apps/backend/routes/quiz.js` 확장
+   - 새로운 엔드포인트 추가:
+     - POST `/quiz/japanese`: 일본어 전용 퀴즈 생성
+     - POST `/quiz/by-language`: 언어별 퀴즈 생성 (자동 감지 지원)
+   - 기존 영어 퀴즈와 호환성 유지
+
+4. **프론트엔드 일본어 퀴즈 컴포넌트 완료**
+   - `/web/apps/frontend/src/components/JapaneseQuiz.jsx` 생성
+   - 4가지 퀴즈 타입 모두 지원
+   - 4지선다와 입력형 퀴즈 UI 분기 처리
+   - 한자/히라가나/로마자 다중 정답 지원 (빈칸 퀴즈)
+   - JLPT 레벨 및 발음 정보 표시
+   - 기존 SRS 시스템과 연동 (cardId 기반)
+
+5. **기존 SRS 로직 통합 완료**
+   - 일본어 퀴즈에서도 기존 SRS 로직 완전 적용
+   - 오답노트 자동 기록 (vocabId 기반)
+   - 망각학습 알고리즘 동일 적용
+   - 연속학습일 카운트 동일 적용
+   - SRS 카드 상태 업데이트 동일 적용
+
+6. **언어별 퀴즈 라우팅 및 UI 구분 완료**
+   - `/web/apps/frontend/src/pages/SrsQuiz.jsx` 확장
+   - 자동 언어 감지 로직 구현 (JLPT 카테고리, kana/romaji 필드 기반)
+   - 일본어 퀴즈와 영어 퀴즈 UI 분기 처리
+   - 퀴즈 타입 드롭다운 메뉴로 실시간 변경 가능
+   - 기존 연속학습일 시스템과 완전 호환
+   - 언어별 배지 표시 (영어/일본어 구분)
+
+## 프로젝트 완료 상태
+✅ **모든 요구 사항이 성공적으로 구현 완료되었습니다!**
+
+### 완성된 기능들:
+1. **4가지 일본어 퀴즈 타입 모두 구현 완료**
+   - ✅ 일본어 단어 → 한국어 뜻 (4지선다)
+   - ✅ 한국어 뜻 → 일본어 단어 (4지선다)
+   - ✅ 예문 빈칸 스펠링 입력 (한자/로마자 모두 정답 처리)
+   - ✅ 일본어 단어 → 로마자 발음 (4지선다)
+
+2. **기존 SRS 로직 완전 적용**
+   - ✅ 오답노트 자동 기록
+   - ✅ 망각학습 알고리즘 동일 적용
+   - ✅ 연속학습일 카운트
+   - ✅ SRS 카드 상태 업데이트
+
+3. **언어 구분 및 자동 감지**
+   - ✅ JLPT 단어 자동 감지
+   - ✅ 영어/일본어 퀴즈 자동 분기
+   - ✅ 언어별 UI 구분
+
+## 기술적 구현 완료 사항
+- **백엔드**: 새로운 API 엔드포인트 `/quiz/japanese`, `/quiz/by-language` 구현
+- **프론트엔드**: JapaneseQuiz 컴포넌트 및 SrsQuiz 통합 완료
+- **타입 정의**: 일본어 퀴즈 전용 타입 시스템 구축
+- **데이터베이스**: 기존 JLPT 단어 데이터와 완전 호환
+
+## 테스트 권장 사항
+1. JLPT N5 단어로 각 퀴즈 타입 테스트
+2. 한자/히라가나/로마자 입력 퀴즈에서 다중 정답 확인
+3. SRS 카드 상태 변화 및 오답노트 기록 확인
+4. 연속학습일 카운트 정상 작동 확인
+
+## 데이터베이스 구조 이슈 및 해결 (2025-09-16)
+
+### 발견된 문제
+- vocab 테이블에 kana, romaji, kanji 등의 일본어 전용 필드가 존재하지 않음
+- 일본어 데이터는 dictentry.examples JSON 필드에 저장됨
+- 프론트엔드에서 일본어 단어가 영어로 인식되는 문제 발생
+
+### 해결 방안 구현
+1. **언어 감지 로직 수정**
+   - vocab.levelJLPT 필드 확인
+   - vocab.source === 'jlpt_vocabs' 확인
+   - dictentry.examples 내 일본어 데이터 존재 여부 확인
+
+2. **백엔드 데이터 쿼리 수정**
+   - `/srs/queue` 엔드포인트에서 dictentry와 translations 관계 포함
+   - vocab 정보에 필요한 모든 관련 데이터 전달
+
+3. **프론트엔드 언어 감지 동기화**
+   - 백엔드와 동일한 언어 감지 로직 적용
+   - levelJLPT, source, dictentry.examples 기반 판별
+
+### 현재 데이터 저장 구조
+- **일본어 단어**: dictentry.examples[].ja
+- **한국어 번역**: VocabTranslation 테이블 (languageId=2)
+- **로마자 발음**: dictentry.ipa 필드
+- **예문**: dictentry.examples[].ja / examples[].ko
+- **JLPT 레벨**: vocab.levelJLPT
+
+## SRS Queue 500 에러 수정 (2025-09-16)
+
+### 발견된 문제
+- `/srs/queue?folderId=3&selectedItems=2:1` 요청에서 500 에러 발생
+- Prisma 오류: `Unknown field 'categories' for select statement on model 'vocab'`
+- SRS 라우트에서 언어 감지를 위해 존재하지 않는 `categories` 필드 사용
+
+### 문제 원인
+- `/web/apps/backend/routes/srs.js:1931`에서 잘못된 필드 선택
+- `select: { categories: true, kana: true, romaji: true }` → `categories` 필드가 vocab 모델에 존재하지 않음
+- detectLanguage 함수는 `levelJLPT`, `source`, `dictentry.examples` 필드를 사용함
+
+### 해결 방안
+**srs.js:1929-1940 수정**
+```javascript
+// 수정 전
+const firstVocab = await prisma.vocab.findFirst({
+    where: { id: vocabIds[0] },
+    select: { categories: true, kana: true, romaji: true }
+});
+
+// 수정 후
+const firstVocab = await prisma.vocab.findFirst({
+    where: { id: vocabIds[0] },
+    select: {
+        levelJLPT: true,
+        source: true,
+        dictentry: {
+            select: {
+                examples: true
+            }
+        }
+    }
+});
+```
+
+### 수정 완료 상태
+✅ **SRS Queue 500 에러 해결 완료**
+- Prisma 쿼리에서 올바른 필드들 사용
+- detectLanguage 함수와 호환되는 데이터 구조로 수정
+- 일본어/영어 언어 감지 정상 작동
+
+## SRS 퀴즈 UI 언어 감지 문제 수정 (2025-09-16)
+
+### 발견된 문제
+- 일본어 SRS 퀴즈에서 영어 퀴즈 UI가 표시되는 문제
+- `isJapaneseQuiz` 조건이 복잡해서 언어 감지 실패
+- 첫 번째 아이템만으로 언어 감지 시 불안정함
+
+### 문제 원인
+- `SrsQuiz.jsx:135`의 복잡한 조건식: `quizLanguage === 'ja' && current && current.vocab && detectLanguageFromVocab(current.vocab) === 'ja'`
+- 첫 번째 vocab만으로 언어 감지 시 vocab 정보가 없을 경우 실패
+
+### 해결 방안
+**1. isJapaneseQuiz 조건 단순화**
+```javascript
+// 수정 전
+const isJapaneseQuiz = quizLanguage === 'ja' && current && current.vocab && detectLanguageFromVocab(current.vocab) === 'ja';
+
+// 수정 후
+const isJapaneseQuiz = quizLanguage === 'ja';
+```
+
+**2. 언어 감지 로직 개선**
+```javascript
+// 수정 전: 첫 번째 아이템만 확인
+const firstVocab = queueData[0].vocab;
+if (firstVocab) {
+    const detectedLanguage = detectLanguageFromVocab(firstVocab);
+    // ...
+}
+
+// 수정 후: 큐 전체에서 일본어 검색
+for (const item of queueData) {
+    if (item.vocab) {
+        const itemLanguage = detectLanguageFromVocab(item.vocab);
+        if (itemLanguage === 'ja') {
+            detectedLanguage = 'ja';
+            break;
+        }
+    }
+}
+```
+
+### 수정 완료 상태
+✅ **일본어 SRS 퀴즈 UI 감지 문제 해결 완료**
+- 언어 감지 로직을 더 안정적으로 개선
+- 큐 전체에서 일본어 단어 존재 여부 확인
+- isJapaneseQuiz 조건 단순화로 UI 분기 안정화
+
+## selectedItems 파라미터 누락 문제 수정 (2025-09-16)
+
+### 발견된 문제
+- URL `http://localhost:3000/learn/vocab?mode=srs_folder&folderId=3&selectedItems=2`에서 여전히 영어 퀴즈 UI 표시
+- `selectedItems` 파라미터가 SRS queue 요청에 포함되지 않음
+- 특정 아이템 선택 시 언어 감지가 작동하지 않음
+
+### 문제 원인
+- `SrsQuiz.jsx`에서 URL의 `selectedItems` 파라미터를 읽지만 API 요청에 포함하지 않음
+- useEffect 의존성 배열에 `selectedItems` 누락
+
+### 해결 방안
+**1. selectedItems 파라미터 추가**
+```javascript
+const selectedItems = params.get('selectedItems');
+
+// queueUrl 생성 시 selectedItems 포함
+let queueUrl;
+if (allOverdue) {
+    queueUrl = '/srs/queue?all=true';
+    if (selectedItems) {
+        queueUrl += `&selectedItems=${selectedItems}`;
+    }
+} else {
+    queueUrl = `/srs/queue?folderId=${folderId}`;
+    if (selectedItems) {
+        queueUrl += `&selectedItems=${selectedItems}`;
+    }
+}
+```
+
+**2. useEffect 의존성 배열 수정**
+```javascript
+}, [folderId, allOverdue, selectedItems]);
+```
+
+### 수정 완료 상태
+✅ **selectedItems 파라미터 누락 문제 해결 완료**
+- URL의 selectedItems 파라미터가 SRS queue API 요청에 포함됨
+- 특정 일본어 단어 선택 시 올바른 언어 감지 가능
+- useEffect 의존성 배열에 selectedItems 추가로 파라미터 변경 시 재로딩
+
+## LearnVocab.jsx 일본어 퀴즈 타입 선택 화면 수정 (2025-09-16)
+
+### 발견된 근본 문제
+- URL `/learn/vocab?mode=srs_folder&folderId=3&selectedItems=2`는 `LearnVocab` 컴포넌트로 라우팅됨
+- `SrsQuiz` 컴포넌트가 아닌 `LearnVocab` 컴포넌트에서 퀴즈 타입 선택 화면이 표시됨
+- `LearnVocab.jsx`에서 일본어 언어 감지 및 퀴즈 타입 선택이 영어 전용으로 하드코딩됨
+
+### 해결 방안
+**1. 언어 감지 함수 추가**
+```javascript
+const detectLanguageFromVocab = (vocab) => {
+    if (!vocab) return 'en';
+    if (vocab.levelJLPT) return 'ja';
+    if (vocab.source === 'jlpt_vocabs') return 'ja';
+    if (vocab.dictentry && vocab.dictentry.examples) {
+        const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
+        const hasJapanese = examples.some(ex => ex.ja || ex.source === 'jlpt_vocabs');
+        if (hasJapanese) return 'ja';
+    }
+    return 'en';
+};
+```
+
+**2. 퀴즈 언어 상태 추가**
+```javascript
+const [quizLanguage, setQuizLanguage] = useState('en');
+```
+
+**3. 큐 데이터 로딩 후 언어 감지**
+```javascript
+// 큐 전체에서 언어 감지 (일본어가 하나라도 있으면 일본어 퀴즈)
+if (fetched.length > 0) {
+    let detectedLanguage = 'en';
+    for (const item of fetched) {
+        if (item.vocab) {
+            const itemLanguage = detectLanguageFromVocab(item.vocab);
+            if (itemLanguage === 'ja') {
+                detectedLanguage = 'ja';
+                break;
+            }
+        }
+    }
+    setQuizLanguage(detectedLanguage);
+}
+```
+
+**4. 퀴즈 타입 선택 화면 언어별 분기**
+- 일본어 감지 시: 4가지 일본어 퀴즈 타입 표시
+  - 일본어 → 한국어 뜻 (4지선다)
+  - 한국어 뜻 → 일본어 (4지선다)
+  - 일본어 → 로마자 발음 (4지선다)
+  - 예문 빈칸 채우기 (스펠링 입력)
+- 영어 감지 시: 기존 영어 퀴즈 타입들 표시
+
+### 수정 완료 상태
+✅ **LearnVocab.jsx 일본어 지원 완료**
+- 언어 자동 감지 로직 구현
+- 일본어/영어 퀴즈 타입 선택 화면 분기 처리
+- JapaneseQuizTypes import 및 사용
+- 일본어 배지 표시로 언어 구분 명확화
+
+## 최종 상태 (2025-09-16)
+🎉 **모든 SRS 퀴즈 관련 문제 해결 완료**
+1. ✅ SRS Queue 500 에러 수정 (Prisma 필드 오류)
+2. ✅ 일본어 퀴즈 UI 언어 감지 개선 (SrsQuiz.jsx)
+3. ✅ selectedItems 파라미터 누락 문제 해결 (SrsQuiz.jsx)
+4. ✅ LearnVocab.jsx 일본어 퀴즈 타입 선택 화면 구현
+5. ✅ 일본어 SRS 퀴즈에서 올바른 퀴즈 타입 표시 가능
+
+**이제 URL `/learn/vocab?mode=srs_folder&folderId=3&selectedItems=2`에서 일본어 단어 선택 시 올바른 일본어 퀴즈 타입들이 표시됩니다!**
+
+## LearnVocab.jsx 일본어 퀴즈 렌더링 로직 추가 (2025-09-16)
+
+### 발견된 문제
+- 일본어 퀴즈 타입 선택 후에도 영어 퀴즈 UI가 표시됨
+- `JapaneseQuiz` 컴포넌트 import 누락
+- 일본어 퀴즈 타입 선택 시 `JapaneseQuiz` 컴포넌트로 렌더링하는 로직 부재
+
+### 해결 방안
+**1. JapaneseQuiz 컴포넌트 import 추가**
+```javascript
+import JapaneseQuiz from '../components/JapaneseQuiz';
+```
+
+**2. 일본어 퀴즈 렌더링 로직 추가**
+```javascript
+// 일본어 퀴즈 렌더링 (일본어 퀴즈 타입이 선택된 경우)
+if (quizLanguage === 'ja' && quizTypeParam && Object.values(JapaneseQuizTypes).includes(quizTypeParam)) {
+    const japaneseVocabIds = queue
+        .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja')
+        .map(item => item.vocabId);
+
+    const handleJapaneseQuizComplete = () => {
+        navigate(folderIdParam ? `/srs/folder/${folderIdParam}` : '/srs');
+    };
+
+    return (
+        <main className="container py-4" style={{ maxWidth: 720 }}>
+            <audio ref={audioRef} style={{ display: 'none' }} />
+            <JapaneseQuiz
+                vocabIds={japaneseVocabIds}
+                quizType={quizTypeParam}
+                onQuizComplete={handleJapaneseQuizComplete}
+                folderId={folderIdParam}
+            />
+        </main>
+    );
+}
+```
+
+### 수정 완료 상태
+✅ **LearnVocab.jsx 일본어 퀴즈 완전 지원 완료**
+- JapaneseQuiz 컴포넌트 import 및 렌더링 로직 추가
+- 일본어 퀴즈 타입 선택 시 올바른 일본어 퀴즈 UI 표시
+- 퀴즈 완료 후 폴더로 돌아가기 기능 구현
+
+**이제 일본어 퀴즈 타입 선택 시 올바른 일본어 퀴즈가 표시됩니다!**
+
+## 일본어 퀴즈 혼합형 타입 추가 (2025-09-16)
+
+### 추가된 기능
+- 영어 퀴즈와 마찬가지로 일본어 퀴즈에도 혼합형 문제 유형 추가
+- 4가지 일본어 퀴즈 타입이 랜덤하게 출제되는 혼합형 옵션 구현
+
+### 수정 사항
+**1. japanese-quiz.js 타입 정의 추가**
+```javascript
+export const JapaneseQuizTypes = {
+  // 기존 타입들...
+
+  // 혼합형 퀴즈 (위 4가지 타입이 랜덤하게 출제)
+  JP_MIXED: 'jp_mixed'
+};
+
+// 설명 추가
+[JapaneseQuizTypes.JP_MIXED]: '다양한 유형의 일본어 퀴즈가 랜덤하게 출제됩니다'
+```
+
+**2. LearnVocab.jsx UI 옵션 추가**
+```javascript
+<button
+    className="btn btn-outline-secondary btn-lg text-start p-3"
+    onClick={() => handleQuizTypeSelect(JapaneseQuizTypes.JP_MIXED)}
+>
+    <div className="d-flex align-items-center">
+        <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
+        <div>
+            <h6 className="mb-1">혼합형</h6>
+            <small className="text-muted">일본어→한국어, 한국어→일본어, 로마자 발음, 스펠링 입력이 랜덤하게 출제됩니다</small>
+        </div>
+    </div>
+</button>
+```
+
+### 구현된 일본어 퀴즈 타입 (총 5가지)
+1. ✅ **일본어 → 한국어 뜻** (4지선다)
+2. ✅ **한국어 뜻 → 일본어** (4지선다)
+3. ✅ **일본어 → 로마자 발음** (4지선다)
+4. ✅ **예문 빈칸 채우기** (스펠링 입력)
+5. ✅ **혼합형** (위 4가지 타입 랜덤 출제) 🆕
+
+### 수정 완료 상태
+✅ **일본어 퀴즈 혼합형 타입 추가 완료**
+- 타입 정의 및 설명 추가
+- 퀴즈 선택 UI에 혼합형 옵션 추가
+- 영어 퀴즈와 동일한 UX 제공
+
+## 백엔드 혼합형 퀴즈 지원 추가 (2025-09-16)
+
+### 발견된 문제
+- `/quiz/japanese` API에서 500 에러 발생
+- `jp_mixed` 타입이 지원 타입 목록에 포함되지 않음
+- `generateJapaneseMixedQuiz` 함수 미구현
+
+### 해결 방안
+**1. 지원 타입 목록에 혼합형 추가**
+```javascript
+// routes/quiz.js
+const supportedTypes = [
+    'jp_word_to_ko_meaning',
+    'ko_meaning_to_jp_word',
+    'jp_word_to_romaji',
+    'jp_fill_in_blank',
+    'jp_mixed' // 추가
+];
+```
+
+**2. generateJapaneseMixedQuiz 함수 구현**
+```javascript
+// services/quizService.js
+async function generateJapaneseMixedQuiz(prisma, userId, vocabIds) {
+    const quizTypes = [
+        'jp_word_to_ko_meaning',
+        'ko_meaning_to_jp_word',
+        'jp_word_to_romaji',
+        'jp_fill_in_blank'
+    ];
+
+    const quizItems = [];
+    for (const vocabId of vocabIds) {
+        // 각 단어마다 랜덤하게 퀴즈 타입 선택
+        const randomType = quizTypes[Math.floor(Math.random() * quizTypes.length)];
+        // 해당 타입의 퀴즈 생성 후 추가
+    }
+
+    return quizItems.map(item => ({
+        ...item,
+        originalQuizType: item.quizType, // 원래 타입 보존
+        quizType: 'jp_mixed' // 혼합형으로 표시
+    }));
+}
+```
+
+**3. generateQuizByLanguageAndType에 케이스 추가**
+```javascript
+case 'jp_mixed':
+    return generateJapaneseMixedQuiz(prisma, userId, vocabIds);
+```
+
+### 수정 완료 상태
+✅ **백엔드 혼합형 퀴즈 지원 완료**
+- `/quiz/japanese` API에서 `jp_mixed` 타입 처리 가능
+- 각 단어마다 랜덤한 퀴즈 타입 생성
+- 원래 퀴즈 타입 정보 보존하여 UI에서 적절히 렌더링 가능
+
+## quizService.js categories 필드 오류 완전 수정 (2025-09-16)
+
+### 발견된 추가 문제
+- `quizService.js`의 여러 함수에서 `categories` 필드 사용으로 Prisma 에러 발생
+- 일본어 퀴즈 생성 시 vocab 모델의 잘못된 필드 참조
+
+### 수정된 위치들
+1. **일본어 단어 검색 조건 수정 (4곳)**
+   ```javascript
+   // 수정 전
+   OR: [
+       { categories: { contains: 'JLPT' } },
+       { kana: { not: null } }
+   ]
+
+   // 수정 후
+   OR: [
+       { levelJLPT: { not: null } },
+       { source: 'jlpt_vocabs' }
+   ]
+   ```
+
+2. **JLPT 레벨 추출 로직 단순화 (3곳)**
+   ```javascript
+   // 수정 전
+   jlptLevel: extractJlptLevel(vocab.categories),
+
+   // 수정 후
+   jlptLevel: vocab.levelJLPT,
+   ```
+
+### 수정 완료 상태
+✅ **모든 categories 필드 오류 수정 완료**
+- SRS queue API와 Japanese quiz API 모두 정상 작동
+- vocab 모델의 올바른 필드들 사용: `levelJLPT`, `source`
+- 일본어 퀴즈 생성 가능

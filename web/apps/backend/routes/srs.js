@@ -24,7 +24,11 @@ dayjs.extend(utc); dayjs.extend(tz);
 
 const { prisma } = require('../lib/prismaClient');
 const { ok, fail } = require('../lib/resp');
-const { generateMcqQuizItems } = require('../services/quizService');
+const {
+    generateMcqQuizItems,
+    generateQuizByLanguageAndType,
+    detectLanguage
+} = require('../services/quizService');
 const auth = require('../middleware/auth');
 const { scheduleFolder } = require('../services/alarmQueue');
 const { nextAlarmSlot } = require('../utils/alarmTime');
@@ -1804,18 +1808,34 @@ router.get('/queue', async (req, res) => {
             
             if (!filteredCards.length) return ok(res, []);
             
+            // vocab 정보 가져오기 (언어 감지용)
+            const vocabMap = new Map();
+            if (vocabIds.length > 0) {
+                const vocabs = await prisma.vocab.findMany({
+                    where: { id: { in: vocabIds } },
+                    include: {
+                        dictentry: true,
+                        translations: {
+                            where: { languageId: 2 } // Korean
+                        }
+                    }
+                });
+                vocabs.forEach(v => vocabMap.set(v.id, v));
+            }
+
             // Generate quiz items
             const queue = await generateMcqQuizItems(prisma, userId, vocabIds);
-            
+
             // Inject card information for frontend (SRS 폴더와 동일한 구조)
             const queueWithCardInfo = queue.map(q => {
                 const card = filteredCards.find(c => 
                     (c.srsfolderitem[0]?.vocabId || c.srsfolderitem[0]?.vocab?.id) === q.vocabId
                 );
                 const folderItem = card?.srsfolderitem[0];
-                
-                return { 
-                    ...q, 
+                const vocabData = vocabMap.get(q.vocabId);
+
+                return {
+                    ...q,
                     folderId: folderItem?.folderId || null,
                     cardId: card?.id || null,
                     isLearned: folderItem?.learned || false,
@@ -1826,7 +1846,9 @@ router.get('/queue', async (req, res) => {
                     isOverdue: card?.isOverdue || false,
                     overdueDeadline: card?.overdueDeadline,
                     waitingUntil: card?.waitingUntil,
-                    isFromWrongAnswer: card?.isFromWrongAnswer || false
+                    isFromWrongAnswer: card?.isFromWrongAnswer || false,
+                    // vocab 정보 추가 (언어 감지용)
+                    vocab: vocabData || q.vocab
                 };
             });
             
@@ -1900,13 +1922,52 @@ router.get('/queue', async (req, res) => {
             });
             
             const vocabIds = items.map((it) => it.vocabId ?? it.card?.itemId).filter(Boolean);
+
+            // 첫 번째 vocab으로 언어 감지
+            let detectedLanguage = 'en';
+            if (vocabIds.length > 0) {
+                const firstVocab = await prisma.vocab.findFirst({
+                    where: { id: vocabIds[0] },
+                    select: {
+                        levelJLPT: true,
+                        source: true,
+                        dictentry: {
+                            select: {
+                                examples: true
+                            }
+                        }
+                    }
+                });
+                if (firstVocab) {
+                    detectedLanguage = detectLanguage(firstVocab);
+                    console.log(`[SRS QUEUE] Detected language: ${detectedLanguage} for vocabIds: ${vocabIds.slice(0, 5).join(',')}`);
+                }
+            }
+
             // Generate a multiple-choice quiz from the folder's vocab IDs [211]
             const queue = await generateMcqQuizItems(prisma, userId, vocabIds);
+            // 각 vocab 정보 가져오기 (언어 감지를 위해)
+            const vocabMap = new Map();
+            if (vocabIds.length > 0) {
+                const vocabs = await prisma.vocab.findMany({
+                    where: { id: { in: vocabIds } },
+                    include: {
+                        dictentry: true,
+                        translations: {
+                            where: { languageId: 2 } // Korean
+                        }
+                    }
+                });
+                vocabs.forEach(v => vocabMap.set(v.id, v));
+            }
+
             // Inject folderId and cardId into each quiz item for the frontend's answer submission
             const queueWithFolderId = queue.map(q => {
                 const item = items.find(it => (it.vocabId ?? it.card?.itemId) === q.vocabId);
-                return { 
-                    ...q, 
+                const vocabData = vocabMap.get(q.vocabId);
+
+                return {
+                    ...q,
                     folderId,
                     cardId: vocabToCardMap.get(q.vocabId) || null,
                     isLearned: item?.learned || false,
@@ -1920,7 +1981,9 @@ router.get('/queue', async (req, res) => {
                     isOverdue: item?.card?.isOverdue || false,
                     overdueDeadline: item?.card?.overdueDeadline,
                     waitingUntil: item?.card?.waitingUntil,
-                    isFromWrongAnswer: item?.card?.isFromWrongAnswer || false
+                    isFromWrongAnswer: item?.card?.isFromWrongAnswer || false,
+                    // vocab 정보 추가 (언어 감지용)
+                    vocab: vocabData || q.vocab
                 };
             });
             

@@ -1,8 +1,10 @@
-// src/pages/SrsQuiz.jsx (lang='en'으로 수정)
+// src/pages/SrsQuiz.jsx - 언어별 SRS 퀴즈 지원
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
 import { fetchJSON, withCreds, isAbortError } from '../api/client';
 import Pron from '../components/Pron';
+import JapaneseQuiz from '../components/JapaneseQuiz';
+import { JapaneseQuizTypes, isJapaneseQuizSupported } from '../types/japanese-quiz';
 import { toast } from 'react-toastify';
 
 export default function SrsQuiz() {
@@ -10,6 +12,7 @@ export default function SrsQuiz() {
     const [params] = useSearchParams();
     const folderId = Number(params.get('folder'));
     const allOverdue = params.get('all') === 'true';
+    const selectedItems = params.get('selectedItems');
 
     const [loading, setLoading] = useState(true);
     const [queue, setQueue] = useState([]);
@@ -17,6 +20,8 @@ export default function SrsQuiz() {
     const [submitting, setSubmitting] = useState(false);
     const [err, setErr] = useState(null);
     const [streakInfo, setStreakInfo] = useState(null);
+    const [quizLanguage, setQuizLanguage] = useState('en'); // 퀴즈 언어 상태
+    const [quizType, setQuizType] = useState('meaning'); // 퀴즈 타입 상태
 
     // 폴더 ID가 변경될 때마다 퀴즈 큐를 가져옵니다.
     useEffect(() => {
@@ -38,8 +43,14 @@ export default function SrsQuiz() {
                 let queueUrl;
                 if (allOverdue) {
                     queueUrl = '/srs/queue?all=true';
+                    if (selectedItems) {
+                        queueUrl += `&selectedItems=${selectedItems}`;
+                    }
                 } else {
                     queueUrl = `/srs/queue?folderId=${folderId}`;
+                    if (selectedItems) {
+                        queueUrl += `&selectedItems=${selectedItems}`;
+                    }
                 }
                 
                 const [queueRes, streakRes] = await Promise.all([
@@ -48,9 +59,44 @@ export default function SrsQuiz() {
                 ]);
                 
                 if (!ac.signal.aborted) {
-                    setQueue(Array.isArray(queueRes.data) ? queueRes.data : []);
+                    const queueData = Array.isArray(queueRes.data) ? queueRes.data : [];
+                    setQueue(queueData);
                     setIdx(0);
                     setStreakInfo(streakRes.data);
+
+                    console.log('[SrsQuiz] Queue loaded:', {
+                        queueLength: queueData.length,
+                        firstItem: queueData[0],
+                        hasVocab: queueData[0]?.vocab ? 'yes' : 'no',
+                        vocabCategories: queueData[0]?.vocab?.categories,
+                        vocabKana: queueData[0]?.vocab?.kana,
+                        vocabRomaji: queueData[0]?.vocab?.romaji
+                    });
+
+                    // 큐 전체에서 언어 감지 (일본어가 하나라도 있으면 일본어 퀴즈)
+                    if (queueData.length > 0) {
+                        let detectedLanguage = 'en';
+
+                        // 큐의 모든 아이템을 확인해서 일본어 단어가 있는지 검사
+                        for (const item of queueData) {
+                            if (item.vocab) {
+                                const itemLanguage = detectLanguageFromVocab(item.vocab);
+                                if (itemLanguage === 'ja') {
+                                    detectedLanguage = 'ja';
+                                    break;
+                                }
+                            }
+                        }
+
+                        setQuizLanguage(detectedLanguage);
+                        console.log('[SrsQuiz] Detected language:', detectedLanguage, 'from', queueData.length, 'items');
+
+                        // 일본어인 경우 기본 퀴즈 타입 설정
+                        if (detectedLanguage === 'ja') {
+                            setQuizType(JapaneseQuizTypes.JP_WORD_TO_KO_MEANING);
+                            console.log('[SrsQuiz] Set Japanese quiz type:', JapaneseQuizTypes.JP_WORD_TO_KO_MEANING);
+                        }
+                    }
                 }
             } catch (e) {
                 if (!isAbortError(e)) {
@@ -63,9 +109,44 @@ export default function SrsQuiz() {
         })();
 
         return () => ac.abort();
-    }, [folderId, allOverdue]);
+    }, [folderId, allOverdue, selectedItems]);
 
     const current = queue[idx];
+
+    // 언어 감지 함수
+    const detectLanguageFromVocab = (vocab) => {
+        if (!vocab) return 'en';
+
+        // JLPT 레벨이 있으면 일본어
+        if (vocab.levelJLPT) {
+            return 'ja';
+        }
+
+        // source가 jlpt_vocabs이면 일본어
+        if (vocab.source === 'jlpt_vocabs') {
+            return 'ja';
+        }
+
+        // dictentry의 examples에 일본어 데이터가 있으면 일본어
+        if (vocab.dictentry && vocab.dictentry.examples) {
+            const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
+            const hasJapanese = examples.some(ex => ex.ja || ex.source === 'jlpt_vocabs');
+            if (hasJapanese) {
+                return 'ja';
+            }
+        }
+
+        return 'en';
+    };
+
+    // 일본어 퀴즈 완료 핸들러
+    const handleJapaneseQuizComplete = (finalScore) => {
+        toast.success(`퀴즈 완료! 점수: ${finalScore.correct}/${finalScore.total}`);
+        navigate(`/srs/folders/${folderId}`);
+    };
+
+    // 일본어 퀴즈인지 확인
+    const isJapaneseQuiz = quizLanguage === 'ja';
 
     // 진행률 계산
     const progress = useMemo(() => {
@@ -268,6 +349,97 @@ export default function SrsQuiz() {
         );
     }
 
+    // 일본어 퀴즈 렌더링
+    if (isJapaneseQuiz && queue.length > 0) {
+        // 현재 큐에서 일본어 단어들의 vocabId 추출
+        const japaneseVocabIds = queue
+            .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja')
+            .map(item => item.vocabId);
+
+        console.log('[SrsQuiz] Japanese quiz detected:', {
+            isJapaneseQuiz,
+            quizLanguage,
+            totalQueue: queue.length,
+            japaneseVocabIds,
+            firstVocab: queue[0]?.vocab
+        });
+
+        return (
+            <main className="container py-4" style={{ maxWidth: 720 }}>
+                {/* 연속학습일 정보 (상단 배너) */}
+                {streakInfo && (
+                    <div className="alert alert-light border mb-3" role="alert">
+                        <div className="d-flex justify-content-between align-items-center">
+                            <div className="d-flex align-items-center">
+                                <span className="me-2" style={{ fontSize: '20px' }}>
+                                    {streakInfo.status?.icon || '🔥'}
+                                </span>
+                                <div>
+                                    <strong className="me-2">연속 {streakInfo.streak}일째 학습 중</strong>
+                                    <span className="badge bg-primary me-2">
+                                        {streakInfo.dailyQuizCount}/{streakInfo.requiredDaily}
+                                    </span>
+                                    {streakInfo.bonus?.current && (
+                                        <span className="badge bg-warning text-dark">
+                                            {streakInfo.bonus.current.emoji} {streakInfo.bonus.current.title}
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                            <small className="text-muted">
+                                {streakInfo.isCompletedToday ? '✅ 오늘 목표 달성!' :
+                                 `${streakInfo.remainingForStreak}개 더 필요`}
+                            </small>
+                        </div>
+                        {/* 미니 진행바 */}
+                        <div className="progress mt-2" style={{ height: '4px' }}>
+                            <div
+                                className={`progress-bar ${
+                                    streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
+                                }`}
+                                style={{ width: `${streakInfo.progressPercent}%` }}
+                            ></div>
+                        </div>
+                    </div>
+                )}
+
+                {/* 퀴즈 타입 선택 (일본어) */}
+                <div className="mb-3">
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="badge bg-info">일본어 퀴즈</span>
+                        <div className="dropdown">
+                            <button className="btn btn-outline-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                퀴즈 타입 변경
+                            </button>
+                            <ul className="dropdown-menu">
+                                <li><button className="dropdown-item" onClick={() => setQuizType(JapaneseQuizTypes.JP_WORD_TO_KO_MEANING)}>
+                                    일본어 → 한국어 뜻
+                                </button></li>
+                                <li><button className="dropdown-item" onClick={() => setQuizType(JapaneseQuizTypes.KO_MEANING_TO_JP_WORD)}>
+                                    한국어 뜻 → 일본어
+                                </button></li>
+                                <li><button className="dropdown-item" onClick={() => setQuizType(JapaneseQuizTypes.JP_WORD_TO_ROMAJI)}>
+                                    일본어 → 로마자 발음
+                                </button></li>
+                                <li><button className="dropdown-item" onClick={() => setQuizType(JapaneseQuizTypes.JP_FILL_IN_BLANK)}>
+                                    예문 빈칸 채우기
+                                </button></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <JapaneseQuiz
+                    vocabIds={japaneseVocabIds}
+                    quizType={quizType}
+                    onQuizComplete={handleJapaneseQuizComplete}
+                    folderId={folderId}
+                />
+            </main>
+        );
+    }
+
+    // 기존 영어 퀴즈 렌더링
     return (
         <main className="container py-4" style={{ maxWidth: 720 }}>
             {/* 연속학습일 정보 (상단 배너) */}
@@ -291,13 +463,13 @@ export default function SrsQuiz() {
                             </div>
                         </div>
                         <small className="text-muted">
-                            {streakInfo.isCompletedToday ? '✅ 오늘 목표 달성!' : 
+                            {streakInfo.isCompletedToday ? '✅ 오늘 목표 달성!' :
                              `${streakInfo.remainingForStreak}개 더 필요`}
                         </small>
                     </div>
                     {/* 미니 진행바 */}
                     <div className="progress mt-2" style={{ height: '4px' }}>
-                        <div 
+                        <div
                             className={`progress-bar ${
                                 streakInfo.isCompletedToday ? 'bg-success' : 'bg-primary'
                             }`}
@@ -308,14 +480,17 @@ export default function SrsQuiz() {
             )}
 
             <div className="d-flex justify-content-between align-items-center mb-2">
-                <h4 className="m-0">SRS 복습 퀴즈</h4>
+                <h4 className="m-0">
+                    SRS 복습 퀴즈
+                    {quizLanguage === 'en' && <span className="badge bg-success ms-2">영어</span>}
+                </h4>
                 <span className="badge bg-dark fs-6">{progress.learned} / {progress.total}</span>
             </div>
 
             <div className="card shadow-sm">
                 <div className="card-body text-center p-5">
-                    {/* ✅ [수정] lang 속성을 'en'으로 고정 */}
-                    <h2 className="display-5 mb-2" lang="en">{current?.question ?? '—'}</h2>
+                    {/* 언어에 따른 lang 속성 설정 */}
+                    <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
                     <Pron ipa={current?.pron?.ipa} ipaKo={current?.pron?.ipaKo} />
                     <div className="d-flex gap-2 justify-content-center mt-4">
                         <button className="btn btn-success btn-lg" disabled={submitting} onClick={() => submit(true)}>맞음</button>
