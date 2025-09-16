@@ -34,10 +34,30 @@ const cefrToFolder = {
 
 // 현재 cefr_vocabs.json 오디오 경로 생성
 const getCurrentAudioPath = (vocab, isGlossMode = false) => {
-    console.log('[AUDIO DEBUG] getCurrentAudioPath called with vocab.pos:', vocab.pos, 'vocab.source:', vocab.source, 'vocab.levelCEFR:', vocab.levelCEFR, 'isGlossMode:', isGlossMode);
+    console.log('[AUDIO DEBUG] getCurrentAudioPath called with vocab:', {
+        pos: vocab.pos,
+        source: vocab.source,
+        levelCEFR: vocab.levelCEFR,
+        languageId: vocab.vocab?.languageId,
+        kana: vocab.kana,
+        kanji: vocab.kanji,
+        languageCode: vocab.vocab?.language?.code,
+        isGlossMode
+    });
 
-    // 1. 일본어 단어 처리 (languageId가 3이거나 kana 데이터가 있는 경우)
-    if (vocab.vocab?.languageId === 3 || vocab.kana || vocab.kanji || vocab.vocab?.language?.code === 'ja') {
+    // 1. 일본어 단어 처리 (다양한 조건으로 감지)
+    const isJapanese = vocab.vocab?.languageId === 3 ||
+                      vocab.kana ||
+                      vocab.kanji ||
+                      vocab.vocab?.language?.code === 'ja' ||
+                      vocab.source === 'jlpt' ||
+                      (vocab.vocab?.dictentry?.audioUrl && vocab.vocab.dictentry.audioUrl.includes('/jlpt/')) ||
+                      (vocab.question && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.question)) || // 히라가나, 가타카나, 한자 감지
+                      (vocab.lemma && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.lemma));
+
+    console.log('[AUDIO DEBUG] Japanese detection result:', isJapanese);
+
+    if (isJapanese) {
         console.log('[AUDIO DEBUG] Detected Japanese word:', vocab.lemma || vocab.question);
 
         // dictentry.audioLocal에서 일본어 오디오 경로 확인
@@ -46,21 +66,61 @@ const getCurrentAudioPath = (vocab, isGlossMode = false) => {
             let parsedAudio;
             try {
                 parsedAudio = typeof audioLocalData === 'string' ? JSON.parse(audioLocalData) : audioLocalData;
-                const japaneseAudioPath = isGlossMode ? parsedAudio?.gloss : parsedAudio?.word;
+                console.log('[AUDIO DEBUG] isGlossMode:', isGlossMode);
+                console.log('[AUDIO DEBUG] parsedAudio:', parsedAudio);
+                console.log('[AUDIO DEBUG] Available audio files:', {
+                    word: parsedAudio?.word,
+                    gloss: parsedAudio?.gloss,
+                    example: parsedAudio?.example
+                });
+
+                let japaneseAudioPath;
+                if (isGlossMode) {
+                    japaneseAudioPath = parsedAudio?.gloss;
+                    console.log('[AUDIO DEBUG] Gloss mode - trying gloss audio:', japaneseAudioPath);
+                } else {
+                    // 예문 모드에서는 example을 우선하되, 없으면 null을 반환 (word는 사용하지 않음)
+                    japaneseAudioPath = parsedAudio?.example;
+                    console.log('[AUDIO DEBUG] Example mode - trying example audio:', japaneseAudioPath);
+                    if (!japaneseAudioPath) {
+                        console.log('[AUDIO DEBUG] No example audio found, will not use word audio for Japanese');
+                    }
+                }
+                console.log('[AUDIO DEBUG] Final selected japaneseAudioPath:', japaneseAudioPath);
+
                 if (japaneseAudioPath) {
                     console.log('[AUDIO DEBUG] Using Japanese audioLocal path:', japaneseAudioPath);
                     return japaneseAudioPath.startsWith('/') ? japaneseAudioPath : `/${japaneseAudioPath}`;
                 }
             } catch (e) {
                 console.warn('[AUDIO DEBUG] Failed to parse Japanese audioLocal:', e);
+                // audioLocal이 단순 문자열인 경우 (일본어 JLPT 단어들)
+                console.log('[AUDIO DEBUG] audioLocal is simple string:', audioLocalData);
+
+                // 일본어 JLPT 단어를 위한 특별 처리
+                const basePath = audioLocalData.replace('/word.mp3', '').replace('word.mp3', '');
+                console.log('[AUDIO DEBUG] Japanese base path:', basePath);
+
+                if (isGlossMode) {
+                    // 뜻 모드: gloss.mp3 시도
+                    const glossPath = `${basePath}/gloss.mp3`;
+                    console.log('[AUDIO DEBUG] Trying Japanese gloss path:', glossPath);
+                    return glossPath.startsWith('/') ? glossPath : `/${glossPath}`;
+                } else {
+                    // 예문 모드: example.mp3 시도
+                    const examplePath = `${basePath}/example.mp3`;
+                    console.log('[AUDIO DEBUG] Trying Japanese example path:', examplePath);
+                    return examplePath.startsWith('/') ? examplePath : `/${examplePath}`;
+                }
             }
         }
 
-        // dictentry.audioUrl 확인
+        // dictentry.audioUrl 확인 - 하지만 일본어는 오디오 재생하지 않음
         const audioUrl = vocab.vocab?.dictentry?.audioUrl;
         if (audioUrl) {
-            console.log('[AUDIO DEBUG] Using Japanese audioUrl:', audioUrl);
-            return audioUrl.startsWith('/') ? audioUrl : `/${audioUrl}`;
+            console.log('[AUDIO DEBUG] audioUrl available but skipping Japanese audio:', audioUrl);
+            console.log('[AUDIO DEBUG] Japanese words currently only have word.mp3 - not playing audio');
+            return null;
         }
 
         // 일본어 오디오가 없으면 null 반환 (무음 처리)
@@ -294,11 +354,18 @@ export default function LearnVocab() {
                     parsedExamples = JSON.parse(examples);
                 } catch (e) {
                     console.warn('[SPELLING DEBUG] Failed to parse examples:', e);
+                    parsedExamples = [];
                 }
             }
 
+            // parsedExamples가 null, undefined, 또는 배열이 아닌 경우 빈 배열로 설정
+            if (!Array.isArray(parsedExamples)) {
+                parsedExamples = [];
+            }
+
             // 먼저 kind === "example" 형태의 예문 찾기 (개선된 로직)
-            for (const exampleEntry of parsedExamples) {
+            if (parsedExamples.length > 0) {
+                for (const exampleEntry of parsedExamples) {
                 if (exampleEntry.kind === "example") {
                     let englishText = exampleEntry.en;
                     let koreanText = exampleEntry.ko;
@@ -330,6 +397,7 @@ export default function LearnVocab() {
                         exampleTranslation = koreanText;
                         break;
                     }
+                }
                 }
             }
 
@@ -725,7 +793,23 @@ export default function LearnVocab() {
             console.log('[AUDIO DEBUG] vocab.lemma:', current.lemma, 'vocab.question:', current.question);
             console.log('[AUDIO DEBUG] vocab.source:', current.source, 'vocab.pos:', current.pos);
             console.log('[AUDIO DEBUG] Generated localAudioPath:', localAudioPath);
+
             const el = audioRef.current;
+
+            // localAudioPath가 null인 경우 오디오 요소는 설정하되 재생은 하지 않음
+            if (!localAudioPath) {
+                console.log('[AUDIO DEBUG] No audio path available, setting up audio element but skipping playback');
+                // 오디오 요소 정리 및 정지 상태로 설정
+                if (el) {
+                    el.removeEventListener('play', el._currentPlayHandler);
+                    el.removeEventListener('ended', el._currentEndHandler);
+                    el.pause();
+                    el.src = '';
+                    el._currentPlayHandler = null;
+                    el._currentEndHandler = null;
+                }
+                return;
+            }
 
             // 기존 이벤트 리스너 제거 (중복 방지)
             el.removeEventListener('play', el._currentPlayHandler);
@@ -1359,10 +1443,17 @@ export default function LearnVocab() {
                         parsedExamples = JSON.parse(examples);
                     } catch (e) {
                         console.warn('Failed to parse examples:', e);
+                        parsedExamples = [];
                     }
                 }
 
-                for (const exampleBlock of parsedExamples) {
+                // parsedExamples가 null, undefined, 또는 배열이 아닌 경우 빈 배열로 설정
+                if (!Array.isArray(parsedExamples)) {
+                    parsedExamples = [];
+                }
+
+                if (parsedExamples.length > 0) {
+                    for (const exampleBlock of parsedExamples) {
                     if (exampleBlock.definitions) {
                         for (const def of exampleBlock.definitions) {
                             if (def.examples && def.examples.length > 0) {
@@ -1386,6 +1477,7 @@ export default function LearnVocab() {
                         exampleSentence = exampleBlock.en || exampleBlock.de;
                         break;
                     }
+                }
                 }
             }
 
@@ -1982,7 +2074,24 @@ export default function LearnVocab() {
                                         // 예문 구조 파싱
                                         let displayExamples = [];
 
-                                        for (const ex of examples) {
+                                        // examples가 배열인지 확인
+                                        let parsedExamples = examples;
+                                        if (typeof examples === 'string') {
+                                            try {
+                                                parsedExamples = JSON.parse(examples);
+                                            } catch (e) {
+                                                console.warn('Failed to parse examples:', e);
+                                                parsedExamples = [];
+                                            }
+                                        }
+
+                                        // parsedExamples가 null, undefined, 또는 배열이 아닌 경우 빈 배열로 설정
+                                        if (!Array.isArray(parsedExamples)) {
+                                            parsedExamples = [];
+                                        }
+
+                                        if (parsedExamples.length > 0) {
+                                            for (const ex of parsedExamples) {
                                             if (ex.definitions) {
                                                 for (const def of ex.definitions) {
                                                     if (def.examples && Array.isArray(def.examples)) {
@@ -1992,6 +2101,7 @@ export default function LearnVocab() {
                                                 }
                                             }
                                             if (displayExamples.length > 0) break;
+                                        }
                                         }
 
                                         if (displayExamples.length === 0) return null;
@@ -2432,45 +2542,60 @@ export default function LearnVocab() {
                             <>
                                 <div className="mb-3 lead"><strong>뜻:</strong> {current.answer}</div>
                                 {(() => {
-                                    // Enhanced example extraction logic
+                                    // Enhanced example extraction logic for both English and Japanese
                                     const dictentry = current.vocab?.dictentry || {};
-                                    const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
-                                    
-                                    // Try multiple approaches to find examples
                                     let englishExample = '';
                                     let koreanExample = '';
-                                    
-                                    // 1. Find example with kind === 'example'
-                                    const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
-                                    if (exampleExample) {
-                                        englishExample = exampleExample.en || '';
-                                        koreanExample = exampleExample.ko || '';
-                                        
-                                        // Extract from chirpScript if needed
-                                        if (!englishExample && exampleExample.chirpScript) {
-                                            const patterns = [
-                                                /예문은 (.+?)\./,
-                                                /([A-Z][^.!?]*[.!?])/,
-                                                /([A-Z][^가-힣]*?)\s*([가-힣][^.]*[.])/
-                                            ];
-                                            
-                                            for (const pattern of patterns) {
-                                                const match = exampleExample.chirpScript.match(pattern);
-                                                if (match) {
-                                                    englishExample = match[1].trim();
-                                                    break;
+
+                                    // Check if this is a Japanese word (similar to audio detection logic)
+                                    const isJapanese = current.vocab?.languageId === 3 ||
+                                                      current.kana ||
+                                                      current.kanji ||
+                                                      current.vocab?.language?.code === 'ja' ||
+                                                      current.vocab?.source === 'jlpt' ||
+                                                      (current.question && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(current.question));
+
+                                    if (isJapanese && dictentry.examples && typeof dictentry.examples === 'object' && !Array.isArray(dictentry.examples)) {
+                                        // Japanese word structure: examples is an object
+                                        englishExample = dictentry.examples.example || '';
+                                        koreanExample = dictentry.examples.koExample || '';
+                                        console.log('[FLASH DEBUG] Japanese examples found:', { englishExample, koreanExample });
+                                    } else {
+                                        // English word structure: examples is an array
+                                        const rawMeanings = Array.isArray(dictentry.examples) ? dictentry.examples : [];
+
+                                        // 1. Find example with kind === 'example'
+                                        const exampleExample = rawMeanings.find(ex => ex.kind === 'example');
+                                        if (exampleExample) {
+                                            englishExample = exampleExample.en || '';
+                                            koreanExample = exampleExample.ko || '';
+
+                                            // Extract from chirpScript if needed
+                                            if (!englishExample && exampleExample.chirpScript) {
+                                                const patterns = [
+                                                    /예문은 (.+?)\./,
+                                                    /([A-Z][^.!?]*[.!?])/,
+                                                    /([A-Z][^가-힣]*?)\s*([가-힣][^.]*[.])/
+                                                ];
+
+                                                for (const pattern of patterns) {
+                                                    const match = exampleExample.chirpScript.match(pattern);
+                                                    if (match) {
+                                                        englishExample = match[1].trim();
+                                                        break;
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    
-                                    // 2. If no example found, try any entry with examples
-                                    if (!koreanExample && !englishExample) {
-                                        for (const entry of rawMeanings) {
-                                            if (entry.ko || entry.en || entry.chirpScript) {
-                                                koreanExample = entry.ko || '';
-                                                englishExample = entry.en || '';
-                                                break;
+
+                                        // 2. If no example found, try any entry with examples
+                                        if (!koreanExample && !englishExample) {
+                                            for (const entry of rawMeanings) {
+                                                if (entry.ko || entry.en || entry.chirpScript) {
+                                                    koreanExample = entry.ko || '';
+                                                    englishExample = entry.en || '';
+                                                    break;
+                                                }
                                             }
                                         }
                                     }

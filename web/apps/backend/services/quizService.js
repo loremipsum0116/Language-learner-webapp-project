@@ -19,18 +19,48 @@ async function generateMcqQuizItems(prisma, userId, vocabIds) {
     if (ids.length === 0) return [];
 
     const [vocabs, cards, distractorPool] = await Promise.all([
-        prisma.vocab.findMany({ where: { id: { in: ids } }, include: { dictentry: true } }),
+        prisma.vocab.findMany({
+            where: { id: { in: ids } },
+            include: {
+                dictentry: true,
+                translations: {
+                    where: { languageId: 2 }, // Korean language ID
+                    select: { translation: true }
+                }
+            }
+        }),
         prisma.srscard.findMany({ where: { userId, itemType: 'vocab', itemId: { in: ids } }, select: { id: true, itemId: true } }),
-        prisma.vocab.findMany({ where: { id: { notIn: ids }, dictentry: { isNot: null } }, include: { dictentry: true }, take: 500 }),
+        prisma.vocab.findMany({
+            where: { id: { notIn: ids }, dictentry: { isNot: null } },
+            include: {
+                dictentry: true,
+                translations: {
+                    where: { languageId: 2 }, // Korean language ID
+                    select: { translation: true }
+                }
+            },
+            take: 500
+        }),
     ]);
 
     const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
     const distractorGlosses = new Set();
     distractorPool.forEach(v => {
-        // 여러 스키마 구조에 대응하여 안정적으로 뜻을 추출
-        const examples = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
-        const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
-        let gloss = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+        // VocabTranslation 테이블에서 한국어 번역 추출 (일본어 단어 지원)
+        let gloss = null;
+
+        // 1. VocabTranslation 테이블에서 한국어 번역 확인
+        if (v.translations && v.translations.length > 0) {
+            gloss = v.translations[0].translation;
+        }
+
+        // 2. 기존 dictentry.examples에서 추출 (영어 단어용)
+        if (!gloss) {
+            const examples = Array.isArray(v.dictentry?.examples) ? v.dictentry.examples : [];
+            const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
+            gloss = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+        }
+
         if (gloss) distractorGlosses.add(gloss.split(';')[0].split(',')[0].trim());
     });
 
@@ -38,9 +68,20 @@ async function generateMcqQuizItems(prisma, userId, vocabIds) {
     for (const vocab of vocabs) {
         if (!vocab.dictentry) continue;
 
-        const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
-        const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
-        const correct = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+        // VocabTranslation 테이블에서 한국어 번역 추출 (일본어 단어 지원)
+        let correct = null;
+
+        // 1. VocabTranslation 테이블에서 한국어 번역 확인
+        if (vocab.translations && vocab.translations.length > 0) {
+            correct = vocab.translations[0].translation;
+        }
+
+        // 2. 기존 dictentry.examples에서 추출 (영어 단어용)
+        if (!correct) {
+            const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
+            const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
+            correct = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+        }
 
         if (!correct) continue;
 

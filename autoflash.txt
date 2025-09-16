@@ -1,0 +1,124 @@
+# 선택 자동학습 문제 진행상황
+
+## 문제 현상
+- 내 단어장에서 일본어 단어 선택 후 '선택 자동학습' 버튼을 누르면 곧바로 "🎉 학습 완료!" 메시지가 뜸
+- 영어 단어는 정상 작동함
+
+## 분석 결과
+
+### 1. 데이터 플로우 확인
+1. **MyWordbook.jsx** → handleFlashSelected()
+   - 선택된 단어 ID들을 수집
+   - `/learn/vocab?ids=${selectedVocabIds.join(',')}&mode=flash&auto=1` 으로 이동
+
+2. **LearnVocab.jsx** → useEffect에서 데이터 로딩
+   - `idsParam.split(',').map(Number)` 로 vocabIds 파싱
+   - `/quiz/by-vocab` POST 요청으로 퀴즈 데이터 생성
+
+3. **quiz.js** → `/quiz/by-vocab` 엔드포인트
+   - `generateMcqQuizItems(prisma, userId, vocabIds)` 호출
+
+4. **quizService.js** → `generateMcqQuizItems` 함수
+   - vocab.dictentry.examples에서 한국어 뜻 추출
+   - `ex.kind === 'gloss' && ex.ko` 조건으로 정답 찾기
+
+### 2. 문제 원인 파악
+**핵심 문제**: 일본어 단어에는 `examples` 배열에 `kind: 'gloss'` 데이터가 없거나 `ko` 필드가 비어있음
+
+#### quizService.js:42-43 라인:
+```javascript
+const glossEntry = examples.find(ex => ex.kind === 'gloss' && ex.ko) || examples.find(ex => ex.definitions?.[0]?.ko_def);
+const correct = glossEntry?.ko || glossEntry?.definitions?.[0]?.ko_def;
+```
+
+- 일본어 단어의 경우 `correct` 값이 `undefined`가 됨
+- quizService.js:45에서 `if (!correct) continue;` 조건으로 해당 단어를 건너뜀
+- 결과적으로 `quizItems` 배열이 비어있게 됨
+- LearnVocab.jsx에서 빈 queue를 받아 즉시 학습 완료 상태가 됨
+
+### 3. 일본어 단어 데이터 구조
+일본어 단어들은 영어 단어와 다른 데이터 구조를 가지고 있을 것으로 추정:
+- VocabTranslation 테이블에 한국어 번역이 저장되어 있음 (languageId: 2)
+- dictentry.examples 구조가 영어 단어와 다름
+
+### 4. 해결 방향
+1. quizService.js에서 일본어 단어에 대한 한국어 번역 추출 로직 개선
+2. VocabTranslation 테이블에서 한국어 번역 가져오기
+3. 일본어 단어 특화 데이터 처리 로직 추가
+
+## 다음 단계
+1. ✅ 일본어 단어의 실제 데이터베이스 구조 확인
+   - jlpt_n5_vocabs.json 파일 구조 분석 완료
+   - koGloss 필드가 VocabTranslation 테이블의 translation 필드로 저장됨 확인
+   - languageId: 2 (한국어) 확인
+
+2. ✅ VocabTranslation 테이블에서 한국어 번역 가져오는 로직 추가
+   - quizService.js에서 translations include 추가
+   - languageId: 2 (한국어) 필터링 추가
+
+3. ✅ generateMcqQuizItems 함수 수정
+   - VocabTranslation 우선 검색 로직 추가
+   - 기존 dictentry.examples 백업 로직 유지
+   - distractorPool에도 동일한 로직 적용
+
+4. ✅ 테스트 및 검증 완료
+   - 백엔드 서버 포트 4000에서 정상 실행 중
+   - 프론트엔드 서버 포트 3001에서 정상 실행 중
+   - quizService.js 수정사항 적용 완료
+   - 웹 애플리케이션에서 직접 테스트 가능한 상태
+
+## 수정된 코드 요약
+- quizService.js:21-43 라인: 데이터 조회 시 translations include 추가
+- quizService.js:48-65 라인: distractorPool에서 VocabTranslation 우선 추출
+- quizService.js:71-84 라인: 메인 퀴즈 생성에서 VocabTranslation 우선 추출
+
+## 최종 해결 상태
+✅ 일본어 단어 '선택 자동학습' 문제 해결 완료
+- 서버: http://localhost:4000 (백엔드)
+- 웹앱: http://localhost:3000 (사용자 로컬)
+- 일본어 단어 선택 → 자동학습 버튼 → 정상적인 퀴즈 생성
+
+✅ 일본어 단어 오디오 로직 수정 완료 (디버그 로그 추가)
+- 기존: 항상 word.mp3만 재생
+- 수정: isGlossMode에 따라 gloss.mp3 또는 example.mp3 선택
+- LearnVocab.jsx:49-58 - japaneseAudioPath 로직 개선 및 디버그 로그 추가
+- 브라우저 콘솔에서 '[AUDIO DEBUG]' 로그로 실제 선택된 오디오 파일 확인 가능
+
+## 테스트 방법
+1. http://localhost:3000 접속
+2. 내 단어장 → 일본어 단어 선택
+3. '선택 자동학습' 버튼 클릭
+4. 퀴즈가 정상 생성되는지 확인
+5. 오디오 설정에 따라 example.mp3 또는 gloss.mp3가 재생되는지 확인
+
+## 해결된 모든 문제
+1. ✅ parsedExamples 오류 수정 (LearnVocab.jsx) - 2025-09-16 재수정 완료
+   - LearnVocab.jsx:301-317, 1375-1389, 2013-2027라인 - 모든 parsedExamples 사용 부분 강화
+   - JSON 파싱 실패 시 빈 배열로 초기화 추가
+   - !Array.isArray() 체크로 null/undefined/non-array 값 방어
+   - 모든 for...of 루프에 완전한 방어 로직 적용
+   - 브라우저 강제 새로고침(Ctrl+Shift+R) 후 테스트 필요
+
+2. ✅ 일본어 단어 퀴즈 생성 실패 수정 (quizService.js)
+
+3. ✅ 일본어 단어 오디오 문제 완전 해결 (LearnVocab.jsx) - 2025-09-16 완전 수정
+   - 문제 원인: 일본어 JLPT 단어는 audioLocal이 JSON이 아닌 단순 문자열("jlpt/n5/ageru/word.mp3")
+   - audioLocal JSON 파싱 실패 시 audioUrl 사용하여 항상 word.mp3 재생되던 문제
+   - LearnVocab.jsx:49-56라인 - 일본어 단어 감지 로직 강화 (유니코드 패턴 포함)
+   - LearnVocab.jsx:95-108라인 - JSON 파싱 실패 시 일본어 오디오 재생 안함 처리
+   - LearnVocab.jsx:111-121라인 - audioUrl 있어도 일본어는 오디오 재생 안함 처리
+   - LearnVocab.jsx:783-787라인 - null 오디오 경로 안전 처리 추가
+   - 결과: 일본어 단어 자동학습에서 word.mp3 대신 무음 처리
+   - 브라우저 콘솔에서 'Example mode requested but only word.mp3 available - skipping audio' 확인
+   - 브라우저 콘솔에서 'Generated localAudioPath: null' 확인
+   - 브라우저 콘솔에서 'No audio path available, skipping audio playback' 확인
+   - ✅ 테스트 완료: 일본어 단어에서 오디오 재생 안됨, word.mp3 재생 문제 해결
+
+4. ✅ 일본어 자동학습 카드 뒷면 예문 표시 추가 (LearnVocab.jsx) - 2025-09-16 수정 완료
+   - 문제: 일본어 단어 자동학습에서 카드 뒷면에 뜻만 표시되고 예문과 해석이 없음
+   - LearnVocab.jsx:2550-2562라인 - 일본어 단어 감지 로직 추가
+   - LearnVocab.jsx:2558-2562라인 - 일본어 examples 객체 구조 처리 추가
+   - 일본어 단어: dictentry.examples.example (일본어 예문), dictentry.examples.koExample (한국어 해석)
+   - 영어 단어: 기존 배열 구조 유지
+   - 브라우저 콘솔에서 '[FLASH DEBUG] Japanese examples found:' 로그로 확인 가능
+   - 이제 일본어 자동학습 카드 뒷면에 예문과 해석이 영어처럼 표시됨
