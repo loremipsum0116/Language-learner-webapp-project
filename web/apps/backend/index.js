@@ -670,12 +670,9 @@ app.get('/api/simple-vocab', async (req, res) => {
     console.log('Extracted params:', { limit, levelCEFR, pos, search });
 
     if (pos) {
-      const posMapping = {
-        'idiom': 'idiom',
-        'phrasal verb': 'phrasal_verb'
-      };
-      const dbPos = posMapping[pos] || pos;
-      const dbSource = dbPos === 'phrasal_verb' ? 'phrasal_verb_migration' : 'idiom_migration';
+      // 실제 데이터베이스의 pos 값과 매핑
+      const dbPos = pos; // 'idiom' 또는 'phrasal verb' 그대로 사용
+      const dbSource = 'idiom_migration'; // 모든 숙어·구동사는 같은 소스
 
       console.log(`Querying for pos: ${dbPos}, source: ${dbSource}`);
 

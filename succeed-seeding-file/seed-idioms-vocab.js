@@ -91,8 +91,10 @@ async function seedIdiomsAsVocab() {
     let processed = 0;
     let successful = 0;
     let failed = 0;
+    let idiomCount = 0;
+    let phrasalVerbCount = 0;
 
-    console.log('📝 Processing idioms...');
+    console.log('📝 Processing idioms and phrasal verbs...');
 
     for (const idiom of idiomData) {
       try {
@@ -102,12 +104,37 @@ async function seedIdiomsAsVocab() {
           console.log(`⏳ Processed ${processed}/${idiomData.length} idioms...`);
         }
 
-        // Create vocab entry for idiom
+        // Determine if it's an idiom or phrasal verb based on audio path
+        let posType = 'idiom'; // default
+        if (idiom.audio && idiom.audio.word) {
+          if (idiom.audio.word.includes('phrasal_verb/')) {
+            posType = 'phrasal verb';
+            phrasalVerbCount++;
+          } else {
+            idiomCount++;
+          }
+        } else {
+          idiomCount++; // default to idiom if no audio path
+        }
+
+        // Map Korean difficulty to CEFR level
+        const categoryToCEFR = {
+          '기초': 'A2',
+          '중급': 'B1',
+          '중상급': 'B2',
+          '고급': 'C1'
+        };
+
+        // Extract difficulty from category (e.g., "중급, 숙어" -> "중급")
+        const difficulty = idiom.category ? idiom.category.split(',')[0].trim() : '중급';
+        const cefrLevel = categoryToCEFR[difficulty] || 'B1';
+
+        // Create vocab entry for idiom/phrasal verb
         const vocabEntry = await prisma.vocab.create({
           data: {
             lemma: idiom.idiom,
-            pos: 'idiom',
-            levelCEFR: 'Unknown',
+            pos: posType,
+            levelCEFR: cefrLevel,
             source: 'idiom_migration',
             languageId: englishLang.id
           }
@@ -149,6 +176,7 @@ async function seedIdiomsAsVocab() {
             vocabId: vocabEntry.id,
             ipa: null,
             audioUrl: idiom.audio?.word || null,
+            audioLocal: idiom.audio ? JSON.stringify(idiom.audio) : null,
             examples: examples.length > 0 ? examples : null
           }
         });
@@ -161,18 +189,37 @@ async function seedIdiomsAsVocab() {
       }
     }
 
-    console.log('\n🎉 Idiom seeding completed!');
+    console.log('\n🎉 Idiom and phrasal verb seeding completed!');
     console.log(`📊 Final Statistics:`);
     console.log(`   - Total processed: ${processed}`);
     console.log(`   - Successfully inserted: ${successful}`);
+    console.log(`     • Idioms: ${idiomCount}`);
+    console.log(`     • Phrasal verbs: ${phrasalVerbCount}`);
     console.log(`   - Failed: ${failed}`);
 
     // Verify the results
-    const idiomCount = await prisma.vocab.count({
+    const dbTotalCount = await prisma.vocab.count({
       where: { source: 'idiom_migration' }
     });
 
-    console.log(`   - Database count: ${idiomCount}`);
+    const dbIdiomCount = await prisma.vocab.count({
+      where: {
+        source: 'idiom_migration',
+        pos: 'idiom'
+      }
+    });
+
+    const dbPhrasalCount = await prisma.vocab.count({
+      where: {
+        source: 'idiom_migration',
+        pos: 'phrasal verb'
+      }
+    });
+
+    console.log(`   - Database verification:`);
+    console.log(`     • Total in DB: ${dbTotalCount}`);
+    console.log(`     • Idioms in DB: ${dbIdiomCount}`);
+    console.log(`     • Phrasal verbs in DB: ${dbPhrasalCount}`);
 
     // Show sample data
     const sampleIdioms = await prisma.vocab.findMany({

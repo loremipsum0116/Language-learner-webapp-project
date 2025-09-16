@@ -23,6 +23,12 @@
 - **테이블**: vocab, VocabTranslation, dictentry, Language
 - **특징**:
   - vocab 테이블에 source='idiom_migration'으로 저장
+  - **오디오 경로 기반 자동 분류** (2025-09-17 수정)
+    - `idiom/` 폴더: pos='idiom' (숙어)
+    - `phrasal_verb/` 폴더: pos='phrasal verb' (구동사)
+  - **CEFR 레벨 자동 매핑** (2025-09-17 수정)
+    - 기초 → A2, 중급 → B1, 중상급 → B2, 고급 → C1
+    - category 필드 분석하여 자동 설정
   - 한국어 번역을 VocabTranslation 테이블에 저장
   - 예문과 사용법을 dictentry 테이블에 저장
 
@@ -77,11 +83,14 @@
 
 - **CEFR 어휘**: 약 12,000개 영어 단어
 - **시험별 단어**: TOEIC, TOEFL, IELTS, 수능 카테고리별 분류
-- **숙어·구동사**: 1,001개 영어 표현
+- **숙어·구동사**: 1,001개 영어 표현 (2025-09-17 수정)
+  - 숙어 (idiom): 424개 - 오디오 경로가 `idiom/`로 시작하는 항목
+  - 구동사 (phrasal verb): 577개 - 오디오 경로가 `phrasal_verb/`로 시작하는 항목
+  - **CEFR 레벨**: 기초(A2), 중급(B1), 중상급(B2), 고급(C1)으로 자동 분류 (2025-09-17 수정)
 - **JLPT N5 일본어**: 502개 일본어 단어 (가나, 한국어 번역, 예문 포함)
 - **한국어 번역**: 모든 항목에 대해 제공
 
-## 일본어 구현 상태 (2025-09-16)
+## 일본어 구현 상태 (2025-09-17)
 
 ### ✅ 완료된 기능
 
@@ -94,12 +103,13 @@
   - `dictentry` 테이블: ipa(가나), ipaKo(로마자), examples(JSON 배열), audioLocal
   - `VocabTranslation` 테이블: 한국어 번역
 
-#### 2. 프론트엔드 표시
+#### 2. 웹 프론트엔드 표시
 - **카드 표면 (JapaneseVocabCard.jsx)**:
   - 일본어 단어 전체 표시 (예: "お先に失礼します")
   - 한자 부분에만 후리가나 표시 (예: お<ruby>先<rt>さき</rt></ruby>에<ruby>失礼<rt>しつれい</rt></ruby>します)
   - 특별 케이스 "お先に失礼します" 수동 매핑 적용
   - 히라가나/가타카나 부분은 후리가나 없이 표시
+  - **오디오 재생 버튼 footer에 추가 (2025-09-17)**
 
 - **상세보기 (VocabDetailModal.jsx)**:
   - 제목에서 한자 부분에만 후리가나 표시
@@ -107,10 +117,14 @@
   - 예문 오디오 버튼 기능 (audioLocal 데이터 파싱)
   - 특별 케이스 "お先に失礼します" 수동 매핑 적용
 
-#### 3. 오디오 기능
-- JLPT 단어 오디오 경로 파싱 (audioLocal JSON 데이터)
-- 단어 발음(word), 뜻(gloss), 예문(example) 오디오 지원
-- 상세보기에서 예문 오디오 재생 버튼 표시
+#### 3. 오디오 기능 (2025-09-17 수정)
+- JLPT 단어 오디오 경로 수정 완료
+- 경로 형식: `/jlpt/{레벨}/{로마자}/word.mp3`
+  - 레벨: 소문자 변환 (N5 → n5)
+  - 폴더명: romaji 필드 사용 (없으면 lemma 사용)
+  - 예: `/jlpt/n5/asatte/word.mp3`
+- playVocabAudio 함수에 일본어 단어 전용 처리 로직 추가
+- JapaneseVocabCard에 오디오 재생 버튼 추가 (footer 위치)
 
 ### 🔧 해결된 주요 문제들
 
@@ -119,6 +133,10 @@
 3. **후리가나 표시 문제**: 전체 텍스트에 후리가나 → 한자에만 표시
 4. **텍스트 누락 문제**: "お先に失礼します" → "お先にします" 축약 → 특별 처리로 해결
 5. **오디오 재생 문제**: audioLocal JSON 파싱 로직 구현
+6. **오디오 경로 문제** (2025-09-17): URL 인코딩 문제 → romaji 사용으로 해결
+7. **오디오 버튼 누락** (2025-09-17): JapaneseVocabCard에 재생 버튼 추가
+8. **구동사 탭 빈 결과 문제** (2025-09-17): 백엔드 API pos 매핑 오류 → 수정 완료
+9. **CEFR 레벨 Unknown 문제** (2025-09-17): 시딩 스크립트에서 category 기반 자동 매핑 구현
 
 ### 📂 관련 파일들
 
@@ -126,9 +144,10 @@
 - `web/apps/backend/seed-jlpt-vocabs.js` (시딩 스크립트)
 - `succeed-seeding-file/jlpt_n5_vocabs.json` (데이터 파일)
 
-**프론트엔드:**
+**웹 프론트엔드:**
 - `web/apps/frontend/src/components/JapaneseVocabCard.jsx` (카드 표면)
 - `web/apps/frontend/src/components/VocabDetailModal.jsx` (상세보기)
+- `web/apps/frontend/src/pages/VocabList.jsx` (오디오 재생 로직)
 
 ### 🎯 특별 처리 케이스
 
@@ -136,3 +155,10 @@
 - 카드 표면: お<ruby>先<rt>さき</rt></ruby>に<ruby>失礼<rt>しつれい</rt></ruby>します
 - 상세보기: 동일한 형태로 표시
 - 전체 텍스트 보존 및 정확한 후리가나 위치
+
+## 📌 개발 방향 (2025-09-17)
+
+**웹 개발에 집중**
+- 모바일 앱 개발 일시 중단
+- 웹 프론트엔드 기능 완성도 향상에 집중
+- 일본어 학습 기능 강화 예정
