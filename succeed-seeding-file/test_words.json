@@ -1,0 +1,44 @@
+[
+  {
+    "lemma": "いらっしゃいませ",
+    "kana": "いらっしゃいませ",
+    "romaji": "irasshaimase",
+    "koGloss": "exp. 어서 오십시오",
+    "pos": "expression",
+    "example": "店員がお客さんに「いらっしゃいませ」と言いました。",
+    "koExample": "점원이 손님에게 \"어서 오십시오\"라고 말했습니다.",
+    "audio": {
+      "word": "jlpt/n5/irasshaimase/word.mp3",
+      "gloss": "jlpt/n5/irasshaimase/gloss.mp3",
+      "example": "jlpt/n5/irasshaimase/example.mp3"
+    }
+  },
+  {
+    "lemma": "ある",
+    "kana": "ある",
+    "romaji": "aru",
+    "koGloss": "v. 있다 (사물)",
+    "pos": "verb",
+    "example": "机の上に本があります。",
+    "koExample": "책상 위에 책이 있습니다.",
+    "audio": {
+      "word": "jlpt/n5/aru/word.mp3",
+      "gloss": "jlpt/n5/aru/gloss.mp3",
+      "example": "jlpt/n5/aru/example.mp3"
+    }
+  },
+  {
+    "lemma": "あまり",
+    "kana": "あまり",
+    "romaji": "amari",
+    "koGloss": "adv. 그다지, 별로 (부정문과 함께 사용)",
+    "pos": "adverb",
+    "example": "この映画はあまり面白くありません。",
+    "koExample": "이 영화는 그다지 재미있지 않습니다.",
+    "audio": {
+      "word": "jlpt/n5/amari/word.mp3",
+      "gloss": "jlpt/n5/amari/gloss.mp3",
+      "example": "jlpt/n5/amari/example.mp3"
+    }
+  }
+]

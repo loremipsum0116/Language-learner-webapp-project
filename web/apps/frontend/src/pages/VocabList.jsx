@@ -1103,7 +1103,44 @@ export default function VocabList() {
 
     const playVocabAudio = async (vocab) => {
         console.log('🔍 [DEBUG] playVocabAudio vocab.source:', vocab.source, 'lemma:', vocab.lemma);
-        // Check if this is an idiom/phrasal verb first
+
+        // Check if this is a Japanese word first
+        if (vocab.source === 'jlpt_vocabs' || vocab.source === 'jlpt' || vocab.levelJLPT) {
+            console.log('🔍 [DEBUG] Detected Japanese word:', vocab.lemma, 'levelJLPT:', vocab.levelJLPT);
+
+            // Try to parse audioLocal for Japanese words
+            if (vocab.dictentry?.audioLocal) {
+                try {
+                    let audioData = null;
+                    if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
+                        audioData = JSON.parse(vocab.dictentry.audioLocal);
+                    } else if (typeof vocab.dictentry.audioLocal === 'object') {
+                        audioData = vocab.dictentry.audioLocal;
+                    }
+
+                    if (audioData?.word) {
+                        const audioPath = audioData.word.startsWith('/') ? audioData.word : `/${audioData.word}`;
+                        console.log('✅ Playing Japanese WORD audio:', audioPath);
+                        playUrl(audioPath, 'vocab', vocab.id);
+                        return;
+                    }
+                } catch (e) {
+                    console.warn('Failed to parse Japanese audioLocal:', e);
+                }
+            }
+
+            // Fallback to JLPT folder structure
+            const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+            // Use romaji for the folder name instead of Japanese characters
+            const folderName = vocab.romaji ? vocab.romaji.toLowerCase() : vocab.lemma.toLowerCase();
+            const audioPath = `/jlpt/${jlptLevel}/${folderName}/word.mp3`;
+            console.log('⚠️ Playing Japanese audio from JLPT folder:', audioPath);
+            console.log('Using romaji/folder name:', folderName, 'from lemma:', vocab.lemma);
+            playUrl(audioPath, 'vocab', vocab.id);
+            return;
+        }
+
+        // Check if this is an idiom/phrasal verb
         if (vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || vocab.pos === 'idiom' || vocab.pos === 'phrasal_verb' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")))) {
             // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용
             const audioUrl = vocab.audioUrl || vocab.dictentry?.audioUrl || vocab.audio;

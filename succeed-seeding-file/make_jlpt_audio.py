@@ -44,9 +44,9 @@ RETRY_BACKOFF_SEC = float(os.getenv("RETRY_BACKOFF_SEC", "0.8"))
 JA_MALE = os.getenv("JA_MALE", "ja-JP-Chirp3-HD-Orus")  # 일본어 남성 보이스
 JA_FEMALE = os.getenv("JA_FEMALE", "ja-JP-Chirp3-HD-Achernar")  # 일본어 여성 보이스
 
-# 한국어 보이스 (Chirp3 HD) - 일본어와 동일한 보이스 사용
-KO_MALE = os.getenv("KO_MALE", "ko-KR-Chirp3-HD-Orus")  # 한국어 남성 보이스
-KO_FEMALE = os.getenv("KO_FEMALE", "ko-KR-Chirp3-HD-Achernar")  # 한국어 여성 보이스
+# 한국어 보이스 (Neural2) - Neural2로 변경
+KO_MALE = os.getenv("KO_MALE", "ko-KR-Neural2-C")  # 한국어 남성 보이스
+KO_FEMALE = os.getenv("KO_FEMALE", "ko-KR-Neural2-B")  # 한국어 여성 보이스
 
 
 # 폴백 후보
@@ -69,13 +69,13 @@ JA_FEMALE_FALLBACKS = _parse_list(
 KO_MALE_FALLBACKS = _parse_list(
     os.getenv(
         "KO_MALE_FALLBACKS",
-        "ko-KR-Chirp3-HD-Orus,ko-KR-Neural2-C,ko-KR-Neural2-A,ko-KR-Standard-C,ko-KR-Standard-D",
+        "ko-KR-Neural2-C,ko-KR-Standard-C,ko-KR-Standard-D",
     )
 )
 KO_FEMALE_FALLBACKS = _parse_list(
     os.getenv(
         "KO_FEMALE_FALLBACKS",
-        "ko-KR-Chirp3-HD-Achernar,ko-KR-Neural2-B,ko-KR-Neural2-A,ko-KR-Standard-A,ko-KR-Standard-B",
+        "ko-KR-Neural2-B,ko-KR-Standard-A,ko-KR-Standard-B",
     )
 )
 
@@ -110,7 +110,7 @@ def build_output_paths(romaji: str, level: str = "n5") -> Dict[str, str]:
 
 
 def clean_ko_gloss(text: str) -> str:
-    """한국어 뜻 전처리 - 품사 표시 제거 및 특수문자 처리"""
+    """한국어 뜻 전처리 - 괄호 및 괄호 내용 완전 제거"""
     if not text:
         return ""
     s = normalize_spaces(text)
@@ -118,8 +118,8 @@ def clean_ko_gloss(text: str) -> str:
     # 물결 표시(~)를 '무엇무엇'으로 치환
     s = s.replace("~", "무엇무엇")
 
-    # 한국어: 괄호는 제거하고 괄호 안의 내용은 유지
-    s = re.sub(r"[（(]([^）)]*)[）)]", r"\1", s)
+    # 괄호 및 괄호 안의 내용 완전히 제거
+    s = re.sub(r"[（(][^）)]*[）)]", "", s)
 
     # 품사 약어 제거 (영어, 한국어 품사 표시 모두)
     s = re.sub(
@@ -378,7 +378,7 @@ def process(json_path: str) -> None:
     print(f"    KO: male={KO_MALE}, female={KO_FEMALE}")
     print(f"    gaps: gloss={GLOSS_GAP_MS}ms, comma={COMMA_GAP_MS}ms")
     print(
-        "📝 모드: word=ja-JP(Chirp3 HD), gloss=ja-JP+ko-KR(Chirp3 HD), example=ja-JP(Chirp3 HD), 성별 순환(남→여→남…)\n"
+        "📝 모드: word=ja-JP(Chirp3 HD), gloss=ja-JP(Chirp3)+ko-KR(Neural2), example=ja-JP(Chirp3 HD), 성별 순환(남→여→남…)\n"
     )
 
     last_saved: Optional[str] = None

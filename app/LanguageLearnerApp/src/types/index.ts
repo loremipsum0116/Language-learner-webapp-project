@@ -33,6 +33,7 @@ export interface Vocab {
   lemma: string;
   pos: string;
   levelCEFR?: string;
+  levelJLPT?: string;
   ko_gloss?: string;
   gloss?: string; // Web compatibility
   source?: string;
@@ -47,6 +48,7 @@ export interface Vocab {
   };
   dictentry?: DictEntry;
   audioLocal?: string;
+  audio_local?: string | object;
 }
 
 export interface DictEntry {

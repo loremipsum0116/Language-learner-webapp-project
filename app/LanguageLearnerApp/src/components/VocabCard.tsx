@@ -28,6 +28,11 @@ const VocabCard: React.FC<VocabCardProps> = ({
   
   // Check if this is an idiom or phrasal verb
   const isIdiomOrPhrasal = vocab.source === 'idiom_migration';
+  // Check if this is a Japanese vocabulary (JLPT or has Japanese audio)
+  const isJapaneseVocab = vocab.source?.includes('jlpt') ||
+                          vocab.source?.includes('japanese') ||
+                          vocab.levelJLPT ||
+                          (vocab.audio_local && typeof vocab.audio_local === 'string' && vocab.audio_local.includes('japanese'));
   const isPlaying = playingAudio?.type === 'vocab' && playingAudio?.id === vocab.id;
   
   const getStageInfo = () => {
@@ -207,8 +212,8 @@ const VocabCard: React.FC<VocabCardProps> = ({
           </View>
         </View>
         
-        {/* Play button for idioms and phrasal verbs */}
-        {isIdiomOrPhrasal && onPlayAudio && (
+        {/* Play button for idioms, phrasal verbs, and Japanese vocabulary */}
+        {(isIdiomOrPhrasal || isJapaneseVocab) && onPlayAudio && (
           <TouchableOpacity
             style={styles.playButton}
             onPress={() => onPlayAudio(vocab)}

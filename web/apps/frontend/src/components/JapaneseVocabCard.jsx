@@ -190,7 +190,7 @@ export default function JapaneseVocabCard({
         <div
           className="card-body card-clickable pt-0"
           onClick={() => onOpenDetail(vocab.id)}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', position: 'relative' }}
         >
           <div className="text-center mb-2">
             <FuriganaDisplay kanji={vocab.lemma} kana={vocab.kana || vocab.ipa} />
@@ -205,7 +205,6 @@ export default function JapaneseVocabCard({
           <div className="card-subtitle text-muted text-center">
             {koGloss}
           </div>
-
         </div>
         <div className="card-footer d-flex gap-2 justify-content-between align-items-center">
           <div className="d-flex align-items-center">
@@ -226,30 +225,29 @@ export default function JapaneseVocabCard({
                 + SRS
               </button>
             </div>
-            {vocab.audio && (
-              <button
-                className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center ms-2"
-                style={{ width: '32px', height: '32px' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onPlayAudio(vocab);
-                }}
-                disabled={isEnriching}
-                title="음성 듣기"
-              >
-                {isEnriching ? (
-                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                ) : isPlaying ? (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
-                    <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
-                  </svg>
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
-                    <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
-                  </svg>
-                )}
-              </button>
-            )}
+            {/* Audio play button */}
+            <button
+              className="btn btn-sm btn-outline-info rounded-circle d-flex align-items-center justify-content-center ms-2"
+              style={{ width: '32px', height: '32px' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onPlayAudio(vocab);
+              }}
+              disabled={isEnriching}
+              title="음성 듣기"
+            >
+              {isEnriching ? (
+                <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              ) : isPlaying ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-pause-fill" viewBox="0 0 16 16">
+                  <path d="M5.5 3.5A1.5 1.5 0 0 1 7 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5zm5 0A1.5 1.5 0 0 1 12 5v6a1.5 1.5 0 0 1-3 0V5a1.5 1.5 0 0 1 1.5-1.5z" />
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-play-fill" viewBox="0 0 16 16">
+                  <path d="M11.596 8.697l-6.363 3.692A.5.5 0 0 1 4 11.942V4.058a.5.5 0 0 1 .777-.416l6.363 3.692a.5.5 0 0 1 0 .863z" />
+                </svg>
+              )}
+            </button>
           </div>
         </div>
       </div>
