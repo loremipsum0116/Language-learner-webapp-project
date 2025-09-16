@@ -501,7 +501,7 @@ export default function WrongAnswers() {
             
             return (
               <div
-                key={`wrong-answer-${safeId}`}
+                key={`wrong-answer-${safeId}-${index}`}
                 className={`list-group-item ${
                   wa.srsCard?.isMastered ? "border-warning bg-light" : ""
                 } ${hasRealId && selectedIds.has(actualId) ? "border-primary bg-light" : ""}`}
@@ -555,9 +555,17 @@ export default function WrongAnswers() {
                               let koGloss = "뜻 정보 없음";
                               try {
                                 if (wa.vocab.dictentry?.examples) {
-                                  const examples = Array.isArray(wa.vocab.dictentry.examples)
-                                    ? wa.vocab.dictentry.examples
-                                    : JSON.parse(wa.vocab.dictentry.examples);
+                                  let examples = wa.vocab.dictentry.examples;
+
+                                  // 문자열인 경우에만 JSON 파싱
+                                  if (typeof examples === 'string') {
+                                    examples = JSON.parse(examples);
+                                  }
+
+                                  // 배열이 아닌 경우 배열로 변환
+                                  if (!Array.isArray(examples)) {
+                                    examples = [examples];
+                                  }
 
                                   for (const ex of examples) {
                                     // definitions 안에 ko_def가 있는 경우

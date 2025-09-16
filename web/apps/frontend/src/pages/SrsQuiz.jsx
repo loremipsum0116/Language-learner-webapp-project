@@ -121,6 +121,14 @@ export default function SrsQuiz() {
             return 'ja';
         }
 
+        // lemma에 일본어 문자(히라가나, 카타카나, 한자)가 있으면 일본어
+        if (vocab.lemma) {
+            const japaneseRegex = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/;
+            if (japaneseRegex.test(vocab.lemma)) {
+                return 'ja';
+            }
+        }
+
         // dictentry의 examples에 일본어 데이터가 있으면 일본어
         if (vocab.dictentry && vocab.dictentry.examples) {
             const examples = Array.isArray(vocab.dictentry.examples) ? vocab.dictentry.examples : [];
@@ -250,26 +258,39 @@ export default function SrsQuiz() {
 
             setQueue(updatedQueue);
 
-            // 오답인 경우 오답노트에 기록
-            console.log(`[SRS 퀴즈 오답노트 DEBUG] correct: ${correct}, canUpdateCardState: ${canUpdateCardState}, folderId: ${folderId}, cardId: ${current.cardId}, vocabId: ${current.vocabId}`);
+            // 오답인 경우 오답노트에 기록 (일본어는 JapaneseQuiz에서 처리하므로 제외)
+            const currentLanguage = detectLanguageFromVocab(current.vocab);
+            const isJapanese = currentLanguage === 'ja';
+
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] vocab data:`, current.vocab);
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] correct: ${correct}, canUpdateCardState: ${canUpdateCardState}, folderId: ${folderId}, cardId: ${current.cardId}, vocabId: ${current.vocabId}, language: ${currentLanguage}, isJapanese: ${isJapanese}`);
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] vocab.levelJLPT:`, current.vocab?.levelJLPT);
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] vocab.source:`, current.vocab?.source);
+            console.log(`[SRS 퀴즈 오답노트 DEBUG] vocab.lemma:`, current.vocab?.lemma);
+
             if (!correct && canUpdateCardState) {
+                if (isJapanese) {
+                    console.log(`[SRS 퀴즈 오답노트 DEBUG] 일본어 단어이므로 오답노트 기록 건너뜀`);
+                    return; // 일본어는 JapaneseQuiz에서 처리
+                }
                 try {
                     const odatPayload = {
                         itemType: 'vocab',
                         itemId: current.vocabId || current.cardId,
                         wrongData: {
                             question: current.question || '알 수 없는 단어',
-                            answer: current.question || '정답',
-                            userAnswer: 'incorrect', // SrsQuiz에서는 단순히 오답 표시
+                            answer: current.answer || '정답',
+                            userAnswer: 'incorrect', // SRS에서는 단순히 오답 표시
                             quizType: 'srs-meaning',
                             folderId: folderId,
                             vocabId: current.vocabId || current.cardId,
                             ko_gloss: current.answer || '뜻 정보 없음',
                             context: current.contextSentence || null,
-                            pron: current.pron || null
+                            pron: current.pron || null,
+                            language: 'en' // 영어 퀴즈
                         }
                     };
-                    console.log(`[SRS 퀴즈 오답노트 DEBUG] 전송할 데이터:`, odatPayload);
+                    console.log(`[SRS 퀴즈 오답노트 DEBUG] 전송할 데이터 (영어):`, odatPayload);
                     
                     const response = await fetchJSON('/api/odat-note/create', withCreds({
                         method: 'POST',
@@ -336,8 +357,8 @@ export default function SrsQuiz() {
         );
     }
 
-    // 일본어 SRS 퀴즈도 영어와 동일한 카드 기반 UI 사용 (SRS 시스템 통합을 위해)
-    // 별도의 JapaneseQuiz 컴포넌트 대신 기본 SRS UI 사용
+    // 일본어 SRS 퀴즈는 JapaneseQuiz 컴포넌트에서 처리됨
+    // 여기서는 영어 SRS 퀴즈만 처리
 
     // 기존 영어 퀴즈 렌더링
     return (

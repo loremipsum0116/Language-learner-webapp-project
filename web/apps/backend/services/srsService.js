@@ -1308,24 +1308,43 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
     // --- 오답노트 처리 (실제 오답일 때만 추가) ---
     // 오답노트 추가 조건: 명확히 오답이고(correct === false), vocabId가 있고, 통계에 반영되는 학습인 경우에만
     const isActualWrongAnswer = correct === false && vocabId && shouldCountInStats;
-    
+
     if (isActualWrongAnswer) {
-        console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}, correct=${correct}, shouldCountInStats=${shouldCountInStats}`);
+        // 일본어 단어인지 확인 (JLPT 단어는 프론트엔드에서 처리하므로 건너뜀)
+        let skipWrongAnswerNote = false;
         try {
-            const { addWrongAnswer } = require('./wrongAnswerService');
-            await addWrongAnswer(userId, vocabId, folderId);
-            console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
-            
-            // lastWrongAt 업데이트 (SRS 폴더에서만, 자율학습모드에는 해당 없음)
-            if (folderId) {
-                await prisma.srsfolderitem.updateMany({
-                    where: { folderId: folderId, cardId: cardId },
-                    data: { lastWrongAt: now }
-                });
-                console.log(`[SRS SERVICE] Updated lastWrongAt for SRS folder item`);
+            const vocab = await prisma.vocab.findFirst({
+                where: { id: vocabId },
+                select: { levelJLPT: true, source: true, lemma: true }
+            });
+
+            if (vocab && (vocab.levelJLPT || vocab.source === 'jlpt_vocabs' ||
+                (vocab.lemma && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.lemma)))) {
+                skipWrongAnswerNote = true;
+                console.log(`[SRS SERVICE] Skipping wrong answer note for Japanese vocab: vocabId=${vocabId}, levelJLPT=${vocab.levelJLPT}, source=${vocab.source}`);
             }
-        } catch (error) {
-            console.error(`[SRS SERVICE] Failed to add wrong answer note:`, error);
+        } catch (err) {
+            console.error(`[SRS SERVICE] Error checking vocab language:`, err);
+        }
+
+        if (!skipWrongAnswerNote) {
+            console.log(`[SRS SERVICE] Adding to wrong answer note: userId=${userId}, vocabId=${vocabId}, folderId=${folderId}, correct=${correct}, shouldCountInStats=${shouldCountInStats}`);
+            try {
+                const { addWrongAnswer } = require('./wrongAnswerService');
+                await addWrongAnswer(userId, vocabId, folderId);
+                console.log(`[SRS SERVICE] Successfully added to wrong answer note with folder isolation`);
+
+                // lastWrongAt 업데이트 (SRS 폴더에서만, 자율학습모드에는 해당 없음)
+                if (folderId) {
+                    await prisma.srsfolderitem.updateMany({
+                        where: { folderId: folderId, cardId: cardId },
+                        data: { lastWrongAt: now }
+                    });
+                    console.log(`[SRS SERVICE] Updated lastWrongAt for SRS folder item`);
+                }
+            } catch (error) {
+                console.error(`[SRS SERVICE] Failed to add wrong answer note:`, error);
+            }
         }
     } else if (correct === false && !vocabId) {
         console.log(`[SRS SERVICE] Wrong answer but no vocabId - skipping wrong answer note`);

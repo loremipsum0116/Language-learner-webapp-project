@@ -126,6 +126,8 @@ export default function JapaneseQuiz({
     const submitAnswer = async () => {
         if (!currentQuiz) return;
 
+        console.log('[JAPANESE QUIZ] submitAnswer 함수 시작:', { currentIndex, currentQuiz: currentQuiz.question });
+
         let finalAnswer;
         let correct = false;
 
@@ -187,6 +189,42 @@ export default function JapaneseQuiz({
             } catch (error) {
                 console.error('[JAPANESE QUIZ] Failed to record SRS answer:', error);
                 // SRS 기록 실패는 퀴즈 진행을 막지 않음
+            }
+        }
+
+        // 오답인 경우 오답노트에 기록 (임시로 모든 경우 - 백엔드 기록 안 됨)
+        // TODO: 백엔드 SRS 오답노트 기록 문제 해결 후 !currentQuiz.cardId 조건 복원 필요
+        if (!correct) {
+            try {
+                const odatPayload = {
+                    itemType: 'vocab',
+                    itemId: currentQuiz.vocabId || currentQuiz.cardId,
+                    wrongData: {
+                        question: currentQuiz.question || '알 수 없는 단어',
+                        answer: currentQuiz.answer || '정답',
+                        userAnswer: isMultipleChoice ? finalAnswer : finalAnswer,
+                        quizType: actualQuizType || currentQuiz.quizType || 'japanese-quiz',
+                        folderId: folderId,
+                        vocabId: currentQuiz.vocabId || currentQuiz.cardId,
+                        ko_gloss: currentQuiz.answerTranslation || currentQuiz.answer || '뜻 정보 없음',
+                        context: currentQuiz.contextSentence || null,
+                        pron: currentQuiz.pron || null,
+                        language: 'ja' // 일본어 퀴즈임을 명시
+                    }
+                };
+
+                console.log('[JAPANESE QUIZ] Recording wrong answer to odat-note:', odatPayload);
+
+                const response = await fetchJSON('/api/odat-note/create', withCreds({
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(odatPayload)
+                }));
+
+                console.log('✅ [일본어 퀴즈 오답 기록 완료] 응답:', response);
+            } catch (odatError) {
+                console.error('❌ [일본어 퀴즈 오답 기록 실패]:', odatError);
+                // 오답 기록 실패도 퀴즈 진행을 막지 않음
             }
         }
 
