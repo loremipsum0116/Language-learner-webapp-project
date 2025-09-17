@@ -90,12 +90,13 @@ async function addWrongAnswer(userId, vocabId, folderId = null) {
   const createData = {
     userId,
     vocabId,
+    itemId: vocabId, // itemId 필드 추가 (vocabId와 동일한 값 사용)
     wrongAt: wrongAt.toDate(),
     reviewWindowStart: reviewWindowStart.toDate(),
     reviewWindowEnd: reviewWindowEnd.toDate(),
     attempts: currentAttempts
   };
-  
+
   // folderId가 제공된 경우에만 추가
   if (folderId) {
     createData.folderId = folderId;

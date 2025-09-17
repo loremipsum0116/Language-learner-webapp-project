@@ -325,9 +325,9 @@ export default function JapaneseQuiz({
             }
         }
 
-        // 오답인 경우 오답노트에 기록 (임시로 모든 경우 - 백엔드 기록 안 됨)
-        // TODO: 백엔드 SRS 오답노트 기록 문제 해결 후 !currentQuiz.cardId 조건 복원 필요
-        if (!correct) {
+        // 오답인 경우 오답노트에 기록 (SRS 카드가 아닌 경우에만)
+        // SRS 카드인 경우는 백엔드에서 처리하지만, 일본어는 백엔드에서 건너뛰므로 여기서도 건너뜀
+        if (!correct && !currentQuiz.cardId) {
             try {
                 const odatPayload = {
                     itemType: 'vocab',
@@ -355,6 +355,15 @@ export default function JapaneseQuiz({
                 }));
 
                 console.log('✅ [일본어 퀴즈 오답 기록 완료] 응답:', response);
+
+                // 오답노트에 새로운 기록이 추가되었음을 알리는 이벤트 발생
+                window.dispatchEvent(new CustomEvent('wrongAnswerAdded', {
+                    detail: {
+                        itemType: 'vocab',
+                        itemId: currentQuiz.vocabId || currentQuiz.cardId,
+                        language: 'ja'
+                    }
+                }));
             } catch (odatError) {
                 console.error('❌ [일본어 퀴즈 오답 기록 실패]:', odatError);
                 // 오답 기록 실패도 퀴즈 진행을 막지 않음

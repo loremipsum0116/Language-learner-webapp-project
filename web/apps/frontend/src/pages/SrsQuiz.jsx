@@ -409,6 +409,15 @@ export default function SrsQuiz() {
                         body: JSON.stringify(odatPayload)
                     }));
                     console.log(`✅ [SRS 퀴즈 오답 기록 완료] 응답:`, response);
+
+                    // 오답노트에 새로운 기록이 추가되었음을 알리는 이벤트 발생
+                    window.dispatchEvent(new CustomEvent('wrongAnswerAdded', {
+                        detail: {
+                            itemType: 'vocab',
+                            itemId: current.vocabId || current.cardId,
+                            language: currentLanguage
+                        }
+                    }));
                 } catch (error) {
                     if (error.message.includes('Unauthorized')) {
                         console.log('📝 [비로그인 사용자] 오답노트는 로그인 후 이용 가능합니다.');

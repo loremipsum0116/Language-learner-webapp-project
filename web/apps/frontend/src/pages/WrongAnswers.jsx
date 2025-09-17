@@ -111,6 +111,30 @@ export default function WrongAnswers() {
     reload();
   }, [selectedTab]);
 
+  // 오답 기록 이벤트 리스너 추가
+  useEffect(() => {
+    const handleWrongAnswerAdded = () => {
+      console.log('[WRONG ANSWERS] New wrong answer detected, refreshing...');
+      reload();
+      loadCategories();
+    };
+
+    // 페이지가 다시 포커스될 때 새로고침 (다른 탭에서 학습 후 돌아올 때)
+    const handleFocus = () => {
+      reload();
+      loadCategories();
+    };
+
+    // 커스텀 이벤트 리스너 등록
+    window.addEventListener('wrongAnswerAdded', handleWrongAnswerAdded);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('wrongAnswerAdded', handleWrongAnswerAdded);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, []);
+
   const handleSelectItem = (id) => {
     // Only allow selection of real database IDs (number or string, but not temp IDs)
     if (!id || (typeof id === 'string' && id.startsWith('temp-'))) {
