@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 import LanguageSelectionModal from "../components/LanguageSelectionModal";
-import "./Home_en.css";
+import "./Home.css";
 
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 

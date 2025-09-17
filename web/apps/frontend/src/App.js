@@ -5,8 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Routes, Route } from "react-router-dom";
 import Header from "./pages/Header";
 import Footer from "./components/Footer";
-import HomeEn from "./pages/Home_en";
-import HomeJp from "./pages/Home_jp";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LearnVocab from "./pages/LearnVocab";
@@ -52,29 +51,17 @@ export default function App() {
       <div className="app-wrapper">
         <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route 
-          path="/home" 
+        <Route
+          path="/home"
           element={
             <>
               <Header />
               <div className="main-content">
-                <HomeEn />
+                <Home />
               </div>
               <Footer />
             </>
-          } 
-        />
-        <Route 
-          path="/home-jp" 
-          element={
-            <>
-              <Header />
-              <div className="main-content">
-                <HomeJp />
-              </div>
-              <Footer />
-            </>
-          } 
+          }
         />
         <Route 
           path="/login" 
