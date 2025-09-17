@@ -168,7 +168,8 @@ export default function JapaneseQuiz({
     vocabIds,
     quizType = JapaneseQuizTypes.JP_WORD_TO_KO_MEANING,
     onQuizComplete,
-    folderId = null
+    folderId = null,
+    mode = null
 }) {
     const [quizItems, setQuizItems] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -310,15 +311,31 @@ export default function JapaneseQuiz({
         // SRS 시스템에 답안 전송 (cardId가 있는 경우에만)
         if (currentQuiz.cardId) {
             try {
-                await fetchJSON('/quiz/answer', withCreds({
-                    method: 'POST',
-                    body: JSON.stringify({
-                        folderId: folderId,
-                        cardId: currentQuiz.cardId,
-                        correct: correct
-                    })
-                }));
-                console.log('[JAPANESE QUIZ] SRS answer recorded:', { cardId: currentQuiz.cardId, correct });
+                console.log('[JAPANESE QUIZ SRS DEBUG] 체크:', {
+                    mode,
+                    folderId,
+                    cardId: currentQuiz.cardId,
+                    correct
+                });
+
+                // all_overdue 모드에서는 folderId가 없어도 SRS 업데이트 진행
+                if (!folderId && mode !== 'all_overdue') {
+                    console.warn('[JAPANESE QUIZ] folderId가 없어 SRS 채점을 건너뜁니다.');
+                } else {
+                    console.log('[JAPANESE QUIZ SRS DEBUG] API 호출 시작:', { folderId, cardId: currentQuiz.cardId, correct });
+
+                    const srsResponse = await fetchJSON('/quiz/answer', withCreds({
+                        method: 'POST',
+                        body: JSON.stringify({
+                            folderId: folderId,
+                            cardId: currentQuiz.cardId,
+                            correct: correct
+                        })
+                    }));
+
+                    console.log('[JAPANESE QUIZ SRS DEBUG] API 응답:', srsResponse);
+                    console.log('[JAPANESE QUIZ] SRS answer recorded:', { cardId: currentQuiz.cardId, correct });
+                }
             } catch (error) {
                 console.error('[JAPANESE QUIZ] Failed to record SRS answer:', error);
                 // SRS 기록 실패는 퀴즈 진행을 막지 않음

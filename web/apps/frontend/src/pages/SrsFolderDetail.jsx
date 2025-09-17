@@ -91,8 +91,8 @@ const getCardBackgroundColor = (item) => {
         const now = new Date();
         const reviewTime = new Date(item.nextReviewAt);
         if (reviewTime > now) {
-            return { 
-                className: 'text-dark border-secondary', 
+            return {
+                className: 'text-dark border-secondary',
                 style: { backgroundColor: '#e2e3e5', color: '#41464b' } // 연한 회색
             };
         }

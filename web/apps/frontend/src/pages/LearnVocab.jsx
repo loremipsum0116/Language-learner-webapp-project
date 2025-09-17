@@ -1669,13 +1669,28 @@ export default function LearnVocab() {
                     return;
                 }
                 const folderId = current.folderId || folderIdParam;
-                if (!folderId) {
+
+                // all_overdue 모드에서는 folderId가 없어도 SRS 업데이트 진행
+                console.log('[SRS DEBUG - 정답] 체크:', {
+                    mode,
+                    folderId,
+                    cardId: current.cardId,
+                    folderIdParam,
+                    currentFolderId: current.folderId
+                });
+
+                if (!folderId && mode !== 'all_overdue') {
                     toast.error('folderId가 없어 SRS 채점을 진행할 수 없습니다. 폴더에서 퀴즈를 시작하세요.');
                     return;
                 }
+
+                console.log('[SRS DEBUG - 정답] API 호출 시작:', { folderId, cardId: current.cardId, correct: true });
+
                 const { data } = await fetchJSON('/quiz/answer', withCreds({
                     method: 'POST', body: JSON.stringify({ folderId, cardId: current.cardId, correct: true })
                 }));
+
+                console.log('[SRS DEBUG - 정답] API 응답:', data);
 
                 // 마스터 달성 축하 메시지 표시
                 if (data?.isMasteryAchieved) {
@@ -1710,13 +1725,28 @@ export default function LearnVocab() {
                         return;
                     }
                     const folderId = current.folderId || folderIdParam;
-                    if (!folderId) {
+
+                    // all_overdue 모드에서는 folderId가 없어도 SRS 업데이트 진행
+                    console.log('[SRS DEBUG - 오답] 체크:', {
+                        mode,
+                        folderId,
+                        cardId: current.cardId,
+                        folderIdParam,
+                        currentFolderId: current.folderId
+                    });
+
+                    if (!folderId && mode !== 'all_overdue') {
                         toast.error('folderId가 없어 SRS 채점을 진행할 수 없습니다. 폴더에서 퀴즈를 시작하세요.');
                         return;
                     }
+
+                    console.log('[SRS DEBUG - 오답] API 호출 시작:', { folderId, cardId: current.cardId, correct: false });
+
                     const { data } = await fetchJSON('/quiz/answer', withCreds({
                         method: 'POST', body: JSON.stringify({ folderId, cardId: current.cardId, correct: false })
                     }));
+
+                    console.log('[SRS DEBUG - 오답] API 응답:', data);
 
                     setFeedback({ status: data?.status ?? 'fail', answer: correctAnswer });
 
@@ -2145,6 +2175,7 @@ export default function LearnVocab() {
                     quizType={quizTypeParam}
                     onQuizComplete={handleJapaneseQuizComplete}
                     folderId={folderIdParam}
+                    mode={mode}
                 />
             </main>
         );

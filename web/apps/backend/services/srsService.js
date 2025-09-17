@@ -1258,12 +1258,12 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
 
     // --- SrsFolderItem Update ---
     if (folderId) {
-        // 현재 폴더 아이템 상태 조회
+        // 특정 폴더에서 학습하는 경우
         const currentItem = await prisma.srsfolderitem.findFirst({
             where: { folderId: folderId, cardId: cardId },
             select: { learned: true }
         });
-        
+
         // learned 상태 결정: SRS 상태 변경이 가능할 때만 learned 상태 변경
         let newLearnedState;
         if (canUpdateCardState) {
@@ -1273,26 +1273,49 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
             // SRS 상태 변경 불가 시: 기존 learned 상태 유지 (자율 학습은 진도에 영향 없음)
             newLearnedState = currentItem?.learned ?? false;
         }
-        
-        // SRS 학습 기록 업데이트를 위한 데이터 준비
+
         const updateData = {
             learned: newLearnedState,
-            // wrongCount는 SRS 상태 변경이 가능할 때만 증가 (자율 학습에서는 증가하지 않음)
             wrongCount: { increment: (correct || !canUpdateCardState) ? 0 : 1 },
+            lastReviewedAt: now
         };
-        
-        // lastReviewedAt은 학습 기록 추적을 위해 항상 업데이트 (실제 답변했으므로)
-        updateData.lastReviewedAt = now;
-        if (canUpdateCardState) {
-            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=true (SRS state will change)`);
-        } else {
-            console.log(`[SRS SERVICE] UPDATING lastReviewedAt for card ${cardId} - canUpdateCardState=false (SRS state unchanged, but tracking study)`);
-        }
-        
+
+        console.log(`[SRS SERVICE] UPDATING folder ${folderId} item for card ${cardId} - learned: ${newLearnedState}, canUpdateCardState: ${canUpdateCardState}`);
+
         await prisma.srsfolderitem.updateMany({
             where: { folderId: folderId, cardId: cardId },
             data: updateData
         });
+    } else {
+        // all_overdue 모드: 해당 카드가 속한 모든 폴더의 learned 상태 업데이트
+        console.log(`[SRS SERVICE] all_overdue mode - updating learned status for all folders containing card ${cardId}`);
+
+        if (canUpdateCardState) {
+            // SRS 상태 변경 가능 시: 정답이면 learned=true, 오답이면 learned 상태는 유지하고 wrongCount만 증가
+            const updateData = {
+                lastReviewedAt: now
+            };
+
+            if (correct) {
+                updateData.learned = true;
+                console.log(`[SRS SERVICE] Setting learned=true for all folders containing card ${cardId} (correct answer)`);
+            } else {
+                updateData.wrongCount = { increment: 1 };
+                console.log(`[SRS SERVICE] Incrementing wrongCount for all folders containing card ${cardId} (wrong answer)`);
+            }
+
+            await prisma.srsfolderitem.updateMany({
+                where: { cardId: cardId },
+                data: updateData
+            });
+        } else {
+            // SRS 상태 변경 불가 시: lastReviewedAt만 업데이트 (학습 기록 추적용)
+            console.log(`[SRS SERVICE] SRS state unchanged - only updating lastReviewedAt for card ${cardId}`);
+            await prisma.srsfolderitem.updateMany({
+                where: { cardId: cardId },
+                data: { lastReviewedAt: now }
+            });
+        }
     }
 
     // --- 연속 학습 일수 업데이트 (통계에 반영되는 학습에서만) ---
@@ -1571,15 +1594,25 @@ async function restartMasteredFolder(folderId, userId) {
  */
 async function getAvailableCardsForReviewFixed(userId) {
     const now = new Date();
-    
-    // 일단 기본 조건으로 SRS 카드들을 가져옴
+
+    // 실시간 overdue 판단을 위해 모든 카드를 가져옴 (isOverdue 조건 제거)
     const cards = await prisma.srscard.findMany({
         where: {
             userId: userId,
-            isOverdue: true,
             OR: [
-                { overdueDeadline: { gt: now } }, // 데드라인이 지나지 않은 카드
-                { overdueDeadline: null } // 자동학습 카드 (데드라인 없음)
+                // 실제 overdue 카드들
+                {
+                    isOverdue: true,
+                    OR: [
+                        { overdueDeadline: { gt: now } }, // 데드라인이 지나지 않은 카드
+                        { overdueDeadline: null } // 자동학습 카드 (데드라인 없음)
+                    ]
+                },
+                // 실시간 overdue 확인: waitingUntil이 현재 시간보다 과거인 카드들
+                {
+                    waitingUntil: { lte: now },
+                    isOverdue: false // DB에서는 아직 overdue로 표시되지 않았지만 실제로는 overdue
+                }
             ],
             frozenUntil: null // 동결되지 않은 카드만
         },
@@ -1599,16 +1632,24 @@ async function getAvailableCardsForReviewFixed(userId) {
         ]
     });
 
-    // 고아 카드 필터링: srsfolderitem이 있고 해당 폴더가 존재하는 카드만 반환
+    // 고아 카드 필터링 및 실시간 overdue 상태 확인
     const validCards = cards.filter(card => {
         // srsfolderitem이 없으면 고아
         if (!card.srsfolderitem || card.srsfolderitem.length === 0) {
             return false;
         }
-        
+
         // srsfolderitem은 있지만 srsfolder가 null인 경우도 고아
         const hasValidFolder = card.srsfolderitem.some(item => item.srsfolder && item.srsfolder.id);
         return hasValidFolder;
+    });
+
+    // 실시간 overdue 상태 디버깅
+    console.log(`[SRS AVAILABLE DEBUG] Found ${validCards.length} valid cards for user ${userId}`);
+    validCards.forEach(card => {
+        const isRealTimeOverdue = card.waitingUntil && new Date(card.waitingUntil) <= now;
+        const isDbOverdue = card.isOverdue;
+        console.log(`  - Card ${card.id}: DB overdue=${isDbOverdue}, RealTime overdue=${isRealTimeOverdue}, waitingUntil=${card.waitingUntil?.toISOString()}`);
     });
 
     return validCards;
