@@ -1658,18 +1658,19 @@ router.delete('/folders/:id', async (req, res, next) => {
                         });
                         const orphanedVocabIds = orphanedCardsWithVocab.map(card => card.itemId);
 
-                        // 🔥 2.4.2. 고아 카드들의 모든 오답노트 삭제 (cardId 기반)
+                        // 🔥 2.4.2. 고아 카드들의 모든 오답노트 삭제 (itemId 기반)
                         const cardWrongAnswers = await tx.wronganswer.deleteMany({
                             where: {
                                 userId,
-                                cardId: { in: orphanedCardIds }
+                                itemId: { in: orphanedCardIds },
+                                itemType: 'srscard'
                             }
                         });
                         totalWrongAnswersDeleted += cardWrongAnswers.count;
                         console.log(`[RECURSIVE DELETE] Deleted ${cardWrongAnswers.count} card-based wrong answers for orphaned cards`);
 
                         // 🔥 2.4.3. 고아 카드들의 vocab 관련 리포트 삭제
-                        const cardReports = await tx.card_reports.deleteMany({
+                        const cardReports = await tx.cardReport.deleteMany({
                             where: {
                                 userId,
                                 vocabId: { in: orphanedVocabIds }
@@ -1734,7 +1735,7 @@ router.delete('/folders/:id', async (req, res, next) => {
                 select: { id: true, folderId: true }
             });
 
-            const orphanedReports = await tx.card_reports.findMany({
+            const orphanedReports = await tx.cardReport.findMany({
                 where: {
                     userId,
                     vocabId: { in: allFolderIds } // 이건 실제로는 발생하지 않지만 검증용

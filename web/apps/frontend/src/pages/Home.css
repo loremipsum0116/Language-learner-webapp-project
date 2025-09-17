@@ -6,10 +6,11 @@
   padding: 2rem;
   display: grid;
   gap: 2rem;
-  grid-template-areas: 
+  grid-template-areas:
     "hero hero"
     "widgets widgets"
     "learning learning"
+    "japanese japanese"
     "tools tools";
   grid-template-columns: 1fr 1fr;
 }
@@ -402,6 +403,123 @@
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   color: inherit;
+}
+
+/* Japanese Learning Section */
+.japanese-section {
+  grid-area: japanese;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2rem;
+  padding: 2.5rem;
+  border: 1px solid rgba(220, 53, 69, 0.2);
+}
+
+.japanese-section .learning-title {
+  color: var(--color-charcoal);
+  background: linear-gradient(135deg,
+    rgba(220, 53, 69, 0.1) 0%,
+    rgba(255, 193, 7, 0.1) 50%,
+    rgba(220, 53, 69, 0.1) 100%);
+  padding: 1rem 2rem;
+  border-radius: 1rem;
+  border: 2px solid rgba(220, 53, 69, 0.2);
+}
+
+/* Japanese Cards Styling */
+.learning-card.japanese-grammar::before {
+  background: linear-gradient(90deg, #dc3545 0%, #c82333 100%);
+}
+
+.learning-card.japanese-reading::before {
+  background: linear-gradient(90deg, #fd7e14 0%, #e55100 100%);
+}
+
+.learning-card.japanese-listening::before {
+  background: linear-gradient(90deg, #6f42c1 0%, #5a32a3 100%);
+}
+
+.learning-card.japanese-grammar:hover {
+  border-color: #dc3545;
+  box-shadow: 0 15px 35px rgba(220, 53, 69, 0.2);
+}
+
+.learning-card.japanese-reading:hover {
+  border-color: #fd7e14;
+  box-shadow: 0 15px 35px rgba(253, 126, 20, 0.2);
+}
+
+.learning-card.japanese-listening:hover {
+  border-color: #6f42c1;
+  box-shadow: 0 15px 35px rgba(111, 66, 193, 0.2);
+}
+
+/* Japanese Badges */
+.learning-badge.japanese-grammar {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+.learning-badge.japanese-reading {
+  background: linear-gradient(135deg, #fd7e14 0%, #e55100 100%);
+  color: white;
+}
+
+.learning-badge.japanese-listening {
+  background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+  color: white;
+}
+
+/* Japanese Level Buttons */
+.level-btn.japanese-grammar {
+  color: #dc3545;
+  border-color: #dc3545;
+  background: transparent;
+}
+
+.level-btn.japanese-grammar:hover {
+  background: #dc3545;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.level-btn.japanese-reading {
+  color: #fd7e14;
+  border-color: #fd7e14;
+  background: transparent;
+}
+
+.level-btn.japanese-reading:hover {
+  background: #fd7e14;
+  color: white;
+  transform: translateY(-1px);
+}
+
+.level-btn.japanese-listening {
+  color: #6f42c1;
+  border-color: #6f42c1;
+  background: transparent;
+}
+
+.level-btn.japanese-listening:hover {
+  background: #6f42c1;
+  color: white;
+  transform: translateY(-1px);
+}
+
+/* Japanese Main Buttons */
+.learning-main-btn.japanese-grammar {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+}
+
+.learning-main-btn.japanese-reading {
+  background: linear-gradient(135deg, #fd7e14 0%, #e55100 100%);
+  color: white;
+}
+
+.learning-main-btn.japanese-listening {
+  background: linear-gradient(135deg, #6f42c1 0%, #5a32a3 100%);
+  color: white;
 }
 
 /* Tools Section */

@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="일본어 날짜, 숫자, 시간 및 요일 표현을 학습할 수 있는 인터랙티브 퀴즈 플랫폼">
+    <meta name="keywords" content="일본어, 학습, 퀴즈, 날짜, 숫자, 시간, 요일, 히라가나, 로마지">
+    <meta name="author" content="Japanese Learning Center">
+    <title>🇯🇵 일본어 종합 학습 퀴즈 - 날짜, 숫자, 시간 마스터</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="nav-home">
+                <button onclick="goHome()" class="home-btn" aria-label="홈으로 돌아가기">🏠 홈</button>
+            </div>
+            <h1>🇯🇵 일본어 종합 학습 센터</h1>
+            <p>날짜, 숫자, 시간·요일을 마스터하세요!</p>
+        </div>
+
+        <div class="quiz-selector">
+            <div class="quiz-card active" onclick="selectQuiz('date')" role="button" tabindex="0" aria-label="날짜 표현 퀴즈 선택">
+                <h3>📅 날짜 표현</h3>
+                <p>1일부터 31일까지의 특별한 일본어 날짜 읽기를 학습합니다. 특히 1~10일, 14일, 20일, 24일의 불규칙한 표현을 집중 연습할 수 있습니다.</p>
+            </div>
+            <div class="quiz-card" onclick="selectQuiz('number')" role="button" tabindex="0" aria-label="숫자 표현 퀴즈 선택">
+                <h3>🔢 숫자 표현</h3>
+                <p>기본 숫자 1~10, 백 단위(100~1000), 천 단위(1000~10000)를 학습합니다. 300, 600, 800, 3000, 8000 등 특별한 발음을 집중 연습합니다.</p>
+            </div>
+            <div class="quiz-card" onclick="selectQuiz('time')" role="button" tabindex="0" aria-label="시간과 요일 표현 퀴즈 선택">
+                <h3>⏰ 시간·요일</h3>
+                <p>시(時), 분(分), 요일 표현을 학습합니다. 4시, 7시, 9시의 특별한 읽기와 분의 ふん/ぷん 변화를 마스터합니다.</p>
+            </div>
+        </div>
+
+        <!-- 날짜 퀴즈 -->
+        <div id="date-quiz" class="quiz-content date-quiz active">
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setDateMode('quiz')">퀴즈 모드</button>
+                <button class="mode-btn" onclick="setDateMode('reference')">참고표 보기</button>
+            </div>
+
+            <div id="date-quiz-mode" class="sub-mode active">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">문제 번호</div>
+                        <div class="stat-value" id="date-questionNumber">1/10</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">정답률</div>
+                        <div class="stat-value" id="date-score">0%</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">연속 정답</div>
+                        <div class="stat-value" id="date-streak">0</div>
+                    </div>
+                </div>
+
+                <div class="question" id="date-question">1일</div>
+                <div class="feedback" id="date-feedback"></div>
+                <div class="options" id="date-options"></div>
+
+                <div class="controls">
+                    <button class="btn" id="date-nextBtn" onclick="dateNextQuestion()" style="display:none;">다음 문제</button>
+                    <button class="btn" id="date-restartBtn" onclick="dateRestart()" style="display:none;">다시 시작</button>
+                </div>
+            </div>
+
+            <div id="date-reference-mode" class="sub-mode">
+                <div class="reference-table">
+                    <h3>🌟 특별히 주의해야 할 날짜들</h3>
+                    <div class="item-grid">
+                        <div class="item-card special">
+                            <div class="item-value">1일</div>
+                            <div class="item-reading">ついたち</div>
+                            <div class="item-romaji">tsuitachi</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">2일</div>
+                            <div class="item-reading">ふつか</div>
+                            <div class="item-romaji">futsuka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">3일</div>
+                            <div class="item-reading">みっか</div>
+                            <div class="item-romaji">mikka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">4일</div>
+                            <div class="item-reading">よっか</div>
+                            <div class="item-romaji">yokka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">5일</div>
+                            <div class="item-reading">いつか</div>
+                            <div class="item-romaji">itsuka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">6일</div>
+                            <div class="item-reading">むいか</div>
+                            <div class="item-romaji">muika</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">7일</div>
+                            <div class="item-reading">なのか</div>
+                            <div class="item-romaji">nanoka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">8일</div>
+                            <div class="item-reading">ようか</div>
+                            <div class="item-romaji">youka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">9일</div>
+                            <div class="item-reading">ここのか</div>
+                            <div class="item-romaji">kokonoka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">10일</div>
+                            <div class="item-reading">とおか</div>
+                            <div class="item-romaji">tooka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">14일</div>
+                            <div class="item-reading">じゅうよっか</div>
+                            <div class="item-romaji">juu yokka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">20일</div>
+                            <div class="item-reading">はつか</div>
+                            <div class="item-romaji">hatsuka</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">24일</div>
+                            <div class="item-reading">にじゅうよっか</div>
+                            <div class="item-romaji">nijuu yokka</div>
+                        </div>
+                    </div>
+
+                    <h3>📝 규칙적인 날짜들 (11-31일)</h3>
+                    <div class="item-grid">
+                        <div class="item-card">
+                            <div class="item-value">11일</div>
+                            <div class="item-reading">じゅういちにち</div>
+                            <div class="item-romaji">juu ichi nichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">15일</div>
+                            <div class="item-reading">じゅうごにち</div>
+                            <div class="item-romaji">juu go nichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">21일</div>
+                            <div class="item-reading">にじゅういちにち</div>
+                            <div class="item-romaji">nijuu ichi nichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">25일</div>
+                            <div class="item-reading">にじゅうごにち</div>
+                            <div class="item-romaji">nijuu go nichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">30일</div>
+                            <div class="item-reading">さんじゅうにち</div>
+                            <div class="item-romaji">sanjuu nichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">31일</div>
+                            <div class="item-reading">さんじゅういちにち</div>
+                            <div class="item-romaji">sanjuu ichi nichi</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 숫자 퀴즈 -->
+        <div id="number-quiz" class="quiz-content number-quiz">
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setNumberMode('quiz')">퀴즈 모드</button>
+                <button class="mode-btn" onclick="setNumberMode('reference')">참고표 보기</button>
+            </div>
+
+            <div id="number-quiz-mode" class="sub-mode active">
+                <div class="diff-selector">
+                    <button class="diff-btn active" onclick="setNumberDifficulty('all')">전체</button>
+                    <button class="diff-btn" onclick="setNumberDifficulty('basic')">1-10</button>
+                    <button class="diff-btn" onclick="setNumberDifficulty('hundreds')">백 단위</button>
+                    <button class="diff-btn" onclick="setNumberDifficulty('thousands')">천 단위</button>
+                    <button class="diff-btn" onclick="setNumberDifficulty('special')">특별한 발음</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">문제 번호</div>
+                        <div class="stat-value" id="number-questionNumber">1/10</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">정답률</div>
+                        <div class="stat-value" id="number-score">0%</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">연속 정답</div>
+                        <div class="stat-value" id="number-streak">0</div>
+                    </div>
+                </div>
+
+                <div class="question" id="number-question">
+                    <span>1</span>
+                    <div class="question-type" id="number-questionType">기본 숫자</div>
+                </div>
+                <div class="feedback" id="number-feedback"></div>
+                <div class="options" id="number-options"></div>
+
+                <div class="controls">
+                    <button class="btn" id="number-nextBtn" onclick="numberNextQuestion()" style="display:none;">다음 문제</button>
+                    <button class="btn" id="number-restartBtn" onclick="numberRestart()" style="display:none;">다시 시작</button>
+                </div>
+            </div>
+
+            <div id="number-reference-mode" class="sub-mode">
+                <div class="reference-table">
+                    <h3>🎯 기본 숫자 (1-10)</h3>
+                    <div class="item-grid">
+                        <div class="item-card">
+                            <div class="item-value">1</div>
+                            <div class="item-reading">いち</div>
+                            <div class="item-romaji">ichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">2</div>
+                            <div class="item-reading">に</div>
+                            <div class="item-romaji">ni</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">3</div>
+                            <div class="item-reading">さん</div>
+                            <div class="item-romaji">san</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">4</div>
+                            <div class="item-reading">よん / し</div>
+                            <div class="item-romaji">yon / shi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">5</div>
+                            <div class="item-reading">ご</div>
+                            <div class="item-romaji">go</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">6</div>
+                            <div class="item-reading">ろく</div>
+                            <div class="item-romaji">roku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">7</div>
+                            <div class="item-reading">なな / しち</div>
+                            <div class="item-romaji">nana / shichi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">8</div>
+                            <div class="item-reading">はち</div>
+                            <div class="item-romaji">hachi</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">9</div>
+                            <div class="item-reading">きゅう / く</div>
+                            <div class="item-romaji">kyuu / ku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">10</div>
+                            <div class="item-reading">じゅう</div>
+                            <div class="item-romaji">juu</div>
+                        </div>
+                    </div>
+
+                    <h3>💯 백 단위 (100-1000)</h3>
+                    <div class="item-grid">
+                        <div class="item-card">
+                            <div class="item-value">100</div>
+                            <div class="item-reading">ひゃく</div>
+                            <div class="item-romaji">hyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">200</div>
+                            <div class="item-reading">にひゃく</div>
+                            <div class="item-romaji">nihyaku</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">300</div>
+                            <div class="item-reading">さんびゃく</div>
+                            <div class="item-romaji">sanbyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">400</div>
+                            <div class="item-reading">よんひゃく</div>
+                            <div class="item-romaji">yonhyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">500</div>
+                            <div class="item-reading">ごひゃく</div>
+                            <div class="item-romaji">gohyaku</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">600</div>
+                            <div class="item-reading">ろっぴゃく</div>
+                            <div class="item-romaji">roppyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">700</div>
+                            <div class="item-reading">ななひゃく</div>
+                            <div class="item-romaji">nanahyaku</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">800</div>
+                            <div class="item-reading">はっぴゃく</div>
+                            <div class="item-romaji">happyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">900</div>
+                            <div class="item-reading">きゅうひゃく</div>
+                            <div class="item-romaji">kyuuhyaku</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">1000</div>
+                            <div class="item-reading">せん</div>
+                            <div class="item-romaji">sen</div>
+                        </div>
+                    </div>
+
+                    <h3>🎌 천 단위 (1000-10000)</h3>
+                    <div class="item-grid">
+                        <div class="item-card">
+                            <div class="item-value">1000</div>
+                            <div class="item-reading">せん</div>
+                            <div class="item-romaji">sen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">2000</div>
+                            <div class="item-reading">にせん</div>
+                            <div class="item-romaji">nisen</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">3000</div>
+                            <div class="item-reading">さんぜん</div>
+                            <div class="item-romaji">sanzen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">4000</div>
+                            <div class="item-reading">よんせん</div>
+                            <div class="item-romaji">yonsen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">5000</div>
+                            <div class="item-reading">ごせん</div>
+                            <div class="item-romaji">gosen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">6000</div>
+                            <div class="item-reading">ろくせん</div>
+                            <div class="item-romaji">rokusen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">7000</div>
+                            <div class="item-reading">ななせん</div>
+                            <div class="item-romaji">nanasen</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">8000</div>
+                            <div class="item-reading">はっせん</div>
+                            <div class="item-romaji">hassen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">9000</div>
+                            <div class="item-reading">きゅうせん</div>
+                            <div class="item-romaji">kyuusen</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">10000</div>
+                            <div class="item-reading">いちまん</div>
+                            <div class="item-romaji">ichiman</div>
+                        </div>
+                    </div>
+
+                    <div class="note">
+                        <div class="note-title">⚠️ 특별한 발음 규칙</div>
+                        <div class="note-content">
+                            <strong>백 단위:</strong> 300(さんびゃく), 600(ろっぴゃく), 800(はっぴゃく)<br>
+                            <strong>천 단위:</strong> 3000(さんぜん), 8000(はっせん)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 시간·요일 퀴즈 -->
+        <div id="time-quiz" class="quiz-content time-quiz">
+            <div class="mode-selector">
+                <button class="mode-btn active" onclick="setTimeMode('quiz')">퀴즈 모드</button>
+                <button class="mode-btn" onclick="setTimeMode('reference')">참고표 보기</button>
+            </div>
+
+            <div id="time-quiz-mode" class="sub-mode active">
+                <div class="diff-selector">
+                    <button class="diff-btn active" onclick="setTimeCategory('all')">전체</button>
+                    <button class="diff-btn" onclick="setTimeCategory('hours')">시(時)</button>
+                    <button class="diff-btn" onclick="setTimeCategory('minutes')">분(分)</button>
+                    <button class="diff-btn" onclick="setTimeCategory('weekdays')">요일</button>
+                    <button class="diff-btn" onclick="setTimeCategory('special')">특별한 발음</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-label">문제 번호</div>
+                        <div class="stat-value" id="time-questionNumber">1/10</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">정답률</div>
+                        <div class="stat-value" id="time-score">0%</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">연속 정답</div>
+                        <div class="stat-value" id="time-streak">0</div>
+                    </div>
+                </div>
+
+                <div class="question" id="time-question">
+                    <span>1시</span>
+                    <div class="question-type" id="time-questionType">시간</div>
+                </div>
+                <div class="feedback" id="time-feedback"></div>
+                <div class="options" id="time-options"></div>
+
+                <div class="controls">
+                    <button class="btn" id="time-nextBtn" onclick="timeNextQuestion()" style="display:none;">다음 문제</button>
+                    <button class="btn" id="time-restartBtn" onclick="timeRestart()" style="display:none;">다시 시작</button>
+                </div>
+            </div>
+
+            <div id="time-reference-mode" class="sub-mode">
+                <div class="reference-table">
+                    <h3>🕐 시 (時)</h3>
+                    <div class="item-grid">
+                        <div class="item-card">
+                            <div class="item-value">1시</div>
+                            <div class="item-reading">いちじ</div>
+                            <div class="item-romaji">ichiji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">2시</div>
+                            <div class="item-reading">にじ</div>
+                            <div class="item-romaji">niji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">3시</div>
+                            <div class="item-reading">さんじ</div>
+                            <div class="item-romaji">sanji</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">4시</div>
+                            <div class="item-reading">よじ</div>
+                            <div class="item-romaji">yoji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">5시</div>
+                            <div class="item-reading">ごじ</div>
+                            <div class="item-romaji">goji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">6시</div>
+                            <div class="item-reading">ろくじ</div>
+                            <div class="item-romaji">rokuji</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">7시</div>
+                            <div class="item-reading">しちじ</div>
+                            <div class="item-romaji">shichiji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">8시</div>
+                            <div class="item-reading">はちじ</div>
+                            <div class="item-romaji">hachiji</div>
+                        </div>
+                        <div class="item-card special">
+                            <div class="item-value">9시</div>
+                            <div class="item-reading">くじ</div>
+                            <div class="item-romaji">kuji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">10시</div>
+                            <div class="item-reading">じゅうじ</div>
+                            <div class="item-romaji">juuji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">11시</div>
+                            <div class="item-reading">じゅういちじ</div>
+                            <div class="item-romaji">juuichiji</div>
+                        </div>
+                        <div class="item-card">
+                            <div class="item-value">12시</div>
+                            <div class="item-reading">じゅうにじ</div>
+                            <div class="item-romaji">juuniji</div>
+                        </div>
+                    </div>
+
+                    <h3>⏱️ 주요 분 (分)</h3>
+                    <div class="scroll-container">
+                        <div class="item-grid">
+                            <div class="item-card special">
+                                <div class="item-value">1분</div>
+                                <div class="item-reading">いっぷん</div>
+                                <div class="item-romaji">ippun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">2분</div>
+                                <div class="item-reading">にふん</div>
+                                <div class="item-romaji">nifun</div>
+                            </div>
+                            <div class="item-card special">
+                                <div class="item-value">3분</div>
+                                <div class="item-reading">さんぷん</div>
+                                <div class="item-romaji">sanpun</div>
+                            </div>
+                            <div class="item-card special">
+                                <div class="item-value">4분</div>
+                                <div class="item-reading">よんぷん</div>
+                                <div class="item-romaji">yonpun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">5분</div>
+                                <div class="item-reading">ごふん</div>
+                                <div class="item-romaji">gofun</div>
+                            </div>
+                            <div class="item-card special">
+                                <div class="item-value">6분</div>
+                                <div class="item-reading">ろっぷん</div>
+                                <div class="item-romaji">roppun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">7분</div>
+                                <div class="item-reading">ななふん</div>
+                                <div class="item-romaji">nanafun</div>
+                            </div>
+                            <div class="item-card special">
+                                <div class="item-value">8분</div>
+                                <div class="item-reading">はっぷん</div>
+                                <div class="item-romaji">happun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">9분</div>
+                                <div class="item-reading">きゅうふん</div>
+                                <div class="item-romaji">kyuufun</div>
+                            </div>
+                            <div class="item-card special">
+                                <div class="item-value">10분</div>
+                                <div class="item-reading">じゅっぷん</div>
+                                <div class="item-romaji">juppun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">15분</div>
+                                <div class="item-reading">じゅうごふん</div>
+                                <div class="item-romaji">juugofun</div>
+                            </div>
+                            <div class="item-card">
+                                <div class="item-value">30분</div>
+                                <div class="item-reading">さんじゅっぷん/はん</div>
+                                <div class="item-romaji">sanjuppun/han</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>📅 요일 (曜日)</h3>
+                    <div class="item-grid">
+                        <div class="weekday-item">
+                            <div class="weekday-name">월요일</div>
+                            <div class="item-reading">げつようび</div>
+                            <div class="item-romaji">getsuyoubi</div>
+                            <div class="weekday-kanji">月曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">화요일</div>
+                            <div class="item-reading">かようび</div>
+                            <div class="item-romaji">kayoubi</div>
+                            <div class="weekday-kanji">火曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">수요일</div>
+                            <div class="item-reading">すいようび</div>
+                            <div class="item-romaji">suiyoubi</div>
+                            <div class="weekday-kanji">水曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">목요일</div>
+                            <div class="item-reading">もくようび</div>
+                            <div class="item-romaji">mokuyoubi</div>
+                            <div class="weekday-kanji">木曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">금요일</div>
+                            <div class="item-reading">きんようび</div>
+                            <div class="item-romaji">kinyoubi</div>
+                            <div class="weekday-kanji">金曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">토요일</div>
+                            <div class="item-reading">どようび</div>
+                            <div class="item-romaji">doyoubi</div>
+                            <div class="weekday-kanji">土曜日</div>
+                        </div>
+                        <div class="weekday-item">
+                            <div class="weekday-name">일요일</div>
+                            <div class="item-reading">にちようび</div>
+                            <div class="item-romaji">nichiyoubi</div>
+                            <div class="weekday-kanji">日曜日</div>
+                        </div>
+                    </div>
+
+                    <div class="note">
+                        <div class="note-title">⚠️ 특별한 발음 규칙</div>
+                        <div class="note-content">
+                            <strong>시:</strong> 4시(よじ), 7시(しちじ), 9시(くじ)<br>
+                            <strong>분:</strong> 1,3,4,6,8,10분은 ぷん으로 발음<br>
+                            <strong>30분:</strong> さんじゅっぷん 또는 はん(半)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 전역 변수
+        let activeQuiz = 'date';
+
+        // 퀴즈 선택
+        function selectQuiz(type) {
+            const cards = document.querySelectorAll('.quiz-card');
+            const contents = document.querySelectorAll('.quiz-content');
+            
+            cards.forEach(card => card.classList.remove('active'));
+            contents.forEach(content => content.classList.remove('active'));
+            
+            if (type === 'date') {
+                cards[0].classList.add('active');
+                document.getElementById('date-quiz').classList.add('active');
+                if (dateQuiz.questions.length === 0) dateGenerateQuestions();
+            } else if (type === 'number') {
+                cards[1].classList.add('active');
+                document.getElementById('number-quiz').classList.add('active');
+                if (numberQuiz.questions.length === 0) numberGenerateQuestions();
+            } else if (type === 'time') {
+                cards[2].classList.add('active');
+                document.getElementById('time-quiz').classList.add('active');
+                if (timeQuiz.questions.length === 0) timeGenerateQuestions();
+            }
+            
+            activeQuiz = type;
+        }
+
+        // 날짜 퀴즈 데이터와 로직
+        const dates = {
+            1: { hiragana: 'ついたち', romaji: 'tsuitachi' },
+            2: { hiragana: 'ふつか', romaji: 'futsuka' },
+            3: { hiragana: 'みっか', romaji: 'mikka' },
+            4: { hiragana: 'よっか', romaji: 'yokka' },
+            5: { hiragana: 'いつか', romaji: 'itsuka' },
+            6: { hiragana: 'むいか', romaji: 'muika' },
+            7: { hiragana: 'なのか', romaji: 'nanoka' },
+            8: { hiragana: 'ようか', romaji: 'youka' },
+            9: { hiragana: 'ここのか', romaji: 'kokonoka' },
+            10: { hiragana: 'とおか', romaji: 'tooka' },
+            11: { hiragana: 'じゅういちにち', romaji: 'juu ichi nichi' },
+            12: { hiragana: 'じゅうににち', romaji: 'juu ni nichi' },
+            13: { hiragana: 'じゅうさんにち', romaji: 'juu san nichi' },
+            14: { hiragana: 'じゅうよっか', romaji: 'juu yokka' },
+            15: { hiragana: 'じゅうごにち', romaji: 'juu go nichi' },
+            16: { hiragana: 'じゅうろくにち', romaji: 'juu roku nichi' },
+            17: { hiragana: 'じゅうしちにち', romaji: 'juu shichi nichi' },
+            18: { hiragana: 'じゅうはちにち', romaji: 'juu hachi nichi' },
+            19: { hiragana: 'じゅうくにち', romaji: 'juu ku nichi' },
+            20: { hiragana: 'はつか', romaji: 'hatsuka' },
+            21: { hiragana: 'にじゅういちにち', romaji: 'nijuu ichi nichi' },
+            22: { hiragana: 'にじゅうににち', romaji: 'nijuu ni nichi' },
+            23: { hiragana: 'にじゅうさんにち', romaji: 'nijuu san nichi' },
+            24: { hiragana: 'にじゅうよっか', romaji: 'nijuu yokka' },
+            25: { hiragana: 'にじゅうごにち', romaji: 'nijuu go nichi' },
+            26: { hiragana: 'にじゅうろくにち', romaji: 'nijuu roku nichi' },
+            27: { hiragana: 'にじゅうしちにち', romaji: 'nijuu shichi nichi' },
+            28: { hiragana: 'にじゅうはちにち', romaji: 'nijuu hachi nichi' },
+            29: { hiragana: 'にじゅうくにち', romaji: 'nijuu ku nichi' },
+            30: { hiragana: 'さんじゅうにち', romaji: 'sanjuu nichi' },
+            31: { hiragana: 'さんじゅういちにち', romaji: 'sanjuu ichi nichi' }
+        };
+
+        const dateQuiz = {
+            currentQuestion: 0,
+            correctAnswers: 0,
+            totalQuestions: 10,
+            streak: 0,
+            questions: [],
+            currentAnswer: '',
+            answered: false
+        };
+
+        function setDateMode(mode) {
+            const buttons = document.querySelectorAll('#date-quiz .mode-btn');
+            const modes = document.querySelectorAll('#date-quiz .sub-mode');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            modes.forEach(m => m.classList.remove('active'));
+            
+            if (mode === 'quiz') {
+                buttons[0].classList.add('active');
+                document.getElementById('date-quiz-mode').classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+                document.getElementById('date-reference-mode').classList.add('active');
+            }
+        }
+
+        function dateGenerateQuestions() {
+            const specialDates = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 14, 20, 24];
+            const specialQuestions = specialDates.sort(() => Math.random() - 0.5).slice(0, 7);
+            const regularDates = Object.keys(dates)
+                .map(d => parseInt(d))
+                .filter(d => !specialDates.includes(d))
+                .sort(() => Math.random() - 0.5)
+                .slice(0, 3);
+            
+            dateQuiz.questions = [...specialQuestions, ...regularDates].sort(() => Math.random() - 0.5);
+            dateShowQuestion();
+        }
+
+        function dateShowQuestion() {
+            if (dateQuiz.currentQuestion >= dateQuiz.totalQuestions) {
+                dateShowResult();
+                return;
+            }
+
+            dateQuiz.answered = false;
+            const questionNum = dateQuiz.questions[dateQuiz.currentQuestion];
+            dateQuiz.currentAnswer = dates[questionNum].hiragana;
+            
+            document.getElementById('date-question').textContent = `${questionNum}일`;
+            document.getElementById('date-questionNumber').textContent = `${dateQuiz.currentQuestion + 1}/${dateQuiz.totalQuestions}`;
+            document.getElementById('date-feedback').classList.remove('show');
+            document.getElementById('date-nextBtn').style.display = 'none';
+            
+            const options = dateGenerateOptions(questionNum);
+            const optionsContainer = document.getElementById('date-options');
+            optionsContainer.innerHTML = '';
+            
+            options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerHTML = `
+                    <div>${option.hiragana}</div>
+                    <div style="color: #888; font-size: 0.9em; margin-top: 5px;">${option.romaji}</div>
+                `;
+                optionDiv.onclick = () => dateCheckAnswer(option.hiragana, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+
+        function dateGenerateOptions(correctDate) {
+            const correctOption = dates[correctDate];
+            const options = [correctOption];
+            const usedDates = [correctDate];
+            
+            while (options.length < 4) {
+                const randomDate = Math.floor(Math.random() * 31) + 1;
+                if (!usedDates.includes(randomDate)) {
+                    options.push(dates[randomDate]);
+                    usedDates.push(randomDate);
+                }
+            }
+            
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        function dateCheckAnswer(selected, element) {
+            if (dateQuiz.answered) return;
+            dateQuiz.answered = true;
+            
+            const options = document.querySelectorAll('#date-options .option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            const feedback = document.getElementById('date-feedback');
+            
+            if (selected === dateQuiz.currentAnswer) {
+                element.classList.add('correct');
+                dateQuiz.correctAnswers++;
+                dateQuiz.streak++;
+                feedback.innerHTML = `✨ 정답입니다! 훌륭해요!`;
+                feedback.className = 'feedback correct show';
+            } else {
+                element.classList.add('wrong');
+                dateQuiz.streak = 0;
+                feedback.innerHTML = `❌ 틀렸습니다. 정답은 <strong>${dateQuiz.currentAnswer}</strong> 입니다.`;
+                feedback.className = 'feedback wrong show';
+                
+                options.forEach(opt => {
+                    if (opt.textContent.includes(dateQuiz.currentAnswer)) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            dateUpdateScore();
+            document.getElementById('date-nextBtn').style.display = 'block';
+        }
+
+        function dateUpdateScore() {
+            const percentage = Math.round((dateQuiz.correctAnswers / (dateQuiz.currentQuestion + 1)) * 100);
+            document.getElementById('date-score').textContent = `${percentage}%`;
+            document.getElementById('date-streak').textContent = dateQuiz.streak;
+        }
+
+        function dateNextQuestion() {
+            dateQuiz.currentQuestion++;
+            dateShowQuestion();
+        }
+
+        function dateShowResult() {
+            const percentage = Math.round((dateQuiz.correctAnswers / dateQuiz.totalQuestions) * 100);
+            const question = document.getElementById('date-question');
+            question.style.fontSize = '1.5em';
+            
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 완벽합니다! 모든 문제를 맞췄어요!';
+            } else if (percentage >= 80) {
+                message = '👏 훌륭해요! 거의 다 맞췄네요!';
+            } else if (percentage >= 60) {
+                message = '👍 좋아요! 조금만 더 연습하면 완벽해질 거예요!';
+            } else {
+                message = '💪 화이팅! 참고표를 보고 다시 도전해보세요!';
+            }
+            
+            question.innerHTML = `
+                <div>
+                    <div>최종 점수: ${percentage}%</div>
+                    <div style="font-size: 0.7em; margin-top: 10px;">${dateQuiz.correctAnswers}/${dateQuiz.totalQuestions} 문제 정답</div>
+                    <div style="font-size: 0.6em; margin-top: 10px;">${message}</div>
+                </div>
+            `;
+            
+            document.getElementById('date-options').innerHTML = '';
+            document.getElementById('date-feedback').classList.remove('show');
+            document.getElementById('date-nextBtn').style.display = 'none';
+            document.getElementById('date-restartBtn').style.display = 'block';
+        }
+
+        function dateRestart() {
+            dateQuiz.currentQuestion = 0;
+            dateQuiz.correctAnswers = 0;
+            dateQuiz.streak = 0;
+            dateGenerateQuestions();
+            document.getElementById('date-restartBtn').style.display = 'none';
+            dateUpdateScore();
+        }
+
+        // 숫자 퀴즈 데이터와 로직
+        const numbers = {
+            1: { hiragana: 'いち', romaji: 'ichi', type: 'basic' },
+            2: { hiragana: 'に', romaji: 'ni', type: 'basic' },
+            3: { hiragana: 'さん', romaji: 'san', type: 'basic' },
+            4: { hiragana: 'よん', romaji: 'yon', type: 'basic' },
+            5: { hiragana: 'ご', romaji: 'go', type: 'basic' },
+            6: { hiragana: 'ろく', romaji: 'roku', type: 'basic' },
+            7: { hiragana: 'なな', romaji: 'nana', type: 'basic' },
+            8: { hiragana: 'はち', romaji: 'hachi', type: 'basic' },
+            9: { hiragana: 'きゅう', romaji: 'kyuu', type: 'basic' },
+            10: { hiragana: 'じゅう', romaji: 'juu', type: 'basic' },
+            100: { hiragana: 'ひゃく', romaji: 'hyaku', type: 'hundreds' },
+            200: { hiragana: 'にひゃく', romaji: 'nihyaku', type: 'hundreds' },
+            300: { hiragana: 'さんびゃく', romaji: 'sanbyaku', type: 'hundreds', special: true },
+            400: { hiragana: 'よんひゃく', romaji: 'yonhyaku', type: 'hundreds' },
+            500: { hiragana: 'ごひゃく', romaji: 'gohyaku', type: 'hundreds' },
+            600: { hiragana: 'ろっぴゃく', romaji: 'roppyaku', type: 'hundreds', special: true },
+            700: { hiragana: 'ななひゃく', romaji: 'nanahyaku', type: 'hundreds' },
+            800: { hiragana: 'はっぴゃく', romaji: 'happyaku', type: 'hundreds', special: true },
+            900: { hiragana: 'きゅうひゃく', romaji: 'kyuuhyaku', type: 'hundreds' },
+            1000: { hiragana: 'せん', romaji: 'sen', type: 'thousands' },
+            2000: { hiragana: 'にせん', romaji: 'nisen', type: 'thousands' },
+            3000: { hiragana: 'さんぜん', romaji: 'sanzen', type: 'thousands', special: true },
+            4000: { hiragana: 'よんせん', romaji: 'yonsen', type: 'thousands' },
+            5000: { hiragana: 'ごせん', romaji: 'gosen', type: 'thousands' },
+            6000: { hiragana: 'ろくせん', romaji: 'rokusen', type: 'thousands' },
+            7000: { hiragana: 'ななせん', romaji: 'nanasen', type: 'thousands' },
+            8000: { hiragana: 'はっせん', romaji: 'hassen', type: 'thousands', special: true },
+            9000: { hiragana: 'きゅうせん', romaji: 'kyuusen', type: 'thousands' },
+            10000: { hiragana: 'いちまん', romaji: 'ichiman', type: 'thousands' }
+        };
+
+        const numberQuiz = {
+            currentQuestion: 0,
+            correctAnswers: 0,
+            totalQuestions: 10,
+            streak: 0,
+            questions: [],
+            currentAnswer: '',
+            currentNumber: 0,
+            answered: false,
+            currentDifficulty: 'all'
+        };
+
+        function setNumberMode(mode) {
+            const buttons = document.querySelectorAll('#number-quiz .mode-btn');
+            const modes = document.querySelectorAll('#number-quiz .sub-mode');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            modes.forEach(m => m.classList.remove('active'));
+            
+            if (mode === 'quiz') {
+                buttons[0].classList.add('active');
+                document.getElementById('number-quiz-mode').classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+                document.getElementById('number-reference-mode').classList.add('active');
+            }
+        }
+
+        function setNumberDifficulty(difficulty) {
+            numberQuiz.currentDifficulty = difficulty;
+            const buttons = document.querySelectorAll('#number-quiz .diff-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            numberRestart();
+        }
+
+        function numberGenerateQuestions() {
+            let pool = [];
+            
+            switch(numberQuiz.currentDifficulty) {
+                case 'basic':
+                    pool = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+                    break;
+                case 'hundreds':
+                    pool = [100, 200, 300, 400, 500, 600, 700, 800, 900];
+                    break;
+                case 'thousands':
+                    pool = [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000];
+                    break;
+                case 'special':
+                    pool = [300, 600, 800, 3000, 8000];
+                    break;
+                case 'all':
+                default:
+                    const specialNumbers = [300, 600, 800, 3000, 8000];
+                    pool = [
+                        ...specialNumbers.sort(() => Math.random() - 0.5).slice(0, 5),
+                        1, 2, 7, 9, 10,
+                        100, 500,
+                        1000, 5000, 10000
+                    ];
+                    break;
+            }
+            
+            numberQuiz.questions = pool.sort(() => Math.random() - 0.5).slice(0, numberQuiz.totalQuestions);
+            numberShowQuestion();
+        }
+
+        function numberGetQuestionType(num) {
+            const number = numbers[num];
+            if (number.special) return '특별한 발음';
+            if (number.type === 'basic') return '기본 숫자';
+            if (number.type === 'hundreds') return '백 단위';
+            if (number.type === 'thousands') return '천 단위';
+            return '';
+        }
+
+        function numberShowQuestion() {
+            if (numberQuiz.currentQuestion >= numberQuiz.totalQuestions) {
+                numberShowResult();
+                return;
+            }
+
+            numberQuiz.answered = false;
+            numberQuiz.currentNumber = numberQuiz.questions[numberQuiz.currentQuestion];
+            numberQuiz.currentAnswer = numbers[numberQuiz.currentNumber].hiragana;
+            
+            document.getElementById('number-question').innerHTML = `
+                <span>${numberQuiz.currentNumber.toLocaleString()}</span>
+                <div class="question-type">${numberGetQuestionType(numberQuiz.currentNumber)}</div>
+            `;
+            document.getElementById('number-questionNumber').textContent = `${numberQuiz.currentQuestion + 1}/${numberQuiz.totalQuestions}`;
+            document.getElementById('number-feedback').classList.remove('show');
+            document.getElementById('number-nextBtn').style.display = 'none';
+            
+            const options = numberGenerateOptions(numberQuiz.currentNumber);
+            const optionsContainer = document.getElementById('number-options');
+            optionsContainer.innerHTML = '';
+            
+            options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                optionDiv.innerHTML = `
+                    <div style="font-size: 1.3em;">${option.hiragana}</div>
+                    <div style="color: #888; font-size: 0.9em; margin-top: 5px;">${option.romaji}</div>
+                `;
+                optionDiv.onclick = () => numberCheckAnswer(option.hiragana, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+
+        function numberGenerateOptions(correctNum) {
+            const correctOption = numbers[correctNum];
+            const options = [correctOption];
+            const usedNumbers = [correctNum];
+            
+            const sameTypeNumbers = Object.keys(numbers)
+                .map(n => parseInt(n))
+                .filter(n => numbers[n].type === correctOption.type && n !== correctNum);
+            
+            while (options.length < 4) {
+                let randomNum;
+                
+                if (sameTypeNumbers.length > 0 && Math.random() > 0.3) {
+                    const availableNums = sameTypeNumbers.filter(n => !usedNumbers.includes(n));
+                    if (availableNums.length > 0) {
+                        randomNum = availableNums[Math.floor(Math.random() * availableNums.length)];
+                    }
+                }
+                
+                if (!randomNum) {
+                    const allNumbers = Object.keys(numbers).map(n => parseInt(n));
+                    const availableNums = allNumbers.filter(n => !usedNumbers.includes(n));
+                    randomNum = availableNums[Math.floor(Math.random() * availableNums.length)];
+                }
+                
+                if (randomNum && !usedNumbers.includes(randomNum)) {
+                    options.push(numbers[randomNum]);
+                    usedNumbers.push(randomNum);
+                }
+            }
+            
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        function numberCheckAnswer(selected, element) {
+            if (numberQuiz.answered) return;
+            numberQuiz.answered = true;
+            
+            const options = document.querySelectorAll('#number-options .option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            const feedback = document.getElementById('number-feedback');
+            const numberInfo = numbers[numberQuiz.currentNumber];
+            
+            if (selected === numberQuiz.currentAnswer) {
+                element.classList.add('correct');
+                numberQuiz.correctAnswers++;
+                numberQuiz.streak++;
+                let message = `✨ 정답입니다! `;
+                if (numberInfo.special) {
+                    message += `(특별한 발음에 주의!)`;
+                }
+                feedback.innerHTML = message;
+                feedback.className = 'feedback correct show';
+            } else {
+                element.classList.add('wrong');
+                numberQuiz.streak = 0;
+                let message = `❌ 틀렸습니다. 정답은 <strong>${numberQuiz.currentAnswer}</strong> (${numberInfo.romaji}) 입니다.`;
+                if (numberInfo.special) {
+                    message += ` <br>💡 이 숫자는 특별한 발음 규칙이 적용됩니다!`;
+                }
+                feedback.innerHTML = message;
+                feedback.className = 'feedback wrong show';
+                
+                options.forEach(opt => {
+                    if (opt.textContent.includes(numberQuiz.currentAnswer)) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            numberUpdateScore();
+            document.getElementById('number-nextBtn').style.display = 'block';
+        }
+
+        function numberUpdateScore() {
+            const percentage = Math.round((numberQuiz.correctAnswers / (numberQuiz.currentQuestion + 1)) * 100);
+            document.getElementById('number-score').textContent = `${percentage}%`;
+            document.getElementById('number-streak').textContent = numberQuiz.streak;
+        }
+
+        function numberNextQuestion() {
+            numberQuiz.currentQuestion++;
+            numberShowQuestion();
+        }
+
+        function numberShowResult() {
+            const percentage = Math.round((numberQuiz.correctAnswers / numberQuiz.totalQuestions) * 100);
+            const question = document.getElementById('number-question');
+            question.style.fontSize = '1.5em';
+            
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 완벽합니다! 일본어 숫자 마스터!';
+            } else if (percentage >= 80) {
+                message = '👏 훌륭해요! 거의 완벽하네요!';
+            } else if (percentage >= 60) {
+                message = '👍 좋아요! 특별한 발음 규칙을 더 연습해보세요!';
+            } else {
+                message = '💪 화이팅! 참고표를 보고 다시 도전해보세요!';
+            }
+            
+            question.innerHTML = `
+                <div>
+                    <div style="font-size: 1.2em;">최종 점수: ${percentage}%</div>
+                    <div style="font-size: 0.7em; margin-top: 10px;">${numberQuiz.correctAnswers}/${numberQuiz.totalQuestions} 문제 정답</div>
+                    <div style="font-size: 0.6em; margin-top: 10px;">${message}</div>
+                </div>
+            `;
+            
+            document.getElementById('number-options').innerHTML = '';
+            document.getElementById('number-feedback').classList.remove('show');
+            document.getElementById('number-nextBtn').style.display = 'none';
+            document.getElementById('number-restartBtn').style.display = 'block';
+        }
+
+        function numberRestart() {
+            numberQuiz.currentQuestion = 0;
+            numberQuiz.correctAnswers = 0;
+            numberQuiz.streak = 0;
+            numberGenerateQuestions();
+            document.getElementById('number-restartBtn').style.display = 'none';
+            numberUpdateScore();
+        }
+
+        // 시간·요일 퀴즈 데이터와 로직
+        const timeData = {
+            '1시': { hiragana: 'いちじ', romaji: 'ichiji', type: 'hours' },
+            '2시': { hiragana: 'にじ', romaji: 'niji', type: 'hours' },
+            '3시': { hiragana: 'さんじ', romaji: 'sanji', type: 'hours' },
+            '4시': { hiragana: 'よじ', romaji: 'yoji', type: 'hours', special: true },
+            '5시': { hiragana: 'ごじ', romaji: 'goji', type: 'hours' },
+            '6시': { hiragana: 'ろくじ', romaji: 'rokuji', type: 'hours' },
+            '7시': { hiragana: 'しちじ', romaji: 'shichiji', type: 'hours', special: true },
+            '8시': { hiragana: 'はちじ', romaji: 'hachiji', type: 'hours' },
+            '9시': { hiragana: 'くじ', romaji: 'kuji', type: 'hours', special: true },
+            '10시': { hiragana: 'じゅうじ', romaji: 'juuji', type: 'hours' },
+            '11시': { hiragana: 'じゅういちじ', romaji: 'juuichiji', type: 'hours' },
+            '12시': { hiragana: 'じゅうにじ', romaji: 'juuniji', type: 'hours' },
+            '1분': { hiragana: 'いっぷん', romaji: 'ippun', type: 'minutes', special: true },
+            '2분': { hiragana: 'にふん', romaji: 'nifun', type: 'minutes' },
+            '3분': { hiragana: 'さんぷん', romaji: 'sanpun', type: 'minutes', special: true },
+            '4분': { hiragana: 'よんぷん', romaji: 'yonpun', type: 'minutes', special: true },
+            '5분': { hiragana: 'ごふん', romaji: 'gofun', type: 'minutes' },
+            '6분': { hiragana: 'ろっぷん', romaji: 'roppun', type: 'minutes', special: true },
+            '7분': { hiragana: 'ななふん', romaji: 'nanafun', type: 'minutes' },
+            '8분': { hiragana: 'はっぷん', romaji: 'happun', type: 'minutes', special: true },
+            '9분': { hiragana: 'きゅうふん', romaji: 'kyuufun', type: 'minutes' },
+            '10분': { hiragana: 'じゅっぷん', romaji: 'juppun', type: 'minutes', special: true },
+            '15분': { hiragana: 'じゅうごふん', romaji: 'juugofun', type: 'minutes' },
+            '30분': { hiragana: 'さんじゅっぷん', romaji: 'sanjuppun', type: 'minutes', alt: 'はん (han)' },
+            '월요일': { hiragana: 'げつようび', romaji: 'getsuyoubi', type: 'weekdays', kanji: '月曜日' },
+            '화요일': { hiragana: 'かようび', romaji: 'kayoubi', type: 'weekdays', kanji: '火曜日' },
+            '수요일': { hiragana: 'すいようび', romaji: 'suiyoubi', type: 'weekdays', kanji: '水曜日' },
+            '목요일': { hiragana: 'もくようび', romaji: 'mokuyoubi', type: 'weekdays', kanji: '木曜日' },
+            '금요일': { hiragana: 'きんようび', romaji: 'kinyoubi', type: 'weekdays', kanji: '金曜日' },
+            '토요일': { hiragana: 'どようび', romaji: 'doyoubi', type: 'weekdays', kanji: '土曜日' },
+            '일요일': { hiragana: 'にちようび', romaji: 'nichiyoubi', type: 'weekdays', kanji: '日曜日' }
+        };
+
+        const timeQuiz = {
+            currentQuestion: 0,
+            correctAnswers: 0,
+            totalQuestions: 10,
+            streak: 0,
+            questions: [],
+            currentAnswer: '',
+            currentKey: '',
+            answered: false,
+            currentCategory: 'all'
+        };
+
+        function setTimeMode(mode) {
+            const buttons = document.querySelectorAll('#time-quiz .mode-btn');
+            const modes = document.querySelectorAll('#time-quiz .sub-mode');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            modes.forEach(m => m.classList.remove('active'));
+            
+            if (mode === 'quiz') {
+                buttons[0].classList.add('active');
+                document.getElementById('time-quiz-mode').classList.add('active');
+            } else {
+                buttons[1].classList.add('active');
+                document.getElementById('time-reference-mode').classList.add('active');
+            }
+        }
+
+        function setTimeCategory(category) {
+            timeQuiz.currentCategory = category;
+            const buttons = document.querySelectorAll('#time-quiz .diff-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            timeRestart();
+        }
+
+        function timeGenerateQuestions() {
+            let pool = [];
+            
+            switch(timeQuiz.currentCategory) {
+                case 'hours':
+                    pool = Object.keys(timeData).filter(key => timeData[key].type === 'hours');
+                    break;
+                case 'minutes':
+                    pool = Object.keys(timeData).filter(key => timeData[key].type === 'minutes');
+                    break;
+                case 'weekdays':
+                    pool = Object.keys(timeData).filter(key => timeData[key].type === 'weekdays');
+                    break;
+                case 'special':
+                    pool = Object.keys(timeData).filter(key => timeData[key].special === true);
+                    break;
+                case 'all':
+                default:
+                    const specialPool = Object.keys(timeData).filter(key => timeData[key].special === true);
+                    const hoursPool = Object.keys(timeData).filter(key => timeData[key].type === 'hours' && !timeData[key].special);
+                    const minutesPool = Object.keys(timeData).filter(key => timeData[key].type === 'minutes' && !timeData[key].special);
+                    const weekdaysPool = Object.keys(timeData).filter(key => timeData[key].type === 'weekdays');
+                    
+                    pool = [
+                        ...specialPool.sort(() => Math.random() - 0.5).slice(0, 4),
+                        ...hoursPool.sort(() => Math.random() - 0.5).slice(0, 2),
+                        ...minutesPool.sort(() => Math.random() - 0.5).slice(0, 2),
+                        ...weekdaysPool.sort(() => Math.random() - 0.5).slice(0, 2)
+                    ];
+                    break;
+            }
+            
+            timeQuiz.questions = pool.sort(() => Math.random() - 0.5).slice(0, timeQuiz.totalQuestions);
+            timeShowQuestion();
+        }
+
+        function timeGetQuestionType(key) {
+            const data = timeData[key];
+            if (data.special) return '특별한 발음';
+            if (data.type === 'hours') return '시간';
+            if (data.type === 'minutes') return '분';
+            if (data.type === 'weekdays') return '요일';
+            return '';
+        }
+
+        function timeShowQuestion() {
+            if (timeQuiz.currentQuestion >= timeQuiz.totalQuestions) {
+                timeShowResult();
+                return;
+            }
+
+            timeQuiz.answered = false;
+            timeQuiz.currentKey = timeQuiz.questions[timeQuiz.currentQuestion];
+            timeQuiz.currentAnswer = timeData[timeQuiz.currentKey].hiragana;
+            
+            document.getElementById('time-question').innerHTML = `
+                <span>${timeQuiz.currentKey}</span>
+                <div class="question-type">${timeGetQuestionType(timeQuiz.currentKey)}</div>
+            `;
+            document.getElementById('time-questionNumber').textContent = `${timeQuiz.currentQuestion + 1}/${timeQuiz.totalQuestions}`;
+            document.getElementById('time-feedback').classList.remove('show');
+            document.getElementById('time-nextBtn').style.display = 'none';
+            
+            const options = timeGenerateOptions(timeQuiz.currentKey);
+            const optionsContainer = document.getElementById('time-options');
+            optionsContainer.innerHTML = '';
+            
+            options.forEach(option => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option';
+                let content = `
+                    <div style="font-size: 1.3em;">${option.hiragana}</div>
+                    <div style="color: #888; font-size: 0.9em; margin-top: 5px;">${option.romaji}</div>
+                `;
+                if (option.kanji) {
+                    content += `<div style="color: #aaa; font-size: 1.2em; margin-top: 5px;">${option.kanji}</div>`;
+                }
+                optionDiv.innerHTML = content;
+                optionDiv.onclick = () => timeCheckAnswer(option.hiragana, optionDiv);
+                optionsContainer.appendChild(optionDiv);
+            });
+        }
+
+        function timeGenerateOptions(correctKey) {
+            const correctOption = timeData[correctKey];
+            const options = [correctOption];
+            const usedKeys = [correctKey];
+            
+            const sameTypeKeys = Object.keys(timeData).filter(key => 
+                timeData[key].type === correctOption.type && key !== correctKey
+            );
+            
+            while (options.length < 4) {
+                let randomKey;
+                
+                if (sameTypeKeys.length > 0 && Math.random() > 0.2) {
+                    const availableKeys = sameTypeKeys.filter(key => !usedKeys.includes(key));
+                    if (availableKeys.length > 0) {
+                        randomKey = availableKeys[Math.floor(Math.random() * availableKeys.length)];
+                    }
+                }
+                
+                if (!randomKey) {
+                    const allKeys = Object.keys(timeData);
+                    const availableKeys = allKeys.filter(key => !usedKeys.includes(key));
+                    randomKey = availableKeys[Math.floor(Math.random() * availableKeys.length)];
+                }
+                
+                if (randomKey && !usedKeys.includes(randomKey)) {
+                    options.push(timeData[randomKey]);
+                    usedKeys.push(randomKey);
+                }
+            }
+            
+            return options.sort(() => Math.random() - 0.5);
+        }
+
+        function timeCheckAnswer(selected, element) {
+            if (timeQuiz.answered) return;
+            timeQuiz.answered = true;
+            
+            const options = document.querySelectorAll('#time-options .option');
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+            
+            const feedback = document.getElementById('time-feedback');
+            const data = timeData[timeQuiz.currentKey];
+            
+            if (selected === timeQuiz.currentAnswer) {
+                element.classList.add('correct');
+                timeQuiz.correctAnswers++;
+                timeQuiz.streak++;
+                let message = `✨ 정답입니다! `;
+                if (data.alt) {
+                    message += `다른 표현: ${data.alt}`;
+                }
+                if (data.special) {
+                    message += ` (특별한 발음 규칙!)`;
+                }
+                feedback.innerHTML = message;
+                feedback.className = 'feedback correct show';
+            } else {
+                element.classList.add('wrong');
+                timeQuiz.streak = 0;
+                let message = `❌ 틀렸습니다. 정답은 <strong>${timeQuiz.currentAnswer}</strong> (${data.romaji}) 입니다.`;
+                if (data.special) {
+                    if (timeQuiz.currentKey.includes('시')) {
+                        message += ` <br>💡 ${timeQuiz.currentKey}는 특별한 읽기를 사용합니다!`;
+                    } else if (timeQuiz.currentKey.includes('분')) {
+                        message += ` <br>💡 이 분은 ぷん으로 발음됩니다!`;
+                    }
+                }
+                feedback.innerHTML = message;
+                feedback.className = 'feedback wrong show';
+                
+                options.forEach(opt => {
+                    if (opt.textContent.includes(timeQuiz.currentAnswer)) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            timeUpdateScore();
+            document.getElementById('time-nextBtn').style.display = 'block';
+        }
+
+        function timeUpdateScore() {
+            const percentage = Math.round((timeQuiz.correctAnswers / (timeQuiz.currentQuestion + 1)) * 100);
+            document.getElementById('time-score').textContent = `${percentage}%`;
+            document.getElementById('time-streak').textContent = timeQuiz.streak;
+        }
+
+        function timeNextQuestion() {
+            timeQuiz.currentQuestion++;
+            timeShowQuestion();
+        }
+
+        function timeShowResult() {
+            const percentage = Math.round((timeQuiz.correctAnswers / timeQuiz.totalQuestions) * 100);
+            const question = document.getElementById('time-question');
+            question.style.fontSize = '1.5em';
+            
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 완벽합니다! 시간 표현 마스터!';
+            } else if (percentage >= 80) {
+                message = '👏 훌륭해요! 거의 완벽하네요!';
+            } else if (percentage >= 60) {
+                message = '👍 좋아요! 특별한 발음을 더 연습해보세요!';
+            } else {
+                message = '💪 화이팅! 참고표를 보고 다시 도전해보세요!';
+            }
+            
+            question.innerHTML = `
+                <div>
+                    <div style="font-size: 1.2em;">최종 점수: ${percentage}%</div>
+                    <div style="font-size: 0.7em; margin-top: 10px;">${timeQuiz.correctAnswers}/${timeQuiz.totalQuestions} 문제 정답</div>
+                    <div style="font-size: 0.6em; margin-top: 10px;">${message}</div>
+                </div>
+            `;
+            
+            document.getElementById('time-options').innerHTML = '';
+            document.getElementById('time-feedback').classList.remove('show');
+            document.getElementById('time-nextBtn').style.display = 'none';
+            document.getElementById('time-restartBtn').style.display = 'block';
+        }
+
+        function timeRestart() {
+            timeQuiz.currentQuestion = 0;
+            timeQuiz.correctAnswers = 0;
+            timeQuiz.streak = 0;
+            timeGenerateQuestions();
+            document.getElementById('time-restartBtn').style.display = 'none';
+            timeUpdateScore();
+        }
+
+        // 키보드 내비게이션 추가
+        document.addEventListener('keydown', function(event) {
+            // 퀴즈 카드 키보드 내비게이션
+            const cards = document.querySelectorAll('.quiz-card');
+            cards.forEach((card, index) => {
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        card.click();
+                    }
+                });
+            });
+
+            // 옵션 키보드 내비게이션 (1-4 키)
+            if (['1', '2', '3', '4'].includes(event.key)) {
+                const options = document.querySelectorAll(`#${activeQuiz}-options .option`);
+                const optionIndex = parseInt(event.key) - 1;
+                if (options[optionIndex]) {
+                    options[optionIndex].click();
+                }
+            }
+
+            // Enter 키로 다음 문제 진행
+            if (event.key === 'Enter') {
+                const nextBtn = document.querySelector(`#${activeQuiz}-nextBtn`);
+                if (nextBtn && nextBtn.style.display !== 'none') {
+                    nextBtn.click();
+                }
+            }
+
+            // 스페이스바로 다시 시작
+            if (event.key === ' ' && event.ctrlKey) {
+                event.preventDefault();
+                const restartBtn = document.querySelector(`#${activeQuiz}-restartBtn`);
+                if (restartBtn && restartBtn.style.display !== 'none') {
+                    restartBtn.click();
+                }
+            }
+        });
+
+        // 홈으로 이동 함수
+        function goHome() {
+            window.location.href = 'index.html';
+        }
+
+        // 초기화
+        dateGenerateQuestions();
+    </script>
+</body>
+</html>

@@ -60,13 +60,14 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
                 setLoading(true);
                 
                 let url = `/auto-folder/preview?dailyWordCount=${dailyWordCount}`;
-                if (examCategory && examCategory !== 'mywordbook') {
+                // selectedVocabIds가 있으면 최우선으로 처리
+                if (selectedVocabIds.length > 0) {
+                    // 선택된 단어들로 자동 폴더 생성
+                    url += `&selectedVocabIds=${selectedVocabIds.join(',')}`;
+                } else if (examCategory && examCategory !== 'mywordbook') {
                     url += `&examCategory=${examCategory}`;
                 } else if (cefrLevel) {
                     url += `&cefrLevel=${cefrLevel}`;
-                } else if (selectedVocabIds.length > 0) {
-                    // 내 단어장에서 선택된 단어들로 자동 폴더 생성
-                    url += `&selectedVocabIds=${selectedVocabIds.join(',')}`;
                 }
                 
                 console.log('[AutoFolder] Making preview API call to:', url);
@@ -108,13 +109,14 @@ const AutoFolderModal = ({ isOpen, onClose, selectedVocabIds, examCategory, cefr
                 selectedVocabIdsArray: selectedVocabIds
             });
 
-            if (examCategory && examCategory !== 'mywordbook') {
+            // selectedVocabIds가 있으면 최우선으로 처리
+            if (selectedVocabIds.length > 0) {
+                // 선택된 단어들로 자동 폴더 생성
+                requestData.selectedVocabIds = selectedVocabIds;
+            } else if (examCategory && examCategory !== 'mywordbook') {
                 requestData.examCategory = examCategory;
             } else if (cefrLevel && examCategory !== 'mywordbook') {
                 requestData.cefrLevel = cefrLevel;
-            } else if (selectedVocabIds.length > 0) {
-                // 내 단어장에서 선택된 단어들로 자동 폴더 생성
-                requestData.selectedVocabIds = selectedVocabIds;
             }
 
             console.log('[AutoFolder] Final request data:', requestData);

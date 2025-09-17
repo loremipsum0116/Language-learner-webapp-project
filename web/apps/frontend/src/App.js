@@ -23,6 +23,8 @@ import LearnStart from "./pages/LearnStart";
 import Dashboard from "./pages/Dashboard";
 import GrammarHub from './pages/GrammarHub';
 import GrammarQuiz from './pages/GrammarQuiz';
+import JapaneseGrammarHub from './pages/JapaneseGrammarHub';
+import JapaneseGrammarQuiz from './pages/JapaneseGrammarQuiz';
 import SrsDashboard from "./pages/SrsDashboard";
 import SrsQuiz from "./pages/SrsQuiz";
 import SrsFolderDetail from './pages/SrsFolderDetail';
@@ -249,8 +251,8 @@ export default function App() {
           />
           
           {/* Grammar 관련 라우트 */}
-          <Route 
-            path="/learn/grammar" 
+          <Route
+            path="/learn/grammar"
             element={
               <>
                 <Header />
@@ -259,10 +261,10 @@ export default function App() {
                 </div>
                 <Footer />
               </>
-            } 
+            }
           />
-          <Route 
-            path="/learn/grammar/:topicId" 
+          <Route
+            path="/learn/grammar/:topicId"
             element={
               <>
                 <Header />
@@ -271,7 +273,33 @@ export default function App() {
                 </div>
                 <Footer />
               </>
-            } 
+            }
+          />
+
+          {/* Japanese Grammar 관련 라우트 */}
+          <Route
+            path="/learn/japanese-grammar"
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <JapaneseGrammarHub />
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/learn/japanese-grammar/:topicId"
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <JapaneseGrammarQuiz />
+                </div>
+                <Footer />
+              </>
+            }
           />
           
           

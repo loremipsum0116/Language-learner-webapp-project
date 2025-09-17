@@ -885,3 +885,60 @@ if (cards && cards.length > 0) {
 - ✅ **확장성**: **N개 중복 카드 지원**
 
 **🎉 하위폴더별 중복 카드 처리 문제 완전 해결! 이제 같은 단어가 여러 폴더에 있어도 한 번의 정답으로 모든 카드가 올바르게 처리됩니다!**
+
+---
+
+## 🛠️ 2025-09-17 23:00 - 추가 버그 수정 및 기능 개선
+
+### 1. DB 재시딩 완료 (22:42)
+- **CEFR 기본 어휘**: 9,814개 영어 단어
+- **시험별 단어**: 21,255개 연결 (TOEIC, TOEFL, IELTS, 수능)
+- **숙어·구동사**: 1,001개
+- **JLPT N5 일본어**: 502개 단어
+- **오디오 파일**: succeed-seeding-file/jlpt/n5 → backend/jlpt/n5 복사 완료
+
+### 2. 폴더 삭제 API 오류 수정 (22:50)
+#### 문제점:
+- `wronganswer` 테이블에 `cardId` 필드 없음
+- `card_reports` → `cardReport` Prisma 모델명 불일치
+
+#### 해결:
+```javascript
+// 수정 전
+cardId: { in: orphanedCardIds }
+
+// 수정 후
+itemId: { in: orphanedCardIds },
+itemType: 'srscard'
+```
+- `card_reports` → `cardReport` (2곳 수정)
+
+#### 결과:
+- ✅ 49개 폴더 성공적으로 삭제
+- ✅ 907개 카드 완전 삭제
+- ✅ 고아 데이터 0개 확인
+
+### 3. 자동 폴더 생성 버그 수정 (23:15)
+#### 문제점:
+영단어 1개 선택 시 전체 카테고리(905개) 폴더 생성되는 오류
+
+#### 원인:
+`AutoFolderModal.jsx`의 조건문 순서 문제
+```javascript
+// 문제 코드
+if (examCategory) {...}
+else if (cefrLevel) {...}  // 이게 먼저 실행됨
+else if (selectedVocabIds) {...}  // 여기까지 도달 안함
+```
+
+#### 해결:
+```javascript
+// 수정 코드 - selectedVocabIds 우선 처리
+if (selectedVocabIds.length > 0) {...}  // 최우선
+else if (examCategory) {...}
+else if (cefrLevel) {...}
+```
+
+#### 결과:
+- ✅ 선택한 단어 수만큼만 폴더 생성
+- ✅ 영단어와 일본어 동일하게 작동

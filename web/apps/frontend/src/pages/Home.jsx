@@ -648,10 +648,10 @@ export default function Home() {
       <section className="hero-modern">
         <h1 className="hero-title">
           <img src="/danmoosae.png" alt="" style={{ height: '48px', width: 'auto', marginRight: '0.5rem' }} />
-          단무새와 함께하는 영어 학습
+          단무새와 함께하는 언어 학습
         </h1>
         <p className="hero-subtitle">
-          SRS 단어 학습, 문법 연습, 리딩 이해력을 한 곳에서! 귀여운 단무새와 함께{" "}
+          SRS 단어 학습, 문법 연습, 리딩 및 리스닝 문제풀이를 한 곳에서! 귀여운 단무새와 함께{" "}
           <strong>🔊 음성 사전</strong>을 경험해보세요.
         </p>
         <div className="hero-actions">
@@ -712,13 +712,13 @@ export default function Home() {
 
       {/* Learning Areas Section */}
       <section className="learning-section">
-        <h2 className="learning-title">📚 학습 영역</h2>
+        <h2 className="learning-title">📚 영어 학습 영역</h2>
         
         <div className="learning-grid">
           {/* 문법 섹션 */}
           <div className="learning-card grammar">
             <div className="learning-card-header">
-              <h3 className="learning-card-title">📝 문법 연습</h3>
+              <h3 className="learning-card-title">📝 영문법 연습</h3>
               <span className="learning-badge grammar">Grammar</span>
             </div>
             <p className="learning-description">
@@ -745,7 +745,7 @@ export default function Home() {
           {/* 리딩 섹션 */}
           <div className="learning-card reading">
             <div className="learning-card-header">
-              <h3 className="learning-card-title">📖 리딩 연습</h3>
+              <h3 className="learning-card-title">📖 영어 리딩 연습</h3>
               <span className="learning-badge reading">Reading</span>
             </div>
             <p className="learning-description">
@@ -772,7 +772,7 @@ export default function Home() {
           {/* 리스닝 섹션 */}
           <div className="learning-card listening">
             <div className="learning-card-header">
-              <h3 className="learning-card-title">🎧 리스닝 연습</h3>
+              <h3 className="learning-card-title">🎧 영어 리스닝 연습</h3>
               <span className="learning-badge listening">Listening</span>
             </div>
             <p className="learning-description">
@@ -793,6 +793,94 @@ export default function Home() {
             
             <Link to="/listening" className="learning-main-btn listening">
               전체 리스닝 목록 보기 →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Japanese Learning Areas Section */}
+      <section className="learning-section japanese-section">
+        <h2 className="learning-title">🗾 일본어 학습 영역</h2>
+
+        <div className="learning-grid">
+          {/* 일본어 문법 섹션 */}
+          <div className="learning-card japanese-grammar">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">📝 일본어 문법 연습</h3>
+              <span className="learning-badge japanese-grammar">文法</span>
+            </div>
+            <p className="learning-description">
+              일본어 문법의 기초부터 고급까지 체계적으로 학습해보세요.
+            </p>
+
+            <div className="level-buttons">
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
+                <Link
+                  key={level}
+                  to={`/learn/japanese-grammar?level=${level}`}
+                  className="level-btn japanese-grammar"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+
+            <Link to="/learn/japanese-grammar" className="learning-main-btn japanese-grammar">
+              전체 일본어 문법 목록 보기 →
+            </Link>
+          </div>
+
+          {/* 일본어 리딩 섹션 */}
+          <div className="learning-card japanese-reading">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">📖 일본어 리딩 연습</h3>
+              <span className="learning-badge japanese-reading">読解</span>
+            </div>
+            <p className="learning-description">
+              다양한 일본어 텍스트를 읽고 독해력을 향상시켜보세요.
+            </p>
+
+            <div className="level-buttons">
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
+                <Link
+                  key={level}
+                  to={`/japanese-reading?level=${level}`}
+                  className="level-btn japanese-reading"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+
+            <Link to="/japanese-reading" className="learning-main-btn japanese-reading">
+              전체 일본어 리딩 목록 보기 →
+            </Link>
+          </div>
+
+          {/* 일본어 리스닝 섹션 */}
+          <div className="learning-card japanese-listening">
+            <div className="learning-card-header">
+              <h3 className="learning-card-title">🎧 일본어 리스닝 연습</h3>
+              <span className="learning-badge japanese-listening">聴解</span>
+            </div>
+            <p className="learning-description">
+              일본어 음성을 듣고 청취력을 기르며 발음을 익혀보세요.
+            </p>
+
+            <div className="level-buttons">
+              {["N5", "N4", "N3", "N2", "N1"].map((level) => (
+                <Link
+                  key={level}
+                  to={`/japanese-listening/list?level=${level}`}
+                  className="level-btn japanese-listening"
+                >
+                  {level}
+                </Link>
+              ))}
+            </div>
+
+            <Link to="/japanese-listening" className="learning-main-btn japanese-listening">
+              전체 일본어 리스닝 목록 보기 →
             </Link>
           </div>
         </div>
