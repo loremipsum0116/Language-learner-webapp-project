@@ -379,7 +379,7 @@ model VocabTranslation {
   vocabId     Int
   languageId  Int
   translation String
-  definition  String?
+  definition  String?  @db.Text
   examples    Json?
   confidence  Float    @default(1)
   isVerified  Boolean  @default(false)

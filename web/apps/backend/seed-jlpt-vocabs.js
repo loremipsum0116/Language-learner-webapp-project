@@ -116,16 +116,33 @@ async function main() {
           });
 
           // Create dictentry with examples and audio
-          const examples = [];
+          // 두 가지 구조 모두 지원: SRS 폴더용 + 상세페이지용
+          let examplesData = [];
 
-          // Add example if available
           if (item.example && item.koExample) {
-            examples.push({
+            // 1. 상세페이지용 배열 구조 (VocabDetailModal.jsx 호환)
+            examplesData.push({
               kind: 'example',
-              ja: item.example,
-              ko: item.koExample,
+              ja: item.example,        // 일본어 예문
+              ko: item.koExample,      // 한국어 해석
+              en: item.example,        // SRS 폴더 호환용 (en 필드에도 저장)
               source: 'jlpt_vocabs'
             });
+
+            // 2. SRS 폴더용 객체 구조 (SrsFolderDetail.jsx 호환)
+            examplesData.definitions = [
+              {
+                examples: [
+                  {
+                    en: item.example,        // 일본어 예문을 en 필드에 저장 (SRS 폴더 호환)
+                    ko: item.koExample,      // 한국어 해석
+                    ja: item.example,        // 일본어 원문도 별도 보관
+                    kind: 'example',
+                    source: 'jlpt_vocabs'
+                  }
+                ]
+              }
+            ];
           }
 
           const dictentry = await prisma.dictentry.create({
@@ -137,7 +154,7 @@ async function main() {
               audioLocal: item.audio ? JSON.stringify(item.audio) : null,
               license: 'JLPT N5 Vocabs Dataset',
               attribution: 'JLPT N5 Vocabs Dataset',
-              examples: examples.length > 0 ? examples : null
+              examples: Object.keys(examplesData).length > 0 ? examplesData : null
             }
           });
 
