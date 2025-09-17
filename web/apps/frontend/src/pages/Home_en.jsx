@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from 'react-dom';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import LanguageSelectionModal from "../components/LanguageSelectionModal";
 import "./Home_en.css";
 
 /**
@@ -93,23 +95,36 @@ function SrsWidget() {
   const [lat, setLat] = useState(null);
   const [err, setErr] = useState(null);
   const [todayFolderId, setTodayFolderId] = useState(null);
+  // 언어별 카드 수 상태 추가
+  const [srsJapanese, setSrsJapanese] = useState(0);
+  const [srsEnglish, setSrsEnglish] = useState(0);
+  const [hasMultipleLanguages, setHasMultipleLanguages] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
+  const [availableData, setAvailableData] = useState(null); // SRS 카드 데이터 저장
 
   useEffect(() => {
     let mounted = true;
     (async () => {
         try {
             // overdue 상태인 모든 카드 조회
-            const availableData = await fetchJSON(`/srs/available`, withCreds());
+            const fetchedData = await fetchJSON(`/srs/available`, withCreds());
             if (!mounted) return;
-            
-            // overdue 카드 수 카운트
-            let count = 0;
-            if (Array.isArray(availableData?.data)) {
-                count = availableData.data.length;
-            }
-            
+
+            // 데이터를 상태에 저장
+            setAvailableData(fetchedData);
+
+            // 새로운 언어별 분류 응답 처리 (Dashboard와 동일)
+            const srsData = fetchedData?.data;
+            const count = srsData?.total || 0;
+            const japaneseCards = srsData?.japanese || [];
+            const englishCards = srsData?.english || [];
+            const hasMultiple = srsData?.hasMultipleLanguages || false;
+
             setCount(count);
-            setLat(availableData._latencyMs);
+            setSrsJapanese(japaneseCards.length);
+            setSrsEnglish(englishCards.length);
+            setHasMultipleLanguages(hasMultiple);
+            setLat(fetchedData._latencyMs);
         } catch (e) {
             if (mounted) setErr(e);
         }
@@ -136,31 +151,42 @@ function SrsWidget() {
           <>
             <p className="card-text">복습 대기: <strong>{count}</strong> 개</p>
             {lat !== null && <div className="form-text">API {lat}ms</div>}
-            <button 
-              className="btn btn-primary" 
-              onClick={async () => {
-                try {
-                  // 모든 overdue 카드의 vocabId 조회
-                  const availableData = await fetchJSON(`/srs/available`, withCreds());
-                  
-                  if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
-                    // overdue 카드들의 vocabId 추출
-                    const vocabIds = availableData.data
-                      .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
-                      .filter(Boolean);
-                    
-                    if (vocabIds.length > 0) {
-                      // learn/vocab 시스템으로 리다이렉트 (전체 overdue 모드)
-                      window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
-                    } else {
-                      alert('복습할 단어가 없습니다.');
-                    }
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                console.log('[Home SRS] 복습 시작 클릭');
+                console.log('Japanese cards:', srsJapanese);
+                console.log('English cards:', srsEnglish);
+                console.log('Has multiple languages:', hasMultipleLanguages);
+
+                // 모든 overdue 카드의 vocabIds 수집
+                const srsData = availableData?.data;
+                const allCards = [...(srsData?.japanese || []), ...(srsData?.english || [])];
+                const vocabIds = allCards
+                  .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+                  .filter(Boolean);
+
+                console.log('[Home SRS] VocabIds collected:', vocabIds);
+
+                // 언어가 하나만 있는 경우 바로 해당 언어로 퀴즈 타입 선택창 이동
+                if (!hasMultipleLanguages) {
+                  if (srsJapanese > 0 && srsEnglish === 0) {
+                    // 일본어만 있는 경우 - LearnVocab으로 이동
+                    console.log('[Home SRS] 일본어만 있음 - 일본어 퀴즈 타입 선택창으로 이동');
+                    window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
+                  } else if (srsEnglish > 0 && srsJapanese === 0) {
+                    // 영어만 있는 경우 - LearnVocab으로 이동
+                    console.log('[Home SRS] 영어만 있음 - 영어 퀴즈 타입 선택창으로 이동');
+                    window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
                   } else {
+                    // 카드가 없는 경우
+                    console.log('[Home SRS] 복습할 카드가 없음');
                     alert('복습할 카드가 없습니다.');
                   }
-                } catch (error) {
-                  console.error('Failed to fetch overdue cards:', error);
-                  alert('복습 카드를 불러오는 중 오류가 발생했습니다.');
+                } else {
+                  // 여러 언어가 섞여있는 경우 언어 선택 모달 표시
+                  console.log('[Home SRS] 여러 언어 섞임 - 언어 선택 모달 표시');
+                  setShowLanguageModal(true);
                 }
               }}
             >
@@ -169,6 +195,40 @@ function SrsWidget() {
           </>
         )}
       </div>
+
+      {/* 언어 선택 모달 - createPortal로 document.body에 렌더링 */}
+      {showLanguageModal && createPortal(
+        <LanguageSelectionModal
+          show={showLanguageModal}
+          onHide={() => setShowLanguageModal(false)}
+          japaneseCount={srsJapanese}
+          englishCount={srsEnglish}
+          onSelectLanguage={(language) => {
+            console.log('[Home SRS] 언어 선택:', language);
+
+            // 언어별로 카드 ID 필터링
+            const srsData = availableData?.data;
+            let filteredVocabIds = [];
+
+            if (language === 'japanese') {
+              const japaneseCards = srsData?.japanese || [];
+              filteredVocabIds = japaneseCards
+                .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+                .filter(Boolean);
+              console.log('[Home SRS] 일본어 카드 IDs:', filteredVocabIds);
+              window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${filteredVocabIds.join(',')}`;
+            } else if (language === 'english') {
+              const englishCards = srsData?.english || [];
+              filteredVocabIds = englishCards
+                .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+                .filter(Boolean);
+              console.log('[Home SRS] 영어 카드 IDs:', filteredVocabIds);
+              window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${filteredVocabIds.join(',')}`;
+            }
+          }}
+        />,
+        document.body
+      )}
     </div>
   );
 }

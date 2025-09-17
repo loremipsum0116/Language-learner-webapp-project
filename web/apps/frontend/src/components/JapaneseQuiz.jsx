@@ -378,6 +378,13 @@ export default function JapaneseQuiz({
 
     // 다음 문제로 진행
     const nextQuestion = () => {
+        console.log('[JapaneseQuiz] nextQuestion called:', {
+            currentIndex: currentIndex,
+            totalItems: quizItems.length,
+            isLastItem: currentIndex + 1 >= quizItems.length,
+            vocabIds: vocabIds
+        });
+
         setShowResult(false);
         setUserAnswer('');
         setSelectedOption(null);
@@ -390,6 +397,7 @@ export default function JapaneseQuiz({
                 correct: score.correct + (isCorrect ? 1 : 0),
                 total: score.total
             };
+            console.log('[JapaneseQuiz] Quiz completed with score:', finalScore);
             onQuizComplete && onQuizComplete(finalScore);
         }
     };

@@ -2115,9 +2115,25 @@ export default function LearnVocab() {
             .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja')
             .map(item => item.vocabId);
 
+        console.log('[LearnVocab] Japanese quiz rendering:', {
+            totalQueue: queue.length,
+            japaneseVocabIds: japaneseVocabIds,
+            quizType: quizTypeParam,
+            mode: mode
+        });
+
         const handleJapaneseQuizComplete = () => {
             // 퀴즈 완료 후 처리 로직
-            navigate(folderIdParam ? `/srs/folder/${folderIdParam}` : '/srs');
+            if (folderIdParam) {
+                // 특정 폴더에서 온 경우 해당 폴더로 돌아감
+                navigate(`/srs/folder/${folderIdParam}`);
+            } else if (mode === 'all_overdue') {
+                // all_overdue 모드인 경우 대시보드로 돌아감
+                navigate('/dashboard');
+            } else {
+                // 기타 경우 SRS 대시보드로 돌아감
+                navigate('/srs');
+            }
         };
 
         return (

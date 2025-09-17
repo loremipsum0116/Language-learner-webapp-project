@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { fetchJSON, withCreds, isAbortError } from '../api/client';
 import { SrsApi } from '../api/srs';
 import RainbowStar from '../components/RainbowStar';
+import LanguageSelectionModal from '../components/LanguageSelectionModal';
 
 // dayjs(KST 라벨용)
 import dayjs from 'dayjs';
@@ -58,6 +59,7 @@ export default function Dashboard() {
     const [todayStudyLog, setTodayStudyLog] = useState(null);
     const [showStudyDetails, setShowStudyDetails] = useState(false);
     const [showMasteredDetails, setShowMasteredDetails] = useState(false);
+    const [showLanguageModal, setShowLanguageModal] = useState(false);
     const dropdownButtonRef = useRef(null);
     const masteredButtonRef = useRef(null);
 
@@ -87,10 +89,25 @@ export default function Dashboard() {
                     console.log('[Dashboard] Mastered count from /srs/mastered-cards:', masteredCount);
                     console.log('[Dashboard] Sample mastered card structure:', masteredData[0]);
                     
+                    // 새로운 언어별 분류 응답 처리
+                    const srsData = srsQueueRes.data;
+                    const totalSrsCards = srsData?.total || 0;
+                    const japaneseCards = srsData?.japanese || [];
+                    const englishCards = srsData?.english || [];
+                    const hasMultipleLanguages = srsData?.hasMultipleLanguages || false;
+
+                    console.log('[Dashboard] SRS Cards - Japanese:', japaneseCards.length, 'English:', englishCards.length, 'Multiple Languages:', hasMultipleLanguages);
+
                     setStats({
-                        srsQueue: Array.isArray(srsQueueRes.data) ? srsQueueRes.data.length : 0,
+                        srsQueue: totalSrsCards,
                         odatNote: Array.isArray(odatNoteRes.data) ? odatNoteRes.data.length : 0,
                         masteredWords: masteredCount,
+                        // 언어별 정보 추가
+                        srsJapanese: japaneseCards.length,
+                        srsEnglish: englishCards.length,
+                        hasMultipleLanguages: hasMultipleLanguages,
+                        japaneseCards: japaneseCards,
+                        englishCards: englishCards
                     });
                     
                     // 마스터된 카드 데이터 저장
@@ -181,6 +198,45 @@ export default function Dashboard() {
 
 
     const cefrLevel = user?.profile?.level || 'A1';
+
+    // SRS 복습 시작 버튼 클릭 핸들러
+    const handleSrsStartClick = () => {
+        console.log('[Dashboard] SRS 복습 시작 클릭');
+        console.log('Japanese cards:', stats.srsJapanese);
+        console.log('English cards:', stats.srsEnglish);
+        console.log('Has multiple languages:', stats.hasMultipleLanguages);
+
+        // 언어가 하나만 있는 경우 바로 해당 언어 퀴즈 타입 선택창으로 이동
+        if (!stats.hasMultipleLanguages) {
+            if (stats.srsJapanese > 0 && stats.srsEnglish === 0) {
+                // 일본어만 있는 경우 - LearnVocab으로 이동
+                console.log('[Dashboard] 일본어만 있음 - 일본어 퀴즈 타입 선택창으로 이동');
+                window.location.href = '/learn/vocab?mode=all_overdue';
+            } else if (stats.srsEnglish > 0 && stats.srsJapanese === 0) {
+                // 영어만 있는 경우 - LearnVocab으로 이동
+                console.log('[Dashboard] 영어만 있음 - 영어 퀴즈 타입 선택창으로 이동');
+                window.location.href = '/learn/vocab?mode=all_overdue';
+            } else {
+                // 카드가 없는 경우
+                console.log('[Dashboard] 복습할 카드가 없음');
+                alert('복습할 카드가 없습니다.');
+            }
+        } else {
+            // 여러 언어가 섞여있는 경우 언어 선택 모달 표시
+            console.log('[Dashboard] 여러 언어 섞임 - 언어 선택 모달 표시');
+            setShowLanguageModal(true);
+        }
+    };
+
+    // 언어 선택 핸들러
+    const handleLanguageSelect = (language) => {
+        console.log('[Dashboard] 언어 선택:', language);
+        if (language === 'japanese') {
+            window.location.href = '/learn/vocab?mode=all_overdue';
+        } else if (language === 'english') {
+            window.location.href = '/learn/vocab?mode=all_overdue';
+        }
+    };
 
     // 오늘 학습한 단어들을 그룹화하고 통계 계산 (SRS 대시보드와 동일한 로직)
     const processTodayStudyData = () => {
@@ -281,7 +337,7 @@ export default function Dashboard() {
                         </div>
                     </div>
                     <div className="ms-3">
-                        <Link to="/srs/quiz" className="btn btn-danger">
+                        <Link to="/learn/vocab?mode=all_overdue" className="btn btn-danger">
                             <strong>지금 복습하기</strong>
                         </Link>
                     </div>
@@ -316,12 +372,43 @@ export default function Dashboard() {
             {/* 핵심 지표 */}
             <section className="row g-3 mb-4" style={{ overflow: 'visible' }}>
                 <div className="col-md-6 col-lg-3">
-                    <StatCard
-                        title="오늘 학습할 카드"
-                        value={stats.srsQueue}
-                        loading={loading}
-                        icon={<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-stack" viewBox="0 0 16 16"><path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z" /></svg>}
-                    />
+                    <div className="card h-100">
+                        <div className="card-body text-center d-flex flex-column">
+                            <div className="text-primary mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-stack" viewBox="0 0 16 16">
+                                    <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.598.598 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.598.598 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.598.598 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535L7.733.063z" />
+                                </svg>
+                            </div>
+                            <h6 className="card-title text-muted">🦜 오늘의 SRS</h6>
+                            <div className="mb-2">
+                                {loading ? (
+                                    <div className="placeholder-glow">
+                                        <span className="placeholder col-6"></span>
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="h4 mb-1">복습 대기: <span className="text-primary">{stats.srsQueue}</span> 개</div>
+                                        {stats.hasMultipleLanguages && (
+                                            <small className="text-muted">
+                                                🇯🇵 {stats.srsJapanese}개 • 🇺🇸 {stats.srsEnglish}개
+                                            </small>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                            <div className="mt-auto">
+                                {stats.srsQueue > 0 && (
+                                    <button
+                                        className="btn btn-warning btn-sm"
+                                        onClick={handleSrsStartClick}
+                                        disabled={loading}
+                                    >
+                                        복습 시작
+                                    </button>
+                                )}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div className="col-md-6 col-lg-3">
                     <StatCard
@@ -726,6 +813,15 @@ export default function Dashboard() {
                 </div>,
                 document.body
             )}
+
+            {/* 언어 선택 모달 */}
+            <LanguageSelectionModal
+                show={showLanguageModal}
+                onHide={() => setShowLanguageModal(false)}
+                japaneseCount={stats.srsJapanese || 0}
+                englishCount={stats.srsEnglish || 0}
+                onSelectLanguage={handleLanguageSelect}
+            />
         </main>
     );
 }

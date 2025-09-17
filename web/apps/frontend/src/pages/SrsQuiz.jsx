@@ -123,6 +123,7 @@ export default function SrsQuiz() {
     const folderId = Number(params.get('folder'));
     const allOverdue = params.get('all') === 'true';
     const selectedItems = params.get('selectedItems');
+    const selectedLanguage = params.get('language'); // URL에서 선택된 언어 읽기
 
     const [loading, setLoading] = useState(true);
     const [queue, setQueue] = useState([]);
@@ -169,39 +170,58 @@ export default function SrsQuiz() {
                 
                 if (!ac.signal.aborted) {
                     const queueData = Array.isArray(queueRes.data) ? queueRes.data : [];
-                    setQueue(queueData);
-                    setIdx(0);
-                    setStreakInfo(streakRes.data);
 
                     console.log('[SrsQuiz] Queue loaded:', {
                         queueLength: queueData.length,
+                        selectedLanguage: selectedLanguage,
                         firstItem: queueData[0],
-                        hasVocab: queueData[0]?.vocab ? 'yes' : 'no',
-                        vocabCategories: queueData[0]?.vocab?.categories,
-                        vocabKana: queueData[0]?.vocab?.kana,
-                        vocabRomaji: queueData[0]?.vocab?.romaji
+                        hasVocab: queueData[0]?.vocab ? 'yes' : 'no'
                     });
 
-                    // 큐 전체에서 언어 감지 (일본어가 하나라도 있으면 일본어 퀴즈)
-                    if (queueData.length > 0) {
-                        let detectedLanguage = 'en';
+                    let filteredQueue = queueData;
+                    let finalLanguage = 'en';
 
-                        // 큐의 모든 아이템을 확인해서 일본어 단어가 있는지 검사
-                        for (const item of queueData) {
+                    // URL에서 언어가 지정된 경우 해당 언어 카드만 필터링
+                    if (selectedLanguage === 'japanese' || selectedLanguage === 'ja') {
+                        filteredQueue = queueData.filter(item => {
                             if (item.vocab) {
                                 const itemLanguage = detectLanguageFromVocab(item.vocab);
-                                if (itemLanguage === 'ja') {
-                                    detectedLanguage = 'ja';
-                                    break;
+                                return itemLanguage === 'ja';
+                            }
+                            return false;
+                        });
+                        finalLanguage = 'ja';
+                        console.log('[SrsQuiz] Filtered for Japanese:', filteredQueue.length, 'items');
+                    } else if (selectedLanguage === 'english' || selectedLanguage === 'en') {
+                        filteredQueue = queueData.filter(item => {
+                            if (item.vocab) {
+                                const itemLanguage = detectLanguageFromVocab(item.vocab);
+                                return itemLanguage === 'en';
+                            }
+                            return false;
+                        });
+                        finalLanguage = 'en';
+                        console.log('[SrsQuiz] Filtered for English:', filteredQueue.length, 'items');
+                    } else {
+                        // 언어 지정이 없는 경우 기존 자동 감지 로직 사용
+                        if (queueData.length > 0) {
+                            for (const item of queueData) {
+                                if (item.vocab) {
+                                    const itemLanguage = detectLanguageFromVocab(item.vocab);
+                                    if (itemLanguage === 'ja') {
+                                        finalLanguage = 'ja';
+                                        break;
+                                    }
                                 }
                             }
                         }
-
-                        setQuizLanguage(detectedLanguage);
-                        console.log('[SrsQuiz] Detected language:', detectedLanguage, 'from', queueData.length, 'items');
-
-                        // 일본어 감지됨 (SRS에서는 영어와 동일한 UI 사용)
+                        console.log('[SrsQuiz] Auto-detected language:', finalLanguage, 'from', queueData.length, 'items');
                     }
+
+                    setQueue(filteredQueue);
+                    setIdx(0);
+                    setQuizLanguage(finalLanguage);
+                    setStreakInfo(streakRes.data);
                 }
             } catch (e) {
                 if (!isAbortError(e)) {
@@ -214,7 +234,7 @@ export default function SrsQuiz() {
         })();
 
         return () => ac.abort();
-    }, [folderId, allOverdue, selectedItems]);
+    }, [folderId, allOverdue, selectedItems, selectedLanguage]);
 
     const current = queue[idx];
 

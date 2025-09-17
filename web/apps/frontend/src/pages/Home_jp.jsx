@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
 import LanguageSwitcher from "../components/LanguageSwitcher";
+import LanguageSelectionModal from "../components/LanguageSelectionModal";
 import "./Home_jp.css";
 
 /**
@@ -134,6 +135,11 @@ function SrsWidget() {
   const [lat, setLat] = useState(null);
   const [err, setErr] = useState(null);
   const [todayFolderId, setTodayFolderId] = useState(null);
+  // 언어별 카드 수 상태 추가
+  const [srsJapanese, setSrsJapanese] = useState(0);
+  const [srsEnglish, setSrsEnglish] = useState(0);
+  const [hasMultipleLanguages, setHasMultipleLanguages] = useState(false);
+  const [showLanguageModal, setShowLanguageModal] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -143,13 +149,17 @@ function SrsWidget() {
             const availableData = await fetchJSON(`/srs/available`, withCreds());
             if (!mounted) return;
             
-            // overdue カード数カウント
-            let count = 0;
-            if (Array.isArray(availableData?.data)) {
-                count = availableData.data.length;
-            }
-            
+            // 새로운 언어별 분류 응답 처리 (Dashboard와 동일)
+            const srsData = availableData?.data;
+            const count = srsData?.total || 0;
+            const japaneseCards = srsData?.japanese || [];
+            const englishCards = srsData?.english || [];
+            const hasMultiple = srsData?.hasMultipleLanguages || false;
+
             setCount(count);
+            setSrsJapanese(japaneseCards.length);
+            setSrsEnglish(englishCards.length);
+            setHasMultipleLanguages(hasMultiple);
             setLat(availableData._latencyMs);
         } catch (e) {
             if (mounted) setErr(e);
@@ -184,9 +194,13 @@ function SrsWidget() {
                   // すべてのoverdueカードのvocabId照会
                   const availableData = await fetchJSON(`/srs/available`, withCreds());
                   
-                  if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
+                  // 새로운 언어별 분류 응답 구조 처리
+                  const srsData = availableData?.data;
+                  const allCards = [...(srsData?.japanese || []), ...(srsData?.english || [])];
+
+                  if (allCards.length > 0) {
                     // overdueカードからvocabId抽出
-                    const vocabIds = availableData.data
+                    const vocabIds = allCards
                       .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
                       .filter(Boolean);
                     
