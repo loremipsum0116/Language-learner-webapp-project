@@ -1543,8 +1543,7 @@ router.post('/folders/:folderId/items/bulk-delete', async (req, res, next) => {
         next(e);
     }
 });
-// DELETE /srs/folders/:id  (루트/하위 모두 허용)  — 하위와 아이템까지 함께 삭제
-// DELETE /srs/folders/:id  — 단일계층 삭제
+// DELETE /srs/folders/:id  — 재귀적 삭제 (상위폴더 삭제 시 모든 하위폴더와 카드까지 완전 삭제)
 router.delete('/folders/:id', async (req, res, next) => {
     try {
         const userId = req.user.id;
@@ -1554,46 +1553,234 @@ router.delete('/folders/:id', async (req, res, next) => {
         const exists = await prisma.srsfolder.findFirst({ where: { id, userId }, select: { id: true } });
         if (!exists) return fail(res, 404, 'Folder not found');
 
-        await prisma.$transaction(async (tx) => {
-            // 폴더 아이템들 가져오기 (오답노트 정리를 위해)
-            const srsfolderitem = await tx.srsfolderitem.findMany({
-                where: { folderId: id },
-                select: { vocabId: true }
+        // 🔥 재귀적으로 모든 하위폴더 ID 수집
+        const getAllDescendantFolderIds = async (folderId, tx) => {
+            const children = await tx.srsfolder.findMany({
+                where: { parentId: folderId, userId },
+                select: { id: true }
             });
-            const vocabIds = srsfolderitem.map(item => item.vocabId).filter(Boolean);
-            
-            // 폴더 아이템들과 폴더 삭제
-            await tx.srsfolderitem.deleteMany({ where: { folderId: id } });
-            if (tx.srsfolder && typeof tx.srsfolder.delete === 'function') {
-                await tx.srsfolder.delete({ where: { id } });
-            } else {
-                console.error('tx.srsfolder.delete is not available:', typeof tx.srsfolder);
-                throw new Error('Prisma transaction object is invalid');
+
+            let allIds = [folderId];
+            for (const child of children) {
+                const descendantIds = await getAllDescendantFolderIds(child.id, tx);
+                allIds = allIds.concat(descendantIds);
             }
-            
-            // ✅ 해당 폴더의 오답노트 삭제 (폴더별 독립성)
-            // vocabIds가 있는 경우와 없는 경우 모두 처리
-            const wrongAnswersDeleted = await tx.wronganswer.deleteMany({
-                where: { 
-                    userId,
-                    folderId: id
-                }
+            return allIds;
+        };
+
+        let deletionStats = {
+            foldersDeleted: 0,
+            cardsDeleted: 0,
+            wrongAnswersDeleted: 0,
+            totalProcessed: 0
+        };
+
+        await prisma.$transaction(async (tx) => {
+            console.log(`[RECURSIVE DELETE] Starting recursive deletion for folder ${id}`);
+
+            // 🛡️ 안전장치 1: 삭제 전 검증
+            const folderToDelete = await tx.srsfolder.findFirst({
+                where: { id, userId },
+                select: { id: true, name: true, parentId: true }
             });
-            console.log(`[FOLDER DELETE] Deleted ${wrongAnswersDeleted.count} wrong answers for folder ${id}`);
-            
-            // 추가 안전장치: 정리 서비스로 고아 오답노트 정리
+            if (!folderToDelete) {
+                throw new Error(`Folder ${id} not found or access denied for user ${userId}`);
+            }
+
+            // 1. 삭제할 모든 폴더 ID 수집 (재귀적)
+            const allFolderIds = await getAllDescendantFolderIds(id, tx);
+            console.log(`[RECURSIVE DELETE] Found ${allFolderIds.length} folders to delete (including subfolders):`, allFolderIds);
+            deletionStats.totalProcessed = allFolderIds.length;
+
+            // 🛡️ 안전장치 2: 대량 삭제 경고
+            if (allFolderIds.length > 50) {
+                console.warn(`[RECURSIVE DELETE] WARNING: Attempting to delete ${allFolderIds.length} folders - this is a large operation`);
+            }
+
+            // 🛡️ 안전장치 3: 모든 폴더가 해당 사용자 소유인지 재검증
+            const ownershipCheck = await tx.srsfolder.findMany({
+                where: {
+                    id: { in: allFolderIds },
+                    userId: { not: userId }
+                },
+                select: { id: true }
+            });
+            if (ownershipCheck.length > 0) {
+                throw new Error(`Access denied: Found folders not owned by user ${userId}: ${ownershipCheck.map(f => f.id).join(', ')}`);
+            }
+
+            // 🔥 새로운 접근: 각 폴더별로 순차적으로 완전 정리
+            const sortedFolderIds = allFolderIds.reverse(); // 하위 → 상위 순서로
+            let totalCardsDeleted = 0;
+            let totalWrongAnswersDeleted = 0;
+
+            for (const folderId of sortedFolderIds) {
+                console.log(`[RECURSIVE DELETE] 🧹 Starting complete cleanup for folder ${folderId}`);
+
+                // 2.1. 해당 폴더의 모든 카드 ID 수집
+                const folderItems = await tx.srsfolderitem.findMany({
+                    where: { folderId },
+                    select: { cardId: true }
+                });
+                const folderCardIds = folderItems.map(item => item.cardId);
+                console.log(`[RECURSIVE DELETE] Found ${folderCardIds.length} cards in folder ${folderId}`);
+
+                // 2.2. 폴더-카드 연결 삭제 (해당 폴더만)
+                const deletedFolderItems = await tx.srsfolderitem.deleteMany({
+                    where: { folderId }
+                });
+                console.log(`[RECURSIVE DELETE] Deleted ${deletedFolderItems.count} folder-card connections for folder ${folderId}`);
+
+                // 2.3. 이 폴더 전용 오답노트 삭제 (folderId 기반)
+                const folderWrongAnswers = await tx.wronganswer.deleteMany({
+                    where: { userId, folderId }
+                });
+                totalWrongAnswersDeleted += folderWrongAnswers.count;
+                console.log(`[RECURSIVE DELETE] Deleted ${folderWrongAnswers.count} folder-based wrong answers for folder ${folderId}`);
+
+                // 2.4. 이 폴더의 카드들 중 고아가 된 것들 찾기 및 정리
+                if (folderCardIds.length > 0) {
+                    // 다른 폴더에 속하지 않는 카드들 찾기
+                    const orphanedCards = await tx.srscard.findMany({
+                        where: {
+                            id: { in: folderCardIds },
+                            srsfolderitem: { none: {} } // 어떤 폴더에도 속하지 않는 카드들
+                        },
+                        select: { id: true }
+                    });
+                    const orphanedCardIds = orphanedCards.map(card => card.id);
+
+                    if (orphanedCardIds.length > 0) {
+                        // 🔥 2.4.1. 고아 카드들의 vocab ID 수집 (card_reports 삭제용)
+                        const orphanedCardsWithVocab = await tx.srscard.findMany({
+                            where: { id: { in: orphanedCardIds } },
+                            select: { id: true, itemId: true }
+                        });
+                        const orphanedVocabIds = orphanedCardsWithVocab.map(card => card.itemId);
+
+                        // 🔥 2.4.2. 고아 카드들의 모든 오답노트 삭제 (cardId 기반)
+                        const cardWrongAnswers = await tx.wronganswer.deleteMany({
+                            where: {
+                                userId,
+                                cardId: { in: orphanedCardIds }
+                            }
+                        });
+                        totalWrongAnswersDeleted += cardWrongAnswers.count;
+                        console.log(`[RECURSIVE DELETE] Deleted ${cardWrongAnswers.count} card-based wrong answers for orphaned cards`);
+
+                        // 🔥 2.4.3. 고아 카드들의 vocab 관련 리포트 삭제
+                        const cardReports = await tx.card_reports.deleteMany({
+                            where: {
+                                userId,
+                                vocabId: { in: orphanedVocabIds }
+                            }
+                        });
+                        console.log(`[RECURSIVE DELETE] Deleted ${cardReports.count} card reports for orphaned vocab`);
+
+                        // 🔥 2.4.4. 고아 카드들 완전 삭제
+                        await tx.srscard.deleteMany({
+                            where: { id: { in: orphanedCardIds } }
+                        });
+                        totalCardsDeleted += orphanedCardIds.length;
+                        console.log(`[RECURSIVE DELETE] ✓ Deleted ${orphanedCardIds.length} orphaned cards from folder ${folderId}`);
+
+                        // 🔥 2.4.5. 복습 대기 큐 정리 확인 로그
+                        console.log(`[RECURSIVE DELETE] 🔄 Orphaned cards removed from review queue automatically (srscard deletion)`);
+                    }
+                }
+
+                console.log(`[RECURSIVE DELETE] ✅ Complete cleanup finished for folder ${folderId}`);
+            }
+
+            deletionStats.cardsDeleted = totalCardsDeleted;
+            deletionStats.wrongAnswersDeleted = totalWrongAnswersDeleted;
+            console.log(`[RECURSIVE DELETE] Total cleanup: ${totalCardsDeleted} cards, ${totalWrongAnswersDeleted} wrong answers`);
+
+            // 7. 🚨 폴더 삭제 (이미 sortedFolderIds가 하위→상위 순서로 정렬됨)
+            // 🛡️ 안전장치 4: 단계별 삭제 및 오류 처리
+            for (const folderId of sortedFolderIds) {
+                try {
+                    await tx.srsfolder.delete({ where: { id: folderId } });
+                    deletionStats.foldersDeleted++;
+                    console.log(`[RECURSIVE DELETE] ✓ Deleted folder ${folderId}`);
+                } catch (folderDeleteError) {
+                    console.error(`[RECURSIVE DELETE] ✗ Failed to delete folder ${folderId}:`, folderDeleteError.message);
+                    throw new Error(`Failed to delete folder ${folderId}: ${folderDeleteError.message}`);
+                }
+            }
+
+            // 🛡️ 안전장치 5: 삭제 완료 후 검증
+            const remainingFolders = await tx.srsfolder.findMany({
+                where: { id: { in: allFolderIds } },
+                select: { id: true }
+            });
+
+            if (remainingFolders.length > 0) {
+                const remainingIds = remainingFolders.map(f => f.id);
+                throw new Error(`Deletion verification failed: ${remainingIds.length} folders still exist: ${remainingIds.join(', ')}`);
+            }
+
+            // 🛡️ 안전장치 6: 완전성 검증 - 고아 데이터 및 누락 확인
+            const orphanedItems = await tx.srsfolderitem.findMany({
+                where: { folderId: { in: allFolderIds } },
+                select: { folderId: true, cardId: true }
+            });
+
+            const orphanedWrongAnswers = await tx.wronganswer.findMany({
+                where: {
+                    userId,
+                    folderId: { in: allFolderIds }
+                },
+                select: { id: true, folderId: true }
+            });
+
+            const orphanedReports = await tx.card_reports.findMany({
+                where: {
+                    userId,
+                    vocabId: { in: allFolderIds } // 이건 실제로는 발생하지 않지만 검증용
+                },
+                select: { id: true, vocabId: true }
+            });
+
+            // 경고 및 오류 보고
+            if (orphanedItems.length > 0) {
+                console.error(`[RECURSIVE DELETE] ❌ CRITICAL: Found ${orphanedItems.length} orphaned folder items after deletion!`);
+                throw new Error(`Data integrity violation: ${orphanedItems.length} folder items still reference deleted folders`);
+            }
+
+            if (orphanedWrongAnswers.length > 0) {
+                console.error(`[RECURSIVE DELETE] ❌ CRITICAL: Found ${orphanedWrongAnswers.length} orphaned wrong answers after deletion!`);
+                throw new Error(`Data integrity violation: ${orphanedWrongAnswers.length} wrong answers still reference deleted folders`);
+            }
+
+            // 🎯 최종 완전성 확인 로그
+            console.log(`[RECURSIVE DELETE] ✅ Data integrity verified: No orphaned data found`);
+            console.log(`[RECURSIVE DELETE] 📊 Final stats - Folders: ${deletionStats.foldersDeleted}, Cards: ${deletionStats.cardsDeleted}, Wrong Answers: ${deletionStats.wrongAnswersDeleted}`);
+
+            console.log(`[RECURSIVE DELETE] ✅ Deletion completed successfully:`, deletionStats);
+        }, {
+            timeout: 60000 // 재귀적 삭제는 시간이 더 걸릴 수 있으므로 60초
+        });
+
+        // 트랜잭션 완료 후 정리 서비스 실행 (비동기)
+        setImmediate(async () => {
             try {
                 const { cleanupWrongAnswersForDeletedFolder } = require('../services/wrongAnswerCleanupService');
                 await cleanupWrongAnswersForDeletedFolder(id, userId);
+                console.log(`[RECURSIVE DELETE] Background cleanup completed for folder ${id}`);
             } catch (cleanupError) {
-                console.warn(`[FOLDER DELETE] Cleanup service warning for folder ${id}:`, cleanupError.message);
-                // 정리 서비스 오류는 치명적이지 않음
+                console.warn(`[RECURSIVE DELETE] Cleanup service warning for folder ${id}:`, cleanupError.message);
             }
         });
 
-        return ok(res, { deleted: true, id });
+        return ok(res, {
+            deleted: true,
+            id,
+            recursive: true,
+            stats: deletionStats
+        });
     } catch (e) {
-        console.error('DELETE /srs/folders/:id failed:', e);
+        console.error('DELETE /srs/folders/:id (recursive) failed:', e);
         return fail(res, 500, 'Internal Server Error');
     }
 });
@@ -3382,6 +3569,137 @@ router.get('/study-log/today', async (req, res, next) => {
     } catch (e) {
         console.error('GET /srs/study-log/today failed:', e);
         return fail(res, 500, 'Failed to fetch today study log');
+    }
+});
+
+// ────────────────────────────────────────────────────────────
+// 고아 카드 정리 API
+// ────────────────────────────────────────────────────────────
+
+// POST /srs/cleanup/orphaned-cards — 고아 SRS 카드 정리
+router.post('/cleanup/orphaned-cards', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+
+        console.log(`[ORPHANED CARDS CLEANUP] Starting cleanup for user ${userId}`);
+
+        // 1. 고아 SRS 카드 찾기 (삭제된 폴더를 참조하는 카드들 포함)
+        const orphanedCards = await prisma.srscard.findMany({
+            where: {
+                userId: userId,
+                OR: [
+                    {
+                        // 어떤 srsfolderitem에도 연결되지 않은 카드
+                        srsfolderitem: {
+                            none: {}
+                        }
+                    },
+                    {
+                        // 존재하지 않는 폴더를 참조하는 카드들
+                        srsfolderitem: {
+                            every: {
+                                folder: null  // folder가 삭제된 경우
+                            }
+                        }
+                    }
+                ]
+            },
+            include: {
+                srsfolderitem: {
+                    include: {
+                        folder: true
+                    }
+                }
+            }
+        });
+
+        console.log(`[ORPHANED CARDS CLEANUP] Found ${orphanedCards.length} orphaned cards:`, orphanedCards.map(c => c.id));
+
+        if (orphanedCards.length === 0) {
+            return ok(res, {
+                message: '정리할 고아 카드가 없습니다.',
+                deletedCards: 0,
+                deletedWrongAnswers: 0
+            });
+        }
+
+        const orphanedCardIds = orphanedCards.map(card => card.id);
+
+        await prisma.$transaction(async (tx) => {
+            // 2. 고아 카드들과 관련된 오답노트 삭제
+            const deletedWrongAnswers = await tx.wronganswer.deleteMany({
+                where: {
+                    userId: userId,
+                    cardId: { in: orphanedCardIds }
+                }
+            });
+
+            console.log(`[ORPHANED CARDS CLEANUP] Deleted ${deletedWrongAnswers.count} wrong answers`);
+
+            // 3. 고아 SRS 카드들 삭제
+            const deletedCards = await tx.srscard.deleteMany({
+                where: {
+                    id: { in: orphanedCardIds },
+                    userId: userId
+                }
+            });
+
+            console.log(`[ORPHANED CARDS CLEANUP] Deleted ${deletedCards.count} orphaned SRS cards`);
+        }, {
+            timeout: 15000
+        });
+
+        return ok(res, {
+            message: `${orphanedCards.length}개의 고아 SRS 카드와 관련 데이터를 정리했습니다.`,
+            deletedCards: orphanedCards.length,
+            orphanedCardIds: orphanedCardIds
+        });
+
+    } catch (e) {
+        console.error('POST /srs/cleanup/orphaned-cards failed:', e);
+        return fail(res, 500, 'Failed to cleanup orphaned cards');
+    }
+});
+
+// POST /srs/cleanup/specific-card/:cardId — 특정 카드 강제 삭제
+router.post('/cleanup/specific-card/:cardId', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const cardId = Number(req.params.cardId);
+
+        console.log(`[SPECIFIC CARD CLEANUP] Deleting card ${cardId} for user ${userId}`);
+
+        await prisma.$transaction(async (tx) => {
+            // 1. srsfolderitem 연결 삭제
+            await tx.srsfolderitem.deleteMany({
+                where: { cardId: cardId }
+            });
+
+            // 2. 관련 오답노트 삭제
+            await tx.wronganswer.deleteMany({
+                where: {
+                    userId: userId,
+                    cardId: cardId
+                }
+            });
+
+            // 3. SRS 카드 삭제
+            await tx.srscard.delete({
+                where: {
+                    id: cardId,
+                    userId: userId
+                }
+            });
+        });
+
+        return ok(res, {
+            message: `카드 ${cardId}가 완전히 삭제되었습니다.`,
+            deletedCardId: cardId
+        });
+
+    } catch (e) {
+        console.error('POST /srs/cleanup/specific-card failed:', e);
+        return fail(res, 500, 'Failed to delete specific card');
     }
 });
 

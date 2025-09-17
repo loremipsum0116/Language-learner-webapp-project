@@ -166,6 +166,7 @@ const highlightAnswerInTranslation = (translation) => {
 
 export default function JapaneseQuiz({
     vocabIds,
+    cards = null, // 새로 추가: 카드 정보
     quizType = JapaneseQuizTypes.JP_WORD_TO_KO_MEANING,
     onQuizComplete,
     folderId = null,
@@ -241,10 +242,58 @@ export default function JapaneseQuiz({
             }));
 
             if (response.data && response.data.quizItems) {
-                setQuizItems(response.data.quizItems);
+                let processedQuizItems = response.data.quizItems;
+
+                // cards 정보가 있으면 중복 카드 처리
+                if (cards && cards.length > 0) {
+                    console.log('[JAPANESE QUIZ] Processing duplicate cards:', {
+                        originalItems: processedQuizItems.length,
+                        availableCards: cards.map(c => ({cardId: c.cardId, vocabId: c.vocabId, vocab: c.vocab?.lemma}))
+                    });
+
+                    // 각 vocab에 대해 여러 카드가 있다면 복수 생성
+                    const expandedQuizItems = [];
+                    processedQuizItems.forEach(item => {
+                        const matchingCards = cards.filter(card => card.vocabId === item.vocabId);
+
+                        if (matchingCards.length > 1) {
+                            // 중복 카드가 있는 경우: 각 카드별로 퀴즈 아이템 생성
+                            matchingCards.forEach((card, index) => {
+                                expandedQuizItems.push({
+                                    ...item,
+                                    cardId: card.cardId, // 실제 카드 ID로 교체
+                                    folderId: card.folderId,
+                                    folderName: card.folderName,
+                                    duplicateIndex: index // 디버깅용
+                                });
+                            });
+                        } else {
+                            // 단일 카드인 경우: 기존 로직 유지
+                            const card = matchingCards[0];
+                            if (card) {
+                                expandedQuizItems.push({
+                                    ...item,
+                                    cardId: card.cardId,
+                                    folderId: card.folderId,
+                                    folderName: card.folderName
+                                });
+                            } else {
+                                expandedQuizItems.push(item); // fallback
+                            }
+                        }
+                    });
+
+                    processedQuizItems = expandedQuizItems;
+                    console.log('[JAPANESE QUIZ] Expanded quiz items:', {
+                        expandedCount: processedQuizItems.length,
+                        items: processedQuizItems.map(item => ({cardId: item.cardId, vocabId: item.vocabId, answer: item.answer}))
+                    });
+                }
+
+                setQuizItems(processedQuizItems);
                 setCurrentIndex(0);
-                setScore({ correct: 0, total: response.data.quizItems.length });
-                console.log('[JAPANESE QUIZ] Loaded quiz items:', response.data.quizItems);
+                setScore({ correct: 0, total: processedQuizItems.length });
+                console.log('[JAPANESE QUIZ] Loaded quiz items:', processedQuizItems);
             } else {
                 throw new Error('No quiz items received');
             }

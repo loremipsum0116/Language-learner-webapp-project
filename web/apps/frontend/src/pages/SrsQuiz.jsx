@@ -178,6 +178,28 @@ export default function SrsQuiz() {
                         hasVocab: queueData[0]?.vocab ? 'yes' : 'no'
                     });
 
+                    // 중복 카드 디버깅: 같은 lemma가 여러 개 있는지 확인
+                    const lemmaCount = {};
+                    queueData.forEach((item, index) => {
+                        const lemma = item.vocab?.lemma;
+                        if (lemma) {
+                            if (!lemmaCount[lemma]) lemmaCount[lemma] = [];
+                            lemmaCount[lemma].push({
+                                index,
+                                cardId: item.cardId,
+                                folderId: item.folderId,
+                                folderName: item.folderName
+                            });
+                        }
+                    });
+
+                    // 중복된 lemma가 있는 경우 로깅
+                    Object.entries(lemmaCount).forEach(([lemma, items]) => {
+                        if (items.length > 1) {
+                            console.log(`[SrsQuiz] DUPLICATE LEMMA "${lemma}":`, items);
+                        }
+                    });
+
                     let filteredQueue = queueData;
                     let finalLanguage = 'en';
 
@@ -274,12 +296,12 @@ export default function SrsQuiz() {
 
     // 일본어 퀴즈 관련 코드 제거 - SRS에서는 통합 UI 사용
 
-    // 진행률 계산
+    // 진행률 계산 - 실제 처리된 카드 기반으로 수정
     const progress = useMemo(() => {
-        if (queue.length === 0) return { total: 0, learned: 0, remaining: 0 };
-        const learnedCount = queue.filter(q => q.learned).length;
+        if (queue.length === 0) return { total: 0, processed: 0, remaining: 0 };
+        const processedCount = queue.filter(q => q.processed === true).length;
         const total = queue.length;
-        return { total, learned: learnedCount, remaining: total - learnedCount };
+        return { total, processed: processedCount, remaining: total - processedCount };
     }, [queue]);
 
     // 정답/오답 제출 함수
@@ -288,6 +310,17 @@ export default function SrsQuiz() {
 
         try {
             setSubmitting(true);
+
+            // 답안 제출 디버깅
+            console.log(`[SRS QUIZ] Submitting answer:`, {
+                cardId: current.cardId,
+                folderId: folderId,
+                correct: correct,
+                vocab: current.vocab?.lemma,
+                currentIndex: idx,
+                totalQueue: queue.length
+            });
+
             // 백엔드에 답안 제출
             const answerResponse = await fetchJSON('/quiz/answer', withCreds({
                 method: 'POST',
@@ -364,6 +397,8 @@ export default function SrsQuiz() {
                         ...item,
                         // learned 상태: SRS 상태 변경 가능할 때만 업데이트, 아니면 기존 상태 유지
                         learned: canUpdateCardState ? correct : item.learned,
+                        // processed 상태: 실제 처리 여부 추적 (진행률 계산용)
+                        processed: true,
                         // wrongCount: SRS 상태 변경 가능할 때만 증가
                         wrongCount: (correct || !canUpdateCardState) ? item.wrongCount : (item.wrongCount || 0) + 1,
                         // SRS 정보: 실제 변경된 값 또는 계산된 값 사용 (UI 표시용)
@@ -450,9 +485,9 @@ export default function SrsQuiz() {
                 console.log(`[SRS 퀴즈 오답노트 DEBUG] 조건 미충족 - 기록하지 않음`);
             }
 
-            // 다음 문제 찾기
-            const nextIndex = updatedQueue.findIndex((q, i) => i > idx && !q.learned);
-            const fallbackIndex = updatedQueue.findIndex(q => !q.learned);
+            // 다음 문제 찾기 - 처리되지 않은 카드 기준으로 수정
+            const nextIndex = updatedQueue.findIndex((q, i) => i > idx && !q.processed);
+            const fallbackIndex = updatedQueue.findIndex(q => !q.processed);
 
             if (nextIndex !== -1) {
                 setIdx(nextIndex);
@@ -481,8 +516,8 @@ export default function SrsQuiz() {
         return <main className="container py-4"><div className="alert alert-danger">퀴즈 로드 실패: {err.message}</div></main>;
     }
 
-    // 풀 문제가 없는 경우
-    if (!current && progress.remaining === 0) {
+    // 풀 문제가 없는 경우 - 모든 카드가 실제로 처리되었는지 확인
+    if (!current && queue.length > 0 && queue.every(q => q.processed)) {
         return (
             <main className="container py-5 text-center">
                 <div className="p-5 bg-light rounded">

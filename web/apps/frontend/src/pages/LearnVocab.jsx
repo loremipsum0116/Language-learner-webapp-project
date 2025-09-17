@@ -2141,12 +2141,14 @@ export default function LearnVocab() {
 
     // 일본어 퀴즈 렌더링 (일본어 퀴즈 타입이 선택된 경우)
     if (quizLanguage === 'ja' && quizTypeParam && Object.values(JapaneseQuizTypes).includes(quizTypeParam)) {
-        const japaneseVocabIds = queue
-            .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja')
-            .map(item => item.vocabId);
+        const japaneseCards = queue
+            .filter(item => item.vocab && detectLanguageFromVocab(item.vocab) === 'ja');
+
+        const japaneseVocabIds = japaneseCards.map(item => item.vocabId);
 
         console.log('[LearnVocab] Japanese quiz rendering:', {
             totalQueue: queue.length,
+            japaneseCards: japaneseCards.map(card => ({cardId: card.cardId, vocabId: card.vocabId, vocab: card.vocab?.lemma})),
             japaneseVocabIds: japaneseVocabIds,
             quizType: quizTypeParam,
             mode: mode
@@ -2172,6 +2174,7 @@ export default function LearnVocab() {
 
                 <JapaneseQuiz
                     vocabIds={japaneseVocabIds}
+                    cards={japaneseCards}
                     quizType={quizTypeParam}
                     onQuizComplete={handleJapaneseQuizComplete}
                     folderId={folderIdParam}
