@@ -7,6 +7,8 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 import LanguageSelectionModal from "../components/LanguageSelectionModal";
 import "./Home_en.css";
 
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+
 /**
  * English special characters virtual keypad (common symbols)
  * props.onInsert(char) 로 입력 타겟에 삽입
@@ -41,9 +43,13 @@ function AudioPlayer({ src, license, attribution }) {
     if (audioRef.current) audioRef.current.playbackRate = rate;
   }, [rate]);
   if (!src) return null;
+
+  // API_URL을 사용하여 절대 경로로 변환
+  const fullAudioUrl = src.startsWith('http') ? src : `${API_URL}${src}`;
+
   return (
     <div className="my-2">
-      <audio ref={audioRef} src={src} controls preload="none" aria-label="pronunciation audio" />
+      <audio ref={audioRef} src={fullAudioUrl} controls preload="none" aria-label="pronunciation audio" />
       <div className="d-flex align-items-center gap-2 mt-1">
         <label className="form-label m-0">Speed</label>
         {[0.75, 1.0, 1.25].map((r) => (
@@ -234,9 +240,9 @@ function SrsWidget() {
 }
 
 /**
- * 사전 검색 퀵패널 (GET /dict/search)
+ * 영어사전 퀵패널 (GET /dict/search)
  */
-function DictQuickPanel() {
+function EnglishDictQuickPanel() {
   const [q, setQ] = useState("");
   const [loading, setLoading] = useState(false);
   const [entries, setEntries] = useState([]);
@@ -263,14 +269,13 @@ function DictQuickPanel() {
 
   return (
     <div className="widget-card">
-      <div className="widget-title">📚 사전 검색</div>
+      <div className="widget-title">🇺🇸 영어사전</div>
       <div className="widget-content">
-        <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="dictionary search">
+        <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="english dictionary search">
           <input
             ref={inputRef}
             className="form-control"
-            // ▼▼▼ placeholder 수정 ▼▼▼
-            placeholder="영어 또는 한국어 뜻 검색"
+            placeholder="영어 단어 또는 한국어 뜻 검색"
             value={q}
             onChange={(e) => setQ(e.target.value)}
             aria-label="query"
@@ -278,7 +283,7 @@ function DictQuickPanel() {
           <button className="btn btn-outline-primary" type="submit" disabled={loading}>
             {loading ? "🔍 검색 중..." : "🔍 검색"}
           </button>
-          <Link className="btn btn-link" to="/dict" aria-label="open dictionary page">
+          <Link className="btn btn-link" to="/english-dict" aria-label="open english dictionary page">
             상세 보기 →
           </Link>
         </form>
@@ -310,6 +315,137 @@ function DictQuickPanel() {
                   ))}
                 </ul>
               )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Furigana display component for Japanese words
+function FuriganaDisplay({ kanji, kana }) {
+  if (kanji === 'お先に失礼します') {
+    return (
+      <span className="fs-6" lang="ja">
+        お<ruby>先<rt className="fs-7">さき</rt></ruby>に<ruby>失礼<rt className="fs-7">しつれい</rt></ruby>します
+      </span>
+    );
+  }
+
+  if (!kanji) {
+    return <span className="fs-6" lang="ja">{kana || ''}</span>;
+  }
+
+  if (!kana) {
+    return <span className="fs-6" lang="ja">{kanji}</span>;
+  }
+
+  const hasKanji = /[一-龯]/.test(kanji);
+  if (!hasKanji) {
+    return <span className="fs-6" lang="ja">{kanji}</span>;
+  }
+
+  // Simple approach for now
+  return <span className="fs-6" lang="ja">{kanji}</span>;
+}
+
+/**
+ * 일본어사전 퀵패널 (GET /vocab/search?languageId=3)
+ */
+function JapaneseDictQuickPanel() {
+  const [q, setQ] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [entries, setEntries] = useState([]);
+  const [lat, setLat] = useState(null);
+  const [err, setErr] = useState(null);
+  const inputRef = useRef(null);
+
+  const onSearch = async (e) => {
+    e?.preventDefault();
+    if (!q.trim()) return;
+    setLoading(true);
+    setErr(null);
+    try {
+      const data = await fetchJSON(`/vocab/search?q=${encodeURIComponent(q.trim())}&languageId=3`, withCreds());
+      setEntries(data?.data || []);
+      setLat(data._latencyMs);
+    } catch (e) {
+      setErr(e);
+      setEntries([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // 일본어 오디오 URL 생성
+  const getJapaneseAudioUrl = (vocab) => {
+    if (!vocab) return null;
+
+    if (vocab.levelJLPT && vocab.ipaKo) {
+      const level = vocab.levelJLPT.toLowerCase();
+      const romaji = vocab.ipaKo;
+      return `/jlpt/${level}/${romaji}/word.mp3`;
+    }
+
+    return null;
+  };
+
+  return (
+    <div className="widget-card">
+      <div className="widget-title">🇯🇵 일본어사전</div>
+      <div className="widget-content">
+        <form className="d-flex gap-2" onSubmit={onSearch} role="search" aria-label="japanese dictionary search">
+          <input
+            ref={inputRef}
+            className="form-control"
+            placeholder="일본어 단어 또는 한국어 뜻 검색"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            aria-label="query"
+          />
+          <button className="btn btn-outline-primary" type="submit" disabled={loading}>
+            {loading ? "🔍 검색 중..." : "🔍 검색"}
+          </button>
+          <Link className="btn btn-link" to="/japanese-dict" aria-label="open japanese dictionary page">
+            상세 보기 →
+          </Link>
+        </form>
+        {err && err.status === 401 && (
+          <div className="alert alert-danmoosae mt-2">세션 만료: <Link to="/login">다시 로그인</Link></div>
+        )}
+        {lat !== null && (
+          <div className="form-text mt-1">
+            API {lat}ms {lat <= 300 ? "✅(≤300ms)" : "⚠"}
+          </div>
+        )}
+        <div className="mt-3" aria-live="polite">
+          {entries.slice(0, 2).map((e, idx) => (
+            <div key={idx} className="border rounded p-2 mb-2">
+              <div className="d-flex justify-content-between">
+                <strong>
+                  <FuriganaDisplay
+                    kanji={e.lemma}
+                    kana={e.kana || e.dictentry?.ipa}
+                  />
+                </strong>
+                <span className="text-muted">{e.pos}</span>
+              </div>
+              {e.ipaKo && <div className="text-muted">//{e.ipaKo}//</div>}
+              <AudioPlayer src={getJapaneseAudioUrl(e)} license={e.license} attribution={e.attribution} />
+              {(() => {
+                // ko_gloss 필드 우선 사용 (한국어 뜻)
+                const koGloss = e.ko_gloss ||
+                  (Array.isArray(e.examples)
+                    ? e.examples.find(ex => ex && ex.kind === 'gloss')?.ko
+                    : null);
+
+                return koGloss ? (
+                  <div>
+                    — {koGloss} {e.levelJLPT ? <span className="text-muted">({e.levelJLPT})</span> : null}
+                  </div>
+                ) : null;
+              })()}
             </div>
           ))}
         </div>
@@ -526,8 +662,11 @@ export default function Home() {
           <Link className="hero-btn hero-btn-primary" to="/srs">
             🎆 오늘 학습 시작
           </Link>
-          <Link className="hero-btn hero-btn-outline" to="/dict">
-            📚 사전 검색
+          <Link className="hero-btn hero-btn-outline" to="/english-dict">
+            🇺🇸 영어사전
+          </Link>
+          <Link className="hero-btn hero-btn-outline" to="/japanese-dict">
+            🇯🇵 일본어사전
           </Link>
           <Link className="hero-btn hero-btn-outline" to="/vocab">
             📁 단어장
@@ -567,9 +706,11 @@ export default function Home() {
       {/* Widget Section */}
       <section className="widgets-section">
         <SrsWidget />
-        
-        <DictQuickPanel />
-        
+
+        <EnglishDictQuickPanel />
+
+        <JapaneseDictQuickPanel />
+
         <DashboardWidget />
       </section>
 

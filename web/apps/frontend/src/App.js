@@ -11,6 +11,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LearnVocab from "./pages/LearnVocab";
 import Dict from "./pages/Dict";
+import EnglishDict from "./pages/EnglishDict";
+import JapaneseDict from "./pages/JapaneseDict";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/Logout";
 import Admin from "./pages/Admin";
@@ -404,8 +406,8 @@ export default function App() {
             </>
           } 
         />
-        <Route 
-          path="/dict" 
+        <Route
+          path="/dict"
           element={
             <>
               <Header />
@@ -414,7 +416,31 @@ export default function App() {
               </div>
               <Footer />
             </>
-          } 
+          }
+        />
+        <Route
+          path="/english-dict"
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <EnglishDict />
+              </div>
+              <Footer />
+            </>
+          }
+        />
+        <Route
+          path="/japanese-dict"
+          element={
+            <>
+              <Header />
+              <div className="main-content">
+                <JapaneseDict />
+              </div>
+              <Footer />
+            </>
+          }
         />
         </Routes>
       </div>

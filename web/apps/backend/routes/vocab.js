@@ -192,22 +192,110 @@ router.get('/list', async (req, res) => {
 });
 
 // ✅ MUST COME BEFORE "/:id"
-// GET /vocab/search?q=...&limit=20
+// GET /vocab/search?q=...&limit=20&languageId=3
 router.get('/search', async (req, res) => {
   try {
     const q = (req.query.q || '').toString().trim();
+    const languageId = parseInt(req.query.languageId, 10);
     const limit = Math.min(Math.max(parseInt(req.query.limit || '20', 10) || 20, 1), 50);
 
     if (!q) return res.json({ data: [] });
 
-    // First test without include
-    let vocabs = await prisma.vocab.findMany({
-      where: { lemma: { contains: q } },
-      take: limit,
-      orderBy: { lemma: 'asc' }
-    });
-    
-    console.log('DEBUG: Found vocabs without include:', vocabs.length);
+    console.log(`🔍 [VOCAB SEARCH] Searching for: "${q}" in language: ${languageId}`);
+
+    let vocabs = [];
+    const hasKorean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(q);
+
+    if (hasKorean) {
+      // 한국어 검색: 언어별로 다른 검색 로직 사용
+      console.log(`🇰🇷 [VOCAB SEARCH] Korean search for: "${q}" in language: ${languageId}`);
+
+      if (languageId === 3) {
+        // 일본어: VocabTranslation과 dictentry 모두에서 검색
+        console.log(`🇯🇵 [VOCAB SEARCH] Japanese Korean search`);
+        vocabs = await prisma.vocab.findMany({
+          where: {
+            AND: [
+              { languageId: 3 }, // 일본어
+              {
+                OR: [
+                  // VocabTranslation에서 검색
+                  {
+                    translations: {
+                      some: {
+                        translation: { contains: q },
+                        languageId: 2 // 한국어
+                      }
+                    }
+                  },
+                  // dictentry.examples에서 koGloss 검색 (일본어 특별 구조)
+                  {
+                    dictentry: {
+                      examples: {
+                        path: '$[*].koGloss',
+                        string_contains: q
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          include: {
+            dictentry: true,
+            translations: {
+              where: { languageId: 2 } // 한국어 번역
+            }
+          },
+          take: limit,
+          orderBy: { lemma: 'asc' }
+        });
+      } else {
+        // 영어: VocabTranslation에서만 검색
+        vocabs = await prisma.vocab.findMany({
+          where: {
+            AND: [
+              languageId ? { languageId } : {},
+              {
+                translations: {
+                  some: {
+                    translation: { contains: q },
+                    languageId: 2 // 한국어
+                  }
+                }
+              }
+            ]
+          },
+          include: {
+            translations: {
+              where: { languageId: 2 } // 한국어 번역만
+            }
+          },
+          take: limit,
+          orderBy: { lemma: 'asc' }
+        });
+      }
+    } else {
+      // 일본어/영어 검색: lemma에서 검색
+      console.log(`🔤 [VOCAB SEARCH] Lemma search for: "${q}"`);
+      vocabs = await prisma.vocab.findMany({
+        where: {
+          AND: [
+            languageId ? { languageId } : {},
+            { lemma: { contains: q } }
+          ]
+        },
+        include: {
+          translations: {
+            where: { languageId: 2 } // 한국어 번역
+          }
+        },
+        take: limit,
+        orderBy: { lemma: 'asc' }
+      });
+    }
+
+    console.log('DEBUG: Found vocabs:', vocabs.length);
 
     // Get dictentry separately to debug the relationship
     if (vocabs.length > 0) {
@@ -304,6 +392,7 @@ router.get('/search', async (req, res) => {
         lemma: v.lemma,
         pos: v.pos,
         level: v.levelCEFR,
+        levelJLPT: v.levelJLPT, // JLPT 레벨 추가
         ko_gloss: primaryGloss,
         ipa: v.dictentry?.ipa ?? null,
         ipaKo: v.dictentry?.ipaKo ?? null,
