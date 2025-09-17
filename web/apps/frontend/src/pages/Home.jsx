@@ -3,7 +3,6 @@ import { createPortal } from 'react-dom';
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { fetchJSON, withCreds } from "../api/client";
-import LanguageSwitcher from "../components/LanguageSwitcher";
 import LanguageSelectionModal from "../components/LanguageSelectionModal";
 import "./Home.css";
 
@@ -645,9 +644,6 @@ export default function Home() {
 
   return (
     <div className="home-container">
-      {/* Language Switcher */}
-      <LanguageSwitcher />
-      
       {/* Hero Section */}
       <section className="hero-modern">
         <h1 className="hero-title">
