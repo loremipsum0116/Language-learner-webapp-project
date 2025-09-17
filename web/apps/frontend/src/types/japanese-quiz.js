@@ -13,7 +13,7 @@ export const JapaneseQuizTypes = {
   // 예문의 빈칸에 일본어 단어 입력 (한자/로마자 모두 정답 처리)
   JP_FILL_IN_BLANK: 'jp_fill_in_blank',
 
-  // 일본어 단어를 보고 로마자 발음을 맞추는 퀴즈 (4지선다)
+  // 일본어 오디오를 듣고 일본어 단어를 맞추는 퀴즈 (4지선다) - 2025-09-17 수정
   JP_WORD_TO_ROMAJI: 'jp_word_to_romaji',
 
   // 혼합형 퀴즈 (위 4가지 타입이 랜덤하게 출제)
@@ -120,7 +120,7 @@ export function getQuizTypeDescription(quizType) {
     [JapaneseQuizTypes.JP_WORD_TO_KO_MEANING]: '일본어 단어를 보고 한국어 뜻을 맞추세요',
     [JapaneseQuizTypes.KO_MEANING_TO_JP_WORD]: '한국어 뜻을 보고 일본어 단어를 맞추세요',
     [JapaneseQuizTypes.JP_FILL_IN_BLANK]: '예문의 빈칸에 알맞은 일본어 단어를 입력하세요',
-    [JapaneseQuizTypes.JP_WORD_TO_ROMAJI]: '일본어 단어의 로마자 발음을 맞추세요',
+    [JapaneseQuizTypes.JP_WORD_TO_ROMAJI]: '일본어 오디오를 듣고 알맞은 일본어 단어를 선택하세요',
     [JapaneseQuizTypes.JP_MIXED]: '다양한 유형의 일본어 퀴즈가 랜덤하게 출제됩니다'
   };
 

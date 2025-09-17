@@ -4,6 +4,117 @@ import { JapaneseQuizTypes, isMultipleChoiceQuiz, isInputQuiz, getQuizTypeDescri
 import { fetchJSON, withCreds } from '../api/client';
 import { toast } from 'react-toastify';
 
+// Furigana display component - handles mixed kanji/hiragana
+function FuriganaDisplay({ kanji, kana }) {
+  // Debug logging
+  if (kanji?.includes('おさき') || kanji?.includes('ありがとう')) {
+    console.log('FuriganaDisplay debug:', { kanji, kana });
+  }
+
+  // Special handling for problematic phrases - show furigana only over kanji
+  if (kanji === 'お先に失礼します') {
+    return (
+      <span className="fs-4" lang="ja">
+        お<ruby>先<rt className="fs-6">さき</rt></ruby>に<ruby>失礼<rt className="fs-6">しつれい</rt></ruby>します
+      </span>
+    );
+  }
+
+  // If no kanji text, return kana
+  if (!kanji) {
+    return <span className="fs-4" lang="ja">{kana || ''}</span>;
+  }
+
+  // If no kana provided, return kanji only
+  if (!kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // If kanji and kana are the same, no need for furigana
+  if (kanji === kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // Check if kanji contains any actual kanji characters
+  const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+  if (!hasKanji) {
+    // No kanji characters, just display the kanji text without furigana
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // If the displayed text (kanji) is already in hiragana/katakana only, don't show furigana
+  const isKanjiAlreadyHiragana = /^[\u3040-\u309f\u30a0-\u30ff\s\u3000]+$/.test(kanji);
+  if (isKanjiAlreadyHiragana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // Complex parsing for mixed kanji/hiragana text
+  const result = [];
+  let kanaIndex = 0;
+
+  for (let i = 0; i < kanji.length; i++) {
+    const char = kanji[i];
+
+    // If it's a kanji character
+    if (/[\u4e00-\u9faf]/.test(char)) {
+      // Find the reading for this kanji
+      let reading = '';
+
+      // Look ahead to find the next non-kanji character or end
+      let nextNonKanjiIndex = i + 1;
+      while (nextNonKanjiIndex < kanji.length && /[\u4e00-\u9faf]/.test(kanji[nextNonKanjiIndex])) {
+        nextNonKanjiIndex++;
+      }
+
+      if (nextNonKanjiIndex < kanji.length) {
+        // There's a hiragana part after this kanji sequence
+        const nextHiragana = kanji[nextNonKanjiIndex];
+        const nextHiraganaIndexInKana = kana.indexOf(nextHiragana, kanaIndex);
+
+        if (nextHiraganaIndexInKana > kanaIndex) {
+          const kanjiSequence = kanji.slice(i, nextNonKanjiIndex);
+          reading = kana.slice(kanaIndex, nextHiraganaIndexInKana);
+
+          result.push(
+            <ruby key={i}>
+              {kanjiSequence}
+              <rt className="fs-6">{reading}</rt>
+            </ruby>
+          );
+
+          kanaIndex = nextHiraganaIndexInKana;
+          i = nextNonKanjiIndex - 1; // -1 because the loop will increment
+          continue;
+        }
+      } else {
+        // This is the last kanji sequence
+        reading = kana.slice(kanaIndex);
+        const kanjiSequence = kanji.slice(i);
+
+        result.push(
+          <ruby key={i}>
+            {kanjiSequence}
+            <rt className="fs-6">{reading}</rt>
+          </ruby>
+        );
+        break;
+      }
+    }
+    // If it's hiragana/katakana, add it directly
+    else if (/[\u3040-\u309f\u30a0-\u30ff]/.test(char)) {
+      result.push(char);
+      kanaIndex++;
+    }
+    // Other characters (spaces, punctuation)
+    else {
+      result.push(char);
+    }
+  }
+
+  return <span className="fs-4" lang="ja">{result}</span>;
+}
+
 // JLPT 레벨 배지 색상 함수 (기존 JapaneseVocabCard와 동일)
 const getJlptBadgeColor = (level) => {
     switch (level) {
@@ -92,6 +203,28 @@ export default function JapaneseQuiz({
         setShowSpellingWarning(false);
         setShowResult(false);
     }, [currentIndex]);
+
+    // 오디오 재생 함수 (2025-09-17 추가)
+    const playAudio = (audioPath) => {
+        if (!audioPath) {
+            console.error('오디오 경로가 없습니다');
+            return;
+        }
+
+        try {
+            // JLPT 오디오 경로 구성: /jlpt/{level}/{folder}/word.mp3
+            const fullAudioUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}${audioPath}`;
+            console.log('🔊 Playing audio:', fullAudioUrl);
+
+            const audio = new Audio(fullAudioUrl);
+            audio.play().catch(error => {
+                console.error('오디오 재생 실패:', error);
+                alert('오디오를 재생할 수 없습니다. 파일이 존재하지 않을 수 있습니다.');
+            });
+        } catch (error) {
+            console.error('오디오 재생 중 오류:', error);
+        }
+    };
 
     const loadQuizData = async () => {
         try {
@@ -316,9 +449,41 @@ export default function JapaneseQuiz({
                                 </span>
                             )}
 
-                            <h2 className="display-6 mb-3" lang="ja">
-                                {currentQuiz.question}
-                            </h2>
+                            {/* 오디오 퀴즈인 경우 오디오 재생 버튼 표시 (2025-09-17 추가) */}
+                            {currentQuiz.audioQuestion ? (
+                                <div className="audio-question-section">
+                                    <div className="text-center mb-3">
+                                        <p className="h5 text-muted mb-3">🎧 오디오를 듣고 알맞은 일본어 단어를 선택하세요</p>
+                                        <button
+                                            className="btn btn-primary btn-lg"
+                                            onClick={() => playAudio(currentQuiz.audioQuestion)}
+                                            style={{ fontSize: '1.5rem', padding: '12px 24px' }}
+                                        >
+                                            🔊 오디오 재생
+                                        </button>
+                                        <div className="text-muted mt-2">
+                                            <small>버튼을 눌러 오디오를 재생할 수 있습니다</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="display-6 mb-3">
+                                    {(() => {
+                                        console.log('🔍 [JAPANESE QUIZ DEBUG]', {
+                                            question: currentQuiz.question,
+                                            pron: currentQuiz.pron,
+                                            hiragana: currentQuiz.pron?.hiragana,
+                                            kana: currentQuiz.pron?.kana,
+                                            romaji: currentQuiz.pron?.romaji
+                                        });
+                                        return null;
+                                    })()}
+                                    <FuriganaDisplay
+                                        kanji={currentQuiz.question}
+                                        kana={currentQuiz.pron?.hiragana || currentQuiz.pron?.kana}
+                                    />
+                                </div>
+                            )}
 
                             {/* 발음 정보 표시 (일본어 → 한국어 뜻 퀴즈에서) */}
                             {actualQuizType === JapaneseQuizTypes.JP_WORD_TO_KO_MEANING && currentQuiz.pron && (

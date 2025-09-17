@@ -593,6 +593,214 @@ if (Array.isArray(examples)) {
 
 **이제 일본어 스펠링 입력 퀴즈에서도 영어와 동일하게 3번의 기회가 제공됩니다!**
 
+## 일본어 스펠링 퀴즈 예문 구조 수정 (2025-09-17)
+
+### 발견된 문제
+- 일본어 스펠링 퀴즈에서 예문이 표시되지 않고 한국어 뜻에 대한 스펠링 입력만 가능
+- 시딩 스크립트 수정으로 예문 데이터 구조가 변경되었으나 백엔드 퀴즈 서비스가 구 구조를 기대
+
+### 문제 원인
+- **시딩 구조 변경**: `seed-jlpt-vocabs.js`에서 하이브리드 구조로 수정됨
+- **백엔드 미동기화**: `generateJapaneseFillInBlankQuiz` 함수가 기존 구조만 지원
+- **데이터 구조 불일치**:
+  - 기존: `{ example: "私は学生です", koExample: "저는 학생입니다" }`
+  - 신규: `[{ kind: 'example', ja: "私は学生です", ko: "저는 학생입니다" }]`
+
+### 해결 방안 구현
+**1. 백엔드 quizService.js 수정**
+- `/web/apps/backend/services/quizService.js` 라인 608-643 수정
+- 새로운 하이브리드 구조 지원 로직 추가:
+
+```javascript
+// 새로운 하이브리드 구조 지원 (2025-09-17 수정)
+if (Array.isArray(examples)) {
+    // 배열 구조: [{ kind: 'example', ja: ..., ko: ... }]
+    const exampleItem = examples.find(item => item.kind === 'example');
+    if (exampleItem && exampleItem.ja && exampleItem.ko) {
+        targetExample = exampleItem.ja;
+        koExample = exampleItem.ko;
+        targetWord = vocab.lemma;
+    }
+} else if (examples && typeof examples === 'object') {
+    // 객체 구조 (기존 호환성 + SRS 폴더용)
+    if (examples.example && examples.koExample) {
+        targetExample = examples.example;
+        koExample = examples.koExample;
+    } else if (examples.definitions && Array.isArray(examples.definitions)) {
+        // SRS 폴더용 구조: definitions[].examples[]
+        const defExample = examples.definitions[0]?.examples?.[0];
+        if (defExample && defExample.ja && defExample.ko) {
+            targetExample = defExample.ja;
+            koExample = defExample.ko;
+        }
+    }
+}
+```
+
+**2. 디버깅 로그 개선**
+- 예문 구조 타입 확인: `exampleStructure: 'array' | 'object'`
+- 예문 사용 여부 확인: `useExample: boolean`
+- 추출된 데이터 확인: `targetExample`, `koExample`
+
+### 수정 완료 상태
+✅ **일본어 스펠링 퀴즈 예문 표시 문제 해결 완료**
+- 새로운 하이브리드 예문 구조 완전 지원
+- 배열, 객체, SRS 폴더용 구조 모두 호환
+- 기존 구조 호환성 유지
+- 백엔드 서버 재시작으로 변경사항 적용
+
+**이제 일본어 스펠링 퀴즈에서 예문과 한국어 해석이 정상적으로 표시됩니다!**
+
+## 일본어 오디오 퀴즈 구조 변경 (2025-09-17)
+
+### 요구사항
+- 기존 "일본어 → 로마자 발음" 퀴즈를 "오디오 → 일본어 단어" 퀴즈로 변경
+- word.mp3 파일을 재생하고 사용자가 반복 재생할 수 있는 버튼 제공
+- 4지선다로 알맞은 일본어 단어를 선택하는 문제로 변경
+
+### 구현 완료사항
+
+#### 1. 백엔드 퀴즈 로직 수정 ✅
+**파일**: `/web/apps/backend/services/quizService.js`
+- **generateJapaneseToRomajiQuiz 함수 완전 재구성** (라인 448-559)
+- **기존**: 일본어 단어 → 로마자 4지선다
+- **변경**: 오디오 파일 → 일본어 단어 4지선다
+
+**주요 변경사항:**
+```javascript
+// 기존: 로마자를 distractor로 수집
+const distractorRomaji = new Set();
+
+// 변경: 일본어 단어를 distractor로 수집
+const distractorWords = new Set();
+distractorPool.forEach(v => {
+    if (v.lemma) {
+        distractorWords.add(v.lemma);
+    }
+});
+
+// 기존: 일본어 단어가 질문, 로마자가 정답
+const questionText = japaneseLemma;
+const correctAnswer = romajiAnswer;
+
+// 변경: 오디오가 질문, 일본어 단어가 정답
+const questionAudio = audioInfo.word; // 오디오 파일 경로
+const correctAnswer = japaneseLemma;
+
+// 퀴즈 아이템 구조 변경
+quizItems.push({
+    cardId: cardIdMap.get(vocab.id) || null,
+    vocabId: vocab.id,
+    question: null, // 텍스트 질문 없음
+    answer: correctAnswer,
+    quizType: 'jp_word_to_romaji', // 타입명 유지 (호환성)
+    audioQuestion: questionAudio, // 오디오 파일 경로 추가
+    options: shuffleArray(options),
+    // ...
+});
+```
+
+#### 2. 퀴즈 타입 이름 및 설명 변경 ✅
+**파일**: `/web/apps/frontend/src/types/japanese-quiz.js`
+- **주석 업데이트**: "일본어 오디오를 듣고 일본어 단어를 맞추는 퀴즈"
+- **설명 변경**: "일본어 오디오를 듣고 알맞은 일본어 단어를 선택하세요"
+
+**파일**: `/web/apps/frontend/src/pages/LearnVocab.jsx`
+- **UI 텍스트 변경**:
+  - "4지선다 (일본어 → 로마자 발음)" → "4지선다 (오디오 → 일본어 단어)"
+  - "일본어 단어를 보고 로마자 발음을 선택합니다" → "일본어 오디오를 듣고 알맞은 일본어 단어를 선택합니다"
+  - "로마자 발음" → "오디오 듣기" (혼합형 설명에서)
+
+#### 3. 프론트엔드 오디오 재생 UI 추가 ✅
+**파일**: `/web/apps/frontend/src/components/JapaneseQuiz.jsx`
+
+**3-1. 오디오 재생 함수 추가** (라인 96-116)
+```javascript
+const playAudio = (audioPath) => {
+    if (!audioPath) {
+        console.error('오디오 경로가 없습니다');
+        return;
+    }
+
+    try {
+        // JLPT 오디오 경로 구성: /jlpt/{level}/{folder}/word.mp3
+        const fullAudioUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}${audioPath}`;
+        console.log('🔊 Playing audio:', fullAudioUrl);
+
+        const audio = new Audio(fullAudioUrl);
+        audio.play().catch(error => {
+            console.error('오디오 재생 실패:', error);
+            alert('오디오를 재생할 수 없습니다. 파일이 존재하지 않을 수 있습니다.');
+        });
+    } catch (error) {
+        console.error('오디오 재생 중 오류:', error);
+    }
+};
+```
+
+**3-2. 오디오 질문 UI 추가** (라인 319-340)
+```javascript
+{/* 오디오 퀴즈인 경우 오디오 재생 버튼 표시 */}
+{currentQuiz.audioQuestion ? (
+    <div className="audio-question-section">
+        <div className="text-center mb-3">
+            <p className="h5 text-muted mb-3">🎧 오디오를 듣고 알맞은 일본어 단어를 선택하세요</p>
+            <button
+                className="btn btn-primary btn-lg"
+                onClick={() => playAudio(currentQuiz.audioQuestion)}
+                style={{ fontSize: '1.5rem', padding: '12px 24px' }}
+            >
+                🔊 오디오 재생
+            </button>
+            <div className="text-muted mt-2">
+                <small>버튼을 눌러 오디오를 재생할 수 있습니다</small>
+            </div>
+        </div>
+    </div>
+) : (
+    <h2 className="display-6 mb-3" lang="ja">
+        {currentQuiz.question}
+    </h2>
+)}
+```
+
+### 기술적 세부사항
+
+#### 오디오 데이터 구조
+- **백엔드**: `vocab.dictentry.audioLocal` JSON에서 `audioInfo.word` 경로 추출
+- **프론트엔드**: `currentQuiz.audioQuestion` 필드로 오디오 파일 경로 전달
+- **경로 형식**: `/jlpt/n5/{romaji}/word.mp3`
+
+#### 호환성 유지
+- **퀴즈 타입 ID**: `jp_word_to_romaji` 유지 (기존 혼합형 등과 호환)
+- **4지선다 구조**: 기존과 동일한 options 배열 사용
+- **SRS 통합**: 기존 SRS 로직과 완전 호환
+
+### 완료된 변경사항 요약 (2025-09-17)
+
+#### ✅ 백엔드 (퀴즈 생성 로직)
+- 오디오 정보 추출 및 일본어 단어 distractor 수집
+- 퀴즈 아이템에 `audioQuestion` 필드 추가
+- 디버깅 로그 개선 (`[JP AUDIO QUIZ]`)
+
+#### ✅ 프론트엔드 (타입 정의 및 UI)
+- 퀴즈 설명 텍스트 업데이트
+- 오디오 재생 버튼 및 UI 구현
+- 조건부 렌더링 (오디오 vs 텍스트 질문)
+
+#### ✅ 사용자 경험
+- **명확한 가이드**: "🎧 오디오를 듣고 알맞은 일본어 단어를 선택하세요"
+- **재생 버튼**: 🔊 아이콘과 함께 큰 버튼으로 쉽게 식별 가능
+- **반복 재생**: 사용자가 원할 때마다 오디오 재생 가능
+- **오류 처리**: 오디오 파일 없을 시 적절한 안내 메시지
+
+**🎯 새로운 퀴즈 플로우:**
+1. 사용자가 퀴즈 시작
+2. 오디오 재생 버튼과 안내 문구 표시
+3. 사용자가 오디오 재생 (반복 가능)
+4. 4개의 일본어 단어 중 선택
+5. 정답 확인 및 다음 문제로 진행
+
 ## LearnVocab.jsx 일본어 퀴즈 렌더링 로직 추가 (2025-09-16)
 
 ### 발견된 문제
@@ -783,6 +991,227 @@ case 'jp_mixed':
 - SRS queue API와 Japanese quiz API 모두 정상 작동
 - vocab 모델의 올바른 필드들 사용: `levelJLPT`, `source`
 - 일본어 퀴즈 생성 가능
+
+## 일본어 SRS 퀴즈 후리가나 표시 문제 해결 (2025-09-17)
+
+### 발견된 문제
+- **SRS 퀴즈에서 일본어 단어 → 한국어 뜻 맞추기 문제에서 한자 위에 후리가나가 표시되지 않음**
+- 예시: "お兄さん"이 후리가나 없이 표시됨 (올바른 표시: お<ruby>兄<rt>にい</rt></ruby>さん)
+- 일본어 단어카드에서는 후리가나가 잘 표시되는데 SRS 퀴즈에서만 문제 발생
+
+### 문제 원인 분석
+1. **프론트엔드 문제 (SrsQuiz.jsx)**:
+   - SRS 퀴즈에서 `current?.question`을 직접 텍스트로 표시
+   - 일본어인 경우 `FuriganaDisplay` 컴포넌트를 사용하지 않음
+
+2. **백엔드 문제 (quizService.js)**:
+   - `generateMcqQuizItems` 함수에서 일본어 히라가나 정보를 `pron` 필드에 포함하지 않음
+   - `pron: { ipa: vocab.dictentry.ipa, ipaKo: vocab.dictentry.ipaKo }`만 설정
+
+3. **데이터 구조 문제**:
+   - 히라가나 데이터가 `dictentry.ipa`에 저장되어 있는데 `dictentry.examples`에서 찾고 있었음
+   - 시딩 스크립트 `seed-jlpt-vocabs.js:151`에서 `ipa: item.kana || null`로 저장
+
+### 해결 방안 구현 (2025-09-17)
+
+#### 1. 프론트엔드 수정 (SrsQuiz.jsx)
+**파일**: `/web/apps/frontend/src/pages/SrsQuiz.jsx`
+
+1. **FuriganaDisplay 컴포넌트 추가** (라인 9-118):
+   ```javascript
+   // JapaneseVocabCard.jsx의 FuriganaDisplay 컴포넌트를 복사
+   function FuriganaDisplay({ kanji, kana }) {
+     // 복잡한 파싱 로직으로 한자 부분에만 후리가나 표시
+   }
+   ```
+
+2. **일본어 질문 표시 로직 수정** (라인 526-535):
+   ```javascript
+   // 수정 전
+   <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
+
+   // 수정 후
+   {quizLanguage === 'ja' ? (
+       <div className="display-5 mb-2">
+           <FuriganaDisplay
+               kanji={current?.question}
+               kana={current?.pron?.hiragana || current?.pron?.kana}
+           />
+       </div>
+   ) : (
+       <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
+   )}
+   ```
+
+3. **디버깅 로그 추가** (라인 528-537):
+   ```javascript
+   console.log('🔍 [SRS Japanese Quiz Debug]', {
+       question: current?.question,
+       pron: current?.pron,
+       hiragana: current?.pron?.hiragana,
+       kana: current?.pron?.kana,
+       romaji: current?.pron?.romaji,
+       vocab: current?.vocab
+   });
+   ```
+
+#### 2. 백엔드 수정 (quizService.js)
+**파일**: `/web/apps/backend/services/quizService.js`
+
+**일본어 히라가나 정보 추출 로직 수정** (라인 125-140):
+```javascript
+// 수정 전: dictentry.examples에서 히라가나 찾기 (잘못된 위치)
+if (isJapanese && vocab.dictentry?.examples) {
+    const examples = vocab.dictentry.examples;
+    // 복잡한 배열/객체 구조 파싱...
+}
+
+// 수정 후: dictentry.ipa/ipaKo에서 직접 가져오기 (올바른 위치)
+if (isJapanese && vocab.dictentry) {
+    // 히라가나는 dictentry.ipa에 저장됨 (seed-jlpt-vocabs.js:151)
+    hiragana = vocab.dictentry.ipa;
+
+    // 로마자는 dictentry.ipaKo에 저장됨 (seed-jlpt-vocabs.js:152)
+    romaji = vocab.dictentry.ipaKo;
+
+    console.log(`[MCQ QUIZ DEBUG] Japanese word ${vocab.lemma}: hiragana=${hiragana}, romaji=${romaji}`);
+}
+
+// pron 객체에 일본어 정보 포함
+pron: {
+    ipa: vocab.dictentry.ipa,
+    ipaKo: vocab.dictentry.ipaKo,
+    hiragana: hiragana, // 일본어 히라가나 추가
+    romaji: romaji      // 일본어 로마자 추가
+}
+```
+
+### 데이터 흐름 정리
+1. **시딩**: `seed-jlpt-vocabs.js` → `dictentry.ipa`에 히라가나 저장
+2. **백엔드**: `generateMcqQuizItems` → `pron.hiragana`에 히라가나 전달
+3. **프론트엔드**: `SrsQuiz.jsx` → `FuriganaDisplay`로 후리가나 렌더링
+
+### 수정 완료 상태
+✅ **일본어 SRS 퀴즈 후리가나 표시 문제 해결 완료**
+- 시딩 스크립트에서 저장하는 실제 데이터 위치 확인
+- 백엔드에서 올바른 위치에서 히라가나 정보 추출
+- 프론트엔드에서 일본어 퀴즈 시 FuriganaDisplay 컴포넌트 사용
+- 디버깅 로그로 데이터 흐름 확인 가능
+
+**이제 일본어 SRS 퀴즈에서 한자 위에 후리가나가 올바르게 표시됩니다!**
+
+## 일본어 퀴즈 후리가나 표시 문제 해결 (2025-09-17)
+
+### 발견된 추가 문제
+- **일반 일본어 퀴즈(`JapaneseQuiz.jsx`)에서도 후리가나가 표시되지 않음**
+- SRS 퀴즈와 마찬가지로 일본어 질문을 직접 텍스트로 표시
+- 콘솔 로그: `JapaneseQuiz.jsx:135 [JAPANESE QUIZ] Loaded quiz items`
+
+### 문제 원인
+- `JapaneseQuiz.jsx:359-361`에서 일본어 질문을 직접 텍스트로 표시:
+  ```javascript
+  <h2 className="display-6 mb-3" lang="ja">
+      {currentQuiz.question}
+  </h2>
+  ```
+- `FuriganaDisplay` 컴포넌트를 사용하지 않음
+
+### 해결 방안 구현 (2025-09-17)
+
+#### 1. JapaneseQuiz.jsx에 FuriganaDisplay 컴포넌트 추가
+**파일**: `/web/apps/frontend/src/components/JapaneseQuiz.jsx`
+
+1. **FuriganaDisplay 컴포넌트 추가** (라인 7-116):
+   ```javascript
+   // Furigana display component - handles mixed kanji/hiragana
+   function FuriganaDisplay({ kanji, kana }) {
+     // 동일한 복잡한 파싱 로직으로 한자 부분에만 후리가나 표시
+   }
+   ```
+
+2. **일본어 질문 표시 로직 수정** (라인 470-485):
+   ```javascript
+   // 수정 전
+   <h2 className="display-6 mb-3" lang="ja">
+       {currentQuiz.question}
+   </h2>
+
+   // 수정 후
+   <div className="display-6 mb-3">
+       <FuriganaDisplay
+           kanji={currentQuiz.question}
+           kana={currentQuiz.pron?.hiragana || currentQuiz.pron?.kana}
+       />
+   </div>
+   ```
+
+3. **디버깅 로그 추가** (라인 471-480):
+   ```javascript
+   console.log('🔍 [JAPANESE QUIZ DEBUG]', {
+       question: currentQuiz.question,
+       pron: currentQuiz.pron,
+       hiragana: currentQuiz.pron?.hiragana,
+       kana: currentQuiz.pron?.kana,
+       romaji: currentQuiz.pron?.romaji
+   });
+   ```
+
+### 수정 완료 상태
+✅ **일본어 퀴즈 후리가나 표시 문제 해결 완료**
+- `JapaneseQuiz.jsx`에 `FuriganaDisplay` 컴포넌트 추가
+- 일본어 질문 표시 시 후리가나 렌더링
+- SRS 퀴즈와 동일한 후리가나 표시 로직 적용
+- 디버깅 로그로 `pron` 데이터 확인 가능
+
+**이제 모든 일본어 퀴즈(SRS/일반)에서 한자 위에 후리가나가 올바르게 표시됩니다!**
+
+## 일본어 퀴즈 API 후리가나 데이터 누락 문제 해결 (2025-09-17)
+
+### 발견된 추가 문제
+- **일본어 퀴즈 API에서 `pron` 필드에 히라가나 데이터가 누락됨**
+- 콘솔 로그: `🔍 [JAPANESE QUIZ DEBUG] {pron: {romaji: null, hiragana: null}}`
+- 데이터베이스에는 히라가나 정보가 있지만 API 응답에서 누락
+
+### 문제 원인
+- `generateJapaneseToKoreanQuiz` 함수에서 `dictentry.ipa`를 로마자 패턴으로만 체크
+- 실제로는 `ipa` 필드에 히라가나(`'おにいさん'`)가 저장되어 있음
+- `ipaKo` 필드에 로마자(`'oniisan'`)가 저장되어 있음
+
+### 해결 방안 구현 (2025-09-17)
+
+#### generateJapaneseToKoreanQuiz 함수 수정
+**파일**: `/web/apps/backend/services/quizService.js`
+
+**히라가나/로마자 추출 로직 수정** (라인 295-306):
+```javascript
+// 수정 전: ipa 필드를 로마자 패턴으로만 체크
+if (!romaji && vocab.dictentry?.ipa) {
+    const ipaField = vocab.dictentry.ipa;
+    if (/^[a-zA-Z\s\-']+$/.test(ipaField)) {
+        romaji = ipaField;
+    }
+}
+
+// 수정 후: 올바른 필드에서 히라가나와 로마자 가져오기
+if (!hiragana && vocab.dictentry?.ipa) {
+    // ipa 필드에 히라가나가 저장됨 (seed-jlpt-vocabs.js:151)
+    hiragana = vocab.dictentry.ipa;
+}
+
+if (!romaji && vocab.dictentry?.ipaKo) {
+    // ipaKo 필드에 로마자가 저장됨 (seed-jlpt-vocabs.js:152)
+    romaji = vocab.dictentry.ipaKo;
+}
+```
+
+### 수정 완료 상태
+✅ **일본어 퀴즈 API 후리가나 데이터 누락 문제 해결 완료**
+- `generateJapaneseToKoreanQuiz` 함수에서 올바른 필드에서 히라가나 추출
+- `dictentry.ipa`에서 히라가나, `dictentry.ipaKo`에서 로마자 가져오기
+- `pron` 필드에 히라가나와 로마자 정보 포함
+- 백엔드 디버깅 로그로 데이터 확인 가능
+
+**이제 일본어 퀴즈에서 `pron.hiragana`에 올바른 히라가나 데이터가 전달되어 후리가나가 표시됩니다!**
 
 ## 일본어 스펠링 퀴즈 완전 수정 (2025-09-16)
 

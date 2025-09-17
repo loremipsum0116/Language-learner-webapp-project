@@ -6,6 +6,117 @@ import Pron from '../components/Pron';
 // JapaneseQuiz import 제거 - SRS에서는 통합 UI 사용
 import { toast } from 'react-toastify';
 
+// Furigana display component - handles mixed kanji/hiragana
+function FuriganaDisplay({ kanji, kana }) {
+  // Debug logging
+  if (kanji?.includes('おさき') || kanji?.includes('ありがとう')) {
+    console.log('FuriganaDisplay debug:', { kanji, kana });
+  }
+
+  // Special handling for problematic phrases - show furigana only over kanji
+  if (kanji === 'お先に失礼します') {
+    return (
+      <span className="fs-4" lang="ja">
+        お<ruby>先<rt className="fs-6">さき</rt></ruby>に<ruby>失礼<rt className="fs-6">しつれい</rt></ruby>します
+      </span>
+    );
+  }
+
+  // If no kanji text, return kana
+  if (!kanji) {
+    return <span className="fs-4" lang="ja">{kana || ''}</span>;
+  }
+
+  // If no kana provided, return kanji only
+  if (!kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // If kanji and kana are the same, no need for furigana
+  if (kanji === kana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // Check if kanji contains any actual kanji characters
+  const hasKanji = /[\u4e00-\u9faf]/.test(kanji);
+
+  if (!hasKanji) {
+    // No kanji characters, just display the kanji text without furigana
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // If the displayed text (kanji) is already in hiragana/katakana only, don't show furigana
+  const isKanjiAlreadyHiragana = /^[\u3040-\u309f\u30a0-\u30ff\s\u3000]+$/.test(kanji);
+  if (isKanjiAlreadyHiragana) {
+    return <span className="fs-4" lang="ja">{kanji}</span>;
+  }
+
+  // Complex parsing for mixed kanji/hiragana text
+  const result = [];
+  let kanaIndex = 0;
+
+  for (let i = 0; i < kanji.length; i++) {
+    const char = kanji[i];
+
+    // If it's a kanji character
+    if (/[\u4e00-\u9faf]/.test(char)) {
+      // Find the reading for this kanji
+      let reading = '';
+
+      // Look ahead to find the next non-kanji character or end
+      let nextNonKanjiIndex = i + 1;
+      while (nextNonKanjiIndex < kanji.length && /[\u4e00-\u9faf]/.test(kanji[nextNonKanjiIndex])) {
+        nextNonKanjiIndex++;
+      }
+
+      if (nextNonKanjiIndex < kanji.length) {
+        // There's a hiragana part after this kanji sequence
+        const nextHiragana = kanji[nextNonKanjiIndex];
+        const nextHiraganaIndexInKana = kana.indexOf(nextHiragana, kanaIndex);
+
+        if (nextHiraganaIndexInKana > kanaIndex) {
+          const kanjiSequence = kanji.slice(i, nextNonKanjiIndex);
+          reading = kana.slice(kanaIndex, nextHiraganaIndexInKana);
+
+          result.push(
+            <ruby key={i}>
+              {kanjiSequence}
+              <rt className="fs-6">{reading}</rt>
+            </ruby>
+          );
+
+          kanaIndex = nextHiraganaIndexInKana;
+          i = nextNonKanjiIndex - 1; // -1 because the loop will increment
+          continue;
+        }
+      } else {
+        // This is the last kanji sequence
+        reading = kana.slice(kanaIndex);
+        const kanjiSequence = kanji.slice(i);
+
+        result.push(
+          <ruby key={i}>
+            {kanjiSequence}
+            <rt className="fs-6">{reading}</rt>
+          </ruby>
+        );
+        break;
+      }
+    }
+    // If it's hiragana/katakana, add it directly
+    else if (/[\u3040-\u309f\u30a0-\u30ff]/.test(char)) {
+      result.push(char);
+      kanaIndex++;
+    }
+    // Other characters (spaces, punctuation)
+    else {
+      result.push(char);
+    }
+  }
+
+  return <span className="fs-4" lang="ja">{result}</span>;
+}
+
 export default function SrsQuiz() {
     const navigate = useNavigate();
     const [params] = useSearchParams();
@@ -411,8 +522,28 @@ export default function SrsQuiz() {
 
             <div className="card shadow-sm">
                 <div className="card-body text-center p-5">
-                    {/* 언어에 따른 lang 속성 설정 */}
-                    <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
+                    {/* 언어에 따른 질문 표시 */}
+                    {quizLanguage === 'ja' ? (
+                        <div className="display-5 mb-2">
+                            {(() => {
+                                console.log('🔍 [SRS Japanese Quiz Debug]', {
+                                    question: current?.question,
+                                    pron: current?.pron,
+                                    hiragana: current?.pron?.hiragana,
+                                    kana: current?.pron?.kana,
+                                    romaji: current?.pron?.romaji,
+                                    vocab: current?.vocab
+                                });
+                                return null;
+                            })()}
+                            <FuriganaDisplay
+                                kanji={current?.question}
+                                kana={current?.pron?.hiragana || current?.pron?.kana}
+                            />
+                        </div>
+                    ) : (
+                        <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
+                    )}
                     <Pron
                         ipa={current?.pron?.ipa}
                         ipaKo={current?.pron?.ipaKo}

@@ -162,7 +162,7 @@ export default function JapaneseVocabCard({
     <div className="col-md-6 col-lg-4 mb-3">
       <div className={`card h-100 ${isSelected ? 'border-primary' : ''} ${isMastered ? 'border-warning' : ''} position-relative`}>
         {isMastered && (
-          <div className="position-absolute" style={{ top: '5px', right: '40px', zIndex: 10 }}>
+          <div className="position-absolute" style={{ top: '5px', left: '5px', zIndex: 10 }}>
             <span className="badge bg-warning text-dark">마스터</span>
           </div>
         )}

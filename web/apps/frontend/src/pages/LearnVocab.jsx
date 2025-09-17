@@ -2006,8 +2006,8 @@ export default function LearnVocab() {
                                         <div className="d-flex align-items-center">
                                             <div className="me-3" style={{ fontSize: '2rem' }}>🔊</div>
                                             <div>
-                                                <h6 className="mb-1">4지선다 (일본어 → 로마자 발음)</h6>
-                                                <small className="text-muted">일본어 단어를 보고 로마자 발음을 선택합니다</small>
+                                                <h6 className="mb-1">4지선다 (오디오 → 일본어 단어)</h6>
+                                                <small className="text-muted">일본어 오디오를 듣고 알맞은 일본어 단어를 선택합니다</small>
                                             </div>
                                         </div>
                                     </button>
@@ -2033,7 +2033,7 @@ export default function LearnVocab() {
                                             <div className="me-3" style={{ fontSize: '2rem' }}>🎯</div>
                                             <div>
                                                 <h6 className="mb-1">혼합형</h6>
-                                                <small className="text-muted">일본어→한국어, 한국어→일본어, 로마자 발음, 스펠링 입력이 랜덤하게 출제됩니다</small>
+                                                <small className="text-muted">일본어→한국어, 한국어→일본어, 오디오 듣기, 스펠링 입력이 랜덤하게 출제됩니다</small>
                                             </div>
                                         </div>
                                     </button>

@@ -26,11 +26,28 @@
   - **오디오 경로 기반 자동 분류** (2025-09-17 수정)
     - `idiom/` 폴더: pos='idiom' (숙어)
     - `phrasal_verb/` 폴더: pos='phrasal verb' (구동사)
+    - **핵심 수정**: `idiom.audio.word` 경로 체크 (기존: `idiom.audio` 문자열 체크)
   - **CEFR 레벨 자동 매핑** (2025-09-17 수정)
     - 기초 → A2, 중급 → B1, 중상급 → B2, 고급 → C1
     - category 필드 분석하여 자동 설정
   - 한국어 번역을 VocabTranslation 테이블에 저장
   - 예문과 사용법을 dictentry 테이블에 저장
+- **주요 코드 수정**:
+  ```javascript
+  // 수정 전 (문제 코드)
+  if (idiom.audio && typeof idiom.audio === 'string') {
+    if (idiom.audio.startsWith('phrasal_verb/')) {
+      posType = 'phrasal verb';
+    }
+  }
+
+  // 수정 후 (올바른 코드)
+  if (idiom.audio && idiom.audio.word) {
+    if (idiom.audio.word.startsWith('phrasal_verb/')) {
+      posType = 'phrasal verb';
+    }
+  }
+  ```
 
 ### 4. make_jlpt_audio.py
 - **용도**: JLPT 일본어 단어 오디오 생성
@@ -88,32 +105,98 @@
   - 예문 (example, koExample)
   - 오디오 정보 (audio)
 - **시딩 스크립트**: web/apps/backend/seed-jlpt-vocabs.js
+- **주요 수정사항** (2025-09-17):
+  ```javascript
+  // 두 가지 프론트엔드 구조 모두 지원: SRS 폴더용 + 상세페이지용
+  // 기존: examples: [{ ja: item.example, ko: item.koExample }]
+  // 수정: 하이브리드 구조로 양쪽 모두 호환
+
+  if (item.example && item.koExample) {
+    // 1. 상세페이지용 배열 구조 (VocabDetailModal.jsx 호환)
+    examplesData.push({
+      kind: 'example',
+      ja: item.example,        // 일본어 예문
+      ko: item.koExample,      // 한국어 해석
+      en: item.example,        // SRS 폴더 호환용 (en 필드에도 저장)
+      source: 'jlpt_vocabs'
+    });
+
+    // 2. SRS 폴더용 객체 구조 (SrsFolderDetail.jsx 호환)
+    examplesData.definitions = [
+      {
+        examples: [
+          {
+            en: item.example,        // 일본어 예문을 en 필드에 저장
+            ko: item.koExample,      // 한국어 해석
+            ja: item.example,        // 일본어 원문도 별도 보관
+            kind: 'example',
+            source: 'jlpt_vocabs'
+          }
+        ]
+      }
+    ];
+  }
+  ```
 
 ## 실행 순서
 
-1. **CEFR 기본 어휘 시딩**
+### 🚀 전체 DB 리셋 및 시딩 프로세스 (2025-09-17 수정)
+
+#### 1단계: DB 스키마 준비
+```bash
+cd web/apps/backend
+# VocabTranslation.definition 필드를 TEXT 타입으로 변경
+npx prisma db push
+```
+
+#### 2단계: DB 완전 리셋
+```bash
+# 모든 데이터 삭제 및 스키마 재생성
+PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION="네!" npx prisma db push --force-reset
+```
+
+#### 3단계: 순차적 시딩 실행
+
+1. **CEFR 기본 어휘 시딩** (9,814개 단어)
    ```bash
    cd web/apps/backend
    node seed-cefr-fixed.js
    ```
+   - ✅ 2025-09-17: definition 길이 제한 문제 해결 (TEXT 타입 적용)
+   - ✅ 모든 9,814개 단어 완전 시딩 확인
 
-2. **시험별 단어 시딩**
+2. **시험별 단어 시딩** (카테고리 분류)
    ```bash
    cd web/apps/backend
    node seed-exam-categories.js
    ```
+   - TOEIC: 5,007개 단어
+   - TOEFL: 4,016개 단어
+   - IELTS: 4,933개 단어
+   - 수능: 6,079개 단어
 
-3. **숙어·구동사 시딩**
+3. **숙어·구동사 시딩** (1,001개 표현)
    ```bash
    cd web/apps/backend
    node seed-idioms-vocab.js
    ```
+   - ✅ 2025-09-17: 오디오 경로 기반 자동 분류 구현
+   - ✅ 2025-09-17: CEFR 레벨 자동 매핑 구현
 
-4. **JLPT N5 일본어 단어 시딩**
+4. **JLPT N5 일본어 단어 시딩** (502개 단어)
    ```bash
    cd web/apps/backend
    node seed-jlpt-vocabs.js
    ```
+   - ✅ 2025-09-17: 프론트엔드 호환 예문 구조로 수정
+   - ✅ SRS 폴더 카드에서 예문 정상 표시 가능
+
+### ⚠️ 중요 사항
+
+- **실행 환경**: 반드시 `web/apps/backend` 디렉토리에서 실행
+- **실행 순서 준수**: 위 순서대로 실행해야 데이터 무결성 보장
+- **데이터 백업**: 리셋 전 중요 데이터 백업 필수
+- **권한 확인**: DB 리셋 시 사용자 동의 필요 (`PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION` 환경변수)
 
 ## 참고사항
 
@@ -123,16 +206,61 @@
 - 시딩 전 기존 데이터는 자동으로 삭제됩니다
 - Prisma 클라이언트와 MySQL 데이터베이스 연결이 필요합니다
 
-## 시딩 결과
+## 시딩 결과 (2025-09-17 최종 확인)
 
-- **CEFR 어휘**: 약 12,000개 영어 단어
-- **시험별 단어**: TOEIC, TOEFL, IELTS, 수능 카테고리별 분류
-- **숙어·구동사**: 1,001개 영어 표현 (2025-09-17 수정)
-  - 숙어 (idiom): 424개 - 오디오 경로가 `idiom/`로 시작하는 항목
-  - 구동사 (phrasal verb): 577개 - 오디오 경로가 `phrasal_verb/`로 시작하는 항목
-  - **CEFR 레벨**: 기초(A2), 중급(B1), 중상급(B2), 고급(C1)으로 자동 분류 (2025-09-17 수정)
-- **JLPT N5 일본어**: 502개 일본어 단어 (가나, 한국어 번역, 예문 포함)
-- **한국어 번역**: 모든 항목에 대해 제공
+### 📊 완료된 시딩 데이터
+
+- **CEFR 어휘**: **9,814개** 영어 단어 (완전 시딩 확인)
+  - A1: 905개 단어
+  - A2: 1,557개 단어
+  - B1: 2,214개 단어
+  - B2: 2,452개 단어
+  - C1: 2,686개 단어
+  - ✅ **definition 길이 제한 문제 해결**: 모든 단어 완전 시딩
+
+- **시험별 단어**: **21,255개** 카테고리 연결
+  - TOEIC: 5,007개 단어
+  - TOEFL: 4,016개 단어
+  - IELTS: 4,933개 단어
+  - 수능: 6,079개 단어
+
+- **숙어·구동사**: **1,001개** 영어 표현
+  - ✅ **오디오 경로 기반 자동 분류 적용**:
+    - 숙어 (idiom): `idiom/` 경로 기반 분류
+    - 구동사 (phrasal verb): `phrasal_verb/` 경로 기반 분류
+  - ✅ **CEFR 레벨 자동 매핑**: 기초(A2), 중급(B1), 중상급(B2), 고급(C1)
+  - 한국어 번역 및 예문 포함
+
+- **JLPT N5 일본어**: **502개** 일본어 단어
+  - 가나 읽기, 로마자 표기 포함
+  - 한국어 번역 및 예문 완비
+  - 오디오 정보 연결
+
+### 🔧 해결된 주요 문제들 (2025-09-17)
+
+1. **VocabTranslation.definition 길이 제한**: VARCHAR(191) → TEXT 타입으로 변경
+2. **숙어/구동사 분류 오류**: 오디오 경로 기반 자동 분류 로직 구현
+   - **문제**: `idiom.audio`를 문자열로 체크했으나 실제로는 객체 타입
+   - **해결**: `idiom.audio.word` 경로를 체크하도록 수정
+   - **결과**: 숙어 424개, 구동사 577개로 올바르게 분류
+3. **CEFR 레벨 매핑**: category 필드 분석을 통한 자동 레벨 설정
+4. **시딩 데이터 완전성**: 9,814개 모든 CEFR 단어 완전 시딩 확인
+5. **일본어 예문 표시 문제**: 프론트엔드 호환성 문제 해결 (2025-09-17 추가)
+   - **문제 1**: SRS 폴더 카드에서 일본어 단어 예문이 "예문이 없습니다"로 표시
+   - **문제 2**: 일본어 단어 상세페이지에서 예문 및 해석, 예문 오디오 버튼 누락
+   - **원인**: 두 페이지가 서로 다른 예문 구조를 기대함
+     - SRS 폴더: `definitions[].examples[].en` 구조
+     - 상세페이지: `[{ kind: 'example', ja: ..., ko: ... }]` 배열 구조
+   - **해결**: 하이브리드 구조로 양쪽 모두 지원하도록 일본어 시딩 수정
+   - **결과**: SRS 폴더와 상세페이지 양쪽에서 예문이 정상 표시됨
+6. **일본어 스펠링 퀴즈 예문 표시 문제**: 시딩 구조 변경으로 예문이 표시되지 않는 문제 해결 (2025-09-17 추가)
+   - **문제**: 일본어 스펠링 퀴즈에서 예문이 나타나지 않고 한국어 뜻만 표시되는 문제
+   - **원인**: 시딩 스크립트 수정으로 예문 구조가 변경되었으나 백엔드 퀴즈 서비스가 구 구조를 기대함
+   - **해결**: `generateJapaneseFillInBlankQuiz` 함수에서 새로운 하이브리드 구조 지원
+     - 배열 구조: `[{ kind: 'example', ja: ..., ko: ... }]`
+     - 객체 구조: `definitions[].examples[]` (SRS 폴더용)
+     - 기존 구조: `{ example: ..., koExample: ... }` (호환성 유지)
+   - **결과**: 일본어 스펠링 퀴즈에서 예문과 한국어 해석이 정상 표시됨
 
 ## 일본어 구현 상태 (2025-09-17)
 
@@ -194,6 +322,71 @@
       {(vocab.koGloss || vocab.ko_gloss || glossExample?.ko) && (
         <strong>{vocab.koGloss || vocab.ko_gloss || glossExample?.ko}</strong>
       ```
+11. **일본어 SRS 퀴즈 후리가나 표시 문제** (2025-09-17): SRS 퀴즈에서 한자 위에 후리가나가 표시되지 않는 문제 해결
+    - **문제**: SRS 퀴즈에서 일본어 단어를 보여줄 때 후리가나가 표시되지 않음
+    - **원인 1**: `SrsQuiz.jsx`에서 질문 표시 시 `current?.question`을 직접 텍스트로 표시
+    - **원인 2**: `generateMcqQuizItems` 함수에서 일본어 히라가나 정보를 `pron` 필드에 포함하지 않음
+    - **원인 3**: 히라가나 데이터가 `dictentry.ipa`에 저장되어 있는데 `dictentry.examples`에서 찾고 있었음
+    - **해결**:
+      ```javascript
+      // 프론트엔드 수정 (SrsQuiz.jsx:526-535)
+      {quizLanguage === 'ja' ? (
+          <div className="display-5 mb-2">
+              <FuriganaDisplay
+                  kanji={current?.question}
+                  kana={current?.pron?.hiragana || current?.pron?.kana}
+              />
+          </div>
+      ) : (
+          <h2 className="display-5 mb-2" lang={quizLanguage}>{current?.question ?? '—'}</h2>
+      )}
+
+      // 백엔드 수정 (quizService.js:132-140)
+      if (isJapanese && vocab.dictentry) {
+          // 히라가나는 dictentry.ipa에 저장됨 (seed-jlpt-vocabs.js:151)
+          hiragana = vocab.dictentry.ipa;
+          // 로마자는 dictentry.ipaKo에 저장됨 (seed-jlpt-vocabs.js:152)
+          romaji = vocab.dictentry.ipaKo;
+      }
+      ```
+    - **결과**: 일본어 SRS 퀴즈에서 한자 위에 후리가나가 올바르게 표시됨
+12. **일본어 퀴즈 후리가나 표시 문제** (2025-09-17): JapaneseQuiz.jsx에서도 후리가나가 표시되지 않는 문제 해결
+    - **문제**: 일반 일본어 퀴즈에서도 한자 위에 후리가나가 표시되지 않음
+    - **원인**: `JapaneseQuiz.jsx`에서 일본어 질문을 직접 텍스트로 표시
+    - **해결**:
+      ```javascript
+      // JapaneseQuiz.jsx에 FuriganaDisplay 컴포넌트 추가 (라인 7-116)
+      function FuriganaDisplay({ kanji, kana }) {
+        // 복잡한 파싱 로직으로 한자 부분에만 후리가나 표시
+      }
+
+      // 일본어 질문 표시 로직 수정 (라인 470-485)
+      <div className="display-6 mb-3">
+          <FuriganaDisplay
+              kanji={currentQuiz.question}
+              kana={currentQuiz.pron?.hiragana || currentQuiz.pron?.kana}
+          />
+      </div>
+      ```
+    - **결과**: 모든 일본어 퀴즈(SRS/일반)에서 한자 위에 후리가나가 올바르게 표시됨
+13. **일본어 퀴즈 API 후리가나 데이터 누락 문제** (2025-09-17): generateJapaneseToKoreanQuiz에서 pron 필드에 히라가나 누락
+    - **문제**: 일본어 퀴즈 API에서 `pron.hiragana`가 `null`로 전달됨
+    - **원인**: `generateJapaneseToKoreanQuiz` 함수에서 `dictentry.ipa`를 로마자 패턴으로만 체크
+    - **실제 데이터**: `ipa` 필드에 히라가나(`'おにいさん'`), `ipaKo` 필드에 로마자(`'oniisan'`) 저장
+    - **해결**:
+      ```javascript
+      // quizService.js의 generateJapaneseToKoreanQuiz 함수 수정 (라인 295-306)
+      if (!hiragana && vocab.dictentry?.ipa) {
+          // ipa 필드에 히라가나가 저장됨 (seed-jlpt-vocabs.js:151)
+          hiragana = vocab.dictentry.ipa;
+      }
+
+      if (!romaji && vocab.dictentry?.ipaKo) {
+          // ipaKo 필드에 로마자가 저장됨 (seed-jlpt-vocabs.js:152)
+          romaji = vocab.dictentry.ipaKo;
+      }
+      ```
+    - **결과**: 일본어 퀴즈에서 `pron.hiragana`에 올바른 히라가나 데이터 전달, 후리가나 표시 가능
 
 ### 📂 관련 파일들
 
