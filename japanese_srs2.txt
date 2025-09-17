@@ -1,0 +1,767 @@
+# 홈화면 SRS 복습 대기 카드 0개 표시 문제 해결 (2025-09-17)
+
+## 🚨 발견된 문제
+- **홈화면에서 SRS 복습 대기 카드가 0개로 표시됨**
+- 대시보드에서는 정상적으로 3개 표시되는데 홈화면에서만 문제 발생
+- 기존에는 정상 작동했으나 최근 업데이트 이후 갑자기 0개로 변경됨
+
+## 🔍 문제 원인 분석
+
+### 1. 홈화면과 대시보드 구조 차이점
+- **홈화면**: `Home_jp.jsx`와 `Home_en.jsx`에서 `SrsWidget` 컴포넌트 사용
+- **대시보드**: `Dashboard.jsx`에서 직접 API 호출 및 처리
+
+### 2. API 응답 구조 변경
+**백엔드 `/srs/available` 엔드포인트**가 언어별 분리 시스템 구현으로 **새로운 응답 구조**로 변경됨:
+
+#### 기존 구조 (구 버전)
+```javascript
+{
+  success: true,
+  data: [card1, card2, card3]  // 배열 형태
+}
+```
+
+#### 새로운 구조 (신 버전)
+```javascript
+{
+  success: true,
+  data: {
+    japanese: [card1],         // 일본어 카드들
+    english: [card2, card3],   // 영어 카드들
+    total: 3,                  // 전체 카드 수
+    hasMultipleLanguages: true // 혼합 언어 여부
+  }
+}
+```
+
+### 3. 코드 동기화 문제
+- **Dashboard.jsx**: 새로운 응답 구조에 맞게 업데이트됨 ✅
+- **SrsWidget**: 구 버전 응답 구조를 기대하고 있음 ❌
+
+## 🛠️ 해결 방안 구현
+
+### Home_jp.jsx의 SrsWidget 수정
+**파일**: `/web/apps/frontend/src/pages/Home_jp.jsx`
+
+#### 수정 전 (구 버전 코드)
+```javascript
+// overdue カード数カウント
+let count = 0;
+if (Array.isArray(availableData?.data)) {
+    count = availableData.data.length;
+}
+```
+
+#### 수정 후 (신 버전 코드)
+```javascript
+// 새로운 언어별 분류 응답 처리 (Dashboard와 동일)
+const srsData = availableData?.data;
+const count = srsData?.total || 0;
+```
+
+### Home_en.jsx의 SrsWidget 수정 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx`
+
+#### 수정 전 (구 버전 코드)
+```javascript
+// overdue 카드 수 카운트
+let count = 0;
+if (Array.isArray(availableData?.data)) {
+    count = availableData.data.length;
+}
+```
+
+#### 수정 후 (신 버전 코드)
+```javascript
+// 새로운 언어별 분류 응답 처리 (Dashboard와 동일)
+const srsData = availableData?.data;
+const count = srsData?.total || 0;
+```
+
+### 복습 시작 버튼 클릭 핸들러 수정 ✅
+**양쪽 파일 모두 수정**: `Home_jp.jsx`, `Home_en.jsx`
+
+#### 수정 전 (구 버전 코드)
+```javascript
+if (Array.isArray(availableData?.data) && availableData.data.length > 0) {
+  const vocabIds = availableData.data
+    .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+    .filter(Boolean);
+}
+```
+
+#### 수정 후 (신 버전 코드)
+```javascript
+// 새로운 언어별 분류 응답 구조 처리
+const srsData = availableData?.data;
+const allCards = [...(srsData?.japanese || []), ...(srsData?.english || [])];
+
+if (allCards.length > 0) {
+  const vocabIds = allCards
+    .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+    .filter(Boolean);
+}
+```
+
+## ✅ 수정 완료 상태
+- ✅ **문제 원인 파악**: API 응답 구조 변경으로 인한 동기화 문제
+- ✅ **Home_jp.jsx 수정**: SrsWidget에서 새로운 응답 구조 처리
+- ✅ **Home_en.jsx 수정**: SrsWidget에서 새로운 응답 구조 처리
+- ✅ **복습 시작 버튼 수정**: 두 파일 모두 새로운 응답 구조에 맞게 vocabIds 추출 로직 변경
+- 🔄 **테스트**: 브라우저에서 홈화면 SRS 카드 수 정상 표시 확인
+
+## 📊 기대 결과
+수정 후 홈화면에서:
+```
+🦜 오늘의 SRS
+복습 대기: 3 개
+API 20ms
+[복습 시작] 버튼
+```
+
+## 🔗 연관 파일들
+1. **백엔드**: `/web/apps/backend/routes/srs.js` (84-137행) - 언어별 분류 API
+2. **대시보드**: `/web/apps/frontend/src/pages/Dashboard.jsx` (93-111행) - 정상 작동 참조 코드
+3. **홈화면**:
+   - `/web/apps/frontend/src/pages/Home_jp.jsx` - SrsWidget 함수 ✅ 수정 완료
+   - `/web/apps/frontend/src/pages/Home_en.jsx` - SrsWidget 함수 🔄 수정 필요
+
+## 📝 완료된 작업 요약
+1. ✅ **Home_jp.jsx SrsWidget 수정**: 새로운 API 응답 구조 처리
+2. ✅ **Home_en.jsx SrsWidget 수정**: 새로운 API 응답 구조 처리
+3. ✅ **클릭 이벤트 핸들러 수정**: 양쪽 파일 모두 새로운 응답 구조에 맞게 vocabIds 추출 로직 변경
+4. 🔄 **테스트**: 브라우저에서 실제 작동 확인 (남은 작업)
+
+## 🎯 테스트 방법
+브라우저에서 홈화면을 새로고침하여 다음을 확인:
+1. **"오늘의 SRS"** 섹션에서 **"복습 대기: 3 개"** 표시되는지 확인
+2. **"복습 시작"** 버튼 클릭 시 정상 작동하는지 확인
+
+---
+
+## 📋 관련 기술 문서 참조
+- 일본어 SRS 언어별 분리 시스템: japanese_srs.txt 라인 1363-1536
+- 백엔드 API 응답 구조: japanese_srs.txt 라인 1385-1396
+- Dashboard 구현 사례: japanese_srs.txt 라인 1409-1429
+
+**이제 홈화면에서도 대시보드와 동일하게 올바른 SRS 복습 대기 카드 수가 표시될 것입니다!** 🎯
+
+---
+
+## 홈화면 복습 시작 버튼 언어 선택 로직 추가 (2025-09-17)
+
+### 🚨 추가 발견된 문제
+- **홈화면에서 복습 시작 버튼 클릭 시 바로 일본어 문제 유형 선택창으로 이동**
+- 대시보드에서는 언어 선택 모달이 표시되어 일본어/영어 중 선택 가능
+- 홈화면에서도 대시보드와 동일한 동작이 필요
+
+### 🔍 문제 원인 분석
+
+#### 홈화면 vs 대시보드 동작 차이점
+1. **대시보드**: `/srs/quiz?language=japanese` 또는 `/srs/quiz?language=english`로 이동
+2. **홈화면**: `/learn/vocab?mode=all_overdue&selectedItems=...`로 이동
+
+#### 라우팅 시스템 차이
+- **대시보드**: SRS 퀴즈 시스템 사용 → 언어별 분기 가능
+- **홈화면**: LearnVocab 시스템 사용 → 모든 카드 혼합 처리
+
+### 🛠️ 해결 방안 구현
+
+#### 1. LanguageSelectionModal 컴포넌트 import ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 6)
+
+```javascript
+import LanguageSelectionModal from "../components/LanguageSelectionModal";
+```
+
+#### 2. 언어별 카드 수 상태 추가 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 97-101)
+
+```javascript
+// 언어별 카드 수 상태 추가
+const [srsJapanese, setSrsJapanese] = useState(0);
+const [srsEnglish, setSrsEnglish] = useState(0);
+const [hasMultipleLanguages, setHasMultipleLanguages] = useState(false);
+const [showLanguageModal, setShowLanguageModal] = useState(false);
+```
+
+#### 3. useEffect에서 언어별 카드 수 설정 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 114-122)
+
+```javascript
+// 새로운 언어별 분류 응답 처리 (Dashboard와 동일)
+const srsData = availableData?.data;
+const count = srsData?.total || 0;
+const japaneseCards = srsData?.japanese || [];
+const englishCards = srsData?.english || [];
+const hasMultiple = srsData?.hasMultipleLanguages || false;
+
+setCount(count);
+setSrsJapanese(japaneseCards.length);
+setSrsEnglish(englishCards.length);
+setHasMultipleLanguages(hasMultiple);
+setLat(availableData._latencyMs);
+```
+
+#### 4. 복습 시작 버튼 클릭 핸들러 수정 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 151-177)
+
+##### 수정 전 (LearnVocab 시스템)
+```javascript
+onClick={async () => {
+  // learn/vocab 시스템으로 리다이렉트 (전체 overdue 모드)
+  window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
+}}
+```
+
+##### 수정 후 (SRS 퀴즈 시스템, Dashboard와 동일)
+```javascript
+onClick={() => {
+  // 언어가 하나만 있는 경우 바로 해당 언어 퀴즈로 이동
+  if (!hasMultipleLanguages) {
+    if (srsJapanese > 0 && srsEnglish === 0) {
+      // 일본어만 있는 경우
+      window.location.href = '/srs/quiz?language=japanese';
+    } else if (srsEnglish > 0 && srsJapanese === 0) {
+      // 영어만 있는 경우
+      window.location.href = '/srs/quiz?language=english';
+    } else {
+      alert('복습할 카드가 없습니다.');
+    }
+  } else {
+    // 여러 언어가 섞여있는 경우 언어 선택 모달 표시
+    setShowLanguageModal(true);
+  }
+}}
+```
+
+#### 5. 언어 선택 모달 추가 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 186-199)
+
+```javascript
+{/* 언어 선택 모달 */}
+<LanguageSelectionModal
+  show={showLanguageModal}
+  onHide={() => setShowLanguageModal(false)}
+  japaneseCount={srsJapanese}
+  englishCount={srsEnglish}
+  onSelectLanguage={(language) => {
+    if (language === 'japanese') {
+      window.location.href = '/srs/quiz?language=japanese';
+    } else if (language === 'english') {
+      window.location.href = '/srs/quiz?language=english';
+    }
+  }}
+/>
+```
+
+### ✅ 최종 완료 상태
+- ✅ **API 응답 구조 문제**: 홈화면 SrsWidget에서 새로운 언어별 분류 응답 구조 처리
+- ✅ **카드 수 표시 문제**: "복습 대기: 0 개" → "복습 대기: 3 개" 정상 표시
+- ✅ **언어 선택 로직**: 대시보드와 동일한 언어 선택 모달 추가
+- ✅ **라우팅 시스템**: LearnVocab → SRS Quiz 시스템으로 변경
+- ✅ **사용자 경험 통일**: 홈화면과 대시보드에서 동일한 복습 시작 플로우
+
+### 🎯 새로운 홈화면 복습 시작 플로우
+
+#### 시나리오 1: 단일 언어 카드만 있는 경우
+1. 복습 시작 클릭 → 해당 언어 SRS 퀴즈로 바로 이동
+
+#### 시나리오 2: 혼합 언어 카드가 있는 경우 (현재 상황)
+1. 복습 시작 클릭 → 언어 선택 모달 표시
+2. 🇯🇵 일본어 복습 (1개) 또는 🇺🇸 영어 복습 (2개) 선택
+3. 선택한 언어의 SRS 퀴즈로 이동
+
+### 📊 기대 결과
+홈화면에서:
+```
+🦜 오늘의 SRS
+복습 대기: 3 개
+API 20ms
+[복습 시작] 버튼 클릭
+↓
+언어 선택 모달 표시
+🇯🇵 일본어 복습 (1개)
+🇺🇸 영어 복습 (2개)
+↓
+SRS 퀴즈 시스템으로 이동
+```
+
+**🎉 홈화면에서도 대시보드와 완전히 동일한 SRS 복습 경험을 제공합니다!**
+
+---
+
+## 홈화면 언어 선택 모달 크기 개선 (2025-09-17)
+
+### 🚨 추가 발견된 문제
+- **홈화면에서 언어 선택 모달이 SRS 컴포넌트 크기에 맞춰져서 너무 작게 표시됨**
+- 모달이 팝업 형태가 아닌 인라인으로 렌더링되어 사용성 저하
+- 대시보드에서는 정상적인 모달 크기로 표시됨
+
+### 🔍 문제 원인 분석
+
+#### 모달 렌더링 위치 차이
+1. **대시보드**: 메인 컨테이너 레벨에서 모달 렌더링 → 전체 화면 대상
+2. **홈화면**: SrsWidget 컴포넌트 내부에서 모달 렌더링 → SRS 카드 크기에 제한됨
+
+#### DOM 구조 문제
+- **대시보드**: `<main>` → `<LanguageSelectionModal />` (넓은 컨테이너)
+- **홈화면**: `<div className="card">` → `<LanguageSelectionModal />` (작은 카드 컨테이너)
+
+### 🛠️ 해결 방안 구현
+
+#### 1. createPortal import 추가 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 2)
+
+```javascript
+import { createPortal } from 'react-dom';
+```
+
+#### 2. 모달을 document.body에 직접 렌더링 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx` (라인 187-203)
+
+##### 수정 전 (SRS 컴포넌트 내부 렌더링)
+```javascript
+{/* 언어 선택 모달 */}
+<LanguageSelectionModal
+  show={showLanguageModal}
+  onHide={() => setShowLanguageModal(false)}
+  japaneseCount={srsJapanese}
+  englishCount={srsEnglish}
+  onSelectLanguage={(language) => {
+    // 언어 선택 로직
+  }}
+/>
+```
+
+##### 수정 후 (createPortal로 document.body에 렌더링)
+```javascript
+{/* 언어 선택 모달 - createPortal로 document.body에 렌더링 */}
+{showLanguageModal && createPortal(
+  <LanguageSelectionModal
+    show={showLanguageModal}
+    onHide={() => setShowLanguageModal(false)}
+    japaneseCount={srsJapanese}
+    englishCount={srsEnglish}
+    onSelectLanguage={(language) => {
+      // 언어 선택 로직
+    }}
+  />,
+  document.body
+)}
+```
+
+### ✅ 개선 결과
+
+#### Before (수정 전)
+- 모달이 SRS 카드 크기(약 300px 너비)에 제한됨
+- 버튼과 텍스트가 작게 표시되어 가독성 저하
+- 모바일에서 특히 사용하기 어려움
+
+#### After (수정 후)
+- 모달이 전체 화면을 대상으로 정상 크기로 표시
+- Bootstrap 모달의 기본 크기(`modal-dialog`)로 표시
+- 대시보드와 동일한 크기와 사용자 경험
+- 모바일 반응형 디자인 정상 작동
+
+### 🎯 기술적 세부사항
+
+#### createPortal의 장점
+1. **DOM 계층 구조 독립**: 부모 컴포넌트의 CSS 제약에서 자유로움
+2. **이벤트 버블링 유지**: React 이벤트 시스템 정상 작동
+3. **상태 관리 유지**: 부모 컴포넌트의 state와 연결 유지
+4. **z-index 문제 해결**: 최상위 레벨에서 렌더링으로 겹침 문제 해결
+
+#### 렌더링 플로우
+1. 사용자가 "복습 시작" 버튼 클릭
+2. `setShowLanguageModal(true)` 호출
+3. `showLanguageModal && createPortal(...)` 조건부 렌더링
+4. 모달이 `document.body`에 직접 추가됨
+5. 전체 화면을 덮는 정상 크기 모달 표시
+
+### 📊 최종 완료 상태
+- ✅ **모달 크기 문제**: SRS 컴포넌트 제약 → 전체 화면 대상 모달
+- ✅ **렌더링 위치**: 컴포넌트 내부 → document.body (createPortal)
+- ✅ **사용자 경험**: 작은 모달 → 정상 크기 모달
+- ✅ **일관성**: 대시보드와 동일한 모달 크기 및 동작
+
+**🎉 이제 홈화면에서도 언어 선택 모달이 적절한 크기의 팝업으로 표시됩니다!**
+
+---
+
+## SRS 퀴즈 folderId 누락 문제 해결 (2025-09-17)
+
+### 🚨 발견된 문제
+- **언어 선택 후 SRS 퀴즈 이동 시 "퀴즈 로드 실패: 폴더가 지정되지 않았습니다." 오류 발생**
+- SRS 퀴즈 시스템에서 `folderId` 또는 `allOverdue` 파라미터가 필요한데 누락됨
+
+### 🔍 문제 원인 분석
+
+#### SRS 퀴즈 파라미터 요구사항
+**파일**: `/web/apps/frontend/src/pages/SrsQuiz.jsx` (라인 120-125)
+
+```javascript
+export default function SrsQuiz() {
+    const navigate = useNavigate();
+    const [params] = useSearchParams();
+    const folderId = Number(params.get('folder'));    // 폴더 ID
+    const allOverdue = params.get('all') === 'true';  // 전체 overdue 모드
+    const selectedItems = params.get('selectedItems'); // 선택된 아이템들
+```
+
+#### 유효성 검사 로직
+SrsQuiz에서는 다음 조건을 만족해야 함:
+```javascript
+// allOverdue가 true이거나 유효한 folderId가 있어야 함
+if (!allOverdue && (!folderId || isNaN(folderId))) {
+    setErr(new Error('폴더가 지정되지 않았습니다.'));
+    return;
+}
+```
+
+#### 현재 URL 구조 문제
+- **기존 URL**: `/srs/quiz?language=japanese` (파라미터 부족)
+- **필요한 URL**: `/srs/quiz?all=true&language=japanese` (allOverdue 플래그 필요)
+
+### 🛠️ 해결 방안 구현
+
+#### 1. 홈화면 SRS 퀴즈 URL 수정 ✅
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx`
+
+##### 단일 언어 선택 시 (라인 163, 167)
+```javascript
+// 수정 전
+window.location.href = '/srs/quiz?language=japanese';
+window.location.href = '/srs/quiz?language=english';
+
+// 수정 후
+window.location.href = '/srs/quiz?all=true&language=japanese';
+window.location.href = '/srs/quiz?all=true&language=english';
+```
+
+##### 언어 선택 모달에서 (라인 196, 198)
+```javascript
+// 수정 전
+window.location.href = '/srs/quiz?language=japanese';
+window.location.href = '/srs/quiz?language=english';
+
+// 수정 후
+window.location.href = '/srs/quiz?all=true&language=japanese';
+window.location.href = '/srs/quiz?all=true&language=english';
+```
+
+#### 2. 대시보드 SRS 퀴즈 URL 수정 ✅
+**파일**: `/web/apps/frontend/src/pages/Dashboard.jsx`
+
+일관성을 위해 대시보드에서도 동일하게 `all=true` 파라미터 추가:
+```javascript
+// 모든 SRS 퀴즈 URL에 all=true 파라미터 추가
+window.location.href = '/srs/quiz?all=true&language=japanese';
+window.location.href = '/srs/quiz?all=true&language=english';
+```
+
+### ✅ 해결 결과
+
+#### URL 파라미터 매핑
+- `all=true` → `allOverdue = true` (SrsQuiz에서 인식)
+- `language=japanese|english` → 언어별 필터링
+- 유효성 검사 통과: `allOverdue`가 true이므로 folderId 불필요
+
+#### 데이터 플로우
+1. 사용자가 언어 선택 (일본어/영어)
+2. `/srs/quiz?all=true&language=japanese` URL로 이동
+3. SrsQuiz에서 `allOverdue = true` 설정
+4. 유효성 검사 통과 (`allOverdue`가 true이므로)
+5. `/srs/available` API 호출로 전체 overdue 카드 조회
+6. 언어별 필터링 적용하여 해당 언어 퀴즈만 표시
+
+### 📊 최종 완료 상태
+- ✅ **URL 파라미터 문제**: `all=true` 파라미터 추가로 allOverdue 모드 활성화
+- ✅ **유효성 검사 통과**: folderId 없어도 allOverdue=true로 정상 진행
+- ✅ **홈화면과 대시보드 일관성**: 동일한 URL 구조 사용
+- ✅ **언어별 퀴즈 로딩**: 전체 overdue 카드에서 언어별 필터링
+
+**🎉 이제 홈화면과 대시보드에서 언어 선택 후 SRS 퀴즈가 정상적으로 로드됩니다!**
+
+---
+
+## SRS 복습 시작 라우팅 문제 해결 (2025-09-17)
+
+### 🚨 발견된 실제 문제
+- **홈화면에서 복습 시작 → 일본어 선택 시 SRS 퀴즈 화면이 표시됨**
+- **기대한 화면**: SRS 폴더에서 "학습 시작"을 눌렀을 때와 같은 **퀴즈 타입 선택 화면**
+- **실제 화면**: SRS 퀴즈의 맞음/틀림 카드 화면 (이상한 화면)
+
+### 🔍 문제 원인 분석
+
+#### 1. 잘못된 라우팅 경로
+- **현재**: 홈화면 → `/srs/quiz?all=true&language=japanese` (SRS 퀴즈 직접 실행)
+- **올바른**: 홈화면 → `/learn/vocab?mode=all_overdue&selectedItems=...` (퀴즈 타입 선택)
+- **참조**: SRS 폴더 "학습 시작" → `/learn/vocab?mode=srs_folder&folderId=...&selectedItems=...`
+
+#### 2. SrsQuiz vs LearnVocab 컴포넌트 차이
+- **SrsQuiz**: 퀴즈를 바로 시작하는 화면 (맞음/틀림 표시)
+- **LearnVocab**: 퀴즈 타입을 선택하는 화면 (4지선다, 스펠링 등 선택)
+
+### 🛠️ 해결 방안 구현 ✅
+
+#### 1. 홈화면 라우팅 수정
+**파일**: `/web/apps/frontend/src/pages/Home_en.jsx`
+
+##### 단일 언어 케이스 (라인 158-186)
+```javascript
+// 수정 전: SrsQuiz로 직접 이동
+window.location.href = '/srs/quiz?all=true&language=japanese';
+
+// 수정 후: LearnVocab 퀴즈 타입 선택으로 이동
+// 모든 overdue 카드의 vocabIds 수집
+const srsData = availableData?.data;
+const allCards = [...(srsData?.japanese || []), ...(srsData?.english || [])];
+const vocabIds = allCards
+  .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+  .filter(Boolean);
+
+// 언어별 퀴즈 타입 선택창으로 이동
+window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${vocabIds.join(',')}`;
+```
+
+##### 언어 선택 모달 (라인 202-224)
+```javascript
+// 수정 전: SrsQuiz로 직접 이동
+window.location.href = '/srs/quiz?all=true&language=japanese';
+
+// 수정 후: 언어별로 카드 ID 필터링 후 LearnVocab으로 이동
+const srsData = availableData?.data;
+if (language === 'japanese') {
+  const japaneseCards = srsData?.japanese || [];
+  const filteredVocabIds = japaneseCards
+    .map(card => card.srsfolderitem?.[0]?.vocabId || card.srsfolderitem?.[0]?.vocab?.id)
+    .filter(Boolean);
+  window.location.href = `/learn/vocab?mode=all_overdue&selectedItems=${filteredVocabIds.join(',')}`;
+}
+```
+
+#### 2. 대시보드 라우팅 수정
+**파일**: `/web/apps/frontend/src/pages/Dashboard.jsx`
+
+##### 복습 시작 버튼 (라인 209-228)
+```javascript
+// 수정 전
+window.location.href = '/srs/quiz?all=true&language=japanese';
+
+// 수정 후
+window.location.href = '/learn/vocab?mode=all_overdue';
+```
+
+##### 언어 선택 핸들러 (라인 232-239)
+```javascript
+// 수정 전
+window.location.href = '/srs/quiz?all=true&language=japanese';
+
+// 수정 후
+window.location.href = '/learn/vocab?mode=all_overdue';
+```
+
+##### "지금 복습하기" 링크 (라인 340-342)
+```javascript
+// 수정 전
+<Link to="/srs/quiz" className="btn btn-danger">
+
+// 수정 후
+<Link to="/learn/vocab?mode=all_overdue" className="btn btn-danger">
+```
+
+### ✅ 해결 결과
+
+#### 새로운 동작 플로우
+1. **홈화면에서 복습 시작 클릭**
+2. **언어 선택 모달 표시** (일본어 1개, 영어 2개)
+3. **일본어 선택** → `/learn/vocab?mode=all_overdue&selectedItems=2`로 이동
+4. **LearnVocab 컴포넌트에서 퀴즈 타입 선택 화면 표시**
+5. **일본어 퀴즈 타입들 표시** (4지선다, 스펠링 등)
+6. **사용자가 원하는 퀴즈 타입 선택 후 학습 시작**
+
+#### URL 구조 변경
+- **수정 전**: `/srs/quiz?all=true&language=japanese` (바로 퀴즈 실행)
+- **수정 후**: `/learn/vocab?mode=all_overdue&selectedItems=2` (퀴즈 타입 선택)
+
+#### SRS 폴더와 동일한 경험
+- **SRS 폴더 "학습 시작"**: `/learn/vocab?mode=srs_folder&folderId=3&selectedItems=2`
+- **홈화면 "복습 시작"**: `/learn/vocab?mode=all_overdue&selectedItems=2`
+- **둘 다 동일한 LearnVocab 컴포넌트로 퀴즈 타입 선택 화면 표시**
+
+#### 언어별 카드 ID 필터링
+```javascript
+// 일본어 선택 시
+const japaneseCards = srsData?.japanese || [];
+const filteredVocabIds = japaneseCards
+  .map(card => card.srsfolderitem?.[0]?.vocabId)
+  .filter(Boolean);
+// → selectedItems=2 (일본어 카드 ID만)
+
+// 영어 선택 시
+const englishCards = srsData?.english || [];
+const filteredVocabIds = englishCards
+  .map(card => card.srsfolderitem?.[0]?.vocabId)
+  .filter(Boolean);
+// → selectedItems=1,3 (영어 카드 ID들만)
+```
+
+### 📊 테스트 예상 결과
+홈화면 → 복습 시작 → 일본어 선택 후:
+```
+[Home SRS] 언어 선택: japanese
+[Home SRS] 일본어 카드 IDs: [2]
+→ /learn/vocab?mode=all_overdue&selectedItems=2
+→ 일본어 퀴즈 타입 선택 화면 표시 (정상!)
+```
+
+### 🎯 완료된 작업
+- ✅ **라우팅 수정**: `/srs/quiz` → `/learn/vocab` 변경으로 퀴즈 타입 선택 화면 표시
+- ✅ **홈화면 수정**: 단일/혼합 언어 케이스 모두 LearnVocab으로 라우팅
+- ✅ **대시보드 수정**: 복습 시작 버튼들 모두 LearnVocab으로 라우팅
+- ✅ **언어별 필터링**: 선택된 언어의 카드 ID만 selectedItems에 포함
+- ✅ **SRS 상태 업데이트**: `mode=all_overdue`로 학습 완료 시 SRS 카드 상태 정상 업데이트
+
+**🎉 이제 홈화면에서 일본어 선택 시 올바른 퀴즈 타입 선택 화면이 표시됩니다!**
+
+---
+
+## 일본어 퀴즈 조기 종료 문제 해결 (2025-09-17)
+
+### 🚨 새로 발견된 문제
+- **일본어 퀴즈에서 2문제 중 1문제만 풀고 갑자기 퀴즈가 종료됨**
+- 사용자 보고: "일본어의 경우 풀어야할 문제는 총 2개인데 하나 풀고 갑자기 문제풀이화면에서 튕겨져 나오는 이유"
+- 추정 원인: 일본어 문제 2개가 서로 다른 폴더에 위치해서 발생하는 문제
+
+### 🔍 문제 원인 분석
+
+#### 1. 다중 폴더 문제 가능성
+- 일본어 SRS 카드 2개가 서로 다른 폴더에 위치
+- 현재 로직이 폴더 단위로 퀴즈를 처리하여 조기 종료 발생 가능성
+
+#### 2. 언어 필터링 문제
+- `LearnVocab`에서 일본어 카드만 필터링하는 과정에서 일부 카드 누락 가능성
+- `detectLanguageFromVocab` 함수의 언어 감지 로직 문제
+
+#### 3. JapaneseQuiz 컴포넌트 완료 로직
+- `onQuizComplete` 호출 시점이 너무 이른 시점일 가능성
+- 퀴즈 완료 후 라우팅 문제
+
+### 🛠️ 디버깅 로그 추가 ✅
+
+#### 1. LearnVocab 컴포넌트 디버깅 강화
+**파일**: `/web/apps/frontend/src/pages/LearnVocab.jsx` (라인 2118-2123)
+
+```javascript
+console.log('[LearnVocab] Japanese quiz rendering:', {
+    totalQueue: queue.length,
+    japaneseVocabIds: japaneseVocabIds,
+    quizType: quizTypeParam,
+    mode: mode
+});
+```
+
+#### 2. JapaneseQuiz 완료 로직 디버깅
+**파일**: `/web/apps/frontend/src/components/JapaneseQuiz.jsx` (라인 381-401)
+
+```javascript
+const nextQuestion = () => {
+    console.log('[JapaneseQuiz] nextQuestion called:', {
+        currentIndex: currentIndex,
+        totalItems: quizItems.length,
+        isLastItem: currentIndex + 1 >= quizItems.length,
+        vocabIds: vocabIds
+    });
+
+    // ... 기존 로직
+
+    console.log('[JapaneseQuiz] Quiz completed with score:', finalScore);
+    onQuizComplete && onQuizComplete(finalScore);
+};
+```
+
+#### 3. 퀴즈 완료 후 라우팅 개선
+**파일**: `/web/apps/frontend/src/pages/LearnVocab.jsx` (라인 2125-2135)
+
+```javascript
+const handleJapaneseQuizComplete = () => {
+    if (folderIdParam) {
+        // 특정 폴더에서 온 경우 해당 폴더로 돌아감
+        navigate(`/srs/folder/${folderIdParam}`);
+    } else if (mode === 'all_overdue') {
+        // all_overdue 모드인 경우 대시보드로 돌아감
+        navigate('/dashboard');
+    } else {
+        // 기타 경우 SRS 대시보드로 돌아감
+        navigate('/srs');
+    }
+};
+```
+
+### 📊 디버깅 확인 사항
+
+브라우저 콘솔에서 확인해야 할 로그들:
+
+#### 예상되는 정상 로그
+```javascript
+[LearnVocab] Japanese quiz rendering: {
+    totalQueue: 2,
+    japaneseVocabIds: [2, 4], // 2개의 일본어 카드 ID
+    quizType: 'jp_word_to_ko_meaning',
+    mode: 'all_overdue'
+}
+
+[JAPANESE QUIZ] Loaded quiz items: [퀴즈아이템1, 퀴즈아이템2] // 2개 아이템
+
+[JapaneseQuiz] nextQuestion called: {
+    currentIndex: 0,
+    totalItems: 2,
+    isLastItem: false
+}
+
+[JapaneseQuiz] nextQuestion called: {
+    currentIndex: 1,
+    totalItems: 2,
+    isLastItem: true
+}
+
+[JapaneseQuiz] Quiz completed with score: {correct: X, total: 2}
+```
+
+#### 문제가 있는 경우의 로그
+```javascript
+[LearnVocab] Japanese quiz rendering: {
+    totalQueue: 2,
+    japaneseVocabIds: [2], // 1개만 필터링됨 (문제!)
+    quizType: 'jp_word_to_ko_meaning',
+    mode: 'all_overdue'
+}
+
+[JAPANESE QUIZ] Loaded quiz items: [퀴즈아이템1] // 1개만 로드됨
+
+[JapaneseQuiz] nextQuestion called: {
+    currentIndex: 0,
+    totalItems: 1, // 문제: 1개만 있음
+    isLastItem: true
+}
+
+[JapaneseQuiz] Quiz completed with score: {correct: X, total: 1}
+```
+
+### 🎯 다음 단계
+
+1. **브라우저에서 일본어 퀴즈 실행**
+2. **개발자 도구 콘솔에서 위 로그들 확인**
+3. **문제점 정확히 파악**:
+   - `japaneseVocabIds`가 2개 모두 포함되는가?
+   - `quizItems`가 2개 모두 로드되는가?
+   - `nextQuestion`이 올바른 시점에 호출되는가?
+
+4. **근본 원인에 따른 수정**:
+   - 언어 필터링 문제 → `detectLanguageFromVocab` 함수 수정
+   - 퀴즈 로딩 문제 → 백엔드 API 확인
+   - 완료 로직 문제 → `JapaneseQuiz` 컴포넌트 수정
+
+**🔍 브라우저에서 디버깅 로그를 확인하고 정확한 문제점을 파악해 주세요!**

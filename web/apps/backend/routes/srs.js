@@ -83,10 +83,55 @@ router.get('/status', async (req, res, next) => {
 // GET /srs/available - 현재 학습 가능한 카드들 조회
 router.get('/available', async (req, res, next) => {
     try {
+        console.log('[SRS AVAILABLE] req.user:', req.user ? 'exists' : 'undefined');
+        console.log('[SRS AVAILABLE] userId:', req.user?.id);
+
+        if (!req.user || !req.user.id) {
+            console.log('[SRS AVAILABLE] No user authentication');
+            return ok(res, { japanese: [], english: [], total: 0 });
+        }
+
         const userId = req.user.id;
         const cards = await getAvailableCardsForReview(userId);
-        return ok(res, cards);
+        console.log('[SRS AVAILABLE] Total cards found:', cards.length);
+
+        // 언어별로 카드 분류
+        const japaneseCards = [];
+        const englishCards = [];
+
+        cards.forEach(card => {
+            // vocab 정보에서 언어 감지
+            const vocab = card.srsfolderitem?.[0]?.vocab;
+            if (!vocab) {
+                console.log('[SRS AVAILABLE] Card without vocab:', card.id);
+                return;
+            }
+
+            // 일본어 카드 감지 (JLPT 레벨이 있거나 일본어 문자 포함)
+            const isJapanese = vocab.levelJLPT ||
+                              vocab.source === 'jlpt_vocabs' ||
+                              (vocab.lemma && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.lemma));
+
+            if (isJapanese) {
+                japaneseCards.push(card);
+            } else {
+                englishCards.push(card);
+            }
+        });
+
+        console.log('[SRS AVAILABLE] Japanese cards:', japaneseCards.length);
+        console.log('[SRS AVAILABLE] English cards:', englishCards.length);
+
+        const result = {
+            japanese: japaneseCards,
+            english: englishCards,
+            total: cards.length,
+            hasMultipleLanguages: japaneseCards.length > 0 && englishCards.length > 0
+        };
+
+        return ok(res, result);
     } catch (e) {
+        console.error('[SRS AVAILABLE] Error:', e.message);
         next(e);
     }
 });

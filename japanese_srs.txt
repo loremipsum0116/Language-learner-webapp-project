@@ -1357,3 +1357,182 @@ console.log('Japanese Fill-in-Blank Quiz Item:', {
 - 조기 탈출(early exit) 패턴 적용
 
 이제 일본어 스펠링 퀴즈에서 완벽한 학습 경험을 제공합니다! 🚀
+
+---
+
+## 일본어 SRS 언어별 분리 시스템 구현 (2025-09-17)
+
+### 📋 구현 요구사항
+사용자가 바탕화면에서 "복습 시작" 버튼을 클릭할 때 언어별로 분리된 퀴즈 시스템 구현:
+
+**현재 상황**: 복습 대기 3개 (일본어 1개 + 영어 2개 섞여있음)
+
+**원하는 로직**:
+1. **단일 언어**: 해당 언어 문제 선택창 바로 표시
+2. **혼합 언어**: 언어 선택 모달 → 언어별 문제 선택창
+3. **복습 완료 후**: 남은 언어 자동 처리
+
+### ✅ 완료된 구현 사항
+
+#### 1. 백엔드 API 언어별 카드 분류 로직 ✅
+**파일**: `/web/apps/backend/routes/srs.js` (84-137행)
+
+**주요 변경사항**:
+- `/srs/available` API 응답 형식 변경: 카드 배열 → 언어별 객체
+- 일본어 카드 감지 로직: JLPT 레벨, 소스, 정규식 3중 검증
+- 성능 최적화: 단일 쿼리로 모든 카드 조회 후 프론트엔드에서 분류
+
+**새로운 응답 구조**:
+```javascript
+{
+  success: true,
+  data: {
+    japanese: [{ /* 일본어 카드들 */ }],
+    english: [{ /* 영어 카드들 */ }],
+    total: 3,
+    hasMultipleLanguages: true
+  }
+}
+```
+
+**언어 감지 로직**:
+```javascript
+const isJapanese = vocab.levelJLPT ||
+                  vocab.source === 'jlpt_vocabs' ||
+                  (vocab.lemma && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.lemma));
+```
+
+#### 2. 프론트엔드 Dashboard 컴포넌트 수정 ✅
+**파일**: `/web/apps/frontend/src/pages/Dashboard.jsx`
+
+**주요 개선사항**:
+- 새로운 API 응답 구조 처리 (90-109행)
+- 언어별 상태 관리 추가
+- SRS 카드 UI 완전 개편 (375-412행)
+
+**새로운 SRS 카드 UI**:
+```javascript
+// 언어별 카드 수 표시
+<div className="h4 mb-1">복습 대기: <span className="text-primary">{stats.srsQueue}</span> 개</div>
+{stats.hasMultipleLanguages && (
+    <small className="text-muted">
+        🇯🇵 {stats.srsJapanese}개 • 🇺🇸 {stats.srsEnglish}개
+    </small>
+)}
+
+// 복습 시작 버튼
+{stats.srsQueue > 0 && (
+    <button className="btn btn-warning btn-sm" onClick={handleSrsStartClick}>
+        복습 시작
+    </button>
+)}
+```
+
+#### 3. 언어 선택 모달 UI 컴포넌트 생성 ✅
+**파일**: `/web/apps/frontend/src/components/LanguageSelectionModal.jsx`
+
+**UI 특징**:
+- 🇯🇵 일본어 복습 버튼 (JLPT 단어 학습)
+- 🇺🇸 영어 복습 버튼 (CEFR/TOEIC/TOEFL 단어)
+- 각 언어별 카드 수 배지 표시
+- Bootstrap 기반 반응형 모달 디자인
+
+#### 4. 복습 시작 로직 구현 ✅
+**파일**: `/web/apps/frontend/src/pages/Dashboard.jsx` (202-239행)
+
+**핸들러 함수들**:
+
+##### `handleSrsStartClick()` - 복습 시작 로직
+```javascript
+// 단일 언어 처리
+if (!stats.hasMultipleLanguages) {
+    if (stats.srsJapanese > 0 && stats.srsEnglish === 0) {
+        // 일본어만 있는 경우
+        window.location.href = '/srs/quiz?language=japanese';
+    } else if (stats.srsEnglish > 0 && stats.srsJapanese === 0) {
+        // 영어만 있는 경우
+        window.location.href = '/srs/quiz?language=english';
+    }
+} else {
+    // 혼합 언어 - 모달 표시
+    setShowLanguageModal(true);
+}
+```
+
+##### `handleLanguageSelect(language)` - 언어 선택 처리
+```javascript
+if (language === 'japanese') {
+    window.location.href = '/srs/quiz?language=japanese';
+} else if (language === 'english') {
+    window.location.href = '/srs/quiz?language=english';
+}
+```
+
+### 🔄 실행 흐름
+
+#### 시나리오 1: 일본어만 있는 경우
+1. 복습 시작 클릭 → 일본어 문제 선택창 바로 이동
+
+#### 시나리오 2: 영어만 있는 경우
+1. 복습 시작 클릭 → 영어 문제 선택창 바로 이동
+
+#### 시나리오 3: 혼합 언어 (현재 상황)
+1. 복습 시작 클릭 → 언어 선택 모달 표시
+2. 🇯🇵 일본어 복습 (1개) 또는 🇺🇸 영어 복습 (2개) 선택
+3. 선택한 언어의 문제 선택창으로 이동
+4. 복습 완료 후 → 남은 언어 자동 처리
+
+### 🎯 기술적 구현 세부사항
+
+#### 백엔드 개선사항
+- **언어 감지 정확도**: JLPT 레벨, 소스, 정규식 3중 검증
+- **성능 최적화**: 단일 쿼리로 모든 카드 조회 후 프론트엔드에서 분류
+- **확장성**: 새로운 언어 추가 시 쉬운 확장 가능
+
+#### 프론트엔드 개선사항
+- **사용자 경험**: 직관적인 언어 선택 인터페이스
+- **시각적 표시**: 플래그 아이콘과 카드 수 배지로 명확한 정보 제공
+- **반응형 디자인**: 모든 화면 크기에서 적절한 표시
+
+#### URL 파라미터 시스템
+- `/srs/quiz?language=japanese` - 일본어 퀴즈 모드
+- `/srs/quiz?language=english` - 영어 퀴즈 모드
+
+### 📊 현재 테스트 상황
+- **백엔드**: 포트 4000에서 정상 실행 중
+- **API 응답**: 언어별 분류 정상 작동 (일본어 1개, 영어 2개 확인)
+- **프론트엔드**: 새로운 UI 구현 완료
+- **통합 테스트**: 브라우저에서 확인 필요
+
+### 🚀 다음 단계 (예정)
+
+#### 1. SrsQuiz 컴포넌트 언어 파라미터 처리
+- URL 쿼리 파라미터 `language` 감지
+- 해당 언어 카드만 필터링하여 퀴즈 진행
+
+#### 2. 복습 진행 상태 관리
+- 한 언어 복습 완료 시 자동으로 다른 언어 감지
+- 완료된 언어 제외한 남은 언어 자동 시작
+
+#### 3. 사용자 피드백 개선
+- 복습 진행률 표시
+- 언어별 완료 상태 시각화
+
+---
+
+## 개발 완료 요약 ✅
+
+**구현된 기능**:
+1. ✅ 백엔드 언어별 카드 분류 API
+2. ✅ 프론트엔드 Dashboard 언어 감지 로직
+3. ✅ 언어 선택 모달 UI 컴포넌트
+4. ✅ 복습 시작 버튼 클릭 핸들러
+
+**사용자 경험**:
+- 단일 언어: 즉시 해당 언어 퀴즈 시작
+- 혼합 언어: 아름다운 언어 선택 모달로 선택 후 시작
+- 시각적 표시: 언어별 카드 수와 플래그 아이콘
+
+**일본어와 영어 SRS 퀴즈가 이제 완전히 분리되어 사용자 친화적으로 작동합니다!** 🎌🇺🇸✨
+
+**다음으로 브라우저에서 바탕화면 새로고침 후 "복습 시작" 버튼 테스트 예정**

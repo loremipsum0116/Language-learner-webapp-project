@@ -469,40 +469,43 @@ app.get('/simple-audio-files/:level', async (req, res) => {
 });
 
 // === SIMPLE SRS AVAILABLE ENDPOINT (NO MIDDLEWARE) ===
+// DISABLED: 실제 SRS 라우트를 사용하도록 주석 처리
+/*
 app.get('/srs/available', (req, res) => {
   try {
     console.log('[SIMPLE-SRS] Fetching available SRS data');
-    
+
     // Return simple mock data to prevent crashes
     const srsData = {
       cardsAvailable: 0,
       cardsReady: 0,
       nextReviewTime: null
     };
-    
+
     // Add CORS headers manually for this endpoint
     const origin = req.headers.origin;
     const headers = {
       'Content-Type': 'application/json'
     };
-    
+
     if (origin === 'http://localhost:3000' || origin === 'http://localhost:3001') {
       headers['Access-Control-Allow-Origin'] = origin;
       headers['Access-Control-Allow-Credentials'] = 'true';
     }
-    
+
     res.writeHead(200, headers);
     res.end(JSON.stringify({
       success: true,
       data: srsData
     }));
-    
+
   } catch (error) {
     console.error('[SIMPLE-SRS] Error:', error);
     res.writeHead(500, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify({ success: false, error: error.message }));
   }
 });
+*/
 
 // === 정적 파일 서빙 (최우선) ===
 // Test route for debugging
