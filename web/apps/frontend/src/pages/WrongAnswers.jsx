@@ -73,6 +73,7 @@ export default function WrongAnswers() {
   const [wrongAnswers, setWrongAnswers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState("vocab"); // 새로운 탭 상태
+  const [selectedLanguage, setSelectedLanguage] = useState("all"); // 언어 선택 상태 추가
   const [categories, setCategories] = useState({
     vocab: { total: 0, active: 0 },
     grammar: { total: 0, active: 0 },
@@ -91,11 +92,76 @@ export default function WrongAnswers() {
     }
   };
 
+  // 언어별 필터링 함수
+  const detectLanguage = (wrongAnswer) => {
+    // 어휘의 경우
+    if (selectedTab === "vocab" && wrongAnswer.vocab) {
+      // 일본어 단어 감지
+      if (wrongAnswer.vocab.lemma && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(wrongAnswer.vocab.lemma)) {
+        return 'ja';
+      }
+      // JLPT 레벨이나 일본어 관련 필드가 있으면 일본어
+      if (wrongAnswer.vocab.levelJLPT || wrongAnswer.vocab.source === 'jlpt_vocabs') {
+        return 'ja';
+      }
+      // 그 외는 영어
+      return 'en';
+    }
+
+    // 문법의 경우
+    if (selectedTab === "grammar" && wrongAnswer.wrongData) {
+      // wrongData에서 언어 정보 확인
+      if (wrongAnswer.wrongData.language === 'ja') {
+        return 'ja';
+      }
+      // 문제 텍스트에 일본어 문자가 있으면 일본어
+      if (wrongAnswer.wrongData.question && /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(wrongAnswer.wrongData.question)) {
+        return 'ja';
+      }
+      return 'en';
+    }
+
+    // 리딩, 리스닝의 경우도 유사하게 처리
+    if ((selectedTab === "reading" || selectedTab === "listening") && wrongAnswer.wrongData) {
+      if (wrongAnswer.wrongData.language === 'ja') {
+        return 'ja';
+      }
+      // 문제나 지문에 일본어 문자가 있으면 일본어
+      const textToCheck = wrongAnswer.wrongData.question || wrongAnswer.wrongData.passage || wrongAnswer.wrongData.script || '';
+      if (/[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(textToCheck)) {
+        return 'ja';
+      }
+      return 'en';
+    }
+
+    return 'en'; // 기본값은 영어
+  };
+
   const reload = async () => {
     setLoading(true);
     try {
       const { data } = await fetchJSON(`/api/odat-note/list?type=${selectedTab}`, withCreds());
-      setWrongAnswers(data || []);
+      const allData = data || [];
+
+      console.log(`🔍 [WrongAnswers DEBUG] API 응답:`, {
+        selectedTab,
+        selectedLanguage,
+        totalItems: allData.length,
+        data: allData
+      });
+
+      // 언어별 필터링
+      let filteredData = allData;
+      if (selectedLanguage !== "all") {
+        filteredData = allData.filter(wrongAnswer => {
+          const detectedLanguage = detectLanguage(wrongAnswer);
+          console.log(`🧭 [언어 감지] ID: ${wrongAnswer.id}, 감지된 언어: ${detectedLanguage}, 선택된 언어: ${selectedLanguage}, 표시 여부: ${detectedLanguage === selectedLanguage}`);
+          return detectedLanguage === selectedLanguage;
+        });
+      }
+
+      console.log(`📊 [필터링 결과] 전체: ${allData.length}개 → 필터링 후: ${filteredData.length}개`);
+      setWrongAnswers(filteredData);
     } catch (error) {
       console.error("Failed to load wrong answers:", error);
     } finally {
@@ -109,7 +175,7 @@ export default function WrongAnswers() {
 
   useEffect(() => {
     reload();
-  }, [selectedTab]);
+  }, [selectedTab, selectedLanguage]);
 
   // 오답 기록 이벤트 리스너 추가
   useEffect(() => {
@@ -384,6 +450,36 @@ export default function WrongAnswers() {
             </li>
           ))}
         </ul>
+
+        {/* 언어 섹션 선택 탭 */}
+        <div className="mt-3">
+          <ul className="nav nav-pills">
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedLanguage === "all" ? "active" : ""}`}
+                onClick={() => setSelectedLanguage("all")}
+              >
+                🌐 전체
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedLanguage === "en" ? "active" : ""}`}
+                onClick={() => setSelectedLanguage("en")}
+              >
+                🇺🇸 영어
+              </button>
+            </li>
+            <li className="nav-item">
+              <button
+                className={`nav-link ${selectedLanguage === "ja" ? "active" : ""}`}
+                onClick={() => setSelectedLanguage("ja")}
+              >
+                🇯🇵 일본어
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
 
       {/* 요약 정보 - 어휘 탭일 때만 표시 */}
@@ -687,11 +783,11 @@ export default function WrongAnswers() {
 
                           <div className="mb-2">
                             <div className="mb-2">
-                              <strong>문제:</strong> {wa.wrongData.question}
+                              <strong>문제:</strong> <span dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></span>
                             </div>
                             <div className="mb-2">
-                              <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
-                              <span className="badge bg-success">정답: {wa.wrongData.correctAnswer}</span>
+                              <span className="badge bg-danger me-2">내 답: <span dangerouslySetInnerHTML={{ __html: wa.wrongData.userAnswer }}></span></span>
+                              <span className="badge bg-success">정답: <span dangerouslySetInnerHTML={{ __html: wa.wrongData.correctAnswer }}></span></span>
                             </div>
                           </div>
                         </>
@@ -941,8 +1037,7 @@ export default function WrongAnswers() {
                                 {wa.wrongData.explanation && (
                                   <div className="mb-3">
                                     <strong>💡 해설:</strong>
-                                    <div className="bg-info bg-opacity-10 p-2 mt-1 rounded border">
-                                      {wa.wrongData.explanation}
+                                    <div className="bg-info bg-opacity-10 p-2 mt-1 rounded border" dangerouslySetInnerHTML={{ __html: wa.wrongData.explanation }}>
                                     </div>
                                   </div>
                                 )}
@@ -972,7 +1067,7 @@ export default function WrongAnswers() {
                               <>
                                 <div className="mb-3">
                                   <strong>📝 문제 전체:</strong>
-                                  <div className="bg-white p-3 mt-2 rounded border">{wa.wrongData.question}</div>
+                                  <div className="bg-white p-3 mt-2 rounded border" dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></div>
                                 </div>
 
                                 <div className="mb-3">
@@ -989,7 +1084,7 @@ export default function WrongAnswers() {
                                             : "bg-white"
                                         }`}
                                       >
-                                        <strong>{option}</strong>
+                                        <strong dangerouslySetInnerHTML={{ __html: option }}></strong>
                                         {option === wa.wrongData.correctAnswer && (
                                           <span key={`grammar-correct-${wa.id}-${idx}`} className="ms-2">✅ 정답</span>
                                         )}
@@ -1005,8 +1100,7 @@ export default function WrongAnswers() {
                                 {wa.wrongData.explanation && (
                                   <div className="mb-3">
                                     <strong>💡 해설:</strong>
-                                    <div className="bg-info bg-opacity-10 p-2 mt-1 rounded border">
-                                      {wa.wrongData.explanation}
+                                    <div className="bg-info bg-opacity-10 p-2 mt-1 rounded border" dangerouslySetInnerHTML={{ __html: wa.wrongData.explanation }}>
                                     </div>
                                   </div>
                                 )}

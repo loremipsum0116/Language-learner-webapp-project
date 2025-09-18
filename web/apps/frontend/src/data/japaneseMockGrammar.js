@@ -1232,5 +1232,724 @@ export const japaneseGrammarTopics = [
                 explanation: "'~쯤 되는 높은 지위의 사람이 되면' 이라는 의미로, 지위나 상황의 변화를 나타낼 때 사용해요!"
             }
         ]
+    },
+
+    // ================ 수사 (数詞) 관련 문법들 ================
+    {
+        "id": "numbers-basic",
+        "level": "N5",
+        "title": "기본 숫자 (1-10) - 일본어 수의 기초",
+        "description": "1부터 10까지! 일본어 숫자의 시작. 두 가지 읽는 법이 있는 특별한 숫자들을 마스터해요!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "🔢 일본어 숫자의 첫걸음!"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "일본어 숫자는 한국어와 비슷해서 배우기 쉬워요! 하지만 4, 7, 9는 두 가지 읽는 법이 있어서 상황에 따라 달리 써야 해요. 특히 4는 '죽음'을 연상시켜서 避け(피하는) 경우가 많답니다!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "1️⃣ <ruby>一<rt>いち</rt></ruby> (ichi) - 하나",
+                        "2️⃣ <ruby>二<rt>に</rt></ruby> (ni) - 둘",
+                        "3️⃣ <ruby>三<rt>さん</rt></ruby> (san) - 셋",
+                        "4️⃣ <ruby>四<rt>よん</rt></ruby>/<ruby>四<rt>し</rt></ruby> (yon/shi) - 넷 ⚠️ 두 가지!",
+                        "5️⃣ <ruby>五<rt>ご</rt></ruby> (go) - 다섯",
+                        "6️⃣ <ruby>六<rt>ろく</rt></ruby> (roku) - 여섯",
+                        "7️⃣ <ruby>七<rt>なな</rt></ruby>/<ruby>七<rt>しち</rt></ruby> (nana/shichi) - 일곱 ⚠️ 두 가지!",
+                        "8️⃣ <ruby>八<rt>はち</rt></ruby> (hachi) - 여덟",
+                        "9️⃣ <ruby>九<rt>きゅう</rt></ruby>/<ruby>九<rt>く</rt></ruby> (kyuu/ku) - 아홉 ⚠️ 두 가지!",
+                        "🔟 <ruby>十<rt>じゅう</rt></ruby> (juu) - 열"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "🤔 언제 어떤 읽기를 써야 할까?"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🔸 4 (よん/し) 사용법:",
+                        "   일반적으로: よん (yon) - 숫자 세기, 전화번호",
+                        "   한자어: し (shi) - 사월(<ruby>四月<rt>しがつ</rt></ruby>), 사계(<ruby>四季<rt>しき</rt></ruby>). 단, 4시(<ruby>四時<rt>よじ</rt></ruby>)는 예외!",
+                        "🔸 7 (なな/しち) 사용법:",
+                        "   일반적으로: なな (nana) - 숫자 세기, 1과 헷갈릴 때",
+                        "   한자어: しち (shichi) - 칠월(<ruby>七月<rt>しちがつ</rt></ruby>), 칠시(<ruby>七時<rt>しちじ</rt></ruby>)",
+                        "🔸 9 (きゅう/く) 사용법:",
+                        "   일반적으로: きゅう (kyuu) - 숫자 세기",
+                        "   특정 단어: く (ku) - 구월(<ruby>九月<rt>くがつ</rt></ruby>), 구시(<ruby>九時<rt>くじ</rt></ruby>)"
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "💡 실용 팁! 헷갈릴 때는 よん, なな, きゅう를 기본으로 사용하면 대부분 자연스러워요!"
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "📝 실전! 숫자가 들어간 일상 표현"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "<ruby>一<rt>いち</rt></ruby>、<ruby>二<rt>に</rt></ruby>、<ruby>三<rt>さん</rt></ruby>！", "ko": "하나, 둘, 셋! (구호)" },
+                        { "de": "<ruby>部屋<rt>へや</rt></ruby>の<ruby>番号<rt>ばんごう</rt></ruby>は<ruby>四<rt>よん</rt></ruby>です。", "ko": "방 번호는 4입니다." },
+                        { "de": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>九月<rt>くがつ</rt></ruby><ruby>七日<rt>なのか</rt></ruby>です。", "ko": "오늘은 9월 7일입니다." },
+                        { "de": "<ruby>七時<rt>しちじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。", "ko": "7시에 일어나요." },
+                        { "de": "<ruby>九人<rt>きゅうにん</rt></ruby>の<ruby>友達<rt>ともだち</rt></ruby>がいます。", "ko": "아홉 명의 친구가 있어요." }
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "🌸 문화 팁! 일본에서는 4층을 피하고 3A층, 5층으로 표기하는 건물도 있어요. 4와 死(죽음)의 발음이 같아서예요!"
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "<ruby>電話番号<rt>でんわばんごう</rt></ruby>を<ruby>教<rt>おし</rt></ruby>えてください。090-123___-5678。(숫자 4)",
+                "options": ["よん", "し", "よっつ"],
+                "answer": "よん",
+                "explanation": "전화번호나 방 번호처럼 숫자를 하나씩 읽을 때는 일반적으로 'よん'을 사용해요. 'し'는 '죽음(死)'과 발음이 같아 피하는 경향이 있어요."
+            },
+            {
+                "stem": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>七月<rt>___がつ</rt></ruby>です。",
+                "options": ["なな", "しち", "ななつ"],
+                "answer": "しち",
+                "explanation": "월(月)과 함께 쓸 때는 한자어 읽기인 'しち'를 사용해서 <ruby>七月<rt>しちがつ</rt></ruby>(7월)라고 해요."
+            },
+            {
+                "stem": "<ruby>九時<rt>___じ</rt></ruby>に<ruby>会<rt>あ</rt></ruby>いましょう。",
+                "options": ["きゅう", "く", "ここのつ"],
+                "answer": "く",
+                "explanation": "시간을 나타낼 때 9시는 특별히 'くじ'라고 해요. <ruby>九時<rt>くじ</rt></ruby>(9시)로 외워두세요!"
+            },
+            {
+                "stem": "<ruby>四月<rt>___がつ</rt></ruby>は<ruby>桜<rt>さくら</rt></ruby>の<ruby>季節<rt>きせつ</rt></ruby>です。",
+                "options": ["よん", "し", "よ"],
+                "answer": "し",
+                "explanation": "월(月)과 함께 쓸 때는 한자어 읽기 'し'를 사용해서 <ruby>四月<rt>しがつ</rt></ruby>(4월)라고 해요."
+            },
+            {
+                "stem": "연필이 <ruby>七<rt>___</rt></ruby><ruby>本<rt>ほん</rt></ruby>あります。",
+                "options": ["しち", "なな", "いち"],
+                "answer": "なな",
+                "explanation": "물건을 셀 때처럼 일반적으로 숫자를 말할 때는 'なな'를 사용하는 것이 더 자연스러워요. 'しち'는 'いち(1)'와 헷갈릴 수 있기 때문이에요."
+            },
+            {
+                "stem": "다음 중 두 가지 읽는 법이 *없는* 숫자는 무엇일까요?",
+                "options": ["4", "8", "9"],
+                "answer": "8",
+                "explanation": "8(<ruby>八<rt>はち</rt></ruby>)은 읽는 법이 하나예요. 4(よん/し), 7(なな/しち), 9(きゅう/く)는 두 가지 읽는 법이 있어요."
+            },
+            {
+                "stem": "<ruby>九月<rt>___がつ</rt></ruby>は<ruby>涼<rt>すず</rt></ruby>しいです。",
+                "options": ["きゅう", "く", "きゅ"],
+                "answer": "く",
+                "explanation": "9월은 예외적으로 'くがつ'라고 읽어요. 'きゅうがつ'라고 하지 않으니 주의해야 해요."
+            },
+            {
+                "stem": "숫자 2의 올바른 일본어 발음은 무엇인가요?",
+                "options": ["<ruby>に<rt>に</rt></ruby>", "<ruby>じ<rt>じ</rt></ruby>", "<ruby>ふたつ<rt>ふたつ</rt></ruby>"],
+                "answer": "<ruby>に<rt>に</rt></ruby>",
+                "explanation": "숫자 2는 'に'라고 읽습니다. 'ふたつ'는 개수를 세는 고유어 표현이에요."
+            }
+        ]
+    },
+    {
+        "id": "numbers-hundreds",
+        "level": "N5",
+        "title": "백 단위 숫자 (100-1000) - 특별한 발음의 비밀",
+        "description": "300, 600, 800! 왜 이렇게 다르게 읽을까요? 백 단위 숫자의 특별한 발음 규칙을 정복해요!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "💯 백 단위의 기본 패턴"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "백 단위는 대부분 '숫자 + ひゃく'의 규칙을 따라요. 하지만 300, 600, 800은 발음이 변해서 특별히 외워야 해요! 이건 일본어의 '연음' 현상 때문이랍니다."
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "💯 <ruby>百<rt>ひゃく</rt></ruby> (hyaku) - 100",
+                        "2️⃣💯 <ruby>二百<rt>にひゃく</rt></ruby> (nihyaku) - 200",
+                        "3️⃣💯 <ruby>三百<rt>さんびゃく</rt></ruby> (sanbyaku) - 300 ⚠️ 특별!",
+                        "4️⃣💯 <ruby>四百<rt>よんひゃく</rt></ruby> (yonhyaku) - 400",
+                        "5️⃣💯 <ruby>五百<rt>ごひゃく</rt></ruby> (gohyaku) - 500",
+                        "6️⃣💯 <ruby>六百<rt>ろっぴゃく</rt></ruby> (roppyaku) - 600 ⚠️ 특별!",
+                        "7️⃣💯 <ruby>七百<rt>ななひゃく</rt></ruby> (nanahyaku) - 700",
+                        "8️⃣💯 <ruby>八百<rt>はっぴゃく</rt></ruby> (happyaku) - 800 ⚠️ 특별!",
+                        "9️⃣💯 <ruby>九百<rt>きゅうひゃく</rt></ruby> (kyuuhyaku) - 900",
+                        "🔟💯 <ruby>千<rt>せん</rt></ruby> (sen) - 1000"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "🎵 발음 변화의 비밀!"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "일본어는 말하기 쉽게 하기 위해 발음이 자연스럽게 변해요! 이를 '연음(連音)'이라고 해요. 특히 ん, つ, く 뒤에 ひ음이 오면 발음이 변하기 쉬워요."
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🔴 300: さん + ひゃく → さんびゃく ('びゃく'로 변화)",
+                        "🔴 600: ろく + ひゃく → ろっぴゃく ('っぴゃく'로 변화)",
+                        "🔴 800: はち + ひゃく → はっぴゃく ('っぴゃく'로 변화)"
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "💡 암기 꿀팁! '3, 6, 8은 특별하다'라고 외워보세요! 300(びゃく), 600(っぴゃく), 800(っぴゃく)"
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "💰 실전! 쇼핑과 일상에서"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "これは<ruby>三百円<rt>さんびゃくえん</rt></ruby>です。", "ko": "이것은 300엔입니다." },
+                        { "de": "<ruby>六百人<rt>ろっぴゃくにん</rt></ruby>の<ruby>学生<rt>がくせい</rt></ruby>がいます。", "ko": "600명의 학생이 있습니다." },
+                        { "de": "<ruby>八百屋<rt>やおや</rt></ruby>で<ruby>野菜<rt>やさい</rt></ruby>を<ruby>買<rt>か</rt></ruby>います。", "ko": "야채 가게에서 야채를 삽니다. (八百은 800이지만, 八百屋는 '많은 것을 파는 가게'라는 뜻의 단어예요!)" },
+                        { "de": "<ruby>二百五十円<rt>にひゃくごじゅうえん</rt></ruby>のコーヒーを<ruby>買<rt>か</rt></ruby>いました。", "ko": "250엔짜리 커피를 샀습니다." }
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "🛍️ 일본 여행 팁! 일본 편의점에서 '300엔'은 'さんびゃくえん'이라고 해야 해요. 'さんひゃくえん'이라고 하면 일본인들이 못 알아들을 수 있어요!"
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "이것은 ___ 입니다. (300엔)",
+                "options": ["<ruby>三百円<rt>さんひゃくえん</rt></ruby>", "<ruby>三百円<rt>さんびゃくえん</rt></ruby>", "<ruby>三百円<rt>さんぴゃくえん</rt></ruby>"],
+                "answer": "<ruby>三百円<rt>さんびゃくえん</rt></ruby>",
+                "explanation": "300은 'さんびゃく'로 발음해요! 'さん' 뒤의 'ひゃく'가 'びゃく'로 변하는 탁음화 현상이에요."
+            },
+            {
+                "stem": "<ruby>学生<rt>がくせい</rt></ruby>가 ___ 있습니다. (600명)",
+                "options": ["<ruby>六百人<rt>ろくひゃくにん</rt></ruby>", "<ruby>六百人<rt>ろっぴゃくにん</rt></ruby>", "<ruby>六百人<rt>ろくびゃくにん</rt></ruby>"],
+                "answer": "<ruby>六百人<rt>ろっぴゃくにん</rt></ruby>",
+                "explanation": "600은 'ろっぴゃく'로 발음해요! 'ろく'의 'く'가 'っ'으로 변하고 'ひゃく'가 'ぴゃく'로 변하는 촉음화+반탁음화 현상이에요."
+            },
+            {
+                "stem": "___ 미터를 수영했습니다. (800)",
+                "options": ["<ruby>八百<rt>はちひゃく</rt></ruby>", "<ruby>八百<rt>はっぴゃく</rt></ruby>", "<ruby>八百<rt>はちびゃく</rt></ruby>"],
+                "answer": "<ruby>八百<rt>はっぴゃく</rt></ruby>",
+                "explanation": "800은 'はっぴゃく'로 발음해요! 'はち'의 'ち'가 'っ'으로 변하고 'ひゃく'가 'ぴゃく'로 변하는 촉음화+반탁음화 현상이에요."
+            },
+            {
+                "stem": "특별한 발음을 하는 백 단위 숫자는 무엇인가요?",
+                "options": ["200, 400, 700", "300, 600, 800", "100, 500, 900"],
+                "answer": "300, 600, 800",
+                "explanation": "300(さんびゃく), 600(ろっぴゃく), 800(はっぴゃく)이 특별한 발음 변화를 일으키는 숫자들입니다."
+            },
+            {
+                "stem": "___<ruby>円<rt>えん</rt></ruby> 주세요. (500)",
+                "options": ["<ruby>五百<rt>ごひゃく</rt></ruby>", "<ruby>五百<rt>ごびゃく</rt></ruby>", "<ruby>五百<rt>ごっぴゃく</rt></ruby>"],
+                "answer": "<ruby>五百<rt>ごひゃく</rt></ruby>",
+                "explanation": "500은 특별한 발음 변화 없이 'ごひゃく'라고 그대로 발음해요."
+            },
+            {
+                "stem": "200의 올바른 발음은 무엇인가요?",
+                "options": ["<ruby>にひゃく<rt>にひゃく</rt></ruby>", "<ruby>にびゃく<rt>にびゃく</rt></ruby>", "<ruby>にっぴゃく<rt>にっぴゃく</rt></ruby>"],
+                "answer": "<ruby>にひゃく<rt>にひゃく</rt></ruby>",
+                "explanation": "200은 'に'와 'ひゃく'가 합쳐져 발음 변화 없이 'にひゃく'라고 읽어요."
+            },
+            {
+                "stem": "'びゃく'로 발음이 변하는 백 단위 숫자는 무엇인가요?",
+                "options": ["300", "600", "800"],
+                "answer": "300",
+                "explanation": "300은 'さんびゃく'로, 'ひゃく'가 'びゃく'로 변합니다. 600과 800은 'っぴゃく'로 변해요."
+            },
+            {
+                "stem": "이 책은 ___<ruby>ページ<rt>ページ</rt></ruby>입니다. (400)",
+                "options": ["<ruby>四百<rt>よんひゃく</rt></ruby>", "<ruby>四百<rt>しひゃく</rt></ruby>", "<ruby>四百<rt>よんびゃく</rt></ruby>"],
+                "answer": "<ruby>四百<rt>よんひゃく</rt></ruby>",
+                "explanation": "400은 'よん'과 'ひゃく'가 합쳐져 발음 변화 없이 'よんひゃく'라고 읽어요."
+            }
+        ]
+    },
+    {
+        "id": "numbers-thousands",
+        "level": "N5",
+        "title": "천 단위 숫자 (1000-10000) - 또 다른 특별한 규칙",
+        "description": "3000, 8000은 왜 다를까? 천 단위의 특별한 발음과 만(만) 단위까지 완전 정복!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "🎌 천 단위의 기본 패턴"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "천 단위도 백 단위처럼 특별한 발음 변화가 있어요! 3000과 8000이 바로 그 주인공들이죠. 그리고 10000부터는 '만(まん)'이라는 새로운 단위가 등장해요!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "1️⃣🎌 <ruby>千<rt>せん</rt></ruby> (sen) - 1000",
+                        "2️⃣🎌 <ruby>二千<rt>にせん</rt></ruby> (nisen) - 2000",
+                        "3️⃣🎌 <ruby>三千<rt>さんぜん</rt></ruby> (sanzen) - 3000 ⚠️ 특별!",
+                        "4️⃣🎌 <ruby>四千<rt>よんせん</rt></ruby> (yonsen) - 4000",
+                        "5️⃣🎌 <ruby>五千<rt>ごせん</rt></ruby> (gosen) - 5000",
+                        "6️⃣🎌 <ruby>六千<rt>ろくせん</rt></ruby> (rokusen) - 6000",
+                        "7️⃣🎌 <ruby>七千<rt>ななせん</rt></ruby> (nanasen) - 7000",
+                        "8️⃣🎌 <ruby>八千<rt>はっせん</rt></ruby> (hassen) - 8000 ⚠️ 특별!",
+                        "9️⃣🎌 <ruby>九千<rt>きゅうせん</rt></ruby> (kyuusen) - 9000",
+                        "🔟🎌 <ruby>一万<rt>いちまん</rt></ruby> (ichiman) - 10000"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "🌸 만(万) - 일본의 큰 수 세는 법"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "일본어는 10000부터 '만(万)'이라는 단위를 사용해요! 한국어와 비슷하지만 사용법이 조금 달라요. 큰 숫자를 다룰 때 꼭 필요한 개념이에요."
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "💰 큰 금액 표현: <ruby>一万円<rt>いちまんえん</rt></ruby> (10,000엔), <ruby>十万円<rt>じゅうまんえん</rt></ruby> (100,000엔)",
+                        "👥 많은 사람 수: <ruby>三万人<rt>さんまんにん</rt></ruby> (30,000명)",
+                        "📚 발음 주의사항: 3000 (さんぜん), 8000 (はっせん)"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "💴 실전! 큰 금액과 숫자들"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "この<ruby>車<rt>くるま</rt></ruby>は<ruby>三百万円<rt>さんびゃくまんえん</rt></ruby>です。", "ko": "이 차는 300만엔입니다." },
+                        { "de": "<ruby>八千人<rt>はっせんにん</rt></ruby>が<ruby>参加<rt>さんか</rt></ruby>しました。", "ko": "8천명이 참가했습니다." },
+                        { "de": "<ruby>人口<rt>じんこう</rt></ruby>は<ruby>五万三千人<rt>ごまんさんぜんにん</rt></ruby>です。", "ko": "인구는 5만 3천명입니다." },
+                        { "de": "<ruby>年収<rt>ねんしゅう</rt></ruby>は<ruby>六百万円<rt>ろっぴゃくまんえん</rt></ruby>です。", "ko": "연수입은 600만엔입니다." }
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "💡 일본 생활 팁! 일본에서 집값, 연봉 등은 '만엔' 단위로 이야기해요. '연봉 600만'이라고 하면 600만엔을 의미해요!"
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "<ruby>人口<rt>じんこう</rt></ruby>는 ___입니다. (3000명)",
+                "options": ["<ruby>三千人<rt>さんせんにん</rt></ruby>", "<ruby>三千人<rt>さんぜんにん</rt></ruby>", "<ruby>三千人<rt>みつせんにん</rt></ruby>"],
+                "answer": "<ruby>三千人<rt>さんぜんにん</rt></ruby>",
+                "explanation": "3000은 'さんぜん'으로 발음해요! 'さん' 뒤의 'せん'이 'ぜん'으로 변하는 탁음화 현상이 일어나요."
+            },
+            {
+                "stem": "___<ruby>円<rt>えん</rt></ruby>이 듭니다. (8000)",
+                "options": ["<ruby>八千<rt>はちせん</rt></ruby>", "<ruby>八千<rt>はっせん</rt></ruby>", "<ruby>八千<rt>はちぜん</rt></ruby>"],
+                "answer": "<ruby>八千<rt>はっせん</rt></ruby>",
+                "explanation": "8000은 'はっせん'으로 발음해요! 'はち'의 'ち'가 'っ'으로 변하는 촉음화 현상이 일어나요."
+            },
+            {
+                "stem": "큰 금액 ___를 <ruby>貯金<rt>ちょきん</rt></ruby>했습니다. (50,000엔)",
+                "options": ["<ruby>五万円<rt>ごまんえん</rt></ruby>", "<ruby>五千円<rt>ごせんえん</rt></ruby>", "<ruby>五十万円<rt>ごじゅうまんえん</rt></ruby>"],
+                "answer": "<ruby>五万円<rt>ごまんえん</rt></ruby>",
+                "explanation": "50,000엔은 '5만엔'으로 표현해요! <ruby>五万円<rt>ごまんえん</rt></ruby>."
+            },
+            {
+                "stem": "10,000을 일본어로 하면?",
+                "options": ["<ruby>十千<rt>じゅうせん</rt></ruby>", "<ruby>一万<rt>いちまん</rt></ruby>", "<ruby>千十<rt>せんじゅう</rt></ruby>"],
+                "answer": "<ruby>一万<rt>いちまん</rt></ruby>",
+                "explanation": "10,000부터는 '만(万)' 단위를 사용해서 <ruby>一万<rt>いちまん</rt></ruby>이라고 해요!"
+            },
+            {
+                "stem": "천 단위에서 특별한 발음을 하는 숫자는?",
+                "options": ["2000, 5000", "3000, 8000", "4000, 7000"],
+                "answer": "3000, 8000",
+                "explanation": "3000(さんぜん)과 8000(はっせん)이 특별한 발음 변화를 일으키는 숫자들입니다."
+            },
+            {
+                "stem": "1000의 올바른 발음은 무엇인가요?",
+                "options": ["<ruby>いちせん<rt>いちせん</rt></ruby>", "<ruby>せん<rt>せん</rt></ruby>", "<ruby>いっせん<rt>いっせん</rt></ruby>"],
+                "answer": "<ruby>せん<rt>せん</rt></ruby>",
+                "explanation": "1000은 <ruby>百<rt>ひゃく</rt></ruby>(100)이나 <ruby>万<rt>まん</rt></ruby>(10000)과 달리 앞에 <ruby>一<rt>いち</rt></ruby>를 붙이지 않고 그냥 'せん'이라고만 해요."
+            },
+            {
+                "stem": "<ruby>六千<rt>ろくせん</rt></ruby>의 숫자는 무엇인가요?",
+                "options": ["600", "6000", "60000"],
+                "answer": "6000",
+                "explanation": "<ruby>六<rt>ろく</rt></ruby>는 6, <ruby>千<rt>せん</rt></ruby>은 1000을 의미하므로 합쳐서 6000이 됩니다. 발음 변화는 없어요."
+            },
+            {
+                "stem": "숫자 2,500을 올바르게 읽은 것은?",
+                "options": ["<ruby>にせんごひゃく<rt>にせんごひゃく</rt></ruby>", "<ruby>にせんごびゃく<rt>にせんごびゃく</rt></ruby>", "<ruby>にぜんごひゃく<rt>にぜんごひゃく</rt></ruby>"],
+                "answer": "<ruby>にせんごひゃく<rt>にせんごひゃく</rt></ruby>",
+                "explanation": "2000(<ruby>二千<rt>にせん</rt></ruby>)과 500(<ruby>五百<rt>ごひゃく</rt></ruby>) 모두 특별한 발음 변화가 없으므로 그대로 합쳐서 읽어요."
+            }
+        ]
+    },
+    {
+        "id": "dates-expression",
+        "level": "N5",
+        "title": "날짜 표현 - 1일부터 31일까지의 특별한 읽기",
+        "description": "ついたち, ふつか, みっか... 날짜만의 독특한 일본어 읽기를 마스터해요!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "📅 날짜 표현의 특별한 세계!"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "일본어 날짜는 정말 독특해요! 1일부터 10일까지는 완전히 다른 단어처럼 읽고, 나머지도 특별한 규칙이 있어요. 특히 1일(ついたち), 20일(はつか)은 아예 다른 단어로 기억해야 해요!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🌟 완전히 특별한 날짜들 (1-10일)",
+                        "1일: <ruby>一日<rt>ついたち</rt></ruby>",
+                        "2일: <ruby>二日<rt>ふつか</rt></ruby>",
+                        "3일: <ruby>三日<rt>みっか</rt></ruby>",
+                        "4日: <ruby>四日<rt>よっか</rt></ruby>",
+                        "5日: <ruby>五日<rt>いつか</rt></ruby>",
+                        "6日: <ruby>六日<rt>むいか</rt></ruby>",
+                        "7日: <ruby>七日<rt>なのか</rt></ruby>",
+                        "8日: <ruby>八日<rt>ようか</rt></ruby>",
+                        "9日: <ruby>九日<rt>ここのか</rt></ruby>",
+                        "10日: <ruby>十日<rt>とおか</rt></ruby>"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "📆 11일부터 31일까지의 패턴"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🔸 기본 규칙: 숫자 + <ruby>日<rt>にち</rt></ruby> (예: <ruby>十一日<rt>じゅういちにち</rt></ruby> - 11일)",
+                        "⚠️ 특별한 예외들",
+                        "   14일: <ruby>十四日<rt>じゅうよっか</rt></ruby> (juu yokka) - よっか!",
+                        "   20일: <ruby>二十日<rt>はつか</rt></ruby> (hatsuka) - 완전히 특별!",
+                        "   24일: <ruby>二十四日<rt>にじゅうよっか</rt></ruby> (nijuu yokka) - よっか!"
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "💡 암기 꿀팁! 4가 들어간 날짜(4, 14, 24일)는 모두 'よっか'로 끝나요! 그리고 20일 'はつか'는 따로 외워야 해요!"
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "🗓️ 실전! 일상 대화에서 날짜 말하기"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>一日<rt>ついたち</rt></ruby>です。", "ko": "오늘은 1일입니다." },
+                        { "de": "<ruby>誕生日<rt>たんじょうび</rt></ruby>は<ruby>二十日<rt>はつか</rt></ruby>です。", "ko": "생일은 20일입니다." },
+                        { "de": "<ruby>試験<rt>しけん</rt></ruby>は<ruby>十四日<rt>じゅうよっか</rt></ruby>です。", "ko": "시험은 14일입니다." },
+                        { "de": "<ruby>来月<rt>らいげつ</rt></ruby>の<ruby>五日<rt>いつか</rt></ruby>に<ruby>旅行<rt>りょこう</rt></ruby>します。", "ko": "다음 달 5일에 여행해요." }
+                    ]
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>何日<rt>なんにち</rt></ruby>ですか。→<ruby>一日<rt>___</rt></ruby>です。",
+                "options": ["いちにち", "ついたち", "ひとひ"],
+                "answer": "ついたち",
+                "explanation": "1일은 아주 특별하게 'ついたち'라고 읽어요! '달이 선다'는 의미에서 유래한 고유어예요."
+            },
+            {
+                "stem": "<ruby>誕生日<rt>たんじょうび</rt></ruby>は___です。(20일)",
+                "options": ["<ruby>二十日<rt>にじゅうにち</rt></ruby>", "<ruby>二十日<rt>はつか</rt></ruby>", "<ruby>二十日<rt>ふつか</rt></ruby>"],
+                "answer": "<ruby>二十日<rt>はつか</rt></ruby>",
+                "explanation": "20일은 'はつか'라는 아주 특별한 읽기를 해요! 스무 살을 <ruby>二十歳<rt>はたち</rt></ruby>라고 하는 것과 관련이 있어요."
+            },
+            {
+                "stem": "<ruby>試験<rt>しけん</rt></ruby>は___にあります。(14일)",
+                "options": ["<ruby>十四日<rt>じゅうよんにち</rt></ruby>", "<ruby>十四日<rt>じゅうしにち</rt></ruby>", "<ruby>十四日<rt>じゅうよっか</rt></ruby>"],
+                "answer": "<ruby>十四日<rt>じゅうよっか</rt></ruby>",
+                "explanation": "14일은 'じゅうよっか'라고 해요. <ruby>四日<rt>よっか</rt></ruby>의 규칙을 따르기 때문이에요."
+            },
+            {
+                "stem": "___<ruby>出発<rt>しゅっぱつ</rt></ruby>します。(8일)",
+                "options": ["<ruby>八日<rt>はちにち</rt></ruby>", "<ruby>八日<rt>ようか</rt></ruby>", "<ruby>八日<rt>やっか</rt></ruby>"],
+                "answer": "<ruby>八日<rt>ようか</rt></ruby>",
+                "explanation": "8일은 'ようか'라고 읽어요. 1일부터 10일까지는 모두 이런 고유어 읽기를 가지고 있어요."
+            },
+            {
+                "stem": "완전히 특별한 읽기를 하는 날짜가 *아닌* 것은?",
+                "options": ["<ruby>一日<rt>ついたち</rt></ruby>", "<ruby>二十日<rt>はつか</rt></ruby>", "<ruby>十五日<rt>じゅうごにち</rt></ruby>"],
+                "answer": "<ruby>十五日<rt>じゅうごにち</rt></ruby>",
+                "explanation": "15일은 '숫자+にち' 규칙을 따라서 'じゅうごにち'라고 읽어요. 1일(ついたち)과 20일(はつか)은 완전히 특별한 읽기예요!"
+            },
+            {
+                "stem": "5월 5일 어린이날은 일본어로 어떻게 말할까요?",
+                "options": ["<ruby>五月五日<rt>ごがつごにち</rt></ruby>", "<ruby>五月五日<rt>ごがついつか</rt></ruby>", "<ruby>五月五日<rt>ごがつごか</rt></ruby>"],
+                "answer": "<ruby>五月五日<rt>ごがついつか</rt></ruby>",
+                "explanation": "5일은 특별한 읽기인 'いつか'를 사용해야 해요. 따라서 'ごがつ いつか'가 맞습니다."
+            },
+            {
+                "stem": "<ruby>二十四日<rt>にじゅうよっか</rt></ruby>의 다음 날은 며칠인가요?",
+                "options": ["<ruby>二十五日<rt>にじゅうごか</rt></ruby>", "<ruby>二十五日<rt>にじゅうごにち</rt></ruby>", "<ruby>二十五日<rt>にじゅうごひ</rt></ruby>"],
+                "answer": "<ruby>二十五日<rt>にじゅうごにち</rt></ruby>",
+                "explanation": "24일 다음은 25일이며, 25일은 '숫자+にち' 규칙에 따라 'にじゅうごにち'라고 읽습니다."
+            },
+            {
+                "stem": "10일의 올바른 발음은 무엇인가요?",
+                "options": ["<ruby>十日<rt>じゅうにち</rt></ruby>", "<ruby>十日<rt>とおか</rt></ruby>", "<ruby>十日<rt>じっか</rt></ruby>"],
+                "answer": "<ruby>十日<rt>とおか</rt></ruby>",
+                "explanation": "10일은 'とおか'라는 고유어 읽기를 사용해요. 1일부터 10일까지는 모두 특별하게 읽어요."
+            }
+        ]
+    },
+    {
+        "id": "time-expression",
+        "level": "N5",
+        "title": "시간 표현 - 시(時)와 분(分)의 특별한 발음들",
+        "description": "よじ, しちじ, くじ... 시간도 특별해요! 시와 분의 발음 규칙을 완전 정복!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "🕐 시(時) - 12시간의 특별한 읽기"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "시간 표현도 숫자와 다른 특별한 읽기가 있어요! 특히 4시, 7시, 9시는 일반 숫자와 다르게 읽어야 해요. 이는 듣기 쉽고 구별하기 쉽게 하기 위해서예요!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🕓 <ruby>四時<rt>よじ</rt></ruby> (yoji) - 4시 ⚠️ 'し'가 아니라 'よ'!",
+                        "🕖 <ruby>七時<rt>しちじ</rt></ruby> (shichiji) - 7시 ⚠️ 'なな'가 아니라 'しち'!",
+                        "🕘 <ruby>九時<rt>くじ</rt></ruby> (kuji) - 9시 ⚠️ 'きゅう'가 아니라 'く'!"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "⏰ 분(分) - ふん vs ぷん의 싸움!"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "분(分)은 정말 복잡해요! 'ふん'과 'ぷん' 두 가지 읽기가 있고, 숫자에 따라 달라져요. 하지만 규칙이 있으니까 차근차근 배워봐요!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🎯 'ぷん'으로 읽는 분들: 1(<ruby>いっぷん<rt>いっぷん</rt></ruby>), 3(<ruby>さんぷん<rt>さんぷん</rt></ruby>), 4(<ruby>よんぷん<rt>よんぷん</rt></ruby>), 6(<ruby>ろっぷん<rt>ろっぷん</rt></ruby>), 8(<ruby>はっぷん<rt>はっぷん</rt></ruby>), 10(<ruby>じゅっぷん<rt>じゅっぷん</rt></ruby>)",
+                        "🎯 'ふん'으로 읽는 분들: 2(<ruby>にふん<rt>にふん</rt></ruby>), 5(<ruby>ごふん<rt>ごふん</rt></ruby>), 7(<ruby>ななふん<rt>ななふん</rt></ruby>), 9(<ruby>きゅうふん<rt>きゅうふん</rt></ruby>)"
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "💡 암기법! '1, 3, 4, 6, 8, 10은 ぷん!'이라고 외우세요. 나머지는 ふん이에요!"
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "⏱️ 실전! 시간 약속과 일정"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "<ruby>九時<rt>くじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きます。", "ko": "9시에 일어나요." },
+                        { "de": "<ruby>会議<rt>かいぎ</rt></ruby>は<ruby>四時<rt>よじ</rt></ruby><ruby>十五分<rt>じゅうごふん</rt></ruby>からです。", "ko": "회의는 4시 15분부터예요." },
+                        { "de": "<ruby>電車<rt>でんしゃ</rt></ruby>は<ruby>七時<rt>しちじ</rt></ruby><ruby>三分<rt>さんぷん</rt></ruby>に<ruby>出発<rt>しゅっぱつ</rt></ruby>します。", "ko": "전철은 7시 3분에 출발해요." },
+                        { "de": "<ruby>今<rt>いま</rt></ruby><ruby>十時<rt>じゅうじ</rt></ruby><ruby>半<rt>はん</rt></ruby>です。", "ko": "지금 10시 반이에요. (半은 30분을 의미)" }
+                    ]
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "<ruby>今<rt>いま</rt></ruby>___です。(9시)",
+                "options": ["<ruby>九時<rt>きゅうじ</rt></ruby>", "<ruby>九時<rt>くじ</rt></ruby>", "<ruby>九時<rt>ここのじ</rt></ruby>"],
+                "answer": "<ruby>九時<rt>くじ</rt></ruby>",
+                "explanation": "9시는 'くじ'라고 특별하게 읽어요! 일반 숫자 'きゅう'와 다르니 주의하세요."
+            },
+            {
+                "stem": "<ruby>会議<rt>かいぎ</rt></ruby>는 ___부터입니다。(4시)",
+                "options": ["<ruby>四時<rt>しじ</rt></ruby>", "<ruby>四時<rt>よじ</rt></ruby>", "<ruby>四時<rt>よんじ</rt></ruby>"],
+                "answer": "<ruby>四時<rt>よじ</rt></ruby>",
+                "explanation": "4시는 'よじ'라고 특별하게 읽어요! 'しじ'라고 하면 1시(いちじ)와 헷갈리기 쉽고, 'し'가 '죽음'을 연상시켜서 피하는 이유도 있어요."
+            },
+            {
+                "stem": "___에 <ruby>出発<rt>しゅっぱつ</rt></ruby>합니다。(10분)",
+                "options": ["<ruby>十分<rt>じゅうふん</rt></ruby>", "<ruby>十分<rt>じゅっぷん</rt></ruby>", "<ruby>十分<rt>とおふん</rt></ruby>"],
+                "answer": "<ruby>十分<rt>じゅっぷん</rt></ruby>",
+                "explanation": "10분은 'じゅっぷん'이라고 해요! 'ぷん' 그룹에 속하는 특별한 발음이에요."
+            },
+            {
+                "stem": "<ruby>授業<rt>じゅぎょう</rt></ruby>는 ___에 <ruby>始<rt>はじ</rt></ruby>まります。(7시)",
+                "options": ["<ruby>七時<rt>ななじ</rt></ruby>", "<ruby>七時<rt>しちじ</rt></ruby>", "<ruby>七時<rt>なのじ</rt></ruby>"],
+                "answer": "<ruby>七時<rt>しちじ</rt></ruby>",
+                "explanation": "7시는 'しちじ'라고 읽어요! 시간에서는 일반 숫자 읽기인 'なな' 대신 'しち'를 사용해요."
+            },
+            {
+                "stem": "'ぷん'으로 읽는 분이 *아닌* 것은?",
+                "options": ["<ruby>一分<rt>いっぷん</rt></ruby>", "<ruby>三分<rt>さんぷん</rt></ruby>", "<ruby>五分<rt>ごふん</rt></ruby>"],
+                "answer": "<ruby>五分<rt>ごふん</rt></ruby>",
+                "explanation": "5분은 'ごふん'으로 읽어요! 'ふん' 그룹에 속합니다. 1, 3, 4, 6, 8, 10분이 'ぷん'으로 끝나요."
+            },
+            {
+                "stem": "지금 시간은 3시 5분입니다.",
+                "options": ["<ruby>さんじごぷん<rt>さんじごぷん</rt></ruby>", "<ruby>さんじごふん<rt>さんじごふん</rt></ruby>", "<ruby>さんじごぶん<rt>さんじごぶん</rt></ruby>"],
+                "answer": "<ruby>さんじごふん<rt>さんじごふん</rt></ruby>",
+                "explanation": "3시는 'さんじ', 5분은 'ごふん'이므로, 합쳐서 'さんじ ごふん'이 됩니다."
+            },
+            {
+                "stem": "8분은 어떻게 읽나요?",
+                "options": ["<ruby>はちふん<rt>はちふん</rt></ruby>", "<ruby>はっぷん<rt>はっぷん</rt></ruby>", "<ruby>はちぷん<rt>はちぷん</rt></ruby>"],
+                "answer": "<ruby>はっぷん<rt>はっぷん</rt></ruby>",
+                "explanation": "8분은 'はっぷん'이라고 읽어요. 'ぷん' 그룹이며, 촉음(っ)이 추가되는 특별한 발음입니다."
+            },
+            {
+                "stem": "'30분'을 의미하는 다른 표현은 무엇인가요?",
+                "options": ["<ruby>半<rt>はん</rt></ruby>", "<ruby>分<rt>ぶん</rt></ruby>", "<ruby>丸<rt>まる</rt></ruby>"],
+                "answer": "<ruby>半<rt>はん</rt></ruby>",
+                "explanation": "30분은 <ruby>三十分<rt>さんじゅっぷん</rt></ruby>이라고도 하지만, '반'을 의미하는 <ruby>半<rt>はん</rt></ruby>을 더 자주 사용해요. (예: <ruby>一時半<rt>いちじはん</rt></ruby> - 1시 30분)"
+            }
+        ]
+    },
+    {
+        "id": "weekdays-expression",
+        "level": "N5",
+        "title": "요일 표현 - 月火水木金土日의 완벽 정복",
+        "description": "げつようび부터 にちようび까지! 일본의 7요일을 한자와 함께 마스터해요!",
+        "detailedExplanation": [
+            [
+                {
+                    "type": "heading",
+                    "content": "🌍 요일의 신비한 유래 이야기"
+                },
+                {
+                    "type": "paragraph",
+                    "content": "일본의 요일은 고대 중국의 오행설(五行說)과 천체 관찰에서 유래했어요! 월(달), 화(불/화성), 수(물/수성), 목(나무/목성), 금(금속/금성), 토(흙/토성), 일(태양)을 나타내죠. 서양의 요일 이름과도 비슷한 원리예요!"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "🌙 <ruby>月曜日<rt>げつようび</rt></ruby> (getsuyoubi) - 월요일",
+                        "🔥 <ruby>火曜日<rt>かようび</rt></ruby> (kayoubi) - 화요일",
+                        "💧 <ruby>水曜日<rt>すいようび</rt></ruby> (suiyoubi) - 수요일",
+                        "🌳 <ruby>木曜日<rt>もくようび</rt></ruby> (mokuyoubi) - 목요일",
+                        "💰 <ruby>金曜日<rt>きんようび</rt></ruby> (kinyoubi) - 금요일",
+                        "🏔️ <ruby>土曜日<rt>どようび</rt></ruby> (doyoubi) - 토요일",
+                        "☀️ <ruby>日曜日<rt>にちようび</rt></ruby> (nichiyoubi) - 일요일"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "📅 요일과 함께 쓰는 유용한 표현들"
+                },
+                {
+                    "type": "list",
+                    "items": [
+                        "<ruby>今日<rt>きょう</rt></ruby>は<ruby>何曜日<rt>なんようび</rt></ruby>？(오늘은 무슨 요일?)",
+                        "<ruby>平日<rt>へいじつ</rt></ruby> (평일 - 월~금)",
+                        "<ruby>週末<rt>しゅうまつ</rt></ruby> (주말 - 토, 일)",
+                        "<ruby>休日<rt>きゅうじつ</rt></ruby> (휴일)",
+                        "<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>土曜日<rt>どようび</rt></ruby> (매주 토요일)"
+                    ]
+                }
+            ],
+            [
+                {
+                    "type": "heading",
+                    "content": "💬 실전! 요일이 들어간 일상 대화"
+                },
+                {
+                    "type": "example",
+                    "items": [
+                        { "de": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>火曜日<rt>かようび</rt></ruby>です。", "ko": "오늘은 화요일입니다." },
+                        { "de": "<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>木曜日<rt>もくようび</rt></ruby>に<ruby>会議<rt>かいぎ</rt></ruby>があります。", "ko": "다음 주 목요일에 회의가 있어요." },
+                        { "de": "<ruby>日曜日<rt>にちようび</rt></ruby>は<ruby>家族<rt>かぞく</rt></ruby>と<ruby>過<rt>す</rt></ruby>ごします。", "ko": "일요일은 가족과 보내요." },
+                        { "de": "<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>何<rt>なに</rt></ruby>をしますか？", "ko": "주말에는 뭘 하세요?" }
+                    ]
+                },
+                {
+                    "type": "paragraph",
+                    "content": "🗾 일본 문화 팁! 일본에서는 금요일을 '하나킨(花金)'이라고 해요. '꽃 피는 금요일'이란 뜻으로, 주말을 앞두고 들뜬 기분을 표현하는 말이에요!"
+                }
+            ]
+        ],
+        "questions": [
+            {
+                "stem": "<ruby>今日<rt>きょう</rt></ruby>는 ___입니다. (월요일)",
+                "options": ["<ruby>月曜日<rt>つきようび</rt></ruby>", "<ruby>月曜日<rt>げつようび</rt></ruby>", "<ruby>月曜日<rt>がつようび</rt></ruby>"],
+                "answer": "<ruby>月曜日<rt>げつようび</rt></ruby>",
+                "explanation": "월요일은 'げつようび'라고 읽어요. 달을 의미하는 月의 음독 '게츠'를 사용해요."
+            },
+            {
+                "stem": "<ruby>来週<rt>らいしゅう</rt></ruby>의 ___에 <ruby>試験<rt>しけん</rt></ruby>이 있습니다. (목요일)",
+                "options": ["<ruby>木曜日<rt>きようび</rt></ruby>", "<ruby>木曜日<rt>もくようび</rt></ruby>", "<ruby>木曜日<rt>こようび</rt></ruby>"],
+                "answer": "<ruby>木曜日<rt>もくようび</rt></ruby>",
+                "explanation": "목요일은 'もくようび'라고 읽어요. 나무를 의미하는 木의 음독 '모쿠'를 사용해요."
+            },
+            {
+                "stem": "___는 <ruby>休<rt>やす</rt></ruby>み입니다. (일요일)",
+                "options": ["<ruby>日曜日<rt>ひようび</rt></ruby>", "<ruby>日曜日<rt>にちようび</rt></ruby>", "<ruby>日曜日<rt>じつようび</rt></ruby>"],
+                "answer": "<ruby>日曜日<rt>にちようび</rt></ruby>",
+                "explanation": "일요일은 'にちようび'라고 읽어요. 해를 의미하는 日의 음독 '니치'를 사용해요."
+            },
+            {
+                "stem": "<ruby>毎週<rt>まいしゅう</rt></ruby>___에 <ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>를 합니다. (토요일)",
+                "options": ["<ruby>土曜日<rt>つちようび</rt></ruby>", "<ruby>土曜日<rt>どようび</rt></ruby>", "<ruby>土曜日<rt>とようび</rt></ruby>"],
+                "answer": "<ruby>土曜日<rt>どようび</rt></ruby>",
+                "explanation": "토요일은 'どようび'라고 읽어요. 흙을 의미하는 土의 음독 '도'를 사용해요."
+            },
+            {
+                "stem": "'물'과 관련된 요일은?",
+                "options": ["<ruby>火曜日<rt>かようび</rt></ruby>", "<ruby>水曜日<rt>すいようび</rt></ruby>", "<ruby>木曜日<rt>もくようび</rt></ruby>"],
+                "answer": "<ruby>水曜日<rt>すいようび</rt></ruby>",
+                "explanation": "수요일은 水(물)요일이에요! 수성(水星)에서 유래했어요."
+            },
+            {
+                "stem": "금요일의 올바른 발음은 무엇인가요?",
+                "options": ["<ruby>金曜日<rt>かねようび</rt></ruby>", "<ruby>金曜日<rt>きんようび</rt></ruby>", "<ruby>金曜日<rt>ごんようび</rt></ruby>"],
+                "answer": "<ruby>金曜日<rt>きんようび</rt></ruby>",
+                "explanation": "금요일은 'きんようび'라고 읽어요. 쇠/돈을 의미하는 金의 음독 '킨'을 사용해요."
+            },
+            {
+                "stem": "<ruby>週末<rt>しゅうまつ</rt></ruby>(주말)에 해당하는 요일은 무엇인가요?",
+                "options": ["월요일, 화요일", "금요일, 토요일", "토요일, 일요일"],
+                "answer": "토요일, 일요일",
+                "explanation": "<ruby>週末<rt>しゅうまつ</rt></ruby>는 '주의 끝'이라는 의미로, 토요일(<ruby>土曜日<rt>どようび</rt></ruby>)과 일요일(<ruby>日曜日<rt>にちようび</rt></ruby>)을 가리켜요."
+            },
+            {
+                "stem": "<ruby>今日<rt>きょう</rt></ruby>は<ruby>何曜日<rt>なんようび</rt></ruby>ですか？에 대한 대답으로 알맞지 *않은* 것은?",
+                "options": ["<ruby>火曜日<rt>かようび</rt></ruby>です。", "<ruby>平日<rt>へいじつ</rt></ruby>です。", "<ruby>昨日<rt>きのう</rt></ruby>でした。"],
+                "answer": "<ruby>昨日<rt>きのう</rt></ruby>でした。",
+                "explanation": "'무슨 요일입니까?'라는 질문에는 요일(<ruby>火曜日<rt>かようび</rt></ruby>)이나 평일/주말(<ruby>平日<rt>へいじつ</rt></ruby>) 등으로 답할 수 있지만, '어제였습니다(<ruby>昨日<rt>きのう</rt></ruby>でした)'는 질문에 맞지 않는 대답이에요."
+            }
+        ]
     }
-];
+]

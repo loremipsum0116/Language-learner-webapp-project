@@ -84,30 +84,48 @@ export default function JapaneseGrammarQuiz() {
             setIncorrectAnswers(prev => [...prev, currentQuestion]);
 
             // 오답노트에 일본어 문법 문제 기록
+            const odatPayload = {
+                type: 'grammar',  // 통합된 문법 타입 사용 (영어/일본어 구분 없음)
+                wrongData: {
+                    topicId: topicId,
+                    topicTitle: topic.title,
+                    questionIndex: currentIndex,
+                    question: currentQuestion.stem,
+                    userAnswer: userAnswer,
+                    correctAnswer: currentQuestion.answer,
+                    options: currentQuestion.options,
+                    explanation: currentQuestion.explanation,
+                    level: topic.level,
+                    language: 'ja'  // 일본어 문법임을 명시
+                }
+            };
+
+            console.log('🔍 [일본어 문법 오답 기록 시도]', odatPayload);
+
             try {
-                await fetchJSON('/api/odat-note', withCreds({
+                const response = await fetchJSON('/api/odat-note', withCreds({
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        type: 'japanese-grammar',
-                        wrongData: {
-                            topicId: topicId,
-                            topicTitle: topic.title,
-                            questionIndex: currentIndex,
-                            question: currentQuestion.stem,
-                            userAnswer: userAnswer,
-                            correctAnswer: currentQuestion.answer,
-                            options: currentQuestion.options,
-                            explanation: currentQuestion.explanation,
-                            level: topic.level
-                        }
-                    })
+                    body: JSON.stringify(odatPayload)
                 }));
-                console.log(`✅ [일본어 문법 오답 기록] ${topic.title} - 문제 ${currentIndex + 1}`);
+                console.log(`✅ [일본어 문법 오답 기록 성공] ${topic.title} - 문제 ${currentIndex + 1}`, response);
+
+                // 오답노트 페이지 자동 새로고침 이벤트 발생
+                window.dispatchEvent(new CustomEvent('wrongAnswerAdded', {
+                    detail: {
+                        type: 'grammar',
+                        language: 'ja',
+                        topicTitle: topic.title
+                    }
+                }));
             } catch (error) {
                 console.error('❌ 일본어 문법 오답 기록 실패:', error);
+                console.error('에러 상세:', error.message, error.response);
                 if (error.message.includes('Unauthorized')) {
                     console.warn('⚠️ 로그인이 필요합니다.');
+                    alert('오답노트 기록을 위해 로그인이 필요합니다.');
+                } else {
+                    console.error('⚠️ 오답노트 저장 실패. 백엔드 서버 상태를 확인하세요.');
                 }
             }
         }

@@ -75,7 +75,8 @@ export default function GrammarQuiz() {
                             correctAnswer: currentQuestion.answer,
                             options: currentQuestion.options,
                             explanation: currentQuestion.explanation,
-                            level: topic.level
+                            level: topic.level,
+                            language: 'en' // 영어 문법 명시
                         }
                     })
                 }));

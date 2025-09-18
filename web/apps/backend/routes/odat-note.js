@@ -179,6 +179,16 @@ router.get('/list', async (req, res) => {
           correctTotal: srsCard.correctTotal || 0,
           wrongTotal: srsCard.wrongTotal || 0
         };
+
+        // 어휘 타입에서는 SRS 대기 시간을 고려하여 canReview 재계산
+        const now = new Date();
+        if (srsCard.waitingUntil) {
+          const waitingUntil = new Date(srsCard.waitingUntil);
+          result.canReview = now >= waitingUntil && now >= wa.reviewWindowStart && now <= wa.reviewWindowEnd;
+        } else if (srsCard.nextReviewAt) {
+          const nextReviewAt = new Date(srsCard.nextReviewAt);
+          result.canReview = now >= nextReviewAt && now >= wa.reviewWindowStart && now <= wa.reviewWindowEnd;
+        }
       } else if (wa.itemType === 'vocab') {
         // SRS 카드가 없는 경우 null로 설정
         result.srsCard = null;
@@ -348,11 +358,22 @@ router.post('/create', async (req, res) => {
     // type 필드가 있으면 itemType으로 변환하고 itemId 생성
     if (type && !itemType) {
       itemType = type;
-      // wrongData에서 고유 ID 생성 (정수)
+      // wrongData에서 고유 ID 생성 (정수) - 언어별로 구분
       if (type === 'reading' && wrongData?.questionIndex !== undefined) {
         itemId = wrongData.questionIndex + 1000; // 리딩: 1000번대
       } else if (type === 'grammar' && wrongData?.questionIndex !== undefined) {
-        itemId = wrongData.questionIndex + 2000; // 문법: 2000번대
+        // topicId와 questionIndex를 조합한 고유 ID 생성
+        const topicHash = wrongData.topicId ? wrongData.topicId.split('').reduce((a, b) => {
+          a = ((a << 5) - a) + b.charCodeAt(0);
+          return a & a;
+        }, 0) : 0;
+        const baseId = Math.abs(topicHash) % 1000 + wrongData.questionIndex;
+
+        if (wrongData.language === 'ja') {
+          itemId = baseId + 2000; // 일본어 문법: 2000번대
+        } else {
+          itemId = baseId + 2500; // 영어 문법: 2500번대
+        }
       } else if (type === 'listening' && wrongData?.questionId) {
         // listening의 questionId가 이미 숫자라면 그대로 사용
         itemId = parseInt(wrongData.questionId) || (wrongData.questionIndex + 3000);
@@ -512,11 +533,23 @@ router.post('/', async (req, res) => {
     let finalItemType = type;
     let finalItemId;
     
-    // wrongData에서 고유 ID 생성 (정수)
+    // wrongData에서 고유 ID 생성 (정수) - 언어별로 구분
     if (type === 'reading' && wrongData?.questionIndex !== undefined) {
       finalItemId = wrongData.questionIndex + 1000; // 리딩: 1000번대
     } else if (type === 'grammar' && wrongData?.questionIndex !== undefined) {
-      finalItemId = wrongData.questionIndex + 2000; // 문법: 2000번대
+      // topicId와 questionIndex를 조합한 고유 ID 생성
+      const topicHash = wrongData.topicId ? wrongData.topicId.split('').reduce((a, b) => {
+        a = ((a << 5) - a) + b.charCodeAt(0);
+        return a & a;
+      }, 0) : 0;
+      const baseId = Math.abs(topicHash) % 1000 + wrongData.questionIndex;
+
+      if (wrongData.language === 'ja') {
+        finalItemId = baseId + 2000; // 일본어 문법: 2000번대
+      } else {
+        finalItemId = baseId + 2500; // 영어 문법: 2500번대
+      }
+      console.log(`🎌 [문법 오답] topicId: ${wrongData.topicId}, index: ${wrongData.questionIndex}, itemId: ${finalItemId}, language: ${wrongData.language || 'unknown'}`);
     } else if (type === 'listening' && wrongData?.questionId) {
       // listening의 questionId가 문자열이면 해시로 변환
       const questionId = wrongData.questionId;

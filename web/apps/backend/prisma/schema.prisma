@@ -70,7 +70,7 @@ model grammaritem {
 model reading {
   id        Int    @id @default(autoincrement())
   title     String
-  body      String
+  body      String @db.LongText
   levelCEFR String
   glosses   Json
 }
