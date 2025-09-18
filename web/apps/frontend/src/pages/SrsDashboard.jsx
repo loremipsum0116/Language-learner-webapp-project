@@ -241,9 +241,53 @@ export default function SrsDashboard() {
     async function deleteFolderSafely(e, id, reload) {
         e.preventDefault();
         e.stopPropagation();
-        if (!window.confirm("폴더를 삭제하시겠습니까? (연결된 아이템도 함께 삭제)")) return;
-        await SrsApi.deleteFolder(id);
-        await reload();
+
+        const confirmMessage = `폴더를 삭제하시겠습니까?\n\n⚠️ 삭제 시 다음 정보가 초기화됩니다:\n• 오늘 학습한 단어들의 상세 기록\n• 오답률 통계\n• 폴더 내 모든 카드와 연결 정보\n\n✅ 보존되는 정보:\n• 연속 학습일\n• 오늘 학습한 총 횟수\n• 전체 학습 진행률\n\n정말 삭제하시겠습니까?`;
+
+        if (!window.confirm(confirmMessage)) return;
+
+        try {
+            await SrsApi.deleteFolder(id);
+
+            // 폴더 삭제 후 관련 데이터 강제 새로고침
+            console.log('[FOLDER DELETE] 폴더 삭제 완료, 관련 데이터 새로고침 중...');
+
+            // 1. 현재 페이지 데이터 새로고침
+            await reload();
+
+            // 2. 브라우저 캐시 무효화 (localStorage 기반 캐시가 있다면)
+            if (window.localStorage) {
+                Object.keys(localStorage).forEach(key => {
+                    if (key.includes('srs') || key.includes('wrong') || key.includes('study')) {
+                        localStorage.removeItem(key);
+                        console.log(`[CACHE CLEAR] Removed localStorage: ${key}`);
+                    }
+                });
+            }
+
+            // 3. 다른 탭/페이지에 알림
+            // a) 커스텀 이벤트 발송 (같은 탭 내 다른 컴포넌트)
+            console.log('[FOLDER DELETE] Dispatching srsDataUpdated event for folder:', id);
+            window.dispatchEvent(new CustomEvent('srsDataUpdated', {
+                detail: { type: 'folderDeleted', folderId: id }
+            }));
+
+            // b) storage event 발송 (다른 탭)
+            const storageData = {
+                timestamp: Date.now(),
+                type: 'folderDeleted',
+                folderId: id
+            };
+            console.log('[FOLDER DELETE] Setting storage event:', storageData);
+            localStorage.setItem('srs-data-updated', JSON.stringify(storageData));
+            localStorage.removeItem('srs-data-updated');
+
+            console.log('[FOLDER DELETE] 데이터 새로고침 및 이벤트 발송 완료');
+
+        } catch (error) {
+            console.error('폴더 삭제 실패:', error);
+            alert('폴더 삭제에 실패했습니다. 다시 시도해주세요.');
+        }
     }
     const handleCreateFolder = async (e) => {
         e.preventDefault();
@@ -385,22 +429,22 @@ export default function SrsDashboard() {
                                 
                                 {/* 진행률 바 */}
                                 <div className="progress mb-2" style={{height: '20px'}}>
-                                    <div 
+                                    <div
                                         className={`progress-bar ${
-                                            totalAttempts >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
+                                            (streakInfo?.dailyQuizCount || 0) >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
                                         }`}
-                                        style={{width: `${Math.min(100, (totalAttempts / streakInfo.requiredDaily) * 100)}%`}}
+                                        style={{width: `${Math.min(100, ((streakInfo?.dailyQuizCount || 0) / streakInfo.requiredDaily) * 100)}%`}}
                                     >
-                                        {totalAttempts}/{streakInfo.requiredDaily}
+                                        {streakInfo?.dailyQuizCount || 0}/{streakInfo.requiredDaily}
                                     </div>
                                 </div>
                                 
                                 {/* 상태 메시지 */}
                                 <div className="d-flex justify-content-between align-items-center mb-3">
                                     <small className="text-muted">
-                                        {totalAttempts >= streakInfo.requiredDaily ? 
-                                            '오늘 목표 달성! 🎉' : 
-                                            `오늘 ${streakInfo.requiredDaily - totalAttempts}개 더 필요`}
+                                        {streakInfo.remainingForStreak <= 0 ?
+                                            '오늘 목표 달성! 🎉' :
+                                            `오늘 ${streakInfo.remainingForStreak}개 더 필요`}
                                     </small>
                                     {streakInfo?.bonus?.next && (
                                         <small className="text-muted">
@@ -414,8 +458,14 @@ export default function SrsDashboard() {
                                 <div className="border-top pt-3">
                                     <div className="d-flex justify-content-between align-items-center mb-2">
                                         <small className="text-muted">
-                                            {totalAttempts > 0 ? (
-                                                <>📊 오늘 학습: {totalAttempts}회 | 오답율: <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
+                                            {(streakInfo?.dailyQuizCount || 0) > 0 ? (
+                                                <>📊 오늘 학습: {streakInfo?.dailyQuizCount || 0}회 | 오답율: {
+                                                    totalAttempts > 0 ? (
+                                                        <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
+                                                    ) : (
+                                                        <span className="text-muted">정보 없음</span>
+                                                    )
+                                                }
                                                 {isEstimated && <span className="text-info"> (추정)</span>}</>
                                             ) : (
                                                 <>📊 오늘 학습: 0회 | 오답율: 0%</>
@@ -455,6 +505,12 @@ export default function SrsDashboard() {
                                                                     })
                                                                 }
                                                                 
+                                                            </div>
+                                                        ) : (streakInfo?.dailyQuizCount || 0) > 0 ? (
+                                                            <div className="text-center py-3">
+                                                                <span className="text-info">📚 {streakInfo?.dailyQuizCount || 0}회 학습 완료!</span>
+                                                                <br />
+                                                                <small className="text-muted">상세 학습 기록을 불러올 수 없습니다.</small>
                                                             </div>
                                                         ) : totalAttempts > 0 && isEstimated ? (
                                                             <div className="text-center py-3">

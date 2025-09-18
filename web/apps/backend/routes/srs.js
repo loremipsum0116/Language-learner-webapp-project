@@ -1617,21 +1617,21 @@ router.delete('/folders/:id', async (req, res, next) => {
             for (const folderId of sortedFolderIds) {
                 console.log(`[RECURSIVE DELETE] 🧹 Starting complete cleanup for folder ${folderId}`);
 
-                // 2.1. 해당 폴더의 모든 카드 ID 수집
-                const folderItems = await tx.srsfolderitem.findMany({
+                // 2.1. 모든 폴더-카드 연결 삭제
+                const allFolderItems = await tx.srsfolderitem.findMany({
                     where: { folderId },
-                    select: { cardId: true }
+                    select: { id: true, cardId: true }
                 });
-                const folderCardIds = folderItems.map(item => item.cardId);
-                console.log(`[RECURSIVE DELETE] Found ${folderCardIds.length} cards in folder ${folderId}`);
 
-                // 2.2. 폴더-카드 연결 삭제 (해당 폴더만)
                 const deletedFolderItems = await tx.srsfolderitem.deleteMany({
                     where: { folderId }
                 });
-                console.log(`[RECURSIVE DELETE] Deleted ${deletedFolderItems.count} folder-card connections for folder ${folderId}`);
+                console.log(`[RECURSIVE DELETE] Deleted ${deletedFolderItems.count} folder-card connections`);
 
-                // 2.3. 이 폴더 전용 오답노트 삭제 (folderId 기반)
+                // 수집할 카드 ID는 모든 카드들
+                const folderCardIds = allFolderItems.map(item => item.cardId);
+
+                // 2.2. 이 폴더 전용 오답노트 삭제 (folderId 기반)
                 const folderWrongAnswers = await tx.wronganswer.deleteMany({
                     where: { userId, folderId }
                 });
@@ -1669,14 +1669,8 @@ router.delete('/folders/:id', async (req, res, next) => {
                         totalWrongAnswersDeleted += cardWrongAnswers.count;
                         console.log(`[RECURSIVE DELETE] Deleted ${cardWrongAnswers.count} card-based wrong answers for orphaned cards`);
 
-                        // 🔥 2.4.3. 고아 카드들의 vocab 관련 리포트 삭제
-                        const cardReports = await tx.cardReport.deleteMany({
-                            where: {
-                                userId,
-                                vocabId: { in: orphanedVocabIds }
-                            }
-                        });
-                        console.log(`[RECURSIVE DELETE] Deleted ${cardReports.count} card reports for orphaned vocab`);
+                        // 🔥 2.4.3. cardReport는 학습 기록이 아닌 신고 기록이므로 삭제하지 않음
+                        console.log(`[RECURSIVE DELETE] Skipping cardReport deletion - maintaining report history for orphaned vocab`);
 
                         // 🔥 2.4.4. 고아 카드들 완전 삭제
                         await tx.srscard.deleteMany({
@@ -1735,13 +1729,7 @@ router.delete('/folders/:id', async (req, res, next) => {
                 select: { id: true, folderId: true }
             });
 
-            const orphanedReports = await tx.cardReport.findMany({
-                where: {
-                    userId,
-                    vocabId: { in: allFolderIds } // 이건 실제로는 발생하지 않지만 검증용
-                },
-                select: { id: true, vocabId: true }
-            });
+            // cardReport는 유지하므로 검증에서 제외
 
             // 경고 및 오류 보고
             if (orphanedItems.length > 0) {
@@ -2543,8 +2531,9 @@ router.post('/folders/:id/enable-learning', async (req, res, next) => {
 router.get('/streak', async (req, res, next) => {
     try {
         const userId = req.user.id;
+
         const streakInfo = await getUserStreakInfo(userId);
-        
+
         return ok(res, streakInfo);
     } catch (e) {
         next(e);
@@ -3322,17 +3311,18 @@ router.get('/study-log', async (req, res, next) => {
         console.log(`[STUDY LOG] Querying study log for user ${userId} on ${dateParam}`);
         console.log(`[STUDY LOG] Date range: ${startOfDay.toISOString()} to ${endOfDay.toISOString()}`);
         
-        // 표시용: 모든 오늘 학습한 단어들 조회 (대기상태 포함)
+        // 표시용: 모든 오늘 학습한 단어들 조회 (대기상태 포함, folderId null 포함)
         const allStudiedItems = await prisma.srsfolderitem.findMany({
             where: {
                 srscard: {
                     userId: userId,
                     itemType: 'vocab'
                 },
-                lastReviewedAt: { 
-                    gte: startOfDay, 
-                    lte: endOfDay 
+                lastReviewedAt: {
+                    gte: startOfDay,
+                    lte: endOfDay
                 }
+                // folderId 조건 제거 - null인 것도 포함
             },
             include: {
                 srscard: {

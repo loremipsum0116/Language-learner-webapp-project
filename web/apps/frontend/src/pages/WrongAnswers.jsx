@@ -85,7 +85,9 @@ export default function WrongAnswers() {
 
   const loadCategories = async () => {
     try {
-      const { data } = await fetchJSON("/api/odat-note/categories", withCreds());
+      // 캐시 무효화를 위한 타임스탬프 추가
+      const timestamp = Date.now();
+      const { data } = await fetchJSON(`/api/odat-note/categories?_=${timestamp}`, withCreds());
       setCategories(data);
     } catch (error) {
       console.error("Failed to load categories:", error);
@@ -140,7 +142,9 @@ export default function WrongAnswers() {
   const reload = async () => {
     setLoading(true);
     try {
-      const { data } = await fetchJSON(`/api/odat-note/list?type=${selectedTab}`, withCreds());
+      // 캐시 무효화를 위한 타임스탬프 추가
+      const timestamp = Date.now();
+      const { data } = await fetchJSON(`/api/odat-note/list?type=${selectedTab}&_=${timestamp}`, withCreds());
       const allData = data || [];
 
       console.log(`🔍 [WrongAnswers DEBUG] API 응답:`, {
@@ -185,19 +189,50 @@ export default function WrongAnswers() {
       loadCategories();
     };
 
-    // 페이지가 다시 포커스될 때 새로고침 (다른 탭에서 학습 후 돌아올 때)
-    const handleFocus = () => {
+    const handleDataUpdated = (event) => {
+      console.log('[WRONG ANSWERS] SRS data updated (folder deleted), refreshing...', event?.detail);
       reload();
       loadCategories();
     };
 
+    // localStorage 변경 감지 (다른 탭에서 폴더 삭제 시)
+    const handleStorageChange = (e) => {
+      if (e.key === 'srs-data-updated') {
+        console.log('[WRONG ANSWERS] Storage event detected, refreshing...');
+        reload();
+        loadCategories();
+      }
+    };
+
+    // 페이지가 다시 포커스될 때 새로고침 (다른 탭에서 학습 후 돌아올 때)
+    const handleFocus = () => {
+      console.log('[WRONG ANSWERS] Page focused, refreshing...');
+      reload();
+      loadCategories();
+    };
+
+    // 페이지가 다시 보이게 될 때 새로고침 (탭 전환 시)
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        console.log('[WRONG ANSWERS] Page became visible, refreshing...');
+        reload();
+        loadCategories();
+      }
+    };
+
     // 커스텀 이벤트 리스너 등록
     window.addEventListener('wrongAnswerAdded', handleWrongAnswerAdded);
+    window.addEventListener('srsDataUpdated', handleDataUpdated);
+    window.addEventListener('storage', handleStorageChange);
     window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       window.removeEventListener('wrongAnswerAdded', handleWrongAnswerAdded);
+      window.removeEventListener('srsDataUpdated', handleDataUpdated);
+      window.removeEventListener('storage', handleStorageChange);
       window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
