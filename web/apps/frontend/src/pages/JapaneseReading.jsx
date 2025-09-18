@@ -88,6 +88,27 @@ export default function JapaneseReading() {
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
         }
 
+        // 즉시 업데이트: 문제 제출 후 바로 목록 페이지 데이터 새로고침 신호
+        console.log('🚀 [IMMEDIATE UPDATE] Triggering instant refresh for question:', currentQuestionData.id);
+
+        const updateData = {
+            questionId: currentQuestionData.id,
+            level: level,
+            isCorrect: correct,
+            timestamp: Date.now()
+        };
+        localStorage.setItem('japaneseReadingInstantUpdate', JSON.stringify(updateData));
+
+        // 여러 방법으로 알림 발송
+        console.log('🔔 [EVENT] Dispatching CustomEvent...');
+        window.dispatchEvent(new CustomEvent('japaneseReadingUpdate', { detail: updateData }));
+
+        console.log('🔔 [EVENT] Dispatching StorageEvent...');
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'japaneseReadingInstantUpdate',
+            newValue: JSON.stringify(updateData)
+        }));
+
         // 서버에 답안 제출
         try {
             const response = await fetch('http://localhost:4000/api/japanese-reading/submit', {
@@ -111,6 +132,7 @@ export default function JapaneseReading() {
 
             if (!response.ok) {
                 console.error('Failed to submit answer to server');
+                // 서버 실패 시 롤백 로직을 여기에 추가할 수 있음
             }
         } catch (error) {
             console.error('Error submitting answer:', error);
@@ -151,8 +173,18 @@ export default function JapaneseReading() {
         setCompletedQuestions(new Set());
     };
 
-    const finishQuiz = () => {
+    const navigateToList = () => {
+        // 일본어 리딩 목록 페이지에 통계 업데이트 알림
+        localStorage.setItem('japaneseReadingUpdated', Date.now().toString());
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'japaneseReadingUpdated',
+            newValue: Date.now().toString()
+        }));
         navigate(`/japanese-reading?level=${level}`);
+    };
+
+    const finishQuiz = () => {
+        navigateToList();
     };
 
     if (loading) {
@@ -173,7 +205,7 @@ export default function JapaneseReading() {
                     <h2>❌ 오류 발생</h2>
                     <p>{error}</p>
                     <button
-                        onClick={() => navigate(`/japanese-reading?level=${level}`)}
+                        onClick={navigateToList}
                         className="btn-primary"
                     >
                         목록으로 돌아가기
@@ -211,7 +243,7 @@ export default function JapaneseReading() {
                     <div className="reading-header-top">
                         <button
                             className="btn btn-outline-secondary btn-sm"
-                            onClick={() => navigate(`/japanese-reading?level=${level}`)}
+                            onClick={navigateToList}
                             title="문제 목록으로 돌아가기"
                         >
                             ← 뒤로가기

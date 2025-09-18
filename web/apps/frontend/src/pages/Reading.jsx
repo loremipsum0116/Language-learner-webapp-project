@@ -102,7 +102,26 @@ export default function Reading() {
         console.log('Debug - isCorrect:', correct);
         console.log('Debug - completedQuestions has question:', completedQuestions.has(currentQuestion));
         console.log('Debug - Will increase score?', correct && !completedQuestions.has(currentQuestion));
-        
+
+        // 즉시 업데이트: 문제 제출 후 바로 목록 페이지 데이터 새로고침 신호
+        console.log('🚀 [IMMEDIATE UPDATE] Triggering instant refresh for English reading question:', current.id);
+
+        const updateData = {
+            questionId: current.id,
+            level: level,
+            isCorrect: correct,
+            timestamp: Date.now()
+        };
+
+        // 여러 방법으로 알림 발송
+        console.log('🔔 [EVENT] Dispatching English reading update events...');
+        localStorage.setItem('englishReadingInstantUpdate', JSON.stringify(updateData));
+        window.dispatchEvent(new CustomEvent('englishReadingUpdate', { detail: updateData }));
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'englishReadingInstantUpdate',
+            newValue: JSON.stringify(updateData)
+        }));
+
         // 정답/오답 모두 기록 저장 (로그인된 사용자만)
         try {
             const response = await fetch('http://localhost:4000/api/reading/record', {
@@ -175,6 +194,19 @@ export default function Reading() {
         setCompletedQuestions(new Set());
     };
 
+    const navigateToList = () => {
+        // 영어 리딩 목록 페이지에 통계 업데이트 알림
+        localStorage.setItem('englishReadingInstantUpdate', JSON.stringify({
+            level: level,
+            timestamp: Date.now()
+        }));
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: 'englishReadingInstantUpdate',
+            newValue: Date.now().toString()
+        }));
+        navigate(`/reading?level=${level}`);
+    };
+
     if (loading) {
         return (
             <main className="container py-4">
@@ -222,7 +254,7 @@ export default function Reading() {
                     <div className="reading-header-top">
                         <button 
                             className="btn btn-outline-secondary btn-sm"
-                            onClick={() => navigate(`/reading?level=${level}`)}
+                            onClick={navigateToList}
                             title="문제 목록으로 돌아가기"
                         >
                             ← 뒤로가기

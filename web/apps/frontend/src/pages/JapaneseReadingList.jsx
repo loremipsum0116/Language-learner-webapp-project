@@ -58,6 +58,15 @@ export default function JapaneseReadingList() {
         if (selectedLevel) {
             loadQuestionsForLevel(selectedLevel);
         }
+
+        // 전역 강제 새로고침 함수 등록
+        if (selectedLevel) {
+            window.forceRefreshJapaneseReading = () => {
+                console.log('🔄 [FORCE REFRESH] Global function called!');
+                loadQuestionsForLevel(selectedLevel);
+                setRefreshTrigger(prev => prev + 1);
+            };
+        }
     }, [selectedLevel, refreshTrigger]);
 
     // 페이지 location이 변경될 때마다 학습 기록 새로고침
@@ -67,25 +76,44 @@ export default function JapaneseReadingList() {
         }
     }, [location.key, selectedLevel, refreshTrigger]);
 
-    // 오답노트에서 삭제 시 실시간 업데이트
+    // 오답노트에서 삭제 시 및 일본어 리딩 완료 시 실시간 업데이트
     useEffect(() => {
         const handleWrongAnswersUpdate = () => {
             console.log('🔄 [REAL-TIME UPDATE] Wrong answers updated, triggering refresh...');
             setRefreshTrigger(prev => prev + 1);
         };
 
+        const handleJapaneseReadingUpdate = () => {
+            console.log('🔄 [INSTANT UPDATE] Japanese reading completed, forcing immediate refresh...');
+
+            // 즉시 강제 새로고침
+            if (selectedLevel) {
+                console.log('🚀 [FORCE REFRESH] Immediately reloading data for level:', selectedLevel);
+                loadQuestionsForLevel(selectedLevel);
+            }
+
+            // 상태 업데이트 트리거
+            setRefreshTrigger(prev => prev + 1);
+        };
+
         const handleStorageChange = (e) => {
             if (e.key === 'wrongAnswersUpdated') {
                 handleWrongAnswersUpdate();
+            } else if (e.key === 'japaneseReadingUpdated' || e.key === 'japaneseReadingInstantUpdate') {
+                handleJapaneseReadingUpdate();
             }
         };
 
         window.addEventListener('storage', handleStorageChange);
         window.addEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        window.addEventListener('japaneseReadingUpdated', handleJapaneseReadingUpdate);
+        window.addEventListener('japaneseReadingUpdate', handleJapaneseReadingUpdate);
 
         return () => {
             window.removeEventListener('storage', handleStorageChange);
             window.removeEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+            window.removeEventListener('japaneseReadingUpdated', handleJapaneseReadingUpdate);
+            window.removeEventListener('japaneseReadingUpdate', handleJapaneseReadingUpdate);
         };
     }, []);
 
@@ -135,8 +163,12 @@ export default function JapaneseReadingList() {
             // 학습 기록 로드 (로그인된 경우만)
             try {
                 console.log(`🔍 [HISTORY FETCH] Starting history fetch for ${level}...`);
-                const historyResponse = await fetch(`http://localhost:4000/api/japanese-reading/history/${level}`, {
-                    credentials: 'include'
+                console.log(`🔍 [HISTORY URL] Fetching: http://localhost:4000/api/japanese-reading/history/${level}`);
+                console.log(`🔍 [HISTORY TIME] Current time: ${new Date().toISOString()}`);
+
+                const historyResponse = await fetch(`http://localhost:4000/api/japanese-reading/history/${level}?t=${Date.now()}`, {
+                    credentials: 'include',
+                    cache: 'no-cache' // 캐시 방지
                 });
                 console.log(`📡 [HISTORY RESPONSE] Status: ${historyResponse.status}, OK: ${historyResponse.ok}`);
 

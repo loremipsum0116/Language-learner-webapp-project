@@ -793,7 +793,7 @@ export default function WrongAnswers() {
 
                           <div className="mb-2">
                             <div className="mb-2">
-                              <strong>문제:</strong> {wa.wrongData.question}
+                              <strong>문제:</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></span>
                             </div>
                             <div className="mb-2">
                               <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
@@ -801,7 +801,7 @@ export default function WrongAnswers() {
                             </div>
                             {wa.wrongData.passage && (
                               <div className="small text-muted">
-                                <strong>지문:</strong> {wa.wrongData.passage.substring(0, 100)}...
+                                <strong>지문:</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.passage.substring(0, 100) + '...' }}></span>
                               </div>
                             )}
                           </div>
@@ -1034,12 +1034,12 @@ export default function WrongAnswers() {
                               <>
                                 <div className="mb-3">
                                   <strong>📖 지문 전체:</strong>
-                                  <div className="bg-white p-3 mt-2 rounded border">{wa.wrongData.passage}</div>
+                                  <div className="bg-white p-3 mt-2 rounded border japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.passage }}></div>
                                 </div>
 
                                 <div className="mb-3">
                                   <strong>❓ 문제:</strong>
-                                  <div className="bg-white p-2 mt-1 rounded border">{wa.wrongData.question}</div>
+                                  <div className="bg-white p-2 mt-1 rounded border japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></div>
                                 </div>
 
                                 <div className="mb-3">
@@ -1056,7 +1056,7 @@ export default function WrongAnswers() {
                                             : "bg-white"
                                         }`}
                                       >
-                                        <strong>{key}.</strong> {value}
+                                        <strong>{key}.</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: value }}></span>
                                         {key === wa.wrongData.correctAnswer && (
                                           <span key={`reading-correct-${wa.id}-${key}`} className="ms-2">✅ 정답</span>
                                         )}

@@ -85,19 +85,16 @@ router.get('/list', async (req, res) => {
     }
     
     // 새로운 WrongAnswer 모델에서 미완료 오답들을 카테고리별로 조회
+    // reading 타입의 경우 japanese-reading도 포함
     const baseWhere = {
       userId: req.user.id,
       isCompleted: false,
-      itemType: type
+      itemType: type === 'reading' ? { in: ['reading', 'japanese-reading'] } : type
     };
     
     // Raw SQL 쿼리를 Prisma ORM 쿼리로 변경하여 translations을 포함
     const wrongAnswers = await prisma.wronganswer.findMany({
-      where: {
-        userId: req.user.id,
-        isCompleted: false,
-        itemType: type
-      },
+      where: baseWhere,
       include: {
         vocab: {
           include: {
@@ -328,10 +325,14 @@ router.get('/categories', async (req, res) => {
     };
     
     categories.forEach(cat => {
-      if (data[cat.itemType]) {
-        data[cat.itemType] = {
-          total: Number(cat.totalCount),
-          active: Number(cat.activeCount)
+      // japanese-reading을 reading 카테고리에 포함
+      const categoryType = cat.itemType === 'japanese-reading' ? 'reading' : cat.itemType;
+
+      if (data[categoryType]) {
+        // 기존 값에 누적 (reading과 japanese-reading을 합침)
+        data[categoryType] = {
+          total: data[categoryType].total + Number(cat.totalCount),
+          active: data[categoryType].active + Number(cat.activeCount)
         };
       }
     });

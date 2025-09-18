@@ -958,8 +958,11 @@ app.use((req, res, next) => {
   if (req.path.startsWith('/api/test')) {
     return next();
   }
-  // Skip auth for reading APIs (including Japanese reading)
-  if (req.path.startsWith('/api/reading') || req.path.startsWith('/api/japanese-reading')) {
+  // Skip auth for reading APIs (but not for submit/record endpoints)
+  if (req.path.startsWith('/api/reading') && !req.path.includes('/record')) {
+    return next();
+  }
+  if (req.path.startsWith('/api/japanese-reading') && !req.path.includes('/submit') && !req.path.includes('/history')) {
     return next();
   }
   return authMiddleware(req, res, next);

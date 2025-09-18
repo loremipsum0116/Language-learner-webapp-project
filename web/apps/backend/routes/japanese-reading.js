@@ -61,31 +61,23 @@ router.get('/practice/:level', async (req, res) => {
 });
 
 // 일본어 리딩 답안 제출 및 오답노트 저장
-router.post('/submit', async (req, res) => {
+router.post('/submit', authMiddleware, async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE READING SUBMIT] API CALLED! 🚨🚨🚨');
     try {
         console.log(`🚀🎯 [JAPANESE READING SUBMIT] 답안 제출 시작!`);
         console.log(`📝🎯 [REQUEST BODY]`, req.body);
+        console.log(`🔐🎯 [REQ.USER]`, req.user);
 
         const {
             questionId, level, isCorrect, userAnswer, correctAnswer,
             passage, question, options, explanation
         } = req.body;
-        // 쿠키에서 사용자 ID 추출 (인증 미들웨어 우회)
-        const jwt = require('jsonwebtoken');
-        let userId = null;
 
-        try {
-            const token = req.cookies.token;
-            if (token) {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                userId = decoded.userId;
-            }
-        } catch (error) {
-            console.log('Token verification failed, continuing without user');
-        }
+        // authMiddleware가 설정한 req.user 사용
+        const userId = req.user.userId || req.user.id;
 
         if (!userId) {
+            console.log('❌🎯 [AUTH ERROR] No userId found in req.user');
             return res.status(401).json({ error: 'Authentication required' });
         }
 
@@ -239,27 +231,14 @@ router.post('/submit', async (req, res) => {
 
 // GET /japanese-reading/history/:level - 레벨별 학습 기록 조회
 console.log('🌟 [JAPANESE READING ROUTES] /history/:level route registered!');
-router.get('/history/:level', async (req, res) => {
+router.get('/history/:level', authMiddleware, async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE READING HISTORY] API CALLED! 🚨🚨🚨');
     try {
         const { level } = req.params;
-
-        // 쿠키에서 사용자 ID 추출 (인증 미들웨어 우회)
-        const jwt = require('jsonwebtoken');
-        let userId = null;
-
-        try {
-            const token = req.cookies.token;
-            if (token) {
-                const decoded = jwt.verify(token, process.env.JWT_SECRET);
-                userId = decoded.userId;
-            }
-        } catch (error) {
-            console.log('Token verification failed for history request');
-        }
+        const userId = req.user?.id;
 
         if (!userId) {
-            return res.status(401).json({ error: 'Authentication required' });
+            return res.status(401).json({ error: 'User not authenticated' });
         }
 
         // 해당 레벨의 모든 일본어 리딩 학습 기록 조회
