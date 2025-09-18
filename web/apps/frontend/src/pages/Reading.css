@@ -1,5 +1,41 @@
 /* Reading.css - Modern Reading Practice Styles */
 
+/* Japanese Ruby Text Styling */
+.japanese-text ruby {
+  display: inline-block;
+  position: relative;
+  margin: 0 0.05em;
+  vertical-align: baseline;
+}
+
+.japanese-text ruby rt {
+  font-size: 0.55em;
+  color: #555;
+  position: absolute;
+  top: -0.3em;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  text-align: center;
+  line-height: 1;
+  pointer-events: none;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
+/* Japanese text for reading list page (wider spacing) */
+.japanese-text.reading-list ruby rt {
+  top: -0.7em;
+}
+
+.japanese-text {
+  font-family: 'Hiragino Sans', 'Yu Gothic', 'Meiryo', sans-serif;
+  font-size: 1.1em;
+  line-height: 2.8;
+  letter-spacing: 0.03em;
+  padding-top: 1em;
+}
+
 /* Audio Controls for Listening Practice */
 .audio-controls {
   display: flex;

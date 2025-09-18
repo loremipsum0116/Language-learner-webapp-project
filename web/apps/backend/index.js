@@ -32,6 +32,7 @@ const quizRoutes = require('./routes/quiz');
 const srsRoutes = require('./routes/srs');                // ✅ 한번만
 const userRoutes = require('./routes/user');
 const readingRoutes = require('./routes/reading');
+const japaneseReadingRoutes = require('./routes/japanese-reading');
 const categoryRoutes = require('./routes/categories');
 const myWordbookRoutes = require('./routes/my-wordbook');
 const myIdiomsRoutes = require('./routes/my-idioms');
@@ -806,6 +807,7 @@ app.use('/time-accelerator', require('./routes/timeAccelerator').router);  // �
 app.use('/dict', dictRoutes);  // 사전 검색 API (인증 불필요)
 app.use('/exam-vocab', examVocabRoutes);  // 시험별 단어 API (인증 불필요)
 app.use('/api/reading', readingRoutes);  // Reading API (인증 불필요)
+app.use('/api/japanese-reading', japaneseReadingRoutes);  // Japanese Reading API (인증 불필요)
 app.use('/api/listening', require('./routes/listening'));  // Listening API
 app.use('/api/idiom', require('./routes/idiom_working')); // Idiom API (인증 불필요) - Working version from test server
 app.use('/test-vocab', require('./routes/test-vocab')); // Simple vocab API for mobile app testing
@@ -954,6 +956,10 @@ app.use((req, res, next) => {
   }
   // Skip auth for test API
   if (req.path.startsWith('/api/test')) {
+    return next();
+  }
+  // Skip auth for reading APIs (including Japanese reading)
+  if (req.path.startsWith('/api/reading') || req.path.startsWith('/api/japanese-reading')) {
     return next();
   }
   return authMiddleware(req, res, next);

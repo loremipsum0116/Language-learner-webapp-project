@@ -35,6 +35,8 @@ import LandingPage from "./pages/LandingPage";
 import Reading from "./pages/Reading";
 import ReadingList from "./pages/ReadingList";
 import ReadingReview from "./pages/ReadingReview";
+import JapaneseReadingList from "./pages/JapaneseReadingList";
+import JapaneseReading from "./pages/JapaneseReading";
 import Listening from "./pages/Listening";
 import ListeningList from "./pages/ListeningList";
 import ListeningPractice from "./pages/ListeningPractice";
@@ -405,7 +407,33 @@ export default function App() {
               </div>
               <Footer />
             </ProtectedRoute>
-          } 
+          }
+        />
+
+        {/* Japanese Reading 관련 라우트 (인증 필요) */}
+        <Route
+          path="/japanese-reading"
+          element={
+            <ProtectedRoute>
+              <Header />
+              <div className="main-content">
+                <JapaneseReadingList />
+              </div>
+              <Footer />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/japanese-reading/practice"
+          element={
+            <ProtectedRoute>
+              <Header />
+              <div className="main-content">
+                <JapaneseReading />
+              </div>
+              <Footer />
+            </ProtectedRoute>
+          }
         />
 
         {/* 공개 라우트 */}
