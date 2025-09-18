@@ -1,0 +1,1484 @@
+[
+  {
+    "id": 1,
+    "passage": "わたしは　たなかです。<ruby>学生<rt>がくせい</rt></ruby>です。<ruby>大学<rt>だいがく</rt></ruby>で　<ruby>日本語<rt>にほんご</rt></ruby>を　<ruby>勉強<rt>べんきょう</rt></ruby>しています。<ruby>毎日<rt>まいにち</rt></ruby>　<ruby>図書館<rt>としょかん</rt></ruby>で　<ruby>勉強<rt>べんきょう</rt></ruby>します。",
+    "question": "たなかさんは　なにを　<ruby>勉強<rt>べんきょう</rt></ruby>していますか。",
+    "options": {
+      "A": "<ruby>英語<rt>えいご</rt></ruby>",
+      "B": "<ruby>日本語<rt>にほんご</rt></ruby>",
+      "C": "<ruby>数学<rt>すうがく</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '日本語を　勉強しています'라고 일본어를 공부한다고 명시되어 있습니다."
+  },
+  {
+    "id": 2,
+    "passage": "<ruby>今日<rt>きょう</rt></ruby>は　<ruby>土曜日<rt>どようび</rt></ruby>です。<ruby>天気<rt>てんき</rt></ruby>が　いいです。<ruby>公園<rt>こうえん</rt></ruby>に　いきます。ともだちと　サッカーを　します。",
+    "question": "<ruby>今日<rt>きょう</rt></ruby>は　<ruby>何曜日<rt>なんようび</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>月曜日<rt>げつようび</rt></ruby>",
+      "B": "<ruby>金曜日<rt>きんようび</rt></ruby>",
+      "C": "<ruby>土曜日<rt>どようび</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문 첫 문장에 '今日は　土曜日です'라고 오늘이 토요일이라고 나와 있습니다."
+  },
+  {
+    "id": 3,
+    "passage": "わたしの　<ruby>家族<rt>かぞく</rt></ruby>は　<ruby>四人<rt>よにん</rt></ruby>です。<ruby>父<rt>ちち</rt></ruby>、<ruby>母<rt>はは</rt></ruby>、<ruby>兄<rt>あに</rt></ruby>と　わたしです。<ruby>兄<rt>あに</rt></ruby>は　<ruby>大学生<rt>だいがくせい</rt></ruby>です。",
+    "question": "<ruby>家族<rt>かぞく</rt></ruby>は　<ruby>何人<rt>なんにん</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>三人<rt>さんにん</rt></ruby>",
+      "B": "<ruby>四人<rt>よにん</rt></ruby>",
+      "C": "<ruby>五人<rt>ごにん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '家族は　四人です'라고 가족이 4명이라고 했습니다."
+  },
+  {
+    "id": 4,
+    "passage": "<ruby>朝<rt>あさ</rt></ruby>　<ruby>七時<rt>しちじ</rt></ruby>に　おきます。<ruby>朝<rt>あさ</rt></ruby>ごはんを　たべます。<ruby>八時<rt>はちじ</rt></ruby>に　<ruby>学校<rt>がっこう</rt></ruby>に　いきます。",
+    "question": "<ruby>何時<rt>なんじ</rt></ruby>に　<ruby>学校<rt>がっこう</rt></ruby>に　いきますか。",
+    "options": {
+      "A": "<ruby>七時<rt>しちじ</rt></ruby>",
+      "B": "<ruby>八時<rt>はちじ</rt></ruby>",
+      "C": "<ruby>九時<rt>くじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '八時に　学校に　いきます'라고 8시에 학교에 간다고 했습니다."
+  },
+  {
+    "id": 5,
+    "passage": "<ruby>昨日<rt>きのう</rt></ruby>　<ruby>本屋<rt>ほんや</rt></ruby>で　<ruby>本<rt>ほん</rt></ruby>を　かいました。<ruby>二千円<rt>にせんえん</rt></ruby>でした。とても　おもしろい　<ruby>本<rt>ほん</rt></ruby>です。",
+    "question": "<ruby>本<rt>ほん</rt></ruby>は　いくらでしたか。",
+    "options": {
+      "A": "<ruby>千円<rt>せんえん</rt></ruby>",
+      "B": "<ruby>二千円<rt>にせんえん</rt></ruby>",
+      "C": "<ruby>三千円<rt>さんぜんえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二千円でした'라고 2000엔이었다고 나와 있습니다."
+  },
+  {
+    "id": 6,
+    "passage": "わたしの　<ruby>部屋<rt>へや</rt></ruby>に　つくえが　あります。つくえの　<ruby>上<rt>うえ</rt></ruby>に　コンピューターが　あります。<ruby>毎日<rt>まいにち</rt></ruby>　つかいます。",
+    "question": "つくえの　<ruby>上<rt>うえ</rt></ruby>に　なにが　ありますか。",
+    "options": {
+      "A": "<ruby>本<rt>ほん</rt></ruby>",
+      "B": "コンピューター",
+      "C": "<ruby>電話<rt>でんわ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'つくえの　上に　コンピューターが　あります'라고 나와 있습니다."
+  },
+  {
+    "id": 7,
+    "passage": "<ruby>友達<rt>ともだち</rt></ruby>は　<ruby>中国人<rt>ちゅうごくじん</rt></ruby>です。<ruby>名前<rt>なまえ</rt></ruby>は　リーさんです。<ruby>日本<rt>にほん</rt></ruby>に　<ruby>三年<rt>さんねん</rt></ruby>　います。",
+    "question": "<ruby>友達<rt>ともだち</rt></ruby>は　どこの　<ruby>人<rt>ひと</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>日本人<rt>にほんじん</rt></ruby>",
+      "B": "<ruby>中国人<rt>ちゅうごくじん</rt></ruby>",
+      "C": "<ruby>韓国人<rt>かんこくじん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '友達は　中国人です'라고 친구가 중국인이라고 했습니다."
+  },
+  {
+    "id": 8,
+    "passage": "<ruby>明日<rt>あした</rt></ruby>は　<ruby>日曜日<rt>にちようび</rt></ruby>です。<ruby>山<rt>やま</rt></ruby>に　のぼります。<ruby>朝<rt>あさ</rt></ruby>　<ruby>六時<rt>ろくじ</rt></ruby>に　でかけます。",
+    "question": "いつ　<ruby>山<rt>やま</rt></ruby>に　のぼりますか。",
+    "options": {
+      "A": "<ruby>今日<rt>きょう</rt></ruby>",
+      "B": "<ruby>明日<rt>あした</rt></ruby>",
+      "C": "<ruby>明後日<rt>あさって</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '明日は　日曜日です。山に　のぼります'라고 내일 산에 오른다고 했습니다."
+  },
+  {
+    "id": 9,
+    "passage": "わたしは　ねこを　かっています。<ruby>名前<rt>なまえ</rt></ruby>は　みいです。<ruby>白<rt>しろ</rt></ruby>い　ねこです。<ruby>魚<rt>さかな</rt></ruby>が　すきです。",
+    "question": "ねこは　なにが　すきですか。",
+    "options": {
+      "A": "<ruby>肉<rt>にく</rt></ruby>",
+      "B": "<ruby>魚<rt>さかな</rt></ruby>",
+      "C": "やさい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '魚が　すきです'라고 생선을 좋아한다고 했습니다."
+  },
+  {
+    "id": 10,
+    "passage": "<ruby>駅<rt>えき</rt></ruby>の　<ruby>前<rt>まえ</rt></ruby>に　<ruby>大<rt>おお</rt></ruby>きい　スーパーが　あります。<ruby>毎週<rt>まいしゅう</rt></ruby>　<ruby>土曜日<rt>どようび</rt></ruby>に　<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に　いきます。",
+    "question": "スーパーは　どこに　ありますか。",
+    "options": {
+      "A": "<ruby>駅<rt>えき</rt></ruby>の　<ruby>前<rt>まえ</rt></ruby>",
+      "B": "<ruby>駅<rt>えき</rt></ruby>の　<ruby>後<rt>うし</rt></ruby>ろ",
+      "C": "<ruby>駅<rt>えき</rt></ruby>の　<ruby>中<rt>なか</rt></ruby>"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 '駅の　前に　大きい　スーパーが　あります'라고 역 앞에 있다고 했습니다."
+  },
+  {
+    "id": 11,
+    "passage": "<ruby>私<rt>わたし</rt></ruby>の　<ruby>誕生日<rt>たんじょうび</rt></ruby>は　<ruby>三月<rt>さんがつ</rt></ruby>　<ruby>十日<rt>とおか</rt></ruby>です。ケーキを　たべます。プレゼントを　もらいます。",
+    "question": "<ruby>誕生日<rt>たんじょうび</rt></ruby>は　いつですか。",
+    "options": {
+      "A": "<ruby>二月<rt>にがつ</rt></ruby>　<ruby>十日<rt>とおか</rt></ruby>",
+      "B": "<ruby>三月<rt>さんがつ</rt></ruby>　<ruby>十日<rt>とおか</rt></ruby>",
+      "C": "<ruby>四月<rt>しがつ</rt></ruby>　<ruby>十日<rt>とおか</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '誕生日は　三月　十日です'라고 생일이 3월 10일이라고 했습니다."
+  },
+  {
+    "id": 12,
+    "passage": "<ruby>教室<rt>きょうしつ</rt></ruby>に　<ruby>学生<rt>がくせい</rt></ruby>が　<ruby>十五人<rt>じゅうごにん</rt></ruby>　います。<ruby>先生<rt>せんせい</rt></ruby>も　います。みんな　<ruby>日本語<rt>にほんご</rt></ruby>を　<ruby>勉強<rt>べんきょう</rt></ruby>しています。",
+    "question": "<ruby>学生<rt>がくせい</rt></ruby>は　<ruby>何人<rt>なんにん</rt></ruby>　いますか。",
+    "options": {
+      "A": "<ruby>十人<rt>じゅうにん</rt></ruby>",
+      "B": "<ruby>十五人<rt>じゅうごにん</rt></ruby>",
+      "C": "<ruby>二十人<rt>にじゅうにん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '学生が　十五人　います'라고 학생이 15명이라고 했습니다."
+  },
+  {
+    "id": 13,
+    "passage": "<ruby>今<rt>いま</rt></ruby>　<ruby>十二時<rt>じゅうにじ</rt></ruby>　はんです。おひるごはんを　たべます。レストランに　いきます。",
+    "question": "<ruby>今<rt>いま</rt></ruby>　<ruby>何時<rt>なんじ</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>十二時<rt>じゅうにじ</rt></ruby>",
+      "B": "<ruby>十二時<rt>じゅうにじ</rt></ruby>　はん",
+      "C": "<ruby>一時<rt>いちじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今　十二時　はんです'라고 지금 12시 30분이라고 했습니다."
+  },
+  {
+    "id": 14,
+    "passage": "<ruby>妹<rt>いもうと</rt></ruby>は　<ruby>高校生<rt>こうこうせい</rt></ruby>です。<ruby>十七歳<rt>じゅうななさい</rt></ruby>です。テニスが　じょうずです。",
+    "question": "<ruby>妹<rt>いもうと</rt></ruby>は　<ruby>何歳<rt>なんさい</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>十六歳<rt>じゅうろくさい</rt></ruby>",
+      "B": "<ruby>十七歳<rt>じゅうななさい</rt></ruby>",
+      "C": "<ruby>十八歳<rt>じゅうはっさい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '十七歳です'라고 17살이라고 했습니다."
+  },
+  {
+    "id": 15,
+    "passage": "<ruby>昨日<rt>きのう</rt></ruby>　<ruby>雨<rt>あめ</rt></ruby>が　ふりました。<ruby>今日<rt>きょう</rt></ruby>は　はれています。<ruby>明日<rt>あした</rt></ruby>も　いい　<ruby>天気<rt>てんき</rt></ruby>です。",
+    "question": "<ruby>昨日<rt>きのう</rt></ruby>の　<ruby>天気<rt>てんき</rt></ruby>は　どうでしたか。",
+    "options": {
+      "A": "はれ",
+      "B": "<ruby>雨<rt>あめ</rt></ruby>",
+      "C": "くもり"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '昨日　雨が　ふりました'라고 어제 비가 왔다고 했습니다."
+  },
+  {
+    "id": 16,
+    "passage": "<ruby>電車<rt>でんしゃ</rt></ruby>で　<ruby>会社<rt>かいしゃ</rt></ruby>に　いきます。<ruby>一時間<rt>いちじかん</rt></ruby>　かかります。<ruby>朝<rt>あさ</rt></ruby>は　とても　こみます。",
+    "question": "<ruby>会社<rt>かいしゃ</rt></ruby>まで　どのくらい　かかりますか。",
+    "options": {
+      "A": "<ruby>三十分<rt>さんじゅっぷん</rt></ruby>",
+      "B": "<ruby>一時間<rt>いちじかん</rt></ruby>",
+      "C": "<ruby>二時間<rt>にじかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '一時間　かかります'라고 1시간 걸린다고 했습니다."
+  },
+  {
+    "id": 17,
+    "passage": "<ruby>来週<rt>らいしゅう</rt></ruby>　<ruby>京都<rt>きょうと</rt></ruby>に　りょこうします。<ruby>新幹線<rt>しんかんせん</rt></ruby>で　いきます。<ruby>三日間<rt>みっかかん</rt></ruby>　います。",
+    "question": "どこに　りょこうしますか。",
+    "options": {
+      "A": "<ruby>東京<rt>とうきょう</rt></ruby>",
+      "B": "<ruby>京都<rt>きょうと</rt></ruby>",
+      "C": "<ruby>大阪<rt>おおさか</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '京都に　りょこうします'라고 교토에 여행한다고 했습니다."
+  },
+  {
+    "id": 18,
+    "passage": "カレーを　つくります。にく、やさい、カレールーを　つかいます。<ruby>一時間<rt>いちじかん</rt></ruby>ぐらい　かかります。",
+    "question": "なにを　つくりますか。",
+    "options": {
+      "A": "ラーメン",
+      "B": "カレー",
+      "C": "すし"
+    },
+    "answer": "B",
+    "explanation_ko": "지문 첫 문장에 'カレーを　つくります'라고 카레를 만든다고 했습니다."
+  },
+  {
+    "id": 19,
+    "passage": "<ruby>弟<rt>おとうと</rt></ruby>は　サッカーが　すきです。<ruby>毎日<rt>まいにち</rt></ruby>　れんしゅうします。しょうらい　プロに　なりたいです。",
+    "question": "<ruby>弟<rt>おとうと</rt></ruby>は　なにが　すきですか。",
+    "options": {
+      "A": "やきゅう",
+      "B": "バスケットボール",
+      "C": "サッカー"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '弟は　サッカーが　すきです'라고 동생이 축구를 좋아한다고 했습니다."
+  },
+  {
+    "id": 20,
+    "passage": "<ruby>銀行<rt>ぎんこう</rt></ruby>は　<ruby>九時<rt>くじ</rt></ruby>から　<ruby>三時<rt>さんじ</rt></ruby>まで　あいています。<ruby>土曜日<rt>どようび</rt></ruby>と　<ruby>日曜日<rt>にちようび</rt></ruby>は　やすみです。",
+    "question": "<ruby>銀行<rt>ぎんこう</rt></ruby>は　<ruby>何時<rt>なんじ</rt></ruby>から　あいていますか。",
+    "options": {
+      "A": "<ruby>八時<rt>はちじ</rt></ruby>",
+      "B": "<ruby>九時<rt>くじ</rt></ruby>",
+      "C": "<ruby>十時<rt>じゅうじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '九時から　三時まで　あいています'라고 9시부터 연다고 했습니다."
+  },
+  {
+    "id": 21,
+    "passage": "<ruby>花<rt>はな</rt></ruby>を　かいました。<ruby>母<rt>はは</rt></ruby>の　プレゼントです。<ruby>赤<rt>あか</rt></ruby>い　バラです。きれいです。",
+    "question": "だれの　プレゼントですか。",
+    "options": {
+      "A": "<ruby>父<rt>ちち</rt></ruby>",
+      "B": "<ruby>母<rt>はは</rt></ruby>",
+      "C": "<ruby>姉<rt>あね</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '母の　プレゼントです'라고 어머니의 선물이라고 했습니다."
+  },
+  {
+    "id": 22,
+    "passage": "<ruby>机<rt>つくえ</rt></ruby>の　<ruby>下<rt>した</rt></ruby>に　かばんが　あります。<ruby>黒<rt>くろ</rt></ruby>い　かばんです。<ruby>教科書<rt>きょうかしょ</rt></ruby>が　はいっています。",
+    "question": "かばんは　どこに　ありますか。",
+    "options": {
+      "A": "<ruby>机<rt>つくえ</rt></ruby>の　<ruby>上<rt>うえ</rt></ruby>",
+      "B": "<ruby>机<rt>つくえ</rt></ruby>の　<ruby>下<rt>した</rt></ruby>",
+      "C": "<ruby>机<rt>つくえ</rt></ruby>の　<ruby>横<rt>よこ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '机の　下に　かばんが　あります'라고 책상 아래에 있다고 했습니다."
+  },
+  {
+    "id": 23,
+    "passage": "<ruby>夏休<rt>なつやす</rt></ruby>みに　<ruby>海<rt>うみ</rt></ruby>に　いきます。およぎます。<ruby>魚<rt>さかな</rt></ruby>を　みます。たのしみです。",
+    "question": "<ruby>夏休<rt>なつやす</rt></ruby>みに　どこに　いきますか。",
+    "options": {
+      "A": "<ruby>山<rt>やま</rt></ruby>",
+      "B": "<ruby>海<rt>うみ</rt></ruby>",
+      "C": "<ruby>川<rt>かわ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '夏休みに　海に　いきます'라고 여름방학에 바다에 간다고 했습니다."
+  },
+  {
+    "id": 24,
+    "passage": "<ruby>姉<rt>あね</rt></ruby>は　<ruby>病院<rt>びょういん</rt></ruby>で　はたらいています。かんごしです。<ruby>毎日<rt>まいにち</rt></ruby>　いそがしいです。",
+    "question": "<ruby>姉<rt>あね</rt></ruby>は　どこで　はたらいていますか。",
+    "options": {
+      "A": "<ruby>学校<rt>がっこう</rt></ruby>",
+      "B": "<ruby>会社<rt>かいしゃ</rt></ruby>",
+      "C": "<ruby>病院<rt>びょういん</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '姉は　病院で　はたらいています'라고 언니가 병원에서 일한다고 했습니다."
+  },
+  {
+    "id": 25,
+    "passage": "<ruby>写真<rt>しゃしん</rt></ruby>を　とります。カメラを　つかいます。<ruby>友達<rt>ともだち</rt></ruby>と　<ruby>公園<rt>こうえん</rt></ruby>で　とります。",
+    "question": "だれと　<ruby>写真<rt>しゃしん</rt></ruby>を　とりますか。",
+    "options": {
+      "A": "<ruby>家族<rt>かぞく</rt></ruby>",
+      "B": "<ruby>友達<rt>ともだち</rt></ruby>",
+      "C": "<ruby>先生<rt>せんせい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '友達と　公園で　とります'라고 친구와 사진을 찍는다고 했습니다."
+  },
+  {
+    "id": 26,
+    "passage": "<ruby>音楽<rt>おんがく</rt></ruby>を　きいています。ヘッドホンを　つかいます。クラシックが　すきです。",
+    "question": "どんな　<ruby>音楽<rt>おんがく</rt></ruby>が　すきですか。",
+    "options": {
+      "A": "ジャズ",
+      "B": "ロック",
+      "C": "クラシック"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'クラシックが　すきです'라고 클래식을 좋아한다고 했습니다."
+  },
+  {
+    "id": 27,
+    "passage": "<ruby>夜<rt>よる</rt></ruby>　<ruby>十時<rt>じゅうじ</rt></ruby>に　ねます。<ruby>朝<rt>あさ</rt></ruby>　<ruby>六時<rt>ろくじ</rt></ruby>に　おきます。<ruby>八時間<rt>はちじかん</rt></ruby>　ねます。",
+    "question": "<ruby>何時間<rt>なんじかん</rt></ruby>　ねますか。",
+    "options": {
+      "A": "<ruby>七時間<rt>ななじかん</rt></ruby>",
+      "B": "<ruby>八時間<rt>はちじかん</rt></ruby>",
+      "C": "<ruby>九時間<rt>くじかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '八時間　ねます'라고 8시간 잔다고 했습니다."
+  },
+  {
+    "id": 28,
+    "passage": "ゆうびんきょくで　きってを　かいます。<ruby>八十円<rt>はちじゅうえん</rt></ruby>の　きってです。<ruby>手紙<rt>てがみ</rt></ruby>を　おくります。",
+    "question": "きっては　いくらですか。",
+    "options": {
+      "A": "<ruby>六十円<rt>ろくじゅうえん</rt></ruby>",
+      "B": "<ruby>七十円<rt>ななじゅうえん</rt></ruby>",
+      "C": "<ruby>八十円<rt>はちじゅうえん</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '八十円の　きってです'라고 80엔 우표라고 했습니다."
+  },
+  {
+    "id": 29,
+    "passage": "<ruby>北海道<rt>ほっかいどう</rt></ruby>は　<ruby>寒<rt>さむ</rt></ruby>いです。<ruby>冬<rt>ふゆ</rt></ruby>は　<ruby>雪<rt>ゆき</rt></ruby>が　たくさん　ふります。スキーが　できます。",
+    "question": "<ruby>北海道<rt>ほっかいどう</rt></ruby>の　<ruby>冬<rt>ふゆ</rt></ruby>は　どうですか。",
+    "options": {
+      "A": "あついです",
+      "B": "<ruby>寒<rt>さむ</rt></ruby>いです",
+      "C": "あたたかいです"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '北海道は　寒いです'라고 홋카이도는 춥다고 했습니다."
+  },
+  {
+    "id": 30,
+    "passage": "コーヒーを　のみます。さとうと　ミルクを　いれます。あまい　コーヒーが　すきです。",
+    "question": "コーヒーに　なにを　いれますか。",
+    "options": {
+      "A": "さとうと　ミルク",
+      "B": "レモン",
+      "C": "しお"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 'さとうと　ミルクを　いれます'라고 설탕과 밀크를 넣는다고 했습니다."
+  },
+  {
+    "id": 31,
+    "passage": "<ruby>週末<rt>しゅうまつ</rt></ruby>は　えいがを　みます。えいがかんに　いきます。アクションえいがが　すきです。",
+    "question": "どこで　えいがを　みますか。",
+    "options": {
+      "A": "うち",
+      "B": "えいがかん",
+      "C": "こうえん"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'えいがかんに　いきます'라고 영화관에 간다고 했습니다."
+  },
+  {
+    "id": 32,
+    "passage": "<ruby>新<rt>あたら</rt></ruby>しい　くるまを　かいました。<ruby>赤<rt>あか</rt></ruby>い　くるまです。<ruby>小<rt>ちい</rt></ruby>さくて　べんりです。",
+    "question": "くるまは　なにいろですか。",
+    "options": {
+      "A": "<ruby>青<rt>あお</rt></ruby>",
+      "B": "<ruby>赤<rt>あか</rt></ruby>",
+      "C": "<ruby>白<rt>しろ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '赤い　くるまです'라고 빨간 차라고 했습니다."
+  },
+  {
+    "id": 33,
+    "passage": "<ruby>今年<rt>ことし</rt></ruby>の　<ruby>夏<rt>なつ</rt></ruby>は　とても　あつかったです。<ruby>毎日<rt>まいにち</rt></ruby>　<ruby>三十五度<rt>さんじゅうごど</rt></ruby>　いじょうでした。",
+    "question": "<ruby>今年<rt>ことし</rt></ruby>の　<ruby>夏<rt>なつ</rt></ruby>は　どうでしたか。",
+    "options": {
+      "A": "すずしかった",
+      "B": "あつかった",
+      "C": "さむかった"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今年の　夏は　とても　あつかったです'라고 올해 여름은 매우 더웠다고 했습니다."
+  },
+  {
+    "id": 34,
+    "passage": "パンを　やきます。バターを　つけます。ジャムも　つけます。<ruby>朝<rt>あさ</rt></ruby>ごはんです。",
+    "question": "パンに　なにを　つけますか。",
+    "options": {
+      "A": "バターと　ジャム",
+      "B": "チーズ",
+      "C": "マヨネーズ"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 'バターを　つけます。ジャムも　つけます'라고 버터와 잼을 바른다고 했습니다."
+  },
+  {
+    "id": 35,
+    "passage": "<ruby>犬<rt>いぬ</rt></ruby>の　なまえは　ポチです。<ruby>三歳<rt>さんさい</rt></ruby>です。まいにち　さんぽします。",
+    "question": "<ruby>犬<rt>いぬ</rt></ruby>は　<ruby>何歳<rt>なんさい</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>二歳<rt>にさい</rt></ruby>",
+      "B": "<ruby>三歳<rt>さんさい</rt></ruby>",
+      "C": "<ruby>四歳<rt>よんさい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '三歳です'라고 3살이라고 했습니다."
+  },
+  {
+    "id": 36,
+    "passage": "バスで　<ruby>学校<rt>がっこう</rt></ruby>に　いきます。<ruby>二十分<rt>にじゅっぷん</rt></ruby>　かかります。<ruby>朝<rt>あさ</rt></ruby>は　こみます。",
+    "question": "<ruby>学校<rt>がっこう</rt></ruby>まで　なんで　いきますか。",
+    "options": {
+      "A": "<ruby>電車<rt>でんしゃ</rt></ruby>",
+      "B": "バス",
+      "C": "<ruby>自転車<rt>じてんしゃ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'バスで　学校に　いきます'라고 버스로 학교에 간다고 했습니다."
+  },
+  {
+    "id": 37,
+    "passage": "<ruby>辞書<rt>じしょ</rt></ruby>を　かりました。<ruby>図書館<rt>としょかん</rt></ruby>で　かりました。<ruby>一週間<rt>いっしゅうかん</rt></ruby>　かりられます。",
+    "question": "どこで　<ruby>辞書<rt>じしょ</rt></ruby>を　かりましたか。",
+    "options": {
+      "A": "<ruby>学校<rt>がっこう</rt></ruby>",
+      "B": "<ruby>図書館<rt>としょかん</rt></ruby>",
+      "C": "<ruby>本屋<rt>ほんや</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '図書館で　かりました'라고 도서관에서 빌렸다고 했습니다."
+  },
+  {
+    "id": 38,
+    "passage": "<ruby>日本語<rt>にほんご</rt></ruby>の　テストが　あります。<ruby>来週<rt>らいしゅう</rt></ruby>の　<ruby>水曜日<rt>すいようび</rt></ruby>です。むずかしそうです。",
+    "question": "テストは　いつですか。",
+    "options": {
+      "A": "<ruby>今週<rt>こんしゅう</rt></ruby>",
+      "B": "<ruby>来週<rt>らいしゅう</rt></ruby>",
+      "C": "<ruby>来月<rt>らいげつ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '来週の　水曜日です'라고 다음 주 수요일이라고 했습니다."
+  },
+  {
+    "id": 39,
+    "passage": "<ruby>外国<rt>がいこく</rt></ruby>から　<ruby>手紙<rt>てがみ</rt></ruby>が　きました。イギリスの　ともだちからです。<ruby>英語<rt>えいご</rt></ruby>で　かいてあります。",
+    "question": "<ruby>手紙<rt>てがみ</rt></ruby>は　どこから　きましたか。",
+    "options": {
+      "A": "アメリカ",
+      "B": "イギリス",
+      "C": "カナダ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'イギリスの　ともだちからです'라고 영국 친구로부터 왔다고 했습니다."
+  },
+  {
+    "id": 40,
+    "passage": "<ruby>春<rt>はる</rt></ruby>に　さくらを　みます。とても　きれいです。<ruby>友達<rt>ともだち</rt></ruby>と　おはなみを　します。",
+    "question": "いつ　さくらを　みますか。",
+    "options": {
+      "A": "<ruby>春<rt>はる</rt></ruby>",
+      "B": "<ruby>夏<rt>なつ</rt></ruby>",
+      "C": "<ruby>秋<rt>あき</rt></ruby>"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 '春に　さくらを　みます'라고 봄에 벚꽃을 본다고 했습니다."
+  },
+  {
+    "id": 41,
+    "passage": "<ruby>母<rt>はは</rt></ruby>は　りょうりが　じょうずです。<ruby>毎日<rt>まいにち</rt></ruby>　おいしい　ごはんを　つくります。わたしも　ならいたいです。",
+    "question": "<ruby>母<rt>はは</rt></ruby>は　なにが　じょうずですか。",
+    "options": {
+      "A": "スポーツ",
+      "B": "りょうり",
+      "C": "うた"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '母は　りょうりが　じょうずです'라고 어머니가 요리를 잘한다고 했습니다."
+  },
+  {
+    "id": 42,
+    "passage": "<ruby>地下鉄<rt>ちかてつ</rt></ruby>の　きっぷを　かいます。<ruby>二百円<rt>にひゃくえん</rt></ruby>です。しんじゅくまで　いきます。",
+    "question": "きっぷは　いくらですか。",
+    "options": {
+      "A": "<ruby>百円<rt>ひゃくえん</rt></ruby>",
+      "B": "<ruby>二百円<rt>にひゃくえん</rt></ruby>",
+      "C": "<ruby>三百円<rt>さんびゃくえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二百円です'라고 200엔이라고 했습니다."
+  },
+  {
+    "id": 43,
+    "passage": "<ruby>去年<rt>きょねん</rt></ruby>　<ruby>日本<rt>にほん</rt></ruby>に　きました。<ruby>東京<rt>とうきょう</rt></ruby>に　すんでいます。<ruby>日本語<rt>にほんご</rt></ruby>を　べんきょうしています。",
+    "question": "いつ　<ruby>日本<rt>にほん</rt></ruby>に　きましたか。",
+    "options": {
+      "A": "<ruby>今年<rt>ことし</rt></ruby>",
+      "B": "<ruby>去年<rt>きょねん</rt></ruby>",
+      "C": "<ruby>来年<rt>らいねん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '去年　日本に　きました'라고 작년에 일본에 왔다고 했습니다."
+  },
+  {
+    "id": 44,
+    "passage": "ノートを　<ruby>五冊<rt>ごさつ</rt></ruby>　かいました。えんぴつも　<ruby>十本<rt>じゅっぽん</rt></ruby>　かいました。ぜんぶで　<ruby>千円<rt>せんえん</rt></ruby>でした。",
+    "question": "ノートは　なんさつ　かいましたか。",
+    "options": {
+      "A": "<ruby>三冊<rt>さんさつ</rt></ruby>",
+      "B": "<ruby>五冊<rt>ごさつ</rt></ruby>",
+      "C": "<ruby>十冊<rt>じゅっさつ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'ノートを　五冊　かいました'라고 노트를 5권 샀다고 했습니다."
+  },
+  {
+    "id": 45,
+    "passage": "<ruby>父<rt>ちち</rt></ruby>の　しゅみは　つりです。<ruby>毎週<rt>まいしゅう</rt></ruby>　<ruby>日曜日<rt>にちようび</rt></ruby>に　<ruby>海<rt>うみ</rt></ruby>に　いきます。<ruby>魚<rt>さかな</rt></ruby>を　つります。",
+    "question": "<ruby>父<rt>ちち</rt></ruby>の　しゅみは　なんですか。",
+    "options": {
+      "A": "つり",
+      "B": "およぎ",
+      "C": "ジョギング"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 '父の　しゅみは　つりです'라고 아버지의 취미가 낚시라고 했습니다."
+  },
+  {
+    "id": 46,
+    "passage": "<ruby>明日<rt>あした</rt></ruby>　<ruby>友達<rt>ともだち</rt></ruby>の　うちに　いきます。いっしょに　ゲームを　します。たのしみです。",
+    "question": "<ruby>明日<rt>あした</rt></ruby>　どこに　いきますか。",
+    "options": {
+      "A": "<ruby>学校<rt>がっこう</rt></ruby>",
+      "B": "<ruby>友達<rt>ともだち</rt></ruby>の　うち",
+      "C": "こうえん"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '明日　友達の　うちに　いきます'라고 내일 친구 집에 간다고 했습니다."
+  },
+  {
+    "id": 47,
+    "passage": "あたらしい　ふくを　かいました。<ruby>青<rt>あお</rt></ruby>い　シャツです。<ruby>三千円<rt>さんぜんえん</rt></ruby>でした。やすかったです。",
+    "question": "シャツは　なにいろですか。",
+    "options": {
+      "A": "<ruby>赤<rt>あか</rt></ruby>",
+      "B": "<ruby>青<rt>あお</rt></ruby>",
+      "C": "<ruby>緑<rt>みどり</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '青い　シャツです'라고 파란 셔츠라고 했습니다."
+  },
+  {
+    "id": 48,
+    "passage": "きのう　<ruby>病院<rt>びょういん</rt></ruby>に　いきました。かぜを　ひきました。くすりを　もらいました。",
+    "question": "なぜ　<ruby>病院<rt>びょういん</rt></ruby>に　いきましたか。",
+    "options": {
+      "A": "けがを　した",
+      "B": "かぜを　ひいた",
+      "C": "おなかが　いたい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'かぜを　ひきました'라고 감기에 걸렸다고 했습니다."
+  },
+  {
+    "id": 49,
+    "passage": "<ruby>木曜日<rt>もくようび</rt></ruby>は　<ruby>英語<rt>えいご</rt></ruby>の　じゅぎょうが　あります。<ruby>午前<rt>ごぜん</rt></ruby>　<ruby>十時<rt>じゅうじ</rt></ruby>から　<ruby>十二時<rt>じゅうにじ</rt></ruby>までです。",
+    "question": "<ruby>英語<rt>えいご</rt></ruby>の　じゅぎょうは　なんようびですか。",
+    "options": {
+      "A": "<ruby>水曜日<rt>すいようび</rt></ruby>",
+      "B": "<ruby>木曜日<rt>もくようび</rt></ruby>",
+      "C": "<ruby>金曜日<rt>きんようび</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '木曜日は　英語の　じゅぎょうが　あります'라고 목요일에 영어 수업이 있다고 했습니다."
+  },
+  {
+    "id": 50,
+    "passage": "<ruby>冬<rt>ふゆ</rt></ruby>は　スキーを　します。<ruby>山<rt>やま</rt></ruby>に　いきます。<ruby>雪<rt>ゆき</rt></ruby>が　たくさん　あります。たのしいです。",
+    "question": "<ruby>冬<rt>ふゆ</rt></ruby>に　なにを　しますか。",
+    "options": {
+      "A": "およぎ",
+      "B": "スキー",
+      "C": "キャンプ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '冬は　スキーを　します'라고 겨울에 스키를 한다고 했습니다."
+  },
+  {
+    "id": 51,
+    "passage": "<ruby>朝<rt>あさ</rt></ruby>ごはんは　パンと　たまごです。コーヒーも　のみます。<ruby>七時<rt>しちじ</rt></ruby>に　たべます。",
+    "question": "<ruby>朝<rt>あさ</rt></ruby>ごはんは　<ruby>何時<rt>なんじ</rt></ruby>に　たべますか。",
+    "options": {
+      "A": "<ruby>六時<rt>ろくじ</rt></ruby>",
+      "B": "<ruby>七時<rt>しちじ</rt></ruby>",
+      "C": "<ruby>八時<rt>はちじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '七時に　たべます'라고 7시에 먹는다고 했습니다."
+  },
+  {
+    "id": 52,
+    "passage": "<ruby>今<rt>いま</rt></ruby>　<ruby>雨<rt>あめ</rt></ruby>が　ふっています。かさを　もっていません。ぬれました。",
+    "question": "<ruby>今<rt>いま</rt></ruby>　<ruby>天気<rt>てんき</rt></ruby>は　どうですか。",
+    "options": {
+      "A": "はれ",
+      "B": "<ruby>雨<rt>あめ</rt></ruby>",
+      "C": "くもり"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今　雨が　ふっています'라고 지금 비가 오고 있다고 했습니다."
+  },
+  {
+    "id": 53,
+    "passage": "<ruby>祖母<rt>そぼ</rt></ruby>は　<ruby>七十五歳<rt>ななじゅうごさい</rt></ruby>です。げんきです。<ruby>毎日<rt>まいにち</rt></ruby>　さんぽします。",
+    "question": "<ruby>祖母<rt>そぼ</rt></ruby>は　<ruby>何歳<rt>なんさい</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>七十歳<rt>ななじゅっさい</rt></ruby>",
+      "B": "<ruby>七十五歳<rt>ななじゅうごさい</rt></ruby>",
+      "C": "<ruby>八十歳<rt>はちじゅっさい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '祖母は　七十五歳です'라고 할머니가 75살이라고 했습니다."
+  },
+  {
+    "id": 54,
+    "passage": "デパートで　くつを　かいました。<ruby>黒<rt>くろ</rt></ruby>い　くつです。<ruby>一万円<rt>いちまんえん</rt></ruby>でした。",
+    "question": "くつは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>五千円<rt>ごせんえん</rt></ruby>",
+      "B": "<ruby>八千円<rt>はっせんえん</rt></ruby>",
+      "C": "<ruby>一万円<rt>いちまんえん</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '一万円でした'라고 1만 엔이었다고 했습니다."
+  },
+  {
+    "id": 55,
+    "passage": "<ruby>火曜日<rt>かようび</rt></ruby>と　<ruby>金曜日<rt>きんようび</rt></ruby>に　ジムに　いきます。うんどうします。けんこうに　いいです。",
+    "question": "いつ　ジムに　いきますか。",
+    "options": {
+      "A": "<ruby>月曜日<rt>げつようび</rt></ruby>と　<ruby>水曜日<rt>すいようび</rt></ruby>",
+      "B": "<ruby>火曜日<rt>かようび</rt></ruby>と　<ruby>金曜日<rt>きんようび</rt></ruby>",
+      "C": "<ruby>木曜日<rt>もくようび</rt></ruby>と　<ruby>土曜日<rt>どようび</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '火曜日と　金曜日に　ジムに　いきます'라고 화요일과 금요일에 간다고 했습니다."
+  },
+  {
+    "id": 56,
+    "passage": "ひるごはんは　ラーメンを　たべました。<ruby>八百円<rt>はっぴゃくえん</rt></ruby>でした。おいしかったです。",
+    "question": "ひるごはんは　なにを　たべましたか。",
+    "options": {
+      "A": "うどん",
+      "B": "そば",
+      "C": "ラーメン"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'ひるごはんは　ラーメンを　たべました'라고 점심에 라면을 먹었다고 했습니다."
+  },
+  {
+    "id": 57,
+    "passage": "<ruby>来月<rt>らいげつ</rt></ruby>　けっこんしきが　あります。<ruby>友達<rt>ともだち</rt></ruby>の　けっこんしきです。とうきょうで　あります。",
+    "question": "けっこんしきは　いつですか。",
+    "options": {
+      "A": "<ruby>今月<rt>こんげつ</rt></ruby>",
+      "B": "<ruby>来月<rt>らいげつ</rt></ruby>",
+      "C": "<ruby>再来月<rt>さらいげつ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '来月　けっこんしきが　あります'라고 다음 달에 결혼식이 있다고 했습니다."
+  },
+  {
+    "id": 58,
+    "passage": "<ruby>本<rt>ほん</rt></ruby>を　よみます。<ruby>一週間<rt>いっしゅうかん</rt></ruby>に　<ruby>二冊<rt>にさつ</rt></ruby>　よみます。しょうせつが　すきです。",
+    "question": "<ruby>一週間<rt>いっしゅうかん</rt></ruby>に　<ruby>本<rt>ほん</rt></ruby>を　なんさつ　よみますか。",
+    "options": {
+      "A": "<ruby>一冊<rt>いっさつ</rt></ruby>",
+      "B": "<ruby>二冊<rt>にさつ</rt></ruby>",
+      "C": "<ruby>三冊<rt>さんさつ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '一週間に　二冊　よみます'라고 일주일에 2권 읽는다고 했습니다."
+  },
+  {
+    "id": 59,
+    "passage": "<ruby>午後<rt>ごご</rt></ruby>　<ruby>三時<rt>さんじ</rt></ruby>に　かいぎが　あります。<ruby>二時間<rt>にじかん</rt></ruby>ぐらい　かかります。じゅうようです。",
+    "question": "かいぎは　<ruby>何時<rt>なんじ</rt></ruby>に　ありますか。",
+    "options": {
+      "A": "<ruby>二時<rt>にじ</rt></ruby>",
+      "B": "<ruby>三時<rt>さんじ</rt></ruby>",
+      "C": "<ruby>四時<rt>よじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '午後　三時に　かいぎが　あります'라고 오후 3시에 회의가 있다고 했습니다."
+  },
+  {
+    "id": 60,
+    "passage": "<ruby>週<rt>しゅう</rt></ruby>に　<ruby>三回<rt>さんかい</rt></ruby>　プールに　いきます。およぎます。<ruby>一時間<rt>いちじかん</rt></ruby>ぐらい　およぎます。",
+    "question": "<ruby>週<rt>しゅう</rt></ruby>に　なんかい　プールに　いきますか。",
+    "options": {
+      "A": "<ruby>二回<rt>にかい</rt></ruby>",
+      "B": "<ruby>三回<rt>さんかい</rt></ruby>",
+      "C": "<ruby>四回<rt>よんかい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '週に　三回　プールに　いきます'라고 주에 3번 간다고 했습니다."
+  },
+  {
+    "id": 61,
+    "passage": "タクシーで　くうこうに　いきます。<ruby>三十分<rt>さんじゅっぷん</rt></ruby>　かかります。<ruby>三千円<rt>さんぜんえん</rt></ruby>ぐらいです。",
+    "question": "くうこうまで　どのくらい　かかりますか。",
+    "options": {
+      "A": "<ruby>二十分<rt>にじゅっぷん</rt></ruby>",
+      "B": "<ruby>三十分<rt>さんじゅっぷん</rt></ruby>",
+      "C": "<ruby>四十分<rt>よんじゅっぷん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '三十分　かかります'라고 30분 걸린다고 했습니다."
+  },
+  {
+    "id": 62,
+    "passage": "コンビニで　おにぎりを　かいました。<ruby>二<rt>ふた</rt></ruby>つ　かいました。<ruby>三百円<rt>さんびゃくえん</rt></ruby>でした。",
+    "question": "おにぎりを　いくつ　かいましたか。",
+    "options": {
+      "A": "ひとつ",
+      "B": "ふたつ",
+      "C": "みっつ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二つ　かいました'라고 2개 샀다고 했습니다."
+  },
+  {
+    "id": 63,
+    "passage": "<ruby>秋<rt>あき</rt></ruby>は　もみじが　きれいです。<ruby>山<rt>やま</rt></ruby>に　いきます。しゃしんを　とります。",
+    "question": "いつ　もみじが　きれいですか。",
+    "options": {
+      "A": "<ruby>春<rt>はる</rt></ruby>",
+      "B": "<ruby>夏<rt>なつ</rt></ruby>",
+      "C": "<ruby>秋<rt>あき</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '秋は　もみじが　きれいです'라고 가을에 단풍이 예쁘다고 했습니다."
+  },
+  {
+    "id": 64,
+    "passage": "<ruby>友達<rt>ともだち</rt></ruby>に　メールを　おくります。けいたいでんわを　つかいます。べんりです。",
+    "question": "なにで　メールを　おくりますか。",
+    "options": {
+      "A": "パソコン",
+      "B": "けいたいでんわ",
+      "C": "タブレット"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'けいたいでんわを　つかいます'라고 휴대전화를 사용한다고 했습니다."
+  },
+  {
+    "id": 65,
+    "passage": "スーパーで　やさいを　かいます。にんじん、たまねぎ、じゃがいもを　かいます。カレーを　つくります。",
+    "question": "なにを　つくりますか。",
+    "options": {
+      "A": "サラダ",
+      "B": "スープ",
+      "C": "カレー"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'カレーを　つくります'라고 카레를 만든다고 했습니다."
+  },
+  {
+    "id": 66,
+    "passage": "<ruby>土曜日<rt>どようび</rt></ruby>の　<ruby>午前中<rt>ごぜんちゅう</rt></ruby>に　そうじを　します。<ruby>部屋<rt>へや</rt></ruby>を　きれいに　します。",
+    "question": "いつ　そうじを　しますか。",
+    "options": {
+      "A": "<ruby>金曜日<rt>きんようび</rt></ruby>の　<ruby>午後<rt>ごご</rt></ruby>",
+      "B": "<ruby>土曜日<rt>どようび</rt></ruby>の　<ruby>午前中<rt>ごぜんちゅう</rt></ruby>",
+      "C": "<ruby>日曜日<rt>にちようび</rt></ruby>の　<ruby>夜<rt>よる</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '土曜日の　午前中に　そうじを　します'라고 토요일 오전에 청소한다고 했습니다."
+  },
+  {
+    "id": 67,
+    "passage": "あたらしい　じてんしゃを　かいました。<ruby>青<rt>あお</rt></ruby>い　じてんしゃです。<ruby>二万五千円<rt>にまんごせんえん</rt></ruby>でした。",
+    "question": "じてんしゃは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>二万円<rt>にまんえん</rt></ruby>",
+      "B": "<ruby>二万五千円<rt>にまんごせんえん</rt></ruby>",
+      "C": "<ruby>三万円<rt>さんまんえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二万五千円でした'라고 2만 5천 엔이었다고 했습니다."
+  },
+  {
+    "id": 68,
+    "passage": "<ruby>昼<rt>ひる</rt></ruby>やすみは　<ruby>一時間<rt>いちじかん</rt></ruby>です。<ruby>十二時<rt>じゅうにじ</rt></ruby>から　<ruby>一時<rt>いちじ</rt></ruby>までです。べんとうを　たべます。",
+    "question": "<ruby>昼<rt>ひる</rt></ruby>やすみは　なんじかんですか。",
+    "options": {
+      "A": "<ruby>三十分<rt>さんじゅっぷん</rt></ruby>",
+      "B": "<ruby>一時間<rt>いちじかん</rt></ruby>",
+      "C": "<ruby>二時間<rt>にじかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '昼やすみは　一時間です'라고 점심시간이 1시간이라고 했습니다."
+  },
+  {
+    "id": 69,
+    "passage": "<ruby>祖父<rt>そふ</rt></ruby>は　いなかに　すんでいます。<ruby>農業<rt>のうぎょう</rt></ruby>を　しています。やさいを　つくっています。",
+    "question": "<ruby>祖父<rt>そふ</rt></ruby>は　なにを　していますか。",
+    "options": {
+      "A": "<ruby>会社員<rt>かいしゃいん</rt></ruby>",
+      "B": "<ruby>農業<rt>のうぎょう</rt></ruby>",
+      "C": "<ruby>先生<rt>せんせい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '農業を　しています'라고 농업을 한다고 했습니다."
+  },
+  {
+    "id": 70,
+    "passage": "ホテルに　とまります。<ruby>一泊<rt>いっぱく</rt></ruby>　<ruby>八千円<rt>はっせんえん</rt></ruby>です。あさごはんが　つきます。",
+    "question": "ホテルは　<ruby>一泊<rt>いっぱく</rt></ruby>　いくらですか。",
+    "options": {
+      "A": "<ruby>六千円<rt>ろくせんえん</rt></ruby>",
+      "B": "<ruby>八千円<rt>はっせんえん</rt></ruby>",
+      "C": "<ruby>一万円<rt>いちまんえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '一泊　八千円です'라고 1박에 8천 엔이라고 했습니다."
+  },
+  {
+    "id": 71,
+    "passage": "<ruby>今日<rt>きょう</rt></ruby>は　<ruby>母<rt>はは</rt></ruby>の　<ruby>誕生日<rt>たんじょうび</rt></ruby>です。ケーキを　かいました。プレゼントも　よういしました。",
+    "question": "<ruby>今日<rt>きょう</rt></ruby>は　だれの　<ruby>誕生日<rt>たんじょうび</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>父<rt>ちち</rt></ruby>",
+      "B": "<ruby>母<rt>はは</rt></ruby>",
+      "C": "<ruby>妹<rt>いもうと</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今日は　母の　誕生日です'라고 오늘이 어머니 생일이라고 했습니다."
+  },
+  {
+    "id": 72,
+    "passage": "としょかんで　<ruby>本<rt>ほん</rt></ruby>を　かります。<ruby>二週間<rt>にしゅうかん</rt></ruby>　かりられます。CD も　かりられます。",
+    "question": "<ruby>本<rt>ほん</rt></ruby>は　どのくらい　かりられますか。",
+    "options": {
+      "A": "<ruby>一週間<rt>いっしゅうかん</rt></ruby>",
+      "B": "<ruby>二週間<rt>にしゅうかん</rt></ruby>",
+      "C": "<ruby>三週間<rt>さんしゅうかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二週間　かりられます'라고 2주간 빌릴 수 있다고 했습니다."
+  },
+  {
+    "id": 73,
+    "passage": "<ruby>大学<rt>だいがく</rt></ruby>の　じゅぎょうは　<ruby>九時<rt>くじ</rt></ruby>から　はじまります。<ruby>四時<rt>よじ</rt></ruby>に　おわります。",
+    "question": "じゅぎょうは　<ruby>何時<rt>なんじ</rt></ruby>に　おわりますか。",
+    "options": {
+      "A": "<ruby>三時<rt>さんじ</rt></ruby>",
+      "B": "<ruby>四時<rt>よじ</rt></ruby>",
+      "C": "<ruby>五時<rt>ごじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '四時に　おわります'라고 4시에 끝난다고 했습니다."
+  },
+  {
+    "id": 74,
+    "passage": "レストランで　ばんごはんを　たべました。スパゲッティを　たべました。<ruby>千二百円<rt>せんにひゃくえん</rt></ruby>でした。",
+    "question": "ばんごはんは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>千円<rt>せんえん</rt></ruby>",
+      "B": "<ruby>千二百円<rt>せんにひゃくえん</rt></ruby>",
+      "C": "<ruby>千五百円<rt>せんごひゃくえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '千二百円でした'라고 1200엔이었다고 했습니다."
+  },
+  {
+    "id": 75,
+    "passage": "<ruby>友達<rt>ともだち</rt></ruby>と　カラオケに　いきます。<ruby>二時間<rt>にじかん</rt></ruby>　うたいます。たのしいです。",
+    "question": "どのくらい　うたいますか。",
+    "options": {
+      "A": "<ruby>一時間<rt>いちじかん</rt></ruby>",
+      "B": "<ruby>二時間<rt>にじかん</rt></ruby>",
+      "C": "<ruby>三時間<rt>さんじかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二時間　うたいます'라고 2시간 노래한다고 했습니다."
+  },
+  {
+    "id": 76,
+    "passage": "<ruby>新<rt>あたら</rt></ruby>しい　スマートフォンを　かいました。<ruby>白<rt>しろ</rt></ruby>い　スマートフォンです。カメラが　いいです。",
+    "question": "スマートフォンは　なにいろですか。",
+    "options": {
+      "A": "<ruby>黒<rt>くろ</rt></ruby>",
+      "B": "<ruby>白<rt>しろ</rt></ruby>",
+      "C": "<ruby>赤<rt>あか</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '白い　スマートフォンです'라고 하얀 스마트폰이라고 했습니다."
+  },
+  {
+    "id": 77,
+    "passage": "<ruby>明日<rt>あした</rt></ruby>の　<ruby>朝<rt>あさ</rt></ruby>　<ruby>五時<rt>ごじ</rt></ruby>に　おきます。ひこうきに　のります。りょこうに　いきます。",
+    "question": "<ruby>明日<rt>あした</rt></ruby>　<ruby>何時<rt>なんじ</rt></ruby>に　おきますか。",
+    "options": {
+      "A": "<ruby>四時<rt>よじ</rt></ruby>",
+      "B": "<ruby>五時<rt>ごじ</rt></ruby>",
+      "C": "<ruby>六時<rt>ろくじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '明日の　朝　五時に　おきます'라고 내일 아침 5시에 일어난다고 했습니다."
+  },
+  {
+    "id": 78,
+    "passage": "えきから　うちまで　あるいて　<ruby>十分<rt>じゅっぷん</rt></ruby>です。ちかいです。べんりです。",
+    "question": "えきから　うちまで　どのくらいですか。",
+    "options": {
+      "A": "<ruby>五分<rt>ごふん</rt></ruby>",
+      "B": "<ruby>十分<rt>じゅっぷん</rt></ruby>",
+      "C": "<ruby>十五分<rt>じゅうごふん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'あるいて　十分です'라고 걸어서 10분이라고 했습니다."
+  },
+  {
+    "id": 79,
+    "passage": "<ruby>日曜日<rt>にちようび</rt></ruby>は　やすみです。おそく　おきます。テレビを　みます。",
+    "question": "<ruby>日曜日<rt>にちようび</rt></ruby>は　なにを　しますか。",
+    "options": {
+      "A": "しごと",
+      "B": "べんきょう",
+      "C": "やすみ"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '日曜日は　やすみです'라고 일요일은 쉰다고 했습니다."
+  },
+  {
+    "id": 80,
+    "passage": "みせで　ジュースを　かいました。オレンジジュースです。<ruby>百五十円<rt>ひゃくごじゅうえん</rt></ruby>でした。",
+    "question": "ジュースは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>百円<rt>ひゃくえん</rt></ruby>",
+      "B": "<ruby>百五十円<rt>ひゃくごじゅうえん</rt></ruby>",
+      "C": "<ruby>二百円<rt>にひゃくえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '百五十円でした'라고 150엔이었다고 했습니다."
+  },
+  {
+    "id": 81,
+    "passage": "<ruby>先週<rt>せんしゅう</rt></ruby>　<ruby>映画<rt>えいが</rt></ruby>を　みました。アクションえいがでした。おもしろかったです。",
+    "question": "いつ　<ruby>映画<rt>えいが</rt></ruby>を　みましたか。",
+    "options": {
+      "A": "<ruby>今週<rt>こんしゅう</rt></ruby>",
+      "B": "<ruby>先週<rt>せんしゅう</rt></ruby>",
+      "C": "<ruby>来週<rt>らいしゅう</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '先週　映画を　みました'라고 지난주에 영화를 봤다고 했습니다."
+  },
+  {
+    "id": 82,
+    "passage": "<ruby>父<rt>ちち</rt></ruby>は　<ruby>新聞<rt>しんぶん</rt></ruby>を　よみます。<ruby>毎朝<rt>まいあさ</rt></ruby>　よみます。ニュースを　しります。",
+    "question": "<ruby>父<rt>ちち</rt></ruby>は　いつ　<ruby>新聞<rt>しんぶん</rt></ruby>を　よみますか。",
+    "options": {
+      "A": "<ruby>毎朝<rt>まいあさ</rt></ruby>",
+      "B": "<ruby>毎晩<rt>まいばん</rt></ruby>",
+      "C": "<ruby>昼<rt>ひる</rt></ruby>"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 '毎朝　よみます'라고 매일 아침 읽는다고 했습니다."
+  },
+  {
+    "id": 83,
+    "passage": "こうえんで　<ruby>犬<rt>いぬ</rt></ruby>と　さんぽします。<ruby>三十分<rt>さんじゅっぷん</rt></ruby>ぐらい　あるきます。",
+    "question": "どのくらい　さんぽしますか。",
+    "options": {
+      "A": "<ruby>二十分<rt>にじゅっぷん</rt></ruby>",
+      "B": "<ruby>三十分<rt>さんじゅっぷん</rt></ruby>",
+      "C": "<ruby>四十分<rt>よんじゅっぷん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '三十分ぐらい　あるきます'라고 30분 정도 걷는다고 했습니다."
+  },
+  {
+    "id": 84,
+    "passage": "ともだちから　プレゼントを　もらいました。<ruby>本<rt>ほん</rt></ruby>でした。うれしかったです。",
+    "question": "なにを　もらいましたか。",
+    "options": {
+      "A": "<ruby>本<rt>ほん</rt></ruby>",
+      "B": "CD",
+      "C": "ペン"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 '本でした'라고 책이었다고 했습니다."
+  },
+  {
+    "id": 85,
+    "passage": "<ruby>妹<rt>いもうと</rt></ruby>は　ピアノが　じょうずです。<ruby>毎日<rt>まいにち</rt></ruby>　れんしゅうします。コンクールに　でます。",
+    "question": "<ruby>妹<rt>いもうと</rt></ruby>は　なにが　じょうずですか。",
+    "options": {
+      "A": "ギター",
+      "B": "ピアノ",
+      "C": "バイオリン"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '妹は　ピアノが　じょうずです'라고 여동생이 피아노를 잘한다고 했습니다."
+  },
+  {
+    "id": 86,
+    "passage": "バスていは　うちの　<ruby>前<rt>まえ</rt></ruby>に　あります。とても　べんりです。<ruby>五分<rt>ごふん</rt></ruby>で　つきます。",
+    "question": "バスていは　どこに　ありますか。",
+    "options": {
+      "A": "うちの　<ruby>前<rt>まえ</rt></ruby>",
+      "B": "うちの　<ruby>後<rt>うし</rt></ruby>ろ",
+      "C": "うちの　<ruby>横<rt>よこ</rt></ruby>"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 'バスていは　うちの　前に　あります'라고 버스 정류장이 집 앞에 있다고 했습니다."
+  },
+  {
+    "id": 87,
+    "passage": "<ruby>今月<rt>こんげつ</rt></ruby>から　ヨガを　はじめました。<ruby>週<rt>しゅう</rt></ruby>に　<ruby>一回<rt>いっかい</rt></ruby>　いきます。けんこうに　いいです。",
+    "question": "いつから　ヨガを　はじめましたか。",
+    "options": {
+      "A": "<ruby>先月<rt>せんげつ</rt></ruby>",
+      "B": "<ruby>今月<rt>こんげつ</rt></ruby>",
+      "C": "<ruby>来月<rt>らいげつ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今月から　ヨガを　はじめました'라고 이번 달부터 요가를 시작했다고 했습니다."
+  },
+  {
+    "id": 88,
+    "passage": "かいしゃは　<ruby>九時<rt>くじ</rt></ruby>から　<ruby>六時<rt>ろくじ</rt></ruby>までです。ひるやすみは　<ruby>一時間<rt>いちじかん</rt></ruby>です。",
+    "question": "かいしゃは　<ruby>何時<rt>なんじ</rt></ruby>まで　ですか。",
+    "options": {
+      "A": "<ruby>五時<rt>ごじ</rt></ruby>",
+      "B": "<ruby>六時<rt>ろくじ</rt></ruby>",
+      "C": "<ruby>七時<rt>しちじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '九時から　六時までです'라고 9시부터 6시까지라고 했습니다."
+  },
+  {
+    "id": 89,
+    "passage": "ケーキを　やきました。チョコレートケーキです。ともだちに　あげます。",
+    "question": "だれに　ケーキを　あげますか。",
+    "options": {
+      "A": "かぞく",
+      "B": "ともだち",
+      "C": "せんせい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'ともだちに　あげます'라고 친구에게 준다고 했습니다."
+  },
+  {
+    "id": 90,
+    "passage": "<ruby>電話<rt>でんわ</rt></ruby>ばんごうを　おしえます。ゼロさん　の　いちにさん　の　よんごろくです。",
+    "question": "なにを　おしえますか。",
+    "options": {
+      "A": "じゅうしょ",
+      "B": "<ruby>電話<rt>でんわ</rt></ruby>ばんごう",
+      "C": "メールアドレス"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '電話ばんごうを　おしえます'라고 전화번호를 가르쳐준다고 했습니다."
+  },
+  {
+    "id": 91,
+    "passage": "<ruby>兄<rt>あに</rt></ruby>は　<ruby>背<rt>せ</rt></ruby>が　たかいです。<ruby>百八十<rt>ひゃくはちじゅう</rt></ruby>センチです。バスケットボールを　します。",
+    "question": "<ruby>兄<rt>あに</rt></ruby>の　<ruby>身長<rt>しんちょう</rt></ruby>は　どのくらいですか。",
+    "options": {
+      "A": "<ruby>百七十<rt>ひゃくななじゅう</rt></ruby>センチ",
+      "B": "<ruby>百八十<rt>ひゃくはちじゅう</rt></ruby>センチ",
+      "C": "<ruby>百九十<rt>ひゃくきゅうじゅう</rt></ruby>センチ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '百八十センチです'라고 180센티미터라고 했습니다."
+  },
+  {
+    "id": 92,
+    "passage": "<ruby>昨日<rt>きのう</rt></ruby>は　<ruby>友達<rt>ともだち</rt></ruby>の　<ruby>家<rt>いえ</rt></ruby>で　パーティーを　しました。<ruby>十人<rt>じゅうにん</rt></ruby>　きました。",
+    "question": "なんにん　パーティーに　きましたか。",
+    "options": {
+      "A": "<ruby>八人<rt>はちにん</rt></ruby>",
+      "B": "<ruby>十人<rt>じゅうにん</rt></ruby>",
+      "C": "<ruby>十二人<rt>じゅうににん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '十人　きました'라고 10명이 왔다고 했습니다."
+  },
+  {
+    "id": 93,
+    "passage": "テーブルの　<ruby>上<rt>うえ</rt></ruby>に　りんごが　あります。<ruby>三<rt>みっ</rt></ruby>つ　あります。<ruby>赤<rt>あか</rt></ruby>い　りんごです。",
+    "question": "りんごは　いくつ　ありますか。",
+    "options": {
+      "A": "ふたつ",
+      "B": "みっつ",
+      "C": "よっつ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '三つ　あります'라고 3개 있다고 했습니다."
+  },
+  {
+    "id": 94,
+    "passage": "<ruby>来年<rt>らいねん</rt></ruby>　アメリカに　りゅうがくします。<ruby>一年間<rt>いちねんかん</rt></ruby>　います。えいごを　べんきょうします。",
+    "question": "どのくらい　アメリカに　いますか。",
+    "options": {
+      "A": "<ruby>半年<rt>はんとし</rt></ruby>",
+      "B": "<ruby>一年間<rt>いちねんかん</rt></ruby>",
+      "C": "<ruby>二年間<rt>にねんかん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '一年間　います'라고 1년간 있는다고 했습니다."
+  },
+  {
+    "id": 95,
+    "passage": "きっさてんで　コーヒーを　のみました。<ruby>四百円<rt>よんひゃくえん</rt></ruby>でした。ケーキも　たべました。",
+    "question": "コーヒーは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>三百円<rt>さんびゃくえん</rt></ruby>",
+      "B": "<ruby>四百円<rt>よんひゃくえん</rt></ruby>",
+      "C": "<ruby>五百円<rt>ごひゃくえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '四百円でした'라고 400엔이었다고 했습니다."
+  },
+  {
+    "id": 96,
+    "passage": "<ruby>水曜日<rt>すいようび</rt></ruby>は　<ruby>歯医者<rt>はいしゃ</rt></ruby>に　いきます。<ruby>午後<rt>ごご</rt></ruby>　<ruby>二時<rt>にじ</rt></ruby>の　よやくです。",
+    "question": "<ruby>歯医者<rt>はいしゃ</rt></ruby>の　よやくは　<ruby>何時<rt>なんじ</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>一時<rt>いちじ</rt></ruby>",
+      "B": "<ruby>二時<rt>にじ</rt></ruby>",
+      "C": "<ruby>三時<rt>さんじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '午後　二時の　よやくです'라고 오후 2시 예약이라고 했습니다."
+  },
+  {
+    "id": 97,
+    "passage": "かばんの　<ruby>中<rt>なか</rt></ruby>に　さいふが　あります。<ruby>黒<rt>くろ</rt></ruby>い　さいふです。おかねが　はいっています。",
+    "question": "さいふは　どこに　ありますか。",
+    "options": {
+      "A": "かばんの　<ruby>中<rt>なか</rt></ruby>",
+      "B": "かばんの　<ruby>外<rt>そと</rt></ruby>",
+      "C": "つくえの　<ruby>上<rt>うえ</rt></ruby>"
+    },
+    "answer": "A",
+    "explanation_ko": "지문에서 'かばんの　中に　さいふが　あります'라고 가방 안에 지갑이 있다고 했습니다."
+  },
+  {
+    "id": 98,
+    "passage": "<ruby>今朝<rt>けさ</rt></ruby>　<ruby>六時半<rt>ろくじはん</rt></ruby>に　おきました。シャワーを　あびました。あさごはんを　たべました。",
+    "question": "<ruby>今朝<rt>けさ</rt></ruby>　<ruby>何時<rt>なんじ</rt></ruby>に　おきましたか。",
+    "options": {
+      "A": "<ruby>六時<rt>ろくじ</rt></ruby>",
+      "B": "<ruby>六時半<rt>ろくじはん</rt></ruby>",
+      "C": "<ruby>七時<rt>しちじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '今朝　六時半に　おきました'라고 오늘 아침 6시 30분에 일어났다고 했습니다."
+  },
+  {
+    "id": 99,
+    "passage": "あたらしい　アパートに　ひっこしました。えきから　<ruby>近<rt>ちか</rt></ruby>いです。<ruby>家賃<rt>やちん</rt></ruby>は　<ruby>七万円<rt>ななまんえん</rt></ruby>です。",
+    "question": "<ruby>家賃<rt>やちん</rt></ruby>は　いくらですか。",
+    "options": {
+      "A": "<ruby>五万円<rt>ごまんえん</rt></ruby>",
+      "B": "<ruby>六万円<rt>ろくまんえん</rt></ruby>",
+      "C": "<ruby>七万円<rt>ななまんえん</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '家賃は　七万円です'라고 집세가 7만 엔이라고 했습니다."
+  },
+  {
+    "id": 100,
+    "passage": "<ruby>金曜日<rt>きんようび</rt></ruby>の　<ruby>夜<rt>よる</rt></ruby>は　いつも　そとで　ごはんを　たべます。レストランに　いきます。",
+    "question": "いつ　そとで　ごはんを　たべますか。",
+    "options": {
+      "A": "<ruby>木曜日<rt>もくようび</rt></ruby>の　<ruby>夜<rt>よる</rt></ruby>",
+      "B": "<ruby>金曜日<rt>きんようび</rt></ruby>の　<ruby>夜<rt>よる</rt></ruby>",
+      "C": "<ruby>土曜日<rt>どようび</rt></ruby>の　<ruby>夜<rt>よる</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '金曜日の　夜は　いつも　そとで　ごはんを　たべます'라고 금요일 밤에 밖에서 밥을 먹는다고 했습니다."
+  },
+  {
+    "id": 101,
+    "passage": "<ruby>先生<rt>せんせい</rt></ruby>は　めがねを　かけています。<ruby>新<rt>あたら</rt></ruby>しい　めがねです。よく　みえます。",
+    "question": "<ruby>先生<rt>せんせい</rt></ruby>は　なにを　かけていますか。",
+    "options": {
+      "A": "ぼうし",
+      "B": "めがね",
+      "C": "とけい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '先生は　めがねを　かけています'라고 선생님이 안경을 쓰고 있다고 했습니다."
+  },
+  {
+    "id": 102,
+    "passage": "あさって　<ruby>大阪<rt>おおさか</rt></ruby>に　いきます。しごとで　いきます。<ruby>三日間<rt>みっかかん</rt></ruby>　います。",
+    "question": "どこに　いきますか。",
+    "options": {
+      "A": "<ruby>東京<rt>とうきょう</rt></ruby>",
+      "B": "<ruby>京都<rt>きょうと</rt></ruby>",
+      "C": "<ruby>大阪<rt>おおさか</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 'あさって　大阪に　いきます'라고 모레 오사카에 간다고 했습니다."
+  },
+  {
+    "id": 103,
+    "passage": "<ruby>夕方<rt>ゆうがた</rt></ruby>　<ruby>五時<rt>ごじ</rt></ruby>から　テニスの　れんしゅうが　あります。<ruby>二時間<rt>にじかん</rt></ruby>　れんしゅうします。",
+    "question": "テニスの　れんしゅうは　<ruby>何時<rt>なんじ</rt></ruby>から　ですか。",
+    "options": {
+      "A": "<ruby>四時<rt>よじ</rt></ruby>",
+      "B": "<ruby>五時<rt>ごじ</rt></ruby>",
+      "C": "<ruby>六時<rt>ろくじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '夕方　五時から　テニスの　れんしゅうが　あります'라고 저녁 5시부터 연습이 있다고 했습니다."
+  },
+  {
+    "id": 104,
+    "passage": "にわに　<ruby>花<rt>はな</rt></ruby>が　さいています。<ruby>白<rt>しろ</rt></ruby>い　<ruby>花<rt>はな</rt></ruby>と　<ruby>黄色<rt>きいろ</rt></ruby>い　<ruby>花<rt>はな</rt></ruby>が　あります。きれいです。",
+    "question": "どんな　いろの　<ruby>花<rt>はな</rt></ruby>が　ありますか。",
+    "options": {
+      "A": "<ruby>赤<rt>あか</rt></ruby>と　<ruby>青<rt>あお</rt></ruby>",
+      "B": "<ruby>白<rt>しろ</rt></ruby>と　<ruby>黄色<rt>きいろ</rt></ruby>",
+      "C": "<ruby>紫<rt>むらさき</rt></ruby>と　ピンク"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '白い　花と　黄色い　花が　あります'라고 하얀 꽃과 노란 꽃이 있다고 했습니다."
+  },
+  {
+    "id": 105,
+    "passage": "<ruby>月<rt>つき</rt></ruby>に　<ruby>二回<rt>にかい</rt></ruby>　びようしつに　いきます。かみを　きります。<ruby>三千円<rt>さんぜんえん</rt></ruby>です。",
+    "question": "<ruby>月<rt>つき</rt></ruby>に　なんかい　びようしつに　いきますか。",
+    "options": {
+      "A": "<ruby>一回<rt>いっかい</rt></ruby>",
+      "B": "<ruby>二回<rt>にかい</rt></ruby>",
+      "C": "<ruby>三回<rt>さんかい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '月に　二回　びようしつに　いきます'라고 한 달에 두 번 간다고 했습니다."
+  },
+  {
+    "id": 106,
+    "passage": "うちから　かいしゃまで　<ruby>電車<rt>でんしゃ</rt></ruby>で　<ruby>四十五分<rt>よんじゅうごふん</rt></ruby>です。まいにち　つうきんします。",
+    "question": "かいしゃまで　どのくらい　かかりますか。",
+    "options": {
+      "A": "<ruby>三十五分<rt>さんじゅうごふん</rt></ruby>",
+      "B": "<ruby>四十五分<rt>よんじゅうごふん</rt></ruby>",
+      "C": "<ruby>五十五分<rt>ごじゅうごふん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '電車で　四十五分です'라고 전철로 45분이라고 했습니다."
+  },
+  {
+    "id": 107,
+    "passage": "<ruby>冷蔵庫<rt>れいぞうこ</rt></ruby>に　ぎゅうにゅうが　あります。たまごも　あります。あさごはんを　つくります。",
+    "question": "<ruby>冷蔵庫<rt>れいぞうこ</rt></ruby>に　なにが　ありますか。",
+    "options": {
+      "A": "パンと　バター",
+      "B": "ぎゅうにゅうと　たまご",
+      "C": "にくと　やさい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '冷蔵庫に　ぎゅうにゅうが　あります。たまごも　あります'라고 우유와 계란이 있다고 했습니다."
+  },
+  {
+    "id": 108,
+    "passage": "クリスマスに　ともだちに　プレゼントを　あげます。ほんを　あげます。よろこぶと　おもいます。",
+    "question": "いつ　プレゼントを　あげますか。",
+    "options": {
+      "A": "たんじょうび",
+      "B": "クリスマス",
+      "C": "しょうがつ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'クリスマスに　ともだちに　プレゼントを　あげます'라고 크리스마스에 준다고 했습니다."
+  },
+  {
+    "id": 109,
+    "passage": "うちの　<ruby>近<rt>ちか</rt></ruby>くに　コンビニが　あります。<ruby>二十四時間<rt>にじゅうよじかん</rt></ruby>　あいています。べんりです。",
+    "question": "コンビニは　なんじかん　あいていますか。",
+    "options": {
+      "A": "<ruby>十二時間<rt>じゅうにじかん</rt></ruby>",
+      "B": "<ruby>十八時間<rt>じゅうはちじかん</rt></ruby>",
+      "C": "<ruby>二十四時間<rt>にじゅうよじかん</rt></ruby>"
+    },
+    "answer": "C",
+    "explanation_ko": "지문에서 '二十四時間　あいています'라고 24시간 열려있다고 했습니다."
+  },
+  {
+    "id": 110,
+    "passage": "<ruby>暑<rt>あつ</rt></ruby>い　<ruby>日<rt>ひ</rt></ruby>は　アイスクリームを　たべます。バニラが　すきです。つめたくて　おいしいです。",
+    "question": "どんな　アイスクリームが　すきですか。",
+    "options": {
+      "A": "チョコレート",
+      "B": "バニラ",
+      "C": "ストロベリー"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'バニラが　すきです'라고 바닐라를 좋아한다고 했습니다."
+  },
+  {
+    "id": 111,
+    "passage": "<ruby>週末<rt>しゅうまつ</rt></ruby>は　かぞくと　<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に　いきます。デパートに　いきます。ふくを　かいます。",
+    "question": "どこに　<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>に　いきますか。",
+    "options": {
+      "A": "スーパー",
+      "B": "デパート",
+      "C": "コンビニ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'デパートに　いきます'라고 백화점에 간다고 했습니다."
+  },
+  {
+    "id": 112,
+    "passage": "<ruby>姉<rt>あね</rt></ruby>は　けっこんしています。<ruby>子<rt>こ</rt></ruby>どもが　<ruby>二人<rt>ふたり</rt></ruby>　います。かわいいです。",
+    "question": "<ruby>姉<rt>あね</rt></ruby>の　<ruby>子<rt>こ</rt></ruby>どもは　<ruby>何人<rt>なんにん</rt></ruby>ですか。",
+    "options": {
+      "A": "<ruby>一人<rt>ひとり</rt></ruby>",
+      "B": "<ruby>二人<rt>ふたり</rt></ruby>",
+      "C": "<ruby>三人<rt>さんにん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '子どもが　二人　います'라고 아이가 둘 있다고 했습니다."
+  },
+  {
+    "id": 113,
+    "passage": "ゴールデンウィークに　<ruby>旅行<rt>りょこう</rt></ruby>します。おきなわに　いきます。うみで　およぎます。",
+    "question": "どこに　<ruby>旅行<rt>りょこう</rt></ruby>しますか。",
+    "options": {
+      "A": "ほっかいどう",
+      "B": "おきなわ",
+      "C": "きゅうしゅう"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'おきなわに　いきます'라고 오키나와에 간다고 했습니다."
+  },
+  {
+    "id": 114,
+    "passage": "まいばん　<ruby>十一時<rt>じゅういちじ</rt></ruby>に　ねます。<ruby>七時間<rt>ななじかん</rt></ruby>　ねます。けんこうに　いいです。",
+    "question": "<ruby>何時<rt>なんじ</rt></ruby>に　ねますか。",
+    "options": {
+      "A": "<ruby>十時<rt>じゅうじ</rt></ruby>",
+      "B": "<ruby>十一時<rt>じゅういちじ</rt></ruby>",
+      "C": "<ruby>十二時<rt>じゅうにじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'まいばん　十一時に　ねます'라고 매일 밤 11시에 잔다고 했습니다."
+  },
+  {
+    "id": 115,
+    "passage": "<ruby>本棚<rt>ほんだな</rt></ruby>に　<ruby>本<rt>ほん</rt></ruby>が　たくさん　あります。しょうせつと　まんがが　あります。よく　よみます。",
+    "question": "<ruby>本棚<rt>ほんだな</rt></ruby>に　なにが　ありますか。",
+    "options": {
+      "A": "ノートと　えんぴつ",
+      "B": "しょうせつと　まんが",
+      "C": "しんぶんと　ざっし"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'しょうせつと　まんがが　あります'라고 소설과 만화가 있다고 했습니다."
+  },
+  {
+    "id": 116,
+    "passage": "かぜを　ひいたので　くすりを　のみます。<ruby>一日<rt>いちにち</rt></ruby>　<ruby>三回<rt>さんかい</rt></ruby>　のみます。はやく　なおしたいです。",
+    "question": "<ruby>一日<rt>いちにち</rt></ruby>に　なんかい　くすりを　のみますか。",
+    "options": {
+      "A": "<ruby>二回<rt>にかい</rt></ruby>",
+      "B": "<ruby>三回<rt>さんかい</rt></ruby>",
+      "C": "<ruby>四回<rt>よんかい</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '一日　三回　のみます'라고 하루에 세 번 먹는다고 했습니다."
+  },
+  {
+    "id": 117,
+    "passage": "えいがかんで　えいがを　みました。<ruby>千八百円<rt>せんはっぴゃくえん</rt></ruby>でした。おもしろかったです。",
+    "question": "えいがは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>千五百円<rt>せんごひゃくえん</rt></ruby>",
+      "B": "<ruby>千八百円<rt>せんはっぴゃくえん</rt></ruby>",
+      "C": "<ruby>二千円<rt>にせんえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '千八百円でした'라고 1800엔이었다고 했습니다."
+  },
+  {
+    "id": 118,
+    "passage": "<ruby>郵便局<rt>ゆうびんきょく</rt></ruby>は　<ruby>九時<rt>くじ</rt></ruby>から　<ruby>五時<rt>ごじ</rt></ruby>まで　あいています。<ruby>土曜日<rt>どようび</rt></ruby>も　あいています。",
+    "question": "<ruby>郵便局<rt>ゆうびんきょく</rt></ruby>は　<ruby>何時<rt>なんじ</rt></ruby>まで　あいていますか。",
+    "options": {
+      "A": "<ruby>四時<rt>よじ</rt></ruby>",
+      "B": "<ruby>五時<rt>ごじ</rt></ruby>",
+      "C": "<ruby>六時<rt>ろくじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '九時から　五時まで　あいています'라고 9시부터 5시까지 연다고 했습니다."
+  },
+  {
+    "id": 119,
+    "passage": "げんかんに　くつが　あります。<ruby>三<rt>さん</rt></ruby>そく　あります。あたらしい　くつです。",
+    "question": "くつは　なんそく　ありますか。",
+    "options": {
+      "A": "<ruby>二<rt>に</rt></ruby>そく",
+      "B": "<ruby>三<rt>さん</rt></ruby>そく",
+      "C": "<ruby>四<rt>よん</rt></ruby>そく"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '三そく　あります'라고 3켤레 있다고 했습니다."
+  },
+  {
+    "id": 120,
+    "passage": "ばんごはんは　<ruby>七時<rt>しちじ</rt></ruby>から　たべます。かぞくと　いっしょに　たべます。たのしいです。",
+    "question": "ばんごはんは　<ruby>何時<rt>なんじ</rt></ruby>から　たべますか。",
+    "options": {
+      "A": "<ruby>六時<rt>ろくじ</rt></ruby>",
+      "B": "<ruby>七時<rt>しちじ</rt></ruby>",
+      "C": "<ruby>八時<rt>はちじ</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 'ばんごはんは　七時から　たべます'라고 저녁은 7시부터 먹는다고 했습니다."
+  },
+  {
+    "id": 121,
+    "passage": "<ruby>台風<rt>たいふう</rt></ruby>が　きています。<ruby>強<rt>つよ</rt></ruby>い　<ruby>風<rt>かぜ</rt></ruby>と　<ruby>雨<rt>あめ</rt></ruby>です。そとに　でません。",
+    "question": "なにが　きていますか。",
+    "options": {
+      "A": "<ruby>地震<rt>じしん</rt></ruby>",
+      "B": "<ruby>台風<rt>たいふう</rt></ruby>",
+      "C": "つなみ"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '台風が　きています'라고 태풍이 오고 있다고 했습니다."
+  },
+  {
+    "id": 122,
+    "passage": "<ruby>山田<rt>やまだ</rt></ruby>さんは　いしゃです。びょういんで　はたらいています。いそがしいです。",
+    "question": "<ruby>山田<rt>やまだ</rt></ruby>さんの　しごとは　なんですか。",
+    "options": {
+      "A": "かんごし",
+      "B": "いしゃ",
+      "C": "せんせい"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '山田さんは　いしゃです'라고 야마다 씨는 의사라고 했습니다."
+  },
+  {
+    "id": 123,
+    "passage": "バスで　がっこうに　いきます。<ruby>三十分<rt>さんじゅっぷん</rt></ruby>　かかります。<ruby>二百五十円<rt>にひゃくごじゅうえん</rt></ruby>です。",
+    "question": "バスは　いくらですか。",
+    "options": {
+      "A": "<ruby>二百円<rt>にひゃくえん</rt></ruby>",
+      "B": "<ruby>二百五十円<rt>にひゃくごじゅうえん</rt></ruby>",
+      "C": "<ruby>三百円<rt>さんびゃくえん</rt></ruby>"
+    },
+    "answer": "B",
+    "explanation_ko": "지문에서 '二百五十円です'라고 250엔이라고 했습니다."
+  },
+  {
+    "id": 124,
+    "passage": "あたらしい　パソコンを　かいました。<ruby>八万円<rt>はちまんえん</rt></ruby>でした。はやくて　べんりです。",
+    "question": "パソコンは　いくらでしたか。",
+    "options": {
+      "A": "<ruby>六万円<rt>ろくまんえん</rt></ruby>",
+      "B": "<ruby>八万円<rt>

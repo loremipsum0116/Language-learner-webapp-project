@@ -1948,5 +1948,655 @@
         },
         "answer": "B",
         "explanation_ko": "핵심 리스크는 비용 대비 진입장벽이 낮아 일방적(또는 부실한) 시행이 가능하고, 그 결과 초국경적 피해·책임 문제와 ‘도덕적 해이’가 발생할 수 있다는 점입니다."
+    },
+    {
+        "id": 151,
+        "passage": "The concept of affective labor describes work that produces feelings of ease, well-being, satisfaction, or passion in others, encompassing emotional and caring dimensions of service work that have become increasingly central to post-industrial economies. This form of labor, predominantly performed by women and marginalized groups, involves managing one's own emotions while producing specific emotional states in others through activities such as customer service, healthcare, education, and entertainment. Affective labor blurs traditional distinctions between productive and reproductive work, as it often draws on skills developed through unpaid domestic and care work that are then commodified in wage labor contexts. The immaterial products of affective labor—feelings, relationships, and subjective experiences—resist traditional metrics of productivity and value, creating challenges for recognition and compensation of this essential work. Research reveals how affective labor is simultaneously devalued as 'unskilled' or 'natural' while being crucial for organizational functioning and capital accumulation, particularly in service economies where customer experience determines competitive advantage. The concept highlights how neoliberal capitalism increasingly colonizes intimate and emotional dimensions of human life, transforming affects into sources of economic value while maintaining gendered and racialized hierarchies of worth.",
+        "question": "What paradox does the passage identify about affective labor?",
+        "options": {
+            "A": "It requires no actual skills but is highly compensated",
+            "B": "It is devalued as 'unskilled' while being crucial for organizational functioning",
+            "C": "It only exists in pre-industrial economies",
+            "D": "It eliminates all gender-based work divisions"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 감정 노동이 '비숙련' 또는 '자연스러운' 것으로 평가절하되면서도 동시에 조직 기능과 자본 축적에 중요하다는 역설을 지적하고 있습니다."
+    },
+    {
+        "id": 152,
+        "passage": "The theory of cognitive dissonance, developed by Leon Festinger, describes the psychological discomfort experienced when holding contradictory beliefs, values, or attitudes simultaneously, leading individuals to engage in mental strategies to reduce this tension and restore psychological consistency. This phenomenon occurs when people's actions conflict with their self-concept, when new information challenges existing beliefs, or when making difficult decisions between equally attractive alternatives requires justifying the chosen option while devaluing the rejected one. Cognitive dissonance drives various psychological processes including selective exposure to confirming information, rationalization of contradictory behaviors, and modification of beliefs to align with actions, demonstrating how people are motivated reasoners who seek coherence rather than objective truth-seekers. The theory has profound implications for understanding phenomena such as buyer's remorse, where post-purchase dissonance leads to seeking confirmation of decision wisdom; induced compliance, where performing actions contrary to attitudes leads to attitude change; and belief perseverance, where disconfirming evidence paradoxically strengthens beliefs through motivated reasoning. Research shows that dissonance is culturally variable, with individualistic cultures experiencing more dissonance from personal inconsistency while collectivistic cultures experience more dissonance from social inconsistency. The concept reveals how rationality is bounded by psychological needs for consistency, with implications for persuasion, behavior change, and understanding resistance to evidence that challenges deeply held beliefs.",
+        "question": "How does cognitive dissonance vary across cultures according to the passage?",
+        "options": {
+            "A": "It only occurs in Western societies",
+            "B": "Individualistic cultures experience more dissonance from personal inconsistency while collectivistic cultures from social inconsistency",
+            "C": "All cultures experience identical forms of dissonance",
+            "D": "Cognitive dissonance doesn't exist in collectivistic cultures"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 개인주의 문화는 개인적 불일치로부터, 집단주의 문화는 사회적 불일치로부터 더 많은 부조화를 경험한다고 설명하고 있습니다."
+    },
+    {
+        "id": 153,
+        "passage": "The concept of biocultural diversity recognizes the interconnected evolution of biological, cultural, and linguistic diversity, revealing how human cultures and natural ecosystems have co-evolved through millennia of interaction to create mutually dependent systems of knowledge, practice, and biological richness. This framework challenges the nature-culture divide by demonstrating how cultural practices shape biodiversity through traditional management systems, selective pressures, and landscape modification, while biological diversity provides the material basis for diverse cultural adaptations, knowledge systems, and ways of life. Research shows strong geographical correlations between areas of high biological diversity and linguistic diversity, suggesting that the conditions supporting ecological complexity also foster cultural diversification, with indigenous territories containing disproportionate percentages of both biological species and human languages. The loss of biocultural diversity represents a double extinction crisis, as languages disappear at rates exceeding species extinction, taking with them irreplaceable ecological knowledge, management practices, and alternative ways of understanding human-environment relationships. Contemporary threats to biocultural diversity include globalization pressures that homogenize cultures and landscapes, development projects that displace indigenous peoples from biodiversity hotspots, and education systems that devalue local languages and traditional ecological knowledge. Conservation efforts increasingly recognize that protecting biodiversity requires supporting cultural diversity and indigenous rights, as biological and cultural diversity are not separate phenomena but intertwined dimensions of Earth's life-supporting systems.",
+        "question": "What correlation does the research reveal about biological and linguistic diversity?",
+        "options": {
+            "A": "They exist in completely separate geographical regions",
+            "B": "Areas of high biological diversity strongly correlate with high linguistic diversity",
+            "C": "Language diversity prevents biological conservation",
+            "D": "Biological diversity only exists where there are no human languages"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 생물학적 다양성이 높은 지역과 언어적 다양성이 높은 지역 사이에 강한 지리적 상관관계가 있다고 밝히고 있습니다."
+    },
+    {
+        "id": 154,
+        "passage": "The phenomenon of dark patterns in user interface design refers to deliberately crafted digital interactions that manipulate users into unintended behaviors benefiting companies at the expense of user autonomy, privacy, and financial well-being. These deceptive design practices exploit cognitive biases and psychological vulnerabilities through techniques such as hidden costs revealed at final checkout, forced continuity that makes cancellation difficult, privacy Zuckering that tricks users into sharing more data than intended, and roach motels where getting in is easy but getting out is hard. Dark patterns operate at the intersection of behavioral economics, psychology, and technology, weaponizing knowledge about human decision-making to create interfaces that appear to offer choice while systematically steering users toward outcomes that serve corporate interests. The prevalence of dark patterns raises fundamental questions about consent and autonomy in digital environments, as users ostensibly make free choices that are actually products of sophisticated manipulation techniques designed to bypass rational deliberation. Regulatory responses to dark patterns include consumer protection laws, privacy regulations requiring genuine consent, and proposals for ethical design standards, though enforcement remains challenging given the subtle nature of many manipulative techniques. The phenomenon reveals broader tensions in digital capitalism between user experience and profit extraction, highlighting how interface design has become a site of power where corporate interests shape human behavior through architectural choices that appear neutral but embed specific values and intentions.",
+        "question": "What fundamental issue do dark patterns raise about digital interactions?",
+        "options": {
+            "A": "They make websites load more slowly",
+            "B": "They question the validity of consent and autonomy when choices are products of manipulation",
+            "C": "They only affect elderly users unfamiliar with technology",
+            "D": "They improve user experience and satisfaction"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 다크 패턴이 정교한 조작 기술의 산물인 선택에서 동의와 자율성의 근본적 문제를 제기한다고 설명하고 있습니다."
+    },
+    {
+        "id": 155,
+        "passage": "The theory of institutional isomorphism explains why organizations within the same field tend to become increasingly similar over time, not necessarily because similar forms are more efficient, but because organizations face pressures to conform to established patterns that confer legitimacy and resources. This homogenization occurs through three mechanisms: coercive isomorphism from legal requirements and resource dependencies, mimetic isomorphism where organizations copy successful or prestigious peers during uncertainty, and normative isomorphism from professional standards and educational backgrounds that create shared mental models. The process reveals how rationality in organizational design is often ceremonial rather than substantive, as organizations adopt structures and practices for their symbolic value in demonstrating conformity to institutional expectations rather than their technical effectiveness. Research shows that isomorphic pressures are strongest in fields with high state involvement, powerful professional bodies, or ambiguous performance metrics where legitimacy matters more than efficiency. The phenomenon helps explain paradoxes such as why organizations maintain structures that don't improve performance, why innovations spread regardless of their effectiveness, and why organizational diversity decreases despite environmental complexity that should favor differentiation. However, institutional isomorphism also enables coordination, reduces transaction costs through standardization, and provides cognitive templates that simplify decision-making in complex environments, suggesting that homogenization serves important functions beyond mere conformity.",
+        "question": "Why do organizations maintain ineffective structures according to institutional isomorphism?",
+        "options": {
+            "A": "Because they lack resources to change them",
+            "B": "For symbolic value in demonstrating conformity to institutional expectations",
+            "C": "Because all organizational structures are equally effective",
+            "D": "Due to legal prohibitions against organizational change"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 조직들이 기술적 효과성보다는 제도적 기대에 대한 순응을 보여주는 상징적 가치 때문에 구조와 관행을 채택한다고 설명하고 있습니다."
+    },
+    {
+        "id": 156,
+        "passage": "The concept of extractive institutions, central to institutional economics, describes political and economic arrangements designed to extract resources from society for the benefit of narrow elites rather than creating inclusive opportunities for broad-based prosperity. These institutions persist through self-reinforcing mechanisms where political power enables economic extraction, which generates resources to maintain political dominance, creating vicious cycles that trap societies in poverty and inequality despite abundant natural resources or human capital. Extractive institutions manifest through various forms including monopolistic economic structures that prevent competition, political systems that exclude majority participation, property rights regimes that facilitate expropriation, and educational systems that limit knowledge access to preserve elite advantages. Historical analysis reveals how extractive institutions established during colonialism continue to shape development trajectories, as initial institutional choices create path dependencies that persist through elite capture of independence movements, institutional complementarities that make partial reform ineffective, and cultural adaptations that normalize extraction. The theory challenges geographic and cultural explanations of development by showing how similar peoples achieve vastly different outcomes under different institutional arrangements, while identical institutions produce similar results across diverse cultural contexts. Breaking extractive equilibria requires either external shocks that disrupt elite power, broad coalitions that overcome collective action problems, or gradual institutional drift that accumulates into transformative change, though elites typically respond by adjusting extraction methods rather than accepting inclusive institutions.",
+        "question": "How do extractive institutions maintain themselves according to the passage?",
+        "options": {
+            "A": "Through democratic voting and popular support",
+            "B": "By self-reinforcing cycles where political power enables economic extraction that maintains dominance",
+            "C": "Only through military force and violence",
+            "D": "By providing equal opportunities for all citizens"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 정치 권력이 경제적 추출을 가능하게 하고, 이것이 다시 정치적 지배를 유지하는 자원을 생성하는 자기강화 메커니즘을 통해 유지된다고 설명하고 있습니다."
+    },
+    {
+        "id": 157,
+        "passage": "The phenomenon of linguistic imperialism describes how dominant languages, particularly global English, expand their influence through economic, political, and cultural mechanisms that marginalize local languages while presenting linguistic hegemony as natural, beneficial, or inevitable progress. This process operates through various channels including international development programs that prioritize dominant languages, educational policies that devalue mother tongue instruction, media and technology platforms that privilege certain languages, and professional structures that require dominant language proficiency for economic advancement. Linguistic imperialism involves not just language spread but the transfer of cultural values, ways of thinking, and power relations embedded in language, creating hierarchies where speakers of dominant languages enjoy advantages while others face discrimination or must invest significant resources in language learning to access opportunities. The concept reveals how language functions as cultural capital that can be converted into economic and social advantages, with monolingual speakers of dominant languages benefiting from a global system that treats their linguistic inheritance as universal currency. Resistance to linguistic imperialism includes mother tongue education movements, language revitalization efforts, and calls for linguistic human rights that recognize language diversity as essential for human dignity and cultural survival. However, the process is complicated by voluntary adoption of dominant languages for perceived benefits, creating dilemmas between preserving linguistic diversity and accessing global opportunities, with communities forced to navigate between cultural maintenance and economic participation.",
+        "question": "What does linguistic imperialism involve beyond language spread?",
+        "options": {
+            "A": "Only teaching grammar and vocabulary of dominant languages",
+            "B": "Transfer of cultural values, ways of thinking, and power relations embedded in language",
+            "C": "Complete elimination of all local languages immediately",
+            "D": "Equal exchange between all global languages"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 언어 제국주의가 단순한 언어 확산을 넘어 언어에 내재된 문화적 가치, 사고방식, 권력 관계의 전달을 포함한다고 설명하고 있습니다."
+    },
+    {
+        "id": 158,
+        "passage": "The theory of ambient power analyzes how contemporary governance operates through environmental modulation rather than direct coercion, shaping possibilities and probabilities through the design of spaces, interfaces, and atmospheres that influence behavior without explicit commands or visible force. This form of power works through techniques such as choice architecture that structures decision contexts, sensory environments that affect mood and cognition, algorithmic filtering that shapes information exposure, and nudging that steers behavior while maintaining illusions of freedom. Ambient power is particularly effective because it operates below conscious awareness, appearing as natural or neutral features of environments rather than political interventions, making resistance difficult when power is dispersed through seemingly apolitical design choices. The concept reveals how neoliberal governance has shifted from disciplinary institutions to environmental management, governing at a distance through the configuration of spaces of possibility rather than direct prohibition or prescription. Examples include retail environments engineered to increase consumption, smart cities that govern through sensor networks and responsive systems, and digital platforms that shape behavior through interface design and algorithmic recommendation. The effectiveness of ambient power raises questions about agency and responsibility when behavior emerges from person-environment interactions rather than autonomous choice, challenging liberal notions of freedom that assume independent decision-making. Resistance requires developing sensitivity to environmental influences, creating counter-environments that support different behaviors, and politicizing design choices typically treated as technical or aesthetic decisions.",
+        "question": "Why is ambient power particularly effective according to the passage?",
+        "options": {
+            "A": "It uses explicit force and visible coercion",
+            "B": "It operates below conscious awareness, appearing as neutral features rather than political interventions",
+            "C": "It only works on certain demographic groups",
+            "D": "It requires constant surveillance and monitoring"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 주변 권력이 정치적 개입이 아닌 중립적 특징으로 보이며 의식적 인지 아래에서 작동하기 때문에 특히 효과적이라고 설명하고 있습니다."
+    },
+    {
+        "id": 159,
+        "passage": "The concept of metabolic labor extends Marx's analysis to examine how capitalism exploits not just human work but the broader metabolic processes through which humans and nature transform each other, revealing hidden forms of value extraction from biological and ecological processes. This framework analyzes how capital accumulates through the appropriation of unpaid metabolic work performed by bodies, ecosystems, and the biosphere, including reproductive labor that produces new workers, ecological processes that provide 'ecosystem services,' and bodily processes that maintain worker productivity. Metabolic labor reveals how the boundary between productive and unproductive labor is politically constructed to exclude vast domains of necessary work from compensation, particularly work performed by women, nature, and racialized populations whose contributions are naturalized as non-labor. The concept highlights how capitalism depends on a hidden abode of metabolic reproduction that subsidizes commodity production through uncompensated biological and ecological work, from the carbon sequestration of forests to the emotional labor of social reproduction. Contemporary examples include the gig economy's extraction of metabolic value through algorithmic management of bodily rhythms, pharmaceutical capitalism's commodification of biological processes, and carbon markets that financialize the metabolic work of ecosystems. Understanding metabolic labor reveals the true ecological and social costs of capitalist production obscured by conventional economic accounting, suggesting that sustainability requires recognizing and valuing the full spectrum of metabolic work that sustains human and natural communities.",
+        "question": "What does metabolic labor reveal about capitalism according to the passage?",
+        "options": {
+            "A": "Capitalism only exploits traditional factory labor",
+            "B": "It depends on hidden, uncompensated biological and ecological work that subsidizes production",
+            "C": "All metabolic processes are fairly compensated under capitalism",
+            "D": "Capitalism has no relationship to natural processes"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 자본주의가 상품 생산을 보조하는 보상받지 못하는 생물학적 및 생태학적 작업의 숨겨진 영역에 의존한다고 설명하고 있습니다."
+    },
+    {
+        "id": 160,
+        "passage": "The theory of agnotology examines the deliberate production of ignorance as a political and economic strategy, revealing how powerful actors actively create doubt, confusion, and unknowing to protect interests threatened by knowledge. This study of ignorance-making analyzes techniques such as manufacturing controversy where none exists scientifically, flooding information spaces with misleading content, exploiting balanced reporting norms to create false equivalencies, and strategically defunding research that might produce inconvenient knowledge. Agnotology differs from mere absence of knowledge by focusing on ignorance as an achievement requiring resources, expertise, and coordination, often involving the same institutions and methods used to produce legitimate knowledge. Historical examples include tobacco companies' decades-long campaign to obscure smoking's health effects, fossil fuel industries' climate denial strategies, and pharmaceutical companies' suppression of adverse drug trials, demonstrating how agnogenesis operates through think tanks, front groups, captured regulators, and strategic litigation. The concept reveals how the marketplace of ideas can be manipulated when some participants have vastly superior resources to produce and disseminate doubt, creating asymmetries where producing ignorance is cheaper than producing knowledge. Contemporary agnotology operates through digital platforms that amplify disinformation, algorithmic curation that creates filter bubbles, and the exploitation of cognitive biases that make false beliefs resistant to correction. Understanding agnotology is crucial for defending democratic deliberation and evidence-based policy against orchestrated campaigns of epistemological sabotage.",
+        "question": "How does agnotology differ from mere absence of knowledge?",
+        "options": {
+            "A": "There is no difference between them",
+            "B": "It focuses on ignorance as a deliberate achievement requiring resources and coordination",
+            "C": "Agnotology only occurs in scientific contexts",
+            "D": "It represents complete lack of any information"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 무지학(agnotology)이 단순한 지식의 부재와 달리 자원, 전문성, 조정이 필요한 의도적 성취로서의 무지에 초점을 맞춘다고 설명하고 있습니다."
+    },
+    {
+        "id": 161,
+        "passage": "The concept of participatory authoritarianism describes political systems that maintain authoritarian control while incorporating limited forms of citizen participation that provide input without threatening regime power, creating hybrid arrangements that combine democratic procedures with autocratic outcomes. These systems employ various mechanisms including controlled elections that allow choice among approved candidates, consultative institutions that gather public opinion without binding decision-makers, responsive authoritarianism that addresses specific grievances while maintaining systemic control, and digital participation platforms that channel dissent into manageable formats. Participatory authoritarianism differs from both traditional autocracy and democracy by creating spaces for popular input that enhance regime legitimacy and information gathering while preventing genuine accountability or power transfer. The approach enables authoritarian regimes to identify and address sources of discontent before they threaten stability, co-opt potential opposition through inclusion in controlled processes, and claim democratic credentials while maintaining power monopolies. Research shows that participatory mechanisms can actually strengthen authoritarian rule by providing safety valves for dissent, generating information about citizen preferences, and creating stakeholders invested in regime continuity rather than transformation. The phenomenon challenges assumptions about democratic transition, suggesting that partial liberalization may substitute for rather than lead to democratization, with regimes learning to accommodate participation without accepting accountability.",
+        "question": "How can participatory mechanisms strengthen authoritarian rule?",
+        "options": {
+            "A": "By completely eliminating all forms of citizen involvement",
+            "B": "By providing safety valves for dissent and creating stakeholders invested in regime continuity",
+            "C": "Through genuine democratic accountability and power transfer",
+            "D": "Only through military force and repression"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 참여 메커니즘이 불만의 안전판을 제공하고 체제 연속성에 투자하는 이해관계자를 만들어 권위주의 통치를 강화할 수 있다고 설명하고 있습니다."
+    },
+    {
+        "id": 162,
+        "passage": "The phenomenon of data colonialism represents a new form of resource extraction where human life is converted into data for corporate profit, extending colonial relations through the appropriation of human experience as raw material for algorithmic processing and behavioral prediction. This process involves the dispossession of data from individuals and communities without meaningful consent or compensation, the imposition of extractive infrastructures that make data capture mandatory for social participation, and the concentration of data processing capabilities in corporate centers that mirror colonial divisions between raw material providers and value-added producers. Data colonialism operates through platforms that position themselves as essential services while extracting behavioral surplus, creating dependencies where users must surrender data to access basic social and economic functions. The framework reveals continuities between historical and digital colonialism, including the naturalization of extraction as progress, the use of legal frameworks designed by and for extractors, and the justification of appropriation through claims of efficiency and innovation. Unlike traditional colonialism's territorial focus, data colonialism operates through the colonization of life itself, transforming human experience into a extractable resource through ubiquitous sensing, continuous monitoring, and algorithmic quantification. Resistance faces challenges including network effects that lock users into platforms, the opacity of data extraction processes, and the practical impossibility of informed consent when data uses are unknowable in advance.",
+        "question": "What continuities exist between historical and data colonialism?",
+        "options": {
+            "A": "They have no similarities whatsoever",
+            "B": "Both naturalize extraction as progress and use legal frameworks designed by extractors",
+            "C": "Data colonialism only affects digital natives",
+            "D": "Historical colonialism was more ethical than data colonialism"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 역사적 식민주의와 데이터 식민주의 모두 추출을 진보로 자연화하고 추출자를 위해 설계된 법적 틀을 사용한다는 연속성을 보여준다고 설명하고 있습니다."
+    },
+    {
+        "id": 163,
+        "passage": "The theory of accumulation by contamination describes how capital generates profit through the production and management of toxicity, creating value from processes that poison bodies, environments, and communities while externalizing health and ecological costs onto vulnerable populations. This mechanism operates through industries that profit from producing hazardous substances, waste management companies that charge for containing toxicity they help create, and remediation firms that accumulate capital by partially cleaning up contamination they or their predecessors caused. The framework reveals how contamination is not an unfortunate byproduct but a central feature of accumulation strategies that depend on the unequal distribution of toxic exposure, with race, class, and geography determining who bears the bodily burden of industrial metabolism. Examples include cancer clusters near chemical plants generating profits for both polluters and healthcare industries, superfund sites that become opportunities for remediation contracts, and global waste trades that export toxicity to nations with weaker environmental regulations. Accumulation by contamination creates perverse incentives where cleanup is less profitable than continued contamination, partial remediation maintains demand for future services, and regulatory capture ensures that standards allow profitable levels of poisoning. The concept highlights how capitalism produces what it cannot fully metabolize, generating toxic remainders that accumulate in bodies and environments while creating new frontiers for commodification through the management of manufactured risks.",
+        "question": "What perverse incentives does accumulation by contamination create?",
+        "options": {
+            "A": "Strong incentives for complete environmental cleanup",
+            "B": "Cleanup is less profitable than continued contamination, and partial remediation maintains demand",
+            "C": "Incentives to eliminate all industrial production",
+            "D": "Equal distribution of toxic exposure across all populations"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 오염을 통한 축적이 계속된 오염이 정화보다 수익성이 높고, 부분적 정화가 미래 서비스 수요를 유지하는 왜곡된 인센티브를 만든다고 설명하고 있습니다."
+    },
+    {
+        "id": 164,
+        "passage": "The concept of anticipatory conformity describes how individuals and organizations self-censor and modify behavior based on imagined future surveillance or evaluation, even when no actual monitoring occurs, creating disciplinary effects through the possibility rather than reality of observation. This phenomenon extends beyond Bentham's panopticon by operating through predicted algorithmic judgment, imagined social media reactions, potential employer searches, and hypothetical credit evaluations, causing people to internalize and perform normalized behaviors in anticipation of scrutiny that may never materialize. Anticipatory conformity is amplified by digital technologies that make past actions permanently searchable, creating temporal collapse where future selves are held hostage to present decisions viewed through unknown future moral frameworks. The mechanism operates through several processes including preference falsification where people hide true beliefs to avoid potential consequences, performative authenticity where genuine expression is crafted for algorithmic consumption, and recursive anticipation where people anticipate others' anticipations in infinite loops of strategic self-presentation. Research shows that anticipatory conformity can be more restrictive than actual surveillance, as imagined boundaries are often broader than real constraints, and self-censorship operates continuously while actual monitoring is necessarily limited. The phenomenon raises concerns about freedom and democracy when public discourse is shaped by anticipated rather than actual consequences, creating chilling effects that narrow the range of acceptable expression without explicit censorship.",
+        "question": "How can anticipatory conformity be more restrictive than actual surveillance?",
+        "options": {
+            "A": "It requires more advanced technology to implement",
+            "B": "Imagined boundaries are often broader than real constraints, and self-censorship operates continuously",
+            "C": "It only affects people with criminal records",
+            "D": "Actual surveillance is always more restrictive"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 예측적 순응이 상상된 경계가 실제 제약보다 더 넓고 자기 검열이 지속적으로 작동하기 때문에 실제 감시보다 더 제한적일 수 있다고 설명하고 있습니다."
+    },
+    {
+        "id": 165,
+        "passage": "The theory of slow institutions examines organizations and practices that deliberately operate on extended timescales, resisting acceleration pressures to maintain long-term perspectives, deep relationships, and careful deliberation in contrast to the speed imperatives of contemporary capitalism. These institutions include indigenous governance systems that consider seven-generation impacts, monastic communities that plan in centuries, scientific projects that span multiple lifespans, and agricultural practices that build soil over decades rather than extracting immediate yields. Slow institutions maintain temporal sovereignty through various mechanisms including endowments that provide economic independence from short-term markets, ritual practices that enforce rhythmic rather than accelerated time, apprenticeship systems that transmit knowledge through extended relationships, and decision processes that prioritize wisdom over efficiency. The concept reveals how institutional temporality shapes what kinds of knowledge can be produced, what values can be sustained, and what forms of life can flourish, with slow institutions preserving possibilities foreclosed by acceleration. Research shows that slow institutions serve crucial functions including maintaining biodiversity through patient cultivation, preserving cultural knowledge through intergenerational transmission, and providing resilience through long-term adaptation rather than rapid response. However, slow institutions face existential threats from acceleration pressures, market competition that penalizes patient capital, and cultural changes that devalue extended temporal commitments, raising questions about how to preserve slow institutional forms in fast societies.",
+        "question": "What crucial functions do slow institutions serve according to the passage?",
+        "options": {
+            "A": "Maximizing short-term profits and rapid growth",
+            "B": "Maintaining biodiversity, preserving cultural knowledge, and providing resilience through long-term adaptation",
+            "C": "Eliminating all forms of technological progress",
+            "D": "Competing effectively in accelerated markets"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 느린 제도가 인내심 있는 경작을 통한 생물다양성 유지, 세대간 전수를 통한 문화지식 보존, 장기 적응을 통한 회복력 제공 등의 중요한 기능을 한다고 설명하고 있습니다."
+    },
+    {
+        "id": 166,
+        "passage": "The concept of testimonial quieting describes a form of epistemic injustice where certain speakers are silenced not through explicit prohibition but through systematic inattention, dismissal, and the absence of uptake that makes speaking feel pointless or impossible. This phenomenon goes beyond credibility deficits to examine how some voices are preemptively excluded from discourse through mechanisms such as conversational dynamics that prevent certain speakers from being heard, institutional procedures that lack channels for particular testimonies, and cultural frameworks that cannot recognize certain experiences as knowledge. Testimonial quieting operates through various practices including interruption patterns that prevent completion of thoughts, topic changes that avoid uncomfortable testimonies, professional norms that designate certain speakers as non-experts, and media representations that make some experiences unspeakable or unhearable. The concept reveals how silence is actively produced through the organization of discourse rather than simply reflecting absence of speech, with quieting operating as a form of power that shapes whose knowledge counts and whose experiences remain invisible. Research shows that testimonial quieting particularly affects marginalized groups whose experiences challenge dominant narratives, creating epistemic exploitation where oppressed groups' knowledge is appropriated when convenient but dismissed when threatening. Breaking testimonial quieting requires not just inviting speech but creating conditions for genuine hearing, including transforming institutional structures, developing new interpretive resources, and cultivating epistemic virtues that recognize diverse forms of knowledge.",
+        "question": "How does testimonial quieting differ from explicit censorship?",
+        "options": {
+            "A": "It operates through systematic inattention and absence of uptake rather than direct prohibition",
+            "B": "It only affects written rather than spoken communication",
+            "C": "Testimonial quieting is less serious than censorship",
+            "D": "They are exactly the same phenomenon"
+        },
+        "answer": "A",
+        "explanation_ko": "지문에서 증언적 침묵이 명시적 금지가 아닌 체계적 무관심과 수용 부재를 통해 작동한다고 설명하고 있습니다."
+    },
+    {
+        "id": 167,
+        "passage": "The phenomenon of algorithmic sovereignty refers to the power of algorithms to make authoritative decisions that shape life chances, allocate resources, and determine rights, operating as governing entities that exercise quasi-judicial and administrative functions traditionally reserved for democratic institutions. This sovereignty manifests through credit scoring algorithms that determine access to housing and employment, risk assessment tools that influence criminal sentencing and bail decisions, and matching algorithms that allocate scarce resources such as organs, school placements, and public benefits. Algorithmic sovereignty differs from human decision-making through its scale, speed, and systematicity, making millions of consequential decisions without human oversight while appearing objective and apolitical despite embedding particular values and biases. The concept reveals how private corporations exercise governmental power through proprietary algorithms that affect public welfare but operate outside democratic accountability, constitutional constraints, or procedural protections that apply to state decision-making. Examples include platform algorithms that determine what speech is visible, effectively regulating public discourse; predictive policing systems that shape who is surveilled and arrested; and healthcare algorithms that ration care based on opaque calculations of deservingness. The phenomenon raises fundamental questions about legitimacy when life-affecting decisions are made by unelected algorithms, accountability when decision logic is protected as trade secrets, and justice when algorithmic decisions reproduce historical inequalities while claiming mathematical neutrality.",
+        "question": "What fundamental questions does algorithmic sovereignty raise?",
+        "options": {
+            "A": "Only technical questions about computing efficiency",
+            "B": "Questions about legitimacy, accountability, and justice in automated decision-making",
+            "C": "Whether algorithms should be completely eliminated",
+            "D": "How to make algorithms run faster"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 알고리즘 주권이 자동화된 의사결정에서 정당성, 책임성, 정의에 대한 근본적인 질문을 제기한다고 설명하고 있습니다."
+    },
+    {
+        "id": 168,
+        "passage": "The theory of predatory inclusion describes how marginalized populations are incorporated into institutions and systems in ways that extract value while maintaining subordination, offering formal access while ensuring substantive inequality through discriminatory terms, excessive costs, and structured disadvantage. This process differs from simple exclusion by integrating previously excluded groups into systems of exploitation, such as subprime lending that provides credit access while ensuring wealth stripping, for-profit colleges that offer degrees while generating unpayable debt, and digital platforms that include users while extracting data and labor. Predatory inclusion operates through the rhetoric of democratization and opportunity, presenting exploitation as empowerment and extraction as inclusion, making resistance difficult when formal barriers have been removed even as structural disadvantage intensifies. The mechanism reveals how neoliberal inclusion can be more damaging than exclusion, as targeted populations bear risks and costs while generating profits for includers, creating conditions where participation in supposedly beneficial systems becomes a source of harm. Historical examples include sharecropping that replaced slavery with debt bondage, redlining's replacement with reverse redlining that targets communities for expensive credit, and welfare reform that includes poor women in labor markets through poverty wages. Contemporary predatory inclusion operates through algorithmic targeting that identifies vulnerable populations for exploitation, behavioral manipulation that extracts maximum value from included subjects, and platform labor that includes workers while denying employment protections.",
+        "question": "How can predatory inclusion be more damaging than simple exclusion?",
+        "options": {
+            "A": "It provides complete equality and fair treatment",
+            "B": "Targeted populations bear risks and costs while generating profits for includers",
+            "C": "It only affects wealthy populations",
+            "D": "Exclusion is always worse than any form of inclusion"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 포식적 포용이 대상 인구가 위험과 비용을 부담하면서 포함시키는 자들을 위한 이익을 창출하기 때문에 단순한 배제보다 더 해로울 수 있다고 설명하고 있습니다."
+    },
+    {
+        "id": 169,
+        "passage": "The concept of corporal capitalism examines how contemporary capitalism increasingly operates through the direct manipulation, modification, and commodification of human bodies, creating new frontiers of accumulation through the molecularization of bodily processes and the transformation of biological matter into economic value. This system encompasses pharmaceutical industries that reshape neurochemistry for profit, cosmetic surgery markets that commodify appearance, fertility industries that commercialize reproduction, and biometric systems that convert bodily features into data capital. Corporal capitalism differs from earlier forms of bodily exploitation by operating at the molecular level, targeting not just labor power but biological processes themselves, from neurotransmitters and hormones to genes and stem cells. The framework reveals how bodies become sites of investment and speculation, with venture capital funding life extension research, insurance companies calculating genetic risks, and wellness industries promising optimization through endless intervention. Research shows how corporal capitalism creates new forms of inequality based on biological enhancement, with those able to afford modification gaining advantages while others face discrimination for unmodified bodies. The phenomenon operates through the medicalization of normal variation, creating markets for intervention by pathologizing deviation from constructed norms, and through the promise of enhancement that generates inexhaustible demand for bodily improvement. Resistance faces challenges including the internalization of optimization imperatives, the genuine suffering that medical intervention can address, and the difficulty of distinguishing between therapeutic and enhancement uses of biotechnology.",
+        "question": "How does corporal capitalism create new forms of inequality?",
+        "options": {
+            "A": "By providing equal access to all medical treatments",
+            "B": "Through biological enhancement where those who can afford modification gain advantages",
+            "C": "It reduces all forms of bodily discrimination",
+            "D": "By eliminating all medical interventions"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 신체 자본주의가 개조를 감당할 수 있는 사람들이 이점을 얻는 생물학적 향상을 통해 새로운 형태의 불평등을 만든다고 설명하고 있습니다."
+    },
+    {
+        "id": 170,
+        "passage": "The theory of interpassivity describes how subjects delegate their enjoyment and participation to external agents or systems, experiencing satisfaction through others' activity while remaining passive themselves, revealing mechanisms through which contemporary culture produces disengaged engagement. This phenomenon manifests in various forms including canned laughter that enjoys comedy shows for viewers, social media likes that perform approval without genuine engagement, fitness trackers that exercise symbolically while bodies remain sedentary, and political clicktivism that simulates activism without material action. Interpassivity differs from interactivity by creating the illusion of participation while ensuring actual passivity, allowing subjects to feel involved while avoiding the effort, risk, or commitment of genuine engagement. The concept reveals how contemporary capitalism manages the contradiction between its need for active consumers and passive workers, creating forms of pseudo-activity that dissipate potentially transformative energies into harmless simulation. Examples include binge-watching that provides the satisfaction of cultural consumption without reflection, hoarding content that substitutes acquisition for engagement, and sharing articles that replaces reading with circulating. Interpassivity serves ideological functions by allowing subjects to maintain critical distance while participating in systems they claim to oppose, creating a cynical reason that knows better but acts the same. The phenomenon raises questions about agency and authenticity when satisfaction is experienced through proxies, and political implications when resistance is outsourced to symbolic gestures.",
+        "question": "What ideological function does interpassivity serve?",
+        "options": {
+            "A": "It completely eliminates all forms of ideology",
+            "B": "It allows subjects to maintain critical distance while participating in systems they oppose",
+            "C": "It creates genuine revolutionary consciousness",
+            "D": "It has no relationship to ideology"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 상호수동성이 주체들이 반대한다고 주장하는 시스템에 참여하면서도 비판적 거리를 유지할 수 있게 하는 이데올로기적 기능을 한다고 설명하고 있습니다."
+    },
+    {
+        "id": 171,
+        "passage": "The concept of fugitive planning describes collaborative practices of study, organization, and world-making that operate beneath or beyond institutional recognition, creating forms of collective intelligence and mutual aid that refuse capture by dominant systems of value and control. This mode of planning emerges in the undercommons of institutions where people gather to think and organize in ways that exceed official purposes, in communities that develop survival strategies without state assistance, and in artistic practices that imagine different worlds while avoiding representation. Fugitive planning differs from conventional planning by refusing the position of the planner who stands outside and above, instead operating through immersion, improvisation, and collective study that generates knowledge through struggle rather than expertise. The practice reveals how marginalized communities have always engaged in planning without authorization, creating alternative infrastructures, economies, and ways of life that persist despite and against systems designed for their elimination. Examples include maroon communities that planned autonomous societies while evading colonial capture, underground railroads that organized escape networks through coded communication, and contemporary mutual aid networks that provide support outside state and market systems. Fugitive planning operates through opacity rather than transparency, using strategies of misdirection, coding, and hiddenness to protect spaces of collective possibility from co-optation or destruction. The concept challenges liberal inclusion that would recognize and regulate these practices, insisting instead on the right to opacity and the power of planning that remains fugitive to power.",
+        "question": "How does fugitive planning differ from conventional planning?",
+        "options": {
+            "A": "It requires more formal education and credentials",
+            "B": "It refuses the external planner position, operating through immersion and collective study",
+            "C": "It always seeks official recognition and approval",
+            "D": "It only works in institutional settings"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 도망적 계획이 외부에 서있는 계획자의 위치를 거부하고 대신 몰입과 집단적 연구를 통해 작동한다고 설명하고 있습니다."
+    },
+    {
+        "id": 172,
+        "passage": "The theory of cruel optimism, developed by Lauren Berlant, describes attachments to conditions of possibility that actually impede flourishing, where objects of desire become obstacles to achieving the very outcomes they promise, creating affective binds that sustain harmful relationships. This phenomenon occurs when people remain attached to ideals such as upward mobility, romantic love, or political transformation even as these attachments generate anxiety, exhaustion, and disappointment, maintaining investments in futures that cannot arrive under current conditions. Cruel optimism operates through the promise of the good life that keeps people tethered to systems that exploit them, from workers who sacrifice health for careers that will never provide security to citizens who maintain faith in political systems that ensure their disposability. The concept reveals how optimism itself can be a form of cruelty when it attaches people to impossible or destructive conditions, creating endurance of the present through investment in unachievable futures. Examples include educational debt taken on for degrees that no longer ensure employment, relationships maintained despite harm because of investment in their potential, and political hope that prevents recognition of systemic impossibility. Cruel optimism is particularly powerful under neoliberalism, which privatizes both aspiration and failure, making individuals responsible for structural impossibilities while maintaining attachment to fantasies of individual achievement. The framework suggests that giving up cruel optimisms requires mourning the good life that was never really available, developing different forms of attachment, and creating new imaginaries of collective flourishing.",
+        "question": "What makes optimism 'cruel' according to Berlant's theory?",
+        "options": {
+            "A": "All forms of hope are inherently harmful",
+            "B": "When attachments to ideals impede flourishing and become obstacles to achieving promised outcomes",
+            "C": "Optimism always leads to positive results",
+            "D": "Only pessimism can be cruel"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 이상에 대한 애착이 번영을 방해하고 약속된 결과를 달성하는 데 장애물이 될 때 낙관주의가 '잔인'해진다고 설명하고 있습니다."
+    },
+    {
+        "id": 173,
+        "passage": "The phenomenon of platform feudalism describes how digital platforms create dependency relationships resembling medieval feudalism, where users provide data labor and content in exchange for access to essential digital territories controlled by platform lords. This system operates through network effects that create winner-take-all dynamics, switching costs that lock users into platforms, and terms of service that grant platforms extensive rights while users retain minimal protections. Platform feudalism differs from market capitalism through its emphasis on rent extraction rather than commodity production, with platforms claiming portions of all value created within their domains while providing infrastructure and protection from digital threats. The framework reveals how platforms exercise sovereign power over digital territories, setting rules, adjudicating disputes, and extracting value from all activities within their realms while users lack meaningful alternatives or exit options. Examples include app stores that claim percentages of all transactions, social media platforms that monetize user-generated content without compensation, and gig economy platforms that control workers while denying employment relationships. Platform feudalism creates new forms of dependency where digital serfs must submit to platform governance to participate in economic and social life, surrendering data and accepting surveillance as the price of digital existence. Resistance faces challenges including collective action problems among dispersed users, the essential nature of platform services, and the lack of democratic mechanisms for challenging platform power.",
+        "question": "How do platforms exercise sovereign power according to the passage?",
+        "options": {
+            "A": "Through democratic voting by all users",
+            "B": "By setting rules, adjudicating disputes, and extracting value from all activities in their realms",
+            "C": "They have no real power over users",
+            "D": "Only through providing free services"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 플랫폼이 규칙을 설정하고, 분쟁을 중재하며, 영역 내 모든 활동에서 가치를 추출함으로써 주권적 권력을 행사한다고 설명하고 있습니다."
+    },
+    {
+        "id": 174,
+        "passage": "The concept of atmospheric violence describes forms of harm that operate through the air we breathe, encompassing both material toxicity and affective intensities that create unliveable conditions for targeted populations. This violence manifests through industrial emissions that poison specific neighborhoods, tear gas that makes protest impossible, air conditioning that segregates populations by thermal privilege, and ventilation systems that became vectors of contagion during pandemics. Atmospheric violence reveals how air is not a neutral medium but a stratified space where breathing itself becomes unevenly distributed, with some populations enjoying filtered, conditioned air while others suffocate in pollution, smoke, and chemical weapons. The framework extends beyond physical atmospheres to examine affective atmospheres of fear, anxiety, and dread that make spaces unliveable through hostile architecture, surveillance aesthetics, and designed discomfort that excludes certain bodies. Research shows how atmospheric violence operates through slow violence of gradual poisoning, spectacular violence of gas attacks, and structural violence of unequal access to breathable air, revealing breathing as a political question of who is allowed to inhabit space. Examples include environmental racism that concentrates atmospheric toxins in communities of color, chemical warfare that targets populations through respiratory attack, and COVID-19's unequal impact based on atmospheric conditions of work and residence. The concept challenges approaches that treat air as commons, revealing instead how atmospheres are enclosed, commodified, and weaponized.",
+        "question": "What does atmospheric violence reveal about breathing?",
+        "options": {
+            "A": "Breathing is equally available to all humans",
+            "B": "Breathing becomes a political question of who is allowed to inhabit space",
+            "C": "Air quality has no relationship to social inequality",
+            "D": "Only outdoor air can be violent"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 대기 폭력이 호흡을 누가 공간에 거주할 수 있는지에 대한 정치적 질문으로 드러낸다고 설명하고 있습니다."
+    },
+    {
+        "id": 175,
+        "passage": "The theory of speculative realism challenges anthropocentric philosophy by arguing for the independent existence of reality beyond human perception and cognition, proposing that objects, forces, and processes possess their own being that exceeds human access or understanding. This philosophical movement rejects correlationism—the idea that we can only speak of the correlation between thought and being—to explore what exists independently of human consciousness, including prehistoric events before human existence, cosmic processes at scales beyond human comprehension, and object relations that exclude human participation. Speculative realism encompasses various approaches including object-oriented ontology that grants equal ontological status to all objects, transcendental materialism that explores the conditions for the emergence of thought from matter, and speculative materialism that investigates the absolute as mathematically describable reality. The framework reveals how anthropocentrism limits philosophy and science, preventing engagement with the vast majority of reality that exists without reference to human meaning or purpose. Applications include ecological thinking that recognizes nature's autonomy beyond human utility, technological philosophy that considers machine cognition as genuinely different rather than inferior intelligence, and cosmological speculation about universe structures indifferent to human observation. The approach faces criticism for potentially reinstating pre-critical metaphysics, difficulty in making claims about reality beyond human access without performative contradiction, and political concerns about minimizing human agency and responsibility.",
+        "question": "What does speculative realism reject about traditional philosophy?",
+        "options": {
+            "A": "The existence of any external reality",
+            "B": "Correlationism that limits philosophy to the correlation between thought and being",
+            "C": "All forms of scientific investigation",
+            "D": "The possibility of human knowledge"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 사변적 실재론이 사고와 존재 사이의 상관관계로 철학을 제한하는 상관주의를 거부한다고 설명하고 있습니다."
+    },
+    {
+        "id": 176,
+        "passage": "The phenomenon of assetization describes the transformation of things, activities, and attributes into assets that generate revenue streams, extending financialization beyond traditional property to encompass personal data, social relationships, genetic information, and behavioral patterns. This process involves creating ownership claims over previously unowned resources, developing measurement systems that render qualities as quantities, establishing markets where assets can be traded, and generating income through rent, licensing, or speculation rather than production. Assetization differs from commodification by emphasizing ongoing revenue generation rather than one-time sale, creating rentier relations where asset owners extract value from asset users over extended periods. The framework reveals how capitalism increasingly operates through asset ownership rather than commodity production, with wealth concentrated among those who control assets while others pay to access necessities transformed into investment vehicles. Examples include intellectual property that generates licensing fees from knowledge, personal data that produces behavioral predictions for sale, urban real estate that extracts rent from residents, and natural resources claimed through financialized conservation. Assetization creates new forms of inequality based on asset ownership rather than income, with appreciation and compound returns widening wealth gaps even when wage differentials narrow. The process faces resistance through commons movements that challenge enclosure, alternative ownership models such as cooperatives and trusts, and political demands for wealth taxation that targets assets rather than income.",
+        "question": "How does assetization differ from commodification?",
+        "options": {
+            "A": "They are identical processes with different names",
+            "B": "Assetization emphasizes ongoing revenue generation rather than one-time sale",
+            "C": "Commodification is more advanced than assetization",
+            "D": "Assetization only applies to physical objects"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 자산화가 일회성 판매보다는 지속적인 수익 창출을 강조한다는 점에서 상품화와 다르다고 설명하고 있습니다."
+    },
+    {
+        "id": 177,
+        "passage": "The concept of thanatopolitics extends biopolitics to examine how contemporary governance operates through the administration of death, not just as sovereign exception but as routine calculation that determines whose lives are prolonged and whose deaths are hastened through systemic neglect. This framework analyzes how states and corporations manage death through techniques such as actuarial calculations that price lives differently, triage systems that ration life-saving resources, environmental policies that accept certain levels of mortality, and economic policies that shorten lifespans through stress and deprivation. Thanatopolitics reveals how death is distributed along existing lines of inequality, with race, class, geography, and citizenship determining exposure to premature death through mechanisms that appear technical rather than political. The concept differs from necropolitics by focusing on bureaucratic administration rather than spectacular violence, showing how spreadsheets and algorithms become instruments of death distribution through risk assessments, cost-benefit analyses, and quality-adjusted life year calculations. Examples include austerity policies that increase mortality through healthcare cuts, climate policies that accept deaths in vulnerable populations, pandemic responses that prioritize economic over epidemiological concerns, and pharmaceutical pricing that rations survival based on ability to pay. Thanatopolitics operates through the naturalization of differential mortality, presenting unequal death rates as unfortunate but inevitable rather than political choices about whose lives matter.",
+        "question": "How does thanatopolitics differ from necropolitics?",
+        "options": {
+            "A": "They are exactly the same concept",
+            "B": "Thanatopolitics focuses on bureaucratic administration rather than spectacular violence",
+            "C": "Necropolitics only applies to historical contexts",
+            "D": "Thanatopolitics promotes equal life chances for all"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 타나토정치가 화려한 폭력보다는 관료적 행정에 초점을 맞춘다는 점에서 네크로정치와 다르다고 설명하고 있습니다."
+    },
+    {
+        "id": 178,
+        "passage": "The theory of eliminative materialism proposes that common-sense psychological concepts such as beliefs, desires, and consciousness are fundamentally mistaken and will eventually be eliminated from scientific explanation as neuroscience advances, similar to how vitalism and phlogiston were discarded. This radical position argues that folk psychology—our everyday understanding of mental states—is an empirically false theory that misrepresents the nature of cognitive processes, which are better understood through neuroscientific descriptions of brain states without reference to mental properties. Eliminative materialism differs from other materialist theories by denying that mental states can be reduced to or identified with physical states, arguing instead that mental categories are too confused and inaccurate to map onto neurobiological reality. The framework suggests that future neuroscience will develop entirely new conceptual frameworks for understanding cognition that bear no resemblance to current psychological concepts, just as modern chemistry bears no resemblance to alchemy. Proponents argue that neuroscience already reveals the inadequacy of folk psychological categories, showing that the brain operates through distributed processes that don't correspond to discrete beliefs or desires, and that consciousness may be a persistent illusion rather than genuine phenomenon. Critics challenge eliminative materialism for its counterintuitive denial of seemingly obvious mental experiences, pragmatic difficulties in eliminating psychological concepts from everyday life, and potential self-refutation if beliefs don't exist to assert the theory itself.",
+        "question": "What does eliminative materialism claim about folk psychology?",
+        "options": {
+            "A": "It perfectly describes how the mind actually works",
+            "B": "It is an empirically false theory that misrepresents cognitive processes",
+            "C": "It should be preserved alongside neuroscientific explanations",
+            "D": "It only needs minor modifications to be accurate"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 제거적 유물론이 민속 심리학을 인지 과정의 본질을 잘못 표현하는 경험적으로 거짓된 이론이라고 주장한다고 설명하고 있습니다."
+    },
+    {
+        "id": 179,
+        "passage": "The concept of chronopolitics examines how power operates through the control of time, including the ability to accelerate or delay, to impose deadlines or extend waiting, and to determine whose time matters and whose can be wasted without consequence. This framework reveals how temporal control functions as governance technology through mechanisms such as visa systems that create indefinite waiting, financial instruments that extract future value to the present, prison sentences that steal years of life, and working hours that determine when bodies must be productive. Chronopolitics shows how different populations experience different temporalities, with some enjoying temporal sovereignty while others suffer temporal subjugation through precarious scheduling, bureaucratic delays, and the compression of life into survival time. The theory analyzes how capitalism colonizes time through wage labor that purchases hours of life, debt that mortgages futures, and platforms that harvest attention in micro-moments, creating temporal enclosures where time becomes property. Examples include zero-hour contracts that deny workers temporal stability, asylum systems that suspend lives in indefinite waiting, credit systems that trap borrowers in extended repayment, and technologies that demand constant availability. Chronopolitics reveals how resistance often takes temporal forms through strikes that withdraw time from capital, occupations that reclaim duration, and refusals of productivity that assert alternative temporal values. The framework challenges linear progressive time, revealing instead multiple temporalities in conflict over the organization of social life.",
+        "question": "How does capitalism colonize time according to chronopolitics?",
+        "options": {
+            "A": "By giving everyone complete control over their schedules",
+            "B": "Through wage labor purchasing life hours, debt mortgaging futures, and platforms harvesting attention",
+            "C": "Capitalism has no relationship to temporal control",
+            "D": "By eliminating all forms of time measurement"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 자본주의가 생명의 시간을 구매하는 임금 노동, 미래를 저당잡는 부채, 관심을 수확하는 플랫폼을 통해 시간을 식민화한다고 설명하고 있습니다."
+    },
+    {
+        "id": 180,
+        "passage": "The phenomenon of synthetic freedom describes forms of liberty that appear to offer choice and self-determination while actually operating within tightly constrained parameters that ensure outcomes remain within acceptable ranges for power. This concept examines how contemporary governance produces subjects who experience themselves as free while their choices are structured by architectures that make certain decisions seem natural, rational, or inevitable. Synthetic freedom operates through mechanisms such as consumer choice among predetermined options, political participation within established frameworks, and self-expression through platform-mediated channels that appear open but are algorithmically shaped. The framework reveals how neoliberalism governs through freedom rather than against it, producing forms of liberty that generate self-regulation, market participation, and systemic reproduction while feeling like authentic autonomy. Examples include flexible work that promises autonomy while increasing precarity, social media that offers self-expression within surveillance architectures, financial products that provide choice while ensuring indebtedness, and educational options that maintain class stratification through differential quality. Synthetic freedom is particularly effective because it satisfies psychological needs for autonomy while preventing genuine self-determination, creating subjects who defend their constraints as choices. The concept suggests that real freedom requires not just formal rights or consumer options but material conditions and collective power to shape the contexts within which choices are made.",
+        "question": "Why is synthetic freedom particularly effective as a form of governance?",
+        "options": {
+            "A": "It uses direct force to control populations",
+            "B": "It satisfies psychological needs for autonomy while preventing genuine self-determination",
+            "C": "It provides complete freedom without any constraints",
+            "D": "It only works on uneducated populations"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 합성 자유가 진정한 자기결정을 방해하면서도 자율성에 대한 심리적 욕구를 충족시키기 때문에 특히 효과적이라고 설명하고 있습니다."
+    },
+    {
+        "id": 181,
+        "passage": "The theory of social metabolism describes the material and energy flows between human societies and natural systems, revealing how different modes of production create distinct metabolic profiles that determine resource consumption, waste generation, and ecological impact. This framework analyzes societies as metabolic systems that extract resources from nature, transform them through labor and technology, and return wastes to the environment, with each mode of production establishing specific metabolic relations that shape both social organization and ecological conditions. Industrial capitalism's metabolic profile differs radically from earlier formations through its exponential increase in throughput, its dependence on fossil fuels that release ancient carbon, its generation of synthetic materials that cannot be metabolized by natural systems, and its acceleration beyond natural regeneration rates. The concept reveals how social inequality maps onto metabolic inequality, with wealthy populations consuming disproportionate resources while exporting wastes and ecological damages to poorer regions through global commodity chains and waste trades. Examples include the imperial mode of living that sustains Global North consumption through Global South extraction, urban metabolisms that concentrate resources while externalizing pollution, and agricultural systems that deplete soil nutrients through industrial farming while wasting nutrients in urban sewage. Social metabolism analysis shows that sustainability requires not just technological change but transformation of the social relations that drive metabolic expansion, including growth imperatives, accumulation dynamics, and consumption patterns.",
+        "question": "What distinguishes industrial capitalism's metabolic profile?",
+        "options": {
+            "A": "It perfectly recycles all materials with zero waste",
+            "B": "Exponential throughput increase, fossil fuel dependence, synthetic materials, and acceleration beyond regeneration rates",
+            "C": "It has the same metabolic pattern as all previous societies",
+            "D": "It requires no natural resources"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 산업 자본주의의 신진대사 프로필이 지수적 처리량 증가, 화석 연료 의존, 합성 물질, 자연 재생률을 초과하는 가속화로 구별된다고 설명하고 있습니다."
+    },
+    {
+        "id": 182,
+        "passage": "The concept of colonial durability examines how colonial structures, relations, and logics persist and reproduce themselves through apparent decolonization, independence, and reform, revealing colonialism not as historical event but as ongoing process that adapts to changing conditions while maintaining extractive relations. This framework analyzes how colonial power endures through mechanisms such as debt obligations that maintain financial subordination, educational systems that perpetuate colonial languages and knowledge hierarchies, legal frameworks based on colonial law, and economic structures oriented toward former metropoles. Colonial durability operates through both material infrastructure—ports oriented toward export, railways that extract resources, borders that divide peoples—and cognitive infrastructure that shapes how problems are defined, solutions imagined, and futures envisioned. The concept reveals how neocolonialism is not simply new colonialism but the continuation of colonial relations through transformed mechanisms, with international development replacing civilizing missions, structural adjustment replacing direct administration, and corporate extraction replacing imperial companies. Examples include African countries that remain dependent on exporting raw materials to former colonizers, Caribbean nations trapped in tourism economies serving Global North leisure, and indigenous peoples whose lands remain under settler state jurisdiction despite formal recognition. The framework shows how decolonization often meant flag independence rather than structural transformation, with colonial relations reconstituted through national elites, international institutions, and market mechanisms.",
+        "question": "How does colonial durability differ from traditional colonialism?",
+        "options": {
+            "A": "It operates through the same mechanisms of direct military control",
+            "B": "It maintains colonial relations through transformed mechanisms like debt and structural adjustment",
+            "C": "It completely ended with formal independence",
+            "D": "It only exists in historical memory"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 식민지 지속성이 부채와 구조 조정 같은 변형된 메커니즘을 통해 식민지 관계를 유지한다고 설명하고 있습니다."
+    },
+    {
+        "id": 183,
+        "passage": "The phenomenon of affective capitalism describes how contemporary capitalism extracts value from feelings, moods, and emotions, transforming affects into productive forces, commodities, and sites of accumulation through the management and monetization of emotional life. This system operates through industries that produce and manipulate feelings—entertainment that generates designed emotions, pharmaceuticals that chemically adjust moods, wellness sectors that commodify happiness, and platforms that harvest emotional data for behavioral prediction. Affective capitalism differs from earlier forms by making feeling itself productive, with workers required to perform emotional labor, consumers purchasing emotional experiences, and platforms converting emotional expression into data capital. The framework reveals how neoliberalism governs through affect management, producing subjects who must optimize their emotional states for productivity, maintain positive affect despite precarity, and take individual responsibility for structural suffering through therapeutic self-work. Examples include workplace cultures that demand passionate commitment to exploitation, social media that transforms emotional expression into engagement metrics, dating apps that commodify intimate feelings, and therapies that individualize social problems. Affective capitalism creates new forms of alienation where people become estranged from their own feelings, which are shaped by market forces, measured by algorithms, and performed for value extraction. The concept challenges the separation of rational economy from irrational emotion, showing instead how capitalism increasingly operates through the production, circulation, and accumulation of affect.",
+        "question": "What new forms of alienation does affective capitalism create?",
+        "options": {
+            "A": "Complete elimination of all emotional experience",
+            "B": "People become estranged from feelings shaped by market forces and measured by algorithms",
+            "C": "Perfect harmony between individual emotions and market demands",
+            "D": "Only positive emotions are alienated"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 감정 자본주의가 사람들이 시장 세력에 의해 형성되고 알고리즘에 의해 측정되는 자신의 감정으로부터 소외되는 새로운 형태의 소외를 만든다고 설명하고 있습니다."
+    },
+    {
+        "id": 184,
+        "passage": "The theory of epistemic exploitation occurs when marginalized groups are forced to educate dominant groups about their oppression, extracting cognitive and emotional labor without compensation while reinforcing the very power dynamics that necessitate such education. This phenomenon manifests when oppressed people must repeatedly explain racism to white people, women must teach men about sexism, or disabled people must justify their needs to able-bodied institutions, creating a double bind where refusing performs confirms stereotypes while complying exhausts resources. Epistemic exploitation operates through mechanisms such as diversity work that burdens minorities with institutional change, classroom dynamics where marginalized students become teaching resources, and public debates where oppressed people must prove their humanity. The concept reveals how knowledge extraction mirrors material extraction, with dominant groups appropriating insights from margins while maintaining the conditions that produce marginalization. Research shows that epistemic exploitation causes psychological harm through constant invalidation, creates opportunity costs as time spent educating dominants reduces time for other pursuits, and perpetuates inequality by making oppressed people responsible for their own liberation. The framework extends beyond individual interactions to institutional practices such as unpaid consulting, testimonial extraction in research, and inclusion initiatives that appropriate knowledge while maintaining exclusion. Resistance faces the challenge that refusing epistemic exploitation can be seen as unreasonable or aggressive, while participation depletes energy needed for survival and collective organizing.",
+        "question": "What double bind does epistemic exploitation create?",
+        "options": {
+            "A": "Oppressed groups benefit equally from knowledge exchange",
+            "B": "Refusing to educate confirms stereotypes while complying exhausts resources",
+            "C": "There are no negative consequences to epistemic exploitation",
+            "D": "Dominant groups always compensate for education fairly"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 인식적 착취가 교육을 거부하면 고정관념을 확인시키고 따르면 자원을 고갈시키는 이중 구속을 만든다고 설명하고 있습니다."
+    },
+    {
+        "id": 185,
+        "passage": "The concept of ontological flooding describes the overwhelming multiplication of realities, truths, and ways of being that characterizes contemporary information environments, where incompatible worldviews proliferate without resolution, creating disorientation rather than diversity. This phenomenon emerges from digital platforms that enable infinite perspectives to coexist, algorithmic curation that creates parallel realities, and the collapse of institutional authorities that previously stabilized shared reality, resulting in a condition where multiple ontologies compete without criteria for adjudication. Ontological flooding differs from healthy pluralism by preventing meaningful dialogue between worldviews, as each operates with distinct facts, logics, and values that make communication impossible rather than enriching. The framework reveals how information abundance produces not enlightenment but paralysis, as subjects face endless alternatives without means to choose among them, leading to either arbitrary commitment or cynical withdrawal. Examples include conspiracy theories that create complete alternative realities, filter bubbles that generate incompatible political worlds, wellness movements that multiply incompatible healing ontologies, and scientific debates where public confusion increases with information availability. Ontological flooding serves power by fragmenting potential opposition into incompatible realities, making collective action impossible when people cannot agree on basic facts about the world. The phenomenon suggests that the crisis is not lack of truth but multiplication of truths, requiring new capacities for navigating rather than resolving ontological difference.",
+        "question": "How does ontological flooding differ from healthy pluralism?",
+        "options": {
+            "A": "It enriches dialogue through diverse perspectives",
+            "B": "It prevents meaningful dialogue as worldviews operate with incompatible facts and logics",
+            "C": "There is no difference between them",
+            "D": "It always leads to consensus and agreement"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 존재론적 범람이 세계관들이 양립불가능한 사실과 논리로 작동하여 의미있는 대화를 방해한다는 점에서 건강한 다원주의와 다르다고 설명하고 있습니다."
+    },
+    {
+        "id": 186,
+        "passage": "The theory of communicative capitalism, developed by Jodi Dean, describes how networked communication technologies capture and neutralize political energies by transforming political action into circulation of messages, where the exchange of opinions substitutes for organized political movement. This system operates through the fantasy that expressing opinions online constitutes political participation, the technology fetish that mistakes access to information for democratic empowerment, and the circulation of affect that replaces strategic organization with emotional expression. Communicative capitalism thrives on the production of endless communication that generates data for platform profit while dissipating potentially transformative energies into harmless circulation of content. The framework reveals how the apparent democratization of voice actually depoliticizes by reducing politics to communication, creating noise that drowns out meaningful political speech while maintaining the feeling of participation. Examples include social media activism that mistakes visibility for impact, online petitions that substitute for organized pressure, comment sections that channel rage into profitable engagement, and viral content that creates temporary attention without sustained movement. The concept shows how communicative capitalism produces subjects who are politically exhausted from constant communication while nothing changes, caught between the compulsion to speak and the knowledge that speech is ineffective. Resistance requires moving beyond communication toward organization, replacing circulation with concentration of forces, and developing forms of political action that cannot be captured by communicative networks.",
+        "question": "What fantasy does communicative capitalism operate through?",
+        "options": {
+            "A": "That avoiding all communication leads to political change",
+            "B": "That expressing opinions online constitutes meaningful political participation",
+            "C": "That only offline action matters politically",
+            "D": "That platforms genuinely support revolutionary movements"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 소통 자본주의가 온라인 의견 표현이 정치적 참여를 구성한다는 환상을 통해 작동한다고 설명하고 있습니다."
+    },
+    {
+        "id": 187,
+        "passage": "The phenomenon of calculated ambiguity describes deliberate strategies of maintaining uncertainty in policies, communications, and systems to preserve flexibility, avoid accountability, and enable contradictory actions while appearing coherent. This practice operates through vague language that permits multiple interpretations, policies with undefined key terms, technologies designed with unclear capabilities, and institutional arrangements that obscure responsibility through complexity. Calculated ambiguity differs from mere confusion by being carefully crafted to serve specific interests, allowing powerful actors to shift positions without appearing inconsistent, claim credit for positive outcomes while avoiding blame for negative ones, and maintain coalitions with incompatible goals. The framework reveals how ambiguity functions as a governance tool that enables states to pursue contradictory policies, corporations to avoid regulatory capture, and institutions to defer difficult decisions while maintaining operational flexibility. Examples include privacy policies that appear protective while enabling data extraction, climate commitments with undefined mechanisms, humanitarian interventions with unclear objectives, and algorithms whose operations remain deliberately opaque. Calculated ambiguity creates conditions where those subjected to power cannot effectively resist because the nature and source of that power remain unclear, while those exercising power can adapt their interpretations to changing circumstances. The concept suggests that demands for transparency must recognize how clarity itself can be weaponized, and that sometimes strategic ambiguity from below can counter calculated ambiguity from above.",
+        "question": "How does calculated ambiguity serve powerful actors?",
+        "options": {
+            "A": "By making all their actions completely transparent",
+            "B": "By allowing them to shift positions without appearing inconsistent and avoid accountability",
+            "C": "It only benefits powerless populations",
+            "D": "Through absolute clarity in all communications"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 계산된 모호성이 권력자들이 일관성 없이 보이지 않으면서 입장을 바꾸고 책임을 회피할 수 있게 한다고 설명하고 있습니다."
+    },
+    {
+        "id": 188,
+        "passage": "The theory of luxury surveillance describes how tracking and monitoring technologies are marketed as premium features and status symbols rather than impositions, transforming surveillance from something to avoid into something to desire and purchase. This phenomenon manifests through fitness trackers that gamify self-monitoring, smart homes that offer convenience through constant observation, genetic testing that provides identity through biological surveillance, and social media that converts exhibitionism into cultural capital. Luxury surveillance operates by reframing tracking as self-knowledge, optimization, and care, creating subjects who voluntarily submit to monitoring they would resist if imposed by states or employers. The framework reveals how surveillance capitalism recruits consumers as collaborators in their own monitoring, purchasing devices that extract data, performing behaviors that generate value, and competing to produce the most trackable lives. Examples include quantified self movements that celebrate total life documentation, influencer culture that monetizes self-surveillance, premium services that offer more detailed tracking, and wellness apps that medicalize everyday monitoring. Luxury surveillance creates new forms of inequality between those who can afford premium tracking with privacy protections and those subjected to punitive surveillance without choice, while normalizing the expectation that lives should be transparent and optimizable. The concept challenges privacy frameworks that assume surveillance is unwanted, revealing instead how contemporary subjects are trained to desire visibility and fear the untracked life.",
+        "question": "How does luxury surveillance transform attitudes toward monitoring?",
+        "options": {
+            "A": "It makes everyone completely reject all forms of tracking",
+            "B": "It transforms surveillance from something to avoid into something to desire and purchase",
+            "C": "It has no effect on attitudes toward privacy",
+            "D": "It only affects government surveillance programs"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 럭셔리 감시가 감시를 피해야 할 것에서 욕망하고 구매해야 할 것으로 변환한다고 설명하고 있습니다."
+    },
+    {
+        "id": 189,
+        "passage": "The concept of recursive extraction describes processes where each round of resource extraction creates conditions requiring further extraction, generating intensifying cycles of depletion that become self-reinforcing and accelerating. This mechanism operates through dynamics such as soil degradation that requires increasing chemical inputs, debt spirals that demand ever-greater production to service payments, data mining that generates more data requiring more processing, and psychological depletion that drives compensatory consumption. Recursive extraction differs from simple extraction by creating dependencies where the solution to extraction-caused problems is more extraction, trapping systems in depleting cycles that appear as growth while undermining their own foundations. The framework reveals how capitalism generates not just linear extraction but exponential intensification, as each intervention to maintain productivity creates new sites for value capture while degrading conditions for future production. Examples include fracking that requires increasing intensity to maintain flow rates, attention economy that produces distraction requiring more stimulation, pharmaceutical interventions that create side effects requiring more medication, and urban development that generates problems solved through more development. Recursive extraction operates across scales from bodies subjected to optimization cycles that produce burnout requiring more optimization, to ecosystems where restoration becomes another extraction frontier. The concept suggests that breaking recursive extraction requires not just reducing extraction but transforming the systemic dynamics that make each round of extraction necessary for managing previous extraction's effects.",
+        "question": "What makes recursive extraction self-reinforcing?",
+        "options": {
+            "A": "It automatically stops after one extraction cycle",
+            "B": "Each round creates conditions requiring further extraction, where solutions cause more problems",
+            "C": "It has no relationship to environmental degradation",
+            "D": "It always leads to sustainable resource use"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 재귀적 추출이 각 라운드가 추가 추출을 요구하는 조건을 만들어, 해결책이 더 많은 문제를 일으킨다고 설명하고 있습니다."
+    },
+    {
+        "id": 190,
+        "passage": "The phenomenon of managed decline describes deliberate policies that orchestrate the gradual deterioration of certain places, populations, and ways of life while presenting this destruction as natural, inevitable, or even beneficial. This process operates through systematic disinvestment that withdraws resources from targeted communities, policy abandonment that removes support systems, narrative frameworks that blame victims for structural violence, and redevelopment plans that require current destruction for future promises that never materialize. Managed decline differs from neglect by being actively produced through decisions that appear rational or necessary while concealing their role in creating the conditions they claim to address. The framework reveals how neoliberal governance produces disposable places and people through techniques such as austerity that defunds public services, redlining that concentrates disadvantage, and creative destruction that clears communities for capital accumulation. Examples include deindustrialized cities subjected to planned shrinkage, public housing demolished for mixed-income development that displaces residents, rural areas abandoned as sacrifice zones, and welfare reforms that manage poverty rather than eliminating it. Managed decline creates subjects who internalize their disposability, communities that compete to avoid abandonment, and landscapes of ruination that become frontiers for new rounds of accumulation. The concept challenges narratives of natural decay or market selection, revealing instead how decline is manufactured through political choices that could be otherwise.",
+        "question": "How does managed decline differ from simple neglect?",
+        "options": {
+            "A": "It is actively produced through decisions while concealing their destructive role",
+            "B": "It happens completely naturally without human intervention",
+            "C": "Managed decline always improves conditions",
+            "D": "They are identical phenomena"
+        },
+        "answer": "A",
+        "explanation_ko": "지문에서 관리된 쇠퇴가 파괴적 역할을 은폐하면서 결정을 통해 적극적으로 생산된다는 점에서 단순한 방치와 다르다고 설명하고 있습니다."
+    },
+    {
+        "id": 191,
+        "passage": "The theory of mimetic violence, developed by René Girard, proposes that human desire is fundamentally imitative, leading to conflict when people desire the same objects, creating cycles of rivalry and violence that societies manage through scapegoating mechanisms. This framework argues that humans learn what to desire by copying others' desires rather than through autonomous choice, generating competition not over scarce resources but over socially constructed objects of desire whose value derives from others wanting them. Mimetic violence escalates through reciprocal imitation where each act of aggression provokes mimicked retaliation, creating spirals of conflict that threaten social order unless discharged through sacrifice of scapegoats who become repositories for collective violence. The mechanism reveals how societies maintain cohesion through founding murders that unite communities against designated victims, with religions and legal systems emerging to ritualize and regulate this scapegoating process. Examples include fashion cycles where desire intensifies through imitation, market bubbles driven by mimetic speculation, social media dynamics where competition for attention creates conflict, and political movements that unite through identifying common enemies. Mimetic theory suggests that modernity's rejection of sacrifice without eliminating mimetic desire produces new forms of violence, from economic competition that sacrifices losers to cancel culture that creates digital scapegoats. The framework implies that peace requires either transcending mimetic desire or finding non-violent ways to manage mimetic conflict.",
+        "question": "According to Girard, what is the fundamental nature of human desire?",
+        "options": {
+            "A": "Completely autonomous and individual",
+            "B": "Fundamentally imitative, learned by copying others' desires",
+            "C": "Based purely on biological needs",
+            "D": "Random and unpredictable"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 지라르가 인간의 욕망이 근본적으로 모방적이며, 자율적 선택이 아닌 타인의 욕망을 복사함으로써 학습된다고 주장한다고 설명하고 있습니다."
+    },
+    {
+        "id": 192,
+        "passage": "The concept of abolition ecology links prison abolition with environmental justice, revealing how carceral systems and ecological destruction share common roots in racial capitalism's logic of disposal, containment, and extraction. This framework examines how prisons are disproportionately sited in toxic environments, how mass incarceration removes people from land-based communities, how prison labor fights wildfires caused by climate change, and how carceral expansion destroys ecosystems through construction and resource consumption. Abolition ecology reveals connections between the criminalization of survival strategies in devastated environments and the environmental racism that concentrates both toxicity and imprisonment in communities of color. The approach argues that achieving environmental justice requires dismantling carceral systems, as both rely on designating certain people and places as disposable, creating sacrifice zones where life is devalued for systemic maintenance. Examples include Louisiana's Cancer Alley where petrochemical plants and prisons concentrate, California's use of incarcerated firefighters risking their lives for dollars per day, and indigenous water protectors criminalized for defending ecosystems. Abolition ecology proposes alternatives based on restoration rather than punishment, healing rather than harm, and sustainable communities rather than carceral landscapes. The framework challenges environmental movements that ignore imprisoned populations and prison reform efforts that ignore ecological context, insisting that liberation requires addressing the carceral-environmental nexus.",
+        "question": "What connection does abolition ecology reveal between prisons and environmental destruction?",
+        "options": {
+            "A": "They are completely unrelated issues",
+            "B": "Both rely on logics of disposal and creating sacrifice zones where life is devalued",
+            "C": "Prisons always improve local environments",
+            "D": "Environmental protection requires more prisons"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 폐지 생태학이 감옥과 환경 파괴 모두 특정 사람과 장소를 폐기 가능한 것으로 지정하고 생명이 평가절하되는 희생 구역을 만드는 논리에 의존한다는 연결을 보여준다고 설명하고 있습니다."
+    },
+    {
+        "id": 193,
+        "passage": "The phenomenon of algorithmic governmentality describes how big data analytics and predictive algorithms create new forms of governance that operate through environmental modulation and preemptive intervention rather than disciplinary normalization or legal prohibition. This mode of power works by analyzing massive datasets to identify patterns and correlations, using these insights to predict future behaviors and intervene before undesired actions occur, governing possibilities rather than punishing actualities. Algorithmic governmentality differs from previous forms of power by operating without subjects, as it targets dividual profiles—statistical constructs assembled from data traces—rather than individual persons with coherent identities or intentions. The framework reveals how governance increasingly operates through the mining of data exhaust, the discovery of unknown unknowns through pattern recognition, and the modulation of choice architectures based on predictive models. Examples include predictive policing that deploys resources based on algorithmic forecasts, credit scoring that determines life chances through data profiles, content recommendation that shapes perception through personalized filtering, and dynamic pricing that adjusts costs based on behavioral prediction. Algorithmic governmentality raises concerns about the disappearance of the subject as political actor, the impossibility of resistance to power that operates below consciousness, and the emergence of algorithmic sovereignty that makes decisions without human judgment. The concept suggests that politics must develop new forms of contestation adequate to algorithmic power.",
+        "question": "How does algorithmic governmentality differ from disciplinary power?",
+        "options": {
+            "A": "It relies entirely on human decision-making",
+            "B": "It operates through preemptive intervention and governing possibilities rather than punishing actualities",
+            "C": "It only affects computer programmers",
+            "D": "It requires physical imprisonment"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 알고리즘 통치성이 실제 행위를 처벌하는 것이 아니라 선제적 개입과 가능성 통치를 통해 작동한다고 설명하고 있습니다."
+    },
+    {
+        "id": 194,
+        "passage": "The theory of cruel affects examines how contemporary capitalism produces and mobilizes negative emotions—anxiety, depression, shame, and fear—not as unfortunate side effects but as central mechanisms for generating compliance, productivity, and consumption. This framework analyzes how neoliberalism governs through the production of bad feelings that individualize structural problems, with anxiety driving self-optimization, depression naturalizing political impossibility, shame motivating entrepreneurial transformation, and fear justifying securitization. Cruel affects operate through technologies such as credit scores that generate anxiety, social media that produces envy, gig economies that institutionalize precarity, and wellness industries that commodify the management of capitalism-generated suffering. The concept reveals how emotional suffering under capitalism is not psychological malfunction but system functioning, with bad feelings serving governmental and economic purposes by producing subjects who blame themselves for structural violence. Examples include student debt that creates anxious subjects who accept any employment, body shame that drives consumption, imposter syndrome that increases productivity, and climate anxiety that individualizes systemic crisis. Cruel affects create recursive loops where the affects generated by capitalism drive behaviors that reproduce capitalism, with suffering becoming both product and producer of value. The framework suggests that resistance requires not just feel-good alternatives but the politicization of bad feelings, transforming cruel affects into rage against their systemic causes.",
+        "question": "What function do cruel affects serve under capitalism?",
+        "options": {
+            "A": "They are accidental byproducts with no systemic function",
+            "B": "They generate compliance and productivity by individualizing structural problems",
+            "C": "They always lead to revolutionary consciousness",
+            "D": "They only affect the wealthy"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 잔인한 정동이 구조적 문제를 개인화하여 순응과 생산성을 생성한다고 설명하고 있습니다."
+    },
+    {
+        "id": 195,
+        "passage": "The concept of spectral capitalism describes how contemporary economies increasingly operate through the manipulation of expectations, promises, and virtualizations rather than material production, creating value from futures that may never arrive and potentials that need not be actualized. This system functions through mechanisms such as derivatives that trade risks abstracted from underlying assets, platforms that extract rent from facilitating potential transactions, brands that monetize imaginary qualities, and cryptocurrencies that generate value from speculative belief. Spectral capitalism differs from industrial capitalism by prioritizing the virtual over the actual, with financial instruments exceeding real economy by orders of magnitude, corporate valuations based on hypothetical futures, and economic growth driven by betting on probabilities rather than producing commodities. The framework reveals how capitalism has become increasingly ghostly, operating through haunted assets like zombie firms kept alive by cheap credit, phantom wealth that exists only in accounting, and spectral workers whose labor appears and disappears through platforms. Examples include tech unicorns valued at billions without profits, NFTs that commodify ownership claims to digital ghosts, ghost cities built for inhabitants who never arrive, and financial instruments so complex they become autonomous from human understanding. Spectral capitalism creates subjects who must invest in phantoms, compete with ghosts, and orient their lives toward speculative futures that colonize present possibilities.",
+        "question": "What distinguishes spectral capitalism from industrial capitalism?",
+        "options": {
+            "A": "It focuses entirely on manufacturing physical goods",
+            "B": "It prioritizes the virtual over actual, with value from futures that may never arrive",
+            "C": "It eliminates all financial speculation",
+            "D": "It only exists in developing countries"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 스펙트럴 자본주의가 실제보다 가상을 우선시하며, 결코 도래하지 않을 수도 있는 미래로부터 가치를 창출한다고 설명하고 있습니다."
+    },
+    {
+        "id": 196,
+        "passage": "The phenomenon of palliative capitalism describes how contemporary systems manage the symptoms of their own destructive effects without addressing root causes, creating industries that profit from treating the damage capitalism inflicts while ensuring its continuation. This process operates through sectors such as wellness that manages stress without reducing its sources, therapy that individualizes structural suffering, philanthropy that addresses poverty while maintaining wealth concentration, and green capitalism that commodifies responses to ecological crisis. Palliative capitalism differs from reform by maintaining rather than transforming destructive systems, offering just enough relief to prevent system collapse while extracting value from the management of system-generated harm. The framework reveals how capitalism creates its own demand through destruction, with each crisis becoming an opportunity for new markets in resilience, adaptation, and recovery that assume continued degradation. Examples include mindfulness programs that help workers cope with exploitation, antidepressants that medicate the effects of alienation, disaster capitalism that profits from climate catastrophes, and security industries that manage inequality's violence. Palliative capitalism produces subjects who seek individual solutions to collective problems, purchasing products to manage capitalism's effects rather than organizing to transform its causes. The concept suggests that real solutions require refusing palliative measures that enable system continuation, demanding transformation rather than management of harm.",
+        "question": "How does palliative capitalism maintain destructive systems?",
+        "options": {
+            "A": "By completely solving all systemic problems",
+            "B": "By offering just enough relief to prevent collapse while extracting value from managing harm",
+            "C": "Through revolutionary transformation",
+            "D": "It has no relationship to systemic problems"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 완화 자본주의가 시스템 붕괴를 막을 정도의 완화만 제공하면서 해악 관리로부터 가치를 추출한다고 설명하고 있습니다."
+    },
+    {
+        "id": 197,
+        "passage": "The theory of dissolved agency examines how contemporary systems distribute action across human and non-human actors in ways that make identifying responsible agents impossible, creating conditions where significant effects occur without locatable causes or accountable subjects. This phenomenon manifests through algorithmic systems where outcomes emerge from interactions between multiple algorithms, bureaucracies where decisions result from procedural chains without individual authors, markets where invisible hands produce visible violence, and environmental changes where aggregate actions create singular catastrophes. Dissolved agency differs from clear causation by operating through complex mediations, feedback loops, and emergent properties that prevent tracing effects to origins, making traditional frameworks of responsibility, liability, and justice inadequate. The concept reveals how power operates through the production of agentless events, where things happen without anyone making them happen, creating a politics without subjects where structural violence appears as natural occurrence. Examples include financial crises that emerge from distributed trading algorithms, discrimination that results from machine learning without discriminatory intent, climate change from collective action without collective agency, and platform effects that no single actor controls. Dissolved agency creates conditions where victims exist without perpetrators, harm without liability, and problems without solutions that require identifying and changing agents. The framework suggests that politics must develop new forms of responsibility adequate to distributed agency, creating accountability for systemic effects rather than individual actions.",
+        "question": "What political challenge does dissolved agency create?",
+        "options": {
+            "A": "It makes identifying responsible agents too easy",
+            "B": "It creates conditions where harm occurs without locatable perpetrators or accountability",
+            "C": "It only affects digital systems",
+            "D": "It strengthens traditional justice frameworks"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 용해된 행위성이 찾을 수 있는 가해자나 책임 없이 해악이 발생하는 조건을 만든다고 설명하고 있습니다."
+    },
+    {
+        "id": 198,
+        "passage": "The concept of mnemonic warfare describes conflicts fought through the manipulation of collective memory, where control over the past becomes a means of shaping present reality and future possibility through the strategic production of forgetting and remembering. This form of warfare operates through techniques such as historical revisionism that rewrites events, monument destruction that erases material memory, archival manipulation that disappears evidence, and commemorative practices that impose official narratives while suppressing alternative memories. Mnemonic warfare differs from propaganda by targeting not just beliefs but the deep structures of temporal consciousness, attacking the ability to maintain historical continuity and collective identity across time. The framework reveals how power operates through the administration of memory, determining what must be remembered and what must be forgotten, creating subjects who cannot access their own histories except through authorized channels. Examples include colonial education that erases indigenous history, digital platforms that make past content disappear, transitional justice processes that mandate forgetting through amnesty, and heritage destruction that eliminates material witnesses to alternative pasts. Mnemonic warfare creates populations without history, communities unable to learn from experience, and futures determined by manufactured pasts. The concept suggests that resistance requires not just preserving memory but defending the conditions for collective remembering, creating counter-memories that challenge official amnesia.",
+        "question": "How does mnemonic warfare differ from traditional propaganda?",
+        "options": {
+            "A": "They are identical practices",
+            "B": "It targets deep structures of temporal consciousness rather than just beliefs",
+            "C": "Propaganda is more effective than memory manipulation",
+            "D": "It only works on elderly populations"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 기억 전쟁이 단순한 신념이 아닌 시간 의식의 깊은 구조를 목표로 한다는 점에서 선전과 다르다고 설명하고 있습니다."
+    },
+    {
+        "id": 199,
+        "passage": "The phenomenon of anticipatory nostalgia describes the preemptive mourning for futures that are being destroyed in the present, creating a temporal affect where people experience loss for worlds that are disappearing before they fully arrive. This condition emerges from the awareness that children will inherit degraded environments, that technologies will eliminate ways of life before they're understood, that cultures will vanish before they're documented, and that possibilities are being foreclosed faster than they can be explored. Anticipatory nostalgia operates through mechanisms such as solastalgia for environments being destroyed, preemptive grief for species facing extinction, phantom pain for communities being displaced, and melancholic attachment to futures that climate change makes impossible. The concept reveals how contemporary subjects live in a state of perpetual loss, mourning not just what has been but what will never be, creating a politics of grief that must act despite hopelessness. Examples include young people grieving their stolen futures, indigenous communities mourning landscapes that still exist but are condemned, artists documenting cultures marked for erasure, and parents experiencing sorrow for their children's diminished possibilities. Anticipatory nostalgia differs from traditional nostalgia by being future-oriented, creating attachment to possibilities rather than memories, and generating action from loss rather than paralysis from melancholy. The framework suggests that this grief might be politically productive if it motivates protection of threatened futures rather than resignation to their loss.",
+        "question": "What distinguishes anticipatory nostalgia from traditional nostalgia?",
+        "options": {
+            "A": "It focuses on idealized memories of the past",
+            "B": "It is future-oriented, creating attachment to possibilities rather than memories",
+            "C": "It only affects older generations",
+            "D": "It always leads to political paralysis"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 예측적 노스탤지어가 미래 지향적이며 기억보다는 가능성에 대한 애착을 만든다는 점에서 전통적 노스탤지어와 구별된다고 설명하고 있습니다."
+    },
+    {
+        "id": 200,
+        "passage": "The theory of rewilding subjectivity proposes that human consciousness has been domesticated by civilization's institutions and technologies, requiring processes of decivilization that restore cognitive and affective capacities suppressed by modern life. This framework examines how schooling domesticates attention, wage labor domesticates time, urban planning domesticates movement, and digital media domesticates desire, creating subjects adapted to captivity rather than autonomy. Rewilding subjectivity involves practices such as attention restoration through unstructured time, sensory reawakening through immersion in more-than-human worlds, cognitive diversity through escape from standardized thinking, and emotional range through experiences outside managed affect. The concept differs from primitivism by not seeking return to pre-modern states but rather the cultivation of feral capacities adequate to present conditions, developing forms of consciousness that escape capture by institutional processing. Examples include forest schools that allow children's unstructured development, psychedelic experiences that break cognitive domestication, movement practices that restore bodily autonomy, and temporary autonomous zones that enable experimental subjectivities. Rewilding subjectivity reveals how normalized consciousness is produced rather than natural, showing that other forms of awareness and being remain possible despite systemic domestication. The framework suggests that liberation requires not just changing external conditions but rewilding internal landscapes, creating subjects capable of thinking and feeling beyond institutional programming.",
+        "question": "What does rewilding subjectivity seek to restore?",
+        "options": {
+            "A": "Complete return to prehistoric consciousness",
+            "B": "Cognitive and affective capacities suppressed by modern domestication",
+            "C": "Perfect adaptation to institutional requirements",
+            "D": "Elimination of all human consciousness"
+        },
+        "answer": "B",
+        "explanation_ko": "지문에서 주체성 재야생화가 현대적 길들임에 의해 억압된 인지적, 정동적 능력을 복원하고자 한다고 설명하고 있습니다."
     }
 ]
