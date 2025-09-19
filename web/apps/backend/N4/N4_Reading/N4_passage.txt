@@ -1,0 +1,600 @@
+ID: 1
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>きました。その<ruby>映画<rt>えいが</rt></ruby>は<ruby>日本<rt>にほん</rt></ruby>のアニメで、とても<ruby>面白<rt>おもしろ</rt></ruby>かったです。<ruby>友達<rt>ともだち</rt></ruby>も「もう<ruby>一度<rt>いちど</rt></ruby><ruby>見<rt>み</rt></ruby>たい」と<ruby>言<rt>い</rt></ruby>っていました。<ruby>来週<rt>らいしゅう</rt></ruby>また<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>行<rt>い</rt></ruby>く<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 2
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>部屋<rt>へや</rt></ruby>は<ruby>二階<rt>にかい</rt></ruby>にあります。<ruby>窓<rt>まど</rt></ruby>から<ruby>公園<rt>こうえん</rt></ruby>が<ruby>見<rt>み</rt></ruby>えて、<ruby>春<rt>はる</rt></ruby>になると<ruby>桜<rt>さくら</rt></ruby>がとてもきれいです。<ruby>机<rt>つくえ</rt></ruby>と<ruby>本棚<rt>ほんだな</rt></ruby>と<ruby>小<rt>ちい</rt></ruby>さいソファーがあります。<ruby>毎日<rt>まいにち</rt></ruby>ここで<ruby>勉強<rt>べんきょう</rt></ruby>したり、<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>んだりしています。
+--------------------------------------------------------------------------------
+ID: 3
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>妹<rt>いもうと</rt></ruby>の<ruby>誕生日<rt>たんじょうび</rt></ruby>なので、プレゼントを<ruby>買<rt>か</rt></ruby>いに<ruby>行<rt>い</rt></ruby>きます。<ruby>妹<rt>いもうと</rt></ruby>は<ruby>音楽<rt>おんがく</rt></ruby>が<ruby>好<rt>す</rt></ruby>きだから、CDを<ruby>買<rt>か</rt></ruby>うつもりです。それから、ケーキも<ruby>注文<rt>ちゅうもん</rt></ruby>しました。<ruby>家族<rt>かぞく</rt></ruby>みんなでパーティーをする<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 4
+Passage: <ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>し<ruby>始<rt>はじ</rt></ruby>めてから、もう<ruby>二年<rt>にねん</rt></ruby>になります。<ruby>最初<rt>さいしょ</rt></ruby>はひらがなも<ruby>読<rt>よ</rt></ruby>めませんでしたが、<ruby>今<rt>いま</rt></ruby>は<ruby>簡単<rt>かんたん</rt></ruby>な<ruby>新聞<rt>しんぶん</rt></ruby>なら<ruby>読<rt>よ</rt></ruby>めるようになりました。でも、<ruby>話<rt>はな</rt></ruby>すのはまだ<ruby>苦手<rt>にがて</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 5
+Passage: <ruby>昨日<rt>きのう</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>、<ruby>熱<rt>ねつ</rt></ruby>が<ruby>出<rt>で</rt></ruby>て、<ruby>頭<rt>あたま</rt></ruby>も<ruby>痛<rt>いた</rt></ruby>かったです。<ruby>今朝<rt>けさ</rt></ruby>、<ruby>病院<rt>びょういん</rt></ruby>に<ruby>行<rt>い</rt></ruby>って、<ruby>薬<rt>くすり</rt></ruby>をもらいました。<ruby>医者<rt>いしゃ</rt></ruby>は「<ruby>今日<rt>きょう</rt></ruby>と<ruby>明日<rt>あした</rt></ruby>は<ruby>家<rt>いえ</rt></ruby>で<ruby>休<rt>やす</rt></ruby>んでください」と<ruby>言<rt>い</rt></ruby>いました。
+--------------------------------------------------------------------------------
+ID: 6
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>趣味<rt>しゅみ</rt></ruby>は<ruby>料理<rt>りょうり</rt></ruby>を<ruby>作<rt>つく</rt></ruby>ることです。<ruby>特<rt>とく</rt></ruby>にイタリア<ruby>料理<rt>りょうり</rt></ruby>が<ruby>好<rt>す</rt></ruby>きで、パスタやピザをよく<ruby>作<rt>つく</rt></ruby>ります。<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>を<ruby>家<rt>いえ</rt></ruby>に<ruby>招待<rt>しょうたい</rt></ruby>して、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>食事<rt>しょくじ</rt></ruby>をすることが<ruby>多<rt>おお</rt></ruby>いです。
+--------------------------------------------------------------------------------
+ID: 7
+Passage: <ruby>来月<rt>らいげつ</rt></ruby>、<ruby>大学<rt>だいがく</rt></ruby>を<ruby>卒業<rt>そつぎょう</rt></ruby>します。<ruby>四年間<rt>よねんかん</rt></ruby>、たくさんのことを<ruby>学<rt>まな</rt></ruby>びました。<ruby>卒業<rt>そつぎょう</rt></ruby><ruby>後<rt>ご</rt></ruby>は、<ruby>東京<rt>とうきょう</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>く<ruby>予定<rt>よてい</rt></ruby>です。<ruby>新<rt>あたら</rt></ruby>しい<ruby>生活<rt>せいかつ</rt></ruby>が<ruby>楽<rt>たの</rt></ruby>しみですが、<ruby>少<rt>すこ</rt></ruby>し<ruby>心配<rt>しんぱい</rt></ruby>もしています。
+--------------------------------------------------------------------------------
+ID: 8
+Passage: <ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>遅<rt>おく</rt></ruby>れたので、<ruby>会議<rt>かいぎ</rt></ruby>に<ruby>遅刻<rt>ちこく</rt></ruby>してしまいました。<ruby>部長<rt>ぶちょう</rt></ruby>に<ruby>謝<rt>あやま</rt></ruby>りましたが、「<ruby>次<rt>つぎ</rt></ruby>から<ruby>気<rt>き</rt></ruby>をつけてください」と<ruby>言<rt>い</rt></ruby>われました。<ruby>今度<rt>こんど</rt></ruby>から、もっと<ruby>早<rt>はや</rt></ruby>く<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>ようと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 9
+Passage: <ruby>子供<rt>こども</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>、<ruby>夏休<rt>なつやす</rt></ruby>みは<ruby>祖父母<rt>そふぼ</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>で<ruby>過<rt>す</rt></ruby>ごしました。<ruby>祖父<rt>そふ</rt></ruby>は<ruby>釣<rt>つ</rt></ruby>りが<ruby>好<rt>す</rt></ruby>きで、よく<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>川<rt>かわ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>きました。<ruby>祖母<rt>そぼ</rt></ruby>は<ruby>美味<rt>おい</rt></ruby>しい<ruby>料理<rt>りょうり</rt></ruby>をたくさん<ruby>作<rt>つく</rt></ruby>ってくれました。とても<ruby>楽<rt>たの</rt></ruby>しい<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 10
+Passage: <ruby>今日<rt>きょう</rt></ruby>は<ruby>天気<rt>てんき</rt></ruby>がいいので、<ruby>洗濯<rt>せんたく</rt></ruby>をしました。シャツを<ruby>五枚<rt>ごまい</rt></ruby>、ズボンを<ruby>三本<rt>さんぼん</rt></ruby>、タオルを<ruby>十枚<rt>じゅうまい</rt></ruby><ruby>洗<rt>あら</rt></ruby>いました。<ruby>午後<rt>ごご</rt></ruby>には<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>乾<rt>かわ</rt></ruby>いて、とても<ruby>気持<rt>きも</rt></ruby>ちがいいです。
+--------------------------------------------------------------------------------
+ID: 11
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>は<ruby>駅<rt>えき</rt></ruby>から<ruby>歩<rt>ある</rt></ruby>いて<ruby>十分<rt>じゅっぷん</rt></ruby>ぐらいです。<ruby>毎朝<rt>まいあさ</rt></ruby>、<ruby>八時半<rt>はちじはん</rt></ruby>に<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>て、<ruby>九時<rt>くじ</rt></ruby>に<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>着<rt>つ</rt></ruby>きます。<ruby>帰<rt>かえ</rt></ruby>りは<ruby>普通<rt>ふつう</rt></ruby>、<ruby>七時<rt>しちじ</rt></ruby>ごろです。<ruby>残業<rt>ざんぎょう</rt></ruby>がある<ruby>日<rt>ひ</rt></ruby>は、もっと<ruby>遅<rt>おそ</rt></ruby>くなります。
+--------------------------------------------------------------------------------
+ID: 12
+Passage: <ruby>先週<rt>せんしゅう</rt></ruby>の<ruby>土曜日<rt>どようび</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>の<ruby>結婚式<rt>けっこんしき</rt></ruby>に<ruby>出席<rt>しゅっせき</rt></ruby>しました。<ruby>花嫁<rt>はなよめ</rt></ruby>は<ruby>白<rt>しろ</rt></ruby>いドレスを<ruby>着<rt>き</rt></ruby>ていて、とてもきれいでした。<ruby>式<rt>しき</rt></ruby>の<ruby>後<rt>あと</rt></ruby>、パーティーがあって、<ruby>美味<rt>おい</rt></ruby>しい<ruby>料理<rt>りょうり</rt></ruby>を<ruby>食<rt>た</rt></ruby>べました。
+--------------------------------------------------------------------------------
+ID: 13
+Passage: <ruby>日本<rt>にほん</rt></ruby>に<ruby>来<rt>き</rt></ruby>てから、<ruby>色々<rt>いろいろ</rt></ruby>な<ruby>場所<rt>ばしょ</rt></ruby>を<ruby>旅行<rt>りょこう</rt></ruby>しました。<ruby>京都<rt>きょうと</rt></ruby>では<ruby>古<rt>ふる</rt></ruby>いお<ruby>寺<rt>てら</rt></ruby>を<ruby>見<rt>み</rt></ruby>て、<ruby>大阪<rt>おおさか</rt></ruby>では<ruby>美味<rt>おい</rt></ruby>しいたこ<ruby>焼<rt>や</rt></ruby>きを<ruby>食<rt>た</rt></ruby>べました。でも、<ruby>一番<rt>いちばん</rt></ruby><ruby>印象<rt>いんしょう</rt></ruby>に<ruby>残<rt>のこ</rt></ruby>っているのは<ruby>富士山<rt>ふじさん</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 14
+Passage: <ruby>母<rt>はは</rt></ruby>は<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>水曜日<rt>すいようび</rt></ruby>に<ruby>英語<rt>えいご</rt></ruby>を<ruby>習<rt>なら</rt></ruby>いに<ruby>行<rt>い</rt></ruby>っています。<ruby>去年<rt>きょねん</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>めたので、まだ<ruby>一年<rt>いちねん</rt></ruby>しか<ruby>経<rt>た</rt></ruby>っていません。でも、<ruby>簡単<rt>かんたん</rt></ruby>な<ruby>会話<rt>かいわ</rt></ruby>ならできるようになりました。<ruby>来年<rt>らいねん</rt></ruby>は<ruby>海外<rt>かいがい</rt></ruby><ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きたいそうです。
+--------------------------------------------------------------------------------
+ID: 15
+Passage: <ruby>弟<rt>おとうと</rt></ruby>は<ruby>大学生<rt>だいがくせい</rt></ruby>で、アルバイトをしながら<ruby>勉強<rt>べんきょう</rt></ruby>しています。コンビニで<ruby>週<rt>しゅう</rt></ruby>に<ruby>三日<rt>みっか</rt></ruby><ruby>働<rt>はたら</rt></ruby>いていて、<ruby>時給<rt>じきゅう</rt></ruby>は<ruby>千円<rt>せんえん</rt></ruby>です。アルバイトで<ruby>貯<rt>た</rt></ruby>めたお<ruby>金<rt>かね</rt></ruby>で、<ruby>新<rt>あたら</rt></ruby>しいパソコンを<ruby>買<rt>か</rt></ruby>う<ruby>予定<rt>よてい</rt></ruby>だそうです。
+--------------------------------------------------------------------------------
+ID: 16
+Passage: <ruby>今年<rt>ことし</rt></ruby>の<ruby>夏<rt>なつ</rt></ruby>、<ruby>家族<rt>かぞく</rt></ruby>で<ruby>北海道<rt>ほっかいどう</rt></ruby>へ<ruby>旅行<rt>りょこう</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>です。<ruby>飛行機<rt>ひこうき</rt></ruby>で<ruby>行<rt>い</rt></ruby>って、<ruby>五日間<rt>いつかかん</rt></ruby><ruby>滞在<rt>たいざい</rt></ruby>します。<ruby>美味<rt>おい</rt></ruby>しい<ruby>海鮮<rt>かいせん</rt></ruby><ruby>料理<rt>りょうり</rt></ruby>を<ruby>食<rt>た</rt></ruby>べたり、<ruby>温泉<rt>おんせん</rt></ruby>に<ruby>入<rt>はい</rt></ruby>ったりする<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 17
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>図書館<rt>としょかん</rt></ruby>で<ruby>勉強<rt>べんきょう</rt></ruby>していたら、<ruby>高校<rt>こうこう</rt></ruby>の<ruby>友達<rt>ともだち</rt></ruby>に<ruby>会<rt>あ</rt></ruby>いました。<ruby>三年<rt>さんねん</rt></ruby>ぶりでした。<ruby>彼<rt>かれ</rt></ruby>は<ruby>今<rt>いま</rt></ruby>、<ruby>銀行<rt>ぎんこう</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>いているそうです。<ruby>来週<rt>らいしゅう</rt></ruby>、<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>食事<rt>しょくじ</rt></ruby>をする<ruby>約束<rt>やくそく</rt></ruby>をしました。
+--------------------------------------------------------------------------------
+ID: 18
+Passage: <ruby>姉<rt>あね</rt></ruby>は<ruby>去年<rt>きょねん</rt></ruby><ruby>結婚<rt>けっこん</rt></ruby>して、<ruby>今<rt>いま</rt></ruby>は<ruby>夫<rt>おっと</rt></ruby>と<ruby>二人<rt>ふたり</rt></ruby>で<ruby>住<rt>す</rt></ruby>んでいます。<ruby>新<rt>あたら</rt></ruby>しいアパートは<ruby>駅<rt>えき</rt></ruby>から<ruby>近<rt>ちか</rt></ruby>くて、とても<ruby>便利<rt>べんり</rt></ruby>です。<ruby>来月<rt>らいげつ</rt></ruby>、<ruby>赤<rt>あか</rt></ruby>ちゃんが<ruby>生<rt>う</rt></ruby>まれる<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 19
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>毎日<rt>まいにち</rt></ruby>、<ruby>朝<rt>あさ</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べてから<ruby>新聞<rt>しんぶん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みます。<ruby>特<rt>とく</rt></ruby>に<ruby>経済<rt>けいざい</rt></ruby>のニュースに<ruby>興味<rt>きょうみ</rt></ruby>があります。<ruby>時間<rt>じかん</rt></ruby>がある<ruby>時<rt>とき</rt></ruby>は、スポーツの<ruby>記事<rt>きじ</rt></ruby>も<ruby>読<rt>よ</rt></ruby>みます。<ruby>新聞<rt>しんぶん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むと、<ruby>世界<rt>せかい</rt></ruby>のことがよく<ruby>分<rt>わ</rt></ruby>かります。
+--------------------------------------------------------------------------------
+ID: 20
+Passage: <ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>山<rt>やま</rt></ruby>に<ruby>登<rt>のぼ</rt></ruby>りました。<ruby>朝<rt>あさ</rt></ruby><ruby>六時<rt>ろくじ</rt></ruby>に<ruby>出発<rt>しゅっぱつ</rt></ruby>して、<ruby>四時間<rt>よじかん</rt></ruby>かかって<ruby>頂上<rt>ちょうじょう</rt></ruby>に<ruby>着<rt>つ</rt></ruby>きました。<ruby>天気<rt>てんき</rt></ruby>が<ruby>良<rt>よ</rt></ruby>かったので、<ruby>景色<rt>けしき</rt></ruby>がとてもきれいでした。<ruby>疲<rt>つか</rt></ruby>れましたが、<ruby>楽<rt>たの</rt></ruby>しかったです。
+--------------------------------------------------------------------------------
+ID: 21
+Passage: <ruby>父<rt>ちち</rt></ruby>は<ruby>料理<rt>りょうり</rt></ruby>が<ruby>得意<rt>とくい</rt></ruby>で、<ruby>休日<rt>きゅうじつ</rt></ruby>はよく<ruby>家族<rt>かぞく</rt></ruby>のために<ruby>料理<rt>りょうり</rt></ruby>を<ruby>作<rt>つく</rt></ruby>ってくれます。<ruby>特<rt>とく</rt></ruby>にカレーが<ruby>上手<rt>じょうず</rt></ruby>で、みんな「お<ruby>店<rt>みせ</rt></ruby>の<ruby>味<rt>あじ</rt></ruby>より<ruby>美味<rt>おい</rt></ruby>しい」と<ruby>言<rt>い</rt></ruby>います。<ruby>私<rt>わたし</rt></ruby>も<ruby>父<rt>ちち</rt></ruby>のような<ruby>料理<rt>りょうり</rt></ruby>が<ruby>作<rt>つく</rt></ruby>れるようになりたいです。
+--------------------------------------------------------------------------------
+ID: 22
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>は<ruby>会社<rt>かいしゃ</rt></ruby>の<ruby>忘年会<rt>ぼうねんかい</rt></ruby>です。<ruby>場所<rt>ばしょ</rt></ruby>は<ruby>駅<rt>えき</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くの<ruby>居酒屋<rt>いざかや</rt></ruby>で、<ruby>夜<rt>よる</rt></ruby><ruby>七時<rt>しちじ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>まります。<ruby>参加費<rt>さんかひ</rt></ruby>は<ruby>四千円<rt>よんせんえん</rt></ruby>です。みんなで<ruby>楽<rt>たの</rt></ruby>しく<ruby>過<rt>す</rt></ruby>ごしたいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 23
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>趣味<rt>しゅみ</rt></ruby>は<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ることです。<ruby>特<rt>とく</rt></ruby>に<ruby>風景<rt>ふうけい</rt></ruby><ruby>写真<rt>しゃしん</rt></ruby>が<ruby>好<rt>す</rt></ruby>きで、<ruby>休日<rt>きゅうじつ</rt></ruby>は<ruby>色々<rt>いろいろ</rt></ruby>な<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>行<rt>い</rt></ruby>って<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ります。<ruby>去年<rt>きょねん</rt></ruby>、<ruby>写真<rt>しゃしん</rt></ruby>コンテストで<ruby>賞<rt>しょう</rt></ruby>をもらいました。
+--------------------------------------------------------------------------------
+ID: 24
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、デパートで<ruby>母<rt>はは</rt></ruby>の<ruby>誕生日<rt>たんじょうび</rt></ruby>プレゼントを<ruby>買<rt>か</rt></ruby>いました。<ruby>財布<rt>さいふ</rt></ruby>と<ruby>花<rt>はな</rt></ruby>を<ruby>買<rt>か</rt></ruby>って、<ruby>全部<rt>ぜんぶ</rt></ruby>で<ruby>一万五千円<rt>いちまんごせんえん</rt></ruby>でした。<ruby>母<rt>はは</rt></ruby>はきっと<ruby>喜<rt>よろこ</rt></ruby>ぶと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 25
+Passage: <ruby>今日<rt>きょう</rt></ruby>は<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>っていたので、<ruby>家<rt>いえ</rt></ruby>で<ruby>過<rt>す</rt></ruby>ごしました。<ruby>午前中<rt>ごぜんちゅう</rt></ruby>は<ruby>掃除<rt>そうじ</rt></ruby>をして、<ruby>午後<rt>ごご</rt></ruby>は<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>みました。<ruby>夕方<rt>ゆうがた</rt></ruby>、<ruby>雨<rt>あめ</rt></ruby>が<ruby>止<rt>や</rt></ruby>んだので、<ruby>犬<rt>いぬ</rt></ruby>の<ruby>散歩<rt>さんぽ</rt></ruby>に<ruby>行<rt>い</rt></ruby>きました。
+--------------------------------------------------------------------------------
+ID: 26
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>大学<rt>だいがく</rt></ruby>で<ruby>経済学<rt>けいざいがく</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>しています。<ruby>将来<rt>しょうらい</rt></ruby>は<ruby>銀行<rt>ぎんこう</rt></ruby>か<ruby>証券会社<rt>しょうけんがいしゃ</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>きたいと<ruby>思<rt>おも</rt></ruby>っています。そのために、<ruby>今<rt>いま</rt></ruby>は<ruby>資格<rt>しかく</rt></ruby>の<ruby>勉強<rt>べんきょう</rt></ruby>もしています。
+--------------------------------------------------------------------------------
+ID: 27
+Passage: <ruby>昨日<rt>きのう</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>、<ruby>久<rt>ひさ</rt></ruby>しぶりに<ruby>家族<rt>かぞく</rt></ruby>みんなで<ruby>外食<rt>がいしょく</rt></ruby>しました。<ruby>中華<rt>ちゅうか</rt></ruby><ruby>料理<rt>りょうり</rt></ruby>のレストランで、<ruby>餃子<rt>ぎょうざ</rt></ruby>や<ruby>麻婆豆腐<rt>まーぼーどうふ</rt></ruby>を<ruby>食<rt>た</rt></ruby>べました。<ruby>父<rt>ちち</rt></ruby>が<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>払<rt>はら</rt></ruby>ってくれました。
+--------------------------------------------------------------------------------
+ID: 28
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>町<rt>まち</rt></ruby>には<ruby>大<rt>おお</rt></ruby>きな<ruby>公園<rt>こうえん</rt></ruby>があります。<ruby>春<rt>はる</rt></ruby>は<ruby>桜<rt>さくら</rt></ruby>、<ruby>秋<rt>あき</rt></ruby>は<ruby>紅葉<rt>もみじ</rt></ruby>がきれいです。<ruby>週末<rt>しゅうまつ</rt></ruby>には<ruby>多<rt>おお</rt></ruby>くの<ruby>人<rt>ひと</rt></ruby>が<ruby>散歩<rt>さんぽ</rt></ruby>したり、ジョギングしたりしています。<ruby>私<rt>わたし</rt></ruby>もよく<ruby>行<rt>い</rt></ruby>きます。
+--------------------------------------------------------------------------------
+ID: 29
+Passage: <ruby>友達<rt>ともだち</rt></ruby>から<ruby>借<rt>か</rt></ruby>りた<ruby>本<rt>ほん</rt></ruby>をやっと<ruby>読<rt>よ</rt></ruby>み<ruby>終<rt>お</rt></ruby>わりました。<ruby>三百<rt>さんびゃく</rt></ruby>ページもあって、<ruby>読<rt>よ</rt></ruby>むのに<ruby>二週間<rt>にしゅうかん</rt></ruby>かかりました。とても<ruby>面白<rt>おもしろ</rt></ruby>い<ruby>小説<rt>しょうせつ</rt></ruby>でした。<ruby>明日<rt>あした</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>に<ruby>返<rt>かえ</rt></ruby>します。
+--------------------------------------------------------------------------------
+ID: 30
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>から<ruby>学校<rt>がっこう</rt></ruby>まで、<ruby>自転車<rt>じてんしゃ</rt></ruby>で<ruby>二十分<rt>にじゅっぷん</rt></ruby>ぐらいです。<ruby>雨<rt>あめ</rt></ruby>の<ruby>日<rt>ひ</rt></ruby>はバスで<ruby>行<rt>い</rt></ruby>きますが、<ruby>三十分<rt>さんじゅっぷん</rt></ruby>以上<rt>いじょう</rt>かかります。だから、なるべく<ruby>自転車<rt>じてんしゃ</rt></ruby>で<ruby>行<rt>い</rt></ruby>くようにしています。
+--------------------------------------------------------------------------------
+ID: 31
+Passage: <ruby>今月<rt>こんげつ</rt></ruby>から<ruby>新<rt>あたら</rt></ruby>しい<ruby>仕事<rt>しごと</rt></ruby>を<ruby>始<rt>はじ</rt></ruby>めました。<ruby>前<rt>まえ</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>より<ruby>給料<rt>きゅうりょう</rt></ruby>は<ruby>少<rt>すく</rt></ruby>ないですが、<ruby>仕事<rt>しごと</rt></ruby>の<ruby>内容<rt>ないよう</rt></ruby>が<ruby>面白<rt>おもしろ</rt></ruby>いです。<ruby>同僚<rt>どうりょう</rt></ruby>もみんな<ruby>優<rt>やさ</rt></ruby>しくて、<ruby>働<rt>はたら</rt></ruby>きやすい<ruby>環境<rt>かんきょう</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 32
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>でパーティーがありました。<ruby>十人<rt>じゅうにん</rt></ruby>ぐらい<ruby>集<rt>あつ</rt></ruby>まって、みんなで<ruby>料理<rt>りょうり</rt></ruby>を<ruby>作<rt>つく</rt></ruby>りました。<ruby>私<rt>わたし</rt></ruby>はサラダを<ruby>作<rt>つく</rt></ruby>りました。<ruby>夜<rt>よる</rt></ruby><ruby>十一時<rt>じゅういちじ</rt></ruby>まで<ruby>話<rt>はな</rt></ruby>して、とても<ruby>楽<rt>たの</rt></ruby>しかったです。
+--------------------------------------------------------------------------------
+ID: 33
+Passage: <ruby>来年<rt>らいねん</rt></ruby>、<ruby>留学<rt>りゅうがく</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>です。<ruby>行<rt>い</rt></ruby>き<ruby>先<rt>さき</rt></ruby>はアメリカのニューヨークで、<ruby>一年間<rt>いちねんかん</rt></ruby><ruby>英語<rt>えいご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>します。ホームステイをしながら、<ruby>大学<rt>だいがく</rt></ruby>に<ruby>通<rt>かよ</rt></ruby>う<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 34
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>祖母<rt>そぼ</rt></ruby>は<ruby>今年<rt>ことし</rt></ruby><ruby>八十歳<rt>はちじゅっさい</rt></ruby>になりますが、とても<ruby>元気<rt>げんき</rt></ruby>です。<ruby>毎日<rt>まいにち</rt></ruby><ruby>散歩<rt>さんぽ</rt></ruby>をして、<ruby>週<rt>しゅう</rt></ruby>に<ruby>二回<rt>にかい</rt></ruby>は<ruby>水泳<rt>すいえい</rt></ruby>に<ruby>行<rt>い</rt></ruby>っています。<ruby>料理<rt>りょうり</rt></ruby>も<ruby>自分<rt>じぶん</rt></ruby>で<ruby>作<rt>つく</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 35
+Passage: <ruby>今日<rt>きょう</rt></ruby>、<ruby>新<rt>あたら</rt></ruby>しいスマートフォンを<ruby>買<rt>か</rt></ruby>いました。<ruby>前<rt>まえ</rt></ruby>のものより<ruby>画面<rt>がめん</rt></ruby>が<ruby>大<rt>おお</rt></ruby>きくて、カメラの<ruby>性能<rt>せいのう</rt></ruby>も<ruby>良<rt>よ</rt></ruby>いです。<ruby>値段<rt>ねだん</rt></ruby>は<ruby>六万円<rt>ろくまんえん</rt></ruby>でしたが、<ruby>満足<rt>まんぞく</rt></ruby>しています。
+--------------------------------------------------------------------------------
+ID: 36
+Passage: <ruby>毎朝<rt>まいあさ</rt></ruby>、ジョギングをしています。<ruby>最初<rt>さいしょ</rt></ruby>は<ruby>十分<rt>じゅっぷん</rt></ruby>しか<ruby>走<rt>はし</rt></ruby>れませんでしたが、<ruby>今<rt>いま</rt></ruby>は<ruby>三十分<rt>さんじゅっぷん</rt></ruby><ruby>走<rt>はし</rt></ruby>れるようになりました。<ruby>体重<rt>たいじゅう</rt></ruby>も<ruby>三<rt>さん</rt></ruby>キロ<ruby>減<rt>へ</rt></ruby>りました。
+--------------------------------------------------------------------------------
+ID: 37
+Passage: <ruby>先月<rt>せんげつ</rt></ruby>、<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>しをしました。<ruby>新<rt>あたら</rt></ruby>しい<ruby>部屋<rt>へや</rt></ruby>は<ruby>前<rt>まえ</rt></ruby>より<ruby>広<rt>ひろ</rt></ruby>くて、<ruby>家賃<rt>やちん</rt></ruby>も<ruby>安<rt>やす</rt></ruby>いです。<ruby>駅<rt>えき</rt></ruby>からは<ruby>少<rt>すこ</rt></ruby>し<ruby>遠<rt>とお</rt></ruby>いですが、<ruby>静<rt>しず</rt></ruby>かで<ruby>住<rt>す</rt></ruby>みやすいです。
+--------------------------------------------------------------------------------
+ID: 38
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>土曜日<rt>どようび</rt></ruby>に<ruby>ボランティア<rt>ぼらんてぃあ</rt></ruby>活動<rt>かつどう</rt>をしています。<ruby>老人<rt>ろうじん</rt></ruby>ホームで<ruby>お年寄<rt>としよ</rt></ruby>りの<ruby>話<rt>はなし</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いたり、<ruby>一緒<rt>いっしょ</rt></ruby>にゲームをしたりしています。みなさん、とても<ruby>喜<rt>よろこ</rt></ruby>んでくれます。
+--------------------------------------------------------------------------------
+ID: 39
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>大切<rt>たいせつ</rt></ruby>な<ruby>試験<rt>しけん</rt></ruby>があります。<ruby>三<rt>さん</rt></ruby>か<ruby>月<rt>げつ</rt></ruby><ruby>前<rt>まえ</rt></ruby>から<ruby>準備<rt>じゅんび</rt></ruby>してきました。<ruby>今夜<rt>こんや</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>寝<rt>ね</rt></ruby>て、<ruby>明日<rt>あした</rt></ruby>は<ruby>頑張<rt>がんば</rt></ruby>りたいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 40
+Passage: <ruby>今年<rt>ことし</rt></ruby>の<ruby>冬<rt>ふゆ</rt></ruby>は<ruby>例年<rt>れいねん</rt></ruby>より<ruby>寒<rt>さむ</rt></ruby>いそうです。<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>によると、<ruby>雪<rt>ゆき</rt></ruby>も<ruby>多<rt>おお</rt></ruby>く<ruby>降<rt>ふ</rt></ruby>るそうです。<ruby>暖<rt>あたた</rt></ruby>かい<ruby>服<rt>ふく</rt></ruby>を<ruby>準備<rt>じゅんび</rt></ruby>しておいた<ruby>方<rt>ほう</rt></ruby>がいいですね。
+--------------------------------------------------------------------------------
+ID: 41
+Passage: <ruby>友達<rt>ともだち</rt></ruby>が<ruby>新<rt>あたら</rt></ruby>しいカフェを<ruby>開<rt>ひら</rt></ruby>きました。<ruby>場所<rt>ばしょ</rt></ruby>は<ruby>駅<rt>えき</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くで、コーヒーがとても<ruby>美味<rt>おい</rt></ruby>しいです。<ruby>店内<rt>てんない</rt></ruby>も<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>いた<ruby>雰囲気<rt>ふんいき</rt></ruby>で、<ruby>仕事<rt>しごと</rt></ruby>や<ruby>勉強<rt>べんきょう</rt></ruby>をするのに<ruby>最適<rt>さいてき</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 42
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>初<rt>はじ</rt></ruby>めて<ruby>着物<rt>きもの</rt></ruby>を<ruby>着<rt>き</rt></ruby>ました。<ruby>友達<rt>ともだち</rt></ruby>の<ruby>結婚式<rt>けっこんしき</rt></ruby>に<ruby>出席<rt>しゅっせき</rt></ruby>するためです。<ruby>着<rt>き</rt></ruby>るのが<ruby>大変<rt>たいへん</rt></ruby>でしたが、とても<ruby>素敵<rt>すてき</rt></ruby>な<ruby>経験<rt>けいけん</rt></ruby>でした。<ruby>写真<rt>しゃしん</rt></ruby>もたくさん<ruby>撮<rt>と</rt></ruby>りました。
+--------------------------------------------------------------------------------
+ID: 43
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>兄<rt>あに</rt></ruby>は<ruby>医者<rt>いしゃ</rt></ruby>になるために<ruby>勉強<rt>べんきょう</rt></ruby>しています。<ruby>毎日<rt>まいにち</rt></ruby><ruby>朝<rt>あさ</rt></ruby>から<ruby>晩<rt>ばん</rt></ruby>まで<ruby>勉強<rt>べんきょう</rt></ruby>して、とても<ruby>大変<rt>たいへん</rt></ruby>そうです。でも、<ruby>夢<rt>ゆめ</rt></ruby>のために<ruby>頑張<rt>がんば</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 44
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>野菜<rt>やさい</rt></ruby>の<ruby>値段<rt>ねだん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>くなっています。<ruby>天気<rt>てんき</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>かったからだそうです。<ruby>特<rt>とく</rt></ruby>にトマトとキュウリが<ruby>高<rt>たか</rt></ruby>いです。<ruby>早<rt>はや</rt></ruby>く<ruby>安<rt>やす</rt></ruby>くなってほしいです。
+--------------------------------------------------------------------------------
+ID: 45
+Passage: <ruby>週末<rt>しゅうまつ</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>く<ruby>約束<rt>やくそく</rt></ruby>をしました。<ruby>午後<rt>ごご</rt></ruby><ruby>二時<rt>にじ</rt></ruby>に<ruby>映画館<rt>えいがかん</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>で<ruby>待<rt>ま</rt></ruby>ち<ruby>合<rt>あ</rt></ruby>わせをすることになりました。<ruby>楽<rt>たの</rt></ruby>しみです。
+--------------------------------------------------------------------------------
+ID: 46
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>猫<rt>ねこ</rt></ruby>を<ruby>二匹<rt>にひき</rt></ruby><ruby>飼<rt>か</rt></ruby>っています。<ruby>一匹<rt>いっぴき</rt></ruby>は<ruby>白<rt>しろ</rt></ruby>くて、もう<ruby>一匹<rt>いっぴき</rt></ruby>は<ruby>黒<rt>くろ</rt></ruby>いです。<ruby>二匹<rt>にひき</rt></ruby>とも<ruby>魚<rt>さかな</rt></ruby>が<ruby>大好<rt>だいす</rt></ruby>きで、<ruby>毎日<rt>まいにち</rt></ruby><ruby>元気<rt>げんき</rt></ruby>に<ruby>遊<rt>あそ</rt></ruby>んでいます。
+--------------------------------------------------------------------------------
+ID: 47
+Passage: <ruby>今日<rt>きょう</rt></ruby>は<ruby>父<rt>ちち</rt></ruby>の<ruby>誕生日<rt>たんじょうび</rt></ruby>でした。<ruby>家族<rt>かぞく</rt></ruby>みんなでレストランに<ruby>行<rt>い</rt></ruby>って、お<ruby>祝<rt>いわ</rt></ruby>いをしました。<ruby>父<rt>ちち</rt></ruby>は<ruby>六十歳<rt>ろくじゅっさい</rt></ruby>になりました。プレゼントに<ruby>時計<rt>とけい</rt></ruby>をあげました。
+--------------------------------------------------------------------------------
+ID: 48
+Passage: <ruby>先週<rt>せんしゅう</rt></ruby>、<ruby>風邪<rt>かぜ</rt></ruby>を<ruby>引<rt>ひ</rt></ruby>いて<ruby>三日間<rt>みっかかん</rt></ruby><ruby>学校<rt>がっこう</rt></ruby>を<ruby>休<rt>やす</rt></ruby>みました。<ruby>熱<rt>ねつ</rt></ruby>が<ruby>三十九度<rt>さんじゅうくど</rt></ruby>まで<ruby>上<rt>あ</rt></ruby>がって、とても<ruby>辛<rt>つら</rt></ruby>かったです。<ruby>今<rt>いま</rt></ruby>はもう<ruby>元気<rt>げんき</rt></ruby>になりました。
+--------------------------------------------------------------------------------
+ID: 49
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>では、<ruby>毎月<rt>まいつき</rt></ruby><ruby>最後<rt>さいご</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>帰<rt>かえ</rt></ruby>れます。「プレミアムフライデー」と<ruby>言<rt>い</rt></ruby>って、<ruby>午後<rt>ごご</rt></ruby><ruby>三時<rt>さんじ</rt></ruby>に<ruby>仕事<rt>しごと</rt></ruby>が<ruby>終<rt>お</rt></ruby>わります。
+--------------------------------------------------------------------------------
+ID: 50
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>財布<rt>さいふ</rt></ruby>を<ruby>落<rt>お</rt></ruby>としてしまいました。<ruby>駅員<rt>えきいん</rt></ruby>さんに<ruby>聞<rt>き</rt></ruby>いたら、<ruby>親切<rt>しんせつ</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>が<ruby>届<rt>とど</rt></ruby>けてくれていました。<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>助<rt>たす</rt></ruby>かりました。
+--------------------------------------------------------------------------------
+ID: 51
+Passage: <ruby>来月<rt>らいげつ</rt></ruby>から<ruby>新<rt>あたら</rt></ruby>しいプロジェクトが<ruby>始<rt>はじ</rt></ruby>まります。<ruby>期間<rt>きかん</rt></ruby>は<ruby>六<rt>ろっ</rt></ruby>か<ruby>月<rt>げつ</rt></ruby>で、チームは<ruby>五人<rt>ごにん</rt></ruby>です。<ruby>私<rt>わたし</rt></ruby>はリーダーを<ruby>務<rt>つと</rt></ruby>めることになりました。
+--------------------------------------------------------------------------------
+ID: 52
+Passage: <ruby>今朝<rt>けさ</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>で<ruby>高校<rt>こうこう</rt></ruby><ruby>時代<rt>じだい</rt></ruby>の<ruby>先生<rt>せんせい</rt></ruby>に<ruby>会<rt>あ</rt></ruby>いました。<ruby>十年<rt>じゅうねん</rt></ruby>ぶりでしたが、すぐに<ruby>私<rt>わたし</rt></ruby>のことを<ruby>覚<rt>おぼ</rt></ruby>えていてくれました。とても<ruby>嬉<rt>うれ</rt></ruby>しかったです。
+--------------------------------------------------------------------------------
+ID: 53
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>町<rt>まち</rt></ruby>では、<ruby>毎年<rt>まいとし</rt></ruby><ruby>夏<rt>なつ</rt></ruby>に<ruby>大<rt>おお</rt></ruby>きな<ruby>祭<rt>まつ</rt></ruby>りがあります。<ruby>花火<rt>はなび</rt></ruby>や<ruby>屋台<rt>やたい</rt></ruby>があって、とても<ruby>賑<rt>にぎ</rt></ruby>やかです。<ruby>今年<rt>ことし</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>と<ruby>浴衣<rt>ゆかた</rt></ruby>を<ruby>着<rt>き</rt></ruby>て<ruby>行<rt>い</rt></ruby>く<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 54
+Passage: <ruby>弟<rt>おとうと</rt></ruby>は<ruby>来年<rt>らいねん</rt></ruby><ruby>高校<rt>こうこう</rt></ruby>を<ruby>卒業<rt>そつぎょう</rt></ruby>します。<ruby>大学<rt>だいがく</rt></ruby>に<ruby>進学<rt>しんがく</rt></ruby>するか、<ruby>就職<rt>しゅうしょく</rt></ruby>するか<ruby>迷<rt>まよ</rt></ruby>っています。<ruby>両親<rt>りょうしん</rt></ruby>は「<ruby>自分<rt>じぶん</rt></ruby>で<ruby>決<rt>き</rt></ruby>めなさい」と<ruby>言<rt>い</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 55
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>図書館<rt>としょかん</rt></ruby>で<ruby>本<rt>ほん</rt></ruby>を<ruby>五冊<rt>ごさつ</rt></ruby><ruby>借<rt>か</rt></ruby>りました。<ruby>小説<rt>しょうせつ</rt></ruby>が<ruby>三冊<rt>さんさつ</rt></ruby>、<ruby>料理<rt>りょうり</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>が<ruby>二冊<rt>にさつ</rt></ruby>です。<ruby>二週間<rt>にしゅうかん</rt></ruby><ruby>以内<rt>いない</rt></ruby>に<ruby>返<rt>かえ</rt></ruby>さなければなりません。
+--------------------------------------------------------------------------------
+ID: 56
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>週<rt>しゅう</rt></ruby>に<ruby>三回<rt>さんかい</rt></ruby>ジムに<ruby>通<rt>かよ</rt></ruby>っています。<ruby>月曜日<rt>げつようび</rt></ruby>と<ruby>水曜日<rt>すいようび</rt></ruby>と<ruby>金曜日<rt>きんようび</rt></ruby>です。<ruby>一回<rt>いっかい</rt></ruby><ruby>二時間<rt>にじかん</rt></ruby>ぐらい<ruby>運動<rt>うんどう</rt></ruby>します。<ruby>健康<rt>けんこう</rt></ruby>のためにも<ruby>続<rt>つづ</rt></ruby>けたいです。
+--------------------------------------------------------------------------------
+ID: 57
+Passage: <ruby>今日<rt>きょう</rt></ruby>、<ruby>新<rt>あたら</rt></ruby>しい<ruby>眼鏡<rt>めがね</rt></ruby>を<ruby>作<rt>つく</rt></ruby>りました。<ruby>前<rt>まえ</rt></ruby>のものより<ruby>軽<rt>かる</rt></ruby>くて、かけ<ruby>心地<rt>ごこち</rt></ruby>がいいです。<ruby>値段<rt>ねだん</rt></ruby>は<ruby>三万円<rt>さんまんえん</rt></ruby>でしたが、<ruby>長<rt>なが</rt></ruby>く<ruby>使<rt>つか</rt></ruby>うので<ruby>良<rt>よ</rt></ruby>い<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 58
+Passage: <ruby>姉<rt>あね</rt></ruby>は<ruby>英語<rt>えいご</rt></ruby>の<ruby>先生<rt>せんせい</rt></ruby>をしています。<ruby>中学校<rt>ちゅうがっこう</rt></ruby>で<ruby>教<rt>おし</rt></ruby>えていて、<ruby>生徒<rt>せいと</rt></ruby>たちに<ruby>人気<rt>にんき</rt></ruby>があります。<ruby>授業<rt>じゅぎょう</rt></ruby>が<ruby>分<rt>わ</rt></ruby>かりやすいと<ruby>評判<rt>ひょうばん</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 59
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>月曜日<rt>げつようび</rt></ruby>から、<ruby>新<rt>あたら</rt></ruby>しい<ruby>時間割<rt>じかんわり</rt></ruby>になります。<ruby>英語<rt>えいご</rt></ruby>の<ruby>授業<rt>じゅぎょう</rt></ruby>が<ruby>週<rt>しゅう</rt></ruby>に<ruby>四回<rt>よんかい</rt></ruby>から<ruby>五回<rt>ごかい</rt></ruby>に<ruby>増<rt>ふ</rt></ruby>えます。もっと<ruby>勉強<rt>べんきょう</rt></ruby>しなければなりません。
+--------------------------------------------------------------------------------
+ID: 60
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>部屋<rt>へや</rt></ruby>には<ruby>観葉植物<rt>かんようしょくぶつ</rt></ruby>が<ruby>四<rt>よっ</rt></ruby>つあります。<ruby>毎日<rt>まいにち</rt></ruby><ruby>水<rt>みず</rt></ruby>をやって、<ruby>大切<rt>たいせつ</rt></ruby>に<ruby>育<rt>そだ</rt></ruby>てています。<ruby>部屋<rt>へや</rt></ruby>に<ruby>緑<rt>みどり</rt></ruby>があると、<ruby>気持<rt>きも</rt></ruby>ちが<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>きます。
+--------------------------------------------------------------------------------
+ID: 61
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>から<ruby>誕生日<rt>たんじょうび</rt></ruby>プレゼントをもらいました。<ruby>青<rt>あお</rt></ruby>い<ruby>財布<rt>さいふ</rt></ruby>で、デザインがとても<ruby>素敵<rt>すてき</rt></ruby>です。<ruby>大切<rt>たいせつ</rt></ruby>に<ruby>使<rt>つか</rt></ruby>おうと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 62
+Passage: <ruby>今週<rt>こんしゅう</rt></ruby>の<ruby>土曜日<rt>どようび</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>の<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>しを<ruby>手伝<rt>てつだ</rt></ruby>います。<ruby>朝<rt>あさ</rt></ruby><ruby>九時<rt>くじ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>めて、<ruby>夕方<rt>ゆうがた</rt></ruby>までかかりそうです。<ruby>大変<rt>たいへん</rt></ruby>ですが、みんなで<ruby>協力<rt>きょうりょく</rt></ruby>すれば<ruby>早<rt>はや</rt></ruby>く<ruby>終<rt>お</rt></ruby>わると<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 63
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>は<ruby>来月<rt>らいげつ</rt></ruby>、<ruby>新<rt>あたら</rt></ruby>しいオフィスに<ruby>移転<rt>いてん</rt></ruby>します。<ruby>場所<rt>ばしょ</rt></ruby>は<ruby>今<rt>いま</rt></ruby>より<ruby>駅<rt>えき</rt></ruby>に<ruby>近<rt>ちか</rt></ruby>くなりますが、<ruby>家<rt>いえ</rt></ruby>からは<ruby>遠<rt>とお</rt></ruby>くなります。
+--------------------------------------------------------------------------------
+ID: 64
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>美術館<rt>びじゅつかん</rt></ruby>に<ruby>行<rt>い</rt></ruby>きました。<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>画家<rt>がか</rt></ruby>の<ruby>展覧会<rt>てんらんかい</rt></ruby>をやっていて、たくさんの<ruby>人<rt>ひと</rt></ruby>が<ruby>来<rt>き</rt></ruby>ていました。<ruby>入場料<rt>にゅうじょうりょう</rt></ruby>は<ruby>千五百円<rt>せんごひゃくえん</rt></ruby>でした。
+--------------------------------------------------------------------------------
+ID: 65
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>毎月<rt>まいつき</rt></ruby>、<ruby>両親<rt>りょうしん</rt></ruby>に<ruby>電話<rt>でんわ</rt></ruby>をしています。<ruby>実家<rt>じっか</rt></ruby>は<ruby>遠<rt>とお</rt></ruby>いので、なかなか<ruby>会<rt>あ</rt></ruby>えませんが、<ruby>声<rt>こえ</rt></ruby>を<ruby>聞<rt>き</rt></ruby>くと<ruby>安心<rt>あんしん</rt></ruby>します。
+--------------------------------------------------------------------------------
+ID: 66
+Passage: <ruby>今日<rt>きょう</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>は<ruby>三時間<rt>さんじかん</rt></ruby>もかかりました。<ruby>朝<rt>あさ</rt></ruby><ruby>九時<rt>くじ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>まって、<ruby>昼<rt>ひる</rt></ruby><ruby>十二時<rt>じゅうにじ</rt></ruby>に<ruby>終<rt>お</rt></ruby>わりました。とても<ruby>疲<rt>つか</rt></ruby>れました。
+--------------------------------------------------------------------------------
+ID: 67
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>部屋<rt>へや</rt></ruby>は<ruby>駅<rt>えき</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くにあって<ruby>便利<rt>べんり</rt></ruby>ですが、<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>音<rt>おと</rt></ruby>がうるさいのが<ruby>欠点<rt>けってん</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 68
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>部屋<rt>へや</rt></ruby>の<ruby>窓<rt>まど</rt></ruby>は<ruby>東<rt>ひがし</rt></ruby>に<ruby>向<rt>む</rt></ruby>いています。だから、<ruby>毎朝<rt>まいあさ</rt></ruby>、<ruby>太陽<rt>たいよう</rt></ruby>の<ruby>光<rt>ひかり</rt></ruby>で<ruby>目<rt>め</rt></ruby>が<ruby>覚<rt>さ</rt></ruby>めます。<ruby>時計<rt>とけい</rt></ruby>がなくても<ruby>時間<rt>じかん</rt></ruby>が<ruby>分<rt>わ</rt></ruby>かるので、とても<ruby>便利<rt>べんり</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 69
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>資料<rt>しりょう</rt></ruby>を<ruby>作<rt>つく</rt></ruby>らなければなりません。<ruby>全部<rt>ぜんぶ</rt></ruby>で<ruby>三十<rt>さんじゅう</rt></ruby>ページぐらいあります。<ruby>明日<rt>あした</rt></ruby>までに<ruby>終<rt>お</rt></ruby>わらせる<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 70
+Passage: このレストランはいつも<ruby>込<rt>こ</rt></ruby>んでいるので、<ruby>予約<rt>よやく</rt></ruby>しておいた<ruby>方<rt>ほう</rt></ruby>がいいですよ。<ruby>特<rt>とく</rt></ruby>に<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>予約<rt>よやく</rt></ruby>しないと<ruby>入<rt>はい</rt></ruby>れないかもしれません。
+--------------------------------------------------------------------------------
+ID: 71
+Passage: <ruby>健康<rt>けんこう</rt></ruby>のために、エレベーターを<ruby>使<rt>つか</rt></ruby>わずに<ruby>階段<rt>かいだん</rt></ruby>を<ruby>上<rt>あ</rt></ruby>がることにしています。<ruby>私<rt>わたし</rt></ruby>のオフィスは<ruby>八階<rt>はっかい</rt></ruby>なので、<ruby>少<rt>すこ</rt></ruby>し<ruby>大変<rt>たいへん</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 72
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>歯<rt>は</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>くなったので、<ruby>歯医者<rt>はいしゃ</rt></ruby>に<ruby>行<rt>い</rt></ruby>きました。<ruby>虫歯<rt>むしば</rt></ruby>ができていたようです。<ruby>来週<rt>らいしゅう</rt></ruby>また<ruby>治療<rt>ちりょう</rt></ruby>に<ruby>行<rt>い</rt></ruby>かなければなりません。
+--------------------------------------------------------------------------------
+ID: 73
+Passage: <ruby>すみません、この<ruby>荷物<rt>にもつ</rt></ruby>を<ruby>送<rt>おく</rt></ruby>りたいんですが、<ruby>一番<rt>いちばん</rt></ruby><ruby>安<rt>やす</rt></ruby>い<ruby>方法<rt>ほうほう</rt></ruby>はどれですか。」「それなら、<ruby>船便<rt>ふなびん</rt></ruby>が<ruby>一番<rt>いちばん</rt></ruby><ruby>安<rt>やす</rt></ruby>いですが、<ruby>届<rt>とど</rt></ruby>くまでに<ruby>一<rt>いっ</rt></ruby>か<ruby>月<rt>げつ</rt></ruby>ぐらいかかりますよ。」
+--------------------------------------------------------------------------------
+ID: 74
+Passage: この<ruby>公園<rt>こうえん</rt></ruby>では、バーベキューをしてもいいですが、ゴミは<ruby>必<rt>かなら</rt></ruby>ず<ruby>持<rt>も</rt></ruby>って<ruby>帰<rt>かえ</rt></ruby>らなければなりません。ルールを<ruby>守<rt>まも</rt></ruby>って、みんなで<ruby>気持<rt>きも</rt></ruby>ちよく<ruby>使<rt>つか</rt></ruby>いましょう。
+--------------------------------------------------------------------------------
+ID: 75
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>犬<rt>いぬ</rt></ruby>アレルギーなので、<ruby>友達<rt>ともだち</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>に<ruby>遊<rt>あそ</rt></ruby>びに<ruby>行<rt>い</rt></ruby>けません。その<ruby>友達<rt>ともだち</rt></ruby>は<ruby>犬<rt>いぬ</rt></ruby>を<ruby>三匹<rt>さんびき</rt></ruby>も<ruby>飼<rt>か</rt></ruby>っているからです。
+--------------------------------------------------------------------------------
+ID: 76
+Passage: この<ruby>薬<rt>くすり</rt></ruby>は<ruby>一日<rt>いちにち</rt></ruby><ruby>三回<rt>さんかい</rt></ruby>、<ruby>食事<rt>しょくじ</rt></ruby>の<ruby>後<rt>あと</rt></ruby>に<ruby>飲<rt>の</rt></ruby>んでください。<ruby>眠<rt>ねむ</rt></ruby>くなることがあるので、<ruby>運転<rt>うんてん</rt></ruby>はしないようにしてください。
+--------------------------------------------------------------------------------
+ID: 77
+Passage: <ruby>田中<rt>たなか</rt></ruby>さんは<ruby>三<rt>さん</rt></ruby>か<ruby>月<rt>げつ</rt></ruby><ruby>前<rt>まえ</rt></ruby>に<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>辞<rt>や</rt></ruby>めて、<ruby>自分<rt>じぶん</rt></ruby>でレストランを<ruby>始<rt>はじ</rt></ruby>めました。<ruby>今<rt>いま</rt></ruby>は<ruby>大変<rt>たいへん</rt></ruby>そうですが、とても<ruby>楽<rt>たの</rt></ruby>しそうです。
+--------------------------------------------------------------------------------
+ID: 78
+Passage: <ruby>息子<rt>むすこ</rt></ruby>は<ruby>来年<rt>らいねん</rt></ruby>から<ruby>小学生<rt>しょうがくせい</rt></ruby>になります。それで、<ruby>勉強<rt>べんきょう</rt></ruby>のための<ruby>机<rt>つくえ</rt></ruby>を<ruby>買<rt>か</rt></ruby>ってあげるつもりです。
+--------------------------------------------------------------------------------
+ID: 79
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>午後<rt>ごご</rt></ruby>、<ruby>市役所<rt>しやくしょ</rt></ruby>へ<ruby>行<rt>い</rt></ruby>かなければなりません。<ruby>住所<rt>じゅうしょ</rt></ruby>を<ruby>変<rt>か</rt></ruby>えたので、<ruby>手続<rt>てつづ</rt></ruby>きが<ruby>必要<rt>ひつよう</rt></ruby>なのです。
+--------------------------------------------------------------------------------
+ID: 80
+Passage: <ruby>山田<rt>やまだ</rt></ruby>さんは<ruby>甘<rt>あま</rt></ruby>いものが<ruby>食<rt>た</rt></ruby>べられないそうです。だから、お<ruby>土産<rt>みやげ</rt></ruby>はケーキじゃない<ruby>方<rt>ほう</rt></ruby>がいいでしょう。
+--------------------------------------------------------------------------------
+ID: 81
+Passage: この<ruby>美術館<rt>びじゅつかん</rt></ruby>は<ruby>写真<rt>しゃしん</rt></ruby>を<ruby>撮<rt>と</rt></ruby>ってもかまいませんが、フラッシュを<ruby>使<rt>つか</rt></ruby>ってはいけません。<ruby>他<rt>ほか</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>の<ruby>迷惑<rt>めいわく</rt></ruby>になりますから。
+--------------------------------------------------------------------------------
+ID: 82
+Passage: すみません、<ruby>気分<rt>きぶん</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いので、<ruby>少<rt>すこ</rt></ruby>し<ruby>休<rt>やす</rt></ruby>ませてもらえませんか。<ruby>頭<rt>あたま</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>くて、<ruby>立<rt>た</rt></ruby>っているのがつらいです。
+--------------------------------------------------------------------------------
+ID: 83
+Passage: <ruby>木村<rt>きむら</rt></ruby>さんは<ruby>去年<rt>きょねん</rt></ruby>から<ruby>日本語<rt>にほんご</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>し<ruby>始<rt>はじ</rt></ruby>めたのに、もう<ruby>新聞<rt>しんぶん</rt></ruby>が<ruby>読<rt>よ</rt></ruby>めるそうです。<ruby>本当<rt>ほんとう</rt></ruby>にすごいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 84
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>は<ruby>古<rt>ふる</rt></ruby>くて<ruby>狭<rt>せま</rt></ruby>いですが、<ruby>駅<rt>えき</rt></ruby>に<ruby>近<rt>ちか</rt></ruby>くて<ruby>便利<rt>べんり</rt></ruby>なので<ruby>気<rt>き</rt></ruby>に<ruby>入<rt>い</rt></ruby>っています。<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>す<ruby>予定<rt>よてい</rt></ruby>はありません。
+--------------------------------------------------------------------------------
+ID: 85
+Passage: このボタンを<ruby>押<rt>お</rt></ruby>すと、おつりが<ruby>出<rt>で</rt></ruby>ます。お<ruby>金<rt>かね</rt></ruby>を<ruby>入<rt>い</rt></ruby>れすぎた<ruby>場合<rt>ばあい</rt></ruby>は、このボタンを<ruby>押<rt>お</rt></ruby>してください。
+--------------------------------------------------------------------------------
+ID: 86
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>夢<rt>ゆめ</rt></ruby>は、<ruby>世界中<rt>せかいじゅう</rt></ruby>を<ruby>旅行<rt>りょこう</rt></ruby>することです。そのために、<ruby>今<rt>いま</rt></ruby>からお<ruby>金<rt>かね</rt></ruby>を<ruby>貯<rt>た</rt></ruby>めたり、<ruby>色々<rt>いろいろ</rt></ruby>な<ruby>国<rt>くに</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>を<ruby>勉強<rt>べんきょう</rt></ruby>したりしています。
+--------------------------------------------------------------------------------
+ID: 87
+Passage: このパソコンは<ruby>軽<rt>かる</rt></ruby>くて<ruby>持<rt>も</rt></ruby>ち<ruby>運<rt>はこ</rt></ruby>びやすいですが、バッテリーの<ruby>時間<rt>じかん</rt></ruby>が<ruby>短<rt>みじか</rt></ruby>いのが<ruby>問題<rt>もんだい</rt></ruby>です。<ruby>長<rt>なが</rt></ruby>い<ruby>時間<rt>じかん</rt></ruby><ruby>外<rt>そと</rt></ruby>で<ruby>使<rt>つか</rt></ruby>うのは<ruby>難<rt>むずか</rt></ruby>しいかもしれません。
+--------------------------------------------------------------------------------
+ID: 88
+Passage: レポートを<ruby>書<rt>か</rt></ruby>くために、<ruby>図書館<rt>としょかん</rt></ruby>で<ruby>資料<rt>しりょう</rt></ruby>を<ruby>探<rt>さが</rt></ruby>しました。<ruby>五冊<rt>ごさつ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>を<ruby>借<rt>か</rt></ruby>りましたが、<ruby>全部<rt>ぜんぶ</rt></ruby><ruby>読<rt>よ</rt></ruby>めるか<ruby>心配<rt>しんぱい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 89
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>運動不足<rt>うんどうぶそく</rt></ruby>だと<ruby>感<rt>かん</rt></ruby>じたので、<ruby>一駅<rt>ひとえき</rt></ruby><ruby>前<rt>まえ</rt></ruby>に<ruby>降<rt>お</rt></ruby>りて<ruby>歩<rt>ある</rt></ruby>いて<ruby>帰<rt>かえ</rt></ruby>るようにしました。<ruby>三十分<rt>さんじゅっぷん</rt></ruby>ぐらいですが、いい<ruby>運動<rt>うんどう</rt></ruby>になります。
+--------------------------------------------------------------------------------
+ID: 90
+Passage: このアパートはペットを<ruby>飼<rt>か</rt></ruby>ってはいけないことになっています。もし<ruby>飼<rt>か</rt></ruby>いたいなら、<ruby>大家<rt>おおや</rt></ruby>さんに<ruby>相談<rt>そうだん</rt></ruby>しなければなりません。
+--------------------------------------------------------------------------------
+ID: 91
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>試合<rt>しあい</rt></ruby>に<ruby>勝<rt>か</rt></ruby>ったら、<ruby>全国<rt>ぜんこく</rt></ruby><ruby>大会<rt>たいかい</rt></ruby>に<ruby>出<rt>で</rt></ruby>られます。だから、チームみんなで<ruby>一生懸命<rt>いっしょうけんめい</rt></ruby><ruby>練習<rt>れんしゅう</rt></ruby>しています。
+--------------------------------------------------------------------------------
+ID: 92
+Passage: <ruby>今度<rt>こんど</rt></ruby>の<ruby>旅行<rt>りょこう</rt></ruby>は、<ruby>飛行機<rt>ひこうき</rt></ruby>ではなく<ruby>新幹線<rt>しんかんせん</rt></ruby>で<ruby>行<rt>い</rt></ruby>くことにしました。その<ruby>方<rt>ほう</rt></ruby>が<ruby>景色<rt>けしき</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しめるからです。
+--------------------------------------------------------------------------------
+ID: 93
+Passage: この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>給料<rt>きゅうりょう</rt></ruby>はいいですが、<ruby>残業<rt>ざんぎょう</rt></ruby>が<ruby>多<rt>おお</rt></ruby>くて<ruby>大変<rt>たいへん</rt></ruby>です。<ruby>体<rt>からだ</rt></ruby>を<ruby>壊<rt>こわ</rt></ruby>さないか<ruby>心配<rt>しんぱい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 94
+Passage: お<ruby>客様<rt>きゃくさま</rt></ruby>、<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありませんが、ただいま<ruby>満席<rt>まんせき</rt></ruby>です。<ruby>席<rt>せき</rt></ruby>が<ruby>空<rt>あ</rt></ruby>くまで、あちらでお<ruby>待<rt>ま</rt></ruby>ちいただけますか。
+--------------------------------------------------------------------------------
+ID: 95
+Passage: この<ruby>本<rt>ほん</rt></ruby>は<ruby>面白<rt>おもしろ</rt></ruby>くて、<ruby>一日<rt>いちにち</rt></ruby>で<ruby>読<rt>よ</rt></ruby>んでしまいました。<ruby>友達<rt>ともだち</rt></ruby>にも<ruby>勧<rt>すす</rt></ruby>めてみようと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 96
+Passage: <ruby>佐藤<rt>さとう</rt></ruby>さんは<ruby>英語<rt>えいご</rt></ruby>だけではなく、中国語も<ruby>話<rt>はな</rt></ruby>せるそうです。<ruby>来月<rt>らいげつ</rt></ruby>から<ruby>中国<rt>ちゅうごく</rt></ruby>へ<ruby>出張<rt>しゅっちょう</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 97
+Passage: <ruby>危険<rt>きけん</rt></ruby>ですから、<ruby>黄色<rt>きいろ</rt></ruby>い<ruby>線<rt>せん</rt></ruby>の<ruby>内側<rt>うちがわ</rt></ruby>までお<ruby>下<rt>さ</rt></ruby>がりください。<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>通過<rt>つうか</rt></ruby>します。
+--------------------------------------------------------------------------------
+ID: 98
+Passage: この<ruby>洗濯機<rt>せんたくき</rt></ruby>は<ruby>操作<rt>そうさ</rt></ruby>が<ruby>簡単<rt>かんたん</rt></ruby>で、<ruby>誰<rt>だれ</rt></ruby>でも<ruby>使<rt>つか</rt></ruby>えます。<ruby>音<rt>おと</rt></ruby>も<ruby>静<rt>しず</rt></ruby>かなので、<ruby>夜<rt>よる</rt></ruby>でも<ruby>洗濯<rt>せんたく</rt></ruby>できますよ。
+--------------------------------------------------------------------------------
+ID: 99
+Passage: <ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>りそうだから、<ruby>傘<rt>かさ</rt></ruby>を<ruby>持<rt>も</rt></ruby>って<ruby>行<rt>い</rt></ruby>った<ruby>方<rt>ほう</rt></ruby>がいいよ。」「うーん、でも<ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>では<ruby>一日<rt>いちにち</rt></ruby><ruby>晴<rt>は</rt></ruby>れだって。」
+--------------------------------------------------------------------------------
+ID: 100
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>朝<rt>あさ</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べないと、<ruby>力<rt>ちから</rt></ruby>が<ruby>出<rt>で</rt></ruby>ません。<ruby>一日<rt>いちにち</rt></ruby>の<ruby>元気<rt>げんき</rt></ruby>のために、<ruby>朝<rt>あさ</rt></ruby>ごはんはしっかり<ruby>食<rt>た</rt></ruby>べるようにしています。
+--------------------------------------------------------------------------------
+ID: 101
+Passage: この<ruby>仕事<rt>しごと</rt></ruby>は、パソコンが<ruby>使<rt>つか</rt></ruby>えなくても<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>ですが、<ruby>車<rt>くるま</rt></ruby>の<ruby>運転<rt>うんてん</rt></ruby>ができないと<ruby>困<rt>こま</rt></ruby>ります。
+--------------------------------------------------------------------------------
+ID: 102
+Passage: <ruby>山本<rt>やまもと</rt></ruby>さんは<ruby>病気<rt>びょうき</rt></ruby>で<ruby>入院<rt>にゅういん</rt></ruby>したそうです。それで、<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>出張<rt>しゅっちょう</rt></ruby>は<ruby>私<rt>わたし</rt></ruby>が<ruby>代<rt>か</rt></ruby>わりに<ruby>行<rt>い</rt></ruby>くことになりました。
+--------------------------------------------------------------------------------
+ID: 103
+Passage: この<ruby>地域<rt>ちいき</rt></ruby>では、ゴミを<ruby>出<rt>だ</rt></ruby>す<ruby>曜日<rt>ようび</rt></ruby>が<ruby>決<rt>き</rt></ruby>まっています。<ruby>燃<rt>も</rt></ruby>えるゴミは<ruby>月曜日<rt>げつようび</rt></ruby>と<ruby>木曜日<rt>もくようび</rt></ruby>です。それ<ruby>以外<rt>いがい</rt></ruby>の<ruby>日<rt>ひ</rt></ruby>には<ruby>出<rt>だ</rt></ruby>さないでください。
+--------------------------------------------------------------------------------
+ID: 104
+Passage: すみません、<ruby>道<rt>みち</rt></ruby>に<ruby>迷<rt>まよ</rt></ruby>ってしまったのですが、<ruby>駅<rt>えき</rt></ruby>へはどちらに<ruby>行<rt>い</rt></ruby>けばいいですか。この<ruby>地図<rt>ちず</rt></ruby>を<ruby>見<rt>み</rt></ruby>てもよく<ruby>分<rt>わ</rt></ruby>からなくて。
+--------------------------------------------------------------------------------
+ID: 105
+Passage: この<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>て、<ruby>家族<rt>かぞく</rt></ruby>の<ruby>大切<rt>たいせつ</rt></ruby>さを<ruby>改<rt>あらた</rt></ruby>めて<ruby>感<rt>かん</rt></ruby>じました。<ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>実家<rt>じっか</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>って、<ruby>両親<rt>りょうしん</rt></ruby>に<ruby>会<rt>あ</rt></ruby>おうと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 106
+Passage: <ruby>留学<rt>りゅうがく</rt></ruby><ruby>生活<rt>せいかつ</rt></ruby>で<ruby>一番<rt>いちばん</rt></ruby><ruby>大変<rt>たいへん</rt></ruby>だったのは、<ruby>言葉<rt>ことば</rt></ruby>の<ruby>壁<rt>かべ</rt></ruby>でした。<ruby>言<rt>い</rt></ruby>いたいことが<ruby>うまく<ruby>伝<rt>つた</rt></ruby>わらなくて、<ruby>何<rt>なん</rt></ruby><ruby>度<rt>ど</rt></ruby>も<ruby>悔<rt>くや</rt></ruby>しい<ruby>思<rt>おも</rt></ruby>いをしました。
+--------------------------------------------------------------------------------
+ID: 107
+Passage: <ruby>最近<rt>さいきん</rt></ruby>のスマートフォンは<ruby>色々<rt>いろいろ</rt></ruby>なことができますが、<ruby>機能<rt>きのう</rt></ruby>が<ruby>多<rt>おお</rt></ruby>すぎて、お<ruby>年寄<rt>としよ</rt></ruby>りには<ruby>使<rt>つか</rt></ruby>いにくいかもしれません。
+--------------------------------------------------------------------------------
+ID: 108
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>までに<ruby>部長<rt>ぶちょう</rt></ruby>にメールを<ruby>送<rt>おく</rt></ruby>らなければならないのに、パソコンが<ruby>壊<rt>こわ</rt></ruby>れてしまいました。どうしよう。
+--------------------------------------------------------------------------------
+ID: 109
+Passage: セールだったので、<ruby>予定<rt>よてい</rt></ruby>になかった<ruby>服<rt>ふく</rt></ruby>まで<ruby>買<rt>か</rt></ruby>ってしまいました。<ruby>安<rt>やす</rt></ruby>いからと<ruby>言<rt>い</rt></ruby>って、お<ruby>金<rt>かね</rt></ruby>を<ruby>使<rt>つか</rt></ruby>いすぎてしまいました。
+--------------------------------------------------------------------------------
+ID: 110
+Passage: お<ruby>風呂<rt>ふろ</rt></ruby>の<ruby>掃除<rt>そうじ</rt></ruby>は<ruby>私<rt>わたし</rt></ruby>の<ruby>担当<rt>たんとう</rt></ruby>です。<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>土曜日<rt>どようび</rt></ruby>の<ruby>午前中<rt>ごぜんちゅう</rt></ruby>にすることに<ruby>決<rt>き</rt></ruby>めています。
+--------------------------------------------------------------------------------
+ID: 111
+Passage: この<ruby>問題<rt>もんだい</rt></ruby>の<ruby>答<rt>こた</rt></ruby>えがどうしても<ruby>分<rt>わ</rt></ruby>からないので、<ruby>先生<rt>せんせい</rt></ruby>に<ruby>質問<rt>しつもん</rt></ruby>しに<ruby>行<rt>い</rt></ruby>こうと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 112
+Passage: この<ruby>夏<rt>なつ</rt></ruby>、<ruby>海<rt>うみ</rt></ruby>に<ruby>行<rt>い</rt></ruby>くか<ruby>山<rt>やま</rt></ruby>に<ruby>行<rt>い</rt></ruby>くか、まだ<ruby>決<rt>き</rt></ruby>めていません。どちらも<ruby>行<rt>い</rt></ruby>きたいので<ruby>迷<rt>まよ</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 113
+Passage: <ruby>私<rt>わたし</rt></ruby>が<ruby>住<rt>す</rt></ruby>んでいるマンションは、<ruby>駅<rt>えき</rt></ruby>から<ruby>遠<rt>とお</rt></ruby>いのが<ruby>不便<rt>ふべん</rt></ruby>ですが、<ruby>周<rt>まわ</rt></ruby>りが<ruby>静<rt>しず</rt></ruby>かなので、<ruby>住<rt>す</rt></ruby>みやすいです。
+--------------------------------------------------------------------------------
+ID: 114
+Passage: プレゼンテーションの<ruby>準備<rt>じゅんび</rt></ruby>は<ruby>終<rt>お</rt></ruby>わりましたが、うまく<ruby>発表<rt>はっぴょう</rt></ruby>できるかどうか、とても<ruby>緊張<rt>きんちょう</rt></ruby>しています。
+--------------------------------------------------------------------------------
+ID: 115
+Passage: <ruby>鈴木<rt>すずき</rt></ruby>さんは<ruby>三年間<rt>さんねんかん</rt></ruby>、この<ruby>会社<rt>かいしゃ</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>いた<ruby>後<rt>あと</rt></ruby>、<ruby>国<rt>くに</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>るそうです。<ruby>寂<rt>さび</rt></ruby>しくなりますね。
+--------------------------------------------------------------------------------
+ID: 116
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>雪<rt>ゆき</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るそうなので、<ruby>電車<rt>でんしゃ</rt></ruby>が<ruby>止<rt>と</rt></ruby>まるかもしれません。<ruby>早<rt>はや</rt></ruby>めに<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>た<ruby>方<rt>ほう</rt></ruby>がいいでしょう。
+--------------------------------------------------------------------------------
+ID: 117
+Passage: このレストランのランチは、パンとごはん、どちらか<ruby>選<rt>えら</rt></ruby>べます。おかわりも<ruby>自由<rt>じゆう</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 118
+Passage: この<ruby>傘<rt>かさ</rt></ruby>は<ruby>私<rt>わたし</rt></ruby>のではありません。<ruby>私<rt>わたし</rt></ruby>のは<ruby>青<rt>あお</rt></ruby>くて、もっと<ruby>大<rt>おお</rt></ruby>きいはずです。<ruby>誰<rt>だれ</rt></ruby>かが<ruby>間違<rt>まちが</rt></ruby>えたのでしょう。
+--------------------------------------------------------------------------------
+ID: 119
+Passage: <ruby>風邪<rt>かぜ</rt></ruby>がなかなか<ruby>治<rt>なお</rt></ruby>らないので、<ruby>今日<rt>きょう</rt></ruby>は<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>休<rt>やす</rt></ruby>んで<ruby>病院<rt>びょういん</rt></ruby>に<ruby>行<rt>い</rt></ruby>くことにしました。<ruby>無理<rt>むり</rt></ruby>はしない<ruby>方<rt>ほう</rt></ruby>がいいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 120
+Passage: もうすぐ<ruby>父<rt>ちち</rt></ruby>の<ruby>誕生日<rt>たんじょうび</rt></ruby>なので、<ruby>何<rt>なに</rt></ruby>をプレゼントしようか<ruby>悩<rt>なや</rt></ruby>んでいます。<ruby>父<rt>ちち</rt></ruby>は<ruby>何<rt>なに</rt></ruby>もいらないと<ruby>言<rt>い</rt></ruby>いますが、<ruby>何<rt>なに</rt></ruby>か<ruby>喜<rt>よろこ</rt></ruby>ぶものをあげたいです。
+--------------------------------------------------------------------------------
+ID: 121
+Passage: この<ruby>町<rt>まち</rt></ruby>は<ruby>バス<rt>ばす</rt></ruby>の<ruby>本数<rt>ほんすう</rt></ruby>が<ruby>少<rt>すく</rt></ruby>なくて<ruby>不便<rt>ふべん</rt></ruby>なので、<ruby>車<rt>くるま</rt></ruby>がないと<ruby>生活<rt>せいかつ</rt></ruby>しにくいです。
+--------------------------------------------------------------------------------
+ID: 122
+Passage: <ruby>私<rt>わたし</rt></ruby>がこの<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>選<rt>えら</rt></ruby>んだ<ruby>理由<rt>りゆう</rt></ruby>は、<ruby>海外<rt>かいがい</rt></ruby>で<ruby>働<rt>はたら</rt></ruby>くチャンスがあるからです。<ruby>将来<rt>しょうらい</rt></ruby>は<ruby>外国<rt>がいこく</rt></ruby>で<ruby>仕事<rt>しごと</rt></ruby>をしてみたいです。
+--------------------------------------------------------------------------------
+ID: 123
+Passage: <ruby>部長<rt>ぶちょう</rt></ruby>に<ruby>食事<rt>しょくじ</rt></ruby>に<ruby>誘<rt>さそ</rt></ruby>われたが、<ruby>今夜<rt>こんや</rt></ruby>は<ruby>予定<rt>よてい</rt></ruby>があるので<ruby>断<rt>ことわ</rt></ruby>りました。<ruby>断<rt>ことわ</rt></ruby>るのは<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>なかったです。
+--------------------------------------------------------------------------------
+ID: 124
+Passage: すみません、この<ruby>席<rt>せき</rt></ruby>は<ruby>空<rt>あ</rt></ruby>いていますか。」「いいえ、<ruby>友達<rt>ともだち</rt></ruby>が<ruby>使<rt>つか</rt></ruby>っています。<ruby>今<rt>いま</rt></ruby>トイレに<ruby>行<rt>い</rt></ruby>っています。」
+--------------------------------------------------------------------------------
+ID: 125
+Passage: <ruby>昨日<rt>きのう</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>、<ruby>遅<rt>おそ</rt></ruby>くまでテレビを<ruby>見<rt>み</rt></ruby>ていたので、<ruby>今日<rt>きょう</rt></ruby>はとても<ruby>眠<rt>ねむ</rt></ruby>いです。<ruby>仕事<rt>しごと</rt></ruby>に<ruby>集中<rt>しゅうちゅう</rt></ruby>できません。
+--------------------------------------------------------------------------------
+ID: 126
+Passage: この<ruby>川<rt>かわ</rt></ruby>で<ruby>泳<rt>およ</rt></ruby>いではいけません。<ruby>見<rt>み</rt></ruby>た<ruby>目<rt>め</rt></ruby>はきれいですが、<ruby>流<rt>なが</rt></ruby>れが<ruby>速<rt>はや</rt></ruby>くて<ruby>危険<rt>きけん</rt></ruby>だからです。
+--------------------------------------------------------------------------------
+ID: 127
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>趣味<rt>しゅみ</rt></ruby>は、<ruby>古<rt>ふる</rt></ruby>い<ruby>切手<rt>きって</rt></ruby>を<ruby>集<rt>あつ</rt></ruby>めることです。<ruby>今<rt>いま</rt></ruby>までに<ruby>五百枚<rt>ごひゃくまい</rt></ruby><ruby>以上<rt>いじょう</rt></ruby><ruby>集<rt>あつ</rt></ruby>めました。
+--------------------------------------------------------------------------------
+ID: 128
+Passage: この<ruby>展覧会<rt>てんらんかい</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>日曜日<rt>にちようび</rt></ruby>までです。まだ<ruby>見<rt>み</rt></ruby>ていない<ruby>人<rt>ひと</rt></ruby>は、<ruby>急<rt>いそ</rt></ruby>いだ<ruby>方<rt>ほう</rt></ruby>がいいですよ。
+--------------------------------------------------------------------------------
+ID: 129
+Passage: <ruby>エアコン<rt>えあこん</rt></ruby>をつけたままで<ruby>寝<rt>ね</rt></ruby>ると、<ruby>風邪<rt>かぜ</rt></ruby>をひくかもしれません。タイマーをセットして<ruby>寝<rt>ね</rt></ruby>るようにしましょう。
+--------------------------------------------------------------------------------
+ID: 130
+Passage: <ruby>彼<rt>かれ</rt></ruby>は<ruby>口<rt>くち</rt></ruby>が<ruby>堅<rt>かた</rt></ruby>いので、どんな<ruby>秘密<rt>ひみつ</rt></ruby>でも<ruby>安心<rt>あんしん</rt></ruby>して<ruby>話<rt>はな</rt></ruby>せます。<ruby>決<rt>けっ</rt></ruby>して<ruby>他<rt>ほか</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>には<ruby>言<rt>い</rt></ruby>いません。
+--------------------------------------------------------------------------------
+ID: 131
+Passage: この<ruby>本<rt>ほん</rt></ruby>を<ruby>返<rt>かえ</rt></ruby>すのを<ruby>忘<rt>わす</rt></ruby>れないように、かばんの<ruby>中<rt>なか</rt></ruby>に<ruby>入<rt>い</rt></ruby>れておきました。
+--------------------------------------------------------------------------------
+ID: 132
+Passage: <ruby>道<rt>みち</rt></ruby>が<ruby>渋滞<rt>じゅうたい</rt></ruby>していたせいで、<ruby>約束<rt>やくそく</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>に<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>いそうにありません。<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ないです。
+--------------------------------------------------------------------------------
+ID: 133
+Passage: すみませんが、この<ruby>書類<rt>しょるい</rt></ruby>のコピーをお<ruby>願<rt>ねが</rt></ruby>いできますか。<ruby>一部<rt>いちぶ</rt></ruby>だけでいいです。
+--------------------------------------------------------------------------------
+ID: 134
+Passage: <ruby>今度<rt>こんど</rt></ruby>の<ruby>日曜日<rt>にちようび</rt></ruby>、<ruby>部屋<rt>へや</rt></ruby>の<ruby>掃除<rt>そうじ</rt></ruby>をするつもりです。ずっと<ruby>忙<rt>いそが</rt></ruby>しくてできなかったので、<ruby>部屋<rt>へや</rt></ruby>が<ruby>汚<rt>きたな</rt></ruby>いです。
+--------------------------------------------------------------------------------
+ID: 135
+Passage: このレストランは、<ruby>料理<rt>りょうり</rt></ruby>の<ruby>味<rt>あじ</rt></ruby>はもちろん、サービスもすばらしいです。<ruby>店員<rt>てんいん</rt></ruby>さんがみんな<ruby>親切<rt>しんせつ</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 136
+Passage: この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>明日<rt>あした</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>までに<ruby>終<rt>お</rt></ruby>わらせなければならない。<ruby>今日中<rt>きょうじゅう</rt></ruby>に<ruby>頑張<rt>がんば</rt></ruby>ろう。
+--------------------------------------------------------------------------------
+ID: 137
+Passage: すみません、<ruby>気分<rt>きぶん</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いので<ruby>早退<rt>そうたい</rt></ruby>してもよろしいでしょうか。<ruby>病院<rt>びょういん</rt></ruby>に<ruby>寄<rt>よ</rt></ruby>ってから<ruby>帰<rt>かえ</rt></ruby>ります。
+--------------------------------------------------------------------------------
+ID: 138
+Passage: <ruby>息子<rt>むすこ</rt></ruby>はサッカー<ruby>選手<rt>せんしゅ</rt></ruby>になるのが<ruby>夢<rt>ゆめ</rt></ruby>で、<ruby>毎日<rt>まいにち</rt></ruby><ruby>練習<rt>れんしゅう</rt></ruby>に<ruby>行<rt>い</rt></ruby>っています。けがをしないか<ruby>心配<rt>しんぱい</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 139
+Passage: この<ruby>公園<rt>こうえん</rt></ruby>は、<ruby>犬<rt>いぬ</rt></ruby>の<ruby>散歩<rt>さんぽ</rt></ruby>はいいですが、<ruby>必<rt>かなら</rt></ruby>ずリードをつけてください。
+--------------------------------------------------------------------------------
+ID: 140
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>朝<rt>あさ</rt></ruby>から<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>るそうなので、<ruby>洗濯<rt>せんたく</rt></ruby>は<ruby>今日中<rt>きょうじゅう</rt></ruby>にした<ruby>方<rt>ほう</rt></ruby>がいいですよ。
+--------------------------------------------------------------------------------
+ID: 141
+Passage: この<ruby>辞書<rt>じしょ</rt></ruby>は、<ruby>意味<rt>いみ</rt></ruby>だけではなくて、<ruby>使<rt>つか</rt></ruby>い<ruby>方<rt>かた</rt></ruby>の<ruby>例<rt>れい</rt></ruby>もたくさん<ruby>載<rt>の</rt></ruby>っているので、とても<ruby>役<rt>やく</rt></ruby>に<ruby>立<rt>た</rt></ruby>ちます。
+--------------------------------------------------------------------------------
+ID: 142
+Passage: この<ruby>料理<rt>りょうり</rt></ruby>は<ruby>簡単<rt>かんたん</rt></ruby>そうに<ruby>見<rt>み</rt></ruby>えますが、<ruby>実際<rt>じっさい</rt></ruby>に<ruby>作<rt>つく</rt></ruby>ってみると<ruby>意外<rt>いがい</rt></ruby>と<ruby>難<rt>むずか</rt></ruby>しいんですよ。
+--------------------------------------------------------------------------------
+ID: 143
+Passage: <ruby>携帯<rt>けいたい</rt></ruby><ruby>電話<rt>でんわ</rt></ruby>の<ruby>料金<rt>りょうきん</rt></ruby>を<ruby>安<rt>やす</rt></ruby>くするために、<ruby>電話<rt>でんわ</rt></ruby>する<ruby>時間<rt>じかん</rt></ruby>を<ruby>短<rt>みじか</rt></ruby>くしたり、あまり<ruby>使<rt>つか</rt></ruby>わないサービスをやめたりしています。
+--------------------------------------------------------------------------------
+ID: 144
+Passage: <ruby>彼<rt>かれ</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>はいつも<ruby>長<rt>なが</rt></ruby>くて、<ruby>何<rt>なに</rt></ruby>が<ruby>言<rt>い</rt></ruby>いたいのかよくわかりません。
+--------------------------------------------------------------------------------
+ID: 145
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>面接<rt>めんせつ</rt></ruby>があるので、<ruby>今日<rt>きょう</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>寝<rt>ね</rt></ruby>ようと<ruby>思<rt>おも</rt></ruby>います。<ruby>遅刻<rt>ちこく</rt></ruby>しないように、<ruby>朝<rt>あさ</rt></ruby>は<ruby>早<rt>はや</rt></ruby>めに<ruby>起<rt>お</rt></ruby>きるつもりです。
+--------------------------------------------------------------------------------
+ID: 146
+Passage: この<ruby>映画<rt>えいが</rt></ruby>は<ruby>人気<rt>にんき</rt></ruby>があるので、<ruby>週末<rt>しゅうまつ</rt></ruby>はチケットが<ruby>買<rt>か</rt></ruby>えないかもしれません。<ruby>平日<rt>へいじつ</rt></ruby>に<ruby>見<rt>み</rt></ruby>に<ruby>行<rt>い</rt></ruby>った<ruby>方<rt>ほう</rt></ruby>がいいですよ。
+--------------------------------------------------------------------------------
+ID: 147
+Passage: <ruby>来月<rt>らいげつ</rt></ruby>、<ruby>会社<rt>かいしゃ</rt></ruby>の<ruby>旅行<rt>りょこう</rt></ruby>で<ruby>温泉<rt>おんせん</rt></ruby>に<ruby>行<rt>い</rt></ruby>くことになりました。<ruby>私<rt>わたし</rt></ruby>は<ruby>幹事<rt>かんじ</rt></ruby>なので、ホテルの<ruby>予約<rt>よやく</rt></ruby>などをしなければなりません。
+--------------------------------------------------------------------------------
+ID: 148
+Passage: <ruby>娘<rt>むすめ</rt></ruby>は<ruby>ピアノ<rt>ぴあの</rt></ruby>を<ruby>習<rt>なら</rt></ruby>っていますが、<ruby>最近<rt>さいきん</rt></ruby>あまり<ruby>練習<rt>れんしゅう</rt></ruby>しないので、<ruby>上手<rt>じょうず</rt></ruby>になりません。
+--------------------------------------------------------------------------------
+ID: 149
+Passage: この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>経験<rt>けいけん</rt></ruby>がなくても<ruby>応募<rt>おうぼ</rt></ruby>できます。やる<ruby>気<rt>き</rt></ruby>がある<ruby>方<rt>かた</rt></ruby>なら、<ruby>誰<rt>だれ</rt></ruby>でも<ruby>歓迎<rt>かんげい</rt></ruby>します。
+--------------------------------------------------------------------------------
+ID: 150
+Passage: <ruby>昨日<rt>きのう</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>は<ruby>すごい<rt>すごい</rt></ruby><ruby>雷<rt>かみなり</rt></ruby>でしたね。<ruby>音<rt>おと</rt></ruby>が<ruby>大<rt>おお</rt></ruby>きくて、なかなか<ruby>寝<rt>ね</rt></ruby>られませんでした。
+--------------------------------------------------------------------------------
+ID: 151
+Passage: <ruby>日本<rt>にほん</rt></ruby>の<ruby>夏<rt>なつ</rt></ruby>は<ruby>暑<rt>あつ</rt></ruby>いだけでなく、<ruby>湿度<rt>しつど</rt></ruby>も<ruby>高<rt>たか</rt></ruby>いので、<ruby>大変<rt>たいへん</rt></ruby>です。<ruby>国<rt>くに</rt></ruby>の<ruby>夏<rt>なつ</rt></ruby>が<ruby>恋<rt>こい</rt></ruby>しくなります。
+--------------------------------------------------------------------------------
+ID: 152
+Passage: この<ruby>資料<rt>しりょう</rt></ruby>は<ruby>大切<rt>たいせつ</rt></ruby>なので、なくさないように、このファイルに<ruby>入<rt>い</rt></ruby>れておいてください。
+--------------------------------------------------------------------------------
+ID: 153
+Passage: <ruby>彼<rt>かれ</rt></ruby>は<ruby>約束<rt>やくそく</rt></ruby>を<ruby>守<rt>まも</rt></ruby>らないことが<ruby>多<rt>おお</rt></ruby>いので、あまり<ruby>信用<rt>しんよう</rt></ruby>できません。
+--------------------------------------------------------------------------------
+ID: 154
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>の<ruby>場所<rt>ばしょ</rt></ruby>が<ruby>変<rt>か</rt></ruby>わりました。<ruby>新<rt>あたら</rt></ruby>しい<ruby>場所<rt>ばしょ</rt></ruby>はメールで<ruby>連絡<rt>れんらく</rt></ruby>しますので、<ruby>確認<rt>かくにん</rt></ruby>してください。
+--------------------------------------------------------------------------------
+ID: 155
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>目<rt>め</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>くなったような<ruby>気<rt>き</rt></ruby>がします。<ruby>遠<rt>とお</rt></ruby>くのものが<ruby>見<rt>み</rt></ruby>えにくくなりました。<ruby>眼鏡<rt>めがね</rt></ruby>を<ruby>作<rt>つく</rt></ruby>った<ruby>方<rt>ほう</rt></ruby>がいいかもしれません。
+--------------------------------------------------------------------------------
+ID: 156
+Passage: この<ruby>道<rt>みち</rt></ruby>は<ruby>夜<rt>よる</rt></ruby>になると<ruby>暗<rt>くら</rt></ruby>くて<ruby>危<rt>あぶ</rt></ruby>ないので、<ruby>一人<rt>ひとり</rt></ruby>で<ruby>歩<rt>ある</rt></ruby>かない<ruby>方<rt>ほう</rt></ruby>がいいですよ。
+--------------------------------------------------------------------------------
+ID: 157
+Passage: <ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありませんが、<ruby>今日<rt>きょう</rt></ruby>はもう<ruby>予約<rt>よやく</rt></ruby>でいっぱいです。<ruby>明日<rt>あした</rt></ruby>なら、まだ<ruby>空<rt>あ</rt></ruby>きがあります。
+--------------------------------------------------------------------------------
+ID: 158
+Passage: <ruby>山田<rt>やまだ</rt></ruby>さんは<ruby>三十分<rt>さんじゅっぷん</rt></ruby>も<ruby>遅<rt>おく</rt></ruby>れて<ruby>来<rt>き</rt></ruby>ました。<ruby>連絡<rt>れんらく</rt></ruby>もなかったので、みんな<ruby>心配<rt>しんぱい</rt></ruby>しました。
+--------------------------------------------------------------------------------
+ID: 159
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に<ruby>新<rt>あたら</rt></ruby>しいパン<ruby>屋<rt>や</rt></ruby>ができました。<ruby>安<rt>やす</rt></ruby>くて<ruby>美味<rt>おい</rt></ruby>しいと<ruby>評判<rt>ひょうばん</rt></ruby>で、いつも<ruby>行列<rt>ぎょうれつ</rt></ruby>ができています。
+--------------------------------------------------------------------------------
+ID: 160
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>コーヒー<rt>こーひー</rt></ruby>が<ruby>好<rt>す</rt></ruby>きですが、<ruby>飲<rt>の</rt></ruby>みすぎると<ruby>夜<rt>よる</rt></ruby><ruby>眠<rt>ねむ</rt></ruby>れなくなるので、<ruby>一日<rt>いちにち</rt></ruby><ruby>二杯<rt>にはい</rt></ruby>までと<ruby>決<rt>き</rt></ruby>めています。
+--------------------------------------------------------------------------------
+ID: 161
+Passage: この<ruby>美術館<rt>びじゅつかん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>では、<ruby>携帯電話<rt>けいたいでんわ</rt></ruby>で<ruby>話<rt>はな</rt></ruby>したり、<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>を<ruby>食<rt>た</rt></ruby>べたりしてはいけません。
+--------------------------------------------------------------------------------
+ID: 162
+Passage: この<ruby>仕事<rt>しごと</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>が<ruby>締<rt>し</rt></ruby>め<ruby>切<rt>き</rt></ruby>りなので、まだ<ruby>時間<rt>じかん</rt></ruby>があると<ruby>思<rt>おも</rt></ruby>っていたら、<ruby>間<rt>ま</rt></ruby>に<ruby>合<rt>あ</rt></ruby>わなくなりますよ。
+--------------------------------------------------------------------------------
+ID: 163
+Passage: <ruby>彼<rt>かれ</rt></ruby>は<ruby>ギター<rt>ぎたー</rt></ruby>を<ruby>弾<rt>ひ</rt></ruby>くのが<ruby>上手<rt>じょうず</rt></ruby>で、よく<ruby>友達<rt>ともだち</rt></ruby>とバンドを<ruby>組<rt>く</rt></ruby>んで<ruby>演奏<rt>えんそう</rt></ruby>しています。
+--------------------------------------------------------------------------------
+ID: 164
+Passage: <ruby>天気<rt>てんき</rt></ruby><ruby>予報<rt>よほう</rt></ruby>によると、<ruby>午後<rt>ごご</rt></ruby>から<ruby>雨<rt>あめ</rt></ruby>が<ruby>強<rt>つよ</rt></ruby>くなるそうです。<ruby>傘<rt>かさ</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れないようにしましょう。
+--------------------------------------------------------------------------------
+ID: 165
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>国<rt>くに</rt></ruby>では、<ruby>食事<rt>しょくじ</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に「いただきます」と<ruby>言<rt>い</rt></ruby>う<ruby>習慣<rt>しゅうかん</rt></ruby>はありません。でも、<ruby>日本<rt>にほん</rt></ruby>に<ruby>来<rt>き</rt></ruby>てからは<ruby>言<rt>い</rt></ruby>うようになりました。
+--------------------------------------------------------------------------------
+ID: 166
+Passage: <ruby>駅<rt>えき</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くの<ruby>駐車場<rt>ちゅうしゃじょう</rt></ruby>は<ruby>料金<rt>りょうきん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>いので、<ruby>少<rt>すこ</rt></ruby>し<ruby>歩<rt>ある</rt></ruby>いても<ruby>安<rt>やす</rt></ruby>いところに<ruby>止<rt>と</rt></ruby>めましょう。
+--------------------------------------------------------------------------------
+ID: 167
+Passage: <ruby>田中<rt>たなか</rt></ruby>さんはいつも<ruby>元気<rt>げんき</rt></ruby>に<ruby>挨拶<rt>あいさつ</rt></ruby>をするので、<ruby>会<rt>あ</rt></ruby>うとこっちまで<ruby>元気<rt>げんき</rt></ruby>になります。
+--------------------------------------------------------------------------------
+ID: 168
+Passage: このセーターはデザインは<ruby>好<rt>す</rt></ruby>きですが、<ruby>私<rt>わたし</rt></ruby>には<ruby>少<rt>すこ</rt></ruby>し<ruby>小<rt>ちい</rt></ruby>さいようです。もう<ruby>一<rt>ひと</rt></ruby>つ<ruby>大<rt>おお</rt></ruby>きいサイズはありませんか。
+--------------------------------------------------------------------------------
+ID: 169
+Passage: <ruby>明日<rt>あした</rt></ruby>のハイキングは、<ruby>雨<rt>あめ</rt></ruby>が<ruby>降<rt>ふ</rt></ruby>ったら<ruby>中止<rt>ちゅうし</rt></ruby>になります。その<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>朝<rt>あさ</rt></ruby><ruby>七時<rt>しちじ</rt></ruby>にメールで<ruby>連絡<rt>れんらく</rt></ruby>します。
+--------------------------------------------------------------------------------
+ID: 170
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>辛<rt>から</rt></ruby>い<ruby>料理<rt>りょうり</rt></ruby>が<ruby>苦手<rt>にがて</rt></ruby>で、カレーも<ruby>甘口<rt>あまくち</rt></ruby>しか<ruby>食<rt>た</rt></ruby>べられません。
+--------------------------------------------------------------------------------
+ID: 171
+Passage: <ruby>会議<rt>かいぎ</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>が<ruby>変更<rt>へんこう</rt></ruby>になったことを、<ruby>山田<rt>やまだ</rt></ruby>さんに<ruby>伝<rt>つた</rt></ruby>えるのを<ruby>忘<rt>わす</rt></ruby>れてしまいました。どうしよう。
+--------------------------------------------------------------------------------
+ID: 172
+Passage: この<ruby>奨学金<rt>しょうがくきん</rt></ruby>は、<ruby>成績<rt>せいせき</rt></ruby>が<ruby>優秀<rt>ゆうしゅう</rt></ruby>な<ruby>学生<rt>がくせい</rt></ruby>のためのものです。<ruby>申<rt>もう</rt></ruby>し<ruby>込<rt>こ</rt></ruby>みをしたい<ruby>人<rt>ひと</rt></ruby>は、<ruby>事務所<rt>じむしょ</rt></ruby>まで<ruby>来<rt>き</rt></ruby>てください。
+--------------------------------------------------------------------------------
+ID: 173
+Passage: すみません、<ruby>気分<rt>きぶん</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>いので、<ruby>窓<rt>まど</rt></ruby>を<ruby>開<rt>あ</rt></ruby>けてもいいですか。<ruby>新鮮<rt>しんせん</rt></ruby>な<ruby>空気<rt>くうき</rt></ruby>が<ruby>吸<rt>す</rt></ruby>いたいです。
+--------------------------------------------------------------------------------
+ID: 174
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>兄<rt>あに</rt></ruby>は、<ruby>会社員<rt>かいしゃいん</rt></ruby>をしながら<ruby>小説<rt>しょうせつ</rt></ruby>を<ruby>書<rt>か</rt></ruby>いています。<ruby>いつか<ruby>有名<rt>ゆうめい</rt></ruby>な<ruby>作家<rt>さっか</rt></ruby>になるのが<ruby>夢<rt>ゆめ</rt></ruby>だそうです。
+--------------------------------------------------------------------------------
+ID: 175
+Passage: このお<ruby>菓子<rt>かし</rt></ruby>は<ruby>卵<rt>たまご</rt></ruby>を<ruby>使<rt>つか</rt></ruby>っていないので、<ruby>卵<rt>たまご</rt></ruby>アレルギーの<ruby>人<rt>ひと</rt></ruby>でも<ruby>食<rt>た</rt></ruby>べられます。
+--------------------------------------------------------------------------------
+ID: 176
+Passage: この<ruby>公園<rt>こうえん</rt></ruby>では<ruby>夜<rt>よる</rt></ruby><ruby>九時<rt>くじ</rt></ruby><ruby>以降<rt>いこう</rt></ruby>、<ruby>花火<rt>はなび</rt></ruby>をしてはいけません。<ruby>近所<rt>きんじょ</rt></ruby>の<ruby>迷惑<rt>めいわく</rt></ruby>になります。
+--------------------------------------------------------------------------------
+ID: 177
+Passage: <ruby>田中<rt>たなか</rt></ruby>さんの<ruby>送別会<rt>そうべつかい</rt></ruby>は、<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>金曜日<rt>きんようび</rt></ruby>の<ruby>夜<rt>よる</rt></ruby><ruby>七時<rt>しちじ</rt></ruby>から、<ruby>駅前<rt>えきまえ</rt></ruby>の「さくら」という<ruby>居酒屋<rt>いざかや</rt></ruby>で<ruby>行<rt>おこな</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 178
+Passage: <ruby>今朝<rt>けさ</rt></ruby>、<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>座席<rt>ざせき</rt></ruby>を<ruby>譲<rt>ゆず</rt></ruby>ってくれた<ruby>若<rt>わか</rt></ruby>い<ruby>人<rt>ひと</rt></ruby>がいました。とても<ruby>優<rt>やさ</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>いました。<ruby>私<rt>わたし</rt></ruby>も<ruby>誰<rt>だれ</rt></ruby>かに<ruby>親切<rt>しんせつ</rt></ruby>にしたいです。
+--------------------------------------------------------------------------------
+ID: 179
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>から<ruby>新<rt>あたら</rt></ruby>しいアルバイトを<ruby>始<rt>はじ</rt></ruby>めます。コンビニの<ruby>仕事<rt>しごと</rt></ruby>ですが、<ruby>接客<rt>せっきゃく</rt></ruby>が<ruby>苦手<rt>にがて</rt></ruby>なので<ruby>心配<rt>しんぱい</rt></ruby>です。でも、<ruby>頑張<rt>がんば</rt></ruby>ろうと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 180
+Passage: <ruby>昨夜<rt>さくや</rt></ruby>、<ruby>星<rt>ほし</rt></ruby>がとてもきれいでした。<ruby>空気<rt>くうき</rt></ruby>が<ruby>澄<rt>す</rt></ruby>んでいたので、たくさんの<ruby>星<rt>ほし</rt></ruby>が<ruby>見<rt>み</rt></ruby>えました。<ruby>今度<rt>こんど</rt></ruby>は<ruby>天体<rt>てんたい</rt></ruby><ruby>望遠鏡<rt>ぼうえんきょう</rt></ruby>で<ruby>見<rt>み</rt></ruby>てみたいです。
+--------------------------------------------------------------------------------
+ID: 181
+Passage: <ruby>友達<rt>ともだち</rt></ruby>が<ruby>新<rt>あたら</rt></ruby>しい<ruby>髪型<rt>かみがた</rt></ruby>にしました。<ruby>前<rt>まえ</rt></ruby>より<ruby>短<rt>みじか</rt></ruby>くなって、とても<ruby>似合<rt>にあ</rt></ruby>っています。「かわいいね」と<ruby>言<rt>い</rt></ruby>ったら、<ruby>嬉<rt>うれ</rt></ruby>しそうでした。
+--------------------------------------------------------------------------------
+ID: 182
+Passage: この<ruby>薬<rt>くすり</rt></ruby>は<ruby>食後<rt>しょくご</rt></ruby>すぐに<ruby>飲<rt>の</rt></ruby>まないでください。<ruby>食事<rt>しょくじ</rt></ruby>の<ruby>後<rt>あと</rt></ruby>、<ruby>三十分<rt>さんじゅっぷん</rt></ruby><ruby>以上<rt>いじょう</rt></ruby><ruby>経<rt>た</rt></ruby>ってから<ruby>飲<rt>の</rt></ruby>んでください。
+--------------------------------------------------------------------------------
+ID: 183
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>携帯<rt>けいたい</rt></ruby><ruby>電話<rt>でんわ</rt></ruby>の<ruby>画面<rt>がめん</rt></ruby>が<ruby>割<rt>わ</rt></ruby>れてしまいました。<ruby>落<rt>お</rt></ruby>としたときに<ruby>壊<rt>こわ</rt></ruby>れたようです。<ruby>修理<rt>しゅうり</rt></ruby>に<ruby>出<rt>だ</rt></ruby>すか、<ruby>新<rt>あたら</rt></ruby>しいのを<ruby>買<rt>か</rt></ruby>うか<ruby>迷<rt>まよ</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 184
+Passage: <ruby>明日<rt>あした</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れたら、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>海<rt>うみ</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。<ruby>泳<rt>およ</rt></ruby>いだり、<ruby>砂<rt>すな</rt></ruby>の<ruby>城<rt>しろ</rt></ruby>を<ruby>作<rt>つく</rt></ruby>ったりする<ruby>予定<rt>よてい</rt></ruby>です。とても<ruby>楽<rt>たの</rt></ruby>しみです。
+--------------------------------------------------------------------------------
+ID: 185
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>朝<rt>あさ</rt></ruby>ごはんを<ruby>食<rt>た</rt></ruby>べる<ruby>時間<rt>じかん</rt></ruby>がありません。いつも<ruby>急<rt>いそ</rt></ruby>いで<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>るので、パンを<ruby>持<rt>も</rt></ruby>って<ruby>電車<rt>でんしゃ</rt></ruby>で<ruby>食<rt>た</rt></ruby>べています。
+--------------------------------------------------------------------------------
+ID: 186
+Passage: <ruby>祖母<rt>そぼ</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>には<ruby>大<rt>おお</rt></ruby>きな<ruby>庭<rt>にわ</rt></ruby>があって、<ruby>色々<rt>いろいろ</rt></ruby>な<ruby>野菜<rt>やさい</rt></ruby>を<ruby>育<rt>そだ</rt></ruby>てています。<ruby>今<rt>いま</rt></ruby>はトマトとキュウリがたくさん<ruby>取<rt>と</rt></ruby>れるそうです。
+--------------------------------------------------------------------------------
+ID: 187
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>部屋<rt>へや</rt></ruby>を<ruby>片付<rt>かたづ</rt></ruby>けていたら、<ruby>子供<rt>こども</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>の<ruby>写真<rt>しゃしん</rt></ruby>が<ruby>出<rt>で</rt></ruby>てきました。<ruby>懐<rt>なつ</rt></ruby>かしくて、<ruby>長<rt>なが</rt></ruby>い<ruby>時間<rt>じかん</rt></ruby><ruby>見<rt>み</rt></ruby>てしまいました。
+--------------------------------------------------------------------------------
+ID: 188
+Passage: この<ruby>町<rt>まち</rt></ruby>には<ruby>外国人<rt>がいこくじん</rt></ruby>が<ruby>多<rt>おお</rt></ruby>く<ruby>住<rt>す</rt></ruby>んでいるので、<ruby>国際的<rt>こくさいてき</rt></ruby>な<ruby>雰囲気<rt>ふんいき</rt></ruby>があります。<ruby>色々<rt>いろいろ</rt></ruby>な<ruby>国<rt>くに</rt></ruby>のレストランもあって、<ruby>楽<rt>たの</rt></ruby>しいです。
+--------------------------------------------------------------------------------
+ID: 189
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>は<ruby>大事<rt>だいじ</rt></ruby>な<ruby>発表<rt>はっぴょう</rt></ruby>があるので、<ruby>今夜<rt>こんや</rt></ruby>はお<ruby>酒<rt>さけ</rt></ruby>を<ruby>飲<rt>の</rt></ruby>まないようにします。<ruby>体調<rt>たいちょう</rt></ruby>を<ruby>整<rt>ととの</rt></ruby>えておきたいです。
+--------------------------------------------------------------------------------
+ID: 190
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>弟<rt>おとうと</rt></ruby>は<ruby>絵<rt>え</rt></ruby>を<ruby>描<rt>か</rt></ruby>くのが<ruby>得意<rt>とくい</rt></ruby>で、<ruby>将来<rt>しょうらい</rt></ruby>は<ruby>画家<rt>がか</rt></ruby>になりたいそうです。<ruby>毎日<rt>まいにち</rt></ruby><ruby>絵<rt>え</rt></ruby>の<ruby>練習<rt>れんしゅう</rt></ruby>をしています。
+--------------------------------------------------------------------------------
+ID: 191
+Passage: スーパーで<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>をしていたら、<ruby>財布<rt>さいふ</rt></ruby>を<ruby>忘<rt>わす</rt></ruby>れたことに<ruby>気<rt>き</rt></ruby>づきました。<ruby>恥<rt>は</rt></ruby>ずかしかったですが、<ruby>商品<rt>しょうひん</rt></ruby>を<ruby>戻<rt>もど</rt></ruby>して<ruby>家<rt>いえ</rt></ruby>に<ruby>帰<rt>かえ</rt></ruby>りました。
+--------------------------------------------------------------------------------
+ID: 192
+Passage: <ruby>今年<rt>ことし</rt></ruby>の<ruby>春<rt>はる</rt></ruby>は<ruby>桜<rt>さくら</rt></ruby>が<ruby>早<rt>はや</rt></ruby>く<ruby>咲<rt>さ</rt></ruby>きました。<ruby>例年<rt>れいねん</rt></ruby>より<ruby>二週間<rt>にしゅうかん</rt></ruby>も<ruby>早<rt>はや</rt></ruby>かったので、<ruby>花見<rt>はなみ</rt></ruby>の<ruby>計画<rt>けいかく</rt></ruby>が<ruby>大変<rt>たいへん</rt></ruby>でした。
+--------------------------------------------------------------------------------
+ID: 193
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>毎朝<rt>まいあさ</rt></ruby><ruby>六時<rt>ろくじ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きて、<ruby>犬<rt>いぬ</rt></ruby>の<ruby>散歩<rt>さんぽ</rt></ruby>に<ruby>行<rt>い</rt></ruby>きます。<ruby>運動<rt>うんどう</rt></ruby>にもなるし、<ruby>犬<rt>いぬ</rt></ruby>も<ruby>喜<rt>よろこ</rt></ruby>ぶので、<ruby>一石二鳥<rt>いっせきにちょう</rt></ruby>です。
+--------------------------------------------------------------------------------
+ID: 194
+Passage: <ruby>友達<rt>ともだち</rt></ruby>の<ruby>赤<rt>あか</rt></ruby>ちゃんが<ruby>生<rt>う</rt></ruby>まれたので、お<ruby>祝<rt>いわ</rt></ruby>いを<ruby>贈<rt>おく</rt></ruby>りました。<ruby>可愛<rt>かわい</rt></ruby>い<ruby>服<rt>ふく</rt></ruby>と<ruby>絵本<rt>えほん</rt></ruby>を<ruby>選<rt>えら</rt></ruby>びました。とても<ruby>喜<rt>よろこ</rt></ruby>んでくれました。
+--------------------------------------------------------------------------------
+ID: 195
+Passage: この<ruby>店<rt>みせ</rt></ruby>のラーメンは<ruby>人気<rt>にんき</rt></ruby>があって、<ruby>昼<rt>ひる</rt></ruby><ruby>時<rt>じ</rt></ruby>には<ruby>必<rt>かなら</rt></ruby>ず<ruby>行列<rt>ぎょうれつ</rt></ruby>ができます。でも、<ruby>待<rt>ま</rt></ruby>つ<ruby>価値<rt>かち</rt></ruby>があるほど<ruby>美味<rt>おい</rt></ruby>しいです。
+--------------------------------------------------------------------------------
+ID: 196
+Passage: <ruby>冬<rt>ふゆ</rt></ruby>になると、<ruby>部屋<rt>へや</rt></ruby>が<ruby>乾燥<rt>かんそう</rt></ruby>するので、<ruby>加湿器<rt>かしつき</rt></ruby>を<ruby>使<rt>つか</rt></ruby>います。<ruby>風邪<rt>かぜ</rt></ruby>の<ruby>予防<rt>よぼう</rt></ruby>にもなるそうです。
+--------------------------------------------------------------------------------
+ID: 197
+Passage: <ruby>週末<rt>しゅうまつ</rt></ruby>は<ruby>友達<rt>ともだち</rt></ruby>と<ruby>温泉<rt>おんせん</rt></ruby><ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>きました。ゆっくり<ruby>温泉<rt>おんせん</rt></ruby>に<ruby>入<rt>はい</rt></ruby>って、<ruby>疲<rt>つか</rt></ruby>れが<ruby>取<rt>と</rt></ruby>れました。<ruby>料理<rt>りょうり</rt></ruby>も<ruby>美味<rt>おい</rt></ruby>しくて<ruby>大満足<rt>だいまんぞく</rt></ruby>でした。
+--------------------------------------------------------------------------------
+ID: 198
+Passage: <ruby>昨日<rt>きのう</rt></ruby>、<ruby>新<rt>あたら</rt></ruby>しい<ruby>靴<rt>くつ</rt></ruby>を<ruby>履<rt>は</rt></ruby>いて<ruby>出<rt>で</rt></ruby>かけたら、<ruby>足<rt>あし</rt></ruby>が<ruby>痛<rt>いた</rt></ruby>くなりました。まだ<ruby>慣<rt>な</rt></ruby>れていないからだと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 199
+Passage: <ruby>来月<rt>らいげつ</rt></ruby>、<ruby>姉<rt>あね</rt></ruby>が<ruby>結婚<rt>けっこん</rt></ruby>します。<ruby>相手<rt>あいて</rt></ruby>は<ruby>優<rt>やさ</rt></ruby>しい<ruby>人<rt>ひと</rt></ruby>で、<ruby>家族<rt>かぞく</rt></ruby>みんなが<ruby>安心<rt>あんしん</rt></ruby>しています。<ruby>幸<rt>しあわ</rt></ruby>せになってほしいです。
+--------------------------------------------------------------------------------
+ID: 200
+Passage: <ruby>今日<rt>きょう</rt></ruby>で<ruby>日本語<rt>にほんご</rt></ruby>の<ruby>授業<rt>じゅぎょう</rt></ruby>が<ruby>終<rt>お</rt></ruby>わります。<ruby>三年間<rt>さんねんかん</rt></ruby>、<ruby>本当<rt>ほんとう</rt></ruby>にありがとうございました。これからも<ruby>日本語<rt>にほんご</rt></ruby>の<ruby>勉強<rt>べんきょう</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けたいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------

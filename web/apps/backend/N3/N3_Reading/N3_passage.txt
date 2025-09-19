@@ -1,0 +1,600 @@
+ID: 1
+Passage: この<ruby>度<rt>たび</rt></ruby>、<ruby>私<rt>わたし</rt></ruby>は<ruby>一身上<rt>いっしんじょう</rt></ruby>の<ruby>都合<rt>つごう</rt></ruby>により、<ruby>今月<rt>こんげつ</rt></ruby><ruby>末<rt>まつ</rt></ruby>をもって<ruby>退職<rt>たいしょく</rt></ruby>することになりました。<ruby>三年間<rt>さんねんかん</rt></ruby>という<ruby>短<rt>みじか</rt></ruby>い<ruby>期間<rt>きかん</rt></ruby>ではございましたが、<ruby>公私<rt>こうし</rt></ruby>にわたり<ruby>大変<rt>たいへん</rt></ruby>お<ruby>世話<rt>せわ</rt></ruby>になりました。<ruby>皆様<rt>みなさま</rt></ruby>からいただいた<ruby>温<rt>あたた</rt></ruby>かい<ruby>励<rt>はげ</rt></ruby>ましの<ruby>言葉<rt>ことば</rt></ruby>は、<ruby>決<rt>けっ</rt></ruby>して<ruby>忘<rt>わす</rt></ruby>れません。<ruby>今後<rt>こんご</rt></ruby>の<ruby>皆様<rt>みなさま</rt></ruby>のますますのご<ruby>活躍<rt>かつやく</rt></ruby>を<ruby>心<rt>こころ</rt></ruby>よりお<ruby>祈<rt>いの</rt></ruby>り<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げます。
+--------------------------------------------------------------------------------
+ID: 2
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>健康<rt>けんこう</rt></ruby>のためにジョギングを<ruby>始<rt>はじ</rt></ruby>めました。しかし、<ruby>三日坊主<rt>みっかぼうず</rt></ruby>で<ruby>終<rt>お</rt></ruby>わってしまうのではないかと<ruby>心配<rt>しんぱい</rt></ruby>です。そこで、<ruby>友人<rt>ゆうじん</rt></ruby>を<ruby>誘<rt>さそ</rt></ruby>って<ruby>一緒<rt>いっしょ</rt></ruby>に<ruby>走<rt>はし</rt></ruby>ることにしました。<ruby>一人<rt>ひとり</rt></ruby>だと<ruby>怠<rt>なま</rt></ruby>けてしまいがちですが、<ruby>誰<rt>だれ</rt></ruby>かと<ruby>約束<rt>やくそく</rt></ruby>すれば、<ruby>簡単<rt>かんたん</rt></ruby>にはやめられないと<ruby>思<rt>おも</rt></ruby>ったからです。
+--------------------------------------------------------------------------------
+ID: 3
+Passage: このマンションでは、ゴミは<ruby>朝<rt>あさ</rt></ruby>8<ruby>時<rt>じ</rt></ruby>までに<ruby>指定<rt>してい</rt></ruby>された<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>出<rt>だ</rt></ruby>してください。<ruby>燃<rt>も</rt></ruby>えるゴミは<ruby>月<rt>げつ</rt></ruby>・<ruby>木<rt>もく</rt></ruby>、<ruby>燃<rt>も</rt></ruby>えないゴミは<ruby>水曜日<rt>すいようび</rt></ruby>です。また、<ruby>夜間<rt>やかん</rt></ruby>にゴミを<ruby>出<rt>だ</rt></ruby>すと、カラスなどが<ruby>散<rt>ち</rt></ruby>らかす<ruby>原因<rt>げんいん</rt></ruby>となるため、<ruby>固<rt>かた</rt></ruby>く<ruby>禁止<rt>きんし</rt></ruby>されています。
+--------------------------------------------------------------------------------
+ID: 4
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>読書<rt>どくしょ</rt></ruby>が<ruby>趣味<rt>しゅみ</rt></ruby>ですが、<ruby>最近<rt>さいきん</rt></ruby>は<ruby>電子書籍<rt>でんししょせき</rt></ruby>を<ruby>利用<rt>りよう</rt></ruby>することが<ruby>増<rt>ふ</rt></ruby>えました。<ruby>何冊<rt>なんさつ</rt></ruby>もの<ruby>本<rt>ほん</rt></ruby>を<ruby>一<rt>ひと</rt></ruby>つの<ruby>端末<rt>たんまつ</rt></ruby>で<ruby>持<rt>も</rt></ruby>ち<ruby>運<rt>はこ</rt></ruby>べる<ruby>点<rt>てん</rt></ruby>が<ruby>大変<rt>たいへん</rt></ruby><ruby>便利<rt>べんり</rt></ruby>だからです。しかし、<ruby>紙<rt>かみ</rt></ruby>の<ruby>本<rt>ほん</rt></ruby>をめくる<ruby>感触<rt>かんしょく</rt></ruby>も<ruby>好<rt>す</rt></ruby>きなので、<ruby>小説<rt>しょうせつ</rt></ruby>は<ruby>紙<rt>かみ</rt></ruby>で、<ruby>実用書<rt>じつようしょ</rt></ruby>は<ruby>電子<rt>でんし</rt></ruby>でと<ruby>使<rt>つか</rt></ruby>い<ruby>分<rt>わ</rt></ruby>けています。
+--------------------------------------------------------------------------------
+ID: 5
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>で<ruby>使用<rt>しよう</rt></ruby>する<ruby>資料<rt>しりょう</rt></ruby>ですが、<ruby>一部<rt>いちぶ</rt></ruby><ruby>変更<rt>へんこう</rt></ruby>がございましたので、<ruby>再送<rt>さいそう</rt></ruby>いたします。<ruby>大変<rt>たいへん</rt></ruby><ruby>恐縮<rt>きょうしゅく</rt></ruby>ですが、お<ruby>手元<rt>てもと</rt></ruby>の<ruby>古<rt>ふる</rt></ruby>い<ruby>資料<rt>しりょう</rt></ruby>は<ruby>破棄<rt>はき</rt></ruby>していただき、こちらを<ruby>印刷<rt>いんさつ</rt></ruby>してお<ruby>持<rt>も</rt></ruby>ちください。お<ruby>手数<rt>てすう</rt></ruby>をおかけしますが、よろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 6
+Passage: <ruby>日本<rt>にほん</rt></ruby>のアニメは<ruby>海外<rt>かいがい</rt></ruby>でも<ruby>高<rt>たか</rt></ruby>い<ruby>人気<rt>にんき</rt></ruby>を<ruby>誇<rt>ほこ</rt></ruby>っている。<ruby>その<ruby>理由<rt>りゆう</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つとして、<ruby>単<rt>たん</rt></ruby>なる<ruby>子供<rt>こども</rt></ruby><ruby>向<rt>む</rt></ruby>けの作品<rt>さくひん</rt></ruby>だけでなく、<ruby>大人<rt>おとな</rt></ruby>も<ruby>楽<rt>たの</rt></ruby>しめるような<ruby>深<rt>ふか</rt></ruby>いストーリーや<ruby>複雑<rt>ふくざつ</rt></ruby>な<ruby>人間<rt>にんげん</rt></ruby><ruby>関係<rt>かんけい</rt></ruby>を<ruby>描<rt>えが</rt></ruby>いた<ruby>作品<rt>さくひん</rt></ruby>が<ruby>多<rt>おお</rt></ruby>いことが<ruby>挙<rt>あ</rt></ruby>げられる。これにより、<ruby>幅広<rt>はばひろ</rt></ruby>い<ruby>年齢層<rt>ねんれいそう</rt></ruby>のファンを<ruby>獲得<rt>かくとく</rt></ruby>しているのだ。
+--------------------------------------------------------------------------------
+ID: 7
+Passage: <ruby>環境<rt>かんきょう</rt></ruby><ruby>問題<rt>もんだい</rt></ruby>への<ruby>意識<rt>いしき</rt></ruby>が<ruby>高<rt>たか</rt></ruby>まる<ruby>中<rt>なか</rt></ruby>、マイボトルを<ruby>持参<rt>じさん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えている。ペットボトルごみの<ruby>削減<rt>さくげん</rt></ruby>につながるだけでなく、カフェによっては<ruby>割引<rt>わりびき</rt></ruby>サービスが<ruby>受<rt>う</rt></ruby>けられることもあるからだ。しかし、<ruby>衛生的<rt>えいせいてき</rt></ruby>に<ruby>保<rt>たも</rt></ruby>つためには、こまめに<ruby>洗<rt>あら</rt></ruby>う<ruby>必要<rt>ひつよう</rt></ruby>があるということも<ruby>忘<rt>わす</rt></ruby>れてはならない。
+--------------------------------------------------------------------------------
+ID: 8
+Passage: <ruby>予約<rt>よやく</rt></ruby>の<ruby>変更<rt>へんこう</rt></ruby>は、<ruby>予約日<rt>よやくび</rt></ruby>の<ruby>三日前<rt>みっかまえ</rt></ruby>までにお<ruby>電話<rt>でんわ</rt></ruby>にてご<ruby>連絡<rt>れんらく</rt></ruby>ください。それ<ruby>以降<rt>いこう</rt></ruby>のキャンセルにつきましては、キャンセル<ruby>料<rt>りょう</rt></ruby>として<ruby>料金<rt>りょうきん</rt></ruby>の50%を<ruby>申<rt>もう</rt></ruby>し<ruby>受<rt>う</rt></ruby>けます。なお、<ruby>当日<rt>とうじつ</rt></ruby>のキャンセルは、<ruby>理由<rt>りゆう</rt></ruby>のいかんにかかわらず<ruby>全額<rt>ぜんがく</rt></ruby>をご<ruby>請求<rt>せいきゅう</rt></ruby>させていただきますので、ご<ruby>注意<rt>ちゅうい</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 9
+Passage: <ruby>近年<rt>きんねん</rt></ruby>、<ruby>多<rt>おお</rt></ruby>くの<ruby>企業<rt>きぎょう</rt></ruby>でリモートワークが<ruby>導入<rt>どうにゅう</rt></ruby>されるようになった。<ruby>通勤<rt>つうきん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>がなくなり、<ruby>自由<rt>じゆう</rt></ruby>な<ruby>時間<rt>じかん</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えるというメリットがある<ruby>一方<rt>いっぽう</rt></ruby>で、コミュニケーションが<ruby>取<rt>と</rt></ruby>りづらくなったり、<ruby>仕事<rt>しごと</rt></ruby>とプライベートの<ruby>区別<rt>くべつ</rt></ruby>がつきにくくなったりするという<ruby>課題<rt>かだい</rt></ruby>も<ruby>指摘<rt>してき</rt></ruby>されている。この<ruby>働<rt>はたら</rt></ruby>き<ruby>方<rt>かた</rt></ruby>を<ruby>定着<rt>ていちゃく</rt></ruby>させるには、<ruby>様々<rt>さまざま</rt></ruby>な<ruby>工夫<rt>くふう</rt></ruby>が<ruby>求<rt>もと</rt></ruby>められるだろう。
+--------------------------------------------------------------------------------
+ID: 10
+Passage: このたび<ruby>開発<rt>かいはつ</rt></ruby>した<ruby>新製品<rt>しんせいひん</rt></ruby>は、<ruby>従来<rt>じゅうらい</rt></ruby>のモデルに<ruby>比<rt>くら</rt></ruby>べ、<ruby>消費<rt>しょうひ</rt></ruby><ruby>電力<rt>でんりょく</rt></ruby>を<ruby>約<rt>やく</rt></ruby>30%<ruby>削減<rt>さくげん</rt></ruby>することに<ruby>成功<rt>せいこう</rt></ruby>しました。また、<ruby>操作性<rt>そうさせい</rt></ruby>も<ruby>見直<rt>みなお</rt></ruby>し、ボタンの<ruby>数<rt>かず</rt></ruby>を<ruby>減<rt>へ</rt></ruby>らすことで、どなたでも<ruby>直感的<rt>ちょっかんてき</rt></ruby>に<ruby>使<rt>つか</rt></ruby>えるようになりました。デザインもよりシンプルで、どんなインテリアにもなじみます。
+--------------------------------------------------------------------------------
+ID: 11
+Passage: <ruby>先日<rt>せんじつ</rt></ruby>、<ruby>十年<rt>じゅうねん</rt></ruby>ぶりに<ruby>高校<rt>こうこう</rt></ruby><ruby>時代<rt>じだい</rt></ruby>の<ruby>同窓会<rt>どうそうかい</rt></ruby>に<ruby>参加<rt>さんか</rt></ruby>した。<ruby>昔<rt>むかし</rt></ruby>と<ruby>変<rt>か</rt></ruby>わらない<ruby>友人<rt>ゆうじん</rt></ruby>の<ruby>笑顔<rt>えがお</rt></ruby>に<ruby>会<rt>あ</rt></ruby>えて、とても<ruby>懐<rt>なつ</rt></ruby>かしい<ruby>気持<rt>きも</rt></ruby>ちになった。それぞれが<ruby>違<rt>ちが</rt></ruby>う<ruby>道<rt>みち</rt></ruby>を<ruby>歩<rt>あゆ</rt></ruby>んでいるが、<ruby>話<rt>はな</rt></ruby>してみると<ruby>学生<rt>がくせい</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>に<ruby>戻<rt>もど</rt></ruby>ったかのような<ruby>不思議<rt>ふしぎ</rt></ruby>な<ruby>感覚<rt>かんかく</rt></ruby>だった。<ruby>友人<rt>ゆうじん</rt></ruby>というのは、<ruby>時間<rt>じかん</rt></ruby>が<ruby>経<rt>た</rt></ruby>ってもいいものだと<ruby>改<rt>あらた</rt></ruby>めて<ruby>感<rt>かん</rt></ruby>じた。
+--------------------------------------------------------------------------------
+ID: 12
+Passage: このたびの<ruby>台風<rt>たいふう</rt></ruby>の<ruby>影響<rt>えいきょう</rt></ruby>により、<ruby>明日<rt>あした</rt></ruby><ruby>開催<rt>かいさい</rt></ruby><ruby>予定<rt>よてい</rt></ruby>でした「あおぞらマーケット」は、お<ruby>客様<rt>きゃくさま</rt></ruby>の<ruby>安全<rt>あんぜん</rt></ruby>を<ruby>第一<rt>だいいち</rt></ruby>に<ruby>考<rt>かんが</rt></ruby>え、<ruby>中止<rt>ちゅうし</rt></ruby>させていただくことになりました。<ruby>楽<rt>たの</rt></ruby>しみにされていた<ruby>皆様<rt>みなさま</rt></ruby>には<ruby>大変<rt>たいへん</rt></ruby><ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ございませんが、ご<ruby>理解<rt>りかい</rt></ruby>いただけますようお<ruby>願<rt>ねが</rt></ruby>いいたします。なお、<ruby>延期<rt>えんき</rt></ruby>の<ruby>日程<rt>にってい</rt></ruby>については、<ruby>決定<rt>けってい</rt></ruby>次第<rt>しだい</rt></ruby>、ホームページにてお<ruby>知<rt>し</rt></ruby>らせいたします。
+--------------------------------------------------------------------------------
+ID: 13
+Passage: <ruby>日本語<rt>にほんご</rt></ruby>の<ruby>学習<rt>がくしゅう</rt></ruby>において、<ruby>漢字<rt>かんじ</rt></ruby>を<ruby>難<rt>むずか</rt></ruby>しいと<ruby>感<rt>かん</rt></ruby>じる<ruby>人<rt>ひと</rt></ruby>は<ruby>少<rt>すく</rt></ruby>なくない。しかし、<ruby>漢字<rt>かんじ</rt></ruby>は<ruby>一<rt>ひと</rt></ruby>つ<ruby>一<rt>ひと</rt></ruby>つバラバラに<ruby>覚<rt>おぼ</rt></ruby>えるのではなく、へんやつきなどのパーツ（<ruby>部首<rt>ぶしゅ</rt></ruby>）の<ruby>意味<rt>いみ</rt></ruby>を<ruby>理解<rt>りかい</rt></ruby>すると、<ruby>効率的<rt>こうりつてき</rt></ruby>に<ruby>学習<rt>がくしゅう</rt></ruby>できる<ruby>場合<rt>ばあい</rt></ruby>がある。<ruby>例<rt>たと</rt></ruby>えば、「さんずい」がつく<ruby>漢字<rt>かんじ</rt></ruby>は<ruby>水<rt>みず</rt></ruby>に<ruby>関係<rt>かんけい</rt></ruby>していることが<ruby>多<rt>おお</rt></ruby>い。
+--------------------------------------------------------------------------------
+ID: 14
+Passage: <ruby>今<rt>いま</rt></ruby>、スマートフォンの<ruby>使<rt>つか</rt></ruby>いすぎによる「スマホ<ruby>依存<rt>いぞん</rt></ruby>」が<ruby>問題<rt>もんだい</rt></ruby>になっている。<ruby>寝<rt>ね</rt></ruby>る<ruby>前<rt>まえ</rt></ruby>まで<ruby>画面<rt>がめん</rt></ruby>を<ruby>見<rt>み</rt></ruby>ていると、<ruby>良質<rt>りょうしつ</rt></ruby>な<ruby>睡眠<rt>すいみん</rt></ruby>のさまたげになるとも<ruby>言<rt>い</rt></ruby>われている。そこで<ruby>私<rt>わたし</rt></ruby>は、<ruby>寝室<rt>しんしつ</rt></ruby>にはスマホを<ruby>持<rt>も</rt></ruby>ち<ruby>込<rt>こ</rt></ruby>まず、<ruby>代<rt>か</rt></ruby>わりに<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むようにしている。おかげで、<ruby>寝付<rt>ねつ</rt></ruby>きが<ruby>良<rt>よ</rt></ruby>くなった<ruby>気<rt>き</rt></ruby>がする。
+--------------------------------------------------------------------------------
+ID: 15
+Passage: このたび<ruby>発売<rt>はつばい</rt></ruby>されたおそうじロボットは、<ruby>留守中<rt>るすちゅう</rt></ruby>に<ruby>部屋<rt>へや</rt></ruby>をきれいにしてくれる<ruby>優<rt>すぐ</rt></ruby>れものです。<ruby>専用<rt>せんよう</rt></ruby>アプリを<ruby>使<rt>つか</rt></ruby>えば、<ruby>外出先<rt>がいしゅつさき</rt></ruby>からでも<ruby>操作<rt>そうさ</rt></ruby>が<ruby>可能<rt>かのう</rt></ruby>です。<ruby>例<rt>たと</rt></ruby>えば、<ruby>急<rt>きゅう</rt></ruby>な<ruby>来客<rt>らいきゃく</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に、<ruby>遠隔<rt>えんかく</rt></ruby>でそうじを<ruby>始<rt>はじ</rt></ruby>めさせることもできます。
+--------------------------------------------------------------------------------
+ID: 16
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>海外<rt>かいがい</rt></ruby><ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>く<ruby>際<rt>さい</rt></ruby>、<ruby>必<rt>かなら</rt></ruby>ずその<ruby>国<rt>くに</rt></ruby>の<ruby>簡単<rt>かんたん</rt></ruby>な挨拶<rt>あいさつ</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>を<ruby>覚<rt>おぼ</rt></ruby>えていくようにしている。たった<ruby>一言<rt>ひとこと</rt></ruby>でも、<ruby>現地<rt>げんち</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>で<ruby>話<rt>はな</rt></ruby>しかけるだけで、<ruby>相手<rt>あいて</rt></ruby>の<ruby>反応<rt>はんのう</rt></ruby>がまったく<ruby>違<rt>ちが</rt></ruby>うからだ。それは、<ruby>相手<rt>あいて</rt></ruby>の<ruby>文化<rt>ぶんか</rt></ruby>を<ruby>尊重<rt>そんちょう</rt></ruby>しようという<ruby>気持<rt>きも</rt></ruby>ちが<ruby>伝<rt>つた</rt></ruby>わるからだろうと<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 17
+Passage: <ruby>山中<rt>やまなか</rt></ruby>スポーツセンターよりお<ruby>知<rt>し</rt></ruby>らせです。<ruby>来月<rt>らいげつ</rt></ruby>のプール<ruby>利用<rt>りよう</rt></ruby>ですが、<ruby>施設<rt>しせつ</rt></ruby><ruby>点検<rt>てんけん</rt></ruby>のため、<ruby>第<rt>だい</rt></ruby>2<ruby>月曜日<rt>げつようび</rt></ruby>にあたる14<ruby>日<rt>にち</rt></ruby>は<ruby>臨時<rt>りんじ</rt></ruby><ruby>休館<rt>きゅうかん</rt></ruby>とさせていただきます。なお、トレーニングジムは<ruby>通常<rt>つうじょう</rt></ruby><ruby>通<rt>どお</rt></ruby>りご<ruby>利用<rt>りよう</rt></ruby>いただけます。ご<ruby>迷惑<rt>めいわく</rt></ruby>をおかけしますが、ご<ruby>協力<rt>きょうりょく</rt></ruby>お<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 18
+Passage: <ruby>落<rt>お</rt></ruby>ち<ruby>込<rt>こ</rt></ruby>んでいる<ruby>時<rt>とき</rt></ruby>、<ruby>友達<rt>ともだち</rt></ruby>から「<ruby>大丈夫<rt>だいじょうぶ</rt></ruby>？」と<ruby>声<rt>こえ</rt></ruby>をかけられただけで、<ruby>気持<rt>きも</rt></ruby>ちが<ruby>軽<rt>かる</rt></ruby>くなることがある。それは、<ruby>自分<rt>じぶん</rt></ruby>のことを<ruby>気<rt>き</rt></ruby>にかけてくれる<ruby>人<rt>ひと</rt></ruby>がいると<ruby>感<rt>かん</rt></ruby>じられるからだろう。<ruby>人<rt>ひと</src></ruby>は、<ruby>言葉<rt>ことば</rt></ruby>そのものよりも、その<ruby>裏<rt>うら</rt></ruby>にある<ruby>思<rt>おも</rt></ruby>いやりに<ruby>救<rt>すく</rt></ruby>われるのかもしれない。
+--------------------------------------------------------------------------------
+ID: 19
+Passage: このたび、アパートの<ruby>規則<rt>きそく</rt></ruby>が<ruby>一部<rt>いちぶ</rt></ruby><ruby>変更<rt>へんこう</rt></ruby>になりました。<ruby>最<rt>もっと</rt></ruby>も<ruby>大<rt>おお</rt></ruby>きな<ruby>変更点<rt>へんこうてん</rt></ruby>は、これまで<ruby>禁止<rt>きんし</rt></ruby>されていたペットの<ruby>飼育<rt>しいく</rt></ruby>が、<ruby>小型<rt>こがた</rt></ruby>の<ruby>犬<rt>いぬ</rt></ruby>や<ruby>猫<rt>ねこ</rt></ruby>に<ruby>限<rt>かぎ</rt></ruby>り<ruby>許可<rt>きょか</rt></ruby>されるようになったことです。<ruby>詳<rt>くわ</rt></ruby>しい<ruby>条件<rt>じょうけん</rt></ruby>については、<ruby>管理人<rt>かんりにん</rt></ruby>までお<ruby>問<rt>と</rt></ruby>い<ruby>合<rt>あ</rt></ruby>わせください。
+--------------------------------------------------------------------------------
+ID: 20
+Passage: <ruby>面接<rt>めんせつ</rt></ruby>では、<ruby>自分<rt>じぶん</rt></ruby>の<ruby>長所<rt>ちょうしょ</rt></ruby>をアピールすることが<ruby>求<rt>もと</rt></ruby>められる。しかし、ただ「<ruby>私<rt>わたし</rt></ruby>の<ruby>長所<rt>ちょうしょ</rt></ruby>は○○です」と<ruby>言<rt>い</rt></ruby>うだけでは<ruby>説得力<rt>せっとくりょく</rt></ruby>に<ruby>欠<rt>か</rt></ruby>ける。<ruby>重要<rt>じゅうよう</rt></ruby>なのは、その<ruby>長所<rt>ちょうしょ</rt></ruby>を<ruby>裏付<rt>うらづ</rt></ruby>けるような<ruby>具体的<rt>ぐたいてき</rt></ruby>なエピソードを<ruby>交<rt>まじ</rt></ruby>えて<ruby>話<rt>はな</rt></ruby>すことだ。それによって、<ruby>話<rt>はなし</rt></ruby>の<ruby>信頼性<rt>しんらいせい</rt></ruby>がぐっと<ruby>高<rt>たか</rt></ruby>まる。
+--------------------------------------------------------------------------------
+ID: 21
+Passage: このたび<ruby>私<rt>わたし</rt></ruby>は<ruby>田中<rt>たなか</rt></ruby>に<ruby>代<rt>か</rt></ruby>わり、<ruby>新<rt>あら</rt></ruby>たに<ruby>営業部<rt>えいぎょうぶ</rt></ruby>の<ruby>部長<rt>ぶちょう</rt></ruby>を<ruby>務<rt>つと</rt></ruby>めることになりました<ruby>鈴木<rt>すずき</rt></ruby>と<ruby>申<rt>もう</rt></ruby>します。<ruby>前任者<rt>ぜんにんしゃ</rt></ruby>と<ruby>同様<rt>どうよう</rt></ruby>のご<ruby>指導<rt>しどう</rt></ruby>ご<ruby>鞭撻<rt>べんたつ</rt></ruby>を<ruby>賜<rt>たまわ</rt></ruby>りますようお<ruby>願<rt>ねが</rt></ruby>いいたします。<ruby>至<rt>いた</rt></ruby>らぬ<ruby>点<rt>てん</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いかと<ruby>存<rt>ぞん</rt></ruby>じますが、<ruby>精一杯<rt>せいいっぱい</rt></ruby><ruby>努力<rt>どりょく</rt></ruby>してまいりますので、どうぞよろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 22
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>野菜<rt>やさい</rt></ruby>を<ruby>工場<rt>こうじょう</rt></ruby>で<ruby>生産<rt>せいさん</rt></ruby>する<ruby>技術<rt>ぎじゅつ</rt></ruby>が<ruby>進<rt>すす</rt></ruby>んでいる。<ruby>天候<rt>てんこう</rt></ruby>に<ruby>左右<rt>さゆう</rt></ruby>されずに<ruby>安定的<rt>あんていてき</rt></ruby>に<ruby>供給<rt>きょうきゅう</rt></ruby>できるほか、<ruby>無農薬<rt>むのうやく</rt></ruby>で<ruby>栽培<rt>さいばい</rt></ruby>できるという<ruby>利点<rt>りてん</rt></ruby>がある。しかし、<ruby>設備<rt>せつび</rt></ruby>にかかるコストが<ruby>高<rt>たか</rt></ruby>いため、<ruby>まだ<ruby>値段<rt>ねだん</rt></ruby>が<ruby>高<rt>たか</rt></ruby>いのが<ruby>現状<rt>げんじょう</rt></ruby>だ。<ruby>今後<rt>こんご</rt></ruby>の<ruby>技術<rt>ぎじゅつ</rt></ruby><ruby>革新<rt>かくしん</rt></ruby>が<ruby>期待<rt>きたい</rt></ruby>される。
+--------------------------------------------------------------------------------
+ID: 23
+Passage: このたび<ruby>発売<rt>はつばい</rt></ruby>する<ruby>新<rt>あたら</rt></ruby>しい<ruby>掃除機<rt>そうじき</rt></ruby>は、<ruby>軽<rt>かる</rt></ruby>さが<ruby>特徴<rt>とくちょう</rt></ruby>です。<ruby>従来<rt>じゅうらい</rt></ruby>モデルより20%の<ruby>軽量化<rt>けいりょうか</rt></ruby>を<ruby>実現<rt>じつげん</rt></ruby>し、<ruby>女性<rt>じょせい</rt></ruby>やご<ruby>高齢<rt>こうれい</rt></ruby>の<ruby>方<rt>かた</rt></ruby>でも<ruby>楽<rt>らく</rt></ruby>に<ruby>扱<rt>あつか</rt></ruby>えるようになりました。それにもかかわらず、<ruby>吸引力<rt>きゅういんりょく</rt></ruby>は<ruby>従来<rt>じゅうらい</rt></ruby>どおりパワフルなままです。<ruby>毎日<rt>まいにち</rt></ruby>のお<ruby>掃除<rt>そうじ</rt></ruby>がきっと<ruby>楽<rt>たの</rt></ruby>しくなります。
+--------------------------------------------------------------------------------
+ID: 24
+Passage: <ruby>人<rt>ひと</rt></ruby>と<ruby>話<rt>はな</rt></ruby>すのが<ruby>苦手<rt>にがて</rt></ruby>な<ruby>私<rt>わたし</rt></ruby>にとって、<ruby>初対面<rt>しょたいめん</rt></ruby>の<ruby>人<rt>ひと</rt></ruby>ばかりのパーティーは<ruby>苦痛<rt>くつう</rt></ruby>でしかない。<ruby>壁際<rt>かべぎわ</rt></ruby>に<ruby>立<rt>た</rt></ruby>って、ひたすら<ruby>時間<rt>じかん</rt></ruby>が<ruby>過<rt>す</rt></ruby>ぎるのを<ruby>待<rt>ま</rt></ruby>つのがいつものことだ。しかし、このままではいけないと<ruby>思<rt>おも</rt></ruby>い、<ruby>次回<rt>じかい</rt></ruby>は<ruby>自分<rt>じぶん</rt></ruby>から<ruby>誰<rt>だれ</rt></ruby>か<ruby>一人<rt>ひとり</rt></ruby>には<ruby>話<rt>はな</rt></ruby>しかけてみようと<ruby>決心<rt>けっしん</rt></ruby>した。
+--------------------------------------------------------------------------------
+ID: 25
+Passage: ペットを<ruby>飼<rt>か</rt></ruby>うということは、ただかわいいがるだけでなく、その<ruby>命<rt>いのち</rt></ruby>に<ruby>対<rt>たい</rt></ruby>して<ruby>最後<rt>さいご</rt></ruby>まで<ruby>責任<rt>せきにん</rt></ruby>を<ruby>持<rt>も</rt></ruby>つということだ。<ruby>病気<rt>びょうき</rt></ruby>になった<ruby>時<rt>とき</rt></ruby>の<ruby>治療費<rt>ちりょうひ</rt></ruby>や、<ruby>毎日の<rt>まいにちの</rt></ruby><ruby>世話<rt>せわ</rt></ruby>にかかる<ruby>手間<rt>てま</rt></ruby>と<ruby>時間<rt>じかん</rt></ruby>も<ruby>考<rt>かんが</rt></ruby>えなければならない。<ruby>安易<rt>あんい</rt></ruby>な<ruby>気持<rt>きも</rt></ruby>ちで<ruby>飼<rt>か</rt></ruby>い<ruby>始<rt>はじ</rt></ruby>めるべきではない。
+--------------------------------------------------------------------------------
+ID: 26
+Passage: このたび、<ruby>私<rt>わたし</rt></ruby>どもの<ruby>レストラン<rt>れすとらん</rt></ruby>では、お<ruby>客様<rt>きゃくさま</rt></ruby>への<ruby>感謝<rt>かんしゃ</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちを<ruby>込<rt>こ</rt></ruby>めまして、<ruby>来月<rt>らいげつ</rt></ruby>1<ruby>日<rt>にち</rt></ruby>から10<ruby>日<rt>にち</rt></ruby>までの<ruby>期間<rt>きかん</rt></ruby><ruby>限定<rt>げんてい</rt></ruby>でランチセットを<ruby>通常<rt>つうじょう</rt></ruby><ruby>価格<rt>かかく</rt></ruby>の20%<ruby>引<rt>び</rt></ruby>きでご<ruby>提供<rt>ていきょう</rt></ruby>いたします。この<ruby>機会<rt>きかい</rt></ruby>にぜひご<ruby>来店<rt>らいてん</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 27
+Passage: スマートフォンが<ruby>普及<rt>ふきゅう</rt></ruby>したことで、いつでもどこでも<ruby>情報<rt>じょうほう</rt></ruby>を<ruby>手<rt>て</rt></ruby>に<ruby>入<rt>い</rt></ruby>れられるようになった。<ruby>便利<rt>べんり</rt></ruby>になった<ruby>反面<rt>はんめん</rt></ruby>、<ruby>情報<rt>じょうほう</rt></ruby>が<ruby>多<rt>おお</rt></ruby>すぎて、どれが<ruby>正<rt>ただ</rt></ruby>しいのかを<ruby>判断<rt>はんだん</rt></ruby>するのが<ruby>難<rt>むずか</rt></ruby>しくなったとも<ruby>言<rt>い</rt></ruby>える。<ruby>情報<rt>じょうほう</rt></ruby>をうのみにせず、<ruby>批判的<rt>ひはんてき</rt></ruby>な<ruby>視点<rt>してん</rt></ruby>を<ruby>持<rt>も</rt></ruby>つことが<ruby>大切<rt>たいせつ</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 28
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、ジョギングを<ruby>始<rt>はじ</rt></ruby>めた。<ruby>目的<rt>もくてき</rt></ruby>は<ruby>体力<rt>たいりょく</rt></ruby>づくりだが、それ<ruby>以上<rt>いじょう</rt></ruby>の<ruby>効果<rt>こうか</rt></ruby>があった。<ruby>朝<rt>あさ</rt></ruby>の<ruby>新鮮<rt>しんせん</rt></ruby>な<ruby>空気<rt>くうき</rt></ruby>を<ruby>吸<rt>す</rt></ruby>いながら<ruby>走<rt>はし</rt></ruby>っていると、<ruby>頭<rt>あたま</rt></ruby>の<ruby>中<rt>なか</rt></ruby>がすっきりして、<ruby>仕事<rt>しごと</rt></ruby>のアイデアが<ruby>浮<rt>う</rt></ruby>かんでくることもあるのだ。まさに<ruby>一石二鳥<rt>いっせきにちょう</rt></ruby>とはこのことだ。
+--------------------------------------------------------------------------------
+ID: 29
+Passage: この<ruby>洗濯機<rt>せんたくき</rt></ruby>を<ruby>長<rt>なが</rt></ruby>くお<ruby>使<rt>つか</rt></ruby>いいただくために、<ruby>月<rt>つき</rt></ruby>に<ruby>一度<rt>いちど</rt></ruby>は<ruby>洗濯槽<rt>せんたくそう</rt></ruby>のクリーニングをおすすめします。<ruby>市販<rt>しはん</rt></ruby>のクリーナーを<ruby>使<rt>つか</rt></ruby>い、<ruby>槽洗浄<rt>そうせんじょう</rt></ruby>コースを<ruby>選<rt>えら</rt></ruby>んでください。これを<ruby>行<rt>おこな</rt></ruby>うことで、<ruby>嫌<rt>いや</rt></ruby>なにおいを<ruby>防<rt>ふせ</rt></ruby>ぎ、いつでも<ruby>清潔<rt>せいけつ</rt></ruby>に<ruby>洗濯<rt>せんたく</rt></ruby>することができます。
+--------------------------------------------------------------------------------
+ID: 30
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>一人<rt>ひとり</rt></ruby>で<ruby>食事<rt>しょくじ</rt></ruby>や<ruby>旅行<rt>りょこう</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しむ「おひとりさま」というライフスタイルが<ruby>注目<rt>ちゅうもく</rt></ruby>されている。<ruby>他人<rt>たにん</rt></ruby>に<ruby>気<rt>き</rt></ruby>を<ruby>遣<rt>つか</rt></ruby>うことなく、<ruby>自分<rt>じぶん</rt></ruby>のペースで<ruby>好<rt>す</rt></ruby>きなことをできるのが<ruby>魅力<rt>みりょく</rt></ruby>だろう。しかし、<ruby>何<rt>なに</rt></ruby>かあった<ruby>時<rt>とき</rt></ruby>にすぐに<ruby>助<rt>たす</rt></ruby>けを<ruby>求<rt>もと</rt></ruby>められないといったリスクもあるため、<ruby>常<rt>つね</rt></ruby>に<ruby>周囲<rt>しゅうい</rt></ruby>への<ruby>配慮<rt>はいりょ</rt></ruby>は<ruby>必要<rt>ひつよう</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 31
+Passage: マンション<ruby>住民<rt>じゅうみん</rt></ruby>の<ruby>皆様<rt>みなさま</rt></ruby>へ。<ruby>来週<rt>らいしゅう</rt></ruby><ruby>月曜日<rt>げつようび</rt></ruby>の<ruby>午前<rt>ごぜん</rt></ruby>9<ruby>時<rt>じ</rt></ruby>から12<ruby>時<rt>じ</rt></ruby>まで、<ruby>水道<rt>すいどう</rt></ruby><ruby>管<rt>かん</rt></ruby>の<ruby>工事<rt>こうじ</rt></ruby>のため、<ruby>断水<rt>だんすい</rt></ruby>となります。<ruby>期間中<rt>きかんちゅう</rt></ruby>はトイレや<ruby>台所<rt>だいどころ</rt></ruby>などで<ruby>水<rt>みず</rt></ruby>が<ruby>使用<rt>しよう</rt></ruby>できなくなります。ご<ruby>不便<rt>ふべん</rt></ruby>をおかけしますが、ご<ruby>理解<rt>りかい</rt></ruby>とご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 32
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>町<rt>まち</rt></ruby>には、<ruby>江戸<rt>えど</rt></ruby><ruby>時代<rt>じだい</rt></ruby>から<ruby>続<rt>つづ</rt></ruby>く<ruby>古<rt>ふる</rt></ruby>い<ruby>町並<rt>まちな</rt></ruby>みが<ruby>残<rt>のこ</rt></ruby>っている。<ruby>昔<rt>むかし</rt></ruby>ながらの<ruby>建物<rt>たてもの</rt></ruby>を<ruby>利用<rt>りよう</rt></ruby>したカフェや<ruby>雑貨店<rt>ざっかてん</rt></ruby>もあり、<ruby>観光客<rt>かんこうきゃく</rt></ruby>に<ruby>人気<rt>にんき</rt></ruby>だ。しかし、<ruby>住民<rt>じゅうみん</rt></ruby>の<ruby>高齢化<rt>こうれいか</rt></ruby>が<ruby>進<rt>すす</rt></ruby>み、この<ruby>景色<rt>けしき</rt></ruby>を<ruby>維持<rt>いじ</rt></ruby>していくのが<ruby>難<rt>むずか</rt></ruby>しくなっているという<ruby>問題<rt>もんだい</rt></ruby>もある。
+--------------------------------------------------------------------------------
+ID: 33
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>集中力<rt>しゅうちゅうりょく</rt></ruby>が<ruby>続<rt>つづ</rt></ruby>かないと<ruby>感<rt>かん</rt></ruby>じることが<ruby>多<rt>おお</rt></ruby>かったので、<ruby>生活<rt>せいかつ</rt></ruby><ruby>習慣<rt>しゅうかん</rt></ruby>を<ruby>見直<rt>みなお</rt></ruby>すことにした。まず、<ruby>夜更<rt>よふ</rt></ruby>かしをやめて<ruby>十分<rt>じゅうぶん</rt></ruby>な<ruby>睡眠<rt>すいみん</rt></ruby>をとるようにした。また、<ruby>朝食<rt>ちょうしょく</rt></ruby>をきちんと<ruby>食<rt>た</rt></ruby>べるようにしたところ、<ruby>午前中<rt>ごぜんちゅう</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>の<ruby>効率<rt>こうりつ</rt></ruby>が<ruby>上<rt>あ</rt></ruby>がったように<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 34
+Passage: この<ruby>美術館<rt>びじゅつかん</rt></ruby>では、<ruby>作品<rt>さくひん</rt></ruby>に<ruby>触<rt>ふ</rt></ruby>れることはもちろん、<ruby>写真<rt>しゃしん</rt></ruby><ruby>撮影<rt>さつえい</rt></ruby>もご<ruby>遠慮<rt>えんりょ</rt></ruby>いただいております。ただし、<ruby>特別<rt>とくべつ</rt></ruby>に<ruby>許可<rt>きょか</rt></ruby>されたエリアでの<ruby>撮影<rt>さつえい</rt></ruby>は<ruby>可能<rt>かのう</rt></ruby>です。また、<ruby>館内<rt>かんない</rt></ruby>での<ruby>飲食<rt>いんしょく</rt></ruby>は<ruby>固<rt>かた</rt></ruby>くお<ruby>断<rt>ことわ</rt></ruby>りいたします。皆様<rt>みなさま</rt>のご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 35
+Passage: <ruby>大学<rt>だいがく</rt></ruby>を<ruby>卒業<rt>そつぎょう</rt></ruby>して<ruby>社会人<rt>しゃかいじん</rt></ruby>になってから、<ruby>運動<rt>うんどう</rt></ruby>する<ruby>機会<rt>きかい</rt></ruby>がすっかり<ruby>減<rt>へ</rt></ruby>ってしまった。<ruby>学生<rt>がくせい</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>は<ruby>毎日<rt>まいにち</rt></ruby>のようにサッカーをしていたのに、<ruby>今<rt>いま</rt></ruby>では<ruby>週末<rt>しゅうまつ</rt></ruby>に<ruby>疲<rt>つか</rt></ruby>れて<ruby>寝<rt>ね</rt></ruby>ているだけだ。これではいけないと<ruby>思<rt>おも</rt></ruby>い、<ruby>来週<rt>らいしゅう</rt></ruby>からジムに<ruby>通<rt>かよ</rt></ruby>うことにした。
+--------------------------------------------------------------------------------
+ID: 36
+Passage: <ruby>商品<rt>しょうひん</rt></ruby>ご<ruby>購入<rt>こうにゅう</rt></ruby><ruby>後<rt>ご</rt></ruby>の<ruby>返品<rt>へんぴん</rt></ruby>・<ruby>交換<rt>こうかん</rt></ruby>は、<ruby>未<rt>み</rt></ruby><ruby>使用<rt>しよう</rt></ruby>の<ruby>場合<rt>ばあい</rt></ruby>に<ruby>限<rt>かぎ</rt></ruby>り、ご<ruby>購入<rt>こうにゅう</rt></ruby>から<ruby>一週間<rt>いっしゅうかん</rt></ruby><ruby>以内<rt>いない</rt></ruby>にお<ruby>願<rt>ねが</rt></ruby>いいたします。その<ruby>際<rt>さい</rt></ruby>は、<ruby>必<rt>かなら</rt></ruby>ずレシートをご<ruby>持参<rt>じさん</rt></ruby>ください。レシートがない<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>返品<rt>へんぴん</rt></ruby>・<ruby>交換<rt>こうかん</rt></ruby>をお<ruby>受<rt>う</rt></ruby>けできませんので、あらかじめご<ruby>了承<rt>りょうしょう</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 37
+Passage: <ruby>日本語<rt>にほんご</rt></ruby>には<ruby>敬語<rt>けいご</rt></ruby>があり、<ruby>相手<rt>あいて</rt></ruby>や<ruby>状況<rt>じょうきょう</rt></ruby>によって<ruby>言葉<rt>ことば</rt></ruby>を<ruby>使<rt>つか</rt></ruby>い<ruby>分<rt>わ</rt></ruby>ける<ruby>必要<rt>ひつよう</rt></ruby>がある。これを<ruby>難<rt>むずか</rt></ruby>しいと<ruby>感<rt>かん</rt></ruby>じる<ruby>学習者<rt>がくしゅうしゃ</rt></ruby>は<ruby>多<rt>おお</rt></ruby>いが、<ruby>敬語<rt>けいご</rt></ruby>は<ruby>相手<rt>あいて</rt></ruby>への<ruby>敬意<rt>けいい</rt></ruby>を<ruby>示<rt>しめ</rt></ruby>し、スムーズな<ruby>人間<rt>にんげん</rt></ruby><ruby>関係<rt>かんけい</rt></ruby>を<ruby>築<rt>きず</rt></ruby>くための<ruby>大切<rt>たいせつ</rt></ruby>なツールでもある。まずは<ruby>丁寧語<rt>ていねいご</rt></ruby>である「です・ます」の<ruby>形<rt>かたち</rt></ruby>を<ruby>確実<rt>かくじつ</rt></ruby>にマスターすることから<ruby>始<rt>はじ</rt></ruby>めるとよいだろう。
+--------------------------------------------------------------------------------
+ID: 38
+Passage: <ruby>桜<rt>さくら</rt></ruby>エビルの<ruby>皆様<rt>みなさま</rt></ruby>へ。 <ruby>明日<rt>あした</rt></ruby>、10<ruby>月<rt>がつ</rt></ruby>5<ruby>日<rt>にち</rt></ruby>（<ruby>水<rt>すい</rt></ruby>）の<ruby>午後<rt>ごご</rt></ruby>1<ruby>時<rt>じ</rt></ruby>から5<ruby>時<rt>じ</rt></ruby>まで、<ruby>消防<rt>しょうぼう</rt></ruby><ruby>設備<rt>せつび</rt></ruby>の<ruby>点検<rt>てんけん</rt></ruby>を<ruby>実施<rt>じっし</rt></ruby>します。<ruby>点検中<rt>てんけんちゅう</rt></ruby>、<ruby>非常<rt>ひじょう</rt></ruby>ベルが<ruby>鳴<rt>な</rt></ruby>ることがありますが、<ruby>実際<rt>じっさい</rt></ruby>の<ruby>火災<rt>かさい</rt></ruby>ではありませんのでご<ruby>安心<rt>あんしん</rt></ruby>ください。ご<ruby>迷惑<rt>めいわく</rt></ruby>をおかけしますが、ご<ruby>協力<rt>きょうりょく</rt></ruby>お<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 39
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>故郷<rt>こきょう</rt></ruby>は<ruby>小<rt>ちい</rt></ruby>さな<ruby>漁村<rt>ぎょそん</rt></ruby>だ。<ruby>子供<rt>こども</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>は、<ruby>何<rt>なに</rt></ruby>もないこの<ruby>町<rt>まち</rt></ruby>が<ruby>嫌<rt>いや</rt></ruby>で、<ruby>早<rt>はや</rt></ruby>く<ruby>都会<rt>とかい</rt></ruby>に<ruby>出<rt>で</rt></ruby>たいとばかり<ruby>思<rt>おも</rt></ruby>っていた。しかし、<ruby>実際<rt>じっさい</rt></ruby>に<ruby>都会<rt>とかい</rt></ruby>で<ruby>暮<rt>く</rt></ruby>らしてみると、<ruby>故郷<rt>こきょう</rt></ruby>の<ruby>静<rt>しず</rt></ruby>かな<ruby>海<rt>うみ</rt></ruby>や<ruby>温<rt>あたた</rt></ruby>かい<ruby>人<rt>ひと</rt></ruby>びとのことが<ruby>懐<rt>なつ</rt></ruby>かしく<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>だ</rt></ruby>される。今<rt>いま</rt></ruby>では、あの<ruby>町<rt>まち</rt></ruby>の<ruby>良<rt>よ</rt></ruby>さがよくわかる。
+--------------------------------------------------------------------------------
+ID: 40
+Passage: <ruby>仕事<rt>しごと</rt></ruby>でミスをした<ruby>時<rt>とき</rt></ruby>、それを<ruby>隠<rt>かく</rt></ruby>そうとしたり、<ruby>誰<rt>だれ</rt></ruby>かのせいにしたりするのは<ruby>最<rt>もっと</rt></ruby>もよくない。<ruby>重要<rt>じゅうよう</rt></ruby>なのは、まず<ruby>正直<rt>しょうじき</rt></ruby>に<ruby>報告<rt>ほうこく</rt></ruby>し、<ruby>謝罪<rt>しゃざい</rt></ruby>することだ。そして、なぜミスが<ruby>起<rt>お</rt></ruby>きたのか<ruby>原因<rt>げんいん</rt></ruby>を<ruby>分析<rt>ぶんせき</rt></ruby>し、<ruby>二度<rt>にど</rt></ruby>と<ruby>同<rt>おな</rt></ruby>じ<ruby>過<rt>あやま</rt></ruby>ちを<ruby>繰<rt>く</rt></ruby>り<ruby>返<rt>かえ</rt></ruby>さないように<ruby>対策<rt>たいさく</rt></ruby>を<ruby>立<rt>た</rt></ruby>てることである。
+--------------------------------------------------------------------------------
+ID: 41
+Passage: <ruby>来月<rt>らいげつ</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>まるテレビドラマの<ruby>撮影<rt>さつえい</rt></ruby>のため、<ruby>主演<rt>しゅえん</rt></ruby>の<ruby>俳優<rt>はいゆう</rt></ruby>は<ruby>体重<rt>たいじゅう</rt></ruby>を10キロも<ruby>減<rt>へ</rt></ruby>らしたそうだ。<ruby>役<rt>やく</rt></ruby>づくりのために、<ruby>食事<rt>しょくじ</rt></ruby><ruby>制限<rt>せいげん</rt></ruby>とトレーニングを<ruby>続<rt>つづ</rt></ruby>けたという。<ruby>彼<rt>かれ</rt></ruby>のプロ<ruby>意識<rt>いしき</rt></ruby>の<ruby>高<rt>たか</rt></ruby>さには<ruby>驚<rt>おどろ</rt></ruby>かされる。ドラマの<ruby>放送<rt>ほうそう</rt></ruby>が<ruby>待<rt>ま</rt></ruby>ち<ruby>遠<rt>どお</rt></ruby>しい。
+--------------------------------------------------------------------------------
+ID: 42
+Passage: このパソコン教室では、<ruby>初心者<rt>しょしんしゃ</rt></ruby>の<ruby>方<rt>かた</rt></ruby>を<ruby>対象<rt>たいしょう</rt></ruby>としたコースをご<ruby>用意<rt>ようい</rt></ruby>しております。<ruby>電源<rt>でんげん</rt></ruby>の<ruby>入<rt>い</rt></ruby>れ<ruby>方<rt>かた</rt></ruby>から、インターネットの<ruby>楽<rt>たの</rt></ruby>しみ<ruby>方<rt>かた</rt></ruby>まで、<ruby>丁寧<rt>ていねい</rt></ruby>にお<ruby>教<rt>おし</rt></ruby>えします。パソコンに<ruby>触<rt>さわ</rt></ruby>ったことがないという<ruby>方<rt>かた</rt></ruby>でも、<ruby>安心<rt>あんしん</rt></ruby>してご<ruby>参加<rt>さんか</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 43
+Passage: <ruby>留学<rt>りゅうがく</rt></ruby>して<ruby>初<rt>はじ</rt></ruby>めての<ruby>頃<rt>ころ</rt></ruby>は、<ruby>言葉<rt>ことば</rt></ruby>の<ruby>壁<rt>かべ</rt></ruby>や<ruby>文化<rt>ぶんか</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>いに<ruby>戸惑<rt>とまど</rt></ruby>うことばかりだった。しかし、ホストファミリーや<ruby>学校<rt>がっこう</rt></ruby>の<ruby>友人<rt>ゆうじん</rt></ruby>たちが<ruby>辛抱強<rt>しんぼうづよ</rt></ruby>く<ruby>私<rt>わたし</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いてくれたおかげで、<ruby>少<rt>すこ</rt></ruby>しずつ<ruby>自分<rt>じぶん</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちを<ruby>伝<rt>つた</rt></ruby>えられるようになった。その<ruby>経験<rt>けいけん</rt></ruby>を<ruby>通<rt>とお</rt></ruby>して、コミュニケーションの<ruby>大切<rt>たいせつ</rt></ruby>さを<ruby>学<rt>まな</rt></ruby>んだ。
+--------------------------------------------------------------------------------
+ID: 44
+Passage: この<ruby>図書館<rt>としょかん</rt></ruby>では、<ruby>資料<rt>しりょう</rt></ruby>のコピーサービスを<ruby>利用<rt>りよう</rt></ruby>できます。コピーは<ruby>白黒<rt>しろくろ</rt></ruby>が1<ruby>枚<rt>まい</rt></ruby>10<ruby>円<rt>えん</rt></ruby>、カラーが1<ruby>枚<rt>まい</rt></ruby>50<ruby>円<rt>えん</rt></ruby>です。<ruby>著作権法<rt>ちょさくけんほう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るため、コピーできるのは<ruby>資料<rt>しりょう</rt></ruby>の<ruby>一部分<rt>いちぶぶん</rt></ruby>のみとなっておりますのでご<ruby>注意<rt>ちゅうい</rt></ruby>ください。ご<ruby>不明<rt>ふめい</rt></ruby>な<ruby>点<rt>てん</rt></ruby>はカウンターの<ruby>係員<rt>かかりいん</rt></ruby>におたずねください。
+--------------------------------------------------------------------------------
+ID: 45
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>緊張<rt>きんちょう</rt></ruby>するとすぐにおなかが<ruby>痛<rt>いた</rt></ruby>くなる<ruby>体質<rt>たいしつ</rt></ruby>だ。<ruby>大切<rt>たいせつ</rt></ruby>な<ruby>試験<rt>しけん</rt></ruby>や<ruby>発表<rt>はっぴょう</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>はいつもそうだ。だから、そういう<ruby>日<rt>ひ</rt></ruby>は、<ruby>家<rt>いえ</rt></ruby>を<ruby>出<rt>で</rt></ruby>る<ruby>時間<rt>じかん</rt></ruby>を<ruby>早<rt>はや</rt></ruby>め、<ruby>途中<rt>とちゅう</rt></ruby>でトイレに<ruby>行<rt>い</rt></ruby>けるように<ruby>余裕<rt>よゆう</rt></ruby>を<ruby>持<rt>も</rt></ruby>って<ruby>行動<rt>こうどう</rt></ruby>するようにしている。それが<ruby>私<rt>わたし</rt></ruby>なりの<ruby>対策<rt>たいさく</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 46
+Passage: このたび、<ruby>新<rt>あたら</rt></ruby>しい<ruby>会員<rt>かいいん</rt></ruby>カードを<ruby>導入<rt>どうにゅう</rt></ruby>することになりました。お<ruby>買<rt>か</rt></ruby>い<ruby>上<rt>あ</rt></ruby>げ<ruby>金額<rt>きんがく</rt></ruby>100<ruby>円<rt>えん</rt></ruby>ごとに1ポイントがたまり、たまったポイントは<ruby>次回<rt>じかい</rt></ruby>のお<ruby>買<rt>か</rt></ruby>い<ruby>物<rt>もの</rt></ruby>から1ポイント1<ruby>円<rt>えん</rt></ruby>としてご<ruby>利用<rt>りよう</rt></ruby>いただけます。<ruby>現在<rt>げんざい</rt></ruby>お<ruby>持<rt>も</rt></ruby>ちの<ruby>旧<rt>きゅう</rt></ruby>カードからのポイント<ruby>移行<rt>いこう</rt></ruby>も<ruby>可能<rt>かのう</rt></ruby>ですので、スタッフまでお<ruby>申<rt>もう</rt></ruby>し<ruby>付<rt>つ</rt></ruby>けください。
+--------------------------------------------------------------------------------
+ID: 47
+Passage: <ruby>何<rt>なに</rt></ruby>かを<ruby>新<rt>あたら</rt></ruby>しく<ruby>始<rt>はじ</rt></ruby>めるとき、「<ruby>失敗<rt>しっぱい</rt></ruby>したらどうしよう」という<ruby>不安<rt>ふあん</rt></ruby>から、なかなか<ruby>一歩<rt>いっぽ</rt></ruby>を<ruby>踏<rt>ふ</rt></ruby>み<ruby>出<rt>だ</rt></ruby>せない<ruby>人<rt>ひと</rt></ruby>がいる。<ruby>確<rt>たし</rt></ruby>かに<ruby>失敗<rt>しっぱい</rt></ruby>は<ruby>誰<rt>だれ</rt></ruby>でもしたくない。しかし、<ruby>何<rt>なに</rt></ruby>もせずに<ruby>後悔<rt>こうかい</rt></ruby>するより、やってみて<ruby>失敗<rt>しっぱい</rt></ruby>する<ruby>方<rt>ほう</rt></ruby>がずっといい。<ruby>失敗<rt>しっぱい</rt></ruby>からは<ruby>多<rt>おお</rt></ruby>くのことを<ruby>学<rt>まな</rt></ruby>べるからだ。
+--------------------------------------------------------------------------------
+ID: 48
+Passage: マンションの<ruby>駐輪場<rt>ちゅうりんじょう</rt></ruby>についてのお<ruby>願<rt>ねが</rt></ruby>いです。<ruby>最近<rt>さいきん</rt></ruby>、<ruby>決<rt>き</rt></ruby>められた<ruby>場所以外<rt>ばしょいがい</rt></ruby>に<ruby>自転車<rt>じてんしゃ</rt></ruby>を<ruby>止<rt>と</rt></ruby>める<ruby>方<rt>かた</rt></ruby>が<ruby>見<rt>み</rt></ruby>られます。これは<ruby>他<rt>ほか</rt></ruby>の<ruby>方<rt>かた</rt></ruby>の<ruby>迷惑<rt>めいわく</rt></ruby>になるだけでなく、<ruby>緊急時<rt>きんきゅうじ</rt></ruby>の<ruby>通路<rt>つうろ</rt></ruby>をふさぐことにもなり<ruby>危険<rt>きけん</rt></ruby>です。<ruby>必<rt>かなら</rt></ruby>ず<ruby>自分<rt>じぶん</rt></ruby>の<ruby>番号<rt>ばんごう</rt></ruby>の<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>止<rt>と</rt></ruby>めてください。
+--------------------------------------------------------------------------------
+ID: 49
+Passage: <ruby>最近<rt>さいきん</rt></ruby>の<ruby>子供<rt>こども</rt></ruby>たちは、<ruby>外<rt>そと</rt></ruby>で<ruby>遊<rt>あそ</rt></ruby>ぶよりゲームをする<ruby>時間<rt>じかん</rt></ruby>の<ruby>方<rt>ほう</rt></ruby>が<ruby>長<rt>なが</rt></ruby>いと<ruby>言<rt>い</rt></ruby>われる。ゲームにも<ruby>良<rt>よ</rt></ruby>い<ruby>点<rt>てん</rt></ruby>はあるだろうが、やはり<ruby>子供<rt>こども</rt></ruby>の<ruby>頃<rt>ころ</rt></ruby>は<ruby>自然<rt>しぜん</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>体<rt>からだ</rt></ruby>を<ruby>動<rt>うご</rt></ruby>かして<ruby>遊<rt>あそ</rt></ruby>ぶ<ruby>経験<rt>けいけん</rt></ruby>が<ruby>不可欠<rt>ふかけつ</rt></ruby>だと<ruby>私<rt>わたし</rt></ruby>は<ruby>考<rt>かんが</rt></ruby>える。その<ruby>中<rt>なか</rt></ruby>で、<ruby>友達<rt>ともだち</rt></ruby>と<ruby>協力<rt>きょうりょく</rt></ruby>したりけんかしたりしながら、<ruby>社会性<rt>しゃかいせい</rt></ruby>を<ruby>学<rt>まな</rt></ruby>んでいくものだからだ。
+--------------------------------------------------------------------------------
+ID: 50
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>出張<rt>しゅっちょう</rt></ruby>の<ruby>件<rt>けん</rt></ruby>ですが、<ruby>急<rt>きゅう</rt></ruby>な<ruby>用事<rt>ようじ</rt></ruby>ができてしまい、<ruby>私<rt>わたし</rt></ruby>の<ruby>代<rt>か</rt></ruby>わりに<ruby>同僚<rt>どうりょう</rt></ruby>の<ruby>山田<rt>やまだ</rt></ruby>さんが<ruby>行<rt>い</rt></ruby>くことになりました。<ruby>訪問<rt>ほうもん</rt></ruby>するメンバーが<ruby>変更<rt>へんこう</rt></ruby>となり、<ruby>申<rt>もう</rt></ruby>し<ruby>訳<rt>わけ</rt></ruby>ありません。<ruby>山田<rt>やまだ</rt></ruby>さんには<ruby>事情<rt>じじょう</rt></ruby>を<ruby>伝<rt>つた</rt></ruby>えてありますので、どうぞよろしくお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 51
+Passage: <ruby>日本<rt>にほん</rt></ruby>では<ruby>四季<rt>しき</rt></ruby>がはっきりしており、それぞれの<ruby>季節<rt>きせつ</rt></ruby>に<ruby>特有<rt>とくゆう</rt></ruby>の<ruby>食<rt>た</rt></ruby>べ<ruby>物<rt>もの</rt></ruby>がある。「<ruby>旬<rt>しゅん</rt></ruby>」と<ruby>呼<rt>よ</rt></ruby>ばれるその<ruby>時期<rt>じき</rt></ruby>に<ruby>収穫<rt>しゅうかく</rt></ruby>されたものは、<ruby>栄養価<rt>えいようか</rt></ruby>が<ruby>高<rt>たか</rt></ruby>く、<ruby>味<rt>あじ</rt></ruby>も<ruby>最<rt>もっと</rt></ruby>も<ruby>良<rt>よ</rt></ruby>いとされる。<ruby>例<rt>たと</rt></ruby>えば、<ruby>春<rt>はる</rt></ruby>にはタケノコ、<ruby>夏<rt>なつ</rt></ruby>にはスイカ、<ruby>秋<rt>あき</rt></ruby>にはサンマといった<ruby>具合<rt>ぐあい</rt></ruby>だ。旬のものを<ruby>食<rt>た</rt></ruby>べることは、<ruby>季節<rt>きせつ</rt></ruby>の<ruby>移<rt>うつ</rt></ruby>り<ruby>変<rt>か</rt></ruby>わりを<ruby>感<rt>かん</rt></ruby>じる<ruby>楽<rt>たの</rt></ruby>しみの<ruby>一<rt>ひと</rt></ruby>つでもある。
+--------------------------------------------------------------------------------
+ID: 52
+Passage: <ruby>お客様<rt>きゃくさま</rt></ruby>にお<ruby>知<rt>し</rt></ruby>らせいたします。<ruby>本日<rt>ほんじつ</rt></ruby>、<ruby>食料品<rt>しょくひん</rt></ruby>売り場<rt>うりば</rt></ruby>にて、<ruby>赤<rt>あか</rt></ruby>いかさをお<ruby>忘<rt>わす</rt></ruby>れになったお<ruby>客様<rt>きゃくさま</rt></ruby>はいらっしゃいませんでしょうか。<ruby>心当<rt>こころあた</rt></ruby>たりのあるお<ruby>客様<rt>きゃくさま</rt></ruby>は、1<ruby>階<rt>かい</rt></ruby>のサービスカウンターまでお<ruby>越<rt>こ</rt></ruby>しください。お<ruby>預<rt>あず</rt></ruby>かりしております。
+--------------------------------------------------------------------------------
+ID: 53
+Passage: <ruby>私<rt>わたし</rt></ruby>が<ruby>働<rt>はたら</rt></ruby>いている<ruby>会社<rt>かいしゃ</rt></ruby>では、<ruby>毎週<rt>まいしゅう</rt></ruby><ruby>水曜日<rt>すいようび</rt></ruby>は「ノー残業デー」と<ruby>決<rt>き</rt></ruby>められている。この<ruby>日<rt>ひ</rt></ruby>は、<ruby>特別<rt>とくべつ</rt></ruby>な<ruby>理由<rt>りゆう</rt></ruby>がない<ruby>限<rt>かぎ</rt></ruby>り、<ruby>全員<rt>ぜんいん</rt></ruby>が<ruby>定時<rt>ていじ</rt></ruby>に<ruby>退社<rt>たいしゃ</rt></ruby>しなければならない。はじめは<ruby>仕事<rt>しごと</rt></ruby>が<ruby>終<rt>お</rt></ruby>わらないのではないかと<ruby>心配<rt>しんぱい</rt></ruby>だったが、<ruby>今<rt>いま</rt></ruby>では<ruby>時間内<rt>じかんない</rt></ruby>に<ruby>仕事<rt>しごと</rt></ruby>を<ruby>終<rt>お</rt></ruby>わらせるため、<ruby>逆<rt>ぎゃく</rt></ruby>に<ruby>効率<rt>こうりつ</rt></ruby>が<ruby>上<rt>あ</rt></ruby>がった<ruby>気<rt>き</rt></ruby>がする。
+--------------------------------------------------------------------------------
+ID: 54
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>木曜日<rt>もくようび</rt></ruby>に<ruby>健康診断<rt>けんこうしんだん</rt></ruby>があります。前日<rt>ぜんじつ</rt></ruby>の<ruby>夜<rt>よる</rt></ruby>9<ruby>時<rt>じ</rt></ruby><ruby>以降<rt>いこう</rt></ruby>は、<ruby>食事<rt>しょくじ</rt></ruby>をしないでください。<ruby>水<rt>みず</rt></ruby>やお<ruby>茶<rt>ちゃ</rt></ruby>は<ruby>飲<rt>の</rt></ruby>んでもかまいませんが、ジュースや牛乳<rt>ぎゅうにゅう</rt></ruby>など<ruby>砂糖<rt>さとう</rt></ruby>や<ruby>脂肪<rt>しぼう</rt></ruby>が<ruby>含<rt>ふく</rt></ruby>まれるものは<ruby>避<rt>さ</rt></ruby>けてください。<ruby>当日<rt>とうじつ</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>も、<ruby>食事<rt>しょくじ</rt></ruby>はせずに<ruby>来<rt>き</rt></ruby>てください。
+--------------------------------------------------------------------------------
+ID: 55
+Passage: <ruby>人<rt>ひと</rt></ruby>に<ruby>何<rt>なに</rt></ruby>かを<ruby>説明<rt>せつめい</rt></ruby>する<ruby>時<rt>とき</rt></ruby>、<ruby>専門<rt>せんもん</rt></ruby><ruby>用語<rt>ようご</rt></ruby>ばかりを<ruby>使<rt>つか</rt></ruby>うと、<ruby>相手<rt>あいて</rt></ruby>にうまく<ruby>伝<rt>つた</rt></ruby>わらないことがある。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>相手<rt>あいて</rt></ruby>の<ruby>知識<rt>ちしき</rt></ruby>レベルに<ruby>合<rt>あ</rt></ruby>わせて、できるだけ<ruby>平易<rt>へいい</rt></ruby>な<ruby>言葉<rt>ことば</rt></ruby>を<ruby>選<rt>えら</rt></ruby>び、<ruby>具体的<rt>ぐたいてき</rt></ruby>な<ruby>例<rt>れい</rt></ruby>を<ruby>挙<rt>あ</rt></ruby>げて<ruby>話<rt>はな</rt></ruby>すことだ。そうすることで、<ruby>誤解<rt>ごかい</rt></ruby>なく<ruby>内容<rt>ないよう</rt></ruby>を<ruby>理解<rt>りかい</rt></ruby>してもらえるだろう。
+--------------------------------------------------------------------------------
+ID: 56
+Passage: <ruby>本日<rt>ほんじつ</rt></ruby>は<ruby>悪天候<rt>あくてんこう</rt></ruby>のため、<ruby>予定<rt>よてい</rt></ruby>しておりました<ruby>花火<rt>はなび</rt></ruby><ruby>大会<rt>たいかい</rt></ruby>は<ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>土曜日<rt>どようび</rt></ruby>に<ruby>延期<rt>えんき</rt></ruby>となりました。<ruby>時間<rt>じかん</rt></ruby>と<ruby>場所<rt>ばしょ</rt></ruby>に<ruby>変更<rt>へんこう</rt></ruby>はございません。<ruby>来週<rt>らいしゅう</rt></ruby>こそは<ruby>晴<rt>は</rt></ruby>れることを<ruby>祈<rt>いの</rt></ruby>っております。ご<ruby>来場<rt>らいじょう</rt></ruby>を<ruby>予定<rt>よてい</rt></ruby>されていた<ruby>皆様<rt>みなさま</rt></ruby>にはご<ruby>迷惑<rt>めいわく</rt></ruby>をおかけします。
+--------------------------------------------------------------------------------
+ID: 57
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、インターネットのフリーマーケットアプリを<ruby>利用<rt>りよう</rt></ruby>して、<ruby>不要<rt>ふよう</rt></ruby>になった<ruby>服<rt>ふく</rt></ruby>や<ruby>本<rt>ほん</rt></ruby>を<ruby>売<rt>う</rt></ruby>るようにしている。<ruby>捨<rt>す</rt></ruby>ててしまえばただのゴミだが、<ruby>誰<rt>だれ</rt></ruby>か<ruby>必要<rt>ひつよう</rt></ruby>としている<ruby>人<rt>ひと</rt></ruby>に<ruby>使<rt>つか</rt></ruby>ってもらえるのは<ruby>嬉<rt>うれ</rt></ruby>しいし、<ruby>少<rt>すこ</rt></ruby>しだがお<ruby>金<rt>かね</rt></ruby>にもなる。また、<ruby>物<rt>もの</rt></ruby>を<ruby>大切<rt>たいせつ</rt></ruby>にする<ruby>意識<rt>いしき</rt></ruby>も<ruby>高<rt>たか</rt></ruby>まった。
+--------------------------------------------------------------------------------
+ID: 58
+Passage: <ruby>当店<rt>とうてん</rt></ruby>のパンは、<ruby>毎日<rt>まいにち</rt></ruby>お店<rt>みせ</rt></ruby>で<ruby>焼<rt>や</rt></ruby>き<ruby>上<rt>あ</rt></ruby>げております。<ruby>国産<rt>こくさん</rt></ruby>の<ruby>小麦<rt>こむぎ</rt></ruby>と<ruby>天然<rt>てんねん</rt></ruby><ruby>酵母<rt>こうぼ</rt></ruby>を<ruby>使<rt>つか</rt></ruby>い、<ruby>時間<rt>じかん</rt></ruby>をかけてゆっくりと<ruby>発酵<rt>はっこう</rt></ruby>させているため、<ruby>小麦<rt>こむぎ</rt></ruby><ruby>本来<rt>ほんらい</rt></ruby>の<ruby>豊<rt>ゆた</rt></ruby>かな<ruby>風味<rt>ふうみ</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しめます。<ruby>保存料<rt>ほぞんりょう</rt></ruby>は<ruby>一切<rt>いっさい</rt></ruby><ruby>使用<rt>しよう</rt></ruby>しておりませんので、お<ruby>早<rt>はや</rt></ruby>めにお<ruby>召<rt>め</rt></ruby>し<ruby>上<rt>あ</rt></ruby>がりください。
+--------------------------------------------------------------------------------
+ID: 59
+Passage: <ruby>会話<rt>かいわ</rt></ruby>をするとき、<ruby>相手<rt>あいて</rt></ruby>の<ruby>目<rt>め</rt></ruby>を<ruby>見<rt>み</rt></ruby>て<ruby>話<rt>はな</rt></ruby>すことは<ruby>大切<rt>たいせつ</rt></ruby>だ。しかし、ずっと<ruby>見<rt>み</rt></ruby>つめ<ruby>続<rt>つづ</rt></ruby>けると、<ruby>相手<rt>あいて</rt></ruby>に<ruby>威圧感<rt>いあつかん</rt></ruby>を<ruby>与<rt>あた</rt></ruby>えてしまうこともある。<ruby>適度<rt>てきど</rt></ruby>に<ruby>視線<rt>しせん</rt></ruby>をはずしながら、<ruby>相手<rt>あいて</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>にうなずいたり、<ruby>相槌<rt>あいづち</rt></ruby>を<ruby>打<rt>う</rt></ruby>ったりすることが、<ruby>心地<rt>ここち</rt></ruby>よいコミュニケーションにつながる。
+--------------------------------------------------------------------------------
+ID: 60
+Passage: <ruby>弊社<rt>へいしゃ</rt></ruby>では、<ruby>地球<rt>ちきゅう</rt></ruby><ruby>温暖化<rt>おんだんか</rt></ruby><ruby>対策<rt>たいさく</rt></ruby>の<ruby>一環<rt>いっかん</rt></ruby>として、<ruby>夏<rt>なつ</rt></ruby>の<ruby>期間<rt>きかん</rt></ruby>、オフィスの<ruby>冷房<rt>れいぼう</rt></ruby><ruby>温度<rt>おんど</rt></ruby>を28<ruby>度<rt>ど</rt></ruby>に<ruby>設定<rt>せってい</rt></ruby>しております。つきましては、ノーネクタイ、ノージャケットなどのクールビズ（<ruby>軽装<rt>けいそう</rt></ruby>）での<ruby>勤務<rt>きんむ</rt></ruby>を<ruby>推奨<rt>すいしょう</rt></ruby>いたします。<ruby>皆様<rt>みなさま</rt></ruby>のご<ruby>理解<rt>りかい</rt></ruby>とご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 61
+Passage: <ruby>友人<rt>ゆうじん</rt></ruby>が<ruby>経営<rt>けいえい</rt></ruby>するレストランに<ruby>行<rt>い</rt></ruby>ってきた。<ruby>彼<rt>かれ</rt></ruby>は<ruby>昔<rt>むかし</rt></ruby>から<ruby>料理<rt>りょうり</rt></ruby>が<ruby>得意<rt>とくい</rt></ruby>だったが、<ruby>店<rt>みせ</rt></ruby>の<ruby>料理<rt>りょうり</rt></ruby>は<ruby>想像<rt>そうぞう</rt></ruby><ruby>以上<rt>いじょう</rt></ruby>に<ruby>美味<rt>おい</rt></ruby>しかった。<ruby>特<rt>とく</rt></ruby>に、<ruby>野菜<rt>やさい</rt></ruby>の<ruby>新鮮<rt>しんせん</rt></ruby>さが<ruby>際立<rt>きわだ</rt></ruby>っていた。<ruby>聞<rt>き</rt></ruby>けば、<ruby>毎朝<rt>まいあさ</rt></ruby><ruby>自分<rt>じぶん</rt></ruby>で<ruby>農家<rt>のうか</rt></ruby>へ<ruby>足<rt>あし</rt></ruby>を<ruby>運<rt>はこ</rt></ruby>んで<ruby>仕入<rt>しい</rt></ruby>れているそうだ。そのこだわりに<ruby>感動<rt>かんどう</rt></ruby>した。
+--------------------------------------------------------------------------------
+ID: 62
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>会議<rt>かいぎ</rt></ruby>は<ruby>午前<rt>ごぜん</rt></ruby>10<ruby>時<rt>じ</rt></ruby>からですが、<ruby>準備<rt>じゅんび</rt></ruby>のため、<ruby>関係者<rt>かんけいしゃ</rt></ruby>は9<ruby>時<rt>じ</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby>までに<ruby>会議室<rt>かいぎしつ</rt></ruby>に<ruby>集<rt>あつ</rt></ruby>まってください。プロジェクターの<ruby>接続<rt>せつぞく</rt></ruby>チェックと<ruby>資料<rt>しりょう</rt></ruby>の<ruby>配布<rt>はいふ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>います。ご<ruby>協力<rt>きょうりょく</rt></ruby>お<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 63
+Passage: ストレス<ruby>解消法<rt>かいしょうほう</rt></ruby>は<ruby>人<rt>ひと</rt></ruby>それぞれだが、<ruby>私<rt>わたし</rt></ruby>の<ruby>場合<rt>ばあい</rt></ruby>は<ruby>料理<rt>りょうり</rt></ruby>をすることだ。<ruby>野菜<rt>やさい</rt></ruby>を<ruby>無心<rt>むしん</rt></ruby>で<ruby>切<rt>き</rt></ruby>ったり、<ruby>鍋<rt>なべ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>をかき<ruby>混<rt>ま</rt></ruby>ぜたりしていると、いつのまにか<ruby>嫌<rt>いや</rt></ruby>なことを<ruby>忘<rt>わす</rt></ruby>れている。<ruby>完成<rt>かんせい</rt></ruby>した<ruby>料理<rt>りょうり</rt></ruby>を<ruby>美味<rt>おい</rt></ruby>しく<ruby>食<rt>た</rt></ruby>べれば、<ruby>心<rt>こころ</rt></ruby>も<ruby>満<rt>み</rt></ruby>たされる。
+--------------------------------------------------------------------------------
+ID: 64
+Passage: <ruby>本<rt>ほん</rt></ruby>アプリのアップデートを<ruby>行<rt>おこな</rt></ruby>いました。<ruby>今回<rt>こんかい</rt></ruby>の<ruby>更新<rt>こうしん</rt></ruby>では、<ruby>操作<rt>そうさ</rt></ruby>画面<rt>がめん</rt></ruby>のデザインを<ruby>変更<rt>へんこう</rt></ruby>し、より<ruby>使<rt>つか</rt></ruby>いやすくなりました。また、お<ruby>客様<rt>きゃくさま</rt></ruby>からご<ruby>要望<rt>ようぼう</rt></ruby>の<ruby>多<rt>おお</rt></ruby>かった、<ruby>検索<rt>けんさく</rt></ruby><ruby>機能<rt>きのう</rt></ruby>を<ruby>追加<rt>ついか</rt></ruby>いたしました。より<ruby>快適<rt>かいてき</rt></ruby>になったアプリをぜひお<ruby>試<rt>ため</rt></ruby>しください。
+--------------------------------------------------------------------------------
+ID: 65
+Passage: <ruby>初<rt>はじ</rt></ruby>めて<ruby>会<rt>あ</rt></ruby>う<ruby>人<rt>ひと</rt></ruby>と<ruby>話<rt>はな</rt></ruby>すとき、<ruby>天気<rt>てんき</rt></ruby>の<ruby>話題<rt>わだい</rt></ruby>から<ruby>始<rt>はじ</rt></ruby>めることが<ruby>多<rt>おお</rt></ruby>い。それは、<ruby>誰<rt>だれ</rt></ruby>にでも<ruby>共通<rt>きょうつう</rt></ruby>の<ruby>話題<rt>わだい</rt></ruby>であり、<ruby>相手<rt>あいて</rt></ruby>の<ruby>意見<rt>いけん</rt></ruby>を<ruby>否定<rt>ひてい</rt></ruby>することもないからだ。<ruby>天気<rt>てんき</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>で<ruby>場<rt>ば</rt></ruby>の<ruby>雰囲気<rt>ふんいき</rt></ruby>をなごませてから、<ruby>本題<rt>ほんだい</rt></ruby>に<ruby>入<rt>はい</rt></ruby>るのがスムーズなコミュニケーションのコツかもしれない。
+--------------------------------------------------------------------------------
+ID: 66
+Passage: このたび<ruby>引<rt>ひ</rt></ruby>っ<ruby>越<rt>こ</rt></ruby>しをしましたが、<ruby>荷物<rt>にもつ</rt></ruby>の<ruby>整理<rt>せいり</rt></ruby>がなかなか<ruby>終<rt>お</rt></ruby>わりません。とりあえず<ruby>生活<rt>せいかつ</rt></ruby>に<ruby>必要<rt>ひつよう</rt></ruby>なものだけをダンボールから<ruby>出<rt>だ</rt></ruby>したのですが、<ruby>残<rt>のこ</rt></ruby>りの<ruby>箱<rt>はこ</rt></ruby>を<ruby>見<rt>み</rt></ruby>ると<ruby>気<rt>き</rt></ruby>が<ruby>遠<rt>とお</rt></ruby>くなります。<ruby>週末<rt>しゅうまつ</rt></ruby>にまとめて<ruby>片付<rt>かたづ</rt></ruby>けようと<ruby>思<rt>おも</rt></ruby>っています。
+--------------------------------------------------------------------------------
+ID: 67
+Passage: <ruby>最近<rt>さいきん</rt></ruby>の<ruby>研究<rt>けんきゅう</rt></ruby>によると、<ruby>笑<rt>わら</rt></ruby>うことにはストレスを<ruby>軽減<rt>けいげん</rt></ruby>したり、<ruby>免疫力<rt>めんえきりょく</rt></ruby>を<ruby>高<rt>たか</rt></ruby>めたりする<ruby>効果<rt>こうか</rt></ruby>があるという。おもしろいテレビ<ruby>番組<rt>ばんぐみ</rt></ruby>を<ruby>見<rt>み</rt></ruby>て<ruby>大声<rt>おおごえ</rt></ruby>で<ruby>笑<rt>わら</rt></ruby>うだけでも、<ruby>心<rt>こころ</rt></ruby>と<ruby>体<rt>からだ</rt></ruby>の<ruby>健康<rt>けんこう</rt></ruby>につながるのだ。<ruby>意識的<rt>いしきてき</rt></ruby>に<ruby>笑<rt>わら</rt></ruby>う<ruby>機会<rt>きかい</rt></ruby>を<ruby>増<rt>ふ</rt></ruby>やすことが<ruby>大切<rt>たいせつ</rt></ruby>だろう。
+--------------------------------------------------------------------------------
+ID: 68
+Passage: ABC<ruby>電気<rt>でんき</rt></ruby>をご<ruby>利用<rt>りよう</rt></ruby>いただき、まことにありがとうございます。お<ruby>買<rt>か</rt></ruby>い<ruby>上<rt>あ</rt></ruby>げいただいた<ruby>商品<rt>しょうひん</rt></ruby>の<ruby>修理<rt>しゅうり</rt></ruby>をご<ruby>希望<rt>きぼう</rt></ruby>の<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>保証書<rt>ほしょうしょ</rt></ruby>とレシートを<ruby>添<rt>そ</rt></ruby>えて、お<ruby>近<rt>ちか</rt></ruby>くの<ruby>店舗<rt>てんぽ</rt></ruby>までお<ruby>持<rt>も</rt></ruby>ちください。<ruby>保証<rt>ほしょう</rt></ruby><ruby>期間内<rt>きかんない</rt></ruby>であれば、<ruby>無料<rt>むりょう</rt></ruby>で<ruby>修理<rt>しゅうり</rt></ruby>いたします。ただし、お<ruby>客様<rt>きゃくさま</rt></ruby>の<ruby>過失<rt>かしつ</rt></ruby>による<ruby>故障<rt>こしょう</rt></ruby>は<ruby>有料<rt>ゆうりょう</rt></ruby>となります。
+--------------------------------------------------------------------------------
+ID: 69
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>会社<rt>かいしゃ</rt></ruby>では、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>健康<rt>けんこう</rt></ruby><ruby>増進<rt>ぞうしん</rt></ruby>のために、<ruby>階段<rt>かいだん</rt></ruby>の<ruby>利用<rt>りよう</rt></ruby>を<ruby>奨励<rt>しょうれい</rt></ruby>している。<ruby>各階<rt>かくかい</rt></ruby>の<ruby>階段<rt>かいだん</rt></ruby>の<ruby>壁<rt>かべ</rt></ruby>には、<ruby>消費<rt>しょうひ</rt></ruby>カロリーが<ruby>表示<rt>ひょうじ</rt></ruby>されており、<ruby>楽<rt>たの</rt></ruby>しみながら<ruby>運動<rt>うんどう</rt></ruby>できるようになっている。はじめはきついと<ruby>感<rt>かん</rt></ruby>じたが、<ruby>続<rt>つづ</rt></ruby>けているうちに<ruby>体力<rt>たいりょく</rt></ruby>がついてきたのを<ruby>実感<rt>じっかん</rt></ruby>している。
+--------------------------------------------------------------------------------
+ID: 70
+Passage: このたびのアンケートへのご<ruby>協力<rt>きょうりょく</rt></ruby>、ありがとうございました。<ruby>皆様<rt>みなさま</rt></ruby>からいただいたご<ruby>意見<rt>いけん</rt></ruby>は、<ruby>今後<rt>こんご</rt></ruby>の<ruby>商品<rt>しょうひん</rt></ruby><ruby>開発<rt>かいはつ</rt></ruby>の<ruby>参考<rt>さんこう</rt></ruby>とさせていただきます。なお、ご<ruby>回答<rt>かいとう</rt></ruby>いただいた<ruby>方<rt>かた</rt></ruby>の<ruby>中<rt>なか</rt></ruby>から<ruby>抽選<rt>ちゅうせん</rt></ruby>で100<ruby>名様<rt>めいさま</rt></ruby>に、<ruby>記念品<rt>きねんひん</rt></ruby>をお<ruby>送<rt>おく</rt></ruby>りします。<ruby>当選者<rt>とうせんしゃ</rt></ruby>の<ruby>発表<rt>はっぴょう</rt></ruby>は、<ruby>賞品<rt>しょうひん</rt></ruby>の<ruby>発送<rt>はっそう</rt></ruby>をもってかえさせていただきます。
+--------------------------------------------------------------------------------
+ID: 71
+Passage: <ruby>友人<rt>ゆうじん</rt></ruby>のスピーチはいつも<ruby>聞<rt>き</rt></ruby>き<ruby>手<rt>て</rt></ruby>をひきつける。<ruby>彼<rt>かれ</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>が<ruby>上手<rt>じょうず</rt></ruby>なのは、ただ<ruby>流暢<rt>りゅうちょう</rt></ruby>に<ruby>話<rt>はな</rt></ruby>すからではない。<ruby>話<rt>はな</rt></ruby>す<ruby>前<rt>まえ</rt></ruby>に、<ruby>誰<rt>だれ</rt></ruby>に、<ruby>何<rt>なに</rt></ruby>を、どのように<ruby>伝<rt>つた</rt></ruby>えたいかを<ruby>綿密<rt>めんみつ</rt></ruby>に<ruby>計画<rt>けいかく</rt></ruby>しているからだ。だからこそ、<ruby>彼<rt>かれ</rt></ruby>の<ruby>言葉<rt>ことば</rt></ruby>はいつも<ruby>聞<rt>き</rt></ruby>く<ruby>人<rt>ひと</rt></ruby>の<ruby>心<rt>こころ</rt></ruby>に<ruby>響<rt>ひび</rt></ruby>くのだろう。
+--------------------------------------------------------------------------------
+ID: 72
+Passage: この<ruby>映画<rt>えいが</rt></ruby>は、<ruby>実話<rt>じつわ</rt></ruby>に<ruby>基<rt>もと</rt></ruby>づいて<ruby>作<rt>つく</rt></ruby>られたそうだ。<ruby>主人公<rt>しゅじんこう</rt></ruby>が<ruby>数々<rt>かずかず</rt></ruby>の<ruby>困難<rt>こんなん</rt></ruby>を<ruby>乗<rt>の</rt></ruby>り<ruby>越<rt>こ</rt></ruby>えて<ruby>夢<rt>ゆめ</rt></ruby>をかなえる<ruby>姿<rt>すがた</rt></ruby>に、<ruby>私<rt>わたし</rt></ruby>は<ruby>大<rt>おお</rt></ruby>きな<ruby>勇気<rt>ゆうき</rt></ruby>をもらった。あきらめなければ、<ruby>道<rt>みち</rt></ruby>は<ruby>開<rt>ひら</rt></ruby>けるのだと<ruby>教<rt>おし</rt></ruby>えられた<ruby>気<rt>き</rt></ruby>がする。<ruby>見<rt>み</rt></ruby><ruby>終<rt>お</rt></ruby>わった<ruby>後<rt>あと</rt></ruby>、<ruby>心<rt>こころ</rt></ruby>が<ruby>温<rt>あたた</rt></ruby>かくなる<ruby>作品<rt>さくひん</rt></ruby>だった。
+--------------------------------------------------------------------------------
+ID: 73
+Passage: <ruby>弊社<rt>へいしゃ</rt></ruby>の<ruby>年末<rt>ねんまつ</rt></ruby><ruby>年始<rt>ねんし</rt></ruby>の<ruby>休業<rt>きゅうぎょう</rt></ruby>についてお<ruby>知<rt>し</rt></ruby>らせします。まことに<ruby>勝手<rt>かって</rt></ruby>ながら、12<ruby>月<rt>がつ</rt></ruby>29<ruby>日<rt>にち</rt></ruby>から1<ruby>月<rt>がつ</rt></ruby>3<ruby>日<rt>にち</rt></ruby>までお<ruby>休<rt>やす</rt></ruby>みとさせていただきます。<ruby>休業<rt>きゅうぎょう</rt></ruby><ruby>期間中<rt>きかんちゅう</rt></ruby>にいただいたお<ruby>問<rt>と</rt></ruby>い<ruby>合<rt>あ</rt></ruby>わせについては、1<ruby>月<rt>がつ</rt></ruby>4<ruby>日<rt>にち</rt></ruby><ruby>以降<rt>いこう</rt></ruby>、<ruby>順次<rt>じゅんじ</rt></ruby><ruby>対応<rt>たいおう</rt></ruby>いたします。ご<ruby>不便<rt>ふべん</rt></ruby>をおかけしますが、よろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 74
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>朝型<rt>あさがた</rt></ruby><ruby>人間<rt>にんげん</rt></ruby>だ。<ruby>夜<rt>よる</rt></ruby>は<ruby>早<rt>はや</rt></ruby>く<ruby>寝<rt>ね</rt></ruby>て、そのかわり<ruby>朝<rt>あさ</rt></ruby>5<ruby>時<rt>じ</rt></ruby>に<ruby>起<rt>お</rt></ruby>きる。<ruby>誰<rt>だれ</rt></ruby>にもじゃまされない<ruby>朝<rt>あさ</rt></ruby>の<ruby>静<rt>しず</rt></ruby>かな<ruby>時間<rt>じかん</rt></ruby>は、<ruby>勉強<rt>べんきょう</rt></ruby>や<ruby>仕事<rt>しごと</rt></ruby>に<ruby>集中<rt>しゅうちゅう</rt></ruby>するのに<ruby>最適<rt>さいてき</rt></ruby>だ。<ruby>頭<rt>あたま</rt></ruby>がすっきりしているせいか、<ruby>昼間<rt>ひるま</rt></ruby>よりもずっとはかどる<ruby>気<rt>き</rt></ruby>がする。この<ruby>習慣<rt>しゅうかん</rt></ruby>はこれからも<ruby>続<rt>つづ</rt></ruby>けたい。
+--------------------------------------------------------------------------------
+ID: 75
+Passage: このたび<ruby>市<rt>し</rt></ruby>では、<ruby>市民<rt>しみん</rt></ruby>の<ruby>皆様<rt>みなさま</rt></ruby>の<ruby>健康<rt>けんこう</rt></ruby>づくりを<ruby>応援<rt>おうえん</rt></ruby>するため、ウォーキングマップを<ruby>作成<rt>さくせい</rt></ruby>しました。コースは<ruby>初心者<rt>しょしんしゃ</rt></ruby><ruby>向<rt>む</rt></ruby>けから<ruby>上級者<rt>じょうきゅうしゃ</rt></ruby><ruby>向<rt>む</rt></ruby>けまで3<ruby>種類<rt>しゅるい</rt></ruby>あり、それぞれのおすすめポイントも<ruby>紹介<rt>しょうかい</rt></ruby>しています。このマップは<ruby>市役所<rt>しやくしょ</rt></ruby>や<ruby>公民館<rt>こうみんかん</rt></ruby>で<ruby>無料<rt>むりょう</rt></ruby>で<ruby>配布<rt>はいふ</rt></ruby>しておりますので、ぜひご<ruby>活用<rt>かつよう</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 76
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>文章<rt>ぶんしょう</rt></ruby>を<ruby>書<rt>か</rt></ruby>くとき、まず<ruby>結論<rt>けつろん</rt></ruby>から<ruby>書<rt>か</rt></ruby>くようにしている。そうすることで、<ruby>自分<rt>じぶん</rt></ruby>が<ruby>何<rt>なに</rt></ruby>を<ruby>伝<rt>つた</rt></ruby>えたいのかが<ruby>明確<rt>めいかく</rt></ruby>になり、<ruby>話<rt>はなし</rt></ruby>が<ruby>脇道<rt>わきみち</rt></ruby>にそれるのを<ruby>防<rt>ふせ</rt></ruby>ぐことができるからだ。また、<ruby>読<rt>よ</rt></ruby>む<ruby>側<rt>がわ</rt></ruby>にとっても、<ruby>最初<rt>さいしょ</rt></ruby>に<ruby>要点<rt>ようてん</rt></ruby>がわかるので<ruby>理解<rt>りかい</rt></ruby>しやすいという<ruby>利点<rt>りてん</rt></ruby>がある。
+--------------------------------------------------------------------------------
+ID: 77
+Passage: このマンションでは、<ruby>騒音<rt>そうおん</rt></ruby>に<ruby>関<rt>かん</rt></ruby>するトラブルを<ruby>防<rt>ふせ</rt></ruby>ぐため、<ruby>夜<rt>よる</rt></ruby>10<ruby>時<rt>じ</rt></ruby><ruby>以降<rt>いこう</rt></ruby>は<ruby>洗濯機<rt>せんたくき</rt></ruby>や<ruby>掃除機<rt>そうじき</rt></ruby>の<ruby>使用<rt>しよう</rt></ruby>をご<ruby>遠慮<rt>えんりょ</rt></ruby>いただいております。また、テレビやステレオの<ruby>音量<rt>おんりょう</rt></ruby>にもご<ruby>配慮<rt>はいりょ</rt></ruby>ください。<ruby>皆様<rt>みなさま</rt></ruby>が<ruby>快適<rt>かいてき</rt></ruby>に<ruby>暮<rt>く</rt></ruby>らせるよう、ご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 78
+Passage: <ruby>先日<rt>せんじつ</rt></ruby>、<ruby>山登<rt>やまのぼ</rt></ruby>りをした。<ruby>頂上<rt>ちょうじょう</rt></ruby>までの<ruby>道<rt>みち</rt></ruby>のりは<ruby>険<rt>けわ</rt></ruby>しく、<ruby>何度<rt>なんど</rt></ruby>もあきらめそうになった。しかし、<ruby>苦<rt>くる</rt></ruby>しい<ruby>思<rt>おも</rt></ruby>いをしてたどり<ruby>着<rt>つ</rt></ruby>いた<ruby>頂上<rt>ちょうじょう</rt></ruby>から<ruby>見<rt>み</rt></ruby>た<ruby>景色<rt>けしき</rt></ruby>は、それまでの<ruby>疲<rt>つか</rt></ruby>れをすべて<ruby>忘<rt>わす</rt></ruby>れさせてくれるほど<ruby>素晴<rt>すば</rt></ruby>らしかった。<ruby>簡単<rt>かんたん</rt></ruby>に<ruby>手<rt>て</rt></ruby>に<ruby>入<rt>はい</rt></ruby>らないものほど、<ruby>達成<rt>たっせい</rt></ruby>した<ruby>時<rt>とき</rt></ruby>の<ruby>喜<rt>よろこ</rt></ruby>びは<ruby>大<rt>おお</rt></ruby>きいのだと<ruby>実感<rt>じっかん</rt></ruby>した。
+--------------------------------------------------------------------------------
+ID: 79
+Passage: このたびの<ruby>台風<rt>たいふう</rt></ruby>で<ruby>被災<rt>ひさい</rt></ruby>された<ruby>皆様<rt>みなさま</rt></ruby>に、<ruby>心<rt>こころ</rt></ruby>よりお<ruby>見舞<rt>みま</rt></ruby>い<ruby>申<rt>もう</rt></ruby>し<ruby>上<rt>あ</rt></ruby>げます。<ruby>市役所<rt>しやくしょ</rt></ruby>では、<ruby>家屋<rt>かおく</rt></ruby>に<ruby>被害<rt>ひがい</rt></ruby>を<ruby>受<rt>う</rt></ruby>けた<ruby>方<rt>かた</rt></ruby>を<ruby>対象<rt>たいしょう</rt></ruby>に、<ruby>生活<rt>せいかつ</rt></ruby><ruby>必需品<rt>ひつじゅひん</rt></ruby>の<ruby>配布<rt>はいふ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>っております。<ruby>詳<rt>くわ</rt></ruby>しくは、<ruby>市<rt>し</rt></ruby>のホームページをご<ruby>覧<rt>らん</rt></ruby>いただくか、<ruby>防災<rt>ぼうさい</rt></ruby>センターまでお<ruby>問<rt>と</rt></ruby>い<ruby>合<rt>あ</rt></ruby>わせください。
+--------------------------------------------------------------------------------
+ID: 80
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>犬<rt>いぬ</rt></ruby>より<ruby>猫<rt>ねこ</rt></ruby>の<ruby>方<rt>ほう</rt></ruby>が<ruby>好<rt>す</rt></ruby>きだ。<ruby>犬<rt>いぬ</rt></ruby>のように<ruby>人<rt>ひと</rt></ruby>になつくのもかわいいが、<ruby>猫<rt>ねこ</rt></ruby>の<ruby>気まぐれ<rt>きまぐれ</rt></ruby>で<ruby>自由<rt>じゆう</rt></ruby>なところに<ruby>魅力<rt>みりょく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じる。<ruby>自分<rt>じぶん</rt></ruby>からすり<ruby>寄<rt>よ</rt></ruby>ってきたかと<ruby>思<rt>おも</rt></ruby>うと、<ruby>次<rt>つぎ</rt></ruby>の<ruby>瞬間<rt>しゅんかん</rt></ruby>にはそっけない<ruby>態度<rt>たいど</rt></ruby>をとる。そんなツンデレなところがたまらない。
+--------------------------------------------------------------------------------
+ID: 81
+Passage: このたび<ruby>弊社<rt>へいしゃ</rt></ruby>では、<ruby>新<rt>あら</rt></ruby>たな<ruby>人材<rt>じんざい</rt></ruby>を<ruby>募集<rt>ぼしゅう</rt></ruby>することになりました。<ruby>職務<rt>しょくむ</rt></ruby><ruby>経験<rt>けいけん</rt></ruby>は<ruby>問<rt>と</rt></ruby>いませんが、<ruby>外国語<rt>がいこくご</rt></ruby>でのコミュニケーション<ruby>能力<rt>のうりょく</rt></ruby>が<ruby>必須<rt>ひっす</rt></ruby>となります。<ruby>特<rt>とく</rt></ruby>に<ruby>英語<rt>えいご</rt></ruby>と<ruby>中国語<rt>ちゅうごくご</rt></ruby>が<ruby>堪能<rt>たんのう</rt></ruby>な<ruby>方<rt>かた</rt></ruby>を<ruby>歓迎<rt>かんげい</rt></ruby>します。ご<ruby>興味<rt>きょうみ</rt></ruby>のある<ruby>方<rt>かた</rt></ruby>は、<ruby>弊社<rt>へいしゃ</rt></ruby>ウェブサイトよりご<ruby>応募<rt>おうぼ</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 82
+Passage: <ruby>先日<rt>せんじつ</rt></ruby><ruby>買<rt>か</rt></ruby>ったばかりのスマートフォンを<ruby>落<rt>お</rt></ruby>として、<ruby>画面<rt>がめん</rt></ruby>を<ruby>割<rt>わ</rt></ruby>ってしまった。<ruby>修理<rt>しゅうり</rt></ruby>に<ruby>出<rt>だ</rt></ruby>すと<ruby>高<rt>たか</rt></ruby>いし、かといってこのまま<ruby>使<rt>つか</rt></ruby>うのも<ruby>見<rt>み</rt></ruby>にくい。<ruby>保険<rt>ほけん</rt></ruby>に<ruby>入<rt>はい</rt></ruby>っておけばよかったと<ruby>後悔<rt>こうかい</rt></ruby>している。これからはもっと<ruby>丁寧<rt>ていねい</rt></ruby>に<ruby>扱<rt>あつか</rt></ruby>おうと<ruby>心<rt>こころ</rt></ruby>に<ruby>誓<rt>ちか</rt></ruby>った。
+--------------------------------------------------------------------------------
+ID: 83
+Passage: <ruby>弊社<rt>へいしゃ</rt></ruby>の<ruby>新<rt>あたら</rt></ruby>しい<ruby>掃除機<rt>そうじき</rt></ruby>「クリーンX」は、<ruby>静<rt>しず</rt></ruby>かさが<ruby>自慢<rt>じまん</rt></ruby>です。<ruby>従来<rt>じゅうらい</rt></ruby>のモデルに<ruby>比<rt>くら</rt></ruby>べ、<ruby>運転<rt>うんてん</rt></ruby><ruby>音<rt>おん</rt></ruby>を50%カットしました。そのため、<ruby>赤<rt>あか</rt></ruby>ちゃんが<ruby>寝<rt>ね</rt></ruby>ている<ruby>部屋<rt>へや</rt></ruby>や、<ruby>夜遅<rt>よるおそ</rt></ruby>い<ruby>時間<rt>じかん</rt></ruby>でも、<ruby>周<rt>まわ</rt></ruby>りを<ruby>気<rt>き</rt></ruby>にすることなくお<ruby>掃除<rt>そうじ</rt></ruby>ができます。ぜひ、その<ruby>静<rt>しず</rt></ruby>かさを<ruby>店頭<rt>てんとう</rt></ruby>でお<ruby>確<rt>たし</rt></ruby>かめください。
+--------------------------------------------------------------------------------
+ID: 84
+Passage: <ruby>何事<rt>なにごと</rt></ruby>も<ruby>始<rt>はじ</rt></ruby>める<ruby>前<rt>まえ</rt></ruby>からあきらめてはいけない。<ruby>特<rt>とく</rt></ruby>に、<ruby>他人<rt>たにん</rt></ruby>と<ruby>自分<rt>じぶん</rt></ruby>を<ruby>比<rt>くら</rt></ruby>べて、「<ruby>自分<rt>じぶん</rt></ruby>には<ruby>才能<rt>さいのう</rt></ruby>がない」と<ruby>思<rt>おも</rt></ruby>い<ruby>込<rt>こ</rt></ruby>むのはやめるべきだ。<ruby>人<rt>ひと</rt></ruby>にはそれぞれ<ruby>成長<rt>せいちょう</rt></ruby>のペースがある。まずは<ruby>自分<rt>じぶん</rt></ruby>のできることから<ruby>少<rt>すこ</rt></ruby>しずつ<ruby>始<rt>はじ</rt></ruby>めて、<ruby>昨日<rt>きのう</rt></ruby>の<ruby>自分<rt>じぶん</rt></ruby>より<ruby>少<rt>すこ</rt></ruby>しでも<ruby>前<rt>まえ</rt></ruby>に<ruby>進<rt>すす</rt></ruby>むことが<ruby>大切<rt>たいせつ</rt></ruby>なのだ。
+--------------------------------------------------------------------------------
+ID: 85
+Passage: このたび、<ruby>駅前<rt>えきまえ</rt></ruby>に<ruby>新<rt>あたら</rt></ruby>しくオープンしたカフェ「ひだまり」では、オープン<ruby>記念<rt>きねん</rt></ruby>として、ご<ruby>来店<rt>らいてん</rt></ruby>の<ruby>お客様<rt>きゃくさま</rt></ruby>にオリジナルクッキーをプレゼントいたします。<ruby>数<rt>かず</rt></ruby>に<ruby>限<rt>かぎ</rt></ruby>りがございますので、なくなり<ruby>次第<rt>しだい</rt></ruby><ruby>終了<rt>しゅうりょう</rt></ruby>とさせていただきます。<ruby>皆様<rt>みなさま</rt></ruby>のご<ruby>来店<rt>らいてん</rt></ruby>を<ruby>心<rt>こころ</rt></ruby>よりお<ruby>待<rt>ま</rt></ruby>ちしております。
+--------------------------------------------------------------------------------
+ID: 86
+Passage: <ruby>睡眠<rt>すいみん</rt></ruby><ruby>不足<rt>ぶそく</rt></ruby>は、<ruby>日中<rt>にっちゅう</rt></ruby>の<ruby>眠気<rt>ねむけ</rt></ruby>だけでなく、<ruby>集中力<rt>しゅうちゅうりょく</rt></ruby>や<ruby>判断力<rt>はんだんりょく</rt></ruby>の<ruby>低下<rt>ていか</rt></ruby>にもつながる。<ruby>仕事<rt>しごと</rt></ruby>や<ruby>勉強<rt>べんきょう</rt></ruby>のパフォーマンスを<ruby>上<rt>あ</rt></ruby>げるためには、<ruby>忙<rt>いそが</rt></ruby>しいからといって<ruby>睡眠<rt>すいみん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>を<ruby>削<rt>けず</rt></ruby>るべきではない。<むしろ、しっかりと<ruby>睡眠<rt>すいみん</rt></ruby>をとることこそが、<ruby>結果的<rt>けっかてき</rt></ruby>に<ruby>効率<rt>こうりつ</rt></ruby>を<ruby>上<rt>あ</rt></ruby>げることにつながるのだ。
+--------------------------------------------------------------------------------
+ID: 87
+Passage: このたび、<ruby>緑<rt>みどり</rt></ruby>マンションの<ruby>管理人<rt>かんりにん</rt></ruby>に<ruby>就任<rt>しゅうにん</rt></ruby>いたしました<ruby>佐藤<rt>さとう</rt></ruby>です。<ruby>皆様<rt>みなさま</rt></ruby>が<ruby>安心<rt>あんしん</rt></ruby>して<ruby>快適<rt>かいてき</rt></ruby>に<ruby>暮<rt>く</rt></ruby>らせるよう、<ruby>精一杯<rt>せいいっぱい</rt></ruby><ruby>努<rt>つと</rt></ruby>めてまいります。何かお<ruby>困<rt>こま</rt></ruby>りのことや、お<ruby>気<rt>き</rt></ruby>づきの<ruby>点<rt>てん</rt></ruby>がございましたら、いつでも<ruby>管理人室<rt>かんりにんしつ</rt></ruby>までお<ruby>声<rt>こえ</rt></ruby>がけください。どうぞよろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 88
+Passage: <ruby>最近<rt>さいきん</rt></ruby>のペットブームの<ruby>裏<rt>うら</rt></ruby>で、<ruby>飼<rt>か</rt></ruby>えなくなったペットを<ruby>簡単<rt>かんたん</rt></ruby>に<ruby>捨<rt>す</rt></ruby>ててしまう<ruby>人<rt>ひと</rt></ruby>が<ruby>増<rt>ふ</rt></ruby>えているという。<ruby>動物<rt>どうぶつ</rt></ruby>はぬいぐるみではない。<ruby>一度<rt>いちど</rt></ruby><ruby>家族<rt>かぞく</rt></ruby>として<ruby>迎<rt>むか</rt></ruby>えたからには、<ruby>人間<rt>にんげん</rt></ruby>と<ruby>同<rt>おな</rt></ruby>じようにその<ruby>命<rt>いのち</rt></ruby>が<ruby>終<rt>お</rt></ruby>わるまで<ruby>愛情<rt>あいじょう</rt></ruby>と<ruby>責任<rt>せきにん</rt></ruby>を<ruby>持<rt>も</rt></ruby>って<ruby>世話<rt>せわ</rt></ruby>をするべきだ。
+--------------------------------------------------------------------------------
+ID: 89
+Passage: このたび、<ruby>新<rt>あたら</rt></ruby>しい<ruby>言語<rt>げんご</rt></ruby><ruby>学習<rt>がくしゅう</rt></ruby>アプリ「ことのは」をリリースしました。<ruby>AI<rt>エーアイ</rt></ruby>がユーザーのレベルに<ruby>合<rt>あ</rt></ruby>わせて<ruby>最適<rt>さいてき</rt></ruby>な<ruby>問題<rt>もんだい</rt></ruby>を<ruby>出題<rt>しゅつだい</rt></ruby>するため、<ruby>無理<rt>むり</rt></ruby>なく<ruby>楽<rt>たの</rt></ruby>しく<ruby>学習<rt>がくしゅう</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けることができます。また、<ruby>発音<rt>はつおん</rt></ruby>をチェックする<ruby>機能<rt>きのう</rt></ruby>もあり、スピーキングの<ruby>練習<rt>れんしゅう</rt></ruby>にもなります。まずは<ruby>無料<rt>むりょう</rt></ruby>体験<rt>たいけん</rt></ruby>からお<ruby>試<rt>ため</rt></ruby>しください。
+--------------------------------------------------------------------------------
+ID: 90
+Passage: <ruby>人前<rt>ひとまえ</rt></ruby>で<ruby>話<rt>はな</rt></ruby>すのが<ruby>得意<rt>とくい</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>がいる<ruby>一方<rt>いっぽう</rt></ruby>で、<ruby>私<rt>わたし</rt></ruby>のように<ruby>苦手<rt>にがて</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>もいる。<ruby>苦手<rt>にがて</rt></ruby>を<ruby>克服<rt>こくふく</rt></ruby>するためには、やはり<ruby>練習<rt>れんしゅう</rt></ruby>が<ruby>一番<rt>いちばん</rt></ruby>だ。<ruby>事前<rt>じぜん</rt></ruby>に<ruby>話<rt>はな</rt></ruby>す<ruby>内容<rt>ないよう</rt></ruby>をしっかり<ruby>準備<rt>じゅんび</rt></ruby>し、<ruby>鏡<rt>かがみ</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>で<ruby>何度<rt>なんど</rt></ruby>も<ruby>声<rt>こえ</rt></ruby>に<ruby>出<rt>だ</rt></ruby>してみる。そうすることで、<ruby>自信<rt>じしん</rt></ruby>がつき、<ruby>本番<rt>ほんばん</rt></ruby>でも<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>いて<ruby>話<rt>はな</rt></ruby>せるようになるはずだ。
+--------------------------------------------------------------------------------
+ID: 91
+Passage: <ruby>市民<rt>しみん</rt></ruby>ホール<ruby>改修<rt>かいしゅう</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>のお<ruby>知<rt>し</rt></ruby>らせ。<ruby>来月<rt>らいげつ</rt></ruby>1<ruby>日<rt>にち</rt></ruby>から<ruby>半年間<rt>はんとしん</rt></ruby>、<ruby>耐震<rt>たいしん</rt></ruby><ruby>補強<rt>ほきょう</rt></ruby><ruby>工事<rt>こうじ</rt></ruby>のため、<ruby>全館<rt>ぜんかん</rt></ruby><ruby>休館<rt>きゅうかん</rt></ruby>いたします。<ruby>期間中<rt>きかんちゅう</rt></ruby>はホールはもちろん、<ruby>会議室<rt>かいぎしつ</rt></ruby>や<ruby>図書館<rt>としょかん</rt></ruby>もご<ruby>利用<rt>りよう</rt></ruby>になれません。ご<ruby>不便<rt>ふべん</rt></ruby>をおかけしますが、より<ruby>安全<rt>あんぜん</rt></ruby>な<ruby>施設<rt>しせつ</rt></ruby>として<ruby>生<rt>う</rt></ruby>まれ<ruby>変<rt>か</rt></ruby>わりますので、ご<ruby>理解<rt>りかい</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 92
+Passage: <ruby>地球<rt>ちきゅう</rt></ruby><ruby>温暖化<rt>おんだんか</rt></ruby>の<ruby>問題<rt>もんだい</rt></ruby>は、<ruby>遠<rt>とお</rt></ruby>い<ruby>国<rt>くに</rt></ruby>の<ruby>話<rt>はなし</rt></ruby>ではない。<ruby>私<rt>わたし</rt></ruby>たちの<ruby>生活<rt>せいかつ</rt></ruby>の<ruby>中<rt>なか</rt></ruby>で<ruby>使<rt>つか</rt></ruby>う<ruby>電気<rt>でんき</rt></ruby>を<ruby>少<rt>すこ</rt></ruby>し<ruby>節約<rt>せつやく</rt></ruby>したり、ゴミの<ruby>分別<rt>ぶんべつ</rt></ruby>を<ruby>徹底<rt>てってい</rt></ruby>したりと、<ruby>一人<rt>ひとり</rt></ruby>ひとりができることはたくさんある。その<ruby>小<rt>ちい</rt></ruby>さな<ruby>行動<rt>こうどう</rt></ruby>の<ruby>積<rt>つ</rt></ruby>み<ruby>重<rt>かさ</rt></ruby>ねが、<ruby>未来<rt>みらい</rt></ruby>の<ruby>地球<rt>ちきゅう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>ることにつながるのだ。
+--------------------------------------------------------------------------------
+ID: 93
+Passage: <ruby>このたび、ご<ruby>好評<rt>こうひょう</rt></ruby>いただいております「やさいジュース」をリニューアルしました。<ruby>従来<rt>じゅうらい</rt></ruby>の<ruby>味<rt>あじ</rt></ruby>はそのままに、<ruby>新<rt>あら</rt></ruby>たに<ruby>鉄分<rt>てつぶん</rt></ruby>とビタミンCをプラスしました。<ruby>忙<rt>いそが</rt></ruby>しい<ruby>毎日<rt>まいにち</rt></ruby>の<ruby>栄養<rt>えいよう</rt></ruby>バランスをサポートします。パッケージも<ruby>新<rt>あたら</rt></ruby>しくなりましたので、お<ruby>買<rt>か</rt></ruby>い<ruby>求<rt>もと</rt></ruby>めの<ruby>際<rt>さい</rt></ruby>はご<ruby>注意<rt>ちゅうい</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 94
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>祖父<rt>そふ</rt></ruby>は80<ruby>歳<rt>さい</rt></ruby>になるが、<ruby>今<rt>いま</rt></ruby>でも<ruby>現役<rt>げんえき</rt></ruby>の<ruby>大工<rt>だいく</rt></ruby>だ。<ruby>長年<rt>ながねん</rt></ruby>の<ruby>経験<rt>けいけん</rt></ruby>で<ruby>培<rt>つちか</rt></ruby>った<ruby>技術<rt>ぎじゅつ</rt></ruby>は<ruby>誰<rt>だれ</rt></ruby>にもまねできないと<ruby>評判<rt>ひょうばん</rt></ruby>だ。「<ruby>体<rt>からだ</rt></ruby>が<ruby>動<rt>うご</rt></ruby>くうちは、この<ruby>仕事<rt>しごと</rt></ruby>を<ruby>続<rt>つづ</rt></ruby>けたい」というのが<ruby>口癖<rt>くちぐせ</rt></ruby>だ。<ruby>そんな<ruby>祖父<rt>そふ</rt></ruby>を<ruby>私<rt>わたし</rt></ruby>は<ruby>心<rt>こころ</rt></ruby>から<ruby>尊敬<rt>そんけい</rt></ruby>している。
+--------------------------------------------------------------------------------
+ID: 95
+Passage: <ruby>本<rt>ほん</rt></ruby>マンションでは、<ruby>住民<rt>じゅうみん</rt></ruby><ruby>以外<rt>いがい</rt></ruby>の<ruby>方<rt>かた</rt></ruby>の<ruby>駐車<rt>ちゅうしゃ</rt></ruby>をお<ruby>断<rt>ことわ</rt></ruby>りしております。<ruby>来客用<rt>らいきゃくよう</rt></ruby>のスペースはございませんので、お<ruby>車<rt>くるま</rt></ruby>でご<ruby>友人<rt>ゆうじん</rt></ruby>などを<ruby>訪問<rt>ほうもん</rt></ruby>される<ruby>際<rt>さい</rt></ruby>は、<ruby>近隣<rt>きんりん</rt></ruby>のコインパーキングをご<ruby>利用<rt>りよう</rt></ruby>いただくよう、お<ruby>伝<rt>つた</rt></ruby>えください。<ruby>ご<ruby>理解<rt>りかい</rt></ruby>ご<ruby>協力<rt>きょうりょく</rt></ruby>のほど、よろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 96
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>電子<rt>でんし</rt></ruby>マネーで<ruby>支払<rt>しはら</rt></ruby>いをすることが<ruby>多<rt>おお</rt></ruby>くなった。<ruby>現金<rt>げんきん</rt></ruby>を<ruby>持<rt>も</rt></ruby>ち<ruby>歩<rt>ある</rt></ruby>かなくてすむし、<ruby>支払<rt>しはら</rt></ruby>いもスムーズだ。しかし、お<ruby>金<rt>かね</rt></ruby>を<ruby>使<rt>つか</rt></ruby>っているという<ruby>感覚<rt>かんかく</rt></ruby>が<ruby>薄<rt>うす</rt></ruby>れるためか、つい<ruby>使<rt>つか</rt></ruby>いすぎてしまうことがあるのが<ruby>欠点<rt>けってん</rt></ruby>だ。<ruby>利用<rt>りよう</rt></ruby><ruby>履歴<rt>りれき</rt></ruby>をこまめにチェックするようにしている。
+--------------------------------------------------------------------------------
+ID: 97
+Passage: <ruby>人<rt>ひと</rt></ruby>の<ruby>第一印象<rt>だいいちいんしょう</rt></ruby>は、<ruby>会<rt>あ</rt></ruby>ってからわずか<ruby>数秒<rt>すうびょう</rt></ruby>で<ruby>決<rt>き</rt></ruby>まると<ruby>言<rt>い</rt></ruby>われている。そして、その<ruby>印象<rt>いんしょう</rt></ruby>を<ruby>後<rt>あと</rt></ruby>から<ruby>変<rt>か</rt></ruby>えるのは<ruby>非常<rt>ひじょう</rt></ruby>に<ruby>難<rt>むずか</rt></ruby>しい。だからこそ、<ruby>初対面<rt>しょたいめん</rt></ruby>の<ruby>相手<rt>あいて</rt></ruby>に<ruby>会<rt>あ</rt></ruby>う<ruby>時<rt>とき</rt></ruby>は、<ruby>清潔感<rt>せいけつかん</rt></ruby>のある<ruby>服装<rt>ふくそう</rt></ruby>や、<ruby>明<rt>あか</rt></ruby>るい<ruby>表情<rt>ひょうじょう</rt></ruby>、はきはきとした<ruby>話<rt>はな</rt></ruby>し<ruby>方<rt>かた</rt></ruby>などを<ruby>心<rt>こころ</rt></ruby>がけることが<ruby>重要<rt>じゅうよう</rt></ruby>になる。
+--------------------------------------------------------------------------------
+ID: 98
+Passage: ABC<ruby>株式会社<rt>かぶしきがいしゃ</rt></ruby> <ruby>営業部<rt>えいぎょうぶ</rt></ruby> <ruby>田中<rt>たなか</rt></ruby><ruby>様<rt>さま</rt></ruby>。お<ruby>世話<rt>せわ</rt></ruby>になっております。<ruby>株式会社<rt>かぶしきがいしゃ</rt></ruby>ヤマダの<ruby>鈴木<rt>すずき</rt></ruby>です。お<ruby>送<rt>おく</rt></ruby>りいただいたお<ruby>見積書<rt>みつもりしょ</rt></ruby>、<ruby>拝見<rt>はいけん</rt></ruby>いたしました。こちらの<ruby>内容<rt>ないよう</rt></ruby>で<ruby>問題<rt>もんだい</rt></ruby>ございませんので、<ruby>正式<rt>せいしき</rt></ruby>に<ruby>発注<rt>はっちゅう</rt></ruby>させていただきます。つきましては、<ruby>請求書<rt>せいきゅうしょ</rt></ruby>の<ruby>発行<rt>はっこう</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 99
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>昔<rt>むかし</rt></ruby>から、<ruby>計画<rt>けいかく</rt></ruby>を<ruby>立<rt>た</rt></ruby>てるのが<ruby>苦手<rt>にがて</rt></ruby>だった。<ruby>旅行<rt>りょこう</rt></ruby>に<ruby>行<rt>い</rt></ruby>くのも、<ruby>行<rt>い</rt></ruby>き<ruby>先<rt>さき</rt></ruby>だけを<ruby>決<rt>き</rt></ruby>めて、あとはその<ruby>場<rt>ば</rt></ruby>の<ruby>気分<rt>きぶん</rt></ruby>で<ruby>行動<rt>こうどう</rt></ruby>するスタイルだ。そのせいで<ruby>失敗<rt>しっぱい</rt></ruby>することもあったが、<ruby>予期<rt>よき</rt></ruby>せぬ<ruby>出会<rt>であ</rt></ruby>いや<ruby>発見<rt>はっけん</rt></ruby>があるから、このスタイルはやめられない。
+--------------------------------------------------------------------------------
+ID: 100
+Passage: このたび<ruby>緑町<rt>みどりちょう</rt></ruby>に<ruby>新<rt>あたら</rt></ruby>しく<ruby>開院<rt>かいいん</rt></ruby>しました、さくら<ruby>歯科<rt>しか</rt></ruby>です。<ruby>当院<rt>とういん</rt></ruby>では、<ruby>患者様<rt>かんじゃさま</rt></ruby>とのコミュニケーションを<ruby>大切<rt>たいせつ</rt></ruby>にし、<ruby>十分<rt>じゅうぶん</rt></ruby>な<ruby>説明<rt>せつめい</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>ったうえで<ruby>治療<rt>ちりょう</rt></ruby>を<ruby>進<rt>すす</rt></ruby>めてまいります。<ruby>歯<rt>は</rt></ruby>のことでお<ruby>悩<rt>なや</rt></ruby>みの<ruby>方<rt>かた</rt></ruby>は、どうぞお<ruby>気軽<rt>きがる</rt></ruby>にご<ruby>相談<rt>そうだん</rt></ruby>ください。お<ruby>電話<rt>でんわ</rt></ruby>でのご<ruby>予約<rt>よやく</rt></ruby>もお<ruby>待<rt>ま</rt></ruby>ちしております。
+--------------------------------------------------------------------------------
+ID: 101
+Passage: きのうの<ruby>帰<rt>かえ</rt></ruby>りに<ruby>電車<rt>でんしゃ</rt></ruby>の<ruby>網棚<rt>あみだな</rt></ruby>に<ruby>本<rt>ほん</rt></ruby>を<ruby>置<rt>お</rt></ruby>いたまま<ruby>降<rt>お</rt></ruby>りてしまったことに、<ruby>家<rt>いえ</rt></ruby>に<ruby>着<rt>つ</rt></ruby>いてから<ruby>気<rt>き</rt></ruby>がついた。<ruby>大切<rt>たいせつ</rt></ruby>な<ruby>本<rt>ほん</rt></ruby>だったので、あわてて<ruby>駅<rt>えき</rt></ruby>の<ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby>センターに<ruby>電話<rt>でんわ</rt></ruby>したところ、<ruby>幸<rt>さいわ</rt></ruby>いにも<ruby>届<rt>とど</rt></ruby>けられていることがわかった。<ruby>親切<rt>しんせつ</rt></ruby>な<ruby>人<rt>ひと</rt></ruby>が<ruby>届<rt>とど</rt></ruby>けてくれたのだろう。<ruby>本当<rt>ほんとう</rt></ruby>にほっとした。
+--------------------------------------------------------------------------------
+ID: 102
+Passage: <ruby>近所<rt>きんじょ</rt></ruby>にできたパン<ruby>屋<rt>や</rt></ruby>は、<ruby>朝<rt>あさ</rt></ruby>早くから<ruby>営業<rt>えいぎょう</rt></ruby>している。<ruby>通勤<rt>つうきん</rt></ruby><ruby>前<rt>まえ</rt></ruby>に<ruby>寄<rt>よ</rt></ruby>ることができるので、とても<ruby>助<rt>たす</rt></ruby>かっている。<ruby>焼<rt>や</rt></ruby>きたてのパンの<ruby>香<rt>かお</rt></ruby>りをかぐだけで、<ruby>一日<rt>いちにち</rt></ruby>がんばろうという<ruby>気持<rt>きも</rt></ruby>ちになれるのだ。パンの<ruby>種類<rt>しゅるい</rt></ruby>も<ruby>豊富<rt>ほうふ</rt></ruby>で、<ruby>毎日<rt>まいにち</rt></ruby><ruby>通<rt>かよ</rt></ruby>ってもあきない。
+--------------------------------------------------------------------------------
+ID: 103
+Passage: <ruby>朝<rt>あさ</rt></ruby>は<ruby>忙<rt>いそが</rt></ruby>しくて<ruby>食事<rt>しょくじ</rt></ruby>を<ruby>抜<rt>ぬ</rt></ruby>くという<ruby>人<rt>ひと</rt></ruby>もいるが、それは<ruby>良<rt>よ</rt></ruby>くない<ruby>習慣<rt>しゅうかん</rt></ruby>だ。<ruby>朝食<rt>ちょうしょく</rt></ruby>は、<ruby>一日<rt>いちにち</rt></ruby>を<ruby>活動的<rt>かつどうてき</rt></ruby>に<ruby>過<rt>す</rt></ruby>ごすためのエネルギーを<ruby>補給<rt>ほきゅう</rt></ruby>する<ruby>重要<rt>じゅうよう</rt></ruby>な<ruby>役割<rt>やくわり</rt></ruby>を<ruby>持<rt>も</rt></ruby>っている。<ruby>脳<rt>のう</rt></ruby>の<ruby>働<rt>はたら</rt></ruby>きを<ruby>活発<rt>かっぱつ</rt></ruby>にし、<ruby>午前中<rt>ごぜんちゅう</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>や<ruby>勉強<rt>べんきょう</rt></ruby>の<ruby>能率<rt>のうりつ</rt></ruby>を<ruby>上<rt>あ</rt></ruby>げるためにも、<ruby>朝食<rt>ちょうしょく</rt></ruby>は<ruby>欠<rt>か</rt></ruby>かせない。
+--------------------------------------------------------------------------------
+ID: 104
+Passage: <ruby>住民<rt>じゅうみん</rt></ruby>の<ruby>皆様<rt>みなさま</rt></ruby>へ。<ruby>来週<rt>らいしゅう</rt></ruby><ruby>火曜日<rt>かようび</rt></ruby>、10<ruby>月<rt>がつ</rt></ruby>11<ruby>日<rt>にち</rt></ruby>の<ruby>午後<rt>ごご</rt></ruby>1<ruby>時<rt>じ</rt></ruby>から4<ruby>時<rt>じ</rt></ruby>までの<ruby>間<rt>あいだ</rt></ruby>、エレベーターの<ruby>定期<rt>ていき</rt></ruby><ruby>点検<rt>てんけん</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>います。この<ruby>時間帯<rt>じかんたい</rt></ruby>はエレベーターを<ruby>利用<rt>りよう</rt></ruby>できませんので、<ruby>階段<rt>かいだん</rt></ruby>をご<ruby>利用<rt>りよう</rt></ruby>ください。ご<ruby>不便<rt>ふべん</rt></ruby>をおかけしますが、ご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 105
+Passage: <ruby>社会人<rt>しゃかいじん</rt></ruby>になってから、<ruby>仕事<rt>しごと</rt></ruby>と<ruby>家<rt>いえ</rt></ruby>の<ruby>往復<rt>おうふく</rt></ruby>だけで<ruby>毎日<rt>まいにち</rt></ruby>が<ruby>終<rt>お</rt></ruby>わってしまうことに<ruby>疑問<rt>ぎもん</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じ、<ruby>写真<rt>しゃしん</rt></ruby><ruby>教室<rt>きょうしつ</rt></ruby>に<ruby>通<rt>かよ</rt></ruby>い<ruby>始<rt>はじ</rt></ruby>めた。<ruby>休<rt>やす</rt></ruby>みの<ruby>日<rt>ひ</rt></ruby>にカメラを<ruby>持<rt>も</rt></ruby>って<ruby>出<rt>で</rt></ruby>かけるようになり、これまで<ruby>気<rt>き</rt></ruby>づかなかった<ruby>道端<rt>みちばた</rt></ruby>の<ruby>花<rt>はな</rt></ruby>の<ruby>美<rt>うつく</rt></ruby>しさや<ruby>空<rt>そら</rt></ruby>の<ruby>色<rt>いろ</rt></ruby>の<ruby>変化<rt>へんか</rt></ruby>に<ruby>目<rt>め</rt></ruby>を<ruby>向<rt>む</rt></ruby>けるようになった。<ruby>新<rt>あたら</rt></ruby>しい<ruby>趣味<rt>しゅみ</rt></ruby>が、<ruby>日常<rt>にちじょう</rt></ruby>を<ruby>豊<rt>ゆた</rt></ruby>かにしてくれた。
+--------------------------------------------------------------------------------
+ID: 106
+Passage: みどり<ruby>公園<rt>こうえん</rt></ruby>をご<ruby>利用<rt>りよう</rt></ruby>の<ruby>皆様<rt>みなさま</rt></ruby>へ。<ruby>公園<rt>こうえん</rt></ruby><ruby>内<rt>ない</rt></ruby>でのバーベキューは、<ruby>指定<rt>してい</rt></ruby>されたエリアでのみ<ruby>可能<rt>かのう</rt></ruby>です。また、<ruby>発生<rt>はっせい</rt></ruby>したゴミは<ruby>必<rt>かなら</rt></ruby>ずお<ruby>持<rt>も</rt></ruby>ち<ruby>帰<rt>かえ</rt></ruby>りください。<ruby>夜間<rt>やかん</rt></ruby>の<ruby>大声<rt>おおごえ</rt></ruby>での<ruby>会話<rt>かいわ</rt></ruby>や<ruby>音楽<rt>おんがく</rt></ruby>は、<ruby>近隣<rt>きんりん</rt></ruby><ruby>住民<rt>じゅうみん</rt></ruby>の<ruby>迷惑<rt>めいわく</rt></ruby>となりますのでおやめください。みんなが<ruby>気持<rt>きも</rt></ruby>ちよく<ruby>使<rt>つか</rt></ruby>えるよう、ご<ruby>協力<rt>きょうりょく</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 107
+Passage: <ruby>先日<rt>せんじつ</rt></ruby>、<ruby>初<rt>はじ</rt></ruby>めて<ruby>海外<rt>かいがい</rt></ruby><ruby>出張<rt>しゅっちょう</rt></ruby>に<ruby>行<rt>い</rt></ruby>った。<ruby>言葉<rt>ことば</rt></ruby>が<ruby>十分<rt>じゅうぶん</rt></ruby>に<ruby>通<rt>つう</rt></ruby>じるか<ruby>不安<rt>ふあん</rt></ruby>だったが、<ruby>身振<rt>みぶ</rt></ruby>り<ruby>手振<rt>てぶ</rt></ruby>りを<ruby>交<rt>まじ</rt></ruby>え、なんとか<ruby>商談<rt>しょうだん</rt></ruby>をまとめることができた。<ruby>文化<rt>ぶんか</rt></ruby>や<ruby>習慣<rt>しゅうかん</rt></ruby>の<ruby>違<rt>ちが</rt></ruby>いに<ruby>驚<rt>おどろ</rt></ruby>くことも<ruby>多<rt>おお</rt></ruby>かったが、それも<ruby>含<rt>ふく</rt></ruby>めて<ruby>貴重<rt>きちょう</rt></ruby>な<ruby>経験<rt>けいけん</rt></ruby>となった。この<ruby>経験<rt>けいけん</rt></ruby>を<ruby>今後<rt>こんご</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>に<ruby>活<rt>い</rt></ruby>かしていきたい。
+--------------------------------------------------------------------------------
+ID: 108
+Passage: <ruby>喫茶<rt>きっさ</rt></ruby>「やまびこ」より<ruby>営業時間<rt>えいぎょうじかん</rt></ruby><ruby>変更<rt>へんこう</rt></ruby>のお<ruby>知<rt>し</rt></ruby>らせです。これまで<ruby>夜<rt>よる</rt></ruby>10<ruby>時<rt>じ</rt></ruby>までの<ruby>営業<rt>えいぎょう</rt></ruby>でしたが、<ruby>来月<rt>らいげつ</rt></ruby>より<ruby>夜<rt>よる</rt></ruby>8<ruby>時<rt>じ</rt></ruby>までとさせていただきます。<ruby>開店<rt>かいてん</rt></ruby><ruby>時間<rt>じかん</rt></ruby>に<ruby>変更<rt>へんこう</rt></ruby>はございません。お<ruby>客様<rt>きゃくさま</rt></ruby>にはご<ruby>不便<rt>ふべん</rt></ruby>をおかけしますが、なにとぞご<ruby>理解<rt>りかい</rt></ruby>のほどよろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 109
+Passage: インターネットショッピングは<ruby>便利<rt>べんり</rt></ruby>だが、<ruby>私<rt>わたし</rt></ruby>は<ruby>服<rt>ふく</rt></ruby>を<ruby>買<rt>か</rt></ruby>うときはできるだけお<ruby>店<rt>みせ</rt></ruby>に<ruby>足<rt>あし</rt></ruby>を<ruby>運<rt>はこ</rt></ruby>ぶようにしている。<ruby>画面<rt>がめん</rt></ruby>で<ruby>見<rt>み</rt></ruby>るのと<ruby>実際<rt>じっさい</rt></ruby>の<ruby>色<rt>いろ</rt></ruby>や<ruby>素材感<rt>そざいかん</rt></ruby>が<ruby>違<rt>ちが</rt></ruby>うことがあるし、なにより<ruby>試着<rt>しちゃく</rt></ruby>してみないと<ruby>自分<rt>じぶん</rt></ruby>に<ruby>似合<rt>にあ</rt></ruby>うかどうかわからないからだ。<ruby>失敗<rt>しっぱい</rt></ruby>しないためには、やはり<ruby>手間<rt>てま</rt></ruby>をかけることが<ruby>大切<rt>たいせつ</rt></ruby>だと<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 110
+Passage: <ruby>先日<rt>せんじつ</rt></ruby>の<ruby>誕生日<rt>たんじょうび</rt></ruby>に、<ruby>友人<rt>ゆうじん</rt></ruby>から<ruby>手編<rt>てあ</rt></ruby>みのマフラーをもらった。<ruby>決<rt>けっ</rt></ruby>して<ruby>上手<rt>じょうず</rt></ruby>な<ruby>編<rt>あ</rt></ruby>み<ruby>方<rt>かた</rt></ruby>ではなかったが、<ruby>私<rt>わたし</rt></ruby>のために<ruby>時間<rt>じかん</rt></ruby>をかけて<ruby>作<rt>つく</rt></ruby>ってくれたのだと<ruby>思<rt>おも</rt></ruby>うと、<ruby>胸<rt>むね</rt></ruby>が<ruby>熱<rt>あつ</rt></ruby>くなった。<どんな<ruby>高価<rt>こうか</rt></ruby>なプレゼントよりも<ruby>嬉<rt>うれ</rt></ruby>しい、<ruby>宝物<rt>たからもの</rt></ruby>になった。
+--------------------------------------------------------------------------------
+ID: 111
+Passage: お<ruby>客様<rt>きゃくさま</rt></ruby>へのお<ruby>願<rt>ねが</rt></ruby>いです。<ruby>当<rt>とう</rt></ruby>ホテルでは、<ruby>他<rt>ほか</rt></ruby>のお<ruby>客様<rt>きゃくさま</rt></ruby>のご<ruby>迷惑<rt>めいわく</rt></ruby>となりますので、<ruby>客室<rt>きゃくしつ</rt></ruby><ruby>以外<rt>いがい</rt></ruby>での<ruby>携帯<rt>けいたい</rt></ruby><ruby>電話<rt>でんわ</rt></ruby>での<ruby>通話<rt>つうわ</rt></ruby>はご<ruby>遠慮<rt>えんりょ</rt></ruby>ください。ロビーやレストランなどでご<ruby>使用<rt>しよう</rt></ruby>の<ruby>際<rt>さい</rt></ruby>は、マナーモードに<ruby>設定<rt>せってい</rt></ruby>のうえ、<ruby>通話<rt>つうわ</rt></ruby>はおひかえいただきますよう、お<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 112
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>映画<rt>えいが</rt></ruby>を<ruby>見<rt>み</rt></ruby>るとき、<ruby>事前<rt>じぜん</rt></ruby>にその<ruby>映画<rt>えいが</rt></ruby>の<ruby>情報<rt>じょうほう</rt></ruby>を<ruby>一切<rt>いっさい</rt></ruby><ruby>調<rt>しら</rt></ruby>べないようにしている。あらすじや<ruby>評判<rt>ひょうばん</rt></ruby>を<ruby>知<rt>し</rt></ruby>らないまっさらな<ruby>状態<rt>じょうたい</rt></ruby>で<ruby>見<rt>み</rt></ruby>ることで、<ruby>物語<rt>ものがたり</rt></ruby>の<ruby>展開<rt>てんかい</rt></ruby>に<ruby>心<rt>こころ</rt></ruby>から<ruby>驚<rt>おどろ</rt></ruby>いたり<ruby>感動<rt>かんどう</rt></ruby>したりできるからだ。<ruby>他人<rt>たにん</rt></ruby>の<ruby>評価<rt>ひょうか</rt></ruby>に<ruby>左右<rt>さゆう</rt></ruby>されず、<ruby>自分<rt>じぶん</rt></ruby>だけの<ruby>感想<rt>かんそう</rt></ruby>を<ruby>持<rt>も</rt></ruby>ちたいのだ。
+--------------------------------------------------------------------------------
+ID: 113
+Passage: <ruby>環境<rt>かんきょう</rt></ruby>を<ruby>守<rt>まも</rt></ruby>るために、レジ<ruby>袋<rt>ぶくろ</rt></ruby>が<ruby>有料<rt>ゆうりょう</rt></ruby>になった。<ruby>私<rt>わたし</rt></ruby>はこれをきっかけに、エコバッグを<ruby>持<rt>も</rt></ruby>ち<ruby>歩<rt>ある</rt></ruby>くようになった。はじめは<ruby>忘<rt>わす</rt></ruby>れることもあったが、<ruby>今<rt>いま</rt></ruby>ではすっかり<ruby>習慣<rt>しゅうかん</rt></ruby>になった。ゴミが<ruby>減<rt>へ</rt></ruby>るだけでなく、<ruby>節約<rt>せつやく</rt></ruby>にもつながる。このような<ruby>小<rt>ちい</rt></ruby>さな<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>みが<ruby>広<rt>ひろ</rt></ruby>がればいいと<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 114
+Passage: <ruby>明日<rt>あした</rt></ruby>の<ruby>朝<rt>あさ</rt></ruby>8<ruby>時<rt>じ</rt></ruby>に、<ruby>田中<rt>たなか</rt></ruby>さんから<ruby>電話<rt>でんわ</rt></ruby>をもらうことになっている。<ruby>寝坊<rt>ねぼう</rt></ruby>して<ruby>出<rt>で</rt></ruby>られないと<ruby>大変<rt>たいへん</rt></ruby>なので、<ruby>今夜<rt>こんや</rt></ruby>は<ruby>早<rt>はや</rt></ruby>めに<ruby>寝<rt>ね</rt></ruby>ようと<ruby>思<rt>おも</rt></ruby>う。<ruby>目覚<rt>めざ</rt></ruby>まし<ruby>時計<rt>どけい</rt></ruby>もちゃんとセットしておかなくては。とても<ruby>大切<rt>たいせつ</rt></ruby>な<ruby>用件<rt>ようけん</rt></ruby>なので、<ruby>絶対<rt>ぜったい</rt></ruby>に<ruby>失敗<rt>しっぱい</rt></ruby>はできない。
+--------------------------------------------------------------------------------
+ID: 115
+Passage: このたび<ruby>開発<rt>かいはつ</rt></ruby>した<ruby>新型<rt>しんがた</rt></ruby>カメラは、<ruby>防水<rt>ぼうすい</rt></ruby><ruby>機能<rt>きのう</rt></ruby>に<ruby>優<rt>すぐ</rt></ruby>れており、<ruby>水深<rt>すいしん</rt></ruby>10メートルまで<ruby>対応<rt>たいおう</rt></ruby>しています。<ruby>雨<rt>あめ</rt></ruby>の<ruby>日<rt>ひ</rt></ruby>の<ruby>撮影<rt>さつえい</rt></ruby>はもちろん、シュノーケリングなど<ruby>水中<rt>すいちゅう</rt></ruby>での<ruby>撮影<rt>さつえい</rt></ruby>もお<ruby>楽<rt>たの</rt></ruby>しみいただけます。<ruby>旅<rt>たび</rt></ruby>の<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>を、あらゆるシーンで<ruby>美<rt>うつく</rt></ruby>しく<ruby>残<rt>のこ</rt></ruby>すことができるカメラです。
+--------------------------------------------------------------------------------
+ID: 116
+Passage: <ruby>言葉<rt>ことば</rt></ruby>は<ruby>生<rt>い</rt></ruby>き<ruby>物<rt>もの</rt></ruby>だ、とよく<ruby>言<rt>い</rt></ruby>われる。<ruby>時代<rt>じだい</rt></ruby>とともに<ruby>新<rt>あたら</rt></ruby>しい<ruby>言葉<rt>ことば</rt></ruby>が<ruby>生<rt>う</rt></ruby>まれ、<ruby>古<rt>ふる</rt></ruby>い<ruby>言葉<rt>ことば</rt></ruby>が<ruby>使<rt>つか</rt></ruby>われなくなることもある。<ruby>若者<rt>わかもの</rt></ruby><ruby>言葉<rt>ことば</rt></ruby>を「<ruby>乱<rt>みだ</rt></ruby>れている」と<ruby>批判<rt>ひはん</rt></ruby>する<ruby>人<rt>ひと</rt></ruby>もいるが、それも<ruby>言葉<rt>ことば</rt></ruby>の<ruby>変化<rt>へんか</rt></ruby>の<ruby>一<rt>ひと</rt></ruby>つの<ruby>過程<rt>かてい</rt></ruby>なのかもしれない。ただ、<ruby>相手<rt>あいて</rt></ruby>や<ruby>場面<rt>ばめん</rt></ruby>に<ruby>応<rt>おう</rt></ruby>じた<ruby>言葉<rt>ことば</rt></ruby><ruby>遣<rt>づか</rt></ruby>いを<ruby>心<rt>こころ</rt></ruby>がけることは、いつの<ruby>時代<rt>じだい</rt></ruby>でも<ruby>必要<rt>ひつよう</rt></ruby>だろう。
+--------------------------------------------------------------------------------
+ID: 117
+Passage: このたびの<ruby>人事<rt>じんじ</rt></ruby><ruby>異動<rt>いどう</rt></ruby>で、<ruby>来月<rt>らいげつ</rt></ruby>1<ruby>日<rt>にち</rt></ruby>付<rt>づ</rt></ruby>けで<ruby>大阪<rt>おおさか</rt></ruby><ruby>支社<rt>ししゃ</rt></ruby>へ<ruby>転勤<rt>てんきん</rt></ruby>することになりました。<ruby>入社<rt>にゅうしゃ</rt></ruby>してからの5<ruby>年間<rt>ねんかん</rt></ruby>、<ruby>東京<rt>とうきょう</rt></ruby><ruby>本社<rt>ほんしゃ</rt></ruby>では<ruby>公私<rt>こうし</rt></ruby>にわたり<ruby>大変<rt>たいへん</rt></ruby>お<ruby>世話<rt>せわ</rt></ruby>になりました。<ruby>皆様<rt>みなさま</rt></ruby>には<ruby>感謝<rt>かんしゃ</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちでいっぱいです。<ruby>新<rt>あら</rt></ruby>しい<ruby>勤務地<rt>きんむち</rt></ruby>でも<ruby>精一杯<rt>せいいっぱい</rt></ruby><ruby>頑張<rt>がんば</rt></ruby>りますので、<ruby>今後<rt>こんご</rt></ruby>ともよろしくお<ruby>願<rt>ねが</rt></ruby>いいたします。
+--------------------------------------------------------------------------------
+ID: 118
+Passage: <ruby>健康<rt>けんこう</rt></ruby>のためには、<ruby>栄養<rt>えいよう</rt></ruby>バランスの<ruby>取<rt>と</rt></ruby>れた<ruby>食事<rt>しょくじ</rt></ruby>が<ruby>大切<rt>たいせつ</rt></ruby>だ。しかし、<ruby>忙<rt>いそが</rt></ruby>しいとつい<ruby>外食<rt>がいしょく</rt></ruby>やコンビニの弁当<rt>べんとう</rt></ruby>で<ruby>済<rt>す</rt></ruby>ませてしまいがちだ。そうすると、どうしても<ruby>野菜<rt>やさい</rt></ruby>が<ruby>不足<rt>ふそく</rt></ruby>し、<ruby>塩分<rt>えんぶん</rt></ruby>や<ruby>脂肪分<rt>しぼうぶん</rt></ruby>を<ruby>取<rt>と</rt></ruby>りすぎてしまう。<ruby>意識<rt>いしきてき</rt></ruby>して<ruby>野菜<rt>やさい</rt></ruby>ジュースを<ruby>飲<rt>の</rt></ruby>んだり、サラダを<ruby>追加<rt>ついか</rt></ruby>したりする<ruby>工夫<rt>くふう</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 119
+Passage: この<ruby>部屋<rt>へや</rt></ruby>は、<ruby>私<rt>わたし</rt></ruby>が<ruby>大学<rt>だいがく</rt></ruby>の4<ruby>年間<rt>ねんかん</rt></ruby>を<ruby>過<rt>す</rt></ruby>ごした<ruby>思<rt>おも</rt></ruby>い<ruby>出<rt>で</rt></ruby>の<ruby>場所<rt>ばしょ</rt></ruby>だ。<ruby>楽<rt>たの</rt></ruby>しいことも<ruby>辛<rt>つら</rt></ruby>いことも、すべてこの<ruby>部屋<rt>へや</rt></ruby>で<ruby>経験<rt>けいけん</rt></ruby>した。<ruby>明日<rt>あした</rt></ruby>、ここを<ruby>引<rt>ひ</rt></ruby>き<ruby>払<rt>はら</rt></ruby>って<ruby>社会人<rt>しゃかいじん</rt></ruby>として<ruby>新<rt>あら</rt></ruby>たな<ruby>一歩<rt>いっぽ</rt></ruby>を<ruby>踏<rt>ふ</rt></ruby>み<ruby>出<rt>だ</rt></ruby>す。<ruby>寂<rt>さび</rt></ruby>しい<ruby>気持<rt>きも</rt></ruby>ちもあるが、<ruby>期待<rt>きたい</rt></ruby>の<ruby>方<rt>ほう</rt></ruby>が<ruby>大<rt>おお</rt></ruby>きい。
+--------------------------------------------------------------------------------
+ID: 120
+Passage: <ruby>本<rt>ほん</rt></ruby>イベントにご<ruby>参加<rt>さんか</rt></ruby>の<ruby>方<rt>かた</rt></ruby>は、<ruby>受付<rt>うけつけ</rt></ruby>で<ruby>配布<rt>はいふ</rt></ruby>されたネームプレートを<ruby>必<rt>かなら</rt></ruby>ず<ruby>首<rt>くび</rt></ruby>からかけてください。ネームプレートは、<ruby>会場<rt>かいじょう</rt></ruby>への<ruby>入退場<rt>にゅうたいじょう</rt></ruby>パスを<ruby>兼<rt>か</rt></ruby>ねております。お<ruby>帰<rt>かえ</rt></ruby>りの<ruby>際<rt>さい</rt></ruby>は、<ruby>出口<rt>でぐち</rt></ruby>の<ruby>回収<rt>かいしゅう</rt></ruby>ボックスにご<ruby>返却<rt>へんきゃく</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 121
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>趣味<rt>しゅみ</rt></ruby>は、<ruby>週末<rt>しゅうまつ</rt></ruby>に<ruby>近<rt>ちか</rt></ruby>くの<ruby>図書館<rt>としょかん</rt></ruby>へ<ruby>行<rt>い</rt></ruby>くことだ。<ruby>静<rt>しず</rt></ruby>かな<ruby>空間<rt>くうかん</rt></ruby>で<ruby>本<rt>ほん</rt></ruby>に<ruby>囲<rt>かこ</rt></ruby>まれていると、<ruby>日常<rt>にちじょう</rt></ruby>の<ruby>騒<rt>そう</rt></ruby>がしさから<ruby>解放<rt>かいほう</rt></ruby>されて<ruby>心<rt>こころ</rt></ruby>が<ruby>落<rt>お</rt></ruby>ち<ruby>着<rt>つ</rt></ruby>く。お<ruby>金<rt>かね</rt></ruby>をかけずに<ruby>様々<rt>さまざま</rt></ruby>な<ruby>世界<rt>せかい</rt></ruby>を<ruby>旅<rt>たび</rt></ruby>できる<ruby>読書<rt>どくしょ</rt></ruby>は、<ruby>最高<rt>さいこう</rt></ruby>のぜいたくだと<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 122
+Passage: このたびの<ruby>台風<rt>たいふう</rt></ruby>10<ruby>号<rt>ごう</rt></ruby>の<ruby>接近<rt>せっきん</rt></ruby>にともない、<ruby>安全<rt>あんぜん</rt></ruby>を<ruby>考慮<rt>こうりょ</rt></ruby>し、<ruby>本日<rt>ほんじつ</rt></ruby>の<ruby>営業<rt>えいぎょう</rt></ruby>は<ruby>午後<rt>ごご</rt></ruby>3<ruby>時<rt>じ</rt></ruby>をもって<ruby>終了<rt>しゅうりょう</rt></ruby>させていただきます。<ruby>明日<rt>あした</rt></ruby>は<ruby>通常<rt>つうじょう</rt></ruby>どおり<ruby>午前<rt>ごぜん</rt></ruby>9<ruby>時<rt>じ</rt></ruby>より<ruby>営業<rt>えいぎょう</rt></ruby>する<ruby>予定<rt>よてい</rt></ruby>ですが、<ruby>交通<rt>こうつう</rt></ruby><ruby>機関<rt>きかん</rt></ruby>の<ruby>状況<rt>じょうきょう</rt></ruby>によっては<ruby>変更<rt>へんこう</rt></ruby>となる<ruby>場合<rt>ばあい</rt></ruby>がございます。その<ruby>際<rt>さい</rt></ruby>はホームページでお<ruby>知<rt>し</rt></ruby>らせします。
+--------------------------------------------------------------------------------
+ID: 123
+Passage: <ruby>何<rt>なに</rt></ruby>か<ruby>新<rt>あたら</rt></ruby>しいことを<ruby>学<rt>まな</rt></ruby>ぶとき、<ruby>最初<rt>さいしょ</rt></ruby>からうまくできる<ruby>人<rt>ひと</rt></ruby>はいない。<ruby>何度<rt>なんど</rt></ruby>も<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>繰<rt>く</rt></ruby>り<ruby>返<rt>かえ</rt></ruby>し、そのたびに<ruby>何<rt>なに</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>かったのかを<ruby>考<rt>かんが</rt></ruby>えることで、<ruby>人<rt>ひと</rt></ruby>は<ruby>成長<rt>せいちょう</rt></ruby>していく。<ruby>大切<rt>たいせつ</rt></ruby>なのは、<ruby>失敗<rt>しっぱい</rt></ruby>を<ruby>恐<rt>おそ</rt></ruby>れずにチャレンジする<ruby>気持<rt>きも</rt></ruby>ちと、<ruby>失敗<rt>しっぱい</rt></ruby>から<ruby>学<rt>まな</rt></ruby>ぼうとする<ruby>姿勢<rt>しせい</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 124
+Passage: <ruby>皆様<rt>みなさま</rt></ruby>、<ruby>電車<rt>でんしゃ</rt></ruby>は<ruby>間<rt>ま</rt></ruby>もなく<ruby>終点<rt>しゅうてん</rt></ruby>の<ruby>新宿<rt>しんじゅく</rt></ruby>に<ruby>到着<rt>とうちゃく</rt></ruby>いたします。お<ruby>降<rt>お</rt></ruby>りの<ruby>際<rt>さい</rt></ruby>は、<ruby>車内<rt>しゃない</rt></ruby>にお<ruby>忘<rt>わす</rt></ruby>れ<ruby>物<rt>もの</rt></ruby>なさいませんよう、お<ruby>手回<rt>てまわ</rt></ruby>りの<ruby>品<rt>しな</rt></ruby>をいま<ruby>一度<rt>いちど</rt></ruby>お<ruby>確<rt>たし</rt></ruby>かめください。JR<ruby>線<rt>せん</rt></ruby>、<ruby>私鉄<rt>してつ</rt></ruby>はお<ruby>乗<rt>の</rt></ruby>り<ruby>換<rt>か</rt></ruby>えです。<ruby>本日<rt>ほんじつ</rt></ruby>もご<ruby>乗車<rt>じょうしゃ</rt></ruby>ありがとうございました。
+--------------------------------------------------------------------------------
+ID: 125
+Passage: <ruby>仕事<rt>しごと</rt></ruby>を<ruby>探<rt>さが</rt></ruby>すとき、<ruby>給料<rt>きゅうりょう</rt></ruby>や<ruby>勤務地<rt>きんむち</rt></ruby>といった<ruby>条件<rt>じょうけん</rt></ruby>はもちろん<ruby>重要<rt>じゅうよう</rt></ruby>だ。しかし、それと<ruby>同<rt>おな</rt></ruby>じくらい<ruby>大切<rt>たいせつ</rt></ruby>なのが、「その<ruby>仕事<rt>しごと</rt></ruby>にやりがいを<ruby>感<rt>かん</rt></ruby>じられるか」ということだと<ruby>私<rt>わたし</rt></ruby>は<ruby>思<rt>おも</rt></ruby>う。<ruby>毎日<rt>まいにち</rt></ruby>の<ruby>仕事<rt>しごと</rt></ruby>に<ruby>満足感<rt>まんぞくかん</rt></ruby>を<ruby>得<rt>え</rt></ruby>られなければ、<ruby>長<rt>なが</rt></ruby>く<ruby>続<rt>つづ</rt></ruby>けるのは<ruby>難<rt>むずか</rt></ruby>しいからだ。
+--------------------------------------------------------------------------------
+ID: 126
+Passage: <ruby>来週<rt>らいしゅう</rt></ruby>の<ruby>社内<rt>しゃない</rt></ruby>プレゼン<ruby>大会<rt>たいかい</rt></ruby>の<ruby>発表<rt>はっぴょう</rt></ruby><ruby>順<rt>じゅん</rt></ruby>が<ruby>決<rt>き</rt></ruby>まりましたのでお<ruby>知<rt>し</rt></ruby>らせします。<ruby>私<rt>わたし</rt></ruby>は<ruby>最後<rt>さいご</rt></ruby>の<ruby>発表者<rt>はっぴょうしゃ</rt></ruby>になりました。<ruby>準備<rt>じゅんび</rt></ruby>する<ruby>時間<rt>じかん</rt></ruby>が<ruby>十分<rt>じゅうぶん</rt></ruby>にあるのはありがたいですが、<ruby>待<rt>ま</rt></ruby>っている<ruby>間<rt>あいだ</rt></ruby>ずっと<ruby>緊張<rt>きんちょう</rt></ruby>しそうです。しっかり<ruby>準備<rt>じゅんび</rt></ruby>して<ruby>臨<rt>のぞ</rt></ruby>みたいと<ruby>思<rt>おも</rt></ruby>います。
+--------------------------------------------------------------------------------
+ID: 127
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>日記<rt>にっき</rt></ruby>を<ruby>書<rt>か</rt></ruby>くことを<ruby>習慣<rt>しゅうかん</rt></ruby>にしている。といっても、<ruby>長<rt>なが</rt></ruby>い<ruby>文章<rt>ぶんしょう</rt></ruby>を<ruby>書<rt>か</rt></ruby>くわけではない。その<ruby>日<rt>ひ</rt></ruby>に<ruby>感<rt>かん</rt></ruby>じたことを<ruby>一言<rt>ひとこと</rt></ruby>か<ruby>二言<rt>ふたこと</rt></ruby>、メモするだけだ。それでも、<ruby>後<rt>あと</rt></ruby>で<ruby>読<rt>よ</rt></ruby>み<ruby>返<rt>かえ</rt></ruby>すと、その<ruby>時<rt>とき</rt></ruby>の<ruby>気持<rt>きも</rt></ruby>ちがよみがえってきておもしろい。<ruby>自分<rt>じぶん</rt></ruby>の<ruby>心<rt>こころ</rt></ruby>の<ruby>変化<rt>へんか</rt></ruby>を<ruby>知<rt>し</rt></ruby>る良い<ruby>記録<rt>きろく</rt></ruby>にもなっている。
+--------------------------------------------------------------------------------
+ID: 128
+Passage: ご<ruby>予約<rt>よやく</rt></ruby>の<ruby>時間<rt>じかん</rt></ruby>を15<ruby>分<rt>ふん</rt></ruby><ruby>以上<rt>いじょう</rt></ruby><ruby>過<rt>す</rt></ruby>ぎてもご<ruby>来店<rt>らいてん</rt></ruby>がない<ruby>場合<rt>ばあい</rt></ruby>は、まことに<ruby>勝手<rt>かって</rt></ruby>ながらキャンセルとさせていただきます。<ruby>遅<rt>おく</rt></ruby>れる<ruby>場合<rt>ばあい</rt></ruby>は、<ruby>必<rt>かなら</rt></ruby>ず<ruby>予約<rt>よやく</rt></ruby><ruby>時間<rt>じかん</rt></ruby>までに<ruby>お<ruby>電話<rt>でんわ</rt></ruby>にてご<ruby>連絡<rt>れんらく</rt></ruby>ください。お<ruby>席<rt>せき</rt></ruby>の<ruby>数<rt>かず</rt></ruby>に<ruby>限<rt>かぎ</rt></ruby>りがございますので、ご<ruby>理解<rt>りかい</rt></ruby>をお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 129
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>コーヒー<rt>こーひー</rt></ruby>が<ruby>大好<rt>だいす</rt></ruby>きで、<ruby>一日<rt>いちにち</rt></ruby>に<ruby>何杯<rt>なんばい</rt></ruby>も<ruby>飲<rt>の</rt></ruby>んでしまう。しかし、カフェインの<ruby>取<rt>と</rt></ruby>りすぎは<ruby>体<rt>からだ</rt></ruby>に<ruby>良<rt>よ</rt></ruby>くないと<ruby>聞<rt>き</rt></ruby>き、<ruby>最近<rt>さいきん</rt></ruby>は<ruby>午後<rt>ごご</rt></ruby>3<ruby>時<rt>じ</rt></ruby><ruby>以降<rt>いこう</rt></ruby>は<ruby>飲<rt>の</rt></ruby>まないようにしている。そのかわり、カフェインの<ruby>入<rt>はい</rt></ruby>っていないハーブティーを<ruby>楽<rt>たの</rt></ruby>しむようになった。<ruby>意外<rt>いがい</rt></ruby>とリラックスできて、なかなかいい<ruby>習慣<rt>しゅうかん</rt></ruby>になりそうだ。
+--------------------------------------------------------------------------------
+ID: 130
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>駅<rt>えき</rt></ruby>や<ruby>公園<rt>こうえん</rt></ruby>などで<ruby>無料<rt>むりょう</rt></ruby>で<ruby>利用<rt>りよう</rt></ruby>できるWi-Fiスポットが<ruby>増<rt>ふ</rt></ruby>えてきた。<ruby>外国人<rt>がいこくじん</rt></ruby><ruby>観光客<rt>かんこうきゃく</rt></ruby>にとっては<ruby>非常<rt>ひじょう</rt></ruby>に<ruby>便利<rt>べんり</rt></ruby>だろう。しかし、これらのWi-Fiはセキュリティが<ruby>十分<rt>じゅうぶん</rt></ruby>でない<ruby>場合<rt>ばあい</rt></ruby>があり、<ruby>個人<rt>こじん</rt></ruby><ruby>情報<rt>じょうほう</rt></ruby>が<ruby>盗<rt>ぬす</rt></ruby>まれる<ruby>危険性<rt>きけんせい</rt></ruby>もあることを<ruby>忘<rt>わす</rt></ruby>れてはならない。<ruby>利用<rt>りよう</rt></ruby>する<ruby>際<rt>さい</rt></ruby>は<ruby>注意<rt>ちゅうい</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>だ。
+--------------------------------------------------------------------------------
+ID: 131
+Passage: このたび<ruby>私<rt>わたし</rt></ruby>は、5<ruby>年間<rt>ねんかん</rt></ruby><ruby>務<rt>つと</rt></ruby>めた<ruby>会社<rt>かいしゃ</rt></ruby>を<ruby>退職<rt>たいしょく</rt></ruby>し、<ruby>子<rt>こ</rt></ruby>どもの<ruby>頃<rt>ころ</rt></ruby>からの<ruby>夢<rt>ゆめ</rt></ruby>だったイラストレーターの<ruby>道<rt>みち</rt></ruby>に<ruby>進<rt>すす</rt></ruby>むことを<ruby>決意<rt>けつい</rt></ruby>しました。<ruby>安定<rt>あんてい</rt></ruby>した<ruby>生活<rt>せいかつ</rt></ruby>を<ruby>捨<rt>す</rt></ruby>てることへの<ruby>不安<rt>ふあん</rt></ruby>はありますが、それ<ruby>以上<rt>いじょう</rt></ruby>に、やりたいことに<ruby>挑戦<rt>ちょうせん</rt></ruby>したいという<ruby>気持<rt>きも</rt></ruby>ちが<ruby>強<rt>つよ</rt></ruby>いです。<ruby>温<rt>あたた</rt></ruby>かく<ruby>見守<rt>みまも</rt></ruby>っていただけると<ruby>幸<rt>さいわ</rt></ruby>いです。
+--------------------------------------------------------------------------------
+ID: 132
+Passage: <ruby>風邪<rt>かぜ</rt></ruby>をひいたときは、<ruby>薬<rt>くすり</rt></ruby>を<ruby>飲<rt>の</rt></ruby>むことも<ruby>大切<rt>たいせつ</rt></ruby>だが、それと<ruby>同<rt>おな</rt></ruby>じくらい<ruby>重要<rt>じゅうよう</rt></ruby>なのが<ruby>休養<rt>きゅうよう</rt></ruby>と<ruby>栄養<rt>えいよう</rt></ruby>だ。<ruby>体<rt>からだ</rt></ruby>を<ruby>温<rt>あたた</rt></ruby>かくしてゆっくり<ruby>休<rt>やす</rt></ruby>み、<ruby>消化<rt>しょうか</rt></ruby>の<ruby>良<rt>よ</rt></ruby>いものを<ruby>食<rt>た</rt></ruby>べて<ruby>体力<rt>たいりょく</rt></ruby>を<ruby>回復<rt>かいふく</rt></ruby>させなければ、なかなか<ruby>良<rt>よ</rt></ruby>くならない。<ruby>無理<rt>むり</rt></ruby>をして<ruby>長引<rt>ながび</rt></ruby>かせるより、<ruby>休<rt>やす</rt></ruby>むときはしっかり<ruby>休<rt>やす</rt></ruby>むべきだ。
+--------------------------------------------------------------------------------
+ID: 133
+Passage: <ruby>明日<rt>あした</rt></ruby>のハイキングに<ruby>参加<rt>さんか</rt></ruby>される<ruby>方<rt>かた</rt></ruby>へ。<ruby>集合<rt>しゅうごう</rt></ruby><ruby>場所<rt>ばしょ</rt></ruby>は<ruby>緑駅<rt>みどりえき</rt></ruby>の<ruby>改札口<rt>かいさつぐち</rt></ruby><ruby>前<rt>まえ</rt></ruby>、<ruby>時間<rt>じかん</rt></ruby>は<ruby>午前<rt>ごぜん</rt></ruby>9<ruby>時<rt>じ</rt></ruby>です。<ruby>時間<rt>じかん</rt></ruby>に<ruby>遅<rt>おく</rt></ruby>れないようお<ruby>願<rt>ねが</rt></ruby>いします。<ruby>持<rt>も</rt></ruby>ち<ruby>物<rt>もの</rt></ruby>は、<ruby>弁当<rt>べんとう</rt></ruby>、<ruby>飲<rt>の</rt></ruby>み<ruby>物<rt>もの</rt></ruby>、タオル、<ruby>雨具<rt>あまぐ</rt></ruby>です。<ruby>山<rt>やま</rt></ruby>の<ruby>天気<rt>てんき</rt></ruby>は<ruby>変<rt>か</rt></ruby>わりやすいので、<ruby>晴<rt>は</rt></ruby>れていても<ruby>雨具<rt>あまぐ</rt></ruby>は<ruby>必<rt>かなら</rt></ruby>ずお<ruby>持<rt>も</rt></ruby>ちください。
+--------------------------------------------------------------------------------
+ID: 134
+Passage: <ruby>私<rt>わたし</rt></ruby>がこの<ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>入社<rt>にゅうしゃ</rt></ruby>を<ruby>決<rt>き</rt></ruby>めた<ruby>一番<rt>いちばん</rt></ruby>の<ruby>理由<rt>りゆう</rt></ruby>は、<ruby>社員<rt>しゃいん</rt></ruby>の<ruby>挑戦<rt>ちょうせん</rt></ruby>を<ruby>応援<rt>おうえん</rt></ruby>する<ruby>社風<rt>しゃふう</rt></ruby>に<ruby>魅力<rt>みりょく</rt></ruby>を<ruby>感<rt>かん</rt></ruby>じたからです。<ruby>若手<rt>わかて</rt></ruby>でも<ruby>意見<rt>いけん</rt></ruby>を<ruby>言<rt>い</rt></ruby>いやすく、<ruby>良<rt>よ</rt></ruby>いアイデアは<ruby>積極的<rt>せっきょくてき</rt></ruby>に<ruby>採用<rt>さいよう</rt></ruby>されると<ruby>聞<rt>き</rt></ruby>きました。この<ruby>会社<rt>かいしゃ</rt></ruby>でなら、<ruby>自分<rt>じぶん</rt></ruby>を<ruby>成長<rt>せいちょう</rt></ruby>させることができると<ruby>確信<rt>かくしん</rt></ruby>しています。
+--------------------------------------------------------------------------------
+ID: 135
+Passage: このたび<ruby>発売<rt>はつばい</rt></ruby>する<ruby>電子<rt>でんし</rt></ruby><ruby>辞書<rt>じしょ</rt></ruby>は、<ruby>従来<rt>じゅうらい</rt></ruby>モデルの2<ruby>倍<rt>ばい</rt></ruby>の<ruby>語句<rt>ごく</rt></ruby>を<ruby>収録<rt>しゅうろく</rt></ruby>しました。さらに、<ruby>発音<rt>はつおん</rt></ruby>を<ruby>聞<rt>き</rt></ruby>ける<ruby>音声<rt>おんせい</rt></ruby><ruby>機能<rt>きのう</rt></ruby>も<ruby>付<rt>つ</rt></ruby>いています。<ruby>学習<rt>がくしゅう</rt></ruby>レベルに<ruby>合<rt>あ</rt></ruby>わせて<ruby>使<rt>つか</rt></ruby>えるので、<ruby>初級者<rt>しょきゅうしゃ</rt></ruby>から<ruby>上級者<rt>じょうきゅうしゃ</rt></ruby>まで<ruby>幅広<rt>はばひろ</rt></ruby>くご<ruby>活用<rt>かつよう</rt></ruby>いただけます。<ruby>語学<rt>ごがく</rt></ruby><ruby>学習<rt>がくしゅう</rt></ruby>の<ruby>強<rt>つよ</rt></ruby>い<ruby>味方<rt>みかた</rt></ruby>になるでしょう。
+--------------------------------------------------------------------------------
+ID: 136
+Passage: <ruby>私<rt>わたし</rt></ruby>が<ruby>子<rt>こ</rt></ruby>どもの<ruby>頃<rt>ころ</rt></ruby>は、<ruby>近所<rt>きんじょ</rt></ruby>の<ruby>空<rt>あ</rt></ruby>き<ruby>地<rt>ち</rt></ruby>で<ruby>友達<rt>ともだち</rt></ruby>と<ruby>暗<rt>くら</rt></ruby>くなるまで<ruby>遊<rt>あそ</rt></ruby>んだものだ。しかし、<ruby>今<rt>いま</rt></ruby>は<ruby>遊<rt>あそ</rt></ruby>べる<ruby>場所<rt>ばしょ</rt></ruby>も<ruby>減<rt>へ</rt></ruby>り、<ruby>子<rt>こ</rt></ruby>どもたちは塾<rt>じゅく</rt></ruby>や<ruby>習<rt>なら</rt></ruby>い<ruby>事<rt>ごと</rt></ruby>で<ruby>忙<rt>いそが</rt></ruby>しい。<ruby>時代<rt>じだい</rt></ruby>の<ruby>変化<rt>へんか</rt></ruby>とはいえ、<ruby>少<rt>すこ</rt></ruby>し<ruby>寂<rt>さび</rt></ruby>しい<ruby>気<rt>き</rt></ruby>もする。
+--------------------------------------------------------------------------------
+ID: 137
+Passage: <ruby>本<rt>ほん</rt></ruby>チケットは、<ruby>指定<rt>してい</rt></ruby>された<ruby>日時<rt>にちじ</rt></ruby>のみ<ruby>有効<rt>ゆうこう</rt></ruby>です。<ruby>購入<rt>こうにゅう</rt></ruby><ruby>後<rt>ご</rt></ruby>のお<ruby>客様<rt>きゃくさま</rt></ruby>のご<ruby>都合<rt>つごう</rt></ruby>による<ruby>日時<rt>にちじ</rt></ruby>の<ruby>変更<rt>へんこう</rt></ruby>やキャンセル、<ruby>払<rt>はら</rt></ruby>い<ruby>戻<rt>もど</rt></ruby>しは<ruby>一切<rt>いっさい</rt></ruby>できません。また、<ruby>紛失<rt>ふんしつ</rt></ruby>された<ruby>場合<rt>ばあい</rt></ruby>の<ruby>再<rt>さい</rt></ruby><ruby>発行<rt>はっこう</rt></ruby>もいたしませんので、<ruby>大切<rt>たいせつ</rt></ruby>に<ruby>保管<rt>ほかん</rt></ruby>してください。
+--------------------------------------------------------------------------------
+ID: 138
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>物<rt>もの</rt></ruby>を<ruby>決<rt>き</rt></ruby>めるのに<ruby>時間<rt>じかん</rt></ruby>がかかるタイプだ。レストランのメニューを<ruby>見<rt>み</rt></ruby>ても、どれも<ruby>美味<rt>おい</rt></ruby>しそうに<ruby>見<rt>み</rt></ruby>えてなかなか<ruby>選<rt>えら</rt></ruby>べない。<ruby>友人<rt>ゆうじん</rt></ruby>にはよく「<ruby>優柔不断<rt>ゆうじゅうふだん</rt></ruby>だね」と<ruby>言<rt>い</rt></ruby>われる。しかし、<ruby>自分<rt>じぶん</rt></ruby>としては、じっくり<ruby>考<rt>かんが</rt></ruby>えて<ruby>後悔<rt>こうかい</rt></ruby>のない<ruby>選択<rt>せんたく</rt></ruby>をしたいだけなのだ。
+--------------------------------------------------------------------------------
+ID: 139
+Passage: <ruby>本日<rt>ほんじつ</rt></ruby>はご<ruby>来店<rt>らいてん</rt></ruby>いただき、まことにありがとうございます。<ruby>当店<rt>とうてん</rt></ruby>では、お<ruby>客様<rt>きゃくさま</rt></ruby>に<ruby>安心<rt>あんしん</rt></ruby>してお<ruby>食事<rt>しょくじ</rt></ruby>を<ruby>楽<rt>たの</rt></ruby>しんでいただくため、アレルギー<ruby>情報<rt>じょうほう</rt></ruby>の<ruby>表示<rt>ひょうじ</rt></ruby>を<ruby>行<rt>おこな</rt></ruby>っております。<ruby>詳<rt>くわ</rt></ruby>しい<ruby>内容<rt>ないよう</rt></ruby>はメニューに<ruby>記載<rt>きさい</rt></ruby>しておりますが、ご<ruby>不明<rt>ふめい</rt></ruby>な<ruby>点<rt>てん</rt></ruby>がございましたら、お<ruby>気軽<rt>きがる</rt></ruby>にスタッフまでおたずねください。
+--------------------------------------------------------------------------------
+ID: 140
+Passage: <ruby>仕事<rt>しごと</rt></ruby>を<ruby>円滑<rt>えんかつ</rt></ruby>に<ruby>進<rt>すす</rt></ruby>めるためには、「<ruby>報告<rt>ほうこく</rt></ruby>・<ruby>連絡<rt>れんらく</rt></ruby>・<ruby>相談<rt>そうだん</rt></ruby>」（<ruby>報連相<rt>ほうれんそう</rt></ruby>）が<ruby>欠<rt>か</rt></ruby>かせない。<ruby>自分<rt>じぶん</rt></ruby>ひとりで<ruby>抱<rt>かか</rt></ruby>え<ruby>込<rt>こ</rt></ruby>まず、<ruby>進捗<rt>しんちょく</rt></ruby><ruby>状況<rt>じょうきょう</rt></ruby>をこまめに<ruby>報告<rt>ほうこく</rt></ruby>し、<ruby>問題<rt>もんだい</rt></ruby>が<ruby>起<rt>お</rt></ruby>きたらすぐに<ruby>相談<rt>そうだん</rt></ruby>する。そうすることで、<ruby>大<rt>おお</rt></ruby>きなトラブルを<ruby>未然<rt>みぜん</rt></ruby>に<ruby>防<rt>ふせ</rt></ruby>ぎ、チームとして<ruby>成果<rt>せいか</rt></ruby>を<ruby>出<rt>だ</rt></ruby>すことができるのだ。
+--------------------------------------------------------------------------------
+ID: 141
+Passage: <ruby>桜山<rt>さくらやま</rt></ruby>ホテルでは、お<ruby>客様<rt>きゃくさま</rt></ruby>の<ruby>快適<rt>かいてき</rt></ruby>なご<ruby>滞在<rt>たいざい</rt></ruby>のため、<ruby>全室<rt>ぜんしつ</rt></ruby>で<ruby>無料<rt>むりょう</rt></ruby>のWi-Fiサービスをご<ruby>利用<rt>りよう</rt></ruby>いただけます。ネットワーク<ruby>名<rt>めい</rt></ruby>とパスワードは、お<ruby>部屋<rt>へや</rt></ruby>のテーブル<ruby>上<rt>じょう</rt></ruby>のご<ruby>案内<rt>あんない</rt></ruby>をご<ruby>確認<rt>かくにん</rt></ruby>ください。ご<ruby>不明<rt>ふめい</rt></ruby>な<ruby>点<rt>てん</rt></ruby>は、フロントまでお<ruby>気軽<rt>きがる</rt></ruby>にお<ruby>問<rt>と</rt></ruby>い<ruby>合<rt>あ</rt></ruby>わせください。
+--------------------------------------------------------------------------------
+ID: 142
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>断捨離<rt>だんしゃり</rt></ruby>にハマっている。<ruby>断捨離<rt>だんしゃり</rt></ruby>とは、<ruby>不要<rt>ふよう</rt></ruby>な<ruby>物<rt>もの</rt></ruby>を<ruby>手放<rt>てばな</rt></ruby>すことで、<ruby>生活<rt>せいかつ</rt></ruby>や<ruby>心<rt>こころ</rt></ruby>を<ruby>快適<rt>かいてき</rt></ruby>にすることだ。<ruby>物<rt>もの</rt></ruby>が<ruby>少<rt>すく</rt></ruby>なくなると、<ruby>部屋<rt>へや</rt></ruby>がすっきりするだけでなく、<ruby>掃除<rt>そうじ</rt></ruby>も<ruby>楽<rt>らく</rt></ruby>になる。<ruby>何<rt>なに</rt></ruby>より、<ruby>自分<rt>じぶん</rt></ruby>にとって<ruby>本当<rt>ほんとう</rt></ruby>に<ruby>大切<rt>たいせつ</rt></ruby>なものが<ruby>何<rt>なん</rt></ruby>なのかが<ruby>見<rt>み</rt></ruby>えてくる<ruby>気<rt>き</rt></ruby>がするのだ。
+--------------------------------------------------------------------------------
+ID: 143
+Passage: このたびの<ruby>異動<rt>いどう</rt></ruby>で、<ruby>長年<rt>ながねん</rt></ruby><ruby>慣<rt>な</rt></ruby>れ<ruby>親<rt>した</rt></ruby>しんだ<ruby>部署<rt>ぶしょ</rt></ruby>を<ruby>離<rt>はな</rt></ruby>れることになった。<ruby>新<rt>あたら</rt></ruby>しい<ruby>部署<rt>ぶしょ</rt></ruby>での<ruby>仕事<rt>しごと</rt></ruby>は<ruby>未知<rt>みち</rt></ruby>の<ruby>領域<rt>りょういき</rt></ruby>で、<ruby>正直<rt>しょうじき</rt></ruby>なところ<ruby>不安<rt>ふあん</rt></ruby>でいっぱいだ。しかし、これは<ruby>自分<rt>じぶん</rt></ruby>が<ruby>成長<rt>せいちょう</rt></ruby>するための<ruby>新<rt>あら</rt></ruby>たなチャンスだと<ruby>捉<rt>とら</rt></ruby>え、<ruby>前向<rt>まえむ</rt></ruby>きに<ruby>取<rt>と</rt></ruby>り<ruby>組<rt>く</rt></ruby>んでいきたいと<ruby>思<rt>おも</rt></ruby>う。
+--------------------------------------------------------------------------------
+ID: 144
+Passage: <ruby>最近<rt>さいきん</rt></ruby>、<ruby>何<rt>なに</rt></ruby>でもインターネットで<ruby>調<rt>しら</rt></ruby>べる<ruby>癖<rt>くせ</rt></ruby>がついた。<ruby>便利<rt>べんり</rt></ruby>ではあるが、そのせいで<ruby>自分<rt>じぶん</rt></ruby>の<ruby>頭<rt>あたま</rt></ruby>で<ruby>考<rt>かんが</rt></ruby>える<ruby>力<rt>ちから</rt></ruby>が<ruby>弱<rt>よわ</rt></ruby>くなった<ruby>気<rt>き</rt></ruby>がする。<ruby>簡単<rt>かんたん</rt></ruby>に<ruby>答<rt>こた</rt></ruby>えを<ruby>見<rt>み</rt></ruby>つけるのではなく、<ruby>少<rt>すこ</rt></ruby>し<ruby>時間<rt>じかん</rt></ruby>がかかっても、<ruby>自分<rt>じぶん</rt></ruby>なりに<ruby>考<rt>かんが</rt></ruby>えてみる<ruby>時間<rt>じかん</rt></ruby>を<ruby>大切<rt>たいせつ</rt></ruby>にしたい。
+--------------------------------------------------------------------------------
+ID: 145
+Passage: <ruby>田中<rt>たなか</rt></ruby>さん、<ruby>先日<rt>せんじつ</rt></ruby>お<ruby>借<rt>か</rt></ruby>りした<ruby>傘<rt>かさ</rt></ruby>ですが、<ruby>本日<rt>ほんじつ</truby><ruby>会社<rt>かいしゃ</rt></ruby>に<ruby>持<rt>も</rt></ruby>ってきております。お<ruby>昼休<rt>ひるやす</rt></ruby>みにでも、そちらの<ruby>部署<rt>ぶしょ</rt></ruby>までお<ruby>伺<rt>うかが</rt></ruby>いしてもよろしいでしょうか。もしご<ruby>都合<rt>つごう</rt></ruby>が<ruby>悪<rt>わる</rt></ruby>ければ、<ruby>机<rt>つくえ</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>に<ruby>置<rt>お</rt></ruby>いておきます。よろしくお<ruby>願<rt>ねが</rt></ruby>いします。
+--------------------------------------------------------------------------------
+ID: 146
+Passage: <ruby>私<rt>わたし</rt></ruby>の<ruby>家<rt>いえ</rt></ruby>の<ruby>近<rt>ちか</rt></ruby>くには、<ruby>大<rt>おお</rt></ruby>きな<ruby>公園<rt>こうえん</rt></ruby>がある。<ruby>週末<rt>しゅうまつ</rt></ruby>になると、<ruby>家族<rt>かぞく</rt></ruby>でピクニックをしたり、<ruby>犬<rt>いぬ</rt></ruby>の<ruby>散歩<rt>さんぽ</rt></ruby>をしたりする<ruby>人<rt>ひと</rt></ruby>びとで<ruby>賑<rt>にぎ</rt></ruby>わう。<ruby>私<rt>わたし</rt></ruby>はそこで<ruby>本<rt>ほん</rt></ruby>を<ruby>読<rt>よ</rt></ruby>むのが<ruby>好<rt>す</rt></ruby>きだ。<ruby>木<rt>こ</rt></ruby>もれ<ruby>日<rt>び</rt></ruby>の<ruby>下<rt>した</rt></ruby>で<ruby>読書<rt>どくしょ</rt></ruby>をしていると、<ruby>時間<rt>じかん</rt></ruby>が<ruby>経<rt>た</rt></ruby>つのを<ruby>忘<rt>わす</rt></ruby>れてしまう。
+--------------------------------------------------------------------------------
+ID: 147
+Passage: このたび、<ruby>弊社<rt>へいしゃ</rt></ruby>ではお<ruby>客様<rt>きゃくさま</rt></ruby>の<ruby>利便性<rt>りべんせい</rt></ruby><ruby>向上<rt>こうじょう</rt></ruby>のため、ウェブサイトをリニューアルいたしました。<ruby>新<rt>あたら</rt></ruby>しいサイトでは、スマートフォンでの<ruby>表示<rt>ひょうじ</rt></ruby>に<ruby>最適化<rt>さいてきか</rt></ruby>し、より<ruby>見<rt>み</rt></ruby>やすくなりました。また、<ruby>商品<rt>しょうひん</rt></ruby><ruby>検索<rt>けんさく</rt></ruby><ruby>機能<rt>きのう</rt></ruby>も<ruby>強化<rt>きょうか</rt></ruby>しております。ぜひご<ruby>覧<rt>らん</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 148
+Passage: <ruby>友人<rt>ゆうじん</rt></ruby>に「<ruby>相談<rt>そうだん</rt></ruby>がある」と<ruby>言<rt>い</rt></ruby>われたので、<ruby>話<rt>はなし</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いた。アドバイスをするというより、<ruby>私<rt>わたし</rt></ruby>はただ<ruby>聞<rt>き</rt></ruby>き<ruby>役<rt>やく</rt></ruby>に<ruby>徹<rt>てっ</rt></ruby>した。<ruby>人<rt>ひと</rt></ruby>は<ruby>悩<rt>なや</rt></ruby>みを<ruby>抱<rt>かか</rt></ruby>えているとき、<ruby>答<rt>こた</rt></ruby>えがほしいのではなく、ただ<ruby>話<rt>はなし</rt></ruby>を<ruby>聞<rt>き</rt></ruby>いてほしいだけの<ruby>場合<rt>ばあい</rt></ruby>も<ruby>多<rt>おお</rt></ruby>いからだ。<ruby>友人<rt>ゆうじん</rt></ruby>は<ruby>帰<rt>かえ</rt></ruby>るとき、「<ruby>聞<rt>き</rt></ruby>いてくれてありがとう。<ruby>気持<rt>きも</rt></ruby>ちが<ruby>整理<rt>せいり</rt></ruby>できた」と<ruby>言<rt>い</rt></ruby>ってくれた。
+--------------------------------------------------------------------------------
+ID: 149
+Passage: この<ruby>美術館<rt>びじゅつかん</rt></ruby>は、<ruby>入館<rt>にゅうかん</rt></ruby>に<ruby>際<rt>さい</rt></ruby>して<ruby>予約<rt>よやく</rt></ruby>が<ruby>必要<rt>ひつよう</rt></ruby>です。ウェブサイトからご<ruby>希望<rt>きぼう</rt></ruby>の<ruby>日時<rt>にちじ</rt></ruby>を<ruby>選<rt>えら</rt></ruby>んでご<ruby>予約<rt>よやく</rt></ruby>ください。<ruby>当日券<rt>とうじつけん</rt></ruby>の<ruby>販売<rt>はんばい</rt></ruby>はございませんので、<ruby>予約<rt>よやく</rt></ruby>なしでご<ruby>来館<rt>らいかん</rt></ruby>いただいても<ruby>入館<rt>にゅうかん</rt></ruby>できません。あらかじめご<ruby>了承<rt>りょうしょう</rt></ruby>ください。
+--------------------------------------------------------------------------------
+ID: 150
+Passage: <ruby>私<rt>わたし</rt></ruby>は<ruby>目標<rt>もくひょう</rt></ruby>を<ruby>立<rt>た</rt></ruby>てるとき、<ruby>大<rt>おお</rt></ruby>きな<ruby>目標<rt>もくひょう</rt></ruby>と<ruby>同時<rt>どうじ</rt></ruby>に、そこへ<ruby>至<rt>いた</rt></ruby>るまでの<ruby>小<rt>ちい</rt></ruby>さな<ruby>目標<rt>もくひょう</rt></ruby>も<ruby>設定<rt>せってい</rt></ruby>するようにしている。<ruby>例<rt>たと</rt></ruby>えば、「10キロやせる」という<ruby>大<rt>おお</rt></ruby>きな<ruby>目標<rt>もくひょう</rt></ruby>の<ruby>前<rt>まえ</rt></ruby>に、「まず1キロやせる」「<ruby>毎日<rt>まいにち</rt></ruby>30<ruby>分<rt>ぷん</rt></ruby><ruby>歩<rt>ある</rt></ruby>く」といった<ruby>具合<rt>ぐあい</rt></ruby>だ。<ruby>小<rt>ちい</rt></ruby>さな<ruby>成功<rt>せいこう</rt></ruby>を<ruby>積<rt>つ</rt></ruby>み<ruby>重<rt>かさ</rt></ruby>ねることが、<ruby>最終的<rt>さいしゅうてき</rt></ruby>な<ruby>目標<rt>もくひょう</rt></ruby><ruby>達成<rt>たっせい</rt></ruby>へのモチベーションになると<ruby>信<rt>しん</rt></ruby>じている。
+--------------------------------------------------------------------------------
+ID: 151
+Passage: 日本の会社では、同僚や上司との円滑な人間関係を築くことが非常に重要視される。そのため、「飲み会」と呼ばれる仕事終わりの飲み会が、重要なコミュニケーションの場となることも少なくない。参加は強制ではないが、参加することで普段は話せないような本音を聞けたり、チームの一体感を高めたりする効果が期待される。
+--------------------------------------------------------------------------------
+ID: 152
+Passage: この度は、弊社製品「パワフル掃除機V2」にご関心をお寄せいただき、ありがとうございます。お問い合わせいただいた件ですが、本製品はペットの毛を効率的に吸引できるよう設計されております。しかし、防水機能はございませんので、水気のある場所でのご使用はお控えください。その他ご不明な点がございましたら、お気軽にご連絡ください。
+--------------------------------------------------------------------------------
+ID: 153
+Passage: 引っ越しをしてから一か月が経った。都会の便利な生活は魅力的だったが、毎日の満員電車と騒音にはどうしても慣れなかった。今の田舎町は、店も少なく不便な点もあるが、窓から見える山の景色と鳥の声が、心を穏やかにしてくれる。私にとっては、こちらの生活の方が性に合っているようだ。
+--------------------------------------------------------------------------------
+ID: 154
+Passage: 来週の月曜日、社内システムの大規模なメンテナンスを実施します。作業は午前1時から午前5時までを予定しております。この時間帯は、社内ネットワークへのアクセスが一切できなくなります。皆様には大変ご迷惑をおかけいたしますが、重要なデータは事前にバックアップを取るなど、ご協力をお願いいたします。
+--------------------------------------------------------------------------------
+ID: 155
+Passage: 近年、働き方が多様化し、会社に所属せず個人で仕事をする「フリーランス」が増えている。時間に縛られず、自分の好きな場所で働けるという魅力がある一方で、収入が不安定であったり、病気やけがをした際の保障がなかったりするという厳しい現実もある。自由には責任が伴うということだろう。
+--------------------------------------------------------------------------------
+ID: 156
+Passage: この度は、数あるホテルの中から当ホテルをお選びいただき、誠にありがとうございます。チェックアウトは午前11時となっております。時間を超過しますと、追加料金が発生いたしますのでご注意ください。また、お部屋の鍵は、フロントまでご返却をお願いいたします。快適なご滞在となりますよう、スタッフ一同心よりお祈りしております。
+--------------------------------------------------------------------------------
+ID: 157
+Passage: 外国語を習得する上で最も大切なのは、間違いを恐れないことだと私は思う。完璧な文法や発音を目指すあまり、話すことをためらっていては、いつまでたっても上達しない。多少の間違いは気にせず、積極的にコミュニケーションをとろうとする姿勢こそが、上達への一番の近道なのだ。
+--------------------------------------------------------------------------------
+ID: 158
+Passage: お客様各位。いつも当店をご利用いただき、ありがとうございます。誠に勝手ながら、改装工事のため、来月1日から31日までの一か月間、休業させていただきます。リニューアルオープンは再来月の1日を予定しております。新しく生まれ変わる当店に、どうぞご期待ください。
+--------------------------------------------------------------------------------
+ID: 159
+Passage: 私は子供の頃、人見知りが激しく、友達の輪に入るのが苦手だった。そんな私を変えてくれたのが、一匹の子犬との出会いだった。毎日散歩に連れて行くと、自然と近所の人と話す機会が増えた。「かわいい犬ですね」という一言がきっかけで、会話が弾むようになった。犬が、私と社会とをつなぐ架け橋になってくれたのだ。
+--------------------------------------------------------------------------------
+ID: 160
+Passage: 会議で発言するとき、私はいつも結論から話すように心がけている。なぜなら、ビジネスの場では時間が限られており、聞き手はまず要点を把握したいと考えているからだ。理由や具体例は、その後に補足すればよい。この話し方を意識するだけで、相手に意図が伝わりやすくなるはずだ。
+--------------------------------------------------------------------------------
+ID: 161
+Passage: この度は「青空写真コンテスト」に多数のご応募をいただき、ありがとうございました。審査の結果、入賞作品が決定いたしましたので、発表いたします。入賞された皆様、おめでとうございます。作品は来月1日より、市民ギャラリーにて展示いたしますので、ぜひ足をお運びください。
+--------------------------------------------------------------------------------
+ID: 162
+Passage: 日本の「おもてなし」の心は、海外からも高く評価されている。それは、マニュアル通りのサービスではなく、相手が何を求めているかを察し、先回りして行動するところにあると言われる。相手の立場に立って考えるという、その細やかな心遣いが、人の心を打つのだろう。
+--------------------------------------------------------------------------------
+ID: 163
+Passage: 健康診断の結果、医者から運動不足を指摘された。自分でも自覚はあったが、改めて言われるとショックだった。このままではいけないと思い、一駅手前で電車を降りて歩いて帰ることにした。たいした距離ではないが、毎日続けることが大切だ。まずは三か月、頑張ってみようと思う。
+--------------------------------------------------------------------------------
+ID: 164
+Passage: この図書館の資料を館外へ持ち出す際は、必ず貸出手続きを行ってください。手続きをせずに持ち出すと、出口のブザーが鳴ります。貸出期間は2週間で、一人10冊まで借りることができます。返却が遅れた場合、新たな貸出ができなくなりますので、ご注意ください。
+--------------------------------------------------------------------------------
+ID: 165
+Passage: 新しい企画について、部長に相談したところ、「面白いが、実現するには課題が多すぎる」と言われた。確かに、予算や人員の問題など、クリアすべき点は多い。しかし、私はこの企画が会社にとって必ずプラスになると信じている。簡単にあきらめるつもりはない。もう一度、計画を練り直して説得するつもりだ。
+--------------------------------------------------------------------------------
+ID: 166
+Passage: この度は、山田部長の送別会にご参加いただき、ありがとうございます。部長には、私が新入社員の頃から、仕事の基本を厳しく、そして温かくご指導いただきました。時には失敗して落ち込む私を、食事に誘って励ましてくださったこともありました。部長からいただいた多くの教えを胸に、これからも精一杯頑張ります。
+--------------------------------------------------------------------------------
+ID: 167
+Passage: 最近のスマートフォンは機能が豊富だが、その全てを使いこなしている人は少ないだろう。私自身、電話とメール、インターネットくらいしか使っておらず、多くの機能が眠ったままだ。便利な機能がたくさんあるのだろうが、説明書を読むのも面倒で、ついそのままになっている。もったいないとは思うのだが。
+--------------------------------------------------------------------------------
+ID: 168
+Passage: この度は、弊社にご応募いただき、ありがとうございました。慎重に選考を重ねました結果、誠に残念ながら、今回はご期待に沿えない結果となりました。ご提出いただいた応募書類は、責任をもってこちらで破棄させていただきます。末筆ではございますが、今後のご活躍を心よりお祈り申し上げます。
+--------------------------------------------------------------------------------
+ID: 169
+Passage: 私が住んでいる地域では、月に一度、住民が集まって公園の掃除をする活動がある。はじめは少し面倒だと感じていたが、参加してみると、普段は挨拶くらいしかしない近所の人たちと話す良い機会になった。共通の作業をすることで、連帯感が生まれ、今ではこの活動が楽しみになっている。
+--------------------------------------------------------------------------------
+ID: 170
+Passage: 電車の中では、携帯電話の通話はご遠慮ください。また、優先席付近では、混雑時には電源をお切りください。それ以外の場所では、マナーモードに設定の上、通話はご遠慮ください。皆様のご協力をお願いいたします。
+--------------------------------------------------------------------------------
+ID: 171
+Passage: 私が日本語の勉強で一番苦労したのは、微妙なニュアンスの違いを理解することだった。例えば、「ありがとう」と「すみません」の使い分け。感謝を表す場面で「すみません」と言うことに、最初はとても違和感があった。しかし、相手への気遣いや謙遜の気持ちを表す、日本らしい表現だと理解してからは、自然に使えるようになった。
+--------------------------------------------------------------------------------
+ID: 172
+Passage: この度は、商品のお届けが遅れておりますことを、深くお詫び申し上げます。ご注文いただいた商品は、現在、配送センターを出発しておりますが、交通渋滞の影響で、通常より一日遅れの明日、お届けとなる見込みです。お客様には大変ご迷惑をおかけしますが、今しばらくお待ちいただけますようお願い申し上げます。
+--------------------------------------------------------------------------------
+ID: 173
+Passage: 昔は、わからないことがあれば、辞書を引いたり、図書館で調べたりしたものだ。時間と手間はかかったが、その過程で関連情報も目に入り、知識が深まるという良さがあった。今はインターネットですぐに答えが見つかるが、その答えだけを見て満足してしまい、知識が広がりにくいという側面もあるのではないだろうか。
+--------------------------------------------------------------------------------
+ID: 174
+Passage: 当店では、環境保護のため、簡易包装を心がけております。プレゼント用の包装も承っておりますが、ご希望のお客様は、会計の際にレジ係員にお申し付けください。なお、プレゼント包装は有料となりますので、あらかじめご了承ください。
+--------------------------------------------------------------------------------
+ID: 175
+Passage: 私は、新しいことを始めるとき、まず形から入るタイプだ。例えば、ランニングを始めようと思ったら、まず格好いいウェアとシューズを揃える。道具を揃えることで、自分のやる気を高めるのだ。「格好だけ」と笑う人もいるが、私にとっては、モチベーションを維持するための大切な儀式なのである。
+--------------------------------------------------------------------------------
+ID: 176
+Passage: 来週の金曜日に予定しております会議ですが、山田部長が急な出張で不在のため、再来週の月曜日に変更させていただけないでしょうか。時間は同じ午後2時からで結構です。ご都合が悪いようでしたら、再度調整いたしますので、お返事いただけますと幸いです。
+--------------------------------------------------------------------------------
+ID: 177
+Passage: 最近のテレビは、ただ見るだけでなく、インターネットに接続して様々なコンテンツを楽しめるようになっている。過去の番組を見たり、映画をレンタルしたりと、その機能は多岐にわたる。しかし、選択肢が多すぎると、かえって何を見るか選べなくなり、結局何も見ずに時間を無駄にしてしまうこともある。
+--------------------------------------------------------------------------------
+ID: 178
+Passage: この度は、お足元の悪い中、ご来店いただき誠にありがとうございます。ただいまの時間は、お席が大変混み合っており、ご案内まで30分ほどお待ちいただく可能性がございます。お名前と人数をこちらにご記入の上、お待ちください。順番が来ましたら、お呼び出しいたします。
+--------------------------------------------------------------------------------
+ID: 179
+Passage: 私は、旅先で美術館を訪れるのが好きだ。有名な画家の作品を見るのも良いが、それ以上に、その土地の無名の芸術家が描いた作品に心惹かれることがある。そこには、観光地としての顔だけでなく、地元の人々の暮らしや歴史が表現されているように感じるからだ。美術館は、その土地を深く知るための窓のような存在だ。
+--------------------------------------------------------------------------------
+ID: 180
+Passage: 最近、読んだ本の内容をすぐに忘れてしまうことが多くなった。ただ文字を追うだけで、内容が頭に入っていないのだ。これではいけないと思い、本を読んだ後、その内容を三行で要約する習慣を始めた。要約することで、内容を深く理解し、記憶に定着させることが狙いだ。少し面倒だが、効果はありそうだ。
+--------------------------------------------------------------------------------
+ID: 181
+Passage: 当社の新しいスマートフォンは、カメラ機能に徹底的にこだわりました。AIが被写体を自動で認識し、最適な設定で撮影するため、誰でもプロのような美しい写真を撮ることができます。特に夜景モードでは、これまでのスマートフォンでは不可能だった、明るく鮮やかな写真の撮影が可能です。
+--------------------------------------------------------------------------------
+ID: 182
+Passage: 私たちは、つい自分の価値観で他人を判断してしまいがちだ。しかし、育った環境や経験が違えば、考え方が違うのは当然のことだ。大切なのは、自分と違う意見を持つ人を否定するのではなく、「そういう考え方もあるのか」と一度受け入れてみること。それこそが、異文化理解の第一歩となる。
+--------------------------------------------------------------------------------
+ID: 183
+Passage: 山田様。先日は、会議の資料作成、ありがとうございました。大変分かりやすく、おかげさまで会議もスムーズに進みました。ただ一点、P.5のグラフの数値に誤りがあるようですので、ご確認いただけますでしょうか。お忙しいところ恐縮ですが、修正の上、本日中に再送をお願いいたします。
+--------------------------------------------------------------------------------
+ID: 184
+Passage: 私は、部屋の掃除をするとき、まず好きな音楽をかける。すると、面倒なはずの掃除が、不思議と楽しい時間に変わるのだ。音楽のリズムに合わせて体を動かしていると、あっという間に部屋がきれいになる。少しの工夫で、嫌いなことでも楽しくできるのだと、掃除をするたびに思う。
+--------------------------------------------------------------------------------
+ID: 185
+Passage: 当ビルでは、節電のため、昼休み時間（12:00〜13:00）は、廊下とロビーの照明を一部消灯しております。また、エレベーターも2基のうち1基を停止させていただきます。皆様にはご不便をおかけしますが、地球環境保護のため、ご理解とご協力をお願いいたします。
+--------------------------------------------------------------------------------
+ID: 186
+Passage: 子供の頃、母に「うそをついてはいけません」と厳しく教えられた。しかし、大人になると、時には相手を傷つけないための「優しい嘘」が必要な場面もあると知った。例えば、友人の手料理が正直あまり美味しくなくても、「美味しいね」と言うこと。真実を伝えることだけが、正しさではないのだと学んだ。
+--------------------------------------------------------------------------------
+ID: 187
+Passage: この度は、数あるレストランの中から「キッチン海」にご予約いただき、ありがとうございます。ご予約のキャンセル・変更は、前日までにご連絡をお願いいたします。当日のキャンセルにつきましては、コース料金の100%をキャンセル料として申し受けますので、何卒ご了承ください。
+--------------------------------------------------------------------------------
+ID: 188
+Passage: 私は、何か大きな決断をするとき、必ず一晩寝てから考えるようにしている。その場で感情的に決めてしまうと、後で後悔することが多いからだ。一度冷静になって、様々な角度から物事を検討することで、より良い判断ができると信じている。
+--------------------------------------------------------------------------------
+ID: 189
+Passage: この度は、弊社サービスにご登録いただき、ありがとうございます。ご登録いただいたメールアドレスに、確認のメールをお送りしました。メールに記載されているURLをクリックして、登録を完了させてください。24時間以内に確認が行われない場合、登録は無効となりますのでご注意ください。
+--------------------------------------------------------------------------------
+ID: 190
+Passage: 人は誰でも、得意なこともあれば苦手なこともある。大切なのは、自分の苦手なことから逃げるのではなく、それとどう向き合うかだ。苦手なことを克服しようと努力するのも一つの道だし、それが難しいなら、得意な人に助けを求めるのも賢い選択だ。一人で全てを完璧にこなす必要はないのだ。
+--------------------------------------------------------------------------------
+ID: 191
+Passage: 株式会社山田商事、鈴木様。いつもお世話になっております。株式会社佐藤の田中です。さて、先日ご依頼いただいた商品のサンプルですが、本日、宅配便にて発送いたしました。明日には到着する予定です。ご確認の上、ご検討いただけますと幸いです。今後ともよろしくお願いいたします。
+--------------------------------------------------------------------------------
+ID: 192
+Passage: 新しい服を買うと、次の日にすぐ着ていきたくなる。新しい靴を買うと、すぐに履いて出かけたくなる。このわくわくする気持ちは、大人になっても変わらない。新しいものがもたらしてくれる、ささやかな幸せ。こういう気持ちを、これからも大切にしていきたいと思う。
+--------------------------------------------------------------------------------
+ID: 193
+Passage: このイベント会場内への、飲み物・食べ物の持ち込みは固くお断りいたします。お食事は、ロビーのカフェテリアをご利用ください。また、公演中の写真撮影、録音、録画は一切禁止です。携帯電話の電源は、必ずお切りください。皆様のご協力をお願いいたします。
+--------------------------------------------------------------------------------
+ID: 194
+Passage: 人と話すとき、相手の話を最後まで聞かずに、自分の意見を言いたがる人がいる。しかし、それでは円滑なコミュニケーションは望めない。まずは相手の話にしっかりと耳を傾け、相手が何を言いたいのかを理解することが先決だ。自分の意見を言うのは、それからでも遅くはない。
+--------------------------------------------------------------------------------
+ID: 195
+Passage: この度は、当社の採用試験にご応募いただき、ありがとうございました。書類選考の結果、見事通過されましたので、お知らせいたします。つきましては、下記の日程で一次面接を行いますので、ご都合のよろしい日時を第三希望まで選び、メールにてご返信ください。
+--------------------------------------------------------------------------------
+ID: 196
+Passage: テレビやインターネットでは、毎日のように様々な健康情報が紹介されている。しかし、中には科学的根拠のない、あやしい情報も少なくない。ある食品が体に良いと聞いても、すぐに飛びつくのではなく、その情報が信頼できるものなのか、一度立ち止まって考える冷静さが必要だ。
+--------------------------------------------------------------------------------
+ID: 197
+Passage: 本日ご宿泊のお客様へ。明日の朝食は、1階のレストラン「四季」にて、午前7時から9時半までご用意しております。和食と洋食のバイキング形式となっておりますので、お好きなものをお好きなだけお召し上がりください。なお、朝食券をお持ちの上、ご来場ください。
+--------------------------------------------------------------------------------
+ID: 198
+Passage: 仕事で大きな失敗をしてしまい、ひどく落ち込んだ。しかし、上司は私を叱るのではなく、「この失敗を次にどう活かすかが大事だ」と言ってくれた。その言葉に救われた。失敗は終わりではない。次の成功へのステップなのだ。この経験を無駄にせず、必ず次に活かそうと強く思った。
+--------------------------------------------------------------------------------
+ID: 199
+Passage: 皆様、本日はお忙しい中、私の送別会を開いていただき、本当にありがとうございます。この会社での10年間は、私にとってかけがえのない財産です。皆様と共に働き、笑い、時には悩んだ日々を、決して忘れません。ここで得た経験を糧に、新しい職場でも頑張りたいと思います。本当にありがとうございました。
+--------------------------------------------------------------------------------
+ID: 200
+Passage: この度は、製品アンケートにご協力いただき、誠にありがとうございます。謝礼として、500円分のデジタルギフト券をお送りいたします。メールに記載されたURLからお受け取りください。なお、ギフト券には有効期限がございますので、お早めにご利用ください。今後とも、弊社製品をよろしくお願いいたします。
+--------------------------------------------------------------------------------
