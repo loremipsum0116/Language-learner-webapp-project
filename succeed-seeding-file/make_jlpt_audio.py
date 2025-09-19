@@ -16,8 +16,9 @@ jlpt/n5/{romaji}/
 └── example.mp3  (예문)
 
 보이스:
-- 일본어: ja-JP-Neural2-C (남성), ja-JP-Neural2-B (여성) 순환
-- 한국어: ko-KR-Neural2-C (남성), ko-KR-Neural2-B (여성) 순환
+- 일본어: ja-JP-Chirp3-HD-Orus (남성), ja-JP-Chirp3-HD-Achernar (여성) 순환
+- 한국어 (gloss): ko-KR-Neural2-C (남성), ko-KR-Neural2-B (여성) 순환
+- 한국어 (example): ko-KR-Chirp3-HD-Orus (남성), ko-KR-Chirp3-HD-Achernar (여성) 순환
 
 필수: pip install google-cloud-texttospeech pydub, FFmpeg, GCP ADC 설정
 """
@@ -44,9 +45,13 @@ RETRY_BACKOFF_SEC = float(os.getenv("RETRY_BACKOFF_SEC", "0.8"))
 JA_MALE = os.getenv("JA_MALE", "ja-JP-Chirp3-HD-Orus")  # 일본어 남성 보이스
 JA_FEMALE = os.getenv("JA_FEMALE", "ja-JP-Chirp3-HD-Achernar")  # 일본어 여성 보이스
 
-# 한국어 보이스 (Neural2) - Neural2로 변경
-KO_MALE = os.getenv("KO_MALE", "ko-KR-Neural2-C")  # 한국어 남성 보이스
-KO_FEMALE = os.getenv("KO_FEMALE", "ko-KR-Neural2-B")  # 한국어 여성 보이스
+# 한국어 보이스 (gloss용 Neural2)
+KO_NEURAL_MALE = os.getenv("KO_NEURAL_MALE", "ko-KR-Neural2-C")  # 한국어 Neural2 남성
+KO_NEURAL_FEMALE = os.getenv("KO_NEURAL_FEMALE", "ko-KR-Neural2-B")  # 한국어 Neural2 여성
+
+# 한국어 보이스 (example용 Chirp3)
+KO_CHIRP_MALE = os.getenv("KO_CHIRP_MALE", "ko-KR-Chirp3-HD-Orus")  # 한국어 Chirp3 남성
+KO_CHIRP_FEMALE = os.getenv("KO_CHIRP_FEMALE", "ko-KR-Chirp3-HD-Achernar")  # 한국어 Chirp3 여성
 
 
 # 폴백 후보
@@ -66,16 +71,32 @@ JA_FEMALE_FALLBACKS = _parse_list(
         "ja-JP-Chirp3-HD-Achernar,ja-JP-Neural2-B,ja-JP-Standard-B,ja-JP-Standard-A",
     )
 )
-KO_MALE_FALLBACKS = _parse_list(
+
+# gloss용 한국어 Neural2 폴백
+KO_NEURAL_MALE_FALLBACKS = _parse_list(
     os.getenv(
-        "KO_MALE_FALLBACKS",
+        "KO_NEURAL_MALE_FALLBACKS",
         "ko-KR-Neural2-C,ko-KR-Standard-C,ko-KR-Standard-D",
     )
 )
-KO_FEMALE_FALLBACKS = _parse_list(
+KO_NEURAL_FEMALE_FALLBACKS = _parse_list(
     os.getenv(
-        "KO_FEMALE_FALLBACKS",
+        "KO_NEURAL_FEMALE_FALLBACKS",
         "ko-KR-Neural2-B,ko-KR-Standard-A,ko-KR-Standard-B",
+    )
+)
+
+# example용 한국어 Chirp3 폴백
+KO_CHIRP_MALE_FALLBACKS = _parse_list(
+    os.getenv(
+        "KO_CHIRP_MALE_FALLBACKS",
+        "ko-KR-Chirp3-HD-Orus,ko-KR-Neural2-C,ko-KR-Standard-C",
+    )
+)
+KO_CHIRP_FEMALE_FALLBACKS = _parse_list(
+    os.getenv(
+        "KO_CHIRP_FEMALE_FALLBACKS",
+        "ko-KR-Chirp3-HD-Achernar,ko-KR-Neural2-B,ko-KR-Standard-A",
     )
 )
 
@@ -165,9 +186,19 @@ def is_male(index_zero_based: int) -> bool:
 def voices_for_index(idx0: int) -> Dict[str, str]:
     """인덱스별 보이스 선택"""
     if is_male(idx0):
-        return {"ja": JA_MALE, "ko": KO_MALE, "gender": "male"}
+        return {
+            "ja": JA_MALE,
+            "ko_neural": KO_NEURAL_MALE,  # gloss용
+            "ko_chirp": KO_CHIRP_MALE,    # example용
+            "gender": "male"
+        }
     else:
-        return {"ja": JA_FEMALE, "ko": KO_FEMALE, "gender": "female"}
+        return {
+            "ja": JA_FEMALE,
+            "ko_neural": KO_NEURAL_FEMALE,  # gloss용
+            "ko_chirp": KO_CHIRP_FEMALE,    # example용
+            "gender": "female"
+        }
 
 
 # ===== TTS =====
@@ -324,9 +355,9 @@ def synthesize_mixed_script(
     mixed_text: str,
     voices: Dict[str, str],
     ja_candidates: List[str],
-    ko_candidates: List[str],
+    ko_chirp_candidates: List[str],  # example용 Chirp3 보이스
 ) -> Optional[AudioSegment]:
-    """일본어/한국어 혼합 텍스트를 각각 해당 언어 보이스로 합성"""
+    """일본어/한국어 혼합 텍스트를 각각 해당 언어 보이스로 합성 (example용)"""
     segments = split_mixed_text(mixed_text)
     if not segments:
         return None
@@ -335,14 +366,14 @@ def synthesize_mixed_script(
 
     for lang, text in segments:
         if lang == "ja":
-            # 일본어 부분 - 특수문자 처리 후 일본어 보이스 사용
+            # 일본어 부분 - 특수문자 처리 후 일본어 Chirp3 보이스 사용
             cleaned_text = clean_japanese_text(text)
             seg = synthesize_lang_try_voices(tts, cleaned_text, "ja-JP", ja_candidates)
         else:
-            # 한국어 부분 - 특수문자/물결 처리 후 한국어 보이스 사용, 쉼표 분할 적용
+            # 한국어 부분 - example용이므로 Chirp3 보이스 사용, 쉼표 분할 적용
             cleaned_text = clean_ko_gloss(text)
             seg = synthesize_with_commas_try_voices(
-                tts, cleaned_text, "ko-KR", COMMA_GAP_MS, ko_candidates
+                tts, cleaned_text, "ko-KR", COMMA_GAP_MS, ko_chirp_candidates
             )
 
         if seg is None or len(seg) == 0:
@@ -359,6 +390,13 @@ def synthesize_mixed_script(
 
 
 # ===== 메인 파이프라인 =====
+def extract_level_from_filename(json_path: str) -> str:
+    """JSON 파일명에서 JLPT 레벨 추출 (예: jlpt_n4_vocabs.json -> n4)"""
+    import re
+    filename = os.path.basename(json_path)
+    match = re.search(r'jlpt_?(n[1-5])', filename, re.IGNORECASE)
+    return match.group(1).lower() if match else "n5"
+
 def process(json_path: str) -> None:
     try:
         items = load_items(json_path)
@@ -372,13 +410,15 @@ def process(json_path: str) -> None:
         print("Google Cloud 인증 실패 또는 클라이언트 생성 실패:", e)
         return
 
+    level = extract_level_from_filename(json_path)
     total = len(items)
-    print(f"🎧 JLPT 오디오 생성 시작 (items={total})")
+    print(f"🎧 JLPT 오디오 생성 시작 (items={total}, level={level})")
     print(f"    JA: male={JA_MALE}, female={JA_FEMALE}")
-    print(f"    KO: male={KO_MALE}, female={KO_FEMALE}")
+    print(f"    KO(gloss): male={KO_NEURAL_MALE}, female={KO_NEURAL_FEMALE}")
+    print(f"    KO(example): male={KO_CHIRP_MALE}, female={KO_CHIRP_FEMALE}")
     print(f"    gaps: gloss={GLOSS_GAP_MS}ms, comma={COMMA_GAP_MS}ms")
     print(
-        "📝 모드: word=ja-JP(Chirp3 HD), gloss=ja-JP(Chirp3)+ko-KR(Neural2), example=ja-JP(Chirp3 HD), 성별 순환(남→여→남…)\n"
+        "📝 모드: word=ja-JP(Chirp3 HD), gloss=ja-JP(Chirp3)+ko-KR(Neural2), example=ja-JP(Chirp3)+ko-KR(Chirp3), 성별 순환(남→여→남…)\n"
     )
 
     last_saved: Optional[str] = None
@@ -400,18 +440,29 @@ def process(json_path: str) -> None:
 
         # 출력 경로 생성
         try:
-            paths = build_output_paths(romaji)
+            paths = build_output_paths(romaji, level)
         except Exception as e:
             print(f"[{i+1}/{total}] '{romaji}' 경로 오류: {e}")
             fails.append(f"{romaji}\tPATH_ERROR:{e}")
             continue
 
+        # 폴더가 이미 존재하고 모든 파일이 있는지 확인
+        if os.path.exists(paths["dir"]):
+            has_word = os.path.exists(paths["word"])
+            has_gloss = os.path.exists(paths["gloss"]) if ko_gloss_raw else True
+            has_example = os.path.exists(paths["example"]) if item.get("koChirpScript", "") else True
+
+            if has_word and has_gloss and has_example:
+                print(f"[{i+1}/{total}] '{lemma}({kana})' → 이미 존재, 건너뜀")
+                continue
+
         v = voices_for_index(i)
         print(
-            f"[{i+1}/{total}] '{lemma}({kana})' → dir='{paths['dir']}', ja={v['ja']}, ko={v['ko']} (gender={v['gender']})"
+            f"[{i+1}/{total}] '{lemma}({kana})' → dir='{paths['dir']}', "
+            f"ja={v['ja']}, ko_gloss={v['ko_neural']}, ko_example={v['ko_chirp']} (gender={v['gender']})"
         )
 
-        # 1) word.mp3 (일본어 kana)
+        # 1) word.mp3 (일본어 kana - Chirp3)
         ja_candidates = [v["ja"]] + (
             JA_MALE_FALLBACKS if v["gender"] == "male" else JA_FEMALE_FALLBACKS
         )
@@ -437,14 +488,15 @@ def process(json_path: str) -> None:
             fails.append(f"{romaji}\tWORD_SAVE_FAIL:{e}")
             continue
 
-        # 2) gloss.mp3 = kana + 무음 + koGloss
+        # 2) gloss.mp3 = kana(Chirp3) + 무음 + koGloss(Neural2)
         ko_gloss = clean_ko_gloss(ko_gloss_raw)
         if ko_gloss:
-            ko_candidates = [v["ko"]] + (
-                KO_MALE_FALLBACKS if v["gender"] == "male" else KO_FEMALE_FALLBACKS
+            # gloss용 Neural2 보이스 사용
+            ko_neural_candidates = [v["ko_neural"]] + (
+                KO_NEURAL_MALE_FALLBACKS if v["gender"] == "male" else KO_NEURAL_FEMALE_FALLBACKS
             )
             ko_seg = synthesize_with_commas_try_voices(
-                tts, ko_gloss, "ko-KR", COMMA_GAP_MS, ko_candidates
+                tts, ko_gloss, "ko-KR", COMMA_GAP_MS, ko_neural_candidates
             )
 
             if ko_seg is not None and len(ko_seg) > 0:
@@ -455,7 +507,7 @@ def process(json_path: str) -> None:
 
                 try:
                     gloss_seg.export(paths["gloss"], format="mp3")
-                    print("  ✅ gloss.mp3 저장")
+                    print("  ✅ gloss.mp3 저장 (Neural2)")
 
                     # 추가 저장: audio.gloss (옵션)
                     if audio_paths.get("gloss"):
@@ -472,17 +524,21 @@ def process(json_path: str) -> None:
         else:
             print("  ⚠️ koGloss 비어있음 → gloss 생략")
 
-        # 3) example.mp3 (koChirpScript - 일본어/한국어 분리 합성)
+        # 3) example.mp3 (koChirpScript - 일본어 Chirp3 / 한국어 Chirp3 분리 합성)
         ko_chirp_script = item.get("koChirpScript", "")
         if ko_chirp_script:
+            # example용 Chirp3 보이스 사용
+            ko_chirp_candidates = [v["ko_chirp"]] + (
+                KO_CHIRP_MALE_FALLBACKS if v["gender"] == "male" else KO_CHIRP_FEMALE_FALLBACKS
+            )
             example_seg = synthesize_mixed_script(
-                tts, ko_chirp_script, v, ja_candidates, ko_candidates
+                tts, ko_chirp_script, v, ja_candidates, ko_chirp_candidates
             )
 
             if example_seg is not None and len(example_seg) > 0:
                 try:
                     example_seg.export(paths["example"], format="mp3")
-                    print("  ✅ example.mp3 저장 (koChirpScript - 혼합)")
+                    print("  ✅ example.mp3 저장 (koChirpScript - Chirp3 혼합)")
 
                     # 추가 저장: audio.example (옵션)
                     if audio_paths.get("example"):
@@ -517,5 +573,5 @@ def process(json_path: str) -> None:
 
 
 if __name__ == "__main__":
-    json_file = sys.argv[1] if len(sys.argv) > 1 else "jlpt_n5_vocabs.json"
+    json_file = sys.argv[1] if len(sys.argv) > 1 else "jlpt_n4_vocabs.json"
     process(json_file)

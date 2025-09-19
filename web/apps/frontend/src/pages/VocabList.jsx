@@ -1132,7 +1132,10 @@ export default function VocabList() {
             // Fallback to JLPT folder structure
             const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
             // Use romaji for the folder name instead of Japanese characters
-            const folderName = vocab.romaji ? vocab.romaji.toLowerCase() : vocab.lemma.toLowerCase();
+            // Replace spaces with underscores for folder names (e.g., "issho ni" -> "issho_ni")
+            const folderName = vocab.romaji
+                ? vocab.romaji.toLowerCase().replace(/\s+/g, '_')
+                : vocab.lemma.toLowerCase().replace(/\s+/g, '_');
             const audioPath = `/jlpt/${jlptLevel}/${folderName}/word.mp3`;
             console.log('⚠️ Playing Japanese audio from JLPT folder:', audioPath);
             console.log('Using romaji/folder name:', folderName, 'from lemma:', vocab.lemma);

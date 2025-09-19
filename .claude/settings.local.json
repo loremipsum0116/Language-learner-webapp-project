@@ -240,7 +240,9 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- npx tsx ../../../succeed-seeding-file/seed-cefr-fixed.js)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node ../../../succeed-seeding-file/seed-idioms-vocab.js)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node ../../../succeed-seeding-file/seed-cefr-fixed.js)",
-      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node ../../../succeed-seeding-file/seed-exam-categories.js)"
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node ../../../succeed-seeding-file/seed-exam-categories.js)",
+      "Bash(do mv \"$dir\" \"../n4/\")",
+      "Bash(do cp -r \"$dir\"* \"../n4/$dir\")"
     ],
     "deny": [],
     "ask": []
