@@ -1,0 +1,2003 @@
+[
+    {
+        "lemma": "毎朝",
+        "kana": "まいあさ",
+        "romaji": "maiasa",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 매일 아침",
+        "koExample": "매일 아침 조깅을 합니다.",
+        "koChirpScript": "まいあさ. 매일 아침이라는 뜻의 명사입니다. まいあさじょぎんぐをします. 매일 아침 조깅을 합니다라는 의미네요.",
+        "example": "毎朝ジョギングをします",
+        "exampleKana": "まいあさじょぎんぐをします",
+        "kanji": "毎朝",
+        "onyomi": "マイ、チョウ",
+        "kunyomi": "ごと、あさ",
+        "audio": {
+            "word": "jlpt/n5/maiasa/word.mp3",
+            "gloss": "jlpt/n5/maiasa/gloss.mp3",
+            "example": "jlpt/n5/maiasa/example.mp3"
+        }
+    },
+    {
+        "lemma": "問題",
+        "kana": "もんだい",
+        "romaji": "mondai",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 문제",
+        "koExample": "이 문제는 어렵습니다.",
+        "koChirpScript": "もんだい. 문제라는 뜻의 명사입니다. このもんだいはむずかしいです. 이 문제는 어렵습니다라는 의미네요.",
+        "example": "この問題は難しいです",
+        "exampleKana": "このもんだいはむずかしいです",
+        "kanji": "問題",
+        "onyomi": "モン、ダイ",
+        "kunyomi": "と(う)、-",
+        "audio": {
+            "word": "jlpt/n4/mondai/word.mp3",
+            "gloss": "jlpt/n4/mondai/gloss.mp3",
+            "example": "jlpt/n4/mondai/example.mp3"
+        }
+    },
+    {
+        "lemma": "お茶",
+        "kana": "おちゃ",
+        "romaji": "ocha",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 차",
+        "koExample": "따뜻한 차를 마시고 싶어요.",
+        "koChirpScript": "おちゃ. 차라는 뜻의 명사입니다. あたたかいおちゃがのみたいです. 따뜻한 차를 마시고 싶어요라는 의미네요.",
+        "example": "温かいお茶が飲みたいです",
+        "exampleKana": "あたたかいおちゃがのみたいです",
+        "kanji": "茶",
+        "onyomi": "チャ、サ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/ocha/word.mp3",
+            "gloss": "jlpt/n5/ocha/gloss.mp3",
+            "example": "jlpt/n5/ocha/example.mp3"
+        }
+    },
+    {
+        "lemma": "黒",
+        "kana": "くろ",
+        "romaji": "kuro",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 검은색",
+        "koExample": "이 가방은 검은색입니다.",
+        "koChirpScript": "くろ. 검은색이라는 뜻의 명사입니다. このかばんはくろです. 이 가방은 검은색입니다라는 의미네요.",
+        "example": "この鞄は黒です",
+        "exampleKana": "このかばんはくろです",
+        "kanji": "黒",
+        "onyomi": "コク",
+        "kunyomi": "くろ、くろ(い)",
+        "audio": {
+            "word": "jlpt/n5/kuro/word.mp3",
+            "gloss": "jlpt/n5/kuro/gloss.mp3",
+            "example": "jlpt/n5/kuro/example.mp3"
+        }
+    },
+    {
+        "lemma": "台所",
+        "kana": "だいどころ",
+        "romaji": "daidokoro",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 부엌",
+        "koExample": "어머니는 부엌에 계십니다.",
+        "koChirpScript": "だいどころ. 부엌이라는 뜻의 명사입니다. はははだいどころにいます. 어머니는 부엌에 계십니다라는 의미네요.",
+        "example": "母は台所にいます",
+        "exampleKana": "はははだいどころにいます",
+        "kanji": "台所",
+        "onyomi": "ダイ、ショ",
+        "kunyomi": "-, ところ",
+        "audio": {
+            "word": "jlpt/n5/daidokoro/word.mp3",
+            "gloss": "jlpt/n5/daidokoro/gloss.mp3",
+            "example": "jlpt/n5/daidokoro/example.mp3"
+        }
+    },
+    {
+        "lemma": "葉書",
+        "kana": "はがき",
+        "romaji": "hagaki",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 엽서",
+        "koExample": "친구에게 엽서를 보냈습니다.",
+        "koChirpScript": "はがき. 엽서라는 뜻의 명사입니다. ともだちにはがきをおくりました. 친구에게 엽서를 보냈습니다라는 의미네요.",
+        "example": "友達に葉書を送りました",
+        "exampleKana": "ともだちにはがきをおくりました",
+        "kanji": "葉書",
+        "onyomi": "ヨウ、ショ",
+        "kunyomi": "は、か(く)",
+        "audio": {
+            "word": "jlpt/n5/hagaki/word.mp3",
+            "gloss": "jlpt/n5/hagaki/gloss.mp3",
+            "example": "jlpt/n5/hagaki/example.mp3"
+        }
+    },
+    {
+        "lemma": "ペン",
+        "kana": "ペン",
+        "romaji": "pen",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 펜",
+        "koExample": "펜 좀 빌려주시겠어요?",
+        "koChirpScript": "ぺん. 펜이라는 뜻의 명사입니다. ぺんをかしてください. 펜을 빌려주세요라는 의미네요.",
+        "example": "ペンを貸してください",
+        "exampleKana": "ぺんをかしてください",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/pen/word.mp3",
+            "gloss": "jlpt/n5/pen/gloss.mp3",
+            "example": "jlpt/n5/pen/example.mp3"
+        }
+    },
+    {
+        "lemma": "ニュース",
+        "kana": "ニュース",
+        "romaji": "nyuusu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 뉴스",
+        "koExample": "매일 아침 뉴스를 봅니다.",
+        "koChirpScript": "にゅーす. 뉴스라는 뜻의 명사입니다. まいあさにゅーすをみます. 매일 아침 뉴스를 봅니다라는 의미네요.",
+        "example": "毎朝ニュースを見ます",
+        "exampleKana": "まいあさにゅーすをみます",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/nyuusu/word.mp3",
+            "gloss": "jlpt/n5/nyuusu/gloss.mp3",
+            "example": "jlpt/n5/nyuusu/example.mp3"
+        }
+    },
+    {
+        "lemma": "花瓶",
+        "kana": "かびん",
+        "romaji": "kabin",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 꽃병",
+        "koExample": "꽃병에 꽃을 꽂았습니다.",
+        "koChirpScript": "かびん. 꽃병이라는 뜻의 명사입니다. かびんにはなをさしました. 꽃병에 꽃을 꽂았습니다라는 의미네요.",
+        "example": "花瓶に花を挿しました",
+        "exampleKana": "かびんにはなをさしました",
+        "kanji": "花瓶",
+        "onyomi": "カ、ベイ",
+        "kunyomi": "はな、-",
+        "audio": {
+            "word": "jlpt/n4/kabin/word.mp3",
+            "gloss": "jlpt/n4/kabin/gloss.mp3",
+            "example": "jlpt/n4/kabin/example.mp3"
+        }
+    },
+    {
+        "lemma": "フォーク",
+        "kana": "フォーク",
+        "romaji": "fooku",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 포크",
+        "koExample": "포크와 나이프를 주세요.",
+        "koChirpScript": "ふぉーく. 포크라는 뜻의 명사입니다. ふぉーくとないふをください. 포크와 나이프를 주세요라는 의미네요.",
+        "example": "フォークとナイフをください",
+        "exampleKana": "ふぉーくとないふをください",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/fooku/word.mp3",
+            "gloss": "jlpt/n5/fooku/gloss.mp3",
+            "example": "jlpt/n5/fooku/example.mp3"
+        }
+    },
+    {
+        "lemma": "引く",
+        "kana": "ひく",
+        "romaji": "hiku",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 당기다, 빼다, (감기에) 걸리다",
+        "koExample": "문을 당겨주세요.",
+        "koChirpScript": "ひく. 당기다라는 뜻의 동사입니다. どあをひいてください. 문을 당겨주세요라는 의미네요.",
+        "example": "ドアを引いてください",
+        "exampleKana": "どあをひいてください",
+        "kanji": "引",
+        "onyomi": "イン",
+        "kunyomi": "ひ(く)",
+        "audio": {
+            "word": "jlpt/n5/hiku/word.mp3",
+            "gloss": "jlpt/n5/hiku/gloss.mp3",
+            "example": "jlpt/n5/hiku/example.mp3"
+        }
+    },
+    {
+        "lemma": "フィルム",
+        "kana": "フィルム",
+        "romaji": "firumu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 필름",
+        "koExample": "카메라에 필름을 넣었습니다.",
+        "koChirpScript": "ふぃるむ. 필름이라는 뜻의 명사입니다. かめらにふぃるむをいれました. 카메라에 필름을 넣었습니다라는 의미네요.",
+        "example": "カメラにフィルムを入れました",
+        "exampleKana": "かめらにふぃるむをいれました",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/firumu/word.mp3",
+            "gloss": "jlpt/n5/firumu/gloss.mp3",
+            "example": "jlpt/n5/firumu/example.mp3"
+        }
+    },
+    {
+        "lemma": "磨く",
+        "kana": "みがく",
+        "romaji": "migaku",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. 닦다, 연마하다",
+        "koExample": "매일 이를 닦습니다.",
+        "koChirpScript": "みがく. 닦다라는 뜻의 동사입니다. まいにちはをみがきます. 매일 이를 닦습니다라는 의미네요.",
+        "example": "毎日歯を磨きます",
+        "exampleKana": "まいにちはをみがきます",
+        "kanji": "磨",
+        "onyomi": "マ",
+        "kunyomi": "みが(く)",
+        "audio": {
+            "word": "jlpt/n4/migaku/word.mp3",
+            "gloss": "jlpt/n4/migaku/gloss.mp3",
+            "example": "jlpt/n4/migaku/example.mp3"
+        }
+    },
+    {
+        "lemma": "押す",
+        "kana": "おす",
+        "romaji": "osu",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. 누르다, 밀다",
+        "koExample": "이 버튼을 눌러주세요.",
+        "koChirpScript": "おす. 누르다 또는 밀다라는 뜻의 동사입니다. このぼたんをおしてください. 이 버튼을 눌러주세요라는 의미네요.",
+        "example": "このボタンを押してください",
+        "exampleKana": "このぼたんをおしてください",
+        "kanji": "押",
+        "onyomi": "オウ",
+        "kunyomi": "お(す)",
+        "audio": {
+            "word": "jlpt/n4/osu/word.mp3",
+            "gloss": "jlpt/n4/osu/gloss.mp3",
+            "example": "jlpt/n4/osu/example.mp3"
+        }
+    },
+    {
+        "lemma": "売る",
+        "kana": "うる",
+        "romaji": "uru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 팔다",
+        "koExample": "오래된 책을 팔았습니다.",
+        "koChirpScript": "うる. 팔다라는 뜻의 동사입니다. ふるいほんをうりました. 오래된 책을 팔았습니다라는 의미네요.",
+        "example": "古い本を売りました",
+        "exampleKana": "ふるいほんをうりました",
+        "kanji": "売",
+        "onyomi": "バイ",
+        "kunyomi": "う(る)",
+        "audio": {
+            "word": "jlpt/n5/uru/word.mp3",
+            "gloss": "jlpt/n5/uru/gloss.mp3",
+            "example": "jlpt/n5/uru/example.mp3"
+        }
+    },
+    {
+        "lemma": "電気",
+        "kana": "でんき",
+        "romaji": "denki",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 전기, 불",
+        "koExample": "방의 불을 켜주세요.",
+        "koChirpScript": "でんき. 전기 또는 불이라는 뜻의 명사입니다. へやのでんきをつけてください. 방의 불을 켜주세요라는 의미네요.",
+        "example": "部屋の電気を点けてください",
+        "exampleKana": "へやのでんきをつけてください",
+        "kanji": "電気",
+        "onyomi": "デン、キ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/denki/word.mp3",
+            "gloss": "jlpt/n5/denki/gloss.mp3",
+            "example": "jlpt/n5/denki/example.mp3"
+        }
+    },
+    {
+        "lemma": "並ぶ",
+        "kana": "ならぶ",
+        "romaji": "narabu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 늘어서다, 줄을 서다",
+        "koExample": "사람들이 줄을 서 있습니다.",
+        "koChirpScript": "ならぶ. 늘어서다라는 뜻의 동사입니다. ひとがならんでいます. 사람들이 줄을 서 있습니다라는 의미네요.",
+        "example": "人が並んでいます",
+        "exampleKana": "ひとがならんでいます",
+        "kanji": "並",
+        "onyomi": "ヘイ",
+        "kunyomi": "な(らぶ)",
+        "audio": {
+            "word": "jlpt/n5/narabu/word.mp3",
+            "gloss": "jlpt/n5/narabu/gloss.mp3",
+            "example": "jlpt/n5/narabu/example.mp3"
+        }
+    },
+    {
+        "lemma": "病気",
+        "kana": "びょうき",
+        "romaji": "byouki",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 병",
+        "koExample": "병으로 학교를 쉬었습니다.",
+        "koChirpScript": "びょうき. 병이라는 뜻의 명사입니다. びょうきでがっこうをやすみました. 병으로 학교를 쉬었습니다라는 의미네요.",
+        "example": "病気で学校を休みました",
+        "exampleKana": "びょうきでがっこうをやすみました",
+        "kanji": "病気",
+        "onyomi": "ビョウ、キ",
+        "kunyomi": "や(む)、-",
+        "audio": {
+            "word": "jlpt/n5/byouki/word.mp3",
+            "gloss": "jlpt/n5/byouki/gloss.mp3",
+            "example": "jlpt/n5/byouki/example.mp3"
+        }
+    },
+    {
+        "lemma": "ポケット",
+        "kana": "ポケット",
+        "romaji": "poketto",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 주머니, 포켓",
+        "koExample": "주머니에 열쇠가 있습니다.",
+        "koChirpScript": "ぽけっと. 주머니라는 뜻의 명사입니다. ぽけっとにかぎがあります. 주머니에 열쇠가 있습니다라는 의미네요.",
+        "example": "ポケットに鍵があります",
+        "exampleKana": "ぽけっとにかぎがあります",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/poketto/word.mp3",
+            "gloss": "jlpt/n5/poketto/gloss.mp3",
+            "example": "jlpt/n5/poketto/example.mp3"
+        }
+    },
+    {
+        "lemma": "頭",
+        "kana": "あたま",
+        "romaji": "atama",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 머리",
+        "koExample": "머리가 아파요.",
+        "koChirpScript": "あたま. 머리라는 뜻의 명사입니다. あたまがいたいです. 머리가 아파요라는 의미네요.",
+        "example": "頭が痛いです",
+        "exampleKana": "あたまがいたいです",
+        "kanji": "頭",
+        "onyomi": "トウ、ズ",
+        "kunyomi": "あたま",
+        "audio": {
+            "word": "jlpt/n5/atama/word.mp3",
+            "gloss": "jlpt/n5/atama/gloss.mp3",
+            "example": "jlpt/n5/atama/example.mp3"
+        }
+    },
+    {
+        "lemma": "箸",
+        "kana": "はし",
+        "romaji": "hashi",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 젓가락",
+        "koExample": "젓가락을 사용할 수 있습니까?",
+        "koChirpScript": "はし. 젓가락이라는 뜻의 명사입니다. はしがつかえますか. 젓가락을 사용할 수 있습니까라는 의미네요.",
+        "example": "箸が使えますか",
+        "exampleKana": "はしがつかえますか",
+        "kanji": "箸",
+        "onyomi": "チョ",
+        "kunyomi": "はし",
+        "audio": {
+            "word": "jlpt/n5/hashi/word.mp3",
+            "gloss": "jlpt/n5/hashi/gloss.mp3",
+            "example": "jlpt/n5/hashi/example.mp3"
+        }
+    },
+    {
+        "lemma": "英語",
+        "kana": "えいご",
+        "romaji": "eigo",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 영어",
+        "koExample": "영어를 공부하고 있습니다.",
+        "koChirpScript": "えいご. 영어라는 뜻의 명사입니다. えいごをべんきょうしています. 영어를 공부하고 있습니다라는 의미네요.",
+        "example": "英語を勉強しています",
+        "exampleKana": "えいごをべんきょうしています",
+        "kanji": "英語",
+        "onyomi": "エイ、ゴ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/eigo/word.mp3",
+            "gloss": "jlpt/n5/eigo/gloss.mp3",
+            "example": "jlpt/n5/eigo/example.mp3"
+        }
+    },
+    {
+        "lemma": "家",
+        "kana": "いえ",
+        "romaji": "ie",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 집",
+        "koExample": "저것은 야마다 씨의 집입니다.",
+        "koChirpScript": "いえ. 집이라는 뜻의 명사입니다. あれはやまださんのいえです. 저것은 야마다 씨의 집입니다라는 의미네요.",
+        "example": "あれは山田さんの家です",
+        "exampleKana": "あれはやまださんのいえです",
+        "kanji": "家",
+        "onyomi": "カ、ケ",
+        "kunyomi": "いえ、うち",
+        "audio": {
+            "word": "jlpt/n5/ie/word.mp3",
+            "gloss": "jlpt/n5/ie/gloss.mp3",
+            "example": "jlpt/n5/ie/example.mp3"
+        }
+    },
+    {
+        "lemma": "一月",
+        "kana": "いちがつ",
+        "romaji": "ichigatsu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 1월",
+        "koExample": "제 생일은 1월입니다.",
+        "koChirpScript": "いちがつ. 일월이라는 뜻의 명사입니다. わたしのたんじょうびはいちがつです. 제 생일은 일월입니다라는 의미네요.",
+        "example": "私の誕生日は一月です",
+        "exampleKana": "わたしのたんじょうびはいちがつです",
+        "kanji": "一月",
+        "onyomi": "イチ、ガツ、ゲツ",
+        "kunyomi": "ひと(つ)、つき",
+        "audio": {
+            "word": "jlpt/n5/ichigatsu/word.mp3",
+            "gloss": "jlpt/n5/ichigatsu/gloss.mp3",
+            "example": "jlpt/n5/ichigatsu/example.mp3"
+        }
+    },
+    {
+        "lemma": "暑い",
+        "kana": "あつい",
+        "romaji": "atsui",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 덥다 (날씨)",
+        "koExample": "오늘은 정말 덥네요.",
+        "koChirpScript": "あつい. 덥다라는 뜻의 형용사입니다. きょうはほんとうにあついですね. 오늘은 정말 덥네요라는 의미네요.",
+        "example": "今日は本当に暑いですね",
+        "exampleKana": "きょうはほんとうにあついですね",
+        "kanji": "暑",
+        "onyomi": "ショ",
+        "kunyomi": "あつ(い)",
+        "audio": {
+            "word": "jlpt/n5/atsui_weather/word.mp3",
+            "gloss": "jlpt/n5/atsui_weather/gloss.mp3",
+            "example": "jlpt/n5/atsui_weather/example.mp3"
+        }
+    },
+    {
+        "lemma": "遊ぶ",
+        "kana": "あそぶ",
+        "romaji": "asobu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 놀다",
+        "koExample": "공원에서 친구와 놀았습니다.",
+        "koChirpScript": "あそぶ. 놀다라는 뜻의 동사입니다. こうえんでともだちとあそびました. 공원에서 친구와 놀았습니다라는 의미네요.",
+        "example": "公園で友達と遊びました",
+        "exampleKana": "こうえんでともだちとあそびました",
+        "kanji": "遊",
+        "onyomi": "ユウ、ユ",
+        "kunyomi": "あそ(ぶ)",
+        "audio": {
+            "word": "jlpt/n5/asobu/word.mp3",
+            "gloss": "jlpt/n5/asobu/gloss.mp3",
+            "example": "jlpt/n5/asobu/example.mp3"
+        }
+    },
+    {
+        "lemma": "取る",
+        "kana": "とる",
+        "romaji": "toru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 잡다, 집다",
+        "koExample": "소금 좀 집어주세요.",
+        "koChirpScript": "とる. 잡다 또는 집다라는 뜻의 동사입니다. しおをとってください. 소금 좀 집어주세요라는 의미네요.",
+        "example": "塩を取ってください",
+        "exampleKana": "しおをとってください",
+        "kanji": "取",
+        "onyomi": "シュ",
+        "kunyomi": "と(る)",
+        "audio": {
+            "word": "jlpt/n5/toru/word.mp3",
+            "gloss": "jlpt/n5/toru/gloss.mp3",
+            "example": "jlpt/n5/toru/example.mp3"
+        }
+    },
+    {
+        "lemma": "九",
+        "kana": "きゅう",
+        "romaji": "kyuu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 아홉, 9",
+        "koExample": "고양이가 아홉 마리 있습니다.",
+        "koChirpScript": "きゅう. 아홉이라는 뜻의 명사입니다. ねこがきゅうひきいます. 고양이가 아홉 마리 있습니다라는 의미네요.",
+        "example": "猫が九匹います",
+        "exampleKana": "ねこがきゅうひきいます",
+        "kanji": "九",
+        "onyomi": "キュウ、ク",
+        "kunyomi": "ここの(つ)",
+        "audio": {
+            "word": "jlpt/n5/kyuu/word.mp3",
+            "gloss": "jlpt/n5/kyuu/gloss.mp3",
+            "example": "jlpt/n5/kyuu/example.mp3"
+        }
+    },
+    {
+        "lemma": "閉める",
+        "kana": "しめる",
+        "romaji": "shimeru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 닫다",
+        "koExample": "창문을 닫아도 될까요?",
+        "koChirpScript": "しめる. 닫다라는 뜻의 동사입니다. まどをしめてもいいですか. 창문을 닫아도 될까요라는 의미네요.",
+        "example": "窓を閉めてもいいですか",
+        "exampleKana": "まどをしめてもいいですか",
+        "kanji": "閉",
+        "onyomi": "ヘイ",
+        "kunyomi": "し(める)、と(じる)",
+        "audio": {
+            "word": "jlpt/n5/shimeru/word.mp3",
+            "gloss": "jlpt/n5/shimeru/gloss.mp3",
+            "example": "jlpt/n5/shimeru/example.mp3"
+        }
+    },
+    {
+        "lemma": "大変",
+        "kana": "たいへん",
+        "romaji": "taihen",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 힘들다, 큰일이다",
+        "koExample": "오늘 일은 힘들었습니다.",
+        "koChirpScript": "たいへん. 힘들다라는 뜻의 형용사입니다. きょうのしごとはたいへんでした. 오늘 일은 힘들었습니다라는 의미네요.",
+        "example": "今日の仕事は大変でした",
+        "exampleKana": "きょうのしごとはたいへんでした",
+        "kanji": "大変",
+        "onyomi": "タイ、ヘン",
+        "kunyomi": "おお(きい)、か(わる)",
+        "audio": {
+            "word": "jlpt/n5/taihen/word.mp3",
+            "gloss": "jlpt/n5/taihen/gloss.mp3",
+            "example": "jlpt/n5/taihen/example.mp3"
+        }
+    },
+    {
+        "lemma": "奥さん",
+        "kana": "おくさん",
+        "romaji": "okusan",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 부인, 아내 (남의 아내)",
+        "koExample": "다나카 씨의 부인을 만났습니다.",
+        "koChirpScript": "おくさん. 부인이라는 뜻의 명사입니다. たなかさんのおくさんにあいました. 다나카 씨의 부인을 만났습니다라는 의미네요.",
+        "example": "田中さんの奥さんに会いました",
+        "exampleKana": "たなかさんのおくさんにあいました",
+        "kanji": "奥",
+        "onyomi": "オウ",
+        "kunyomi": "おく",
+        "audio": {
+            "word": "jlpt/n5/okusan/word.mp3",
+            "gloss": "jlpt/n5/okusan/gloss.mp3",
+            "example": "jlpt/n5/okusan/example.mp3"
+        }
+    },
+    {
+        "lemma": "作文",
+        "kana": "さくぶん",
+        "romaji": "sakubun",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 작문",
+        "koExample": "작문 숙제가 있습니다.",
+        "koChirpScript": "さくぶん. 작문이라는 뜻의 명사입니다. さくぶんのしゅくだいがあります. 작문 숙제가 있습니다라는 의미네요.",
+        "example": "作文の宿題があります",
+        "exampleKana": "さくぶんのしゅくだいがあります",
+        "kanji": "作文",
+        "onyomi": "サク、サ、ブン、モン",
+        "kunyomi": "つく(る)、-",
+        "audio": {
+            "word": "jlpt/n5/sakubun/word.mp3",
+            "gloss": "jlpt/n5/sakubun/gloss.mp3",
+            "example": "jlpt/n5/sakubun/example.mp3"
+        }
+    },
+    {
+        "lemma": "便利",
+        "kana": "べんり",
+        "romaji": "benri",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 편리함",
+        "koExample": "이 근처는 편리합니다.",
+        "koChirpScript": "べんり. 편리하다라는 뜻의 형용사입니다. このへんはべんりです. 이 근처는 편리합니다라는 의미네요.",
+        "example": "この辺は便利です",
+        "exampleKana": "このへんはべんりです",
+        "kanji": "便利",
+        "onyomi": "ベン、ビン、リ",
+        "kunyomi": "たよ(り)、-",
+        "audio": {
+            "word": "jlpt/n5/benri/word.mp3",
+            "gloss": "jlpt/n5/benri/gloss.mp3",
+            "example": "jlpt/n5/benri/example.mp3"
+        }
+    },
+    {
+        "lemma": "右",
+        "kana": "みぎ",
+        "romaji": "migi",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 오른쪽",
+        "koExample": "오른쪽으로 돌아주세요.",
+        "koChirpScript": "みぎ. 오른쪽이라는 뜻의 명사입니다. みぎにまがってください. 오른쪽으로 돌아주세요라는 의미네요.",
+        "example": "右に曲がってください",
+        "exampleKana": "みぎにまがってください",
+        "kanji": "右",
+        "onyomi": "ウ、ユウ",
+        "kunyomi": "みぎ",
+        "audio": {
+            "word": "jlpt/n5/migi/word.mp3",
+            "gloss": "jlpt/n5/migi/gloss.mp3",
+            "example": "jlpt/n5/migi/example.mp3"
+        }
+    },
+    {
+        "lemma": "寒い",
+        "kana": "さむい",
+        "romaji": "samui",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 춥다",
+        "koExample": "오늘은 어제보다 춥습니다.",
+        "koChirpScript": "さむい. 춥다라는 뜻의 형용사입니다. きょうはきのうよりさむいです. 오늘은 어제보다 춥습니다라는 의미네요.",
+        "example": "今日は昨日より寒いです",
+        "exampleKana": "きょうはきのうよりさむいです",
+        "kanji": "寒",
+        "onyomi": "カン",
+        "kunyomi": "さむ(い)",
+        "audio": {
+            "word": "jlpt/n5/samui/word.mp3",
+            "gloss": "jlpt/n5/samui/gloss.mp3",
+            "example": "jlpt/n5/samui/example.mp3"
+        }
+    },
+    {
+        "lemma": "浴びる",
+        "kana": "あびる",
+        "romaji": "abiru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 샤워하다, 뒤집어쓰다",
+        "koExample": "매일 아침 샤워를 합니다.",
+        "koChirpScript": "あびる. 샤워하다라는 뜻의 동사입니다. まいあさしゃわーをあびます. 매일 아침 샤워를 합니다라는 의미네요.",
+        "example": "毎朝シャワーを浴びます",
+        "exampleKana": "まいあさしゃわーをあびます",
+        "kanji": "浴",
+        "onyomi": "ヨク",
+        "kunyomi": "あ(びる)",
+        "audio": {
+            "word": "jlpt/n5/abiru/word.mp3",
+            "gloss": "jlpt/n5/abiru/gloss.mp3",
+            "example": "jlpt/n5/abiru/example.mp3"
+        }
+    },
+    {
+        "lemma": "十",
+        "kana": "じゅう",
+        "romaji": "juu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 열, 10",
+        "koExample": "학생이 열 명 있습니다.",
+        "koChirpScript": "じゅう. 열이라는 뜻의 명사입니다. がくせいがじゅうにんいます. 학생이 열 명 있습니다라는 의미네요.",
+        "example": "学生が十人います",
+        "exampleKana": "がくせいがじゅうにんいます",
+        "kanji": "十",
+        "onyomi": "ジュウ、ジッ",
+        "kunyomi": "とお",
+        "audio": {
+            "word": "jlpt/n5/juu/word.mp3",
+            "gloss": "jlpt/n5/juu/gloss.mp3",
+            "example": "jlpt/n5/juu/example.mp3"
+        }
+    },
+    {
+        "lemma": "中",
+        "kana": "なか",
+        "romaji": "naka",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 안, 속",
+        "koExample": "상자 안에 무엇이 있습니까?",
+        "koChirpScript": "なか. 안 또는 속이라는 뜻의 명사입니다. はこのなかになにがありますか. 상자 안에 무엇이 있습니까라는 의미네요.",
+        "example": "箱の中に何がありますか",
+        "exampleKana": "はこのなかになにがありますか",
+        "kanji": "中",
+        "onyomi": "チュウ",
+        "kunyomi": "なか",
+        "audio": {
+            "word": "jlpt/n5/naka/word.mp3",
+            "gloss": "jlpt/n5/naka/gloss.mp3",
+            "example": "jlpt/n5/naka/example.mp3"
+        }
+    },
+    {
+        "lemma": "消す",
+        "kana": "けす",
+        "romaji": "kesu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 끄다, 지우다",
+        "koExample": "텔레비전을 꺼주세요.",
+        "koChirpScript": "けす. 끄다 또는 지우다라는 뜻의 동사입니다. てれびをけしてください. 텔레비전을 꺼주세요라는 의미네요.",
+        "example": "テレビを消してください",
+        "exampleKana": "てれびをけしてください",
+        "kanji": "消",
+        "onyomi": "ショウ",
+        "kunyomi": "き(える)、け(す)",
+        "audio": {
+            "word": "jlpt/n5/kesu/word.mp3",
+            "gloss": "jlpt/n5/kesu/gloss.mp3",
+            "example": "jlpt/n5/kesu/example.mp3"
+        }
+    },
+    {
+        "lemma": "近く",
+        "kana": "ちかく",
+        "romaji": "chikaku",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 근처, 가까이",
+        "koExample": "역 근처에 삽니다.",
+        "koChirpScript": "ちかく. 근처라는 뜻의 명사입니다. えきのちかくにすんでいます. 역 근처에 삽니다라는 의미네요.",
+        "example": "駅の近くに住んでいます",
+        "exampleKana": "えきのちかくにすんでいます",
+        "kanji": "近",
+        "onyomi": "キン",
+        "kunyomi": "ちか(い)",
+        "audio": {
+            "word": "jlpt/n5/chikaku/word.mp3",
+            "gloss": "jlpt/n5/chikaku/gloss.mp3",
+            "example": "jlpt/n5/chikaku/example.mp3"
+        }
+    },
+    {
+        "lemma": "七つ",
+        "kana": "ななつ",
+        "romaji": "nanatsu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 일곱 개",
+        "koExample": "사과를 일곱 개 샀습니다.",
+        "koChirpScript": "ななつ. 일곱 개라는 뜻의 명사입니다. りんごをななつかいました. 사과를 일곱 개 샀습니다라는 의미네요.",
+        "example": "りんごを七つ買いました",
+        "exampleKana": "りんごをななつかいました",
+        "kanji": "七",
+        "onyomi": "シチ",
+        "kunyomi": "なな(つ)、なの",
+        "audio": {
+            "word": "jlpt/n5/nanatsu/word.mp3",
+            "gloss": "jlpt/n5/nanatsu/gloss.mp3",
+            "example": "jlpt/n5/nanatsu/example.mp3"
+        }
+    },
+    {
+        "lemma": "テープレコーダー",
+        "kana": "テープレコーダー",
+        "romaji": "teepurekoodaa",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 녹음기",
+        "koExample": "녹음기로 목소리를 녹음했습니다.",
+        "koChirpScript": "てーぷれこーだー. 녹음기라는 뜻의 명사입니다. てーぷれこーだーでこえをろくおんしました. 녹음기로 목소리를 녹음했습니다라는 의미네요.",
+        "example": "テープレコーダーで声を録音しました",
+        "exampleKana": "てーぷれこーだーでこえをろくおんしました",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/teepurekoodaa/word.mp3",
+            "gloss": "jlpt/n5/teepurekoodaa/gloss.mp3",
+            "example": "jlpt/n5/teepurekoodaa/example.mp3"
+        }
+    },
+    {
+        "lemma": "目",
+        "kana": "め",
+        "romaji": "me",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 눈",
+        "koExample": "눈이 피곤해요.",
+        "koChirpScript": "め. 눈이라는 뜻의 명사입니다. めがつかれました. 눈이 피곤해요라는 의미네요.",
+        "example": "目が疲れました",
+        "exampleKana": "めがつかれました",
+        "kanji": "目",
+        "onyomi": "モク、ボク",
+        "kunyomi": "め",
+        "audio": {
+            "word": "jlpt/n5/me/word.mp3",
+            "gloss": "jlpt/n5/me/gloss.mp3",
+            "example": "jlpt/n5/me/example.mp3"
+        }
+    },
+    {
+        "lemma": "空",
+        "kana": "そら",
+        "romaji": "sora",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 하늘",
+        "koExample": "하늘이 파랗습니다.",
+        "koChirpScript": "そら. 하늘이라는 뜻의 명사입니다. そらがあおいです. 하늘이 파랗습니다라는 의미네요.",
+        "example": "空が青いです",
+        "exampleKana": "そらがあおいです",
+        "kanji": "空",
+        "onyomi": "クウ",
+        "kunyomi": "そら、あ(く)、から",
+        "audio": {
+            "word": "jlpt/n5/sora/word.mp3",
+            "gloss": "jlpt/n5/sora/gloss.mp3",
+            "example": "jlpt/n5/sora/example.mp3"
+        }
+    },
+    {
+        "lemma": "六日",
+        "kana": "むいか",
+        "romaji": "muika",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 6일, 엿새",
+        "koExample": "다음 회의는 6일입니다.",
+        "koChirpScript": "むいか. 6일 또는 엿새라는 뜻의 명사입니다. つぎのかいぎはむいかです. 다음 회의는 6일입니다라는 의미네요.",
+        "example": "次の会議は六日です",
+        "exampleKana": "つぎのかいぎはむいかです",
+        "kanji": "六日",
+        "onyomi": "ロク、ニチ",
+        "kunyomi": "む(つ)、か",
+        "audio": {
+            "word": "jlpt/n5/muika/word.mp3",
+            "gloss": "jlpt/n5/muika/gloss.mp3",
+            "example": "jlpt/n5/muika/example.mp3"
+        }
+    },
+    {
+        "lemma": "座る",
+        "kana": "すわる",
+        "romaji": "suwaru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 앉다",
+        "koExample": "여기에 앉아도 됩니까?",
+        "koChirpScript": "すわる. 앉다라는 뜻의 동사입니다. ここにすわってもいいですか. 여기에 앉아도 됩니까라는 의미네요.",
+        "example": "ここに座ってもいいですか",
+        "exampleKana": "ここにすわってもいいですか",
+        "kanji": "座",
+        "onyomi": "ザ",
+        "kunyomi": "すわ(る)",
+        "audio": {
+            "word": "jlpt/n5/suwaru/word.mp3",
+            "gloss": "jlpt/n5/suwaru/gloss.mp3",
+            "example": "jlpt/n5/suwaru/example.mp3"
+        }
+    },
+    {
+        "lemma": "年",
+        "kana": "とし",
+        "romaji": "toshi",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 해, 나이",
+        "koExample": "나이를 먹으면 시간이 빨리 갑니다.",
+        "koChirpScript": "とし. 해 또는 나이라는 뜻의 명사입니다. としをとるとじかんがはやくすすみます. 나이를 먹으면 시간이 빨리 갑니다라는 의미네요.",
+        "example": "年を取ると時間が早く進みます",
+        "exampleKana": "としをとるとじかんがはやくすすみます",
+        "kanji": "年",
+        "onyomi": "ネン",
+        "kunyomi": "とし",
+        "audio": {
+            "word": "jlpt/n5/toshi/word.mp3",
+            "gloss": "jlpt/n5/toshi/gloss.mp3",
+            "example": "jlpt/n5/toshi/example.mp3"
+        }
+    },
+    {
+        "lemma": "男の子",
+        "kana": "おとこのこ",
+        "romaji": "otokonoko",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 남자아이",
+        "koExample": "저 남자아이는 누구입니까?",
+        "koChirpScript": "おとこのこ. 남자아이라는 뜻의 명사입니다. あのおとこのこはだれですか. 저 남자아이는 누구입니까라는 의미네요.",
+        "example": "あの男の子は誰ですか",
+        "exampleKana": "あのおとこのこはだれですか",
+        "kanji": "男の子",
+        "onyomi": "ダン、ナン、シ、ス",
+        "kunyomi": "おとこ、こ",
+        "audio": {
+            "word": "jlpt/n5/otokonoko/word.mp3",
+            "gloss": "jlpt/n5/otokonoko/gloss.mp3",
+            "example": "jlpt/n5/otokonoko/example.mp3"
+        }
+    },
+    {
+        "lemma": "狭い",
+        "kana": "せまい",
+        "romaji": "semai",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 좁다",
+        "koExample": "이 방은 좁습니다.",
+        "koChirpScript": "せまい. 좁다라는 뜻의 형용사입니다. このへやはせまいです. 이 방은 좁습니다라는 의미네요.",
+        "example": "この部屋は狭いです",
+        "exampleKana": "このへやはせまいです",
+        "kanji": "狭",
+        "onyomi": "キョウ",
+        "kunyomi": "せま(い)",
+        "audio": {
+            "word": "jlpt/n5/semai/word.mp3",
+            "gloss": "jlpt/n5/semai/gloss.mp3",
+            "example": "jlpt/n5/semai/example.mp3"
+        }
+    },
+    {
+        "lemma": "冷蔵庫",
+        "kana": "れいぞうこ",
+        "romaji": "reizouko",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 냉장고",
+        "koExample": "냉장고에 주스가 있습니다.",
+        "koChirpScript": "れいぞうこ. 냉장고라는 뜻의 명사입니다. れいぞうこにじゅーすがあります. 냉장고에 주스가 있습니다라는 의미네요.",
+        "example": "冷蔵庫にジュースがあります",
+        "exampleKana": "れいぞうこにじゅーすがあります",
+        "kanji": "冷蔵庫",
+        "onyomi": "レイ、ゾウ、コ",
+        "kunyomi": "ひ(える)、くら",
+        "audio": {
+            "word": "jlpt/n5/reizouko/word.mp3",
+            "gloss": "jlpt/n5/reizouko/gloss.mp3",
+            "example": "jlpt/n5/reizouko/example.mp3"
+        }
+    },
+    {
+        "lemma": "カメラ",
+        "kana": "カメラ",
+        "romaji": "kamera",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 카메라",
+        "koExample": "새로운 카메라를 샀습니다.",
+        "koChirpScript": "かめら. 카메라라는 뜻의 명사입니다. あたらしいかめらをかいました. 새로운 카메라를 샀습니다라는 의미네요.",
+        "example": "新しいカメラを買いました",
+        "exampleKana": "あたらしいかめらをかいました",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/kamera/word.mp3",
+            "gloss": "jlpt/n5/kamera/gloss.mp3",
+            "example": "jlpt/n5/kamera/example.mp3"
+        }
+    },
+    {
+        "lemma": "玄関",
+        "kana": "げんかん",
+        "romaji": "genkan",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 현관",
+        "koExample": "현관에서 신발을 벗어주세요.",
+        "koChirpScript": "げんかん. 현관이라는 뜻의 명사입니다. げんかんでくつをぬいでください. 현관에서 신발을 벗어주세요라는 의미네요.",
+        "example": "玄関で靴を脱いでください",
+        "exampleKana": "げんかんでくつをぬいでください",
+        "kanji": "玄関",
+        "onyomi": "ゲン、カン",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n4/genkan/word.mp3",
+            "gloss": "jlpt/n4/genkan/gloss.mp3",
+            "example": "jlpt/n4/genkan/example.mp3"
+        }
+    },
+    {
+        "lemma": "違う",
+        "kana": "ちがう",
+        "romaji": "chigau",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. 다르다, 틀리다",
+        "koExample": "이것은 저것과 다릅니다.",
+        "koChirpScript": "ちがう. 다르다 또는 틀리다라는 뜻의 동사입니다. これはあれとちがいます. 이것은 저것과 다릅니다라는 의미네요.",
+        "example": "これはあれと違います",
+        "exampleKana": "これはあれとちがいます",
+        "kanji": "違",
+        "onyomi": "イ",
+        "kunyomi": "ちが(う)",
+        "audio": {
+            "word": "jlpt/n4/chigau/word.mp3",
+            "gloss": "jlpt/n4/chigau/gloss.mp3",
+            "example": "jlpt/n4/chigau/example.mp3"
+        }
+    },
+    {
+        "lemma": "危ない",
+        "kana": "あぶない",
+        "romaji": "abunai",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 위험하다",
+        "koExample": "이 강은 위험합니다.",
+        "koChirpScript": "あぶない. 위험하다라는 뜻의 형용사입니다. このかわはあぶないです. 이 강은 위험합니다라는 의미네요.",
+        "example": "この川は危ないです",
+        "exampleKana": "このかわはあぶないです",
+        "kanji": "危",
+        "onyomi": "キ",
+        "kunyomi": "あぶ(ない)",
+        "audio": {
+            "word": "jlpt/n5/abunai/word.mp3",
+            "gloss": "jlpt/n5/abunai/gloss.mp3",
+            "example": "jlpt/n5/abunai/example.mp3"
+        }
+    },
+    {
+        "lemma": "分かる",
+        "kana": "わかる",
+        "romaji": "wakaru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 알다, 이해하다",
+        "koExample": "일본어를 조금 압니다.",
+        "koChirpScript": "わかる. 알다 또는 이해하다라는 뜻의 동사입니다. にほんごがすこしわかります. 일본어를 조금 압니다라는 의미네요.",
+        "example": "日本語が少し分かります",
+        "exampleKana": "にほんごがすこしわかります",
+        "kanji": "分",
+        "onyomi": "ブン、フン、ブ",
+        "kunyomi": "わ(かる)",
+        "audio": {
+            "word": "jlpt/n5/wakaru/word.mp3",
+            "gloss": "jlpt/n5/wakaru/gloss.mp3",
+            "example": "jlpt/n5/wakaru/example.mp3"
+        }
+    },
+    {
+        "lemma": "言う",
+        "kana": "いう",
+        "romaji": "iu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 말하다",
+        "koExample": "좀 더 천천히 말해주세요.",
+        "koChirpScript": "いう. 말하다라는 뜻의 동사입니다. もうすこしゆっくりいってください. 좀 더 천천히 말해주세요라는 의미네요.",
+        "example": "もう少しゆっくり言ってください",
+        "exampleKana": "もうすこしゆっくりいってください",
+        "kanji": "言",
+        "onyomi": "ゲン、ゴン",
+        "kunyomi": "い(う)、こと",
+        "audio": {
+            "word": "jlpt/n5/iu/word.mp3",
+            "gloss": "jlpt/n5/iu/gloss.mp3",
+            "example": "jlpt/n5/iu/example.mp3"
+        }
+    },
+    {
+        "lemma": "飲む",
+        "kana": "のむ",
+        "romaji": "nomu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 마시다",
+        "koExample": "매일 커피를 마십니다.",
+        "koChirpScript": "のむ. 마시다라는 뜻의 동사입니다. まいにちこーひーをのみます. 매일 커피를 마십니다라는 의미네요.",
+        "example": "毎日コーヒーを飲みます",
+        "exampleKana": "まいにちこーひーをのみます",
+        "kanji": "飲",
+        "onyomi": "イン、オン",
+        "kunyomi": "の(む)",
+        "audio": {
+            "word": "jlpt/n5/nomu/word.mp3",
+            "gloss": "jlpt/n5/nomu/gloss.mp3",
+            "example": "jlpt/n5/nomu/example.mp3"
+        }
+    },
+    {
+        "lemma": "練習",
+        "kana": "れんしゅう",
+        "romaji": "renshuu",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 연습",
+        "koExample": "매일 피아노를 연습합니다.",
+        "koChirpScript": "れんしゅう. 연습이라는 뜻의 명사입니다. まいにちぴあのをれんしゅうします. 매일 피아노를 연습합니다라는 의미네요.",
+        "example": "毎日ピアノを練習します",
+        "exampleKana": "まいにちぴあのをれんしゅうします",
+        "kanji": "練習",
+        "onyomi": "レン、シュウ",
+        "kunyomi": "ね(る)、なら(う)",
+        "audio": {
+            "word": "jlpt/n4/renshuu/word.mp3",
+            "gloss": "jlpt/n4/renshuu/gloss.mp3",
+            "example": "jlpt/n4/renshuu/example.mp3"
+        }
+    },
+    {
+        "lemma": "何",
+        "kana": "なに",
+        "romaji": "nani",
+        "pos": "pronoun",
+        "categories": "N5, JLPT",
+        "koGloss": "pron. 무엇",
+        "koExample": "이것은 무엇입니까?",
+        "koChirpScript": "なに. 무엇이라는 뜻의 대명사입니다. これはなんですか. 이것은 무엇입니까라는 의미네요.",
+        "example": "これは何ですか",
+        "exampleKana": "これはなんですか",
+        "kanji": "何",
+        "onyomi": "カ",
+        "kunyomi": "なに、なん",
+        "audio": {
+            "word": "jlpt/n5/nani/word.mp3",
+            "gloss": "jlpt/n5/nani/gloss.mp3",
+            "example": "jlpt/n5/nani/example.mp3"
+        }
+    },
+    {
+        "lemma": "厚い",
+        "kana": "あつい",
+        "romaji": "atsui",
+        "pos": "adjective",
+        "categories": "N4, JLPT",
+        "koGloss": "adj. 두껍다",
+        "koExample": "이 책은 두껍습니다.",
+        "koChirpScript": "あつい. 두껍다라는 뜻의 형용사입니다. このほんはあついです. 이 책은 두껍습니다라는 의미네요.",
+        "example": "この本は厚いです",
+        "exampleKana": "このほんはあついです",
+        "kanji": "厚",
+        "onyomi": "コウ",
+        "kunyomi": "あつ(い)",
+        "audio": {
+            "word": "jlpt/n4/atsui_thick/word.mp3",
+            "gloss": "jlpt/n4/atsui_thick/gloss.mp3",
+            "example": "jlpt/n4/atsui_thick/example.mp3"
+        }
+    },
+    {
+        "lemma": "毎月",
+        "kana": "まいつき",
+        "romaji": "maitsuki",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 매월, 매달",
+        "koExample": "매달 잡지를 삽니다.",
+        "koChirpScript": "まいつき. 매달이라는 뜻의 명사입니다. まいつきざっしをかいます. 매달 잡지를 삽니다라는 의미네요.",
+        "example": "毎月雑誌を買います",
+        "exampleKana": "まいつきざっしをかいます",
+        "kanji": "毎月",
+        "onyomi": "マイ、ゲツ、ガツ",
+        "kunyomi": "ごと、つき",
+        "audio": {
+            "word": "jlpt/n5/maitsuki/word.mp3",
+            "gloss": "jlpt/n5/maitsuki/gloss.mp3",
+            "example": "jlpt/n5/maitsuki/example.mp3"
+        }
+    },
+    {
+        "lemma": "閉まる",
+        "kana": "しまる",
+        "romaji": "shimaru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 닫히다",
+        "koExample": "문이 자동으로 닫힙니다.",
+        "koChirpScript": "しまる. 닫히다라는 뜻의 동사입니다. どあがじどうでしまります. 문이 자동으로 닫힙니다라는 의미네요.",
+        "example": "ドアが自動で閉まります",
+        "exampleKana": "どあがじどうでしまります",
+        "kanji": "閉",
+        "onyomi": "ヘイ",
+        "kunyomi": "し(まる)、と(じる)",
+        "audio": {
+            "word": "jlpt/n5/shimaru/word.mp3",
+            "gloss": "jlpt/n5/shimaru/gloss.mp3",
+            "example": "jlpt/n5/shimaru/example.mp3"
+        }
+    },
+    {
+        "lemma": "脱ぐ",
+        "kana": "ぬぐ",
+        "romaji": "nugu",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 벗다",
+        "koExample": "실내에서는 모자를 벗어주세요.",
+        "koChirpScript": "ぬぐ. 벗다라는 뜻의 동사입니다. しつないではぼうしをぬいでください. 실내에서는 모자를 벗어주세요라는 의미네요.",
+        "example": "室内では帽子を脱いでください",
+        "exampleKana": "しつないではぼうしをぬいでください",
+        "kanji": "脱",
+        "onyomi": "ダツ",
+        "kunyomi": "ぬ(ぐ)",
+        "audio": {
+            "word": "jlpt/n5/nugu/word.mp3",
+            "gloss": "jlpt/n5/nugu/gloss.mp3",
+            "example": "jlpt/n5/nugu/example.mp3"
+        }
+    },
+    {
+        "lemma": "黒い",
+        "kana": "くろい",
+        "romaji": "kuroi",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 검다",
+        "koExample": "검은 고양이를 좋아합니다.",
+        "koChirpScript": "くろい. 검다라는 뜻의 형용사입니다. くろいねこがすきです. 검은 고양이를 좋아합니다라는 의미네요.",
+        "example": "黒い猫が好きです",
+        "exampleKana": "くろいねこがすきです",
+        "kanji": "黒",
+        "onyomi": "コク",
+        "kunyomi": "くろ(い)",
+        "audio": {
+            "word": "jlpt/n5/kuroi/word.mp3",
+            "gloss": "jlpt/n5/kuroi/gloss.mp3",
+            "example": "jlpt/n5/kuroi/example.mp3"
+        }
+    },
+    {
+        "lemma": "登る",
+        "kana": "のぼる",
+        "romaji": "noboru",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. 오르다",
+        "koExample": "주말에 산에 오릅니다.",
+        "koChirpScript": "のぼる. 오르다라는 뜻의 동사입니다. しゅうまつにやまにのぼります. 주말에 산에 오릅니다라는 의미네요.",
+        "example": "週末に山に登ります",
+        "exampleKana": "しゅうまつにやまにのぼります",
+        "kanji": "登",
+        "onyomi": "トウ、ト",
+        "kunyomi": "のぼ(る)",
+        "audio": {
+            "word": "jlpt/n4/noboru/word.mp3",
+            "gloss": "jlpt/n4/noboru/gloss.mp3",
+            "example": "jlpt/n4/noboru/example.mp3"
+        }
+    },
+    {
+        "lemma": "汚い",
+        "kana": "きたない",
+        "romaji": "kitanai",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 더럽다",
+        "koExample": "손이 더러워서 씻었습니다.",
+        "koChirpScript": "きたない. 더럽다라는 뜻의 형용사입니다. てがきたないのであらいました. 손이 더러워서 씻었습니다라는 의미네요.",
+        "example": "手が汚いので洗いました",
+        "exampleKana": "てがきたないのであらいました",
+        "kanji": "汚",
+        "onyomi": "オ",
+        "kunyomi": "きたな(い)、よご(れる)",
+        "audio": {
+            "word": "jlpt/n5/kitanai/word.mp3",
+            "gloss": "jlpt/n5/kitanai/gloss.mp3",
+            "example": "jlpt/n5/kitanai/example.mp3"
+        }
+    },
+    {
+        "lemma": "雨",
+        "kana": "あめ",
+        "romaji": "ame",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 비",
+        "koExample": "비가 내리고 있습니다.",
+        "koChirpScript": "あめ. 비라는 뜻의 명사입니다. あめがふっています. 비가 내리고 있습니다라는 의미네요.",
+        "example": "雨が降っています",
+        "exampleKana": "あめがふっています",
+        "kanji": "雨",
+        "onyomi": "ウ",
+        "kunyomi": "あめ",
+        "audio": {
+            "word": "jlpt/n5/ame/word.mp3",
+            "gloss": "jlpt/n5/ame/gloss.mp3",
+            "example": "jlpt/n5/ame/example.mp3"
+        }
+    },
+    {
+        "lemma": "お皿",
+        "kana": "おさら",
+        "romaji": "osara",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 접시",
+        "koExample": "접시를 씻어주세요.",
+        "koChirpScript": "おさら. 접시라는 뜻의 명사입니다. おさらをあらってください. 접시를 씻어주세요라는 의미네요.",
+        "example": "お皿を洗ってください",
+        "exampleKana": "おさらをあらってください",
+        "kanji": "皿",
+        "onyomi": "ベイ",
+        "kunyomi": "さら",
+        "audio": {
+            "word": "jlpt/n5/osara/word.mp3",
+            "gloss": "jlpt/n5/osara/gloss.mp3",
+            "example": "jlpt/n5/osara/example.mp3"
+        }
+    },
+    {
+        "lemma": "速い",
+        "kana": "はやい",
+        "romaji": "hayai",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 빠르다",
+        "koExample": "그는 달리기가 빠릅니다.",
+        "koChirpScript": "はやい. 빠르다라는 뜻의 형용사입니다. かれははしるのがはやいです. 그는 달리기가 빠릅니다라는 의미네요.",
+        "example": "彼は走るのが速いです",
+        "exampleKana": "かれははしるのがはやいです",
+        "kanji": "速",
+        "onyomi": "ソク",
+        "kunyomi": "はや(い)",
+        "audio": {
+            "word": "jlpt/n5/hayai/word.mp3",
+            "gloss": "jlpt/n5/hayai/gloss.mp3",
+            "example": "jlpt/n5/hayai/example.mp3"
+        }
+    },
+    {
+        "lemma": "お風呂",
+        "kana": "おふろ",
+        "romaji": "ofuro",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 목욕, 욕실",
+        "koExample": "목욕을 하고 싶습니다.",
+        "koChirpScript": "おふろ. 목욕 또는 욕실이라는 뜻의 명사입니다. おふろにはいりたいです. 목욕을 하고 싶습니다라는 의미네요.",
+        "example": "お風呂に入りたいです",
+        "exampleKana": "おふろにはいりたいです",
+        "kanji": "風呂",
+        "onyomi": "フ、ロ",
+        "kunyomi": "ふろ",
+        "audio": {
+            "word": "jlpt/n5/ofuro/word.mp3",
+            "gloss": "jlpt/n5/ofuro/gloss.mp3",
+            "example": "jlpt/n5/ofuro/example.mp3"
+        }
+    },
+    {
+        "lemma": "新しい",
+        "kana": "あたらしい",
+        "romaji": "atarashii",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 새롭다",
+        "koExample": "이것은 새로운 컴퓨터입니다.",
+        "koChirpScript": "あたらしい. 새롭다라는 뜻의 형용사입니다. これはあたらしいこんぴゅーたーです. 이것은 새로운 컴퓨터입니다라는 의미네요.",
+        "example": "これは新しいコンピューターです",
+        "exampleKana": "これはあたらしいこんぴゅーたーです",
+        "kanji": "新",
+        "onyomi": "シン",
+        "kunyomi": "あたら(しい)",
+        "audio": {
+            "word": "jlpt/n5/atarashii/word.mp3",
+            "gloss": "jlpt/n5/atarashii/gloss.mp3",
+            "example": "jlpt/n5/atarashii/example.mp3"
+        }
+    },
+    {
+        "lemma": "廊下",
+        "kana": "ろうか",
+        "romaji": "rouka",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 복도",
+        "koExample": "복도에서 뛰지 마세요.",
+        "koChirpScript": "ろうか. 복도라는 뜻의 명사입니다. ろうかではしらないでください. 복도에서 뛰지 마세요라는 의미네요.",
+        "example": "廊下で走らないでください",
+        "exampleKana": "ろうかではしらないでください",
+        "kanji": "廊下",
+        "onyomi": "ロウ、カ、ゲ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n4/rouka/word.mp3",
+            "gloss": "jlpt/n4/rouka/gloss.mp3",
+            "example": "jlpt/n4/rouka/example.mp3"
+        }
+    },
+    {
+        "lemma": "茶色",
+        "kana": "ちゃいろ",
+        "romaji": "chairo",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 갈색",
+        "koExample": "갈색 구두를 신고 있습니다.",
+        "koChirpScript": "ちゃいろ. 갈색이라는 뜻의 명사입니다. ちゃいろのくつをはいています. 갈색 구두를 신고 있습니다라는 의미네요.",
+        "example": "茶色の靴を履いています",
+        "exampleKana": "ちゃいろのくつをはいています",
+        "kanji": "茶色",
+        "onyomi": "チャ、サ、ショク、シキ",
+        "kunyomi": "-, いろ",
+        "audio": {
+            "word": "jlpt/n5/chairo/word.mp3",
+            "gloss": "jlpt/n5/chairo/gloss.mp3",
+            "example": "jlpt/n5/chairo/example.mp3"
+        }
+    },
+    {
+        "lemma": "コート",
+        "kana": "コート",
+        "romaji": "kooto",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 코트",
+        "koExample": "추워서 코트를 입었습니다.",
+        "koChirpScript": "こーと. 코트라는 뜻의 명사입니다. さむいのでこーとをきました. 추워서 코트를 입었습니다라는 의미네요.",
+        "example": "寒いのでコートを着ました",
+        "exampleKana": "さむいのでこーとをきました",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/kooto/word.mp3",
+            "gloss": "jlpt/n5/kooto/gloss.mp3",
+            "example": "jlpt/n5/kooto/example.mp3"
+        }
+    },
+    {
+        "lemma": "手紙",
+        "kana": "てがみ",
+        "romaji": "tegami",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 편지",
+        "koExample": "어머니에게 편지를 썼습니다.",
+        "koChirpScript": "てがみ. 편지라는 뜻의 명사입니다. ははにてがみをかきました. 어머니에게 편지를 썼습니다라는 의미네요.",
+        "example": "母に手紙を書きました",
+        "exampleKana": "ははにてがみをかきました",
+        "kanji": "手紙",
+        "onyomi": "シュ、シ",
+        "kunyomi": "て、かみ",
+        "audio": {
+            "word": "jlpt/n5/tegami/word.mp3",
+            "gloss": "jlpt/n5/tegami/gloss.mp3",
+            "example": "jlpt/n5/tegami/example.mp3"
+        }
+    },
+    {
+        "lemma": "要る",
+        "kana": "いる",
+        "romaji": "iru",
+        "pos": "verb",
+        "categories": "N5, JLPT",
+        "koGloss": "v. 필요하다",
+        "koExample": "비자가 필요합니까?",
+        "koChirpScript": "いる. 필요하다라는 뜻의 동사입니다. びざがいりますか. 비자가 필요합니까라는 의미네요.",
+        "example": "ビザが要りますか",
+        "exampleKana": "びざがいりますか",
+        "kanji": "要",
+        "onyomi": "ヨウ",
+        "kunyomi": "い(る)",
+        "audio": {
+            "word": "jlpt/n5/iru_need/word.mp3",
+            "gloss": "jlpt/n5/iru_need/gloss.mp3",
+            "example": "jlpt/n5/iru_need/example.mp3"
+        }
+    },
+    {
+        "lemma": "こっち",
+        "kana": "こっち",
+        "romaji": "kocchi",
+        "pos": "pronoun",
+        "categories": "N5, JLPT",
+        "koGloss": "pron. 이쪽 (구어체)",
+        "koExample": "이쪽으로 오세요.",
+        "koChirpScript": "こっち. 이쪽이라는 뜻의 대명사입니다. こっちへきてください. 이쪽으로 오세요라는 의미네요.",
+        "example": "こっちへ来てください",
+        "exampleKana": "こっちへきてください",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/kocchi/word.mp3",
+            "gloss": "jlpt/n5/kocchi/gloss.mp3",
+            "example": "jlpt/n5/kocchi/example.mp3"
+        }
+    },
+    {
+        "lemma": "スプーン",
+        "kana": "スプーン",
+        "romaji": "supuun",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 숟가락, 스푼",
+        "koExample": "수프는 스푼으로 먹습니다.",
+        "koChirpScript": "すぷーん. 숟가락이라는 뜻의 명사입니다. すーぷはすぷーんでたべます. 수프는 스푼으로 먹습니다라는 의미네요.",
+        "example": "スープはスプーンで食べます",
+        "exampleKana": "すーぷはすぷーんでたべます",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/supuun/word.mp3",
+            "gloss": "jlpt/n5/supuun/gloss.mp3",
+            "example": "jlpt/n5/supuun/example.mp3"
+        }
+    },
+    {
+        "lemma": "時々",
+        "kana": "ときどき",
+        "romaji": "tokidoki",
+        "pos": "adverb",
+        "categories": "N5, JLPT",
+        "koGloss": "adv. 때때로, 가끔",
+        "koExample": "가끔 영화를 봅니다.",
+        "koChirpScript": "ときどき. 때때로 또는 가끔이라는 뜻의 부사입니다. ときどきえいがをみます. 가끔 영화를 봅니다라는 의미네요.",
+        "example": "時々映画を見ます",
+        "exampleKana": "ときどきえいがをみます",
+        "kanji": "時々",
+        "onyomi": "ジ",
+        "kunyomi": "とき",
+        "audio": {
+            "word": "jlpt/n5/tokidoki/word.mp3",
+            "gloss": "jlpt/n5/tokidoki/gloss.mp3",
+            "example": "jlpt/n5/tokidoki/example.mp3"
+        }
+    },
+    {
+        "lemma": "傘",
+        "kana": "かさ",
+        "romaji": "kasa",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 우산",
+        "koExample": "비가 오니까 우산을 쓰세요.",
+        "koChirpScript": "かさ. 우산이라는 뜻의 명사입니다. あめがふっているからかさをさしてください. 비가 오니까 우산을 쓰세요라는 의미네요.",
+        "example": "雨が降っているから傘を差してください",
+        "exampleKana": "あめがふっているからかさをさしてください",
+        "kanji": "傘",
+        "onyomi": "サン",
+        "kunyomi": "かさ",
+        "audio": {
+            "word": "jlpt/n5/kasa/word.mp3",
+            "gloss": "jlpt/n5/kasa/gloss.mp3",
+            "example": "jlpt/n5/kasa/example.mp3"
+        }
+    },
+    {
+        "lemma": "いい",
+        "kana": "いい",
+        "romaji": "ii",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 좋다",
+        "koExample": "오늘은 날씨가 좋네요.",
+        "koChirpScript": "いい. 좋다라는 뜻의 형용사입니다. きょうはいいてんきですね. 오늘은 날씨가 좋네요라는 의미네요.",
+        "example": "今日はいい天気ですね",
+        "exampleKana": "きょうはいいてんきですね",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/ii/word.mp3",
+            "gloss": "jlpt/n5/ii/gloss.mp3",
+            "example": "jlpt/n5/ii/example.mp3"
+        }
+    },
+    {
+        "lemma": "良い",
+        "kana": "よい",
+        "romaji": "yoi",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 좋다",
+        "koExample": "그것은 좋은 생각입니다.",
+        "koChirpScript": "よい. 좋다라는 뜻의 형용사입니다. それはよいかんがえです. 그것은 좋은 생각입니다라는 의미네요.",
+        "example": "それは良い考えです",
+        "exampleKana": "それはよいかんがえです",
+        "kanji": "良",
+        "onyomi": "リョウ",
+        "kunyomi": "よ(い)",
+        "audio": {
+            "word": "jlpt/n5/yoi/word.mp3",
+            "gloss": "jlpt/n5/yoi/gloss.mp3",
+            "example": "jlpt/n5/yoi/example.mp3"
+        }
+    },
+    {
+        "lemma": "電話",
+        "kana": "でんわ",
+        "romaji": "denwa",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 전화",
+        "koExample": "나중에 전화하겠습니다.",
+        "koChirpScript": "でんわ. 전화라는 뜻의 명사입니다. あとででんわします. 나중에 전화하겠습니다라는 의미네요.",
+        "example": "後で電話します",
+        "exampleKana": "あとででんわします",
+        "kanji": "電話",
+        "onyomi": "デン、ワ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/denwa/word.mp3",
+            "gloss": "jlpt/n5/denwa/gloss.mp3",
+            "example": "jlpt/n5/denwa/example.mp3"
+        }
+    },
+    {
+        "lemma": "勤める",
+        "kana": "つとめる",
+        "romaji": "tsutomeru",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. 근무하다",
+        "koExample": "저는 은행에서 근무하고 있습니다.",
+        "koChirpScript": "つとめる. 근무하다라는 뜻의 동사입니다. わたしはぎんこうにつとめています. 저는 은행에서 근무하고 있습니다라는 의미네요.",
+        "example": "私は銀行に勤めています",
+        "exampleKana": "わたしはぎんこうにつとめています",
+        "kanji": "勤",
+        "onyomi": "キン、ゴン",
+        "kunyomi": "つと(める)",
+        "audio": {
+            "word": "jlpt/n4/tsutomeru/word.mp3",
+            "gloss": "jlpt/n4/tsutomeru/gloss.mp3",
+            "example": "jlpt/n4/tsutomeru/example.mp3"
+        }
+    },
+    {
+        "lemma": "安い",
+        "kana": "やすい",
+        "romaji": "yasui",
+        "pos": "adjective",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 싸다",
+        "koExample": "이 가게는 야채가 쌉니다.",
+        "koChirpScript": "やすい. 싸다라는 뜻의 형용사입니다. このみせはやさいがやすいです. 이 가게는 야채가 쌉니다라는 의미네요.",
+        "example": "この店は野菜が安いです",
+        "exampleKana": "このみせはやさいがやすいです",
+        "kanji": "安",
+        "onyomi": "アン",
+        "kunyomi": "やす(い)",
+        "audio": {
+            "word": "jlpt/n5/yasui/word.mp3",
+            "gloss": "jlpt/n5/yasui/gloss.mp3",
+            "example": "jlpt/n5/yasui/example.mp3"
+        }
+    },
+    {
+        "lemma": "どう",
+        "kana": "どう",
+        "romaji": "dou",
+        "pos": "adverb",
+        "categories": "N5, JLPT",
+        "koGloss": "adv. 어떻게",
+        "koExample": "이것은 어떻게 사용합니까?",
+        "koChirpScript": "どう. 어떻게라는 뜻의 부사입니다. これはどうつかいますか. 이것은 어떻게 사용합니까라는 의미네요.",
+        "example": "これはどう使いますか",
+        "exampleKana": "これはどうつかいますか",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/dou/word.mp3",
+            "gloss": "jlpt/n5/dou/gloss.mp3",
+            "example": "jlpt/n5/dou/example.mp3"
+        }
+    },
+    {
+        "lemma": "道",
+        "kana": "みち",
+        "romaji": "michi",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 길",
+        "koExample": "이 길은 어디로 갑니까?",
+        "koChirpScript": "みち. 길이라는 뜻의 명사입니다. このみちはどこへいきますか. 이 길은 어디로 갑니까라는 의미네요.",
+        "example": "この道はどこへ行きますか",
+        "exampleKana": "このみちはどこへいきますか",
+        "kanji": "道",
+        "onyomi": "ドウ、トウ",
+        "kunyomi": "みち",
+        "audio": {
+            "word": "jlpt/n5/michi/word.mp3",
+            "gloss": "jlpt/n5/michi/gloss.mp3",
+            "example": "jlpt/n5/michi/example.mp3"
+        }
+    },
+    {
+        "lemma": "バス",
+        "kana": "バス",
+        "romaji": "basu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 버스",
+        "koExample": "버스를 타고 학교에 갑니다.",
+        "koChirpScript": "ばす. 버스라는 뜻의 명사입니다. ばすにのってがっこうにいきます. 버스를 타고 학교에 갑니다라는 의미네요.",
+        "example": "バスに乗って学校に行きます",
+        "exampleKana": "ばすにのってがっこうにいきます",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/basu/word.mp3",
+            "gloss": "jlpt/n5/basu/gloss.mp3",
+            "example": "jlpt/n5/basu/example.mp3"
+        }
+    },
+    {
+        "lemma": "クラス",
+        "kana": "クラス",
+        "romaji": "kurasu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 반, 클래스",
+        "koExample": "우리 반은 30명입니다.",
+        "koChirpScript": "くらす. 반 또는 클래스라는 뜻의 명사입니다. わたしたちのくらすはさんじゅうにんです. 우리 반은 삼십 명입니다라는 의미네요.",
+        "example": "私たちのクラスは三十人です",
+        "exampleKana": "わたしたちのくらすはさんじゅうにんです",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/kurasu/word.mp3",
+            "gloss": "jlpt/n5/kurasu/gloss.mp3",
+            "example": "jlpt/n5/kurasu/example.mp3"
+        }
+    },
+    {
+        "lemma": "差す",
+        "kana": "さす",
+        "romaji": "sasu",
+        "pos": "verb",
+        "categories": "N4, JLPT",
+        "koGloss": "v. (우산을) 쓰다",
+        "koExample": "비를 맞지 않도록 우산을 썼다.",
+        "koChirpScript": "さす. 우산을 쓰다라는 뜻의 동사입니다. あめにぬれないようにかさをさした. 비를 맞지 않도록 우산을 썼다라는 의미네요.",
+        "example": "雨に濡れないように傘を差した",
+        "exampleKana": "あめにぬれないようにかさをさした",
+        "kanji": "差",
+        "onyomi": "サ",
+        "kunyomi": "さ(す)",
+        "audio": {
+            "word": "jlpt/n4/sasu/word.mp3",
+            "gloss": "jlpt/n4/sasu/gloss.mp3",
+            "example": "jlpt/n4/sasu/example.mp3"
+        }
+    },
+    {
+        "lemma": "スポーツ",
+        "kana": "スポーツ",
+        "romaji": "supootsu",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 스포츠",
+        "koExample": "어떤 스포츠를 좋아합니까?",
+        "koChirpScript": "すぽーつ. 스포츠라는 뜻의 명사입니다. どんあすぽーつがすきですか. 어떤 스포츠를 좋아합니까라는 의미네요.",
+        "example": "どんなスポーツが好きですか",
+        "exampleKana": "どんあすぽーつがすきですか",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/supootsu/word.mp3",
+            "gloss": "jlpt/n5/supootsu/gloss.mp3",
+            "example": "jlpt/n5/supootsu/example.mp3"
+        }
+    },
+    {
+        "lemma": "どっち",
+        "kana": "どっち",
+        "romaji": "docchi",
+        "pos": "pronoun",
+        "categories": "N5, JLPT",
+        "koGloss": "pron. 어느 쪽 (구어체)",
+        "koExample": "커피와 홍차, 어느 쪽이 좋습니까?",
+        "koChirpScript": "どっち. 어느 쪽이라는 뜻의 대명사입니다. こーひーとこうちゃどっちがいいですか. 커피와 홍차 어느 쪽이 좋습니까라는 의미네요.",
+        "example": "コーヒーと紅茶、どっちがいいですか",
+        "exampleKana": "こーひーとこうちゃどっちがいいですか",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/docchi/word.mp3",
+            "gloss": "jlpt/n5/docchi/gloss.mp3",
+            "example": "jlpt/n5/docchi/example.mp3"
+        }
+    },
+    {
+        "lemma": "そば",
+        "kana": "そば",
+        "romaji": "soba",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 옆, 곁",
+        "koExample": "내 옆에 앉아주세요.",
+        "koChirpScript": "そば. 옆 또는 곁이라는 뜻의 명사입니다. わたしのそばにすわってください. 내 옆에 앉아주세요라는 의미네요.",
+        "example": "私のそばに座ってください",
+        "exampleKana": "わたしのそばにすわってください",
+        "kanji": "側",
+        "onyomi": "ソク",
+        "kunyomi": "かわ",
+        "audio": {
+            "word": "jlpt/n5/soba/word.mp3",
+            "gloss": "jlpt/n5/soba/gloss.mp3",
+            "example": "jlpt/n5/soba/example.mp3"
+        }
+    },
+    {
+        "lemma": "新聞",
+        "kana": "しんぶん",
+        "romaji": "shinbun",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 신문",
+        "koExample": "아버지는 매일 신문을 읽습니다.",
+        "koChirpScript": "しんぶん. 신문이라는 뜻의 명사입니다. ちちはまいにちしんぶんをよみます. 아버지는 매일 신문을 읽습니다라는 의미네요.",
+        "example": "父は毎日新聞を読みます",
+        "exampleKana": "ちちはまいにちしんぶんをよみます",
+        "kanji": "新聞",
+        "onyomi": "シン、ブン",
+        "kunyomi": "き(く)",
+        "audio": {
+            "word": "jlpt/n5/shinbun/word.mp3",
+            "gloss": "jlpt/n5/shinbun/gloss.mp3",
+            "example": "jlpt/n5/shinbun/example.mp3"
+        }
+    },
+    {
+        "lemma": "どうして",
+        "kana": "どうして",
+        "romaji": "doushite",
+        "pos": "adverb",
+        "categories": "N5, JLPT",
+        "koGloss": "adv. 왜, 어째서",
+        "koExample": "왜 어제 학교에 오지 않았습니까?",
+        "koChirpScript": "どうして. 왜 또는 어째서라는 뜻의 부사입니다. どうしてきのうがっこうにきませんでしたか. 왜 어제 학교에 오지 않았습니까라는 의미네요.",
+        "example": "どうして昨日学校に来ませんでしたか",
+        "exampleKana": "どうしてきのうがっこうにきませんでしたか",
+        "kanji": null,
+        "onyomi": null,
+        "kunyomi": null,
+        "audio": {
+            "word": "jlpt/n5/doushite/word.mp3",
+            "gloss": "jlpt/n5/doushite/gloss.mp3",
+            "example": "jlpt/n5/doushite/example.mp3"
+        }
+    },
+    {
+        "lemma": "庭",
+        "kana": "にわ",
+        "romaji": "niwa",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 정원, 뜰",
+        "koExample": "정원에 예쁜 꽃이 피어 있습니다.",
+        "koChirpScript": "にわ. 정원이라는 뜻의 명사입니다. にわにきれいなはながさいています. 정원에 예쁜 꽃이 피어 있습니다라는 의미네요.",
+        "example": "庭にきれいな花が咲いています",
+        "exampleKana": "にわにきれいなはながさいています",
+        "kanji": "庭",
+        "onyomi": "テイ",
+        "kunyomi": "にわ",
+        "audio": {
+            "word": "jlpt/n5/niwa/word.mp3",
+            "gloss": "jlpt/n5/niwa/gloss.mp3",
+            "example": "jlpt/n5/niwa/example.mp3"
+        }
+    },
+    {
+        "lemma": "大きな",
+        "kana": "おおきな",
+        "romaji": "ookina",
+        "pos": "pre-noun adjectival",
+        "categories": "N5, JLPT",
+        "koGloss": "adj. 커다란",
+        "koExample": "커다란 개가 있습니다.",
+        "koChirpScript": "おおきな. 커다란이라는 뜻의 연체사입니다. おおきないぬがいます. 커다란 개가 있습니다라는 의미네요.",
+        "example": "大きな犬がいます",
+        "exampleKana": "おおきないぬがいます",
+        "kanji": "大",
+        "onyomi": "ダイ、タイ",
+        "kunyomi": "おお(きい)",
+        "audio": {
+            "word": "jlpt/n5/ookina/word.mp3",
+            "gloss": "jlpt/n5/ookina/gloss.mp3",
+            "example": "jlpt/n5/ookina/example.mp3"
+        }
+    },
+    {
+        "lemma": "辺",
+        "kana": "へん",
+        "romaji": "hen",
+        "pos": "noun",
+        "categories": "N4, JLPT",
+        "koGloss": "n. 근처, 부근",
+        "koExample": "이 근처에 우체국이 있습니까?",
+        "koChirpScript": "へん. 근처 또는 부근이라는 뜻의 명사입니다. このへんにゆうびんきょくがありますか. 이 근처에 우체국이 있습니까라는 의미네요.",
+        "example": "この辺に郵便局がありますか",
+        "exampleKana": "このへんにゆうびんきょくがありますか",
+        "kanji": "辺",
+        "onyomi": "ヘン",
+        "kunyomi": "あた(り)",
+        "audio": {
+            "word": "jlpt/n4/hen/word.mp3",
+            "gloss": "jlpt/n4/hen/gloss.mp3",
+            "example": "jlpt/n4/hen/example.mp3"
+        }
+    },
+    {
+        "lemma": "番号",
+        "kana": "ばんごう",
+        "romaji": "bangou",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 번호",
+        "koExample": "전화번호를 가르쳐주세요.",
+        "koChirpScript": "ばんごう. 번호라는 뜻의 명사입니다. でんわばんごうをおしえてください. 전화번호를 가르쳐주세요라는 의미네요.",
+        "example": "電話番号を教えてください",
+        "exampleKana": "でんわばんごうをおしえてください",
+        "kanji": "番号",
+        "onyomi": "バン、ゴウ",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/bangou/word.mp3",
+            "gloss": "jlpt/n5/bangou/gloss.mp3",
+            "example": "jlpt/n5/bangou/example.mp3"
+        }
+    },
+    {
+        "lemma": "家族",
+        "kana": "かぞく",
+        "romaji": "kazoku",
+        "pos": "noun",
+        "categories": "N5, JLPT",
+        "koGloss": "n. 가족",
+        "koExample": "가족은 몇 명입니까?",
+        "koChirpScript": "かぞく. 가족이라는 뜻의 명사입니다. ごかぞくはなんにんですか. 가족은 몇 명입니까라는 의미네요.",
+        "example": "ご家族は何人ですか",
+        "exampleKana": "ごかぞくはなんにんですか",
+        "kanji": "家族",
+        "onyomi": "カ、ゾク",
+        "kunyomi": "-",
+        "audio": {
+            "word": "jlpt/n5/kazoku/word.mp3",
+            "gloss": "jlpt/n5/kazoku/gloss.mp3",
+            "example": "jlpt/n5/kazoku/example.mp3"
+        }
+    },
+    
+]
