@@ -244,7 +244,8 @@
       "Bash(do mv \"$dir\" \"../n4/\")",
       "Bash(do cp -r \"$dir\"* \"../n4/$dir\")",
       "Bash(git config:*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(do)"
     ],
     "deny": [],
     "ask": []

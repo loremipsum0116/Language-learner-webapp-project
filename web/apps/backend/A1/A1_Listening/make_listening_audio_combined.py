@@ -10,7 +10,7 @@ make_listening_audio_combined.py
           [라벨(A) → 2초대기 → 텍스트] 를 보기마다 수행
   * options가 dict이면(공통) 모든 질문에 동일 적용
   * options가 list[dict]이고 길이가 질문 수와 같으면 문항별 개별 옵션 적용
-- 보이스: 항목 인덱스 기준 US → GB → AU 순환(라운드 로빈), A=Charon, B=Laomedeia, Q=Schedar
+- 보이스: 항목 인덱스 기준 ja-JP 사용, A=Charon, B=Laomedeia, Q=Schedar
 - 출력 속도: 기본 0.8배속(피치 유지, ffmpeg atempo), --tempo로 조정 가능
 - 안전장치: 항목당 export 1회 강제, --purge-out 로 출력 폴더의 기존 .mp3 삭제
 
@@ -21,7 +21,7 @@ make_listening_audio_combined.py
 사용 예:
   python make_listening_audio_combined.py --in A1_Listening.json --out A1_Listening_mix --purge-out
   python make_listening_audio_combined.py --tempo 1.0
-  python make_listening_audio_combined.py --rotate en-GB,en-AU
+  python make_jlpt_audio.py --rotate ja-JP
 """
 import os
 os.environ["GRPC_DNS_RESOLVER"] = "native"
@@ -151,7 +151,21 @@ def purge_dir_mp3(out_dir: str):
 # 보이스 로테이션
 # ----------------------
 def build_voice_set(language_code: str):
-    """언어코드(en-US, en-GB, en-AU 등)에 맞는 A/B/Q 보이스 세트 생성"""
+    """언어코드(ja-JP)에 맞는 A/B/Q 보이스 세트 생성"""
+    # 일본어의 경우 특별 처리
+    if language_code.startswith("ja"):
+        return {
+            "A": texttospeech.VoiceSelectionParams(
+                language_code="ja-JP", name="ja-JP-Chirp3-HD-Orus"
+            ),
+            "B": texttospeech.VoiceSelectionParams(
+                language_code="ja-JP", name="ja-JP-Chirp3-HD-Achernar"
+            ),
+            "Q": texttospeech.VoiceSelectionParams(
+                language_code="ja-JP", name="ja-JP-Chirp3-HD-Orus"
+            ),
+        }
+    # 영어 등 다른 언어의 경우
     return {
         "A": texttospeech.VoiceSelectionParams(
             language_code=language_code, name=f"{language_code}-Chirp3-HD-Charon"
@@ -168,7 +182,7 @@ def build_voice_set(language_code: str):
 def parse_rotation_list(s: str) -> List[str]:
     codes = [x.strip() for x in s.split(",") if x.strip()]
     if not codes:
-        codes = ["en-US", "en-GB", "en-AU"]
+        codes = ["ja-JP"]  # 일본어 기본값
     return codes
 
 
@@ -195,8 +209,8 @@ def atempo_chain(t: float) -> str:
 # ----------------------
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--in", dest="input_json", default="A1_Listening.json", help="입력 JSON 경로")
-    parser.add_argument("--out", dest="out_dir", default="A1_Listening_mix", help="출력 폴더")
+    parser.add_argument("--in", dest="input_json", default="N5_Listening.json", help="입력 JSON 경로")
+    parser.add_argument("--out", dest="out_dir", default="N5_Listening_mix", help="출력 폴더")
     parser.add_argument("--gap-turn", dest="gap_turn_ms", type=int, default=250, help="A/B 사이 침묵(ms)")
     parser.add_argument("--gap-q", dest="gap_q_ms", type=int, default=400, help="대화→질문 블록 앞 침묵(ms)")
     parser.add_argument("--gap-qprefix", dest="gap_qprefix_ms", type=int, default=220, help="프리픽스→질문 사이 침묵(ms)")
@@ -221,8 +235,8 @@ def main():
     parser.add_argument(
         "--rotate",
         dest="rotate",
-        default="en-US,en-GB,en-AU",
-        help="항목별 보이스 로테이션(콤마 구분). 예: en-US,en-GB,en-AU",
+        default="ja-JP",
+        help="항목별 보이스 로테이션(콤마 구분). 예: ja-JP",
     )
     parser.add_argument(
         "--tempo",
