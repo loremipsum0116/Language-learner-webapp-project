@@ -117,9 +117,11 @@ def loudness_normalize(seg: AudioSegment, target_dbfs: float) -> AudioSegment:
     return seg.apply_gain(target_dbfs - seg.dBFS)
 
 
-def build_output_paths(romaji: str, level: str = "n5") -> Dict[str, str]:
-    """JLPT 출력 경로 생성"""
+def build_output_paths(romaji: str, level: str = "n5", suffix: str = "") -> Dict[str, str]:
+    """JLPT 출력 경로 생성 (중복 처리 포함)"""
     word_folder = sanitize_filename(romaji)
+    if suffix:
+        word_folder = f"{word_folder}{suffix}"
     out_dir = os.path.normpath(os.path.join("jlpt", level, word_folder))
     os.makedirs(out_dir, exist_ok=True)
     return {
@@ -391,18 +393,29 @@ def synthesize_mixed_script(
 
 # ===== 메인 파이프라인 =====
 def extract_level_from_filename(json_path: str) -> str:
-    """JSON 파일명에서 JLPT 레벨 추출 (예: N3.json -> N3)"""
+    """JSON 파일명에서 JLPT 레벨 추출 (예: N3.json -> n3, N4_fixed.json -> n4)"""
     import re
     filename = os.path.basename(json_path)
-    match = re.search(r'jlpt_?(n[1-5])', filename, re.IGNORECASE)
+    # N3.json, N4_fixed.json, jlpt_n5.json 등 다양한 형식 지원
+    match = re.search(r'(?:jlpt_?)?([nN][1-5])', filename, re.IGNORECASE)
     return match.group(1).lower() if match else "n5"
 
-def process(json_path: str) -> None:
+def process(json_path: str, missing_only: bool = False) -> None:
     try:
         items = load_items(json_path)
     except Exception as e:
         print(f"JSON 로드 실패: {e}")
         return
+
+    level = extract_level_from_filename(json_path)
+
+    # 누락된 항목 목록 로드 (있는 경우)
+    missing_romajis = set()
+    missing_file = f"{level}_missing_folders.txt"
+    if missing_only and os.path.exists(missing_file):
+        with open(missing_file, "r", encoding="utf-8") as f:
+            missing_romajis = set(line.strip().lower() for line in f if line.strip())
+        print(f"📌 누락된 항목 {len(missing_romajis)}개만 처리 모드 ({missing_file})")
 
     try:
         tts = tts_client()
@@ -410,7 +423,6 @@ def process(json_path: str) -> None:
         print("Google Cloud 인증 실패 또는 클라이언트 생성 실패:", e)
         return
 
-    level = extract_level_from_filename(json_path)
     total = len(items)
     print(f"🎧 JLPT 오디오 생성 시작 (items={total}, level={level})")
     print(f"    JA: male={JA_MALE}, female={JA_FEMALE}")
@@ -423,6 +435,9 @@ def process(json_path: str) -> None:
 
     last_saved: Optional[str] = None
     fails: List[str] = []
+
+    # 중복 romaji 처리를 위한 카운터
+    romaji_counter = {}
 
     for i, item in enumerate(items):
         lemma = item.get("lemma", "")
@@ -438,22 +453,38 @@ def process(json_path: str) -> None:
             )
             continue
 
-        # 출력 경로 생성
+        # 중복 romaji 처리 - 순서대로 접미사 추가
+        romaji_base = romaji.lower().strip()
+        if romaji_base in romaji_counter:
+            romaji_counter[romaji_base] += 1
+            suffix = str(romaji_counter[romaji_base])
+        else:
+            romaji_counter[romaji_base] = 1
+            suffix = ""
+
+        # 출력 경로 생성 (중복 시 접미사 포함)
         try:
-            paths = build_output_paths(romaji, level)
+            paths = build_output_paths(romaji, level, suffix)
         except Exception as e:
             print(f"[{i+1}/{total}] '{romaji}' 경로 오류: {e}")
             fails.append(f"{romaji}\tPATH_ERROR:{e}")
             continue
 
-        # 폴더가 이미 존재하고 모든 파일이 있는지 확인
-        if os.path.exists(paths["dir"]):
+        # 누락된 항목만 처리 모드인 경우
+        if missing_only:
+            # suffix가 포함된 폴더명으로 확인
+            folder_name = sanitize_filename(romaji) + suffix if suffix else sanitize_filename(romaji)
+            if folder_name not in missing_romajis:
+                continue  # 누락 목록에 없으면 건너뛰기
+
+        # 일반 모드: 현재 처리 중인 레벨 폴더 내에만 있는 경우 건너뛰기
+        if not missing_only and os.path.exists(paths["dir"]):
             has_word = os.path.exists(paths["word"])
             has_gloss = os.path.exists(paths["gloss"]) if ko_gloss_raw else True
             has_example = os.path.exists(paths["example"]) if item.get("koChirpScript", "") else True
 
             if has_word and has_gloss and has_example:
-                print(f"[{i+1}/{total}] '{lemma}({kana})' → 이미 존재, 건너뜀")
+                print(f"[{i+1}/{total}] '{lemma}({kana})' → 현재 {level} 폴더에 이미 존재, 건너뜀")
                 continue
 
         v = voices_for_index(i)
@@ -573,5 +604,6 @@ def process(json_path: str) -> None:
 
 
 if __name__ == "__main__":
-    json_file = sys.argv[1] if len(sys.argv) > 1 else "N3.json"
-    process(json_file)
+    json_file = sys.argv[1] if len(sys.argv) > 1 else "N4.json"
+    missing_only = "--missing-only" in sys.argv
+    process(json_file, missing_only=missing_only)
