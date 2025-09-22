@@ -1,0 +1,300 @@
+ID: 1
+Passage: My name is John. I am a student. I have a cat. My cat's name is Tom. Tom is black and white. He likes to play with a ball.
+--------------------------------------------------------------------------------
+ID: 2
+Passage: This is my family. My father is a doctor. My mother is a teacher. I have one sister. Her name is Lisa. We live in a big house.
+--------------------------------------------------------------------------------
+ID: 3
+Passage: I like apples. Apples are red. I eat an apple every day. My friend, Jane, likes bananas. Bananas are yellow.
+--------------------------------------------------------------------------------
+ID: 4
+Passage: Today is Monday. I go to school from Monday to Friday. I don't go to school on Saturday and Sunday. I play with my friends on the weekend.
+--------------------------------------------------------------------------------
+ID: 5
+Passage: I have a blue bag. In my bag, I have three books, a pencil, and an eraser. The books are for my English class.
+--------------------------------------------------------------------------------
+ID: 6
+Passage: My favorite season is summer. It is hot and sunny. I go to the beach with my family. We swim in the sea.
+--------------------------------------------------------------------------------
+ID: 7
+Passage: This is a picture of my room. There is a bed, a desk, and a chair. My computer is on the desk. My clothes are in the closet.
+--------------------------------------------------------------------------------
+ID: 8
+Passage: I can play the piano. I practice every day after school. My sister can sing very well. We like music.
+--------------------------------------------------------------------------------
+ID: 9
+Passage: I am hungry. I want to eat a sandwich and a salad for lunch. For a drink, I want some orange juice.
+--------------------------------------------------------------------------------
+ID: 10
+Passage: My birthday is in May. I will have a party. My friends will come to my house. We will eat cake and play games.
+--------------------------------------------------------------------------------
+ID: 11
+Passage: I live in London. London is a big city. There are many buses and cars. I go to work by bus.
+--------------------------------------------------------------------------------
+ID: 12
+Passage: This is my dog, Max. He is small and brown. He has long ears. He likes to run in the park.
+--------------------------------------------------------------------------------
+ID: 13
+Passage: I get up at 7 o'clock every morning. I wash my face and brush my teeth. Then, I have breakfast. I eat bread and drink milk.
+--------------------------------------------------------------------------------
+ID: 14
+Passage: My favorite color is green. I have a green shirt and a green hat. My room is also painted green.
+--------------------------------------------------------------------------------
+ID: 15
+Passage: I am wearing a red T-shirt and blue jeans today. It is sunny, so I am also wearing sunglasses.
+--------------------------------------------------------------------------------
+ID: 16
+Passage: There is a supermarket near my house. I go there to buy food. I buy milk, eggs, and vegetables.
+--------------------------------------------------------------------------------
+ID: 17
+Passage: I can speak two languages: English and Spanish. I am from Spain. I am learning French now.
+--------------------------------------------------------------------------------
+ID: 18
+Passage: I like watching movies. My favorite movie is 'Toy Story'. It's a movie about toys. It is very fun.
+--------------------------------------------------------------------------------
+ID: 19
+Passage: The weather is cold today. It is winter. I am wearing a warm coat, a scarf, and gloves. I like winter because I can play in the snow.
+--------------------------------------------------------------------------------
+ID: 20
+Passage: I go to the library on Saturdays. I read many books there. The library is very quiet. I like to read storybooks.
+--------------------------------------------------------------------------------
+ID: 21
+Passage: My name is Maria. I am 10 years old. I am a student at a primary school. My favorite subject is art.
+--------------------------------------------------------------------------------
+ID: 22
+Passage: This is a photo of my pet rabbit. His name is Fluffy. He is white and has long ears. He likes to eat carrots.
+--------------------------------------------------------------------------------
+ID: 23
+Passage: I have a new bicycle. It is red. My father gave it to me for my birthday. I ride it to the park every day.
+--------------------------------------------------------------------------------
+ID: 24
+Passage: We are at the zoo. I can see a lion, a monkey, and an elephant. The monkey is eating a banana. The lion is sleeping.
+--------------------------------------------------------------------------------
+ID: 25
+Passage: My school is big. There is a library, a playground, and a music room. I play soccer with my friends on the playground.
+--------------------------------------------------------------------------------
+ID: 26
+Passage: I help my mother in the kitchen. We make pizza for dinner. I put cheese on the pizza. It is delicious.
+--------------------------------------------------------------------------------
+ID: 27
+Passage: It is raining outside. I cannot go to the park. I am at home. I am drawing a picture with my crayons.
+--------------------------------------------------------------------------------
+ID: 28
+Passage: My grandfather lives on a farm. There are many animals, like cows, chickens, and sheep. I like to feed the chickens.
+--------------------------------------------------------------------------------
+ID: 29
+Passage: I am writing an email to my friend, Tom. He lives in Australia. I tell him about my school and my family.
+--------------------------------------------------------------------------------
+ID: 30
+Passage: The train station is next to the post office. The bank is opposite the train station. I need to go to the bank to get some money.
+--------------------------------------------------------------------------------
+ID: 31
+Passage: I have a small garden. I grow flowers and vegetables. I have red roses and yellow sunflowers. I also grow tomatoes.
+--------------------------------------------------------------------------------
+ID: 32
+Passage: My favorite sport is swimming. I go to the swimming pool every Sunday. I can swim very fast. It is good exercise.
+--------------------------------------------------------------------------------
+ID: 33
+Passage: I am at a birthday party. There are many balloons. We are eating birthday cake. The cake has chocolate and strawberries.
+--------------------------------------------------------------------------------
+ID: 34
+Passage: This is my teacher, Mrs. Davis. She is very kind. She teaches us English. We read books and play games in her class.
+--------------------------------------------------------------------------------
+ID: 35
+Passage: I am going on holiday to Italy. I will fly in an airplane. I am very excited. I want to eat pasta and pizza in Italy.
+--------------------------------------------------------------------------------
+ID: 36
+Passage: I have a new phone. It is black. I can use it to call my friends and play games. I like my new phone.
+--------------------------------------------------------------------------------
+ID: 37
+Passage: I have a brother. His name is Peter. He is 15 years old. He is taller than me. He likes to play basketball.
+--------------------------------------------------------------------------------
+ID: 38
+Passage: I am at the market. There are many people. I am buying some fruit. I buy three oranges and five apples.
+--------------------------------------------------------------------------------
+ID: 39
+Passage: My cat is sleeping on the sofa. She is very cute. Her fur is soft and grey. She likes to sleep all day.
+--------------------------------------------------------------------------------
+ID: 40
+Passage: I am watching television. There is a cartoon on TV. It is about a funny mouse and a cat. I laugh a lot.
+--------------------------------------------------------------------------------
+ID: 41
+Passage: I have a headache. I feel sick. My mother says I should rest in bed. I will not go to school today.
+--------------------------------------------------------------------------------
+ID: 42
+Passage: My favorite animal is a horse. Horses are big and strong. They can run very fast. I want to learn to ride a horse.
+--------------------------------------------------------------------------------
+ID: 43
+Passage: I am at a restaurant with my family. I am eating spaghetti. My father is eating fish. The food is very good.
+--------------------------------------------------------------------------------
+ID: 44
+Passage: I am cleaning my room. I put my books on the shelf. I put my toys in the box. Now my room is clean.
+--------------------------------------------------------------------------------
+ID: 45
+Passage: The bus is late. I am waiting at the bus stop. It is cold. I want to go home.
+--------------------------------------------------------------------------------
+ID: 46
+Passage: I am learning to cook. Today, I am making a cake with my grandmother. We need flour, sugar, eggs, and milk.
+--------------------------------------------------------------------------------
+ID: 47
+Passage: This is a hospital. Doctors and nurses work here. They help sick people. My aunt is a nurse.
+--------------------------------------------------------------------------------
+ID: 48
+Passage: I am on a farm. I can see a big red barn. Inside the barn, there are three cows. The cows are eating hay.
+--------------------------------------------------------------------------------
+ID: 49
+Passage: I am listening to music. I like pop music. My favorite singer is Taylor Swift. Her songs are great.
+--------------------------------------------------------------------------------
+ID: 50
+Passage: I am at the airport. I am going to Paris. My flight is at 10 o'clock. I am with my parents.
+--------------------------------------------------------------------------------
+ID: 51
+Passage: I have a pet fish. Its name is Goldie. It is orange. It lives in a small fishbowl on my desk.
+--------------------------------------------------------------------------------
+ID: 52
+Passage: I am in the park. I am flying a kite. The kite is red and yellow. The wind is strong today.
+--------------------------------------------------------------------------------
+ID: 53
+Passage: My dad is a firefighter. He wears a big yellow coat and a helmet. He drives a red fire truck. His job is very important.
+--------------------------------------------------------------------------------
+ID: 54
+Passage: I am thirsty. I want to drink a glass of cold water. There is a bottle of water in the fridge.
+--------------------------------------------------------------------------------
+ID: 55
+Passage: I am at a concert. A band is playing music on the stage. Many people are singing and dancing. It is very loud.
+--------------------------------------------------------------------------------
+ID: 56
+Passage: I am planting a tree in the garden. I dig a hole. I put the small tree in the hole. Then, I give it water.
+--------------------------------------------------------------------------------
+ID: 57
+Passage: My favorite food is ice cream. I like chocolate ice cream the best. I eat it in the summer when it is hot.
+--------------------------------------------------------------------------------
+ID: 58
+Passage: The post office is open from 9 am to 5 pm. I need to send a letter to my grandmother. She lives in another city.
+--------------------------------------------------------------------------------
+ID: 59
+Passage: I am looking at the stars. It is night. The moon is big and bright. I can see many stars in the sky.
+--------------------------------------------------------------------------------
+ID: 60
+Passage: I am at a museum. There are many old things here. I can see paintings and statues. It is very interesting.
+--------------------------------------------------------------------------------
+ID: 61
+Passage: I am taking a photo of my family. My father is tall. My mother has short hair. My sister is smiling.
+--------------------------------------------------------------------------------
+ID: 62
+Passage: I am on a bus. I am going to the city center. I am sitting next to the window. I can see many buildings.
+--------------------------------------------------------------------------------
+ID: 63
+Passage: I am in a shoe store. I want to buy new shoes for school. I like the black shoes. They are my size.
+--------------------------------------------------------------------------------
+ID: 64
+Passage: I am making a snowman. It is snowing outside. The snowman has a carrot for a nose. He is wearing my old hat.
+--------------------------------------------------------------------------------
+ID: 65
+Passage: I am at the beach. I am building a sandcastle. The sand is warm. I can hear the sea.
+--------------------------------------------------------------------------------
+ID: 66
+Passage: I am at the doctor's office. I have a cold. The doctor is checking my ears. He says I need to drink a lot of water.
+--------------------------------------------------------------------------------
+ID: 67
+Passage: I am brushing my teeth. I use a toothbrush and toothpaste. I brush my teeth in the morning and at night.
+--------------------------------------------------------------------------------
+ID: 68
+Passage: I am in a taxi. The driver is taking me to the hotel. The taxi is yellow. The hotel is in the city center.
+--------------------------------------------------------------------------------
+ID: 69
+Passage: I am at a farm. I am milking a cow. The milk is warm. I will drink the fresh milk for breakfast.
+--------------------------------------------------------------------------------
+ID: 70
+Passage: I am at a party. It is my friend's birthday. I gave her a present. It is a book. She likes to read.
+--------------------------------------------------------------------------------
+ID: 71
+Passage: I am in the kitchen. I am hungry. I am making a sandwich. I use bread, cheese, and ham.
+--------------------------------------------------------------------------------
+ID: 72
+Passage: I am walking in the forest. There are many tall trees. I can hear birds singing. The air is fresh.
+--------------------------------------------------------------------------------
+ID: 73
+Passage: I am at a flower shop. I am buying flowers for my mother. I choose the red roses. They are beautiful.
+--------------------------------------------------------------------------------
+ID: 74
+Passage: I am at the cinema. I am watching a movie with my friend. We are eating popcorn. The movie is about superheroes.
+--------------------------------------------------------------------------------
+ID: 75
+Passage: I am in my bedroom. I am doing my homework. My homework is for my math class. It is difficult.
+--------------------------------------------------------------------------------
+ID: 76
+Passage: I am at a cafe. I am drinking a cup of hot chocolate. It is sweet. I am also eating a piece of cake.
+--------------------------------------------------------------------------------
+ID: 77
+Passage: I am on a train. I am going to visit my grandparents. They live in a small town. I am looking out the window.
+--------------------------------------------------------------------------------
+ID: 78
+Passage: I am at the playground. I am on the swing. I am going high up in the air. My friend is on the slide.
+--------------------------------------------------------------------------------
+ID: 79
+Passage: I am in a music class. I am playing the guitar. The teacher is showing me how to play. I like the sound of the guitar.
+--------------------------------------------------------------------------------
+ID: 80
+Passage: I am at a bakery. I can smell fresh bread. I am buying a loaf of bread and two croissants. They are for breakfast.
+--------------------------------------------------------------------------------
+ID: 81
+Passage: I am at home. It is evening. I am having dinner with my family. We are eating rice and chicken.
+--------------------------------------------------------------------------------
+ID: 82
+Passage: I am at a clothing store. I am trying on a new jacket. It is blue. It fits me well. I will buy it.
+--------------------------------------------------------------------------------
+ID: 83
+Passage: I am at a pet shop. There are many animals. I can see puppies, kittens, and birds. I want to buy a kitten.
+--------------------------------------------------------------------------------
+ID: 84
+Passage: I am in an art class. I am painting a picture of a house. I am using blue, red, and yellow paint. My teacher likes my picture.
+--------------------------------------------------------------------------------
+ID: 85
+Passage: I am on a boat. The boat is on a big lake. I can see fish in the water. The weather is sunny and warm.
+--------------------------------------------------------------------------------
+ID: 86
+Passage: I am at a sports center. I am playing tennis with my brother. It is a fun game. We play every Saturday.
+--------------------------------------------------------------------------------
+ID: 87
+Passage: I am in the living room. I am watching a movie on my laptop. My dog is sleeping next to me. It is a quiet evening.
+--------------------------------------------------------------------------------
+ID: 88
+Passage: I am at a fruit stand. I am buying some strawberries. They are red and sweet. I will eat them for dessert.
+--------------------------------------------------------------------------------
+ID: 89
+Passage: I am at the train station. I am waiting for the 3 o'clock train to Manchester. The train is on platform 2.
+--------------------------------------------------------------------------------
+ID: 90
+Passage: I am in the garden. I am watering the plants. The flowers need water to grow. I have many beautiful flowers.
+--------------------------------------------------------------------------------
+ID: 91
+Passage: I am at the dentist. The dentist is checking my teeth. He says my teeth are clean and healthy. I am happy.
+--------------------------------------------------------------------------------
+ID: 92
+Passage: I am at a campsite. I am sitting by a fire. It is warm. I am roasting marshmallows with my friends.
+--------------------------------------------------------------------------------
+ID: 93
+Passage: I am in a taxi. I am going to the airport. My flight is in two hours. I have a big suitcase with me.
+--------------------------------------------------------------------------------
+ID: 94
+Passage: I am at a party. There is a lot of food. I am eating a slice of pizza. It has cheese and pepperoni on it.
+--------------------------------------------------------------------------------
+ID: 95
+Passage: I am on the phone. I am talking to my mother. She is asking about my day. I tell her I am fine.
+--------------------------------------------------------------------------------
+ID: 96
+Passage: I am at a swimming pool. I am learning how to swim. The water is a little cold. My teacher is helping me.
+--------------------------------------------------------------------------------
+ID: 97
+Passage: I am at a bus stop. The bus is coming. It is the number 5 bus. This bus goes to my school.
+--------------------------------------------------------------------------------
+ID: 98
+Passage: I am in the library. I am choosing a book to read. I like adventure stories. I found a book about pirates.
+--------------------------------------------------------------------------------
+ID: 99
+Passage: I am at a train station. I am buying a ticket. The ticket is for a trip to Oxford. The train leaves in ten minutes.
+--------------------------------------------------------------------------------
+ID: 100
+Passage: I am at home. I am watching the birds in my garden. There is a small red bird on the tree. It is singing a beautiful song.
+--------------------------------------------------------------------------------

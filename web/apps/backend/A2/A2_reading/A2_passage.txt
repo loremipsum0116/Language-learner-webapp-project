@@ -1,0 +1,300 @@
+ID: 1
+Passage: Yesterday, I went to the city museum with my friend, Sarah. We saw many interesting things, like old paintings and statues from ancient Rome. After we left the museum, we were hungry, so we found a small café and had some sandwiches and coffee. It was a great day.
+--------------------------------------------------------------------------------
+ID: 2
+Passage: Next summer, my family and I are planning a trip to Japan. We want to visit Tokyo to see the busy city life and then go to Kyoto to see the beautiful temples. I am most excited about trying real Japanese sushi. I have been saving my money for this trip.
+--------------------------------------------------------------------------------
+ID: 3
+Passage: Maria works as a graphic designer. She creates logos and websites for different companies. She usually works from home, which she likes because she can manage her own time. In her free time, she enjoys painting and hiking in the mountains.
+--------------------------------------------------------------------------------
+ID: 4
+Passage: Last weekend, Tom decided to clean his garage. It was very messy. He found his old bicycle, some books he forgot about, and a box of his childhood toys. He spent the whole Saturday organizing everything. Now, the garage looks clean and tidy.
+--------------------------------------------------------------------------------
+ID: 5
+Passage: I am trying to learn how to cook. I watch cooking videos online and follow the recipes. My first dish was spaghetti, and it was quite good. My next challenge is to bake a chocolate cake for my mother's birthday.
+--------------------------------------------------------------------------------
+ID: 6
+Passage: The local library is asking for volunteers. Volunteers will help organize books on the shelves and read stories to young children. You need to be available for at least three hours a week. It's a great way to help the community.
+--------------------------------------------------------------------------------
+ID: 7
+Passage: My apartment is on the third floor. It has a small balcony where I grow some plants. From the balcony, I can see a park. I enjoy sitting there in the evening, drinking tea and reading a book.
+--------------------------------------------------------------------------------
+ID: 8
+Passage: Every morning, I take my dog, Buddy, for a walk in the park. He loves running and playing with other dogs. After the walk, I give him his breakfast. It's a nice way to start the day for both of us.
+--------------------------------------------------------------------------------
+ID: 9
+Passage: I received a letter from my cousin who lives in Canada. She told me about the cold weather and the snow. She sent me a photo of her building a huge snowman. I hope I can visit her next winter.
+--------------------------------------------------------------------------------
+ID: 10
+Passage: Our school is having a music festival next Friday. Many students will perform. My friend, Leo, is going to play the guitar, and I am going to sing a song. We have been practicing every day after school.
+--------------------------------------------------------------------------------
+ID: 11
+Passage: Last year, I traveled to Thailand. The weather was very hot and humid, but I enjoyed it. The food was amazing, especially the spicy soup. I also visited some beautiful beaches and went swimming in the clear blue water.
+--------------------------------------------------------------------------------
+ID: 12
+Passage: To stay healthy, I try to exercise three times a week. I usually go for a run in the morning. I also try to eat a lot of fruits and vegetables and drink plenty of water. I think having a balanced diet is very important.
+--------------------------------------------------------------------------------
+ID: 13
+Passage: I bought a new smartphone yesterday. It has a bigger screen and a better camera than my old one. I spent the evening setting it up and downloading my favorite apps. I'm excited to take some great photos with it.
+--------------------------------------------------------------------------------
+ID: 14
+Passage: My favorite hobby is reading. I love getting lost in a good story. I prefer fantasy books about magic and dragons. I have a small library in my room with over a hundred books.
+--------------------------------------------------------------------------------
+ID: 15
+Passage: When I was a child, I wanted to be an astronaut. I was fascinated by the stars and planets. I used to have a telescope and would look at the moon every night. Now I work in an office, but I still love astronomy.
+--------------------------------------------------------------------------------
+ID: 16
+Passage: There is a new Italian restaurant in my town. I went there with my family last night. The restaurant was beautiful, and the staff were very friendly. I ordered lasagna, and it was the best I have ever tasted.
+--------------------------------------------------------------------------------
+ID: 17
+Passage: I am a member of a local football team. We practice twice a week, on Tuesdays and Thursdays. This Saturday, we have an important match against a team from another town. I hope we can win.
+--------------------------------------------------------------------------------
+ID: 18
+Passage: My sister is studying at a university in a different city. We don't see each other very often, but we talk on the phone every weekend. She is studying to become a doctor. I am very proud of her.
+--------------------------------------------------------------------------------
+ID: 19
+Passage: I love watching documentary films about nature. It's amazing to see wild animals in their natural habitats. Last night, I watched a documentary about penguins in Antarctica. It was both educational and entertaining.
+--------------------------------------------------------------------------------
+ID: 20
+Passage: Our city is trying to be more environmentally friendly. There are now more bicycle lanes, and the city has provided more bins for recycling paper, plastic, and glass. I think these changes are very positive.
+--------------------------------------------------------------------------------
+ID: 21
+Passage: I work in a bookshop. I enjoy my job because I love books and I like helping people find the perfect book to read. The bookshop is usually quiet, but it gets very busy on weekends.
+--------------------------------------------------------------------------------
+ID: 22
+Passage: My best friend's name is Alex. We have known each other since we were five years old. We have similar interests, like playing video games and watching science fiction movies. He is a very kind and funny person.
+--------------------------------------------------------------------------------
+ID: 23
+Passage: I am saving money to buy a new guitar. My old one is broken. I am doing small jobs for my neighbors, like washing their cars and walking their dogs. I hope to have enough money by the end of the month.
+--------------------------------------------------------------------------------
+ID: 24
+Passage: Last month, our English class went on a trip to a theater. We watched a play by William Shakespeare. It was a bit difficult to understand the old language, but the actors were amazing, and the story was exciting.
+--------------------------------------------------------------------------------
+ID: 25
+Passage: I have a part-time job at a coffee shop. I work on Saturday and Sunday mornings. My main task is to take customers' orders and make coffee. I enjoy talking to different people every day.
+--------------------------------------------------------------------------------
+ID: 26
+Passage: My grandmother is a great cook. When I visit her, she always makes my favorite dish, which is chicken soup. Her secret is using fresh vegetables from her own garden. It's the most delicious soup in the world.
+--------------------------------------------------------------------------------
+ID: 27
+Passage: I am not a morning person. I find it very difficult to wake up early. I usually press the snooze button on my alarm clock several times. I feel much more energetic in the afternoon and evening.
+--------------------------------------------------------------------------------
+ID: 28
+Passage: Our family has a tradition. Every New Year's Eve, we go to my grandparents' house. We have a big dinner together, and then we watch fireworks at midnight. It's a special time for our family to be together.
+--------------------------------------------------------------------------------
+ID: 29
+Passage: I am learning a new language, English. I take a class twice a week. I also use an app on my phone to practice vocabulary. It is challenging, but I think it's important to learn about other cultures.
+--------------------------------------------------------------------------------
+ID: 30
+Passage: The weather forecast for tomorrow is not good. It says it will be rainy and windy all day. I was planning to go for a picnic, but I think I will have to cancel it. Maybe I will just stay home and watch a movie.
+--------------------------------------------------------------------------------
+ID: 31
+Passage: I recently joined a gym because I want to get fitter. I go there after work. My favorite machine is the treadmill because I enjoy running. There is also a swimming pool, which I plan to use on weekends.
+--------------------------------------------------------------------------------
+ID: 32
+Passage: My city is famous for its annual flower festival in the spring. The city parks are filled with colorful tulips and daffodils. Many tourists come to see the flowers and enjoy the parades and music. It's a beautiful time of the year.
+--------------------------------------------------------------------------------
+ID: 33
+Passage: I have a cat named Leo. He is very playful. His favorite toy is a small red ball. However, he is afraid of loud noises. When there is a thunderstorm, he always hides under my bed.
+--------------------------------------------------------------------------------
+ID: 34
+Passage: I am taking a photography course. I am learning how to use a professional camera and how to take better pictures. This weekend, our class is going to the zoo to practice taking photos of animals.
+--------------------------------------------------------------------------------
+ID: 35
+Passage: I live in a small town. It's very quiet and peaceful. There aren't many shops or restaurants, but there is a beautiful river where I often go fishing. I prefer the quiet life here to the busy life in a big city.
+--------------------------------------------------------------------------------
+ID: 36
+Passage: Last night, I couldn't sleep well because my neighbors were having a loud party. The music was playing until 2 a.m. I feel very tired today and I have an important exam at school.
+--------------------------------------------------------------------------------
+ID: 37
+Passage: My brother is a chef. He works in a famous hotel restaurant. He often creates new dishes. When he comes home, he sometimes cooks a special dinner for our family, which is always a wonderful treat.
+--------------------------------------------------------------------------------
+ID: 38
+Passage: I am looking for a new apartment. I want a place that is close to a train station because I don't have a car. I also hope to find an apartment with two bedrooms and a modern kitchen.
+--------------------------------------------------------------------------------
+ID: 39
+Passage: I enjoy gardening. It's relaxing to work with plants. This year, I am growing my own vegetables for the first time. I have planted tomatoes, cucumbers, and lettuce. I can't wait to make a salad with them.
+--------------------------------------------------------------------------------
+ID: 40
+Passage: I have a pen pal in South Korea. Her name is Min-jun. We write emails to each other every month. We write about our daily lives, hobbies, and culture. I am learning a lot about her country.
+--------------------------------------------------------------------------------
+ID: 41
+Passage: My favorite type of movie is comedy. I love to laugh, and comedies always make me feel happy and relaxed. I don't really like scary movies because they give me bad dreams.
+--------------------------------------------------------------------------------
+ID: 42
+Passage: I'm going to the supermarket. I have a shopping list. I need to buy milk, bread, cheese, and some apples. I should also remember to buy some cat food for my cat, Whiskers.
+--------------------------------------------------------------------------------
+ID: 43
+Passage: I started a new job last week. I work as a receptionist in a hotel. My job is to welcome guests and answer their questions. I was a little nervous at first, but everyone is very friendly and helpful.
+--------------------------------------------------------------------------------
+ID: 44
+Passage: On my last vacation, I went hiking in the mountains. The air was fresh and the views were spectacular. I walked for about five hours. It was tiring, but I felt great afterwards. I took many photos of the beautiful scenery.
+--------------------------------------------------------------------------------
+ID: 45
+Passage: My mobile phone is very important to me. I use it for many things, not just for making calls. I use it to check my emails, read the news, and listen to music. I can't imagine my life without it.
+--------------------------------------------------------------------------------
+ID: 46
+Passage: I am trying to reduce the amount of plastic I use. I always take a reusable bag when I go shopping. I also bought a reusable water bottle instead of buying bottled water every day. It's a small change, but I think it helps the environment.
+--------------------------------------------------------------------------------
+ID: 47
+Passage: My favorite season is autumn. I love the cool weather and the beautiful colors of the leaves. Red, orange, and yellow leaves are everywhere. I also enjoy wearing warm sweaters and drinking hot chocolate.
+--------------------------------------------------------------------------------
+ID: 48
+Passage: Every Saturday morning, I go to the local market with my mom. It's an outdoor market where local farmers sell fresh fruits, vegetables, and flowers. The prices are better than in the supermarket, and the food is fresher.
+--------------------------------------------------------------------------------
+ID: 49
+Passage: I am redecorating my bedroom. I painted the walls light blue. Yesterday, I bought a new desk and a comfortable chair. Next, I want to buy a new lamp and some posters to put on the wall.
+--------------------------------------------------------------------------------
+ID: 50
+Passage: I have an exam tomorrow, so I need to study tonight. I will go to the library because it's quiet there. I will turn off my phone so I can concentrate. I hope I do well on the exam.
+--------------------------------------------------------------------------------
+ID: 51
+Passage: My friend Clara is from Brazil. She moved here last year. She is learning English and speaks it very well, but sometimes she misses speaking Portuguese. She taught me how to say a few words in her language.
+--------------------------------------------------------------------------------
+ID: 52
+Passage: I love winter sports. My favorite is snowboarding. I learned how to do it a few years ago. Every winter, my friends and I go to a ski resort in the mountains for a weekend. It's so much fun to speed down the snowy slopes.
+--------------------------------------------------------------------------------
+ID: 53
+Passage: I am not very good at remembering birthdays. Last week, I forgot my best friend's birthday. I felt terrible. To apologize, I bought him a nice present and took him out for dinner. He forgave me.
+--------------------------------------------------------------------------------
+ID: 54
+Passage: The internet is very useful for my studies. I can find information for my projects easily. I also use it to watch educational videos. However, my parents say I spend too much time online.
+--------------------------------------------------------------------------------
+ID: 55
+Passage: I have a terrible sense of direction. I get lost easily, even in my own town. That's why I always use a map app on my phone when I go to a new place. It helps me find my way.
+--------------------------------------------------------------------------------
+ID: 56
+Passage: My dad loves old cars. He has a vintage red sports car that he bought many years ago. He doesn't drive it every day, only on sunny weekends. He spends a lot of time cleaning and taking care of it.
+--------------------------------------------------------------------------------
+ID: 57
+Passage: I'm thinking about my future career. I enjoy helping people, so I am considering becoming a nurse or a teacher. Both jobs are challenging but also very rewarding. I need to get good grades in science and English.
+--------------------------------------------------------------------------------
+ID: 58
+Passage: I went to a wedding last Saturday. It was my cousin's wedding. The bride looked beautiful in her white dress. There was a big party after the ceremony with lots of food and dancing. I had a great time.
+--------------------------------------------------------------------------------
+ID: 59
+Passage: I prefer to travel by train rather than by plane. On a train, I can look out the window and see the countryside. The seats are also more comfortable, and I can walk around. It's a more relaxing way to travel.
+--------------------------------------------------------------------------------
+ID: 60
+Passage: I am allergic to cats. When I am near a cat, my eyes get red and I start sneezing. It's a shame because I think cats are very cute. That's why my family has a dog instead of a cat.
+--------------------------------------------------------------------------------
+ID: 61
+Passage: My favorite holiday is Halloween. I love dressing up in costumes. Last year, I was a pirate. This year, I'm going to be a vampire. My friends and I go 'trick-or-treating' around the neighborhood.
+--------------------------------------------------------------------------------
+ID: 62
+Passage: I'm trying to drink less sugary soda. Instead, I'm drinking more water and herbal tea. It was difficult at first because I love soda, but now I feel healthier and have more energy.
+--------------------------------------------------------------------------------
+ID: 63
+Passage: I went to the dentist for a check-up yesterday. He told me I have one small cavity. So, I have to go back next week to get it filled. He also reminded me to floss my teeth every day.
+--------------------------------------------------------------------------------
+ID: 64
+Passage: My apartment building has a small gym on the ground floor. It's very convenient because I don't have to travel to exercise. It has a few running machines and some weights. I use it about three times a week.
+--------------------------------------------------------------------------------
+ID: 65
+Passage: I am a big fan of science fiction movies. I love stories about space travel, aliens, and the future. My all-time favorite movie is 'Star Wars'. I have watched it more than ten times.
+--------------------------------------------------------------------------------
+ID: 66
+Passage: I lost my house keys yesterday. I think I might have dropped them in the park. I looked everywhere, but I couldn't find them. I had to call a locksmith to open my door. It was an expensive mistake.
+--------------------------------------------------------------------------------
+ID: 67
+Passage: My company sent me to a conference in Berlin last month. It was my first time in Englishy. I attended many interesting talks and met people from all over the world. In the evening, I explored the city and tried some English food.
+--------------------------------------------------------------------------------
+ID: 68
+Passage: I have a collection of stamps from different countries. My grandfather gave me my first stamp album when I was ten. I have stamps from Japan, Australia, and Brazil. I think they are like tiny pieces of art.
+--------------------------------------------------------------------------------
+ID: 69
+Passage: I'm not a very patient person. I don't like waiting in long lines or being stuck in traffic. I prefer things to be fast and efficient. My friends say I need to learn to relax more.
+--------------------------------------------------------------------------------
+ID: 70
+Passage: I am volunteering at an animal shelter on weekends. I help clean the cages, feed the animals, and take the dogs for walks. It's hard work, but it feels good to help animals that don't have a home.
+--------------------------------------------------------------------------------
+ID: 71
+Passage: My parents own a small bakery. They wake up very early every morning to bake fresh bread, cakes, and pastries. I sometimes help them on weekends. My favorite thing to eat is their warm apple pie.
+--------------------------------------------------------------------------------
+ID: 72
+Passage: I'm planning a surprise party for my sister's 18th birthday. I have invited all her close friends. My mom is going to bake the cake, and I'm in charge of the decorations. I hope she will be surprised.
+--------------------------------------------------------------------------------
+ID: 73
+Passage: I decided to take a break from social media for a month. At first, it was strange, but then I found I had more time for other things. I read more books and spent more time with my family. It was a positive experience.
+--------------------------------------------------------------------------------
+ID: 74
+Passage: My car broke down on the highway yesterday. The engine started making a strange noise and then it just stopped. I had to call for a tow truck to take it to a garage. It was a stressful situation.
+--------------------------------------------------------------------------------
+ID: 75
+Passage: I love going to concerts. The feeling of being in a crowd and listening to live music is incredible. Last month, I saw my favorite band play. The energy was amazing, and everyone was singing along.
+--------------------------------------------------------------------------------
+ID: 76
+Passage: I have a fear of flying. I get very nervous during takeoff and landing. I try to distract myself by listening to music or reading a book, but it doesn't always help. I prefer to travel by land if possible.
+--------------------------------------------------------------------------------
+ID: 77
+Passage: My local library has started a book club. We meet once a month to discuss a book that we have all read. It's a great way to discover new authors and to hear different opinions about the same story.
+--------------------------------------------------------------------------------
+ID: 78
+Passage: I moved to a new city for my job. It was difficult at first because I didn't know anyone. I decided to join a local hiking club to meet new people. I have made some good friends there and I'm starting to feel more at home.
+--------------------------------------------------------------------------------
+ID: 79
+Passage: I am trying to eat a healthier breakfast. I used to eat sugary cereals, but now I eat oatmeal with fruits and nuts. It gives me more energy to start the day, and I don't feel hungry until lunchtime.
+--------------------------------------------------------------------------------
+ID: 80
+Passage: My favorite place in my city is the botanical garden. It's a large, beautiful park with plants from all over the world. There is a huge glasshouse with tropical plants. It's a peaceful place to walk around and relax.
+--------------------------------------------------------------------------------
+ID: 81
+Passage: I have to give a presentation in my history class tomorrow. I'm a bit nervous because I don't like public speaking. I have practiced it many times in front of a mirror. I hope it goes well.
+--------------------------------------------------------------------------------
+ID: 82
+Passage: Last summer, my friends and I went camping by a lake. We slept in tents, cooked our food over a fire, and went swimming in the lake. At night, we sat by the fire and told stories. It was a memorable experience.
+--------------------------------------------------------------------------------
+ID: 83
+Passage: I am taking an online course to learn how to code. The course has video lessons and exercises. I can study whenever I have free time. I want to learn how to build my own website someday.
+--------------------------------------------------------------------------------
+ID: 84
+Passage: My sister is an artist. She has a small studio in her house where she paints. Her paintings are very colorful and abstract. She is having her first exhibition at a local gallery next month.
+--------------------------------------------------------------------------------
+ID: 85
+Passage: I don't like shopping for clothes in crowded stores. I find it stressful. I prefer to shop online where I can take my time to look at different items and compare prices. It's much more convenient for me.
+--------------------------------------------------------------------------------
+ID: 86
+Passage: I have a part-time job as a dog walker. I walk three different dogs in my neighborhood. It's a great job for me because I love dogs and I enjoy being outdoors. The dogs are always so happy to see me.
+--------------------------------------------------------------------------------
+ID: 87
+Passage: I am going to a job interview this afternoon. I have chosen a smart suit to wear. I have also printed my resume and prepared answers to some common questions. I feel prepared, but I am still a little nervous.
+--------------------------------------------------------------------------------
+ID: 88
+Passage: Every Sunday, my family has a movie night. We take turns choosing a movie. We make popcorn and watch the movie together in the living room. It's a simple but special family tradition.
+--------------------------------------------------------------------------------
+ID: 89
+Passage: I am trying to save water. I take shorter showers now. I also make sure to turn off the tap while I am brushing my teeth. Every little bit helps to protect our planet's resources.
+--------------------------------------------------------------------------------
+ID: 90
+Passage: I visited a castle last weekend. It was very old and big. There was a guide who told us stories about the kings and queens who lived there. I learned a lot about the history of the region.
+--------------------------------------------------------------------------------
+ID: 91
+Passage: I have a new neighbor. His name is David. He moved in yesterday. He is a musician and plays the violin. I introduced myself this morning, and he seems very friendly.
+--------------------------------------------------------------------------------
+ID: 92
+Passage: I am running a marathon next month. I have been training for it for the last three months. I run four times a week. It is the longest distance I have ever tried to run. I am both excited and nervous.
+--------------------------------------------------------------------------------
+ID: 93
+Passage: I found an old black-and-white photograph in my grandmother's house. It was a photo of her when she was a young girl. She looked very different, but she had the same warm smile. It was lovely to see.
+--------------------------------------------------------------------------------
+ID: 94
+Passage: My flight was delayed for three hours due to bad weather. I had to wait at the airport. I read a book and had some coffee. It was boring, but I was happy when we could finally take off.
+--------------------------------------------------------------------------------
+ID: 95
+Passage: I am not a fan of big, crowded cities. I prefer the countryside, where life is slower and more peaceful. I love being surrounded by nature, like forests and fields. I hope to live in a small cottage in the countryside one day.
+--------------------------------------------------------------------------------
+ID: 96
+Passage: I am trying to learn a new skill: juggling. I bought three juggling balls. I practice in my garden every day. It is much harder than it looks! I can only juggle for a few seconds before I drop the balls.
+--------------------------------------------------------------------------------
+ID: 97
+Passage: I went to a farmers' market and bought some local honey. The beekeeper told me how he looks after his bees. It was very interesting. The honey tastes much better than the honey from the supermarket.
+--------------------------------------------------------------------------------
+ID: 98
+Passage: My computer is running very slowly. I think it might have a virus. I am going to take it to a computer repair shop tomorrow. I hope they can fix it quickly because I need it for my work.
+--------------------------------------------------------------------------------
+ID: 99
+Passage: I love the smell of rain after a hot day. It's called 'petrichor'. It's a very fresh and earthy smell. I like to open my window after it rains to let the smell fill my room.
+--------------------------------------------------------------------------------
+ID: 100
+Passage: I am taking a first aid course. I am learning what to do in an emergency, like if someone is choking or has a cut. I think it is a very important and useful skill for everyone to have.
+--------------------------------------------------------------------------------

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import './Reading.css';
+import EnglishWordPopup from '../components/EnglishWordPopup';
 
 export default function ListeningPractice() {
     const [searchParams] = useSearchParams();
@@ -23,10 +24,15 @@ export default function ListeningPractice() {
     const [playbackRate, setPlaybackRate] = useState(1.0);
     const [showScript, setShowScript] = useState(false);
     const [history, setHistory] = useState(new Map()); // 사용자 학습 기록
+    const [englishDict, setEnglishDict] = useState(new Map()); // 영어 사전
+    const [selectedWord, setSelectedWord] = useState(null);
+    const [wordPopupPosition, setWordPopupPosition] = useState(null);
+    const [showTranslation, setShowTranslation] = useState(false);
 
     useEffect(() => {
         loadListeningData();
         loadHistory();
+        loadEnglishDictionary();
     }, [level, startIndex]);
 
     // 오디오 정리
@@ -97,6 +103,60 @@ export default function ListeningPractice() {
         }
     };
 
+    // 영어 사전 데이터 로드 (모든 레벨의 모든 IELTS JSON 파일)
+    const loadEnglishDictionary = async () => {
+        try {
+            const dictMap = new Map();
+
+            // 모든 레벨의 세부 폴더 수
+            const allLevelFolders = {
+                'A1': 9, 'A2': 9, 'B1': 8, 'B2': 8, 'C1': 5
+            };
+
+            // 모든 레벨의 모든 IELTS 파일 로드
+            for (const [levelName, folderCount] of Object.entries(allLevelFolders)) {
+                for (let i = 1; i <= folderCount; i++) {
+                    try {
+                        const response = await fetch(`/${levelName}/${levelName}_${i}/ielts_${levelName.toLowerCase()}_${i}.json`);
+                        if (response.ok) {
+                            const words = await response.json();
+                            words.forEach(word => {
+                                if (word.lemma && word.koGloss) {
+                                    // 기본 단어 추출 (괄호 앞 부분)
+                                    const baseWord = word.lemma.split('(')[0].trim().toLowerCase();
+
+                                    // 해당 기본 단어에 대한 배열이 없으면 생성
+                                    if (!dictMap.has(baseWord)) {
+                                        dictMap.set(baseWord, []);
+                                    }
+
+                                    // 동음이의어 배열에 추가
+                                    dictMap.get(baseWord).push({
+                                        lemma: word.lemma,
+                                        koGloss: word.koGloss,
+                                        pos: word.pos,
+                                        definition: word.definition,
+                                        example: word.example,
+                                        koExample: word.koExample,
+                                        level: levelName
+                                    });
+                                }
+                            });
+                        }
+                    } catch (error) {
+                        console.warn(`Failed to load ${levelName}_${i} dictionary:`, error);
+                    }
+                }
+            }
+
+            console.log(`✅ [영어 사전 로드 완료] 전체 레벨: ${dictMap.size}개 단어`);
+            setEnglishDict(dictMap);
+        } catch (error) {
+            console.error('❌ 영어 사전 로드 실패:', error);
+            setEnglishDict(new Map());
+        }
+    };
+
     // 사용자 리스닝 학습 기록 로드
     const loadHistory = async () => {
         try {
@@ -157,20 +217,11 @@ export default function ListeningPractice() {
         const record = history.get(String(questionId));
         console.log(`🔍 getQuestionStatus for '${questionId}':`, record);
         if (!record) return 'unsolved';
-        
+
         // wrongData.isCorrect 또는 isCompleted 확인
         const isCorrect = record.isCorrect || record.wrongData?.isCorrect || record.isCompleted;
         console.log(`🎯 Question '${questionId}' isCorrect:`, isCorrect);
         return isCorrect ? 'correct' : 'incorrect';
-    };
-
-    const isQuestionSolved = (questionId) => {
-        return history.has(String(questionId));
-    };
-
-    const isQuestionCorrect = (questionId) => {
-        const record = history.get(String(questionId));
-        return record?.isCorrect || record?.wrongData?.isCorrect || record?.isCompleted || false;
     };
 
     const playAudio = () => {
@@ -262,7 +313,96 @@ export default function ListeningPractice() {
         }
     };
 
-    // recordWrongAnswer 함수 제거 - listening/record API에서 자동 처리
+    // 단어 클릭 핸들러 (동음이의어 지원)
+    const handleWordClick = (word, event) => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        const cleanWord = word.toLowerCase().replace(/[^a-z]/g, '');
+        const wordDataArray = englishDict.get(cleanWord);
+
+        if (wordDataArray && wordDataArray.length > 0) {
+            setSelectedWord({
+                word: cleanWord,
+                definitions: wordDataArray
+            });
+            setWordPopupPosition({ x: event.clientX, y: event.clientY });
+        }
+    };
+
+    // 팝업 닫기
+    const closeWordPopup = () => {
+        setSelectedWord(null);
+        setWordPopupPosition(null);
+    };
+
+    // 영어와 한글을 분리하는 함수
+    const separateEnglishKorean = (text) => {
+        if (!text) return { english: '', korean: '' };
+
+        // 괄호 안의 내용 찾기: (내용)
+        const koreanMatches = text.match(/\([^)]+\)/g);
+        let english = text;
+        let korean = '';
+
+        if (koreanMatches) {
+            // 괄호 안의 내용 중 한글이 포함된 것만 필터링
+            const koreanParts = koreanMatches
+                .map(match => match.replace(/[()]/g, ''))
+                .filter(content => /[가-힣]/.test(content));
+
+            if (koreanParts.length > 0) {
+                korean = koreanParts.join(' ');
+                // 괄호와 그 안의 내용을 모두 제거하여 영어만 추출
+                english = text.replace(/\([^)]+\)/g, '').trim();
+            }
+        }
+        return { english: english.trim(), korean: korean.trim() };
+    };
+
+    // 텍스트를 클릭 가능한 단어들로 분할하는 함수
+    const renderClickableText = (text, className = "", showOnlyEnglish = false) => {
+        if (!text) return null;
+
+        // 영어와 한글 분리
+        const { english, korean } = separateEnglishKorean(text);
+        const textToRender = showOnlyEnglish ? english : text;
+
+
+        return textToRender.split(/(\w+)/).map((part, index) => {
+            const cleanPart = part.toLowerCase().replace(/[^a-z]/g, '');
+            const isWord = /^[a-zA-Z]+$/.test(part);
+            const wordDataArray = englishDict.get(cleanPart);
+            const hasTranslation = isWord && wordDataArray && wordDataArray.length > 0;
+
+            if (hasTranslation) {
+                return (
+                    <span
+                        key={index}
+                        className={`clickable-word ${className}`}
+                        onClick={(e) => handleWordClick(part, e)}
+                        style={{
+                            textDecoration: 'underline dotted',
+                            cursor: 'pointer',
+                            color: '#007bff',
+                            fontWeight: '500'
+                        }}
+                        title="클릭하여 뜻 보기"
+                    >
+                        {part}
+                    </span>
+                );
+            }
+            return <span key={index}>{part}</span>;
+        });
+    };
+
+    // 한글 번역만 표시하는 함수
+    const renderKoreanTranslation = (text) => {
+        if (!text) return null;
+        const { korean } = separateEnglishKorean(text);
+        return korean || null;
+    };
 
     const handleAnswerSelect = (option) => {
         if (showExplanation) return;
@@ -323,19 +463,78 @@ export default function ListeningPractice() {
             if (response.ok) {
                 console.log(`✅ [리스닝 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
                 console.log(`📝 [저장된 데이터] questionId: ${current.id}, level: ${level}, isCorrect: ${correct}`);
-                
-                // UI 상태 즉시 업데이트
-                setHistory(prev => {
-                    const newHistory = new Map(prev);
-                    newHistory.set(String(current.id), {
-                        questionId: current.id,
-                        isCorrect: correct,
-                        solvedAt: new Date().toISOString(),
-                        isCompleted: correct,
-                        attempts: 1
+
+                // 백엔드에서 최신 데이터 다시 가져오기
+                try {
+                    const historyResponse = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+                        method: 'GET',
+                        credentials: 'include'
                     });
-                    return newHistory;
-                });
+
+                    if (historyResponse.ok) {
+                        const historyResult = await historyResponse.json();
+                        console.log('🔄 [실시간 히스토리 업데이트] 최신 데이터:', historyResult);
+
+                        const historyMap = new Map();
+                        if (historyResult.data) {
+                            Object.entries(historyResult.data).forEach(([questionId, record]) => {
+                                let wrongData = record.wrongData;
+                                if (typeof wrongData === 'string') {
+                                    try {
+                                        wrongData = JSON.parse(wrongData);
+                                    } catch (e) {
+                                        wrongData = {};
+                                    }
+                                }
+
+                                historyMap.set(questionId, {
+                                    ...record,
+                                    questionId,
+                                    wrongData: wrongData
+                                });
+                            });
+                        }
+                        setHistory(historyMap);
+                        console.log('✅ [히스토리 즉시 업데이트 완료]', historyMap.size, '개 기록');
+                    }
+                } catch (historyError) {
+                    console.warn('히스토리 즉시 업데이트 실패:', historyError);
+
+                    // 폴백: UI 상태만 업데이트
+                    setHistory(prev => {
+                        const newHistory = new Map(prev);
+                        newHistory.set(String(current.id), {
+                            questionId: current.id,
+                            isCorrect: correct,
+                            solvedAt: new Date().toISOString(),
+                            isCompleted: correct,
+                            attempts: 1
+                        });
+                        return newHistory;
+                    });
+                }
+
+                // 모든 브라우저 스토리지 및 이벤트를 통한 강력한 업데이트 신호
+                try {
+                    const timestamp = Date.now().toString();
+
+                    // 모든 스토리지에 저장
+                    localStorage.setItem('wrongAnswersUpdated', timestamp);
+                    localStorage.setItem('listeningRecordUpdated', timestamp);
+                    localStorage.setItem('forceListeningRefresh', timestamp);
+                    sessionStorage.setItem('needsRefresh', 'true');
+                    sessionStorage.setItem('lastUpdated', timestamp);
+                    sessionStorage.setItem('listeningUpdated', timestamp);
+
+                    // 모든 이벤트 발생
+                    window.dispatchEvent(new CustomEvent('wrongAnswersUpdated', { detail: { timestamp } }));
+                    window.dispatchEvent(new CustomEvent('listeningRecordUpdated', { detail: { timestamp } }));
+                    window.dispatchEvent(new CustomEvent('forceListeningRefresh', { detail: { timestamp } }));
+
+                    console.log('🚀 [강제 업데이트 신호 전송 완료]', timestamp);
+                } catch (e) {
+                    console.warn('Storage update failed:', e);
+                }
             } else if (response.status === 401) {
                 console.log('📝 [비로그인 사용자] 리스닝 기록은 로그인 후 저장됩니다.');
             } else {
@@ -352,9 +551,11 @@ export default function ListeningPractice() {
             console.log(`✅ [리스닝 정답] ${level} - 문제 ${currentQuestion + 1} - 정답: ${correctAnswer}`);
         }
         // 오답노트 기록은 listening/record API에서 자동으로 처리되므로 별도 호출 불필요
-        
+
         setIsSubmitting(false);
         setShowExplanation(true);
+        setShowTranslation(true); // 문제 풀이 후 자동으로 번역 표시
+        setShowScript(true); // 정답 확인 후 스크립트 자동 표시
     };
 
     const handleNext = () => {
@@ -365,6 +566,7 @@ export default function ListeningPractice() {
             setIsCorrect(false);
             setShowScript(false); // 스크립트 숨기기
             setIsSubmitting(false); // 제출 상태 리셋
+            setShowTranslation(false); // 번역 숨기기
             
             // 오디오 정리
             if (currentAudio) {
@@ -383,6 +585,7 @@ export default function ListeningPractice() {
             setIsCorrect(false);
             setShowScript(false); // 스크립트 숨기기
             setIsSubmitting(false); // 제출 상태 리셋
+            setShowTranslation(false); // 번역 숨기기
             
             // 오디오 정리
             if (currentAudio) {
@@ -401,7 +604,8 @@ export default function ListeningPractice() {
         setScore(0);
         setCompletedQuestions(new Set());
         setShowScript(false); // 스크립트 숨기기
-        
+        setShowTranslation(false); // 번역 숨기기
+
         // 오디오 정리
         if (currentAudio) {
             currentAudio.pause();
@@ -455,9 +659,38 @@ export default function ListeningPractice() {
                 {/* Header */}
                 <div className="reading-header">
                     <div className="reading-header-top">
-                        <button 
+                        <button
                             className="btn btn-outline-secondary btn-sm"
-                            onClick={() => navigate(`/listening/list?level=${level}`)}
+                            onClick={() => {
+                                // 즉각 반영을 위한 다중 이벤트 발송
+                                const updateData = {
+                                    level: level,
+                                    timestamp: Date.now()
+                                };
+
+                                localStorage.setItem('englishListeningInstantUpdate', JSON.stringify(updateData));
+                                localStorage.setItem('wrongAnswersUpdated', updateData.timestamp.toString());
+                                localStorage.setItem('listeningRecordUpdated', updateData.timestamp.toString());
+                                localStorage.setItem('forceListeningRefresh', updateData.timestamp.toString());
+                                sessionStorage.setItem('needsRefresh', 'true');
+
+                                // Storage 이벤트 발송
+                                window.dispatchEvent(new StorageEvent('storage', {
+                                    key: 'englishListeningInstantUpdate',
+                                    newValue: JSON.stringify(updateData)
+                                }));
+                                window.dispatchEvent(new StorageEvent('storage', {
+                                    key: 'wrongAnswersUpdated',
+                                    newValue: updateData.timestamp.toString()
+                                }));
+                                window.dispatchEvent(new StorageEvent('storage', {
+                                    key: 'listeningRecordUpdated',
+                                    newValue: updateData.timestamp.toString()
+                                }));
+
+                                // 리딩과 동일한 방식으로 이동
+                                navigate(`/listening/list?level=${level}`);
+                            }}
                             title="문제 목록으로 돌아가기"
                         >
                             ← 뒤로가기
@@ -542,7 +775,21 @@ export default function ListeningPractice() {
                             <div className="script-dropdown">
                                 <div className="script-content">
                                     <h6>📝 스크립트:</h6>
-                                    <p className="script-text">{current.script}</p>
+                                    <div className="script-text">
+                                        {renderClickableText(current.script, "", true)}
+                                    </div>
+                                    {showTranslation && renderKoreanTranslation(current.script) && (
+                                        <div className="translation-text" style={{
+                                            marginTop: '8px',
+                                            padding: '8px',
+                                            backgroundColor: '#e8f4f8',
+                                            borderLeft: '4px solid #17a2b8',
+                                            fontSize: '14px',
+                                            color: '#0c5460'
+                                        }}>
+                                            <strong>번역:</strong> {renderKoreanTranslation(current.script)}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         )}
@@ -550,7 +797,21 @@ export default function ListeningPractice() {
 
                     <div className="question-section">
                         <h5 className="question-title">❓ 문제</h5>
-                        <p className="question-text">{current.question}</p>
+                        <p className="question-text">
+                            {renderClickableText(current.question, "", true)}
+                        </p>
+                        {showTranslation && renderKoreanTranslation(current.question) && (
+                            <div className="translation-text" style={{
+                                marginTop: '8px',
+                                padding: '8px',
+                                backgroundColor: '#e8f4f8',
+                                borderLeft: '4px solid #17a2b8',
+                                fontSize: '14px',
+                                color: '#0c5460'
+                            }}>
+                                <strong>번역:</strong> {renderKoreanTranslation(current.question)}
+                            </div>
+                        )}
 
                         <div className="options-grid">
                             {Object.entries(current.options).map(([key, value]) => (
@@ -569,8 +830,35 @@ export default function ListeningPractice() {
                                     }`}
                                     onClick={() => handleAnswerSelect(key)}
                                     disabled={showExplanation}
+                                    style={{
+                                        fontSize: '1.2rem',
+                                        fontWeight: 'bold',
+                                        padding: '1rem',
+                                        textAlign: 'left'
+                                    }}
                                 >
-                                    <span className="option-letter">{key}</span>
+                                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: showExplanation ? '8px' : '0' }}>
+                                            <span className="option-letter" style={{ marginRight: '10px' }}>{key}.</span>
+                                            {showExplanation && (
+                                                <span className="option-text">
+                                                    {renderClickableText(value, "", true)}
+                                                </span>
+                                            )}
+                                        </div>
+                                        {showExplanation && renderKoreanTranslation(value) && (
+                                            <div style={{
+                                                fontSize: '14px',
+                                                color: '#0c5460',
+                                                backgroundColor: '#e8f4f8',
+                                                padding: '4px 8px',
+                                                borderRadius: '4px',
+                                                marginLeft: '30px'
+                                            }}>
+                                                {renderKoreanTranslation(value)}
+                                            </div>
+                                        )}
+                                    </div>
                                 </button>
                             ))}
                         </div>
@@ -663,6 +951,16 @@ export default function ListeningPractice() {
                     </div>
                 )}
             </div>
+
+            {/* 영어 단어 팝업 */}
+            {selectedWord && wordPopupPosition && (
+                <EnglishWordPopup
+                    word={selectedWord.word}
+                    definitions={selectedWord.definitions}
+                    position={wordPopupPosition}
+                    onClose={closeWordPopup}
+                />
+            )}
         </main>
     );
 }

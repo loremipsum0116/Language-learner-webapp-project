@@ -1,0 +1,300 @@
+ID: 1
+Passage: Dear Mr. Harrison, I am writing to express my interest in the Marketing Assistant position advertised on your company's website. I have recently graduated with a degree in Marketing and have six months of internship experience at a digital marketing agency. I am confident that my skills in social media management and content creation would be a valuable asset to your team. My resume is attached for your review. Thank you for your time and consideration. Sincerely, Jane Doe.
+--------------------------------------------------------------------------------
+ID: 2
+Passage: I've just returned from a week-long hiking trip in the Andes. The scenery was absolutely breathtaking, but it was physically challenging. The high altitude made it difficult to breathe, and we had to walk for several hours each day. Despite the difficulties, reaching the mountain peak was one of the most rewarding experiences of my life. I would recommend it to anyone who is physically fit and loves adventure.
+--------------------------------------------------------------------------------
+ID: 3
+Passage: Our local community center is organizing a fundraising event to build a new playground for children. The event will take place next Saturday and will include a bake sale, live music, and games. All profits will go directly to the playground fund. We are also looking for volunteers to help on the day of the event. Please contact us if you are interested.
+--------------------------------------------------------------------------------
+ID: 4
+Passage: I recently read a fascinating book about the history of chocolate. I learned that it was first used as a bitter drink by the Mayans and Aztecs, not as a sweet treat. It was only after it was brought to Europe and mixed with sugar that it became the popular sweet we know today. The book was full of such interesting facts.
+--------------------------------------------------------------------------------
+ID: 5
+Passage: Many cities around the world are encouraging citizens to use public transportation instead of private cars. This is to reduce traffic congestion and air pollution. Some cities offer cheaper fares, while others are improving the comfort and frequency of buses and trains. It is hoped that these measures will make public transport a more attractive option.
+--------------------------------------------------------------------------------
+ID: 6
+Passage: I have decided to adopt a healthier lifestyle. I've started by cutting down on fast food and sugary drinks. I am also trying to cook my own meals more often, using fresh ingredients. Furthermore, I've joined a local gym and I plan to go at least three times a week. It's not easy, but I already feel more energetic.
+--------------------------------------------------------------------------------
+ID: 7
+Passage: The museum has a new exhibition on ancient Egypt. It features over 200 artifacts, including jewelry, pottery, and a real mummy sarcophagus. The exhibition explains the ancient Egyptians' beliefs about life after death. It is a very popular exhibition, so it is recommended to book tickets online in advance to avoid long queues.
+--------------------------------------------------------------------------------
+ID: 8
+Passage: My friend and I are starting a small online business. We are going to sell handmade jewelry. I am responsible for designing and making the jewelry, while my friend will manage the website and social media. We are both excited and a little nervous about this new venture.
+--------------------------------------------------------------------------------
+ID: 9
+Passage: Due to unforeseen maintenance work, the main library will be closed to the public this weekend, from Saturday to Sunday. We apologize for any inconvenience this may cause. The library will reopen as usual on Monday morning at 9 a.m. Any books due for return this weekend can be returned by next Wednesday without any penalty.
+--------------------------------------------------------------------------------
+ID: 10
+Passage: Learning to play a musical instrument as an adult can be challenging, but it is definitely possible. The key is to be patient and consistent. It's better to practice for 15 minutes every day than for two hours once a week. Finding a good teacher can also make a big difference. Don't be afraid to make mistakes; they are part of the learning process.
+--------------------------------------------------------------------------------
+ID: 11
+Passage: I recently watched a documentary about the effects of plastic pollution on our oceans. It was shocking to see how much plastic waste ends up in the sea, harming marine animals. The film encouraged viewers to take action by reducing their own plastic use. Since watching it, I have been making a conscious effort to use less plastic in my daily life.
+--------------------------------------------------------------------------------
+ID: 12
+Passage: My company has a flexible working policy. This means I can choose my own start and finish times, as long as I work a total of eight hours a day. I usually start early, at 7:30 a.m., so I can finish early and avoid the evening traffic jam. This policy has greatly improved my work-life balance.
+--------------------------------------------------------------------------------
+ID: 13
+Passage: I'm not a big fan of modern art. I often find it difficult to understand what the artist is trying to say. I prefer more traditional art, like realistic portraits and landscape paintings. I can appreciate the skill and detail that goes into that kind of work.
+--------------------------------------------------------------------------------
+ID: 14
+Passage: Our city is hosting an international food festival this weekend. There will be stalls from over 30 different countries, offering traditional dishes. It's a great opportunity to taste food from around the world without having to travel. There will also be live music and dance performances from various cultures.
+--------------------------------------------------------------------------------
+ID: 15
+Passage: I've been trying to improve my English speaking skills. I found a language exchange partner online. She is a native English speaker who wants to learn my language. We have a video call once a week. We speak in English for half an hour, and then in my language for half an hour. It's been very helpful.
+--------------------------------------------------------------------------------
+ID: 16
+Passage: The new city library is an amazing building. It's not just a place for books; it's a community hub. It has a café, a children's play area, and free computer access for everyone. They also host workshops and events, like author talks and coding classes for teenagers. It's a wonderful resource for the whole community.
+--------------------------------------------------------------------------------
+ID: 17
+Passage: I used to be afraid of dogs because I was bitten by one when I was a small child. For years, I would get nervous whenever a dog came near me. However, my friend got a puppy last year, and spending time with it has helped me overcome my fear. Now, I find dogs to be friendly and loyal companions.
+--------------------------------------------------------------------------------
+ID: 18
+Passage: This is a reminder to all employees that the company's annual charity run is next Sunday. The run is 5km long and will take place in the city park. Even if you are not a runner, you can participate by walking or by volunteering to help at the event. All money raised will be donated to the local children's hospital.
+--------------------------------------------------------------------------------
+ID: 19
+Passage: I decided to take up photography as a hobby. I bought a second-hand camera and started taking pictures of things I find interesting in my daily life, like street art, old buildings, and people's expressions. It has taught me to pay more attention to the world around me and to see beauty in small details.
+--------------------------------------------------------------------------------
+ID: 20
+Passage: My city has a great bike-sharing system. You can rent a bike from hundreds of stations around the city and return it to any other station. It's cheap and a great way to get some exercise while you travel. It's especially useful for short trips where a bus or train might be inconvenient.
+--------------------------------------------------------------------------------
+ID: 21
+Passage: I'm a volunteer guide at the local art gallery. On weekends, I give tours and explain the history and meaning behind some of the artworks. I enjoy it because I get to share my passion for art with others. It's also a great way to keep learning, as I always have to research the artists and their works.
+--------------------------------------------------------------------------------
+ID: 22
+Passage: I've been trying meditation for the past month. I do it for ten minutes every morning before I start my day. I use an app that guides me through the process. It helps me to feel calmer and more focused. I find that my days are less stressful when I start them with meditation.
+--------------------------------------------------------------------------------
+ID: 23
+Passage: My brother is a terrible driver. He drives too fast and often doesn't pay attention to other cars. I feel very nervous whenever I am in the car with him. I have told him he needs to be more careful, but he doesn't seem to listen.
+--------------------------------------------------------------------------------
+ID: 24
+Passage: Our school cafeteria has changed its menu. They are now offering healthier options, such as salads, whole-wheat sandwiches, and fresh fruit. They have also removed sugary drinks and fried food. I think it's a great change, although some of my friends miss the old menu.
+--------------------------------------------------------------------------------
+ID: 25
+Passage: I work as a journalist. My job involves researching stories, interviewing people, and writing articles. It can be a stressful job with tight deadlines, but it's also very exciting. I get to learn about new things every day and meet many interesting people. No two days are ever the same.
+--------------------------------------------------------------------------------
+ID: 26
+Passage: I am not a fan of reality TV shows. I find them to be unrealistic and often quite silly. The people on them seem to argue all the time. I prefer watching well-written dramas or interesting documentaries instead.
+--------------------------------------------------------------------------------
+ID: 27
+Passage: I recently took a train journey across my country. The journey lasted three days. I had a small sleeping cabin on the train. It was wonderful to watch the landscape change outside my window, from mountains to forests and finally to the coast. It was a much more interesting way to travel than flying.
+--------------------------------------------------------------------------------
+ID: 28
+Passage: My local cinema is very old and beautiful. It's not a modern multiplex; it's a single-screen cinema that has been open for over 80 years. It has comfortable velvet seats and shows a mix of classic films and new independent movies. I love the atmosphere there.
+--------------------------------------------------------------------------------
+ID: 29
+Passage: I have a terrible memory for names. When I meet someone new, I often forget their name just a few minutes later. It can be quite embarrassing. I have tried different techniques, like repeating the name out loud, but nothing seems to work very well.
+--------------------------------------------------------------------------------
+ID: 30
+Passage: To celebrate my parents' 30th wedding anniversary, my brother and I are planning a special dinner for them. We have booked a table at their favorite restaurant. We have also secretly invited some of their close friends and family to join us. We hope it will be a wonderful surprise for them.
+--------------------------------------------------------------------------------
+ID: 31
+Passage: I've started a small vegetable garden on my balcony. It's not very big, but I've managed to grow some tomatoes, herbs, and lettuce. It's very satisfying to cook with ingredients that I've grown myself. It requires daily watering and care, but it's a relaxing activity after a long day at work. My friends are always impressed when I serve them a salad with my own fresh lettuce.
+--------------------------------------------------------------------------------
+ID: 32
+Passage: Last week, my manager asked me to lead a project for the first time. I was nervous because it was a big responsibility, and I had to coordinate with colleagues from different departments. There were a few challenges, especially with communication, but we managed to complete the project successfully. My manager was very pleased with the result, and I feel much more confident in my abilities now.
+--------------------------------------------------------------------------------
+ID: 33
+Passage: I recently signed up for a cookery course that focuses on Italian cuisine. Every Tuesday evening, we learn to make a different dish, from fresh pasta to tiramisu. The instructor is from Rome and she shares a lot of interesting stories about Italian food culture. I've met some nice people in the class, and we often practice the recipes at home. It's a fun and delicious way to spend an evening.
+--------------------------------------------------------------------------------
+ID: 34
+Passage: My city has recently introduced electric scooters as a new form of public transport. You can find them on almost every street corner and rent them using a smartphone app. They are convenient for short distances and are better for the environment than cars. However, some people are concerned about safety, as riders often don't wear helmets and ride on the pavement.
+--------------------------------------------------------------------------------
+ID: 35
+Passage: I'm trying to reduce the amount of waste I produce. I've started carrying a reusable coffee cup and a water bottle with me everywhere. I also try to buy products with less plastic packaging. It's a small change, but if everyone did it, it could make a big difference to our planet. My next step is to try composting my food waste.
+--------------------------------------------------------------------------------
+ID: 36
+Passage: My friend is moving to another country for a new job. We decided to throw a surprise farewell party for her. We invited all her close friends and cooked her favorite dishes. When she walked in and saw everyone, she was so surprised and happy that she started to cry. It was a very emotional evening, but we were all glad to have a chance to say goodbye properly.
+--------------------------------------------------------------------------------
+ID: 37
+Passage: I work from home two days a week. At first, I found it difficult to concentrate with all the distractions at home. But now I have a dedicated workspace in a quiet room, and I stick to a regular schedule, just like in the office. The best part is that I save an hour on commuting, which gives me more time for my hobbies.
+--------------------------------------------------------------------------------
+ID: 38
+Passage: I've been using a new fitness app on my phone. It tracks my daily steps, calories burned, and even my sleep patterns. It also suggests different exercises and healthy recipes. Seeing my progress every day is very motivating. It feels like having a personal trainer in my pocket. I've definitely become more active since I started using it.
+--------------------------------------------------------------------------------
+ID: 39
+Passage: Our flight was delayed by four hours due to bad weather. The airline gave us vouchers for food and drinks at the airport café, which was nice of them. However, it was very boring waiting at the gate with nothing to do. I tried to read a book, but it was too noisy to concentrate. We were all very relieved when we were finally able to board the plane.
+--------------------------------------------------------------------------------
+ID: 40
+Passage: I prefer shopping for clothes in physical stores rather than online. I like to be able to touch the fabric and try things on to see how they fit. Online, the colors can look different from the real product, and it's always a hassle to return items that don't fit. For me, the experience of walking around a shop is also more enjoyable.
+--------------------------------------------------------------------------------
+ID: 41
+Passage: Last weekend, I visited a castle in the countryside. It was built in the 15th century and has a very rich history. We took a guided tour and the guide told us fascinating stories about the kings and queens who lived there. The view from the top of the main tower was incredible. It was like stepping back in time for a day.
+--------------------------------------------------------------------------------
+ID: 42
+Passage: I have a part-time job as a waiter in a busy restaurant. It's a physically demanding job as I'm on my feet for hours. I also have to deal with difficult customers sometimes. However, my colleagues are very friendly and supportive, and we work well as a team. The tips are also a nice bonus. It's taught me a lot about patience and communication.
+--------------------------------------------------------------------------------
+ID: 43
+Passage: I'm thinking of redecorating my living room. The walls are a boring white color, and the furniture is old. I want to paint the walls a warm, light blue color and buy a new, more comfortable sofa. I've been looking for ideas in interior design magazines and websites. I want to create a cozy and relaxing space.
+--------------------------------------------------------------------------------
+ID: 44
+Passage: Every year, my town holds a winter festival. The main attraction is the outdoor ice-skating rink in the town square. There are also stalls selling hot chocolate and local crafts. This year, they added a small concert stage with live music in the evenings. It brings the whole community together and creates a wonderful, festive atmosphere.
+--------------------------------------------------------------------------------
+ID: 45
+Passage: I've decided to learn Spanish. I think it's a beautiful language, and it will be useful for my travels in the future. I'm using a language app to learn vocabulary and grammar, and I watch Spanish movies with subtitles to improve my listening skills. My goal is to be able to have a simple conversation by the end of the year.
+--------------------------------------------------------------------------------
+ID: 46
+Passage: I'm not very good at saving money. I tend to spend too much on things I don't really need, like clothes and eating out. I've decided to make a monthly budget to track my income and expenses. I hope this will help me to see where my money is going and to start saving for a holiday next year.
+--------------------------------------------------------------------------------
+ID: 47
+Passage: My sister and I look very different. She has dark, curly hair and brown eyes, while I have straight, blond hair and blue eyes. People are often surprised to find out that we are sisters. However, we have very similar personalities. We are both outgoing and love to laugh.
+--------------------------------------------------------------------------------
+ID: 48
+Passage: The city council has decided to make the main shopping street a pedestrian-only zone. This means no cars will be allowed on this street from 10 a.m. to 8 p.m. The aim is to make the area safer and more pleasant for shoppers. Some shop owners are worried it might reduce the number of customers, but most residents support the idea.
+--------------------------------------------------------------------------------
+ID: 49
+Passage: I find it very difficult to wake up early in the morning. I'm definitely not a morning person. I usually press the snooze button on my alarm clock several times. By the time I finally get out of bed, I often have to rush to get ready for work. I wish I could be one of those people who wake up early and go for a run.
+--------------------------------------------------------------------------------
+ID: 50
+Passage: I went to a concert last night to see my favorite band. The music was fantastic and the band had so much energy. The atmosphere in the crowd was amazing; everyone was singing and dancing together. It was so loud that my ears were ringing afterwards, but it was totally worth it. It was one of the best live shows I've ever seen.
+--------------------------------------------------------------------------------
+ID: 51
+Passage: My new apartment has a small gym in the basement, which is free for all residents. I've started going there after work. It's much more convenient than traveling to a separate gym, and it saves me money on a membership fee. It's not very big, but it has all the basic equipment I need for a good workout.
+--------------------------------------------------------------------------------
+ID: 52
+Passage: I'm taking a short course on digital photography. I've learned about things like aperture, shutter speed, and composition. Before, I just used to point my camera and shoot in automatic mode. Now, I have more control over my pictures, and I think their quality has improved a lot. The course has made me see the world in a more creative way.
+--------------------------------------------------------------------------------
+ID: 53
+Passage: I tried to bake a cake for my friend's birthday, but it was a complete disaster. I think I used salt instead of sugar by mistake. The cake didn't rise properly, and it tasted terrible. We all had a good laugh about it, and we ended up eating ice cream instead. Next time, I think I'll just buy a cake from the bakery.
+--------------------------------------------------------------------------------
+ID: 54
+Passage: For our team-building day at work, we went to an escape room. We were locked in a themed room and had to solve a series of puzzles and find clues to get out within an hour. It was quite challenging and required a lot of teamwork and communication. We managed to escape with just a few minutes to spare. It was a really fun and different way to bond with colleagues.
+--------------------------------------------------------------------------------
+ID: 55
+Passage: I volunteer at an animal shelter on Saturdays. My main job is to walk the dogs and clean their living areas. Sometimes I also help with feeding. It's sad to see so many animals without a home, but it's rewarding to give them some care and attention. My favorite part is seeing a dog get adopted and go to a loving new family.
+--------------------------------------------------------------------------------
+ID: 56
+Passage: I recently took up cycling as a way to stay fit. I bought a second-hand bike and started with short rides around my neighborhood. Now, I can cycle for over an hour without getting too tired. On weekends, I like to explore the cycling paths along the river. It's a great way to get some exercise and enjoy the fresh air at the same time.
+--------------------------------------------------------------------------------
+ID: 57
+Passage: My local library is running a 'book blind date' event. You choose a book that is wrapped in brown paper, so you can't see the cover or title. There are only a few words written on the front to give you a hint, like 'a magical adventure' or 'a thrilling mystery'. I picked one up today. It's an exciting way to discover new authors and genres that I wouldn't normally choose.
+--------------------------------------------------------------------------------
+ID: 58
+Passage: I'm not a very patient person, so I find waiting in long queues very annoying. Whether it's at the supermarket, the bank, or the post office, I always get frustrated. I usually try to listen to music or a podcast on my phone to make the time pass more quickly, but I still wish things could be more efficient.
+--------------------------------------------------------------------------------
+ID: 59
+Passage: My parents own a small café in our town. I often help them out on weekends. I take orders, serve customers, and sometimes help with washing the dishes. It's hard work, but I enjoy the busy atmosphere and talking to the regular customers. It has taught me the importance of good customer service.
+--------------------------------------------------------------------------------
+ID: 60
+Passage: I've always wanted to see the Northern Lights. I've seen so many beautiful photos and videos of them. This year, I'm finally planning a trip to Norway in the winter, which is one of the best places to see them. I know there's no guarantee, as it depends on the weather and solar activity, but I'm keeping my fingers crossed. It would be a dream come true.
+--------------------------------------------------------------------------------
+ID: 61
+Passage: I had to give a presentation at a conference last month. I was extremely nervous beforehand because I'm not comfortable with public speaking. I practiced my speech many times in front of a mirror and with my family. On the day, my hands were shaking, but once I started talking, I felt more relaxed. The audience asked some interesting questions at the end, and I received positive feedback. It was a great experience for my confidence.
+--------------------------------------------------------------------------------
+ID: 62
+Passage: My friend is very adventurous with food. He loves trying new and unusual dishes from different countries. Last night, he took me to a restaurant that serves traditional Ethiopian food. We ate with our hands, using a special type of bread to pick up the food. I was hesitant at first, but it was surprisingly delicious. I'm glad I tried something new.
+--------------------------------------------------------------------------------
+ID: 63
+Passage: I commute to work by train every day, and the journey takes about 45 minutes. I used to find it boring, but now I use the time productively. I listen to educational podcasts or read books on my e-reader. Sometimes, I just look out the window and relax. It has become a part of my day that I actually enjoy, a time for myself before the busy workday begins.
+--------------------------------------------------------------------------------
+ID: 64
+Passage: I'm becoming more careful about my privacy online. I recently reviewed the privacy settings on my social media accounts and made my profile visible only to my friends. I also try to avoid using public Wi-Fi for sensitive transactions like online banking. It's important to be aware of how much personal information we share online.
+--------------------------------------------------------------------------------
+ID: 65
+Passage: After months of consideration, my family decided to adopt a cat from a local shelter. We chose a quiet, two-year-old cat named Luna. The first few days, she was very shy and hid under the sofa. We gave her space and spoke to her gently. Slowly, she started to trust us. Now, she is a playful and affectionate member of our family. Adopting her was one of the best decisions we've made.
+--------------------------------------------------------------------------------
+ID: 66
+Passage: My new neighbor plays loud music late at night, which makes it difficult for me to sleep. I didn't want to cause any trouble, so I tried to ignore it at first. But after a few sleepless nights, I decided I had to do something. I went over yesterday and politely explained the situation. He was very apologetic and said he didn't realize how loud it was. He promised to be more considerate in the future.
+--------------------------------------------------------------------------------
+ID: 67
+Passage: I'm learning to drive. I'm taking lessons with an instructor twice a week. I've mastered the basics, but I still get nervous in heavy traffic. My instructor says that confidence comes with practice. My driving test is next month, and I'm studying the traffic rules every evening. I'm both excited and scared about the test.
+--------------------------------------------------------------------------------
+ID: 68
+Passage: I love visiting the street market in my city on Saturday mornings. It's full of life and color. You can buy fresh, local vegetables, handmade cheeses, and beautiful flowers. I enjoy talking to the farmers and producers. The prices are often better than in the supermarket, and the quality is excellent. It's a great way to support local businesses.
+--------------------------------------------------------------------------------
+ID: 69
+Passage: Reading is more than just a hobby for me; it's a way to relax and learn. When I read a good novel, I can escape to a different world and forget about my daily stress. When I read non-fiction, I learn new facts and broaden my understanding of the world. A good book is like a good friend.
+--------------------------------------------------------------------------------
+ID: 70
+Passage: I forgot the password for my online banking account. I tried a few different combinations that I thought were correct, but none of them worked. After three failed attempts, my account was locked for security reasons. I had to call the bank's customer service helpline. They asked me some security questions to verify my identity and then helped me to reset my password. It was a bit of a hassle, but I'm glad their security is so thorough.
+--------------------------------------------------------------------------------
+ID: 71
+Passage: My brother's 30th birthday is next month, and I'm planning a surprise party for him. I've created a secret group chat with his friends to coordinate everything. I've booked his favorite restaurant and I'm going to order a special cake. The hardest part is keeping it a secret from him, as we live together. I have to be very careful not to say anything by mistake.
+--------------------------------------------------------------------------------
+ID: 72
+Passage: We had a power cut in our neighborhood last night. It happened suddenly around 8 p.m. All the lights went out, and the TV and Wi-Fi stopped working. It was strange to have the house in complete darkness and silence. My family and I lit some candles and sat in the living room, just talking. It was actually quite nice to be disconnected from technology and spend some quality time together. The power came back on after about two hours.
+--------------------------------------------------------------------------------
+ID: 73
+Passage: I decided to do a 'digital detox' last weekend. This meant no smartphone, no laptop, and no social media for two whole days. On Saturday, I went for a long walk in the park and read a book. On Sunday, I cooked a nice meal and met up with a friend for coffee. I realized how much time I usually spend staring at screens. I felt much more relaxed and present in the moment. I'm going to try to do it once a month.
+--------------------------------------------------------------------------------
+ID: 74
+Passage: I had a dental check-up yesterday. I'm always a bit nervous about going to the dentist, but I know it's important for my health. The dentist was very friendly and explained everything she was doing. Luckily, everything was fine, and I just needed a routine cleaning. She reminded me about the importance of flossing daily. I felt relieved when I left.
+--------------------------------------------------------------------------------
+ID: 75
+Passage: I used to think that sleeping was a waste of time, so I would often stay up late to study or watch movies. As a result, I was always tired during the day and found it hard to concentrate. I've recently started making sure I get at least seven hours of sleep per night. The difference is amazing. I have more energy, I can focus better at work, and I'm in a much better mood.
+--------------------------------------------------------------------------------
+ID: 76
+Passage: I lost my wallet yesterday while I was out shopping. I didn't realize it was gone until I got home. I was very worried because it had my credit cards and ID in it. I went back to all the shops I had visited, but no one had seen it. This morning, I got a call from a woman who had found it on the street. Nothing was missing. I was so grateful and relieved. It restored my faith in the kindness of strangers.
+--------------------------------------------------------------------------------
+ID: 77
+Passage: Moving to a new city for my job was a big change. For the first few months, I felt quite lonely as I didn't know anyone. I decided to make an effort to be more social. I joined a local hiking club and a language class. It was a great way to meet people who share similar interests. I've made some good friends now, and the city is starting to feel like home.
+--------------------------------------------------------------------------------
+ID: 78
+Passage: I had a job interview this morning for a position I'm really excited about. I spent the last few days researching the company and preparing answers to common interview questions. I think the interview went quite well. The interviewers were friendly, and I felt I was able to communicate my skills and experience effectively. They said they would let me know their decision by the end of the week. Now, all I can do is wait and hope for the best.
+--------------------------------------------------------------------------------
+ID: 79
+Passage: My friends and I went to see a new superhero movie that everyone has been talking about. We were all very excited. However, I found it quite disappointing. The plot was very predictable, and the special effects weren't as impressive as I had expected. My friends seemed to enjoy it, but I thought it was just another generic action movie.
+--------------------------------------------------------------------------------
+ID: 80
+Passage: I've started a new morning routine, and it has made a big difference to my day. I wake up 30 minutes earlier than before. I spend about 15 minutes doing some light stretching and meditation, and then I enjoy a cup of coffee while reading the news. This quiet time helps me to start the day feeling calm and prepared, instead of rushing out the door in a panic.
+--------------------------------------------------------------------------------
+ID: 81
+Passage: Yesterday, I visited the city's botanical garden for the first time. I was amazed by the variety of plants and flowers from all over the world. There was a huge glasshouse with tropical plants and a beautiful Japanese garden with a pond. It was so peaceful to walk around and enjoy the nature. It's a perfect place to escape the noise and stress of the city.
+--------------------------------------------------------------------------------
+ID: 82
+Passage: I have a colleague at work who is often very negative. He complains about everything - the company, the managers, the coffee. It can be very draining to be around that kind of energy. I try to be polite but I also try to limit my interactions with him. I prefer to focus on the positive aspects of my job and stay motivated.
+--------------------------------------------------------------------------------
+ID: 83
+Passage: I'm trying to learn how to play the guitar. I bought one a few months ago and I've been watching online tutorials. It's much harder than I thought. My fingers hurt from pressing the strings, and it's difficult to switch between chords smoothly. But when I manage to play a short piece of a song correctly, it feels amazing. I know I just need to be patient and keep practicing.
+--------------------------------------------------------------------------------
+ID: 84
+Passage: My neighborhood has an annual street fair in the summer. The main road is closed to traffic, and it's filled with food stalls, craft vendors, and games for kids. There's a real sense of community as everyone comes out to enjoy the day. My favorite part is the dog show, where local residents show off their pets. It's a simple, happy event that I look forward to every year.
+--------------------------------------------------------------------------------
+ID: 85
+Passage: I have a complicated relationship with social media. On one hand, it's a great way to stay in touch with friends and family who live far away. On the other hand, I find that I spend too much time scrolling through feeds, and it can sometimes make me feel like my own life is not as exciting as others'. I'm trying to find a healthier balance and use it more mindfully.
+--------------------------------------------------------------------------------
+ID: 86
+Passage: For my last birthday, my grandmother gave me a very special gift. It was a photo album that she had made herself. It was filled with pictures of me from when I was a baby until now. She had written little notes next to each photo, sharing memories. It's not an expensive gift, but it's the most thoughtful and meaningful present I have ever received.
+--------------------------------------------------------------------------------
+ID: 87
+Passage: My partner and I decided to paint our kitchen ourselves to save money. We thought it would be an easy weekend job. We were wrong. Preparing the walls took much longer than we expected, and we accidentally spilled some paint on the floor. It was a stressful experience, and the final result is not perfect, but we feel proud that we did it ourselves. Next time, however, we might hire a professional.
+--------------------------------------------------------------------------------
+ID: 88
+Passage: I've been going to a yoga class for about six months. It's not just about physical exercise; it's also about calming the mind. The breathing exercises help me to feel less stressed. Physically, I feel much more flexible and my back pain has improved. It's a great way to take care of both my body and mind.
+--------------------------------------------------------------------------------
+ID: 89
+Passage: I was in a cafe yesterday and I saw a man who looked exactly like a famous actor. I was too shy to go and talk to him, so I discreetly took a photo to show my friends. Later, I looked at the actor's social media and saw that he was in a different country that day. It was just someone who looked very similar. I felt a bit silly, but it was a funny story to tell my friends.
+--------------------------------------------------------------------------------
+ID: 90
+Passage: Last summer, my friends and I rented a small cabin in the mountains for a week. We spent our days hiking and exploring the beautiful scenery. In the evenings, we cooked together and played board games. There was no Wi-Fi or phone signal, which was strange at first, but it was great to disconnect and just enjoy each other's company. It was one of the most relaxing holidays I've ever had.
+--------------------------------------------------------------------------------
+ID: 91
+Passage: I was supposed to fly to Berlin for a business meeting tomorrow. However, this morning my boss called me to say the meeting has been postponed for two weeks. I had already packed my suitcase and arranged for a taxi to the airport. It's a bit inconvenient to change all my plans, but on the bright side, it gives me more time to prepare for the meeting.
+--------------------------------------------------------------------------------
+ID: 92
+Passage: My first job was working in a bookshop during the summer holidays when I was 17. I was responsible for putting books on the shelves and helping customers. I was very nervous at first, but my manager was very kind and patient. I learned a lot about responsibility and how to talk to different kinds of people. It wasn't well-paid, but it was a valuable experience.
+--------------------------------------------------------------------------------
+ID: 93
+Passage: Our family went to the science museum last weekend. It was much more fun than I expected. There were lots of interactive exhibits where you could press buttons and conduct small experiments. My kids particularly enjoyed the section about space, with a model of the solar system. It was a great way to learn about science in a hands-on way, for both children and adults.
+--------------------------------------------------------------------------------
+ID: 94
+Passage: I'm taking an online course in graphic design. The main advantage is the flexibility; I can study whenever I have free time. However, I sometimes miss the experience of a real classroom. It's harder to ask the teacher a quick question, and I don't have the chance to discuss ideas with other students. It requires a lot of self-discipline to stay on track.
+--------------------------------------------------------------------------------
+ID: 95
+Passage: I still remember my high school history teacher, Mr. Evans. He didn't just make us memorize dates and names. He told history like a series of fascinating stories, which made the subject come alive. He encouraged us to ask questions and think critically about the past. He had a real passion for his subject, and that passion was infectious. He is the reason I decided to study history at university.
+--------------------------------------------------------------------------------
+ID: 96
+Passage: My best friend moved to Australia two years ago. It's been hard being so far apart. We try to have a video call every week, but the time difference makes it difficult to schedule. We send each other messages and photos, but it's not the same as meeting for a coffee and a chat. Despite the distance, we are still very close, but it requires effort from both of us.
+--------------------------------------------------------------------------------
+ID: 97
+Passage: On my last holiday, the airline lost my luggage. I arrived in Rome, but my suitcase didn't. I had to spend the first two days of my trip wearing the same clothes and buying essential things like a toothbrush. The airline staff were helpful, and they finally delivered my suitcase to my hotel on the third day. It was a stressful start to the holiday, but I didn't let it ruin my trip.
+--------------------------------------------------------------------------------
+ID: 98
+Passage: I've recently discovered the joy of birdwatching. I bought a pair of binoculars and a guidebook. I just sit in my local park and try to identify the different birds I see. It's a very calm and peaceful hobby. It has taught me to be more patient and observant. I get genuinely excited when I spot a bird that I haven't seen before.
+--------------------------------------------------------------------------------
+ID: 99
+Passage: I was having a really bad day yesterday. I missed my bus, I was late for work, and I had a headache. In the afternoon, I went to a coffee shop. When I went to pay, the person in front of me in the queue had already paid for my coffee. He just smiled and said, 'Pass it on.' This small act of kindness from a stranger completely changed my mood. It was a lovely reminder that there is a lot of good in the world.
+--------------------------------------------------------------------------------
+ID: 100
+Passage: I recently found an old certificate from a swimming competition I won when I was ten. I remember being so proud of that achievement. I had practiced for months, getting up early before school to go to the pool. It wasn't just about winning; it was about setting a goal and working hard to achieve it. Looking at the certificate reminded me that with dedication, I can achieve things that seem difficult at first.
+--------------------------------------------------------------------------------

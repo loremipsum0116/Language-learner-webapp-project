@@ -1,33 +1,33 @@
 [
     {
         "id": "A1_L_001",
-        "topic": "Greeting",
-        "script": "A: Hi, how are you? B: I'm fine, thank you. And you?",
-        "question": "What does person B say?",
+        "topic": "Greeting (인사)",
+        "script": "A: Hi, how are you? (안녕하세요, 어떻게 지내세요?) B: I'm fine, thank you. And you? (저는 잘 지내요, 고마워요. 당신은요?)",
+        "question": "What does person B say? (B는 뭐라고 말하나요?)",
         "options": {
-            "A": "I'm fine, thank you.",
-            "B": "My name is John.",
-            "C": "I am a student."
+            "A": "I'm fine, thank you. (저는 잘 지내요, 고마워요.)",
+            "B": "My name is John. (제 이름은 존입니다.)",
+            "C": "I am a student. (저는 학생입니다.)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_002",
-        "topic": "Introducing Yourself",
-        "script": "My name is Sarah. I am from Canada.",
-        "question": "Where is Sarah from?",
+        "topic": "Introducing Yourself (자기소개)",
+        "script": "My name is Sarah. I am from Canada. (제 이름은 사라입니다. 저는 캐나다에서 왔어요.)",
+        "question": "Where is Sarah from? (사라는 어디 출신인가요?)",
         "options": {
-            "A": "The USA",
-            "B": "Australia",
-            "C": "Canada"
+            "A": "The USA (미국)",
+            "B": "Australia (호주)",
+            "C": "Canada (캐나다)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_003",
-        "topic": "Spelling a Name",
-        "script": "A: How do you spell your name? B: It's T-O-M.",
-        "question": "How is the name spelled?",
+        "topic": "Spelling a Name (이름 철자 말하기)",
+        "script": "A: How do you spell your name? (이름 철자가 어떻게 되나요?) B: It's T-O-M. (T-O-M입니다.)",
+        "question": "How is the name spelled? (이름 철자가 어떻게 되나요?)",
         "options": {
             "A": "T-I-M",
             "B": "T-O-M",
@@ -37,225 +37,225 @@
     },
     {
         "id": "A1_L_004",
-        "topic": "Numbers (1-10)",
-        "script": "I have three cats and two dogs.",
-        "question": "How many cats does the speaker have?",
+        "topic": "Numbers (1-10) (숫자 1-10)",
+        "script": "I have three cats and two dogs. (저는 고양이 세 마리와 개 두 마리가 있어요.)",
+        "question": "How many cats does the speaker have? (화자는 고양이를 몇 마리 가지고 있나요?)",
         "options": {
-            "A": "Two",
-            "B": "Three",
-            "C": "Five"
+            "A": "Two (두 마리)",
+            "B": "Three (세 마리)",
+            "C": "Five (다섯 마리)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_005",
-        "topic": "Telling Time",
-        "script": "A: What time is it? B: It's nine o'clock.",
-        "question": "What is the time?",
+        "topic": "Telling Time (시간 말하기)",
+        "script": "A: What time is it? (지금 몇 시예요?) B: It's nine o'clock. (9시 정각이에요.)",
+        "question": "What is the time? (지금 몇 시인가요?)",
         "options": {
-            "A": "It's 8 o'clock.",
-            "B": "It's 9 o'clock.",
-            "C": "It's 10 o'clock."
+            "A": "It's 8 o'clock. (8시 정각입니다.)",
+            "B": "It's 9 o'clock. (9시 정각입니다.)",
+            "C": "It's 10 o'clock. (10시 정각입니다.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_006",
-        "topic": "Days of the Week",
-        "script": "Today is Monday. Tomorrow is Tuesday.",
-        "question": "What day is tomorrow?",
+        "topic": "Days of the Week (요일)",
+        "script": "Today is Monday. Tomorrow is Tuesday. (오늘은 월요일입니다. 내일은 화요일입니다.)",
+        "question": "What day is tomorrow? (내일은 무슨 요일인가요?)",
         "options": {
-            "A": "Monday",
-            "B": "Wednesday",
-            "C": "Tuesday"
+            "A": "Monday (월요일)",
+            "B": "Wednesday (수요일)",
+            "C": "Tuesday (화요일)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_007",
-        "topic": "Ordering Food",
-        "script": "I would like a hamburger and a cola, please.",
-        "question": "What does the person want to drink?",
+        "topic": "Ordering Food (음식 주문하기)",
+        "script": "I would like a hamburger and a cola, please. (햄버거 하나랑 콜라 하나 주세요.)",
+        "question": "What does the person want to drink? (이 사람은 무엇을 마시고 싶어 하나요?)",
         "options": {
-            "A": "Water",
-            "B": "Cola",
-            "C": "Orange juice"
+            "A": "Water (물)",
+            "B": "Cola (콜라)",
+            "C": "Orange juice (오렌지 주스)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_008",
-        "topic": "Family",
-        "script": "I have one brother and no sisters.",
-        "question": "How many sisters does the speaker have?",
+        "topic": "Family (가족)",
+        "script": "I have one brother and no sisters. (저는 남자 형제가 한 명 있고 여자 형제는 없어요.)",
+        "question": "How many sisters does the speaker have? (화자는 여자 형제가 몇 명 있나요?)",
         "options": {
-            "A": "One",
-            "B": "Two",
-            "C": "Zero"
+            "A": "One (한 명)",
+            "B": "Two (두 명)",
+            "C": "Zero (영 명)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_009",
-        "topic": "Weather",
-        "script": "It's sunny and warm today.",
-        "question": "What is the weather like?",
+        "topic": "Weather (날씨)",
+        "script": "It's sunny and warm today. (오늘은 화창하고 따뜻해요.)",
+        "question": "What is the weather like? (날씨가 어떤가요?)",
         "options": {
-            "A": "Rainy and cold",
-            "B": "Sunny and warm",
-            "C": "Cloudy and windy"
+            "A": "Rainy and cold (비 오고 추운)",
+            "B": "Sunny and warm (화창하고 따뜻한)",
+            "C": "Cloudy and windy (흐리고 바람 부는)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_010",
-        "topic": "Colors",
-        "script": "My favorite color is red. I have a red car.",
-        "question": "What color is the car?",
+        "topic": "Colors (색깔)",
+        "script": "My favorite color is red. I have a red car. (제가 가장 좋아하는 색은 빨간색입니다. 저는 빨간 차를 가지고 있어요.)",
+        "question": "What color is the car? (차는 무슨 색인가요?)",
         "options": {
-            "A": "Blue",
-            "B": "Green",
-            "C": "Red"
+            "A": "Blue (파란색)",
+            "B": "Green (초록색)",
+            "C": "Red (빨간색)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_011",
-        "topic": "Jobs",
-        "script": "He is a doctor. He works at a hospital.",
-        "question": "What is his job?",
+        "topic": "Jobs (직업)",
+        "script": "He is a doctor. He works at a hospital. (그는 의사입니다. 그는 병원에서 일해요.)",
+        "question": "What is his job? (그의 직업은 무엇인가요?)",
         "options": {
-            "A": "A teacher",
-            "B": "A doctor",
-            "C": "A police officer"
+            "A": "A teacher (선생님)",
+            "B": "A doctor (의사)",
+            "C": "A police officer (경찰관)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_012",
-        "topic": "Location",
-        "script": "The book is on the table.",
-        "question": "Where is the book?",
+        "topic": "Location (위치)",
+        "script": "The book is on the table. (책이 테이블 위에 있어요.)",
+        "question": "Where is the book? (책은 어디에 있나요?)",
         "options": {
-            "A": "Under the table",
-            "B": "In the bag",
-            "C": "On the table"
+            "A": "Under the table (테이블 아래)",
+            "B": "In the bag (가방 안)",
+            "C": "On the table (테이블 위)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_013",
-        "topic": "Likes and Dislikes",
-        "script": "I like cheese, but I don't like milk.",
-        "question": "What does the speaker not like?",
+        "topic": "Likes and Dislikes (좋고 싫음)",
+        "script": "I like cheese, but I don't like milk. (저는 치즈는 좋아하지만 우유는 좋아하지 않아요.)",
+        "question": "What does the speaker not like? (화자가 좋아하지 않는 것은 무엇인가요?)",
         "options": {
-            "A": "Cheese",
-            "B": "Milk",
-            "C": "Bread"
+            "A": "Cheese (치즈)",
+            "B": "Milk (우유)",
+            "C": "Bread (빵)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_014",
-        "topic": "Asking for Price",
-        "script": "A: How much is this T-shirt? B: It's ten dollars.",
-        "question": "What is the price of the T-shirt?",
+        "topic": "Asking for Price (가격 묻기)",
+        "script": "A: How much is this T-shirt? (이 티셔츠 얼마예요?) B: It's ten dollars. (10달러입니다.)",
+        "question": "What is the price of the T-shirt? (티셔츠 가격은 얼마인가요?)",
         "options": {
-            "A": "$10",
-            "B": "$15",
-            "C": "$20"
+            "A": "$10 (10달러)",
+            "B": "$15 (15달러)",
+            "C": "$20 (20달러)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_015",
-        "topic": "Transportation",
-        "script": "I go to work by bus.",
-        "question": "How does the speaker go to work?",
+        "topic": "Transportation (교통수단)",
+        "script": "I go to work by bus. (저는 버스를 타고 출근해요.)",
+        "question": "How does the speaker go to work? (화자는 어떻게 출근하나요?)",
         "options": {
-            "A": "By car",
-            "B": "By train",
-            "C": "By bus"
+            "A": "By car (차로)",
+            "B": "By train (기차로)",
+            "C": "By bus (버스로)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_016",
-        "topic": "Daily Routine",
-        "script": "I wake up at 7 AM every morning.",
-        "question": "What time does the speaker wake up?",
+        "topic": "Daily Routine (일상)",
+        "script": "I wake up at 7 AM every morning. (저는 매일 아침 7시에 일어나요.)",
+        "question": "What time does the speaker wake up? (화자는 몇 시에 일어나나요?)",
         "options": {
-            "A": "6 AM",
-            "B": "7 AM",
-            "C": "8 AM"
+            "A": "6 AM (오전 6시)",
+            "B": "7 AM (오전 7시)",
+            "C": "8 AM (오전 8시)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_017",
-        "topic": "Months",
-        "script": "My birthday is in June.",
-        "question": "In which month is the speaker's birthday?",
+        "topic": "Months (월)",
+        "script": "My birthday is in June. (제 생일은 6월이에요.)",
+        "question": "In which month is the speaker's birthday? (화자의 생일은 몇 월인가요?)",
         "options": {
-            "A": "May",
-            "B": "June",
-            "C": "July"
+            "A": "May (5월)",
+            "B": "June (6월)",
+            "C": "July (7월)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_018",
-        "topic": "Abilities",
-        "script": "I can play the guitar, but I can't play the piano.",
-        "question": "What can the speaker play?",
+        "topic": "Abilities (능력)",
+        "script": "I can play the guitar, but I can't play the piano. (저는 기타는 칠 수 있지만 피아노는 못 쳐요.)",
+        "question": "What can the speaker play? (화자는 무엇을 연주할 수 있나요?)",
         "options": {
-            "A": "The piano",
-            "B": "The violin",
-            "C": "The guitar"
+            "A": "The piano (피아노)",
+            "B": "The violin (바이올린)",
+            "C": "The guitar (기타)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_019",
-        "topic": "At the Supermarket",
-        "script": "I need to buy some eggs and bread.",
-        "question": "What does the speaker need to buy?",
+        "topic": "At the Supermarket (슈퍼마켓에서)",
+        "script": "I need to buy some eggs and bread. (저는 달걀과 빵을 좀 사야 해요.)",
+        "question": "What does the speaker need to buy? (화자는 무엇을 사야 하나요?)",
         "options": {
-            "A": "Milk and juice",
-            "B": "Eggs and bread",
-            "C": "Fruit and vegetables"
+            "A": "Milk and juice (우유와 주스)",
+            "B": "Eggs and bread (달걀과 빵)",
+            "C": "Fruit and vegetables (과일과 채소)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_020",
-        "topic": "Describing People",
-        "script": "She has long brown hair and green eyes.",
-        "question": "What color are her eyes?",
+        "topic": "Describing People (사람 묘사하기)",
+        "script": "She has long brown hair and green eyes. (그녀는 긴 갈색 머리와 녹색 눈을 가졌어요.)",
+        "question": "What color are her eyes? (그녀의 눈은 무슨 색인가요?)",
         "options": {
-            "A": "Blue",
-            "B": "Brown",
-            "C": "Green"
+            "A": "Blue (파란색)",
+            "B": "Brown (갈색)",
+            "C": "Green (녹색)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_021",
-        "topic": "Pets",
-        "script": "My pet is a small, white rabbit.",
-        "question": "What kind of pet does the speaker have?",
+        "topic": "Pets (애완동물)",
+        "script": "My pet is a small, white rabbit. (제 애완동물은 작고 하얀 토끼입니다.)",
+        "question": "What kind of pet does the speaker have? (화자는 어떤 종류의 애완동물을 기르나요?)",
         "options": {
-            "A": "A black cat",
-            "B": "A big dog",
-            "C": "A white rabbit"
+            "A": "A black cat (검은 고양이)",
+            "B": "A big dog (큰 개)",
+            "C": "A white rabbit (하얀 토끼)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_022",
-        "topic": "Phone Numbers",
-        "script": "My phone number is 555-1234.",
-        "question": "What is the phone number?",
+        "topic": "Phone Numbers (전화번호)",
+        "script": "My phone number is 555-1234. (제 전화번호는 555-1234입니다.)",
+        "question": "What is the phone number? (전화번호가 무엇인가요?)",
         "options": {
             "A": "555-4321",
             "B": "555-1234",
@@ -265,2137 +265,2137 @@
     },
     {
         "id": "A1_L_023",
-        "topic": "Feelings",
-        "script": "I am very happy today because it's my birthday.",
-        "question": "How does the speaker feel?",
+        "topic": "Feelings (감정)",
+        "script": "I am very happy today because it's my birthday. (오늘은 제 생일이라서 매우 행복해요.)",
+        "question": "How does the speaker feel? (화자는 기분이 어떤가요?)",
         "options": {
-            "A": "Sad",
-            "B": "Tired",
-            "C": "Happy"
+            "A": "Sad (슬픈)",
+            "B": "Tired (피곤한)",
+            "C": "Happy (행복한)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_024",
-        "topic": "Hobbies",
-        "script": "In my free time, I like to read books.",
-        "question": "What is the speaker's hobby?",
+        "topic": "Hobbies (취미)",
+        "script": "In my free time, I like to read books. (저는 자유 시간에 책 읽는 것을 좋아해요.)",
+        "question": "What is the speaker's hobby? (화자의 취미는 무엇인가요?)",
         "options": {
-            "A": "Watching TV",
-            "B": "Reading books",
-            "C": "Playing sports"
+            "A": "Watching TV (TV 시청)",
+            "B": "Reading books (독서)",
+            "C": "Playing sports (운동)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_025",
-        "topic": "Clothing",
-        "script": "I am wearing a blue shirt and black pants.",
-        "question": "What color are the pants?",
+        "topic": "Clothing (의류)",
+        "script": "I am wearing a blue shirt and black pants. (저는 파란색 셔츠와 검은색 바지를 입고 있어요.)",
+        "question": "What color are the pants? (바지는 무슨 색인가요?)",
         "options": {
-            "A": "Blue",
-            "B": "White",
-            "C": "Black"
+            "A": "Blue (파란색)",
+            "B": "White (흰색)",
+            "C": "Black (검은색)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_026",
-        "topic": "At the Library",
-        "script": "A: Where can I find the history books? B: They are on the second floor.",
-        "question": "Where are the history books?",
+        "topic": "At the Library (도서관에서)",
+        "script": "A: Where can I find the history books? (역사 책은 어디서 찾을 수 있나요?) B: They are on the second floor. (2층에 있습니다.)",
+        "question": "Where are the history books? (역사 책은 어디에 있나요?)",
         "options": {
-            "A": "On the first floor",
-            "B": "On the second floor",
-            "C": "On the third floor"
+            "A": "On the first floor (1층에)",
+            "B": "On the second floor (2층에)",
+            "C": "On the third floor (3층에)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_027",
-        "topic": "Asking for Directions",
-        "script": "A: Excuse me, where is the post office? B: Go straight and turn left.",
-        "question": "What are the directions to the post office?",
+        "topic": "Asking for Directions (길 묻기)",
+        "script": "A: Excuse me, where is the post office? (실례합니다, 우체국이 어디인가요?) B: Go straight and turn left. (직진하다가 왼쪽으로 도세요.)",
+        "question": "What are the directions to the post office? (우체국으로 가는 길이 어떻게 되나요?)",
         "options": {
-            "A": "Go straight and turn right.",
-            "B": "Turn left.",
-            "C": "Go straight and turn left."
+            "A": "Go straight and turn right. (직진하다가 오른쪽으로 도세요.)",
+            "B": "Turn left. (왼쪽으로 도세요.)",
+            "C": "Go straight and turn left. (직진하다가 왼쪽으로 도세요.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_028",
-        "topic": "Sports",
-        "script": "My favorite sport is soccer. I play it every weekend.",
-        "question": "What is the speaker's favorite sport?",
+        "topic": "Sports (스포츠)",
+        "script": "My favorite sport is soccer. I play it every weekend. (제가 가장 좋아하는 스포츠는 축구입니다. 주말마다 축구를 해요.)",
+        "question": "What is the speaker's favorite sport? (화자가 가장 좋아하는 스포츠는 무엇인가요?)",
         "options": {
-            "A": "Tennis",
-            "B": "Soccer",
-            "C": "Basketball"
+            "A": "Tennis (테니스)",
+            "B": "Soccer (축구)",
+            "C": "Basketball (농구)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_029",
-        "topic": "Food",
-        "script": "For breakfast, I usually have toast and coffee.",
-        "question": "What does the speaker have for breakfast?",
+        "topic": "Food (음식)",
+        "script": "For breakfast, I usually have toast and coffee. (아침으로 저는 보통 토스트와 커피를 먹어요.)",
+        "question": "What does the speaker have for breakfast? (화자는 아침으로 무엇을 먹나요?)",
         "options": {
-            "A": "Cereal and milk",
-            "B": "Toast and coffee",
-            "C": "Eggs and bacon"
+            "A": "Cereal and milk (시리얼과 우유)",
+            "B": "Toast and coffee (토스트와 커피)",
+            "C": "Eggs and bacon (달걀과 베이컨)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_030",
-        "topic": "Languages",
-        "script": "I can speak English and a little French.",
-        "question": "Which languages can the speaker speak?",
+        "topic": "Languages (언어)",
+        "script": "I can speak English and a little French. (저는 영어와 프랑스어를 조금 할 수 있어요.)",
+        "question": "Which languages can the speaker speak? (화자는 어떤 언어를 할 수 있나요?)",
         "options": {
-            "A": "English and Spanish",
-            "B": "French and German",
-            "C": "English and French"
+            "A": "English and Spanish (영어와 스페인어)",
+            "B": "French and English (프랑스어와 영어)",
+            "C": "English and French (영어와 프랑스어)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_031",
-        "topic": "Countries and Nationalities",
-        "script": "Maria is from Italy. She is Italian.",
-        "question": "What is Maria's nationality?",
+        "topic": "Countries and Nationalities (국가와 국적)",
+        "script": "Maria is from Italy. She is Italian. (마리아는 이탈리아 출신입니다. 그녀는 이탈리아인입니다.)",
+        "question": "What is Maria's nationality? (마리아의 국적은 무엇인가요?)",
         "options": {
-            "A": "Spanish",
-            "B": "Italian",
-            "C": "French"
+            "A": "Spanish (스페인인)",
+            "B": "Italian (이탈리아인)",
+            "C": "French (프랑스인)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_032",
-        "topic": "In the Classroom",
-        "script": "Please open your books to page twenty.",
-        "question": "What page should the students open to?",
+        "topic": "In the Classroom (교실에서)",
+        "script": "Please open your books to page twenty. (책 20페이지를 펴세요.)",
+        "question": "What page should the students open to? (학생들은 몇 페이지를 펴야 하나요?)",
         "options": {
-            "A": "Page 10",
-            "B": "Page 12",
-            "C": "Page 20"
+            "A": "Page 10 (10페이지)",
+            "B": "Page 12 (12페이지)",
+            "C": "Page 20 (20페이지)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_033",
-        "topic": "Simple Requests",
-        "script": "Can you close the window, please? It's cold.",
-        "question": "What does the speaker want to do?",
+        "topic": "Simple Requests (간단한 요청)",
+        "script": "Can you close the window, please? It's cold. (창문 좀 닫아줄래요? 추워요.)",
+        "question": "What does the speaker want to do? (화자는 무엇을 하고 싶어 하나요?)",
         "options": {
-            "A": "Open the window",
-            "B": "Close the window",
-            "C": "Open the door"
+            "A": "Open the window (창문 열기)",
+            "B": "Close the window (창문 닫기)",
+            "C": "Open the door (문 열기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_034",
-        "topic": "At a Party",
-        "script": "A: Would you like some cake? B: Yes, please. It looks delicious.",
-        "question": "Does person B want cake?",
+        "topic": "At a Party (파티에서)",
+        "script": "A: Would you like some cake? (케이크 좀 드실래요?) B: Yes, please. It looks delicious. (네, 주세요. 맛있어 보여요.)",
+        "question": "Does person B want cake? (B는 케이크를 원하나요?)",
         "options": {
-            "A": "Yes, they do.",
-            "B": "No, they don't.",
-            "C": "They want coffee."
+            "A": "Yes, they do. (네, 원합니다.)",
+            "B": "No, they don't. (아니요, 원하지 않습니다.)",
+            "C": "They want coffee. (그들은 커피를 원합니다.)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_035",
-        "topic": "The Body",
-        "script": "My head hurts. I think I need to rest.",
-        "question": "What part of the speaker's body hurts?",
+        "topic": "The Body (신체)",
+        "script": "My head hurts. I think I need to rest. (머리가 아파요. 좀 쉬어야 할 것 같아요.)",
+        "question": "What part of the speaker's body hurts? (화자의 신체 어느 부위가 아픈가요?)",
         "options": {
-            "A": "Stomach",
-            "B": "Head",
-            "C": "Back"
+            "A": "Stomach (배)",
+            "B": "Head (머리)",
+            "C": "Back (등)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_036",
-        "topic": "Rooms in a House",
-        "script": "We cook food in the kitchen.",
-        "question": "Where do we cook food?",
+        "topic": "Rooms in a House (집 안의 방)",
+        "script": "We cook food in the kitchen. (우리는 부엌에서 음식을 요리합니다.)",
+        "question": "Where do we cook food? (우리는 어디에서 음식을 요리하나요?)",
         "options": {
-            "A": "In the bedroom",
-            "B": "In the living room",
-            "C": "In the kitchen"
+            "A": "In the bedroom (침실에서)",
+            "B": "In the living room (거실에서)",
+            "C": "In the kitchen (부엌에서)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_037",
-        "topic": "Fruits",
-        "script": "I like strawberries and oranges.",
-        "question": "Which fruits does the speaker like?",
+        "topic": "Fruits (과일)",
+        "script": "I like strawberries and oranges. (저는 딸기와 오렌지를 좋아해요.)",
+        "question": "Which fruits does the speaker like? (화자는 어떤 과일을 좋아하나요?)",
         "options": {
-            "A": "Apples and bananas",
-            "B": "Strawberries and oranges",
-            "C": "Grapes and pears"
+            "A": "Apples and bananas (사과와 바나나)",
+            "B": "Strawberries and oranges (딸기와 오렌지)",
+            "C": "Grapes and pears (포도와 배)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_038",
-        "topic": "Vegetables",
-        "script": "My favorite vegetable is the carrot.",
-        "question": "What is the speaker's favorite vegetable?",
+        "topic": "Vegetables (채소)",
+        "script": "My favorite vegetable is the carrot. (제가 가장 좋아하는 채소는 당근입니다.)",
+        "question": "What is the speaker's favorite vegetable? (화자가 가장 좋아하는 채소는 무엇인가요?)",
         "options": {
-            "A": "Potato",
-            "B": "Carrot",
-            "C": "Tomato"
+            "A": "Potato (감자)",
+            "B": "Carrot (당근)",
+            "C": "Tomato (토마토)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_039",
-        "topic": "Seasons",
-        "script": "In the summer, it is very hot. I like to go swimming.",
-        "question": "What does the speaker like to do in the summer?",
+        "topic": "Seasons (계절)",
+        "script": "In the summer, it is very hot. I like to go swimming. (여름에는 매우 덥습니다. 저는 수영하러 가는 것을 좋아해요.)",
+        "question": "What does the speaker like to do in the summer? (화자는 여름에 무엇을 하는 것을 좋아하나요?)",
         "options": {
-            "A": "Go skiing",
-            "B": "Go swimming",
-            "C": "Build a snowman"
+            "A": "Go skiing (스키 타러 가기)",
+            "B": "Go swimming (수영하러 가기)",
+            "C": "Build a snowman (눈사람 만들기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_040",
-        "topic": "At the Doctor's",
-        "script": "A: What's the matter? B: I have a cold.",
-        "question": "What is wrong with person B?",
+        "topic": "At the Doctor's (병원에서)",
+        "script": "A: What's the matter? (어디가 안 좋으세요?) B: I have a cold. (감기에 걸렸어요.)",
+        "question": "What is wrong with person B? (B에게 무슨 문제가 있나요?)",
         "options": {
-            "A": "They have a fever.",
-            "B": "They have a headache.",
-            "C": "They have a cold."
+            "A": "They have a fever. (열이 있습니다.)",
+            "B": "They have a headache. (두통이 있습니다.)",
+            "C": "They have a cold. (감기에 걸렸습니다.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_041",
-        "topic": "Shopping for Clothes",
-        "script": "A: Can I try this on? B: Sure, the fitting room is over there.",
-        "question": "Where can the person try the clothes on?",
+        "topic": "Shopping for Clothes (옷 쇼핑)",
+        "script": "A: Can I try this on? (이거 입어봐도 될까요?) B: Sure, the fitting room is over there. (물론이죠, 탈의실은 저쪽에 있습니다.)",
+        "question": "Where can the person try the clothes on? (그 사람은 어디서 옷을 입어볼 수 있나요?)",
         "options": {
-            "A": "At the cashier",
-            "B": "Outside the store",
-            "C": "In the fitting room"
+            "A": "At the cashier (계산대에서)",
+            "B": "Outside the store (가게 밖에서)",
+            "C": "In the fitting room (탈의실에서)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_042",
-        "topic": "Making an Apology",
-        "script": "I'm sorry I'm late.",
-        "question": "Why is the speaker apologizing?",
+        "topic": "Making an Apology (사과하기)",
+        "script": "I'm sorry I'm late. (늦어서 죄송합니다.)",
+        "question": "Why is the speaker apologizing? (화자는 왜 사과하고 있나요?)",
         "options": {
-            "A": "For being early",
-            "B": "For being late",
-            "C": "For forgetting something"
+            "A": "For being early (일찍 와서)",
+            "B": "For being late (늦어서)",
+            "C": "For forgetting something (무언가를 잊어서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_043",
-        "topic": "At the Cinema",
-        "script": "Two tickets for the 7:30 PM show, please.",
-        "question": "What time is the movie?",
+        "topic": "At the Cinema (영화관에서)",
+        "script": "Two tickets for the 7:30 PM show, please. (오후 7시 30분 영화표 두 장 주세요.)",
+        "question": "What time is the movie? (영화는 몇 시에 시작하나요?)",
         "options": {
-            "A": "7:00 PM",
-            "B": "7:30 PM",
-            "C": "8:00 PM"
+            "A": "7:00 PM (오후 7시)",
+            "B": "7:30 PM (오후 7시 30분)",
+            "C": "8:00 PM (오후 8시)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_044",
-        "topic": "Expressing Possession",
-        "script": "This is my pen, not your pen.",
-        "question": "Whose pen is it?",
+        "topic": "Expressing Possession (소유 표현하기)",
+        "script": "This is my pen, not your pen. (이건 당신 펜이 아니라 제 펜입니다.)",
+        "question": "Whose pen is it? (이것은 누구의 펜인가요?)",
         "options": {
-            "A": "The speaker's pen",
-            "B": "The listener's pen",
-            "C": "Their friend's pen"
+            "A": "The speaker's pen (화자의 펜)",
+            "B": "The listener's pen (청자의 펜)",
+            "C": "Their friend's pen (그들의 친구 펜)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_045",
-        "topic": "Places in a City",
-        "script": "The museum is next to the park.",
-        "question": "Where is the museum?",
+        "topic": "Places in a City (도시의 장소)",
+        "script": "The museum is next to the park. (박물관은 공원 옆에 있습니다.)",
+        "question": "Where is the museum? (박물관은 어디에 있나요?)",
         "options": {
-            "A": "Opposite the park",
-            "B": "Next to the park",
-            "C": "Behind the bank"
+            "A": "Opposite the park (공원 맞은편)",
+            "B": "Next to the park (공원 옆)",
+            "C": "Behind the bank (은행 뒤)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_046",
-        "topic": "Weekend Plans",
-        "script": "This weekend, I am going to visit my grandparents.",
-        "question": "What is the speaker's plan for the weekend?",
+        "topic": "Weekend Plans (주말 계획)",
+        "script": "This weekend, I am going to visit my grandparents. (이번 주말에 저는 조부모님 댁에 방문할 거예요.)",
+        "question": "What is the speaker's plan for the weekend? (화자의 주말 계획은 무엇인가요?)",
         "options": {
-            "A": "Go shopping",
-            "B": "Visit grandparents",
-            "C": "Watch a movie"
+            "A": "Go shopping (쇼핑 가기)",
+            "B": "Visit grandparents (조부모님 댁 방문하기)",
+            "C": "Watch a movie (영화 보기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_047",
-        "topic": "Drinks",
-        "script": "I drink tea with milk in the morning.",
-        "question": "How does the speaker drink tea?",
+        "topic": "Drinks (음료)",
+        "script": "I drink tea with milk in the morning. (저는 아침에 우유를 넣은 차를 마셔요.)",
+        "question": "How does the speaker drink tea? (화자는 차를 어떻게 마시나요?)",
         "options": {
-            "A": "With sugar",
-            "B": "With milk",
-            "C": "With lemon"
+            "A": "With sugar (설탕과 함께)",
+            "B": "With milk (우유와 함께)",
+            "C": "With lemon (레몬과 함께)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_048",
-        "topic": "At the Beach",
-        "script": "Let's build a sandcastle.",
-        "question": "What do they want to build?",
+        "topic": "At the Beach (해변에서)",
+        "script": "Let's build a sandcastle. (모래성을 만들자.)",
+        "question": "What do they want to build? (그들은 무엇을 만들고 싶어 하나요?)",
         "options": {
-            "A": "A house",
-            "B": "A sandcastle",
-            "C": "A boat"
+            "A": "A house (집)",
+            "B": "A sandcastle (모래성)",
+            "C": "A boat (보트)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_049",
-        "topic": "School Subjects",
-        "script": "My favorite subject is Math because I like numbers.",
-        "question": "What is the speaker's favorite subject?",
+        "topic": "School Subjects (학교 과목)",
+        "script": "My favorite subject is Math because I like numbers. (제가 가장 좋아하는 과목은 수학이에요, 숫자를 좋아하거든요.)",
+        "question": "What is the speaker's favorite subject? (화자가 가장 좋아하는 과목은 무엇인가요?)",
         "options": {
-            "A": "History",
-            "B": "Science",
-            "C": "Math"
+            "A": "History (역사)",
+            "B": "Science (과학)",
+            "C": "Math (수학)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_050",
-        "topic": "At the Airport",
-        "script": "My flight is at gate number five.",
-        "question": "Which gate is the flight at?",
+        "topic": "At the Airport (공항에서)",
+        "script": "My flight is at gate number five. (제 비행기는 5번 게이트에 있습니다.)",
+        "question": "Which gate is the flight at? (비행기는 몇 번 게이트에 있나요?)",
         "options": {
-            "A": "Gate 3",
-            "B": "Gate 5",
-            "C": "Gate 7"
+            "A": "Gate 3 (3번 게이트)",
+            "B": "Gate 5 (5번 게이트)",
+            "C": "Gate 7 (7번 게이트)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_051",
-        "topic": "Furniture",
-        "script": "There is a sofa and two chairs in the living room.",
-        "question": "How many chairs are in the living room?",
+        "topic": "Furniture (가구)",
+        "script": "There is a sofa and two chairs in the living room. (거실에는 소파 하나와 의자 두 개가 있습니다.)",
+        "question": "How many chairs are in the living room? (거실에 의자가 몇 개 있나요?)",
         "options": {
-            "A": "One",
-            "B": "Two",
-            "C": "Three"
+            "A": "One (한 개)",
+            "B": "Two (두 개)",
+            "C": "Three (세 개)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_052",
-        "topic": "Giving a Compliment",
-        "script": "That's a nice dress. You look great!",
-        "question": "What is the speaker complimenting?",
+        "topic": "Giving a Compliment (칭찬하기)",
+        "script": "That's a nice dress. You look great! (멋진 드레스네요. 정말 멋져 보여요!)",
+        "question": "What is the speaker complimenting? (화자는 무엇을 칭찬하고 있나요?)",
         "options": {
-            "A": "The shoes",
-            "B": "The dress",
-            "C": "The hair"
+            "A": "The shoes (신발)",
+            "B": "The dress (드레스)",
+            "C": "The hair (머리)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_053",
-        "topic": "At the Zoo",
-        "script": "Look at the monkeys! They are so funny.",
-        "question": "Which animal are they looking at?",
+        "topic": "At the Zoo (동물원에서)",
+        "script": "Look at the monkeys! They are so funny. (원숭이들 좀 봐! 정말 재밌어.)",
+        "question": "Which animal are they looking at? (그들은 어떤 동물을 보고 있나요?)",
         "options": {
-            "A": "Lions",
-            "B": "Elephants",
-            "C": "Monkeys"
+            "A": "Lions (사자)",
+            "B": "Elephants (코끼리)",
+            "C": "Monkeys (원숭이)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_054",
-        "topic": "Ordinal Numbers",
-        "script": "The office is on the third floor.",
-        "question": "Which floor is the office on?",
+        "topic": "Ordinal Numbers (서수)",
+        "script": "The office is on the third floor. (사무실은 3층에 있습니다.)",
+        "question": "Which floor is the office on? (사무실은 몇 층에 있나요?)",
         "options": {
-            "A": "The second floor",
-            "B": "The third floor",
-            "C": "The fourth floor"
+            "A": "The second floor (2층)",
+            "B": "The third floor (3층)",
+            "C": "The fourth floor (4층)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_055",
-        "topic": "Asking for Help",
-        "script": "Excuse me, can you help me? I'm lost.",
-        "question": "Why does the speaker need help?",
+        "topic": "Asking for Help (도움 요청하기)",
+        "script": "Excuse me, can you help me? I'm lost. (실례합니다, 좀 도와주시겠어요? 길을 잃었어요.)",
+        "question": "Why does the speaker need help? (화자는 왜 도움이 필요한가요?)",
         "options": {
-            "A": "They are hungry.",
-            "B": "They are lost.",
-            "C": "They are tired."
+            "A": "They are hungry. (배가 고파서.)",
+            "B": "They are lost. (길을 잃어서.)",
+            "C": "They are tired. (피곤해서.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_056",
-        "topic": "In a Hotel",
-        "script": "I have a reservation for a single room.",
-        "question": "What kind of room is reserved?",
+        "topic": "In a Hotel (호텔에서)",
+        "script": "I have a reservation for a single room. (1인실로 예약했습니다.)",
+        "question": "What kind of room is reserved? (어떤 종류의 방이 예약되었나요?)",
         "options": {
-            "A": "A double room",
-            "B": "A single room",
-            "C": "A suite"
+            "A": "A double room (2인실)",
+            "B": "A single room (1인실)",
+            "C": "A suite (스위트룸)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_057",
-        "topic": "Describing a City",
-        "script": "Paris is a big city. It has many famous museums.",
-        "question": "What does Paris have?",
+        "topic": "Describing a City (도시 묘사하기)",
+        "script": "Paris is a big city. It has many famous museums. (파리는 큰 도시입니다. 유명한 박물관이 많이 있습니다.)",
+        "question": "What does Paris have? (파리에는 무엇이 있나요?)",
         "options": {
-            "A": "Famous beaches",
-            "B": "Famous mountains",
-            "C": "Famous museums"
+            "A": "Famous beaches (유명한 해변)",
+            "B": "Famous mountains (유명한 산)",
+            "C": "Famous museums (유명한 박물관)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_058",
-        "topic": "Talking about the Past",
-        "script": "Yesterday, I went to the park with my friend.",
-        "question": "Where did the speaker go yesterday?",
+        "topic": "Talking about the Past (과거에 대해 말하기)",
+        "script": "Yesterday, I went to the park with my friend. (어제 저는 친구와 함께 공원에 갔습니다.)",
+        "question": "Where did the speaker go yesterday? (화자는 어제 어디에 갔나요?)",
         "options": {
-            "A": "To the cinema",
-            "B": "To the park",
-            "C": "To the library"
+            "A": "To the cinema (영화관에)",
+            "B": "To the park (공원에)",
+            "C": "To the library (도서관에)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_059",
-        "topic": "Music",
-        "script": "I like listening to pop music.",
-        "question": "What kind of music does the speaker like?",
+        "topic": "Music (음악)",
+        "script": "I like listening to pop music. (저는 팝 음악 듣는 것을 좋아해요.)",
+        "question": "What kind of music does the speaker like? (화자는 어떤 종류의 음악을 좋아하나요?)",
         "options": {
-            "A": "Rock music",
-            "B": "Classical music",
-            "C": "Pop music"
+            "A": "Rock music (록 음악)",
+            "B": "Classical music (클래식 음악)",
+            "C": "Pop music (팝 음악)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_060",
-        "topic": "At the Post Office",
-        "script": "I'd like to send this letter to Japan, please.",
-        "question": "Where is the letter going?",
+        "topic": "At the Post Office (우체국에서)",
+        "script": "I'd like to send this letter to Japan, please. (이 편지를 일본으로 보내고 싶습니다.)",
+        "question": "Where is the letter going? (편지는 어디로 가나요?)",
         "options": {
-            "A": "China",
-            "B": "Japan",
-            "C": "Korea"
+            "A": "China (중국)",
+            "B": "Japan (일본)",
+            "C": "Korea (한국)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_061",
-        "topic": "Shapes",
-        "script": "The table is round.",
-        "question": "What is the shape of the table?",
+        "topic": "Shapes (모양)",
+        "script": "The table is round. (테이블은 둥글다.)",
+        "question": "What is the shape of the table? (테이블의 모양은 어떤가요?)",
         "options": {
-            "A": "Square",
-            "B": "Round",
-            "C": "Rectangle"
+            "A": "Square (정사각형)",
+            "B": "Round (둥근)",
+            "C": "Rectangle (직사각형)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_062",
-        "topic": "Adjectives",
-        "script": "This box is heavy. Can you help me carry it?",
-        "question": "How is the box described?",
+        "topic": "Adjectives (형용사)",
+        "script": "This box is heavy. Can you help me carry it? (이 상자는 무겁습니다. 드는 것 좀 도와주시겠어요?)",
+        "question": "How is the box described? (상자가 어떻게 묘사되었나요?)",
         "options": {
-            "A": "Light",
-            "B": "Small",
-            "C": "Heavy"
+            "A": "Light (가벼운)",
+            "B": "Small (작은)",
+            "C": "Heavy (무거운)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_063",
-        "topic": "At the Train Station",
-        "script": "The train to London leaves from platform 4.",
-        "question": "Which platform is for the London train?",
+        "topic": "At the Train Station (기차역에서)",
+        "script": "The train to London leaves from platform 4. (런던행 기차는 4번 플랫폼에서 출발합니다.)",
+        "question": "Which platform is for the London train? (런던행 기차는 몇 번 플랫폼인가요?)",
         "options": {
-            "A": "Platform 2",
-            "B": "Platform 4",
-            "C": "Platform 6"
+            "A": "Platform 2 (2번 플랫폼)",
+            "B": "Platform 4 (4번 플랫폼)",
+            "C": "Platform 6 (6번 플랫폼)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_064",
-        "topic": "Making a Suggestion",
-        "script": "It's a beautiful day. Let's go for a walk.",
-        "question": "What does the speaker suggest?",
+        "topic": "Making a Suggestion (제안하기)",
+        "script": "It's a beautiful day. Let's go for a walk. (날씨가 정말 좋네요. 산책하러 가요.)",
+        "question": "What does the speaker suggest? (화자는 무엇을 제안하나요?)",
         "options": {
-            "A": "Watching a movie",
-            "B": "Going for a walk",
-            "C": "Cooking dinner"
+            "A": "Watching a movie (영화 보기)",
+            "B": "Going for a walk (산책 가기)",
+            "C": "Cooking dinner (저녁 요리하기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_065",
-        "topic": "The Internet",
-        "script": "I use the internet to check my email every day.",
-        "question": "What does the speaker do on the internet?",
+        "topic": "The Internet (인터넷)",
+        "script": "I use the internet to check my email every day. (저는 매일 이메일을 확인하기 위해 인터넷을 사용합니다.)",
+        "question": "What does the speaker do on the internet? (화자는 인터넷으로 무엇을 하나요?)",
         "options": {
-            "A": "Play games",
-            "B": "Check email",
-            "C": "Watch videos"
+            "A": "Play games (게임하기)",
+            "B": "Check email (이메일 확인하기)",
+            "C": "Watch videos (동영상 보기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_066",
-        "topic": "Kitchen Objects",
-        "script": "Please pass me a spoon for my soup.",
-        "question": "What does the speaker need for the soup?",
+        "topic": "Kitchen Objects (주방용품)",
+        "script": "Please pass me a spoon for my soup. (제 수프에 쓸 숟가락 좀 건네주시겠어요?)",
+        "question": "What does the speaker need for the soup? (화자는 수프를 위해 무엇이 필요한가요?)",
         "options": {
-            "A": "A fork",
-            "B": "A knife",
-            "C": "A spoon"
+            "A": "A fork (포크)",
+            "B": "A knife (나이프)",
+            "C": "A spoon (숟가락)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_067",
-        "topic": "Invitations",
-        "script": "A: Are you free on Saturday? I'm having a party. B: I'd love to come!",
-        "question": "Is person B going to the party?",
+        "topic": "Invitations (초대)",
+        "script": "A: Are you free on Saturday? I'm having a party. (토요일에 시간 있어요? 제가 파티를 열거든요.) B: I'd love to come! (정말 가고 싶어요!)",
+        "question": "Is person B going to the party? (B는 파티에 갈 건가요?)",
         "options": {
-            "A": "No, they are busy.",
-            "B": "Yes, they will go.",
-            "C": "Maybe, they are not sure."
+            "A": "No, they are busy. (아니요, 바쁩니다.)",
+            "B": "Yes, they will go. (네, 갈 겁니다.)",
+            "C": "Maybe, they are not sure. (아마도요, 확실하지 않습니다.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_068",
-        "topic": "Farm Animals",
-        "script": "On the farm, there are cows and sheep.",
-        "question": "Which animals are on the farm?",
+        "topic": "Farm Animals (농장 동물)",
+        "script": "On the farm, there are cows and sheep. (농장에는 소와 양이 있습니다.)",
+        "question": "Which animals are on the farm? (농장에는 어떤 동물들이 있나요?)",
         "options": {
-            "A": "Tigers and lions",
-            "B": "Cows and sheep",
-            "C": "Penguins and bears"
+            "A": "Tigers and lions (호랑이와 사자)",
+            "B": "Cows and sheep (소와 양)",
+            "C": "Penguins and bears (펭귄과 곰)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_069",
-        "topic": "Frequency",
-        "script": "I sometimes go to the cinema, maybe once a month.",
-        "question": "How often does the speaker go to the cinema?",
+        "topic": "Frequency (빈도)",
+        "script": "I sometimes go to the cinema, maybe once a month. (저는 가끔 영화관에 가요, 아마 한 달에 한 번 정도요.)",
+        "question": "How often does the speaker go to the cinema? (화자는 얼마나 자주 영화관에 가나요?)",
         "options": {
-            "A": "Always",
-            "B": "Never",
-            "C": "Sometimes"
+            "A": "Always (항상)",
+            "B": "Never (절대)",
+            "C": "Sometimes (가끔)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_070",
-        "topic": "At the Bank",
-        "script": "I would like to change one hundred euros into dollars.",
-        "question": "What does the speaker want to do?",
+        "topic": "At the Bank (은행에서)",
+        "script": "I would like to change one hundred euros into dollars. (100유로를 달러로 바꾸고 싶습니다.)",
+        "question": "What does the speaker want to do? (화자는 무엇을 하고 싶어 하나요?)",
         "options": {
-            "A": "Open an account",
-            "B": "Change money",
-            "C": "Withdraw money"
+            "A": "Open an account (계좌 개설하기)",
+            "B": "Change money (환전하기)",
+            "C": "Withdraw money (돈 인출하기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_071",
-        "topic": "Describing a House",
-        "script": "My house has two floors and a small garden.",
-        "question": "What does the house have?",
+        "topic": "Describing a House (집 묘사하기)",
+        "script": "My house has two floors and a small garden. (저희 집은 2층이고 작은 정원이 있습니다.)",
+        "question": "What does the house have? (그 집에는 무엇이 있나요?)",
         "options": {
-            "A": "One floor and a big garden",
-            "B": "Two floors and a small garden",
-            "C": "Three floors and no garden"
+            "A": "One floor and a big garden (1층과 큰 정원)",
+            "B": "Two floors and a small garden (2층과 작은 정원)",
+            "C": "Three floors and no garden (3층과 정원 없음)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_072",
-        "topic": "Drinks at a Cafe",
-        "script": "Can I have a cappuccino, please?",
-        "question": "What did the person order?",
+        "topic": "Drinks at a Cafe (카페 음료)",
+        "script": "Can I have a cappuccino, please? (카푸치노 한 잔 주시겠어요?)",
+        "question": "What did the person order? (그 사람은 무엇을 주문했나요?)",
         "options": {
-            "A": "An espresso",
-            "B": "A latte",
-            "C": "A cappuccino"
+            "A": "An espresso (에스프레소)",
+            "B": "A latte (라떼)",
+            "C": "A cappuccino (카푸치노)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_073",
-        "topic": "Health Problems",
-        "script": "I ate too much and now my stomach hurts.",
-        "question": "Why does the speaker's stomach hurt?",
+        "topic": "Health Problems (건강 문제)",
+        "script": "I ate too much and now my stomach hurts. (너무 많이 먹어서 지금 배가 아파요.)",
+        "question": "Why does the speaker's stomach hurt? (화자의 배는 왜 아픈가요?)",
         "options": {
-            "A": "They are hungry.",
-            "B": "They ate too much.",
-            "C": "They are thirsty."
+            "A": "They are hungry. (배가 고파서.)",
+            "B": "They ate too much. (너무 많이 먹어서.)",
+            "C": "They are thirsty. (목이 말라서.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_074",
-        "topic": "At the Park",
-        "script": "The children are playing on the swings.",
-        "question": "Where are the children playing?",
+        "topic": "At the Park (공원에서)",
+        "script": "The children are playing on the swings. (아이들이 그네를 타고 놀고 있습니다.)",
+        "question": "Where are the children playing? (아이들은 어디서 놀고 있나요?)",
         "options": {
-            "A": "On the slide",
-            "B": "On the swings",
-            "C": "In the sandbox"
+            "A": "On the slide (미끄럼틀에서)",
+            "B": "On the swings (그네에서)",
+            "C": "In the sandbox (모래밭에서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_075",
-        "topic": "Talking about the Future",
-        "script": "Tomorrow I will go shopping with my sister.",
-        "question": "What will the speaker do tomorrow?",
+        "topic": "Talking about the Future (미래에 대해 말하기)",
+        "script": "Tomorrow I will go shopping with my sister. (내일 저는 여동생과 쇼핑하러 갈 거예요.)",
+        "question": "What will the speaker do tomorrow? (화자는 내일 무엇을 할 건가요?)",
         "options": {
-            "A": "Go to work",
-            "B": "Go shopping",
-            "C": "Stay at home"
+            "A": "Go to work (일하러 가기)",
+            "B": "Go shopping (쇼핑하러 가기)",
+            "C": "Stay at home (집에 있기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_076",
-        "topic": "Paying for Something",
-        "script": "A: That's five pounds, please. B: Here you are.",
-        "question": "How much does the person have to pay?",
+        "topic": "Paying for Something (결제하기)",
+        "script": "A: That's five pounds, please. (5파운드입니다.) B: Here you are. (여기 있습니다.)",
+        "question": "How much does the person have to pay? (그 사람은 얼마를 내야 하나요?)",
         "options": {
-            "A": "Four pounds",
-            "B": "Five pounds",
-            "C": "Six pounds"
+            "A": "Four pounds (4파운드)",
+            "B": "Five pounds (5파운드)",
+            "C": "Six pounds (6파운드)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_077",
-        "topic": "Personal Information",
-        "script": "I live in a small town near London.",
-        "question": "Where does the speaker live?",
+        "topic": "Personal Information (개인 정보)",
+        "script": "I live in a small town near London. (저는 런던 근처의 작은 마을에 삽니다.)",
+        "question": "Where does the speaker live? (화자는 어디에 사나요?)",
         "options": {
-            "A": "In a big city",
-            "B": "In London",
-            "C": "In a small town"
+            "A": "In a big city (큰 도시에)",
+            "B": "In London (런던에)",
+            "C": "In a small town (작은 마을에)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_078",
-        "topic": "At a Restaurant",
-        "script": "The fish is very good here. I recommend it.",
-        "question": "What food does the speaker recommend?",
+        "topic": "At a Restaurant (식당에서)",
+        "script": "The fish is very good here. I recommend it. (여기 생선 요리가 아주 맛있어요. 추천합니다.)",
+        "question": "What food does the speaker recommend? (화자는 어떤 음식을 추천하나요?)",
         "options": {
-            "A": "The chicken",
-            "B": "The steak",
-            "C": "The fish"
+            "A": "The chicken (닭고기 요리)",
+            "B": "The steak (스테이크)",
+            "C": "The fish (생선 요리)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_079",
-        "topic": "Time of Day",
-        "script": "I go to bed at 11 o'clock at night.",
-        "question": "When does the speaker go to bed?",
+        "topic": "Time of Day (하루의 시간)",
+        "script": "I go to bed at 11 o'clock at night. (저는 밤 11시에 잠자리에 들어요.)",
+        "question": "When does the speaker go to bed? (화자는 언제 잠자리에 드나요?)",
         "options": {
-            "A": "In the morning",
-            "B": "In the afternoon",
-            "C": "At night"
+            "A": "In the morning (아침에)",
+            "B": "In the afternoon (오후에)",
+            "C": "At night (밤에)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_080",
-        "topic": "Materials",
-        "script": "This table is made of wood.",
-        "question": "What is the table made of?",
+        "topic": "Materials (재료)",
+        "script": "This table is made of wood. (이 테이블은 나무로 만들어졌습니다.)",
+        "question": "What is the table made of? (테이블은 무엇으로 만들어졌나요?)",
         "options": {
-            "A": "Metal",
-            "B": "Plastic",
-            "C": "Wood"
+            "A": "Metal (금속)",
+            "B": "Plastic (플라스틱)",
+            "C": "Wood (나무)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_081",
-        "topic": "Classroom Instructions",
-        "script": "Please be quiet. The exam is starting.",
-        "question": "What should the students do?",
+        "topic": "Classroom Instructions (교실 지시사항)",
+        "script": "Please be quiet. The exam is starting. (조용히 해주세요. 시험이 시작됩니다.)",
+        "question": "What should the students do? (학생들은 무엇을 해야 하나요?)",
         "options": {
-            "A": "Talk to each other",
-            "B": "Be quiet",
-            "C": "Leave the room"
+            "A": "Talk to each other (서로 이야기하기)",
+            "B": "Be quiet (조용히 하기)",
+            "C": "Leave the room (교실 나가기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_082",
-        "topic": "In the Garden",
-        "script": "I like to grow flowers in my garden. I have red and yellow roses.",
-        "question": "What does the speaker grow in the garden?",
+        "topic": "In the Garden (정원에서)",
+        "script": "I like to grow flowers in my garden. I have red and yellow roses. (저는 제 정원에서 꽃 키우는 것을 좋아해요. 빨간 장미와 노란 장미가 있어요.)",
+        "question": "What does the speaker grow in the garden? (화자는 정원에서 무엇을 키우나요?)",
         "options": {
-            "A": "Vegetables",
-            "B": "Flowers",
-            "C": "Trees"
+            "A": "Vegetables (채소)",
+            "B": "Flowers (꽃)",
+            "C": "Trees (나무)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_083",
-        "topic": "Asking for Permission",
-        "script": "Can I use your phone? I need to make a call.",
-        "question": "What does the speaker want to do?",
+        "topic": "Asking for Permission (허락 구하기)",
+        "script": "Can I use your phone? I need to make a call. (전화기 좀 써도 될까요? 전화할 데가 있어서요.)",
+        "question": "What does the speaker want to do? (화자는 무엇을 하고 싶어 하나요?)",
         "options": {
-            "A": "Use the computer",
-            "B": "Use the phone",
-            "C": "Borrow a book"
+            "A": "Use the computer (컴퓨터 사용하기)",
+            "B": "Use the phone (전화기 사용하기)",
+            "C": "Borrow a book (책 빌리기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_084",
-        "topic": "At a Birthday Party",
-        "script": "Let's sing 'Happy Birthday' for Anna.",
-        "question": "What are they going to sing?",
+        "topic": "At a Birthday Party (생일 파티에서)",
+        "script": "Let's sing 'Happy Birthday' for Anna. (애나를 위해 '생일 축하' 노래를 부르자.)",
+        "question": "What are they going to sing? (그들은 무슨 노래를 부를 건가요?)",
         "options": {
-            "A": "A pop song",
-            "B": "'Happy Birthday'",
-            "C": "A Christmas carol"
+            "A": "A pop song (팝송)",
+            "B": "'Happy Birthday' ('생일 축하' 노래)",
+            "C": "A Christmas carol (크리스마스 캐럴)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_085",
-        "topic": "Household Chores",
-        "script": "I have to wash the dishes after dinner.",
-        "question": "What chore does the speaker have to do?",
+        "topic": "Household Chores (집안일)",
+        "script": "I have to wash the dishes after dinner. (저는 저녁 식사 후에 설거지를 해야 해요.)",
+        "question": "What chore does the speaker have to do? (화자는 무슨 집안일을 해야 하나요?)",
         "options": {
-            "A": "Clean the room",
-            "B": "Wash the dishes",
-            "C": "Do the laundry"
+            "A": "Clean the room (방 청소하기)",
+            "B": "Wash the dishes (설거지하기)",
+            "C": "Do the laundry (빨래하기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_086",
-        "topic": "Public Transportation",
-        "script": "The next bus arrives in five minutes.",
-        "question": "When will the next bus arrive?",
+        "topic": "Public Transportation (대중교통)",
+        "script": "The next bus arrives in five minutes. (다음 버스는 5분 후에 도착합니다.)",
+        "question": "When will the next bus arrive? (다음 버스는 언제 도착하나요?)",
         "options": {
-            "A": "In 5 minutes",
-            "B": "In 10 minutes",
-            "C": "In 15 minutes"
+            "A": "In 5 minutes (5분 후)",
+            "B": "In 10 minutes (10분 후)",
+            "C": "In 15 minutes (15분 후)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_087",
-        "topic": "Describing Weather",
-        "script": "It's cold outside. You should wear a coat.",
-        "question": "What should the person wear?",
+        "topic": "Describing Weather (날씨 묘사하기)",
+        "script": "It's cold outside. You should wear a coat. (밖은 추워요. 코트를 입어야 해요.)",
+        "question": "What should the person wear? (그 사람은 무엇을 입어야 하나요?)",
         "options": {
-            "A": "A T-shirt",
-            "B": "A coat",
-            "C": "Shorts"
+            "A": "A T-shirt (티셔츠)",
+            "B": "A coat (코트)",
+            "C": "Shorts (반바지)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_088",
-        "topic": "Movies",
-        "script": "I like watching comedy movies because they make me laugh.",
-        "question": "Why does the speaker like comedy movies?",
+        "topic": "Movies (영화)",
+        "script": "I like watching comedy movies because they make me laugh. (저는 코미디 영화 보는 것을 좋아해요, 웃게 만들거든요.)",
+        "question": "Why does the speaker like comedy movies? (화자는 왜 코미디 영화를 좋아하나요?)",
         "options": {
-            "A": "They are scary.",
-            "B": "They are sad.",
-            "C": "They are funny."
+            "A": "They are scary. (무서워서.)",
+            "B": "They are sad. (슬퍼서.)",
+            "C": "They are funny. (재미있어서.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_089",
-        "topic": "At the Chemist's",
-        "script": "I need something for a headache.",
-        "question": "What does the speaker need?",
+        "topic": "At the Chemist's (약국에서)",
+        "script": "I need something for a headache. (두통약 좀 필요해요.)",
+        "question": "What does the speaker need? (화자는 무엇이 필요한가요?)",
         "options": {
-            "A": "Medicine for a cough",
-            "B": "Medicine for a headache",
-            "C": "Medicine for a stomach ache"
+            "A": "Medicine for a cough (기침약)",
+            "B": "Medicine for a headache (두통약)",
+            "C": "Medicine for a stomach ache (복통약)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_090",
-        "topic": "Giving Opinions",
-        "script": "I think this book is very interesting.",
-        "question": "What is the speaker's opinion of the book?",
+        "topic": "Giving Opinions (의견 말하기)",
+        "script": "I think this book is very interesting. (이 책은 매우 흥미롭다고 생각해요.)",
+        "question": "What is the speaker's opinion of the book? (책에 대한 화자의 의견은 어떤가요?)",
         "options": {
-            "A": "It's boring.",
-            "B": "It's interesting.",
-            "C": "It's difficult."
+            "A": "It's boring. (지루하다.)",
+            "B": "It's interesting. (흥미롭다.)",
+            "C": "It's difficult. (어렵다.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_091",
-        "topic": "Computer Parts",
-        "script": "I use a mouse to click on the icons on my computer screen.",
-        "question": "What does the speaker use to click?",
+        "topic": "Computer Parts (컴퓨터 부품)",
+        "script": "I use a mouse to click on the icons on my computer screen. (저는 컴퓨터 화면의 아이콘을 클릭하기 위해 마우스를 사용합니다.)",
+        "question": "What does the speaker use to click? (화자는 클릭하기 위해 무엇을 사용하나요?)",
         "options": {
-            "A": "A keyboard",
-            "B": "A mouse",
-            "C": "A monitor"
+            "A": "A keyboard (키보드)",
+            "B": "A mouse (마우스)",
+            "C": "A monitor (모니터)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_092",
-        "topic": "Travel",
-        "script": "Last year, I traveled to Spain for my vacation.",
-        "question": "Where did the speaker go for vacation?",
+        "topic": "Travel (여행)",
+        "script": "Last year, I traveled to Spain for my vacation. (작년에 저는 휴가로 스페인에 갔어요.)",
+        "question": "Where did the speaker go for vacation? (화자는 휴가로 어디에 갔나요?)",
         "options": {
-            "A": "France",
-            "B": "Italy",
-            "C": "Spain"
+            "A": "France (프랑스)",
+            "B": "Italy (이탈리아)",
+            "C": "Spain (스페인)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_093",
-        "topic": "Thanking Someone",
-        "script": "A: Here is your coffee. B: Thank you very much.",
-        "question": "What does person B say?",
+        "topic": "Thanking Someone (감사 표현하기)",
+        "script": "A: Here is your coffee. (여기 커피 나왔습니다.) B: Thank you very much. (정말 고맙습니다.)",
+        "question": "What does person B say? (B는 뭐라고 말하나요?)",
         "options": {
-            "A": "You're welcome.",
-            "B": "I'm sorry.",
-            "C": "Thank you."
+            "A": "You're welcome. (천만에요.)",
+            "B": "I'm sorry. (죄송합니다.)",
+            "C": "Thank you. (고맙습니다.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_094",
-        "topic": "Sizes",
-        "script": "I need a medium size shirt.",
-        "question": "What size shirt does the speaker need?",
+        "topic": "Sizes (사이즈)",
+        "script": "I need a medium size shirt. (저는 중간 사이즈 셔츠가 필요해요.)",
+        "question": "What size shirt does the speaker need? (화자는 어떤 사이즈의 셔츠가 필요한가요?)",
         "options": {
-            "A": "Small",
-            "B": "Medium",
-            "C": "Large"
+            "A": "Small (작은 사이즈)",
+            "B": "Medium (중간 사이즈)",
+            "C": "Large (큰 사이즈)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_095",
-        "topic": "The Calendar",
-        "script": "The date today is October 25th.",
-        "question": "What is the date?",
+        "topic": "The Calendar (달력)",
+        "script": "The date today is October 25th. (오늘 날짜는 10월 25일입니다.)",
+        "question": "What is the date? (오늘 날짜는 며칠인가요?)",
         "options": {
-            "A": "October 24th",
-            "B": "October 25th",
-            "C": "October 26th"
+            "A": "October 24th (10월 24일)",
+            "B": "October 25th (10월 25일)",
+            "C": "October 26th (10월 26일)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_096",
-        "topic": "Leaving a Message",
-        "script": "Hello, this is Mark. Can you tell Susan I called?",
-        "question": "What does Mark want Susan to know?",
+        "topic": "Leaving a Message (메시지 남기기)",
+        "script": "Hello, this is Mark. Can you tell Susan I called? (안녕하세요, 마크입니다. 수잔에게 제가 전화했다고 전해주시겠어요?)",
+        "question": "What does Mark want Susan to know? (마크는 수잔이 무엇을 알기를 원하나요?)",
         "options": {
-            "A": "That he will call back later.",
-            "B": "That he called.",
-            "C": "That he is waiting for her."
+            "A": "That he will call back later. (나중에 다시 전화할 것이라고.)",
+            "B": "That he called. (전화했었다고.)",
+            "C": "That he is waiting for her. (그녀를 기다리고 있다고.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_097",
-        "topic": "Wild Animals",
-        "script": "The lion is often called the 'king of the jungle'.",
-        "question": "Which animal is called the 'king of the jungle'?",
+        "topic": "Wild Animals (야생 동물)",
+        "script": "The lion is often called the 'king of the jungle'. (사자는 종종 '정글의 왕'이라고 불립니다.)",
+        "question": "Which animal is called the 'king of the jungle'? (어떤 동물이 '정글의 왕'이라고 불리나요?)",
         "options": {
-            "A": "The tiger",
-            "B": "The elephant",
-            "C": "The lion"
+            "A": "The tiger (호랑이)",
+            "B": "The elephant (코끼리)",
+            "C": "The lion (사자)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_098",
-        "topic": "Desserts",
-        "script": "For dessert, I would like some chocolate ice cream.",
-        "question": "What does the speaker want for dessert?",
+        "topic": "Desserts (디저트)",
+        "script": "For dessert, I would like some chocolate ice cream. (디저트로 초콜릿 아이스크림을 먹고 싶어요.)",
+        "question": "What does the speaker want for dessert? (화자는 디저트로 무엇을 원하나요?)",
         "options": {
-            "A": "Fruit salad",
-            "B": "Chocolate ice cream",
-            "C": "Apple pie"
+            "A": "Fruit salad (과일 샐러드)",
+            "B": "Chocolate ice cream (초콜릿 아이스크림)",
+            "C": "Apple pie (애플 파이)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_099",
-        "topic": "Morning Activities",
-        "script": "First, I brush my teeth, and then I have breakfast.",
-        "question": "What does the speaker do first in the morning?",
+        "topic": "Morning Activities (아침 활동)",
+        "script": "First, I brush my teeth, and then I have breakfast. (먼저, 이를 닦고 나서 아침을 먹어요.)",
+        "question": "What does the speaker do first in the morning? (화자는 아침에 가장 먼저 무엇을 하나요?)",
         "options": {
-            "A": "Have breakfast",
-            "B": "Get dressed",
-            "C": "Brush teeth"
+            "A": "Have breakfast (아침 식사하기)",
+            "B": "Get dressed (옷 입기)",
+            "C": "Brush teeth (이 닦기)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_100",
-        "topic": "Saying Goodbye",
-        "script": "A: See you tomorrow! B: Goodbye!",
-        "question": "What does person B say?",
+        "topic": "Saying Goodbye (작별 인사)",
+        "script": "A: See you tomorrow! (내일 봐요!) B: Goodbye! (안녕히 가세요!)",
+        "question": "What does person B say? (B는 뭐라고 말하나요?)",
         "options": {
-            "A": "Hello!",
-            "B": "Good morning!",
-            "C": "Goodbye!"
+            "A": "Hello! (안녕하세요!)",
+            "B": "Good morning! (좋은 아침이에요!)",
+            "C": "Goodbye! (안녕히 가세요!)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_101",
-        "topic": "Physical States",
-        "script": "I'm thirsty. I need a glass of water.",
-        "question": "Why does the speaker need water?",
+        "topic": "Physical States (신체 상태)",
+        "script": "I'm thirsty. I need a glass of water. (목이 말라요. 물 한 잔이 필요해요.)",
+        "question": "Why does the speaker need water? (화자는 왜 물이 필요한가요?)",
         "options": {
-            "A": "Because they are hungry.",
-            "B": "Because they are thirsty.",
-            "C": "Because they are tired."
+            "A": "Because they are hungry. (배가 고파서.)",
+            "B": "Because they are thirsty. (목이 말라서.)",
+            "C": "Because they are tired. (피곤해서.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_102",
-        "topic": "Comparisons",
-        "script": "My brother is taller than me.",
-        "question": "Who is taller?",
+        "topic": "Comparisons (비교)",
+        "script": "My brother is taller than me. (제 남동생은 저보다 키가 커요.)",
+        "question": "Who is taller? (누가 더 키가 큰가요?)",
         "options": {
-            "A": "The speaker",
-            "B": "The speaker's brother",
-            "C": "They are the same height."
+            "A": "The speaker (화자)",
+            "B": "The speaker's brother (화자의 남동생)",
+            "C": "They are the same height. (그들은 키가 같아요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_103",
-        "topic": "Holiday Activities",
-        "script": "On holiday, I like to relax on the beach and read a book.",
-        "question": "What does the speaker like to do on holiday?",
+        "topic": "Holiday Activities (휴가 활동)",
+        "script": "On holiday, I like to relax on the beach and read a book. (휴가 때, 저는 해변에서 쉬면서 책 읽는 것을 좋아해요.)",
+        "question": "What does the speaker like to do on holiday? (화자는 휴가 때 무엇을 하는 것을 좋아하나요?)",
         "options": {
-            "A": "Go hiking",
-            "B": "Visit museums",
-            "C": "Relax on the beach"
+            "A": "Go hiking (하이킹 가기)",
+            "B": "Visit museums (박물관 방문하기)",
+            "C": "Relax on the beach (해변에서 휴식하기)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_104",
-        "topic": "Technology",
-        "script": "I watch videos on my tablet.",
-        "question": "What does the speaker use to watch videos?",
+        "topic": "Technology (기술)",
+        "script": "I watch videos on my tablet. (저는 태블릿으로 동영상을 봐요.)",
+        "question": "What does the speaker use to watch videos? (화자는 동영상을 보기 위해 무엇을 사용하나요?)",
         "options": {
-            "A": "A television",
-            "B": "A tablet",
-            "C": "A smartphone"
+            "A": "A television (텔레비전)",
+            "B": "A tablet (태블릿)",
+            "C": "A smartphone (스마트폰)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_105",
-        "topic": "Evening Routine",
-        "script": "In the evening, I watch TV with my family.",
-        "question": "What does the speaker do in the evening?",
+        "topic": "Evening Routine (저녁 일과)",
+        "script": "In the evening, I watch TV with my family. (저녁에 저는 가족과 함께 TV를 봐요.)",
+        "question": "What does the speaker do in the evening? (화자는 저녁에 무엇을 하나요?)",
         "options": {
-            "A": "Read a book",
-            "B": "Watch TV",
-            "C": "Listen to music"
+            "A": "Read a book (책 읽기)",
+            "B": "Watch TV (TV 보기)",
+            "C": "Listen to music (음악 듣기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_106",
-        "topic": "At the Hairdresser's",
-        "script": "I would like to have my hair cut, please. Just a little shorter.",
-        "question": "What does the customer want?",
+        "topic": "At the Hairdresser's (미용실에서)",
+        "script": "I would like to have my hair cut, please. Just a little shorter. (머리 좀 잘라주세요. 조금만 더 짧게요.)",
+        "question": "What does the customer want? (손님은 무엇을 원하나요?)",
         "options": {
-            "A": "A new hair color",
-            "B": "A haircut",
-            "C": "Longer hair"
+            "A": "A new hair color (새로운 머리 색깔)",
+            "B": "A haircut (머리 자르기)",
+            "C": "Longer hair (더 긴 머리)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_107",
-        "topic": "Money",
-        "script": "A coffee costs two euros.",
-        "question": "How much is a coffee?",
+        "topic": "Money (돈)",
+        "script": "A coffee costs two euros. (커피 한 잔에 2유로입니다.)",
+        "question": "How much is a coffee? (커피는 얼마인가요?)",
         "options": {
-            "A": "One euro",
-            "B": "Two euros",
-            "C": "Three euros"
+            "A": "One euro (1유로)",
+            "B": "Two euros (2유로)",
+            "C": "Three euros (3유로)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_108",
-        "topic": "Directions (Indoors)",
-        "script": "The toilets are down the hall and to the right.",
-        "question": "Where are the toilets?",
+        "topic": "Directions (Indoors) (실내 길 안내)",
+        "script": "The toilets are down the hall and to the right. (화장실은 복도를 따라가서 오른쪽에 있어요.)",
+        "question": "Where are the toilets? (화장실은 어디에 있나요?)",
         "options": {
-            "A": "Up the stairs",
-            "B": "To the left",
-            "C": "To the right"
+            "A": "Up the stairs (계단 위)",
+            "B": "To the left (왼쪽)",
+            "C": "To the right (오른쪽)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_109",
-        "topic": "The Weather (Negative)",
-        "script": "I don't like the rain. It's wet and cold.",
-        "question": "Why doesn't the speaker like the rain?",
+        "topic": "The Weather (Negative) (날씨 - 부정적)",
+        "script": "I don't like the rain. It's wet and cold. (저는 비를 좋아하지 않아요. 젖고 추워요.)",
+        "question": "Why doesn't the speaker like the rain? (화자는 왜 비를 좋아하지 않나요?)",
         "options": {
-            "A": "It's sunny and warm.",
-            "B": "It's wet and cold.",
-            "C": "It's windy and cloudy."
+            "A": "It's sunny and warm. (화창하고 따뜻해서.)",
+            "B": "It's wet and cold. (젖고 추워서.)",
+            "C": "It's windy and cloudy. (바람 불고 흐려서.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_110",
-        "topic": "Objects in a Bag",
-        "script": "In my bag, I have my keys, my wallet, and my phone.",
-        "question": "What is in the speaker's bag?",
+        "topic": "Objects in a Bag (가방 속 물건)",
+        "script": "In my bag, I have my keys, my wallet, and my phone. (제 가방에는 열쇠, 지갑, 그리고 전화기가 있어요.)",
+        "question": "What is in the speaker's bag? (화자의 가방에는 무엇이 있나요?)",
         "options": {
-            "A": "A book and a pen",
-            "B": "Keys and a wallet",
-            "C": "A laptop and a charger"
+            "A": "A book and a pen (책과 펜)",
+            "B": "Keys and a wallet (열쇠와 지갑)",
+            "C": "A laptop and a charger (노트북과 충전기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_111",
-        "topic": "Telling Time (Half Past)",
-        "script": "The meeting is at half past ten.",
-        "question": "What time is the meeting?",
+        "topic": "Telling Time (Half Past) (시간 말하기 - 30분)",
+        "script": "The meeting is at half past ten. (회의는 10시 30분입니다.)",
+        "question": "What time is the meeting? (회의는 몇 시인가요?)",
         "options": {
-            "A": "10:00",
-            "B": "10:15",
-            "C": "10:30"
+            "A": "10:00 (10시)",
+            "B": "10:15 (10시 15분)",
+            "C": "10:30 (10시 30분)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_112",
-        "topic": "Daily Food",
-        "script": "I eat rice for dinner almost every day.",
-        "question": "What does the speaker often eat for dinner?",
+        "topic": "Daily Food (일상 음식)",
+        "script": "I eat rice for dinner almost every day. (저는 거의 매일 저녁으로 밥을 먹어요.)",
+        "question": "What does the speaker often eat for dinner? (화자는 저녁으로 무엇을 자주 먹나요?)",
         "options": {
-            "A": "Pasta",
-            "B": "Rice",
-            "C": "Potatoes"
+            "A": "Pasta (파스타)",
+            "B": "Rice (밥)",
+            "C": "Potatoes (감자)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_113",
-        "topic": "Workplace",
-        "script": "I work in an office. I am a secretary.",
-        "question": "Where does the speaker work?",
+        "topic": "Workplace (직장)",
+        "script": "I work in an office. I am a secretary. (저는 사무실에서 일해요. 저는 비서입니다.)",
+        "question": "Where does the speaker work? (화자는 어디에서 일하나요?)",
         "options": {
-            "A": "In a school",
-            "B": "In a hospital",
-            "C": "In an office"
+            "A": "In a school (학교에서)",
+            "B": "In a hospital (병원에서)",
+            "C": "In an office (사무실에서)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_114",
-        "topic": "Describing Feelings",
-        "script": "I am tired because I went to bed late last night.",
-        "question": "How is the speaker feeling?",
+        "topic": "Describing Feelings (감정 묘사하기)",
+        "script": "I am tired because I went to bed late last night. (어젯밤에 늦게 자서 피곤해요.)",
+        "question": "How is the speaker feeling? (화자는 어떻게 느끼고 있나요?)",
         "options": {
-            "A": "Excited",
-            "B": "Tired",
-            "C": "Angry"
+            "A": "Excited (신이 난)",
+            "B": "Tired (피곤한)",
+            "C": "Angry (화가 난)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_115",
-        "topic": "Shopping for Food",
-        "script": "I need a kilo of apples and two kilos of bananas.",
-        "question": "How many kilos of bananas does the speaker need?",
+        "topic": "Shopping for Food (식료품 쇼핑)",
+        "script": "I need a kilo of apples and two kilos of bananas. (사과 1킬로그램과 바나나 2킬로그램이 필요해요.)",
+        "question": "How many kilos of bananas does the speaker need? (화자는 바나나 몇 킬로그램이 필요한가요?)",
         "options": {
-            "A": "One",
-            "B": "Two",
-            "C": "Three"
+            "A": "One (1)",
+            "B": "Two (2)",
+            "C": "Three (3)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_116",
-        "topic": "At the Gym",
-        "script": "I go to the gym to exercise three times a week.",
-        "question": "How often does the speaker go to the gym?",
+        "topic": "At the Gym (헬스장에서)",
+        "script": "I go to the gym to exercise three times a week. (저는 일주일에 세 번 운동하러 헬스장에 가요.)",
+        "question": "How often does the speaker go to the gym? (화자는 얼마나 자주 헬스장에 가나요?)",
         "options": {
-            "A": "Once a week",
-            "B": "Twice a week",
-            "C": "Three times a week"
+            "A": "Once a week (일주일에 한 번)",
+            "B": "Twice a week (일주일에 두 번)",
+            "C": "Three times a week (일주일에 세 번)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_117",
-        "topic": "Weekend Activities",
-        "script": "On Sunday, I clean my house.",
-        "question": "What does the speaker do on Sunday?",
+        "topic": "Weekend Activities (주말 활동)",
+        "script": "On Sunday, I clean my house. (일요일에 저는 집을 청소해요.)",
+        "question": "What does the speaker do on Sunday? (화자는 일요일에 무엇을 하나요?)",
         "options": {
-            "A": "Go shopping",
-            "B": "Meet friends",
-            "C": "Clean the house"
+            "A": "Go shopping (쇼핑하러 가기)",
+            "B": "Meet friends (친구 만나기)",
+            "C": "Clean the house (집 청소하기)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_118",
-        "topic": "Sea Animals",
-        "script": "Dolphins are very intelligent animals that live in the sea.",
-        "question": "Where do dolphins live?",
+        "topic": "Sea Animals (해양 동물)",
+        "script": "Dolphins are very intelligent animals that live in the sea. (돌고래는 바다에 사는 매우 똑똑한 동물입니다.)",
+        "question": "Where do dolphins live? (돌고래는 어디에 사나요?)",
         "options": {
-            "A": "In the forest",
-            "B": "In the sea",
-            "C": "In the mountains"
+            "A": "In the forest (숲속에서)",
+            "B": "In the sea (바다에서)",
+            "C": "In the mountains (산에서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_119",
-        "topic": "Booking a Table",
-        "script": "I'd like to book a table for two people for 8 PM tonight.",
-        "question": "How many people is the table for?",
+        "topic": "Booking a Table (테이블 예약)",
+        "script": "I'd like to book a table for two people for 8 PM tonight. (오늘 밤 8시에 두 명 자리 예약하고 싶어요.)",
+        "question": "How many people is the table for? (몇 명 자리 테이블인가요?)",
         "options": {
-            "A": "Two",
-            "B": "Three",
-            "C": "Four"
+            "A": "Two (두 명)",
+            "B": "Three (세 명)",
+            "C": "Four (네 명)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_120",
-        "topic": "Simple Instructions",
-        "script": "Please write your name at the top of the paper.",
-        "question": "Where should the name be written?",
+        "topic": "Simple Instructions (간단한 지시)",
+        "script": "Please write your name at the top of the paper. (종이 맨 위에 이름을 써주세요.)",
+        "question": "Where should the name be written? (이름은 어디에 써야 하나요?)",
         "options": {
-            "A": "At the bottom",
-            "B": "In the middle",
-            "C": "At the top"
+            "A": "At the bottom (맨 아래에)",
+            "B": "In the middle (가운데에)",
+            "C": "At the top (맨 위에)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_121",
-        "topic": "Winter Clothes",
-        "script": "It's snowing. I need my hat and gloves.",
-        "question": "What does the speaker need?",
+        "topic": "Winter Clothes (겨울 옷)",
+        "script": "It's snowing. I need my hat and gloves. (눈이 와요. 모자와 장갑이 필요해요.)",
+        "question": "What does the speaker need? (화자는 무엇이 필요한가요?)",
         "options": {
-            "A": "Sunglasses and a T-shirt",
-            "B": "A hat and gloves",
-            "C": "Shorts and sandals"
+            "A": "Sunglasses and a T-shirt (선글라스와 티셔츠)",
+            "B": "A hat and gloves (모자와 장갑)",
+            "C": "Shorts and sandals (반바지와 샌들)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_122",
-        "topic": "Birthday Presents",
-        "script": "For my birthday, I got a new watch from my parents.",
-        "question": "What present did the speaker get?",
+        "topic": "Birthday Presents (생일 선물)",
+        "script": "For my birthday, I got a new watch from my parents. (생일 선물로 부모님께 새 시계를 받았어요.)",
+        "question": "What present did the speaker get? (화자는 무슨 선물을 받았나요?)",
         "options": {
-            "A": "A new phone",
-            "B": "A new watch",
-            "C": "A new book"
+            "A": "A new phone (새 전화기)",
+            "B": "A new watch (새 시계)",
+            "C": "A new book (새 책)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_123",
-        "topic": "Insects",
-        "script": "Bees are small insects that make honey.",
-        "question": "What do bees make?",
+        "topic": "Insects (곤충)",
+        "script": "Bees are small insects that make honey. (벌은 꿀을 만드는 작은 곤충입니다.)",
+        "question": "What do bees make? (벌은 무엇을 만드나요?)",
         "options": {
-            "A": "Milk",
-            "B": "Honey",
-            "C": "Silk"
+            "A": "Milk (우유)",
+            "B": "Honey (꿀)",
+            "C": "Silk (비단)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_124",
-        "topic": "At the Bus Stop",
-        "script": "The bus is late. It was supposed to be here ten minutes ago.",
-        "question": "Is the bus on time?",
+        "topic": "At the Bus Stop (버스 정류장에서)",
+        "script": "The bus is late. It was supposed to be here ten minutes ago. (버스가 늦네요. 10분 전에 왔어야 했어요.)",
+        "question": "Is the bus on time? (버스는 제시간에 왔나요?)",
         "options": {
-            "A": "Yes, it's early.",
-            "B": "No, it's late.",
-            "C": "Yes, it's on time."
+            "A": "Yes, it's early. (네, 일찍 왔어요.)",
+            "B": "No, it's late. (아니요, 늦었어요.)",
+            "C": "Yes, it's on time. (네, 제시간에 왔어요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_125",
-        "topic": "Snacks",
-        "script": "I'm a little hungry. I'll have an apple for a snack.",
-        "question": "What will the speaker have for a snack?",
+        "topic": "Snacks (간식)",
+        "script": "I'm a little hungry. I'll have an apple for a snack. (조금 배고프네요. 간식으로 사과를 먹을래요.)",
+        "question": "What will the speaker have for a snack? (화자는 간식으로 무엇을 먹을 건가요?)",
         "options": {
-            "A": "A sandwich",
-            "B": "An apple",
-            "C": "A cake"
+            "A": "A sandwich (샌드위치)",
+            "B": "An apple (사과)",
+            "C": "A cake (케이크)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_126",
-        "topic": "Family Members",
-        "script": "My father's mother is my grandmother.",
-        "question": "Who is the speaker's grandmother?",
+        "topic": "Family Members (가족 구성원)",
+        "script": "My father's mother is my grandmother. (아버지의 어머니는 저의 할머니입니다.)",
+        "question": "Who is the speaker's grandmother? (화자의 할머니는 누구인가요?)",
         "options": {
-            "A": "Her mother's sister",
-            "B": "Her father's mother",
-            "C": "Her mother's mother"
+            "A": "Her mother's sister (어머니의 여자 형제)",
+            "B": "Her father's mother (아버지의 어머니)",
+            "C": "Her mother's mother (어머니의 어머니)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_127",
-        "topic": "The City vs The Countryside",
-        "script": "I live in the countryside. It's very quiet here.",
-        "question": "What is the countryside like?",
+        "topic": "The City vs The Countryside (도시 대 시골)",
+        "script": "I live in the countryside. It's very quiet here. (저는 시골에 살아요. 여기는 매우 조용해요.)",
+        "question": "What is the countryside like? (시골은 어떤가요?)",
         "options": {
-            "A": "It's noisy.",
-            "B": "It's quiet.",
-            "C": "It's busy."
+            "A": "It's noisy. (시끄러워요.)",
+            "B": "It's quiet. (조용해요.)",
+            "C": "It's busy. (분주해요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_128",
-        "topic": "Cooking",
-        "script": "To make this pasta, you need tomatoes, onions, and garlic.",
-        "question": "What do you need for the pasta?",
+        "topic": "Cooking (요리)",
+        "script": "To make this pasta, you need tomatoes, onions, and garlic. (이 파스타를 만들려면 토마토, 양파, 마늘이 필요해요.)",
+        "question": "What do you need for the pasta? (파스타를 위해 무엇이 필요한가요?)",
         "options": {
-            "A": "Chicken and peppers",
-            "B": "Tomatoes and onions",
-            "C": "Cream and mushrooms"
+            "A": "Chicken and peppers (닭고기와 피망)",
+            "B": "Tomatoes and onions (토마토와 양파)",
+            "C": "Cream and mushrooms (크림과 버섯)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_129",
-        "topic": "At a Cafe (Payment)",
-        "script": "A: Can I pay by credit card? B: Yes, of course.",
-        "question": "How does the customer want to pay?",
+        "topic": "At a Cafe (Payment) (카페에서 - 결제)",
+        "script": "A: Can I pay by credit card? (신용카드로 계산할 수 있나요?) B: Yes, of course. (네, 물론입니다.)",
+        "question": "How does the customer want to pay? (손님은 어떻게 결제하고 싶어 하나요?)",
         "options": {
-            "A": "With cash",
-            "B": "By credit card",
-            "C": "With a check"
+            "A": "With cash (현금으로)",
+            "B": "By credit card (신용카드로)",
+            "C": "With a check (수표로)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_130",
-        "topic": "Describing a Room",
-        "script": "My bedroom has a bed, a desk, and a large window.",
-        "question": "What is in the speaker's bedroom?",
+        "topic": "Describing a Room (방 묘사하기)",
+        "script": "My bedroom has a bed, a desk, and a large window. (제 침실에는 침대, 책상, 그리고 큰 창문이 있어요.)",
+        "question": "What is in the speaker's bedroom? (화자의 침실에는 무엇이 있나요?)",
         "options": {
-            "A": "A sofa and a TV",
-            "B": "A bed and a desk",
-            "C": "A table and chairs"
+            "A": "A sofa and a TV (소파와 TV)",
+            "B": "A bed and a desk (침대와 책상)",
+            "C": "A table and chairs (테이블과 의자)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_131",
-        "topic": "Making Plans",
-        "script": "A: What are you doing tonight? B: I'm going to the cinema with friends.",
-        "question": "What is person B's plan for tonight?",
+        "topic": "Making Plans (계획 세우기)",
+        "script": "A: What are you doing tonight? (오늘 밤에 뭐 해요?) B: I'm going to the cinema with friends. (친구들과 영화 보러 갈 거예요.)",
+        "question": "What is person B's plan for tonight? (B의 오늘 밤 계획은 무엇인가요?)",
         "options": {
-            "A": "Staying home",
-            "B": "Going to a restaurant",
-            "C": "Going to the cinema"
+            "A": "Staying home (집에 있기)",
+            "B": "Going to a restaurant (식당에 가기)",
+            "C": "Going to the cinema (영화관에 가기)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_132",
-        "topic": "Plants",
-        "script": "This plant needs water every two days.",
-        "question": "How often does the plant need water?",
+        "topic": "Plants (식물)",
+        "script": "This plant needs water every two days. (이 식물은 이틀에 한 번 물을 줘야 해요.)",
+        "question": "How often does the plant need water? (식물은 얼마나 자주 물이 필요한가요?)",
         "options": {
-            "A": "Every day",
-            "B": "Every two days",
-            "C": "Once a week"
+            "A": "Every day (매일)",
+            "B": "Every two days (이틀에 한 번)",
+            "C": "Once a week (일주일에 한 번)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_133",
-        "topic": "Telling Time (Quarter Past)",
-        "script": "The class starts at a quarter past nine.",
-        "question": "What time does the class start?",
+        "topic": "Telling Time (Quarter Past) (시간 말하기 - 15분)",
+        "script": "The class starts at a quarter past nine. (수업은 9시 15분에 시작해요.)",
+        "question": "What time does the class start? (수업은 몇 시에 시작하나요?)",
         "options": {
-            "A": "9:00",
-            "B": "9:15",
-            "C": "9:30"
+            "A": "9:00 (9시)",
+            "B": "9:15 (9시 15분)",
+            "C": "9:30 (9시 30분)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_134",
-        "topic": "Jobs (Location)",
-        "script": "A chef is a person who cooks food in a restaurant.",
-        "question": "Where does a chef work?",
+        "topic": "Jobs (Location) (직업 - 장소)",
+        "script": "A chef is a person who cooks food in a restaurant. (요리사는 식당에서 음식을 요리하는 사람입니다.)",
+        "question": "Where does a chef work? (요리사는 어디에서 일하나요?)",
         "options": {
-            "A": "In a school",
-            "B": "In a restaurant",
-            "C": "In a shop"
+            "A": "In a school (학교에서)",
+            "B": "In a restaurant (식당에서)",
+            "C": "In a shop (가게에서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_135",
-        "topic": "Giving Advice",
-        "script": "You look tired. You should get some sleep.",
-        "question": "What advice does the speaker give?",
+        "topic": "Giving Advice (조언하기)",
+        "script": "You look tired. You should get some sleep. (피곤해 보여요. 잠을 좀 자야 해요.)",
+        "question": "What advice does the speaker give? (화자는 어떤 조언을 하나요?)",
         "options": {
-            "A": "To drink some coffee",
-            "B": "To get some sleep",
-            "C": "To go for a walk"
+            "A": "To drink some coffee (커피를 마시라고)",
+            "B": "To get some sleep (잠을 좀 자라고)",
+            "C": "To go for a walk (산책하러 가라고)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_136",
-        "topic": "At the Shoe Shop",
-        "script": "Do you have these shoes in size seven?",
-        "question": "What size shoes is the customer looking for?",
+        "topic": "At the Shoe Shop (신발 가게에서)",
+        "script": "Do you have these shoes in size seven? (이 신발 7사이즈 있나요?)",
+        "question": "What size shoes is the customer looking for? (손님은 어떤 사이즈의 신발을 찾고 있나요?)",
         "options": {
-            "A": "Size 6",
-            "B": "Size 7",
-            "C": "Size 8"
+            "A": "Size 6 (6 사이즈)",
+            "B": "Size 7 (7 사이즈)",
+            "C": "Size 8 (8 사이즈)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_137",
-        "topic": "The Four Seasons",
-        "script": "After winter comes spring.",
-        "question": "What season is after winter?",
+        "topic": "The Four Seasons (사계절)",
+        "script": "After winter comes spring. (겨울 다음에는 봄이 와요.)",
+        "question": "What season is after winter? (겨울 다음은 무슨 계절인가요?)",
         "options": {
-            "A": "Summer",
-            "B": "Autumn",
-            "C": "Spring"
+            "A": "Summer (여름)",
+            "B": "Autumn (가을)",
+            "C": "Spring (봄)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_138",
-        "topic": "Likes and Dislikes (Activities)",
-        "script": "I love dancing but I hate singing.",
-        "question": "What activity does the speaker hate?",
+        "topic": "Likes and Dislikes (Activities) (좋고 싫음 - 활동)",
+        "script": "I love dancing but I hate singing. (저는 춤추는 것은 정말 좋아하지만 노래하는 것은 싫어해요.)",
+        "question": "What activity does the speaker hate? (화자가 싫어하는 활동은 무엇인가요?)",
         "options": {
-            "A": "Dancing",
-            "B": "Singing",
-            "C": "Drawing"
+            "A": "Dancing (춤추기)",
+            "B": "Singing (노래하기)",
+            "C": "Drawing (그림 그리기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_139",
-        "topic": "Buying Tickets",
-        "script": "One adult and two children's tickets for the museum, please.",
-        "question": "How many children's tickets do they want?",
+        "topic": "Buying Tickets (표 구매하기)",
+        "script": "One adult and two children's tickets for the museum, please. (박물관 표 어른 한 장, 어린이 두 장 주세요.)",
+        "question": "How many children's tickets do they want? (그들은 어린이 표를 몇 장 원하나요?)",
         "options": {
-            "A": "One",
-            "B": "Two",
-            "C": "Three"
+            "A": "One (한 장)",
+            "B": "Two (두 장)",
+            "C": "Three (세 장)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_140",
-        "topic": "Opposites",
-        "script": "This room is very bright. The other room is dark.",
-        "question": "What is the opposite of bright?",
+        "topic": "Opposites (반대말)",
+        "script": "This room is very bright. The other room is dark. (이 방은 매우 밝아요. 다른 방은 어두워요.)",
+        "question": "What is the opposite of bright? (밝은의 반대말은 무엇인가요?)",
         "options": {
-            "A": "Light",
-            "B": "Dark",
-            "C": "Big"
+            "A": "Light (가벼운)",
+            "B": "Dark (어두운)",
+            "C": "Big (큰)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_141",
-        "topic": "At the Beach (Activities)",
-        "script": "The sun is strong. Don't forget to use sunscreen.",
-        "question": "What should you use at the beach?",
+        "topic": "At the Beach (Activities) (해변에서 - 활동)",
+        "script": "The sun is strong. Don't forget to use sunscreen. (햇볕이 강해요. 자외선 차단제 바르는 것을 잊지 마세요.)",
+        "question": "What should you use at the beach? (해변에서 무엇을 사용해야 하나요?)",
         "options": {
-            "A": "A towel",
-            "B": "An umbrella",
-            "C": "Sunscreen"
+            "A": "A towel (수건)",
+            "B": "An umbrella (우산)",
+            "C": "Sunscreen (자외선 차단제)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_142",
-        "topic": "Breakfast Foods",
-        "script": "I don't like cereal for breakfast. I prefer eggs.",
-        "question": "What does the speaker prefer for breakfast?",
+        "topic": "Breakfast Foods (아침 식사 음식)",
+        "script": "I don't like cereal for breakfast. I prefer eggs. (저는 아침 식사로 시리얼을 좋아하지 않아요. 저는 달걀을 더 좋아해요.)",
+        "question": "What does the speaker prefer for breakfast? (화자는 아침 식사로 무엇을 더 좋아하나요?)",
         "options": {
-            "A": "Cereal",
-            "B": "Toast",
-            "C": "Eggs"
+            "A": "Cereal (시리얼)",
+            "B": "Toast (토스트)",
+            "C": "Eggs (달걀)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_143",
-        "topic": "Getting Around the City",
-        "script": "The fastest way to get there is by taxi.",
-        "question": "What is the fastest way to travel?",
+        "topic": "Getting Around the City (도시 이동)",
+        "script": "The fastest way to get there is by taxi. (거기까지 가는 가장 빠른 방법은 택시를 타는 것입니다.)",
+        "question": "What is the fastest way to travel? (가장 빠른 이동 방법은 무엇인가요?)",
         "options": {
-            "A": "By bus",
-            "B": "By taxi",
-            "C": "By walking"
+            "A": "By bus (버스로)",
+            "B": "By taxi (택시로)",
+            "C": "By walking (걸어서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_144",
-        "topic": "Parts of a Day",
-        "script": "The sun rises in the morning.",
-        "question": "When does the sun rise?",
+        "topic": "Parts of a Day (하루의 시간대)",
+        "script": "The sun rises in the morning. (해는 아침에 뜹니다.)",
+        "question": "When does the sun rise? (해는 언제 뜨나요?)",
         "options": {
-            "A": "In the morning",
-            "B": "In the evening",
-            "C": "At night"
+            "A": "In the morning (아침에)",
+            "B": "In the evening (저녁에)",
+            "C": "At night (밤에)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_145",
-        "topic": "Invitations (Declining)",
-        "script": "A: Do you want to go to the concert on Friday? B: I'm sorry, I can't. I'm busy.",
-        "question": "Is person B going to the concert?",
+        "topic": "Invitations (Declining) (초대 - 거절)",
+        "script": "A: Do you want to go to the concert on Friday? (금요일에 콘서트 갈래요?) B: I'm sorry, I can't. I'm busy. (미안해요, 못 가요. 바빠요.)",
+        "question": "Is person B going to the concert? (B는 콘서트에 갈 건가요?)",
         "options": {
-            "A": "Yes, they are.",
-            "B": "No, they are not.",
-            "C": "Maybe."
+            "A": "Yes, they are. (네, 갑니다.)",
+            "B": "No, they are not. (아니요, 가지 않습니다.)",
+            "C": "Maybe. (아마도요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_146",
-        "topic": "Study Habits",
-        "script": "I study English for one hour every day.",
-        "question": "How long does the speaker study English each day?",
+        "topic": "Study Habits (공부 습관)",
+        "script": "I study English for one hour every day. (저는 매일 한 시간씩 영어를 공부해요.)",
+        "question": "How long does the speaker study English each day? (화자는 매일 영어를 얼마나 공부하나요?)",
         "options": {
-            "A": "30 minutes",
-            "B": "One hour",
-            "C": "Two hours"
+            "A": "30 minutes (30분)",
+            "B": "One hour (1시간)",
+            "C": "Two hours (2시간)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_147",
-        "topic": "In the Kitchen",
-        "script": "I need a knife to cut the vegetables.",
-        "question": "What does the speaker need a knife for?",
+        "topic": "In the Kitchen (주방에서)",
+        "script": "I need a knife to cut the vegetables. (채소를 자르려면 칼이 필요해요.)",
+        "question": "What does the speaker need a knife for? (화자는 왜 칼이 필요한가요?)",
         "options": {
-            "A": "To eat soup",
-            "B": "To cut vegetables",
-            "C": "To drink water"
+            "A": "To eat soup (수프를 먹기 위해)",
+            "B": "To cut vegetables (채소를 자르기 위해)",
+            "C": "To drink water (물을 마시기 위해)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_148",
-        "topic": "Describing a Movie",
-        "script": "The movie was very long, about three hours.",
-        "question": "How was the movie?",
+        "topic": "Describing a Movie (영화 묘사하기)",
+        "script": "The movie was very long, about three hours. (그 영화는 매우 길었어요, 약 세 시간 정도.)",
+        "question": "How was the movie? (영화는 어땠나요?)",
         "options": {
-            "A": "It was short.",
-            "B": "It was long.",
-            "C": "It was boring."
+            "A": "It was short. (짧았어요.)",
+            "B": "It was long. (길었어요.)",
+            "C": "It was boring. (지루했어요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_149",
-        "topic": "At the Station (Information)",
-        "script": "The next train to Oxford is delayed by 20 minutes.",
-        "question": "What is the situation with the Oxford train?",
+        "topic": "At the Station (Information) (역에서 - 정보)",
+        "script": "The next train to Oxford is delayed by 20 minutes. (다음 옥스퍼드행 기차는 20분 지연되었습니다.)",
+        "question": "What is the situation with the Oxford train? (옥스퍼드행 기차 상황은 어떤가요?)",
         "options": {
-            "A": "It's on time.",
-            "B": "It's cancelled.",
-            "C": "It's delayed."
+            "A": "It's on time. (제시간에 있습니다.)",
+            "B": "It's cancelled. (취소되었습니다.)",
+            "C": "It's delayed. (지연되었습니다.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_150",
-        "topic": "Agreeing",
-        "script": "A: It's a lovely day, isn't it? B: Yes, it's beautiful.",
-        "question": "Does person B agree with person A?",
+        "topic": "Agreeing (동의하기)",
+        "script": "A: It's a lovely day, isn't it? (날씨 정말 좋죠?) B: Yes, it's beautiful. (네, 아름다워요.)",
+        "question": "Does person B agree with person A? (B는 A의 말에 동의하나요?)",
         "options": {
-            "A": "Yes, they agree.",
-            "B": "No, they disagree.",
-            "C": "They don't have an opinion."
+            "A": "Yes, they agree. (네, 동의합니다.)",
+            "B": "No, they disagree. (아니요, 동의하지 않습니다.)",
+            "C": "They don't have an opinion. (의견이 없습니다.)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_151",
-        "topic": "Geography",
-        "script": "The Amazon is a very long river in South America.",
-        "question": "What is the Amazon?",
+        "topic": "Geography (지리)",
+        "script": "The Amazon is a very long river in South America. (아마존은 남아메리카에 있는 매우 긴 강입니다.)",
+        "question": "What is the Amazon? (아마존은 무엇인가요?)",
         "options": {
-            "A": "A mountain",
-            "B": "A river",
-            "C": "A desert"
+            "A": "A mountain (산)",
+            "B": "A river (강)",
+            "C": "A desert (사막)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_152",
-        "topic": "Telling Time (Quarter To)",
-        "script": "I have an appointment at a quarter to five.",
-        "question": "What time is the appointment?",
+        "topic": "Telling Time (Quarter To) (시간 말하기 - 15분 전)",
+        "script": "I have an appointment at a quarter to five. (저는 5시 15분 전에 약속이 있어요.)",
+        "question": "What time is the appointment? (약속은 몇 시인가요?)",
         "options": {
-            "A": "4:15",
-            "B": "4:30",
-            "C": "4:45"
+            "A": "4:15 (4시 15분)",
+            "B": "4:30 (4시 30분)",
+            "C": "4:45 (4시 45분)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_153",
-        "topic": "At the Market",
-        "script": "These tomatoes are very fresh.",
-        "question": "How are the tomatoes?",
+        "topic": "At the Market (시장에서)",
+        "script": "These tomatoes are very fresh. (이 토마토들은 매우 신선해요.)",
+        "question": "How are the tomatoes? (토마토는 어떤가요?)",
         "options": {
-            "A": "They are old.",
-            "B": "They are fresh.",
-            "C": "They are expensive."
+            "A": "They are old. (오래됐어요.)",
+            "B": "They are fresh. (신선해요.)",
+            "C": "They are expensive. (비싸요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_154",
-        "topic": "Musical Instruments",
-        "script": "My daughter is learning to play the violin.",
-        "question": "What instrument is the daughter learning?",
+        "topic": "Musical Instruments (악기)",
+        "script": "My daughter is learning to play the violin. (제 딸은 바이올린을 배우고 있어요.)",
+        "question": "What instrument is the daughter learning? (딸은 어떤 악기를 배우고 있나요?)",
         "options": {
-            "A": "The piano",
-            "B": "The guitar",
-            "C": "The violin"
+            "A": "The piano (피아노)",
+            "B": "The guitar (기타)",
+            "C": "The violin (바이올린)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_155",
-        "topic": "Weather (Temperature)",
-        "script": "The temperature today is 25 degrees Celsius.",
-        "question": "What is the temperature?",
+        "topic": "Weather (Temperature) (날씨 - 기온)",
+        "script": "The temperature today is 25 degrees Celsius. (오늘 기온은 섭씨 25도입니다.)",
+        "question": "What is the temperature? (기온은 몇 도인가요?)",
         "options": {
-            "A": "15 degrees",
-            "B": "20 degrees",
-            "C": "25 degrees"
+            "A": "15 degrees (15도)",
+            "B": "20 degrees (20도)",
+            "C": "25 degrees (25도)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_156",
-        "topic": "At the Hotel (Checking out)",
-        "script": "We need to check out of the hotel before 11 AM.",
-        "question": "What time do they need to check out?",
+        "topic": "At the Hotel (Checking out) (호텔에서 - 체크아웃)",
+        "script": "We need to check out of the hotel before 11 AM. (우리는 오전 11시 전에 호텔에서 체크아웃해야 해요.)",
+        "question": "What time do they need to check out? (그들은 몇 시에 체크아웃해야 하나요?)",
         "options": {
-            "A": "Before 11 AM",
-            "B": "At 12 PM",
-            "C": "In the afternoon"
+            "A": "Before 11 AM (오전 11시 전)",
+            "B": "At 12 PM (오후 12시)",
+            "C": "In the afternoon (오후에)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_157",
-        "topic": "Hobbies (Collecting)",
-        "script": "My hobby is collecting stamps from different countries.",
-        "question": "What does the speaker collect?",
+        "topic": "Hobbies (Collecting) (취미 - 수집)",
+        "script": "My hobby is collecting stamps from different countries. (제 취미는 여러 나라의 우표를 모으는 것입니다.)",
+        "question": "What does the speaker collect? (화자는 무엇을 수집하나요?)",
         "options": {
-            "A": "Coins",
-            "B": "Stamps",
-            "C": "Postcards"
+            "A": "Coins (동전)",
+            "B": "Stamps (우표)",
+            "C": "Postcards (엽서)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_158",
-        "topic": "Daily Travel",
-        "script": "It takes me 30 minutes to get to work by car.",
-        "question": "How long is the speaker's journey to work?",
+        "topic": "Daily Travel (일상 이동)",
+        "script": "It takes me 30 minutes to get to work by car. (차로 출근하는 데 30분 걸려요.)",
+        "question": "How long is the speaker's journey to work? (화자의 출근 시간은 얼마나 걸리나요?)",
         "options": {
-            "A": "15 minutes",
-            "B": "30 minutes",
-            "C": "45 minutes"
+            "A": "15 minutes (15분)",
+            "B": "30 minutes (30분)",
+            "C": "45 minutes (45분)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_159",
-        "topic": "Food Allergies",
-        "script": "I can't eat nuts because I am allergic.",
-        "question": "What can't the speaker eat?",
+        "topic": "Food Allergies (음식 알레르기)",
+        "script": "I can't eat nuts because I am allergic. (저는 알레르기가 있어서 견과류를 못 먹어요.)",
+        "question": "What can't the speaker eat? (화자는 무엇을 못 먹나요?)",
         "options": {
-            "A": "Fish",
-            "B": "Nuts",
-            "C": "Eggs"
+            "A": "Fish (생선)",
+            "B": "Nuts (견과류)",
+            "C": "Eggs (달걀)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_160",
-        "topic": "In a Clothes Shop (Material)",
-        "script": "Is this shirt made of cotton?",
-        "question": "What material is the customer asking about?",
+        "topic": "In a Clothes Shop (Material) (옷 가게에서 - 소재)",
+        "script": "Is this shirt made of cotton? (이 셔츠는 면으로 만들어졌나요?)",
+        "question": "What material is the customer asking about? (손님은 어떤 소재에 대해 묻고 있나요?)",
         "options": {
-            "A": "Wool",
-            "B": "Silk",
-            "C": "Cotton"
+            "A": "Wool (양모)",
+            "B": "Silk (실크)",
+            "C": "Cotton (면)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_161",
-        "topic": "The Natural World",
-        "script": "Trees are very important because they give us oxygen.",
-        "question": "Why are trees important?",
+        "topic": "The Natural World (자연 세계)",
+        "script": "Trees are very important because they give us oxygen. (나무는 우리에게 산소를 주기 때문에 매우 중요합니다.)",
+        "question": "Why are trees important? (나무는 왜 중요한가요?)",
         "options": {
-            "A": "They give us water.",
-            "B": "They give us oxygen.",
-            "C": "They give us food."
+            "A": "They give us water. (물을 주기 때문에.)",
+            "B": "They give us oxygen. (산소를 주기 때문에.)",
+            "C": "They give us food. (음식을 주기 때문에.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_162",
-        "topic": "At Home",
-        "script": "The remote control for the TV is on the sofa.",
-        "question": "Where is the remote control?",
+        "topic": "At Home (집에서)",
+        "script": "The remote control for the TV is on the sofa. (TV 리모컨은 소파 위에 있어요.)",
+        "question": "Where is the remote control? (리모컨은 어디에 있나요?)",
         "options": {
-            "A": "On the table",
-            "B": "On the sofa",
-            "C": "On the floor"
+            "A": "On the table (테이블 위)",
+            "B": "On the sofa (소파 위)",
+            "C": "On the floor (바닥 위)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_163",
-        "topic": "Asking for Repetition",
-        "script": "A: My name is... B: Sorry, can you say that again, please?",
-        "question": "What does person B want?",
+        "topic": "Asking for Repetition (반복 요청하기)",
+        "script": "A: My name is... (제 이름은...) B: Sorry, can you say that again, please? (죄송하지만, 다시 한번 말씀해 주시겠어요?)",
+        "question": "What does person B want? (B는 무엇을 원하나요?)",
         "options": {
-            "A": "To know the time",
-            "B": "To hear the name again",
-            "C": "To leave"
+            "A": "To know the time (시간을 알기 위해)",
+            "B": "To hear the name again (이름을 다시 듣기 위해)",
+            "C": "To leave (떠나기 위해)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_164",
-        "topic": "Types of Houses",
-        "script": "I live in a flat on the fifth floor.",
-        "question": "Where does the speaker live?",
+        "topic": "Types of Houses (집의 종류)",
+        "script": "I live in a flat on the fifth floor. (저는 5층에 있는 아파트에 살아요.)",
+        "question": "Where does the speaker live? (화자는 어디에 사나요?)",
         "options": {
-            "A": "In a house",
-            "B": "In a flat",
-            "C": "In a bungalow"
+            "A": "In a house (주택에)",
+            "B": "In a flat (아파트에)",
+            "C": "In a bungalow (방갈로에)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_165",
-        "topic": "At the Office",
-        "script": "My computer is not working. I need to call IT support.",
-        "question": "What is the problem?",
+        "topic": "At the Office (사무실에서)",
+        "script": "My computer is not working. I need to call IT support. (제 컴퓨터가 작동하지 않아요. IT 지원팀에 전화해야 해요.)",
+        "question": "What is the problem? (무엇이 문제인가요?)",
         "options": {
-            "A": "The phone is not working.",
-            "B": "The computer is not working.",
-            "C": "The printer is not working."
+            "A": "The phone is not working. (전화가 작동하지 않아요.)",
+            "B": "The computer is not working. (컴퓨터가 작동하지 않아요.)",
+            "C": "The printer is not working. (프린터가 작동하지 않아요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_166",
-        "topic": "Meals of the Day",
-        "script": "Lunch is the meal we eat in the middle of the day.",
-        "question": "When do we eat lunch?",
+        "topic": "Meals of the Day (하루의 식사)",
+        "script": "Lunch is the meal we eat in the middle of the day. (점심은 우리가 하루 중 가운데 먹는 식사입니다.)",
+        "question": "When do we eat lunch? (우리는 언제 점심을 먹나요?)",
         "options": {
-            "A": "In the morning",
-            "B": "In the middle of the day",
-            "C": "In the evening"
+            "A": "In the morning (아침에)",
+            "B": "In the middle of the day (하루 중 가운데)",
+            "C": "In the evening (저녁에)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_167",
-        "topic": "Renting a Car",
-        "script": "I'd like to rent a small car for three days.",
-        "question": "For how long does the person want to rent a car?",
+        "topic": "Renting a Car (자동차 렌트)",
+        "script": "I'd like to rent a small car for three days. (3일 동안 소형차를 빌리고 싶어요.)",
+        "question": "For how long does the person want to rent a car? (그 사람은 며칠 동안 차를 빌리고 싶어 하나요?)",
         "options": {
-            "A": "For one day",
-            "B": "For two days",
-            "C": "For three days"
+            "A": "For one day (하루 동안)",
+            "B": "For two days (이틀 동안)",
+            "C": "For three days (사흘 동안)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_168",
-        "topic": "Expressing Preference",
-        "script": "A: Do you prefer tea or coffee? B: I prefer tea.",
-        "question": "What does person B prefer?",
+        "topic": "Expressing Preference (선호 표현하기)",
+        "script": "A: Do you prefer tea or coffee? (차와 커피 중에 어떤 것을 더 좋아하세요?) B: I prefer tea. (저는 차를 더 좋아해요.)",
+        "question": "What does person B prefer? (B는 무엇을 더 좋아하나요?)",
         "options": {
-            "A": "Coffee",
-            "B": "Tea",
-            "C": "Neither"
+            "A": "Coffee (커피)",
+            "B": "Tea (차)",
+            "C": "Neither (둘 다 아님)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_169",
-        "topic": "The Weather and Activities",
-        "script": "It's windy today. Let's fly a kite.",
-        "question": "What activity is good for a windy day?",
+        "topic": "The Weather and Activities (날씨와 활동)",
+        "script": "It's windy today. Let's fly a kite. (오늘 바람이 많이 불어요. 연을 날리자.)",
+        "question": "What activity is good for a windy day? (바람 부는 날에 하기 좋은 활동은 무엇인가요?)",
         "options": {
-            "A": "Having a picnic",
-            "B": "Flying a kite",
-            "C": "Sunbathing"
+            "A": "Having a picnic (소풍 가기)",
+            "B": "Flying a kite (연 날리기)",
+            "C": "Sunbathing (일광욕하기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_170",
-        "topic": "At the Pet Shop",
-        "script": "I would like to buy some food for my cat.",
-        "question": "What does the customer want to buy?",
+        "topic": "At the Pet Shop (애완동물 가게에서)",
+        "script": "I would like to buy some food for my cat. (제 고양이 사료 좀 사고 싶어요.)",
+        "question": "What does the customer want to buy? (손님은 무엇을 사고 싶어 하나요?)",
         "options": {
-            "A": "A new pet",
-            "B": "A toy for a dog",
-            "C": "Food for a cat"
+            "A": "A new pet (새 애완동물)",
+            "B": "A toy for a dog (개 장난감)",
+            "C": "Food for a cat (고양이 사료)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_171",
-        "topic": "Personal Appearance",
-        "script": "He has a beard and wears glasses.",
-        "question": "What does he look like?",
+        "topic": "Personal Appearance (외모)",
+        "script": "He has a beard and wears glasses. (그는 수염이 있고 안경을 썼어요.)",
+        "question": "What does he look like? (그는 어떻게 생겼나요?)",
         "options": {
-            "A": "He has long hair.",
-            "B": "He has a beard and glasses.",
-            "C": "He is very tall."
+            "A": "He has long hair. (그는 머리가 길어요.)",
+            "B": "He has a beard and glasses. (그는 수염이 있고 안경을 썼어요.)",
+            "C": "He is very tall. (그는 키가 매우 커요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_172",
-        "topic": "At the Supermarket (Checkout)",
-        "script": "A: Do you have a loyalty card? B: Yes, here it is.",
-        "question": "What does the cashier ask for?",
+        "topic": "At the Supermarket (Checkout) (슈퍼마켓에서 - 계산)",
+        "script": "A: Do you have a loyalty card? (포인트 카드 있으세요?) B: Yes, here it is. (네, 여기 있어요.)",
+        "question": "What does the cashier ask for? (계산원은 무엇을 요청하나요?)",
         "options": {
-            "A": "A credit card",
-            "B": "A loyalty card",
-            "C": "A shopping bag"
+            "A": "A credit card (신용카드)",
+            "B": "A loyalty card (포인트 카드)",
+            "C": "A shopping bag (쇼핑백)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_173",
-        "topic": "Talking about Age",
-        "script": "My son is five years old.",
-        "question": "How old is the speaker's son?",
+        "topic": "Talking about Age (나이에 대해 말하기)",
+        "script": "My son is five years old. (제 아들은 다섯 살입니다.)",
+        "question": "How old is the speaker's son? (화자의 아들은 몇 살인가요?)",
         "options": {
-            "A": "4 years old",
-            "B": "5 years old",
-            "C": "6 years old"
+            "A": "4 years old (4살)",
+            "B": "5 years old (5살)",
+            "C": "6 years old (6살)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_174",
-        "topic": "Ordering Pizza",
-        "script": "We'd like a large pizza with cheese and tomatoes.",
-        "question": "What size pizza do they want?",
+        "topic": "Ordering Pizza (피자 주문하기)",
+        "script": "We'd like a large pizza with cheese and tomatoes. (치즈와 토마토가 들어간 큰 피자 한 판 주세요.)",
+        "question": "What size pizza do they want? (그들은 어떤 사이즈의 피자를 원하나요?)",
         "options": {
-            "A": "Small",
-            "B": "Medium",
-            "C": "Large"
+            "A": "Small (작은 사이즈)",
+            "B": "Medium (중간 사이즈)",
+            "C": "Large (큰 사이즈)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_175",
-        "topic": "The Dentist",
-        "script": "You should brush your teeth twice a day.",
-        "question": "How often should you brush your teeth?",
+        "topic": "The Dentist (치과 의사)",
+        "script": "You should brush your teeth twice a day. (하루에 두 번 이를 닦아야 해요.)",
+        "question": "How often should you brush your teeth? (얼마나 자주 이를 닦아야 하나요?)",
         "options": {
-            "A": "Once a day",
-            "B": "Twice a day",
-            "C": "Three times a day"
+            "A": "Once a day (하루에 한 번)",
+            "B": "Twice a day (하루에 두 번)",
+            "C": "Three times a day (하루에 세 번)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_176",
-        "topic": "Directions (Prepositions)",
-        "script": "The pharmacy is opposite the supermarket.",
-        "question": "Where is the pharmacy?",
+        "topic": "Directions (Prepositions) (길 안내 - 전치사)",
+        "script": "The pharmacy is opposite the supermarket. (약국은 슈퍼마켓 맞은편에 있어요.)",
+        "question": "Where is the pharmacy? (약국은 어디에 있나요?)",
         "options": {
-            "A": "Next to the supermarket",
-            "B": "Opposite the supermarket",
-            "C": "Behind the supermarket"
+            "A": "Next to the supermarket (슈퍼마켓 옆)",
+            "B": "Opposite the supermarket (슈퍼마켓 맞은편)",
+            "C": "Behind the supermarket (슈퍼마켓 뒤)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_177",
-        "topic": "At the Museum",
-        "script": "Please do not touch the paintings.",
-        "question": "What is not allowed in the museum?",
+        "topic": "At the Museum (박물관에서)",
+        "script": "Please do not touch the paintings. (그림을 만지지 마세요.)",
+        "question": "What is not allowed in the museum? (박물관에서 허용되지 않는 것은 무엇인가요?)",
         "options": {
-            "A": "Taking photos",
-            "B": "Talking quietly",
-            "C": "Touching the paintings"
+            "A": "Taking photos (사진 촬영)",
+            "B": "Talking quietly (조용히 말하기)",
+            "C": "Touching the paintings (그림 만지기)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_178",
-        "topic": "Simple Past Tense",
-        "script": "Last night, I watched a film on TV.",
-        "question": "What did the speaker do last night?",
+        "topic": "Simple Past Tense (단순 과거 시제)",
+        "script": "Last night, I watched a film on TV. (어젯밤에 저는 TV로 영화를 봤어요.)",
+        "question": "What did the speaker do last night? (화자는 어젯밤에 무엇을 했나요?)",
         "options": {
-            "A": "Listened to music",
-            "B": "Watched a film",
-            "C": "Read a book"
+            "A": "Listened to music (음악을 들었어요)",
+            "B": "Watched a film (영화를 봤어요)",
+            "C": "Read a book (책을 읽었어요)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_179",
-        "topic": "At the Bakery",
-        "script": "I'll have six bread rolls, please.",
-        "question": "How many bread rolls does the customer want?",
+        "topic": "At the Bakery (빵집에서)",
+        "script": "I'll have six bread rolls, please. (빵 6개 주세요.)",
+        "question": "How many bread rolls does the customer want? (손님은 빵을 몇 개 원하나요?)",
         "options": {
-            "A": "Four",
-            "B": "Five",
-            "C": "Six"
+            "A": "Four (네 개)",
+            "B": "Five (다섯 개)",
+            "C": "Six (여섯 개)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_180",
-        "topic": "Technology Problems",
-        "script": "I can't connect to the Wi-Fi.",
-        "question": "What is the problem?",
+        "topic": "Technology Problems (기술 문제)",
+        "script": "I can't connect to the Wi-Fi. (와이파이에 연결할 수 없어요.)",
+        "question": "What is the problem? (무엇이 문제인가요?)",
         "options": {
-            "A": "The battery is low.",
-            "B": "Cannot connect to Wi-Fi.",
-            "C": "The screen is broken."
+            "A": "The battery is low. (배터리가 부족해요.)",
+            "B": "Cannot connect to Wi-Fi. (와이파이에 연결할 수 없어요.)",
+            "C": "The screen is broken. (화면이 깨졌어요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_181",
-        "topic": "Gardening",
-        "script": "In the spring, I plant new flowers in my garden.",
-        "question": "When does the speaker plant flowers?",
+        "topic": "Gardening (정원 가꾸기)",
+        "script": "In the spring, I plant new flowers in my garden. (봄에 저는 정원에 새 꽃을 심어요.)",
+        "question": "When does the speaker plant flowers? (화자는 언제 꽃을 심나요?)",
         "options": {
-            "A": "In summer",
-            "B": "In autumn",
-            "C": "In spring"
+            "A": "In summer (여름에)",
+            "B": "In autumn (가을에)",
+            "C": "In spring (봄에)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_182",
-        "topic": "Asking About a Job",
-        "script": "A: What do you do? B: I'm a nurse.",
-        "question": "What is person B's job?",
+        "topic": "Asking About a Job (직업 묻기)",
+        "script": "A: What do you do? (무슨 일 하세요?) B: I'm a nurse. (저는 간호사입니다.)",
+        "question": "What is person B's job? (B의 직업은 무엇인가요?)",
         "options": {
-            "A": "A teacher",
-            "B": "A nurse",
-            "C": "A driver"
+            "A": "A teacher (선생님)",
+            "B": "A nurse (간호사)",
+            "C": "A driver (운전사)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_183",
-        "topic": "At the Library (Borrowing)",
-        "script": "You can borrow books for two weeks.",
-        "question": "How long can you borrow books for?",
+        "topic": "At the Library (Borrowing) (도서관에서 - 대출)",
+        "script": "You can borrow books for two weeks. (책은 2주 동안 빌릴 수 있습니다.)",
+        "question": "How long can you borrow books for? (책을 얼마나 오래 빌릴 수 있나요?)",
         "options": {
-            "A": "For one week",
-            "B": "For two weeks",
-            "C": "For one month"
+            "A": "For one week (1주 동안)",
+            "B": "For two weeks (2주 동안)",
+            "C": "For one month (한 달 동안)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_184",
-        "topic": "Describing a Day",
-        "script": "I had a very busy day at work today.",
-        "question": "How was the speaker's day?",
+        "topic": "Describing a Day (하루 묘사하기)",
+        "script": "I had a very busy day at work today. (오늘 직장에서 매우 바쁜 하루를 보냈어요.)",
+        "question": "How was the speaker's day? (화자의 하루는 어땠나요?)",
         "options": {
-            "A": "It was relaxing.",
-            "B": "It was busy.",
-            "C": "It was boring."
+            "A": "It was relaxing. (편안했어요.)",
+            "B": "It was busy. (바빴어요.)",
+            "C": "It was boring. (지루했어요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_185",
-        "topic": "At a Concert",
-        "script": "The music is too loud!",
-        "question": "What is the problem with the music?",
+        "topic": "At a Concert (콘서트에서)",
+        "script": "The music is too loud! (음악이 너무 시끄러워요!)",
+        "question": "What is the problem with the music? (음악에 무슨 문제가 있나요?)",
         "options": {
-            "A": "It's too quiet.",
-            "B": "It's too loud.",
-            "C": "It's too slow."
+            "A": "It's too quiet. (너무 조용해요.)",
+            "B": "It's too loud. (너무 시끄러워요.)",
+            "C": "It's too slow. (너무 느려요.)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_186",
-        "topic": "Physical Activity",
-        "script": "I like walking in the mountains.",
-        "question": "What activity does the speaker enjoy?",
+        "topic": "Physical Activity (신체 활동)",
+        "script": "I like walking in the mountains. (저는 산에서 걷는 것을 좋아해요.)",
+        "question": "What activity does the speaker enjoy? (화자는 어떤 활동을 즐기나요?)",
         "options": {
-            "A": "Swimming in the sea",
-            "B": "Walking in the mountains",
-            "C": "Cycling in the city"
+            "A": "Swimming in the sea (바다에서 수영하기)",
+            "B": "Walking in the mountains (산에서 걷기)",
+            "C": "Cycling in the city (도시에서 자전거 타기)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_187",
-        "topic": "At the Greengrocer's",
-        "script": "Can I have half a kilo of grapes, please?",
-        "question": "How many grapes does the customer want?",
+        "topic": "At the Greengrocer's (청과물 가게에서)",
+        "script": "Can I have half a kilo of grapes, please? (포도 반 킬로그램 주시겠어요?)",
+        "question": "How many grapes does the customer want? (손님은 포도를 얼마나 원하나요?)",
         "options": {
-            "A": "Half a kilo",
-            "B": "One kilo",
-            "C": "Two kilos"
+            "A": "Half a kilo (반 킬로그램)",
+            "B": "One kilo (1킬로그램)",
+            "C": "Two kilos (2킬로그램)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_188",
-        "topic": "The Time (Noon/Midnight)",
-        "script": "Let's meet for lunch at noon.",
-        "question": "What time are they meeting for lunch?",
+        "topic": "The Time (Noon/Midnight) (시간 - 정오/자정)",
+        "script": "Let's meet for lunch at noon. (정오에 점심 식사해요.)",
+        "question": "What time are they meeting for lunch? (그들은 몇 시에 점심을 먹기로 했나요?)",
         "options": {
-            "A": "11:00 AM",
-            "B": "12:00 PM (noon)",
-            "C": "1:00 PM"
+            "A": "11:00 AM (오전 11시)",
+            "B": "12:00 PM (noon) (오후 12시 (정오))",
+            "C": "1:00 PM (오후 1시)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_189",
-        "topic": "Expressing Certainty",
-        "script": "A: Are you sure? B: Yes, I'm positive.",
-        "question": "Is person B sure?",
+        "topic": "Expressing Certainty (확신 표현하기)",
+        "script": "A: Are you sure? (확실해요?) B: Yes, I'm positive. (네, 확신해요.)",
+        "question": "Is person B sure? (B는 확신하나요?)",
         "options": {
-            "A": "No, they are not sure.",
-            "B": "They are a little sure.",
-            "C": "Yes, they are very sure."
+            "A": "No, they are not sure. (아니요, 확신하지 않아요.)",
+            "B": "They are a little sure. (조금 확신해요.)",
+            "C": "Yes, they are very sure. (네, 매우 확신해요.)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_190",
-        "topic": "At the Cinema (Snacks)",
-        "script": "I'll have a large popcorn and a small drink.",
-        "question": "What size drink does the person want?",
+        "topic": "At the Cinema (Snacks) (영화관에서 - 간식)",
+        "script": "I'll have a large popcorn and a small drink. (큰 팝콘 하나랑 작은 음료 하나 주세요.)",
+        "question": "What size drink does the person want? (그 사람은 어떤 사이즈의 음료를 원하나요?)",
         "options": {
-            "A": "Small",
-            "B": "Medium",
-            "C": "Large"
+            "A": "Small (작은 사이즈)",
+            "B": "Medium (중간 사이즈)",
+            "C": "Large (큰 사이즈)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_191",
-        "topic": "School Timetable",
-        "script": "We have an English class at 9 AM, and after that, we have Math.",
-        "question": "What class is after the English class?",
+        "topic": "School Timetable (학교 시간표)",
+        "script": "We have an English class at 9 AM, and after that, we have Math. (우리는 오전 9시에 영어 수업이 있고, 그 후에 수학 수업이 있어요.)",
+        "question": "What class is after the English class? (영어 수업 다음은 무슨 수업인가요?)",
         "options": {
-            "A": "History",
-            "B": "Math",
-            "C": "Science"
+            "A": "History (역사)",
+            "B": "Math (수학)",
+            "C": "Science (과학)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_192",
-        "topic": "Weather Forecast",
-        "script": "The forecast for tomorrow is cloudy with a chance of rain.",
-        "question": "What is the weather forecast for tomorrow?",
+        "topic": "Weather Forecast (일기 예보)",
+        "script": "The forecast for tomorrow is cloudy with a chance of rain. (내일 예보는 흐리고 비가 올 가능성이 있습니다.)",
+        "question": "What is the weather forecast for tomorrow? (내일 일기 예보는 어떤가요?)",
         "options": {
-            "A": "Sunny",
-            "B": "Snowy",
-            "C": "Cloudy and possibly rainy"
+            "A": "Sunny (맑음)",
+            "B": "Snowy (눈)",
+            "C": "Cloudy and possibly rainy (흐리고 비 올 가능성 있음)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_193",
-        "topic": "At the Newsagent's",
-        "script": "Can I have a newspaper and a magazine, please?",
-        "question": "What does the customer want to buy?",
+        "topic": "At the Newsagent's (신문 가판대에서)",
+        "script": "Can I have a newspaper and a magazine, please? (신문 하나랑 잡지 하나 주시겠어요?)",
+        "question": "What does the customer want to buy? (손님은 무엇을 사고 싶어 하나요?)",
         "options": {
-            "A": "A book and a pen",
-            "B": "A newspaper and a magazine",
-            "C": "A card and a stamp"
+            "A": "A book and a pen (책과 펜)",
+            "B": "A newspaper and a magazine (신문과 잡지)",
+            "C": "A card and a stamp (카드와 우표)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_194",
-        "topic": "Lost Property",
-        "script": "I think I lost my wallet. It's black and has my ID card in it.",
-        "question": "What did the speaker lose?",
+        "topic": "Lost Property (분실물)",
+        "script": "I think I lost my wallet. It's black and has my ID card in it. (지갑을 잃어버린 것 같아요. 검은색이고 안에 신분증이 들어있어요.)",
+        "question": "What did the speaker lose? (화자는 무엇을 잃어버렸나요?)",
         "options": {
-            "A": "Their keys",
-            "B": "Their phone",
-            "C": "Their wallet"
+            "A": "Their keys (열쇠)",
+            "B": "Their phone (전화기)",
+            "C": "Their wallet (지갑)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_195",
-        "topic": "Cooking Instructions",
-        "script": "Cook the pasta for ten minutes.",
-        "question": "How long should the pasta be cooked?",
+        "topic": "Cooking Instructions (요리 지시)",
+        "script": "Cook the pasta for ten minutes. (파스타를 10분 동안 요리하세요.)",
+        "question": "How long should the pasta be cooked? (파스타는 얼마나 오래 요리해야 하나요?)",
         "options": {
-            "A": "5 minutes",
-            "B": "10 minutes",
-            "C": "15 minutes"
+            "A": "5 minutes (5분)",
+            "B": "10 minutes (10분)",
+            "C": "15 minutes (15분)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_196",
-        "topic": "Public Signs",
-        "script": "The sign says 'No Smoking'.",
-        "question": "What is not allowed?",
+        "topic": "Public Signs (공공 표지판)",
+        "script": "The sign says 'No Smoking'. (표지판에 '금연'이라고 쓰여 있어요.)",
+        "question": "What is not allowed? (무엇이 허용되지 않나요?)",
         "options": {
-            "A": "No eating",
-            "B": "No parking",
-            "C": "No smoking"
+            "A": "No eating (취식 금지)",
+            "B": "No parking (주차 금지)",
+            "C": "No smoking (흡연 금지)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_197",
-        "topic": "At the Airport (Baggage)",
-        "script": "You can only take one piece of hand luggage on the plane.",
-        "question": "How much hand luggage is allowed?",
+        "topic": "At the Airport (Baggage) (공항에서 - 수하물)",
+        "script": "You can only take one piece of hand luggage on the plane. (비행기에는 기내 수하물을 한 개만 가져갈 수 있습니다.)",
+        "question": "How much hand luggage is allowed? (기내 수하물은 얼마나 허용되나요?)",
         "options": {
-            "A": "One piece",
-            "B": "Two pieces",
-            "C": "No hand luggage"
+            "A": "One piece (한 개)",
+            "B": "Two pieces (두 개)",
+            "C": "No hand luggage (기내 수하물 없음)"
         },
         "answer": "A"
     },
     {
         "id": "A1_L_198",
-        "topic": "Making a Phone Call",
-        "script": "Hello, can I speak to Mr. Smith, please?",
-        "question": "Who does the caller want to speak to?",
+        "topic": "Making a Phone Call (전화 걸기)",
+        "script": "Hello, can I speak to Mr. Smith, please? (안녕하세요, 스미스 씨와 통화할 수 있을까요?)",
+        "question": "Who does the caller want to speak to? (전화 건 사람은 누구와 통화하고 싶어 하나요?)",
         "options": {
-            "A": "Mr. Jones",
-            "B": "Mr. Smith",
-            "C": "Mrs. Davis"
+            "A": "Mr. Jones (존스 씨)",
+            "B": "Mr. Smith (스미스 씨)",
+            "C": "Mrs. Davis (데이비스 부인)"
         },
         "answer": "B"
     },
     {
         "id": "A1_L_199",
-        "topic": "Routines (Weekly)",
-        "script": "I do my food shopping every Friday afternoon.",
-        "question": "When does the speaker do their food shopping?",
+        "topic": "Routines (Weekly) (일상 - 주간)",
+        "script": "I do my food shopping every Friday afternoon. (저는 매주 금요일 오후에 식료품 쇼핑을 해요.)",
+        "question": "When does the speaker do their food shopping? (화자는 언제 식료품 쇼핑을 하나요?)",
         "options": {
-            "A": "On Monday",
-            "B": "On Wednesday",
-            "C": "On Friday"
+            "A": "On Monday (월요일에)",
+            "B": "On Wednesday (수요일에)",
+            "C": "On Friday (금요일에)"
         },
         "answer": "C"
     },
     {
         "id": "A1_L_200",
-        "topic": "Ending a Conversation",
-        "script": "It was nice talking to you. I have to go now.",
-        "question": "What is the speaker doing?",
+        "topic": "Ending a Conversation (대화 끝내기)",
+        "script": "It was nice talking to you. I have to go now. (이야기 즐거웠어요. 이제 가봐야 해요.)",
+        "question": "What is the speaker doing? (화자는 무엇을 하고 있나요?)",
         "options": {
-            "A": "Starting a conversation",
-            "B": "Asking a question",
-            "C": "Ending a conversation"
+            "A": "Starting a conversation (대화 시작하기)",
+            "B": "Asking a question (질문하기)",
+            "C": "Ending a conversation (대화 끝내기)"
         },
         "answer": "C"
     }

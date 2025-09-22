@@ -249,7 +249,16 @@
       "Bash(do echo \"=== $dir Listening 폴더 ===\")",
       "Bash(do echo \"=== $dir 폴더 구조 ===\")",
       "Bash(do echo \"=== $dir Listening 폴더 내용 ===\")",
-      "Bash(do echo \"=== $dir 오디오 폴더 확인 ===\")"
+      "Bash(do echo \"=== $dir 오디오 폴더 확인 ===\")",
+      "Bash(do echo \"=== $level passage.txt 확인 ===\")",
+      "Bash(do echo \"=== $level Reading JSON 확인 ===\")",
+      "Bash(xargs ls:*)",
+      "Bash(do mkdir -p \"web/apps/frontend/public/$level/$level_Listening/$level_Listening_mix\")",
+      "Bash(__NEW_LINE__ if [ -d \"$source_dir\" ])",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(fi)",
+      "Bash(if [ -d \"web/apps/backend/$level/$level_$i\" ])"
     ],
     "deny": [],
     "ask": []

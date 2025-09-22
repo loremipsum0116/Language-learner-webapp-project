@@ -10,7 +10,7 @@ make_jlpt_audio.py
           [라벨(A) → 2초대기 → 텍스트] 를 보기마다 수행
   * options가 dict이면(공통) 모든 질문에 동일 적용
   * options가 list[dict]이고 길이가 질문 수와 같으면 문항별 개별 옵션 적용
-- 보이스: 항목 인덱스 기준 ja-JP 사용, A=Charon, B=Laomedeia, C=Achernar, Q=Aoede
+- 보이스: 항목 인덱스 기준 ja-JP 사용, A=Charon, B=Laomedeia, C=Sadachbia, Q=Aoede
 - 출력 속도: 기본 0.8배속(피치 유지, ffmpeg atempo), --tempo로 조정 가능
 - 안전장치: 항목당 export 1회 강제, --purge-out 로 출력 폴더의 기존 .mp3 삭제
 
@@ -208,7 +208,7 @@ def build_voice_set(language_code: str):
             language_code=language_code, name=f"{language_code}-Chirp3-HD-Laomedeia"
         ),
         "C": texttospeech.VoiceSelectionParams(
-            language_code=language_code, name=f"{language_code}-Chirp3-HD-Achernar"
+            language_code=language_code, name=f"{language_code}-Chirp3-HD-Sadachbia"
         ),
         "Q": texttospeech.VoiceSelectionParams(
             language_code=language_code, name=f"{language_code}-Chirp3-HD-Kore"

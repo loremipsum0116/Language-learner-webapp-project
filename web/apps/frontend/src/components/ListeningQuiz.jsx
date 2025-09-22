@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 import { fetchJSON, withCreds } from '../api/client';
+import EnglishWordPopup from './EnglishWordPopup';
 
 /**
  * 리스닝 퀴즈 컴포넌트
@@ -16,11 +17,160 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
   const [isPlaying, setIsPlaying] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1.0);
   const [showScript, setShowScript] = useState(false);
+  const [englishDict, setEnglishDict] = useState(new Map()); // 영어 사전
+  const [selectedWord, setSelectedWord] = useState(null);
+  const [wordPopupPosition, setWordPopupPosition] = useState(null);
+  const [showTranslation, setShowTranslation] = useState(false);
   
   const audioRef = useRef(null);
   
   const currentQuestion = questions[currentIndex];
-  
+
+  // 영어 사전 데이터 로드 (모든 레벨의 모든 IELTS JSON 파일)
+  const loadEnglishDictionary = async () => {
+    try {
+      const dictMap = new Map();
+
+      // 모든 레벨의 세부 폴더 수
+      const allLevelFolders = {
+        'A1': 9, 'A2': 9, 'B1': 8, 'B2': 8, 'C1': 5
+      };
+
+      // 모든 레벨의 모든 IELTS 파일 로드
+      for (const [levelName, folderCount] of Object.entries(allLevelFolders)) {
+        for (let i = 1; i <= folderCount; i++) {
+          try {
+            const response = await fetch(`/${levelName}/${levelName}_${i}/ielts_${levelName.toLowerCase()}_${i}.json`);
+            if (response.ok) {
+              const words = await response.json();
+              words.forEach(word => {
+                if (word.lemma && word.koGloss) {
+                  // 기본 단어 추출 (괄호 앞 부분)
+                  const baseWord = word.lemma.split('(')[0].trim().toLowerCase();
+
+                  // 해당 기본 단어에 대한 배열이 없으면 생성
+                  if (!dictMap.has(baseWord)) {
+                    dictMap.set(baseWord, []);
+                  }
+
+                  // 동음이의어 배열에 추가
+                  dictMap.get(baseWord).push({
+                    lemma: word.lemma,
+                    koGloss: word.koGloss,
+                    pos: word.pos,
+                    definition: word.definition,
+                    example: word.example,
+                    koExample: word.koExample,
+                    level: levelName
+                  });
+                }
+              });
+            }
+          } catch (error) {
+            console.warn(`Failed to load ${levelName}_${i} dictionary:`, error);
+          }
+        }
+      }
+
+      console.log(`✅ [영어 사전 로드 완료] 전체 레벨: ${dictMap.size}개 단어`);
+      setEnglishDict(dictMap);
+    } catch (error) {
+      console.error('❌ 영어 사전 로드 실패:', error);
+      setEnglishDict(new Map());
+    }
+  };
+
+  // 단어 클릭 핸들러 (동음이의어 지원)
+  const handleWordClick = (word, event) => {
+    const cleanWord = word.toLowerCase().replace(/[^a-z]/g, '');
+    const wordDataArray = englishDict.get(cleanWord);
+
+    if (wordDataArray && wordDataArray.length > 0) {
+      setSelectedWord({
+        word: cleanWord,
+        definitions: wordDataArray
+      });
+      setWordPopupPosition({ x: event.clientX, y: event.clientY });
+    }
+  };
+
+  // 팝업 닫기
+  const closeWordPopup = () => {
+    setSelectedWord(null);
+    setWordPopupPosition(null);
+  };
+
+  // 영어와 한글을 분리하는 함수
+  const separateEnglishKorean = (text) => {
+    if (!text) return { english: '', korean: '' };
+
+    // 괄호 안의 내용 찾기: (내용)
+    const koreanMatches = text.match(/\([^)]+\)/g);
+    let english = text;
+    let korean = '';
+
+    if (koreanMatches) {
+      // 괄호 안의 내용 중 한글이 포함된 것만 필터링
+      const koreanParts = koreanMatches
+        .map(match => match.replace(/[()]/g, ''))
+        .filter(content => /[가-힣]/.test(content));
+
+      if (koreanParts.length > 0) {
+        korean = koreanParts.join(' ');
+        // 괄호와 그 안의 내용을 모두 제거하여 영어만 추출
+        english = text.replace(/\([^)]+\)/g, '').trim();
+      }
+    }
+
+    return { english: english.trim(), korean: korean.trim() };
+  };
+
+  // 텍스트를 클릭 가능한 단어들로 분할하는 함수
+  const renderClickableText = (text, className = "", showOnlyEnglish = false) => {
+    if (!text) return null;
+
+    // 영어와 한글 분리
+    const { english, korean } = separateEnglishKorean(text);
+    const textToRender = showOnlyEnglish ? english : text;
+
+    return textToRender.split(/(\w+)/).map((part, index) => {
+      const cleanPart = part.toLowerCase().replace(/[^a-z]/g, '');
+      const isWord = /^[a-zA-Z]+$/.test(part);
+      const wordDataArray = englishDict.get(cleanPart);
+      const hasTranslation = isWord && wordDataArray && wordDataArray.length > 0;
+
+      if (hasTranslation) {
+        return (
+          <span
+            key={index}
+            className={`clickable-word ${className}`}
+            onClick={(e) => handleWordClick(part, e)}
+            style={{
+              textDecoration: 'underline dotted',
+              cursor: 'pointer'
+            }}
+            title="클릭하여 뜻 보기"
+          >
+            {part}
+          </span>
+        );
+      }
+      return <span key={index}>{part}</span>;
+    });
+  };
+
+  // 한글 번역만 표시하는 함수
+  const renderKoreanTranslation = (text) => {
+    if (!text) return null;
+    const { korean } = separateEnglishKorean(text);
+    return korean || null;
+  };
+
+  // 컴포넌트 마운트 시 영어 사전 로드
+  useEffect(() => {
+    loadEnglishDictionary();
+  }, []);
+
   // 실제 MP3 파일 재생
   const playScript = () => {
     if (!currentQuestion?.id) return;
@@ -85,7 +235,48 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
       toast.success('정답입니다! 🎉');
     } else {
       toast.error(`틀렸습니다. 정답은 "${currentQuestion.answer}" 입니다.`);
-      
+    }
+
+    // 문제 풀이 후 자동으로 번역 표시
+    setShowTranslation(true);
+
+    // 즉각 반영을 위한 업데이트 데이터 생성
+    const updateData = {
+      questionId: currentQuestion.id,
+      level: level,
+      isCorrect: isCorrect,
+      timestamp: Date.now()
+    };
+
+    // 다중 이벤트 발송으로 즉각 반영 보장
+    localStorage.setItem('englishListeningInstantUpdate', JSON.stringify(updateData));
+    localStorage.setItem('wrongAnswersUpdated', updateData.timestamp.toString());
+    localStorage.setItem('listeningRecordUpdated', updateData.timestamp.toString());
+    localStorage.setItem('forceListeningRefresh', updateData.timestamp.toString());
+    sessionStorage.setItem('needsRefresh', 'true');
+
+    // 커스텀 이벤트 발송
+    window.dispatchEvent(new CustomEvent('englishListeningUpdate', { detail: updateData }));
+    window.dispatchEvent(new CustomEvent('wrongAnswersUpdated', { detail: updateData }));
+    window.dispatchEvent(new CustomEvent('listeningRecordUpdated', { detail: updateData }));
+    window.dispatchEvent(new CustomEvent('forceListeningRefresh', { detail: updateData }));
+
+    // Storage 이벤트 발송
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'englishListeningInstantUpdate',
+      newValue: JSON.stringify(updateData)
+    }));
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'wrongAnswersUpdated',
+      newValue: updateData.timestamp.toString()
+    }));
+    window.dispatchEvent(new StorageEvent('storage', {
+      key: 'listeningRecordUpdated',
+      newValue: updateData.timestamp.toString()
+    }));
+
+    // 오답인 경우에만 오답노트에 기록
+    if (!isCorrect) {
       // 오답노트에 리스닝 문제 기록
       try {
         await fetchJSON('/api/odat-note', withCreds({
@@ -130,6 +321,7 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
       setSelectedAnswer('');
       setIsAnswered(false);
       setShowScript(false);
+      setShowTranslation(false);
       stopAudio();
     } else {
       // 퀴즈 완료
@@ -148,6 +340,7 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
     setShowResult(false);
     setResults([]);
     setShowScript(false);
+    setShowTranslation(false);
     stopAudio();
   };
   
@@ -362,7 +555,19 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
               
               {showScript && (
                 <div className="script-display mt-2 p-3 bg-light border rounded">
-                  <strong>스크립트:</strong> <em>"{currentQuestion.script}"</em>
+                  <strong>스크립트:</strong> <em>"{renderClickableText(currentQuestion.script, "", true)}"</em>
+                  {showTranslation && renderKoreanTranslation(currentQuestion.script) && (
+                    <div style={{
+                      marginTop: '8px',
+                      padding: '8px',
+                      backgroundColor: '#e8f4f8',
+                      borderLeft: '4px solid #17a2b8',
+                      fontSize: '14px',
+                      color: '#0c5460'
+                    }}>
+                      <strong>번역:</strong> {renderKoreanTranslation(currentQuestion.script)}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
@@ -371,8 +576,20 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
           {/* 질문 */}
           <div className="question-section mb-4">
             <h6 className="question-text">
-              {currentQuestion.question}
+              {renderClickableText(currentQuestion.question, "", true)}
             </h6>
+            {showTranslation && renderKoreanTranslation(currentQuestion.question) && (
+              <div style={{
+                marginTop: '8px',
+                padding: '8px',
+                backgroundColor: '#e8f4f8',
+                borderLeft: '4px solid #17a2b8',
+                fontSize: '14px',
+                color: '#0c5460'
+              }}>
+                <strong>번역:</strong> {renderKoreanTranslation(currentQuestion.question)}
+              </div>
+            )}
           </div>
           
           
@@ -392,7 +609,26 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
                 disabled={isAnswered}
                 style={{ fontSize: '1.5rem', fontWeight: 'bold', padding: '1rem' }}
               >
-                {key}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', width: '100%' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', marginBottom: isAnswered ? '8px' : '0' }}>
+                    <span style={{ marginRight: '10px' }}>{key}.</span>
+                    {isAnswered && (
+                      <span>{renderClickableText(value, "", true)}</span>
+                    )}
+                  </div>
+                  {isAnswered && renderKoreanTranslation(value) && (
+                    <div style={{
+                      fontSize: '14px',
+                      color: '#0c5460',
+                      backgroundColor: '#e8f4f8',
+                      padding: '4px 8px',
+                      borderRadius: '4px',
+                      marginLeft: '30px'
+                    }}>
+                      {renderKoreanTranslation(value)}
+                    </div>
+                  )}
+                </div>
                 {isAnswered && key === currentQuestion.answer && (
                   <span className="badge bg-light text-success ms-2">✓ 정답</span>
                 )}
@@ -516,6 +752,16 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
           font-size: 0.9rem;
         }
       `}</style>
+
+      {/* 영어 단어 팝업 */}
+      {selectedWord && wordPopupPosition && (
+        <EnglishWordPopup
+          word={selectedWord.word}
+          definitions={selectedWord.definitions}
+          position={wordPopupPosition}
+          onClose={closeWordPopup}
+        />
+      )}
     </div>
   );
 }

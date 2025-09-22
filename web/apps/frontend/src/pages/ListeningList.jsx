@@ -6,6 +6,7 @@ export default function ListeningList() {
     const [searchParams] = useSearchParams();
     const location = useLocation();
     const level = searchParams.get('level') || 'A1';
+    const refreshParam = searchParams.get('refresh') || searchParams.get('t');
     
     const [listeningData, setListeningData] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -14,24 +15,31 @@ export default function ListeningList() {
     const [history, setHistory] = useState(new Map()); // Map<questionId, historyData>
     const [refreshTrigger, setRefreshTrigger] = useState(0);
 
+    // 한국어 번역 제거 함수 (목록용)
+    const removeKoreanTranslation = (text) => {
+        if (!text) return '';
+        // 괄호 안의 한글 내용을 제거: (한글내용)
+        return text.replace(/\([^)]*[가-힣][^)]*\)/g, '').trim();
+    };
+
     useEffect(() => {
-        console.log(`🔄🆕 [EFFECT START] useEffect 시작`);
-        
+        console.log(`🔄🆕 [EFFECT START] useEffect 시작 - level: ${level}, refreshTrigger: ${refreshTrigger}`);
+
         const abortController = new AbortController();
-        
+
         const loadData = async () => {
             try {
                 console.log(`🔄🆕 [DATA LOADING START] 데이터 로딩 시작`);
-                
+
                 // 리스닝 데이터와 히스토리를 순차적으로 로드
                 await loadListeningData();
                 console.log(`📚🆕 [LISTENING DATA LOADED] 리스닝 데이터 로드 완료`);
-                
+
                 if (!abortController.signal.aborted) {
                     await loadHistory(abortController.signal);
                     console.log(`📊🆕 [HISTORY LOADED] 히스토리 로드 완료`);
                 }
-                
+
                 console.log(`✅🆕 [ALL DATA LOADED] 모든 데이터 로딩 완료`);
             } catch (error) {
                 if (error.name === 'AbortError') {
@@ -41,38 +49,80 @@ export default function ListeningList() {
                 }
             }
         };
-        
+
         loadData();
-        
+
         // Cleanup function
         return () => {
             console.log(`🧹🆕 [EFFECT CLEANUP] useEffect 정리 중`);
             abortController.abort();
         };
-    }, [level, location, refreshTrigger]); // location 변경 시에도 새로고침
+    }, [level, location, refreshTrigger, refreshParam]); // URL 파라미터 변경 시에도 새로고침
 
-    // 오답노트에서 삭제 시 실시간 업데이트
+    // 실시간 업데이트 및 페이지 포커스 시 새로고침
     useEffect(() => {
+        const handleEnglishListeningUpdate = () => {
+            console.log('🔄 [LISTENING UPDATE] English listening updated, triggering refresh...');
+            setRefreshTrigger(prev => prev + 1);
+        };
+
         const handleWrongAnswersUpdate = () => {
             console.log('🔄 [REAL-TIME UPDATE] Wrong answers updated, triggering refresh...');
             setRefreshTrigger(prev => prev + 1);
         };
-        
-        // localStorage 변경 이벤트 리스닝
+
+        const handleVisibilityChange = () => {
+            if (!document.hidden) {
+                console.log('🔄 [PAGE FOCUS] Page became visible, triggering refresh...');
+                setRefreshTrigger(prev => prev + 1);
+            }
+        };
+
+        const handleFocus = () => {
+            console.log('🔄 [WINDOW FOCUS] Window focused, triggering refresh...');
+            setRefreshTrigger(prev => prev + 1);
+        };
+
+        // 모든 스토리지 변경 이벤트 리스닝
         const handleStorageChange = (e) => {
-            if (e.key === 'wrongAnswersUpdated') {
+            if (e.key === 'wrongAnswersUpdated' ||
+                e.key === 'listeningRecordUpdated' ||
+                e.key === 'forceListeningRefresh' ||
+                e.key === 'englishListeningInstantUpdate') {
+                console.log('🔄 [STORAGE EVENT] Storage key changed:', e.key);
                 handleWrongAnswersUpdate();
             }
         };
-        
+
+        // 페이지 로드 시 세션 스토리지 체크 및 강제 새로고침
+        if (sessionStorage.getItem('needsRefresh') === 'true') {
+            console.log('🔄 [SESSION CHECK] Need refresh detected, triggering update...');
+            sessionStorage.removeItem('needsRefresh');
+            handleWrongAnswersUpdate();
+        }
+
+        // refresh 파라미터가 있으면 강제 새로고침
+        if (refreshParam) {
+            console.log('🔄 [URL REFRESH] Refresh parameter detected:', refreshParam);
+            setTimeout(() => handleWrongAnswersUpdate(), 100);
+        }
+
         window.addEventListener('storage', handleStorageChange);
-        
-        // 같은 탭에서의 변경도 감지 (storage 이벤트는 다른 탭에서만 발생)
+        window.addEventListener('englishListeningUpdate', handleEnglishListeningUpdate);
         window.addEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
-        
+        window.addEventListener('listeningRecordUpdated', handleWrongAnswersUpdate);
+        window.addEventListener('forceListeningRefresh', handleWrongAnswersUpdate);
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        window.addEventListener('focus', handleFocus);
+
         return () => {
             window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('englishListeningUpdate', handleEnglishListeningUpdate);
             window.removeEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+            window.removeEventListener('listeningRecordUpdated', handleWrongAnswersUpdate);
+            window.removeEventListener('forceListeningRefresh', handleWrongAnswersUpdate);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.removeEventListener('focus', handleFocus);
         };
     }, [level]);
 
@@ -106,9 +156,10 @@ export default function ListeningList() {
     const loadHistory = async (signal) => {
         try {
             console.log(`🚀🆕 [SIMPLIFIED FETCH START] 단순화된 fetch 시작`);
-            
-            const response = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+
+            const response = await fetch(`http://localhost:4000/api/listening/history/${level}?t=${Date.now()}`, {
                 credentials: 'include',
+                cache: 'no-cache',
                 signal: signal
             });
             
@@ -152,7 +203,7 @@ export default function ListeningList() {
                         
                         // 기본 통계값 설정
                         const correctCount = wrongData?.correctCount || (isCorrect ? 1 : 0);
-                        const incorrectCount = wrongData?.incorrectCount || (isCorrect ? 0 : 1);  
+                        const incorrectCount = wrongData?.incorrectCount || (isCorrect ? 0 : 1);
                         const totalAttempts = wrongData?.totalAttempts || record.attempts || 1;
                         
                         console.log(`📝🆕 [리스닝 기록 BUSTED] questionId: ${questionId}, isCorrect: ${isCorrect}, lastResult: ${lastResult}, stats: ${correctCount}/${incorrectCount}/${totalAttempts}`);
@@ -472,13 +523,13 @@ export default function ListeningList() {
                                 </div>
                                 
                                 <div className="question-text">
-                                    {question.question}
+                                    {removeKoreanTranslation(question.question)}
                                 </div>
                                 
                                 <div className="question-preview">
                                     <p className="audio-info">🎵 오디오: {question.id}.mp3</p>
                                     <p className="script-preview">
-                                        "{question.script?.slice(0, 80) || '스크립트 미리보기'}..."
+                                        "{removeKoreanTranslation(question.script)?.slice(0, 80) || '스크립트 미리보기'}..."
                                     </p>
                                 </div>
                                 

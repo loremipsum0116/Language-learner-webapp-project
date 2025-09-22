@@ -40,6 +40,8 @@ import JapaneseReading from "./pages/JapaneseReading";
 import Listening from "./pages/Listening";
 import ListeningList from "./pages/ListeningList";
 import ListeningPractice from "./pages/ListeningPractice";
+import JapaneseListeningList from "./pages/JapaneseListeningList";
+import JapaneseListeningPractice from "./pages/JapaneseListeningPractice";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -306,8 +308,8 @@ export default function App() {
           
           
           {/* Listening 관련 라우트 */}
-          <Route 
-            path="/listening" 
+          <Route
+            path="/listening"
             element={
               <>
                 <Header />
@@ -316,10 +318,10 @@ export default function App() {
                 </div>
                 <Footer />
               </>
-            } 
+            }
           />
-          <Route 
-            path="/listening/list" 
+          <Route
+            path="/listening/list"
             element={
               <ProtectedRoute>
                 <Header />
@@ -328,10 +330,10 @@ export default function App() {
                 </div>
                 <Footer />
               </ProtectedRoute>
-            } 
+            }
           />
-          <Route 
-            path="/listening/practice" 
+          <Route
+            path="/listening/practice"
             element={
               <ProtectedRoute>
                 <Header />
@@ -340,7 +342,45 @@ export default function App() {
                 </div>
                 <Footer />
               </ProtectedRoute>
-            } 
+            }
+          />
+
+          {/* Japanese Listening 관련 라우트 */}
+          <Route
+            path="/japanese-listening"
+            element={
+              <>
+                <Header />
+                <div className="main-content">
+                  <Placeholder title="일본어 리스닝 홈" />
+                </div>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/japanese-listening/list"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <div className="main-content">
+                  <JapaneseListeningList />
+                </div>
+                <Footer />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/japanese-listening/practice"
+            element={
+              <ProtectedRoute>
+                <Header />
+                <div className="main-content">
+                  <JapaneseListeningPractice />
+                </div>
+                <Footer />
+              </ProtectedRoute>
+            }
           />
 
           {/* 관리자 전용 */}
