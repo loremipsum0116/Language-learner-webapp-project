@@ -245,7 +245,11 @@
       "Bash(do cp -r \"$dir\"* \"../n4/$dir\")",
       "Bash(git config:*)",
       "Bash(git stash:*)",
-      "Bash(do)"
+      "Bash(do)",
+      "Bash(do echo \"=== $dir Listening 폴더 ===\")",
+      "Bash(do echo \"=== $dir 폴더 구조 ===\")",
+      "Bash(do echo \"=== $dir Listening 폴더 내용 ===\")",
+      "Bash(do echo \"=== $dir 오디오 폴더 확인 ===\")"
     ],
     "deny": [],
     "ask": []

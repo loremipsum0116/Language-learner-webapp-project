@@ -49,6 +49,25 @@ def sanitize_filename(name: str) -> str:
     return re.sub(r'[\\/*?:"<>| ]+', "_", str(name)).strip("_")
 
 
+
+def remove_parentheses(text: str) -> str:
+    """소괄호() 및 그 내부 텍스트만 제거, 다른 괄호[]{}는 괄호만 제거하고 내용은 유지
+    예: "こんにちは (안녕하세요) [test] {日本語}" -> "こんにちは test 日本語"
+    """
+    if not text:
+        return text
+    # 소괄호와 내부 내용 제거 (전각/반각)
+    result = re.sub(r'[（(][^）)]*[）)]', '', text)
+    # 대괄호는 괄호만 제거하고 내용 유지 (전각/반각)
+    result = re.sub(r'[［\[]', '', result)
+    result = re.sub(r'[］\]]', '', result)
+    # 중괄호는 괄호만 제거하고 내용 유지 (전각/반각)
+    result = re.sub(r'[｛\{]', '', result)
+    result = re.sub(r'[｝\}]', '', result)
+    # 여러 공백을 하나로 정리
+    result = re.sub(r'\s+', ' ', result)
+    return result.strip()
+
 def parse_script_ordered(script: str) -> List[Tuple[str, str]]:
     """'A: ... B: ...' -> [('A','...'), ('B','...'), ...]
        라벨이 없으면 전체를 A 보이스로 나레이션 처리."""
@@ -57,11 +76,12 @@ def parse_script_ordered(script: str) -> List[Tuple[str, str]]:
     s = re.sub(r"\s+", " ", script).strip()
     tokens = re.split(r"(?i)\b([AB])\s*:\s*", s)
     if len(tokens) < 3:
-        return [("A", s)]  # 라벨 없음 → 나레이션
+        return [("A", remove_parentheses(s))]  # 라벨 없음 → 나레이션
     seq = []
     for i in range(1, len(tokens), 2):
         spk = tokens[i].upper()
         text = tokens[i + 1].strip()
+        text = remove_parentheses(text)
         if spk in ("A", "B") and text:
             seq.append((spk, text))
     return seq
@@ -70,14 +90,14 @@ def parse_script_ordered(script: str) -> List[Tuple[str, str]]:
 def normalize_questions(q_field: Any) -> List[str]:
     """str -> [str], list -> list[str], dict{'questions': [...]} -> list[str]"""
     if isinstance(q_field, list):
-        return [str(x).strip() for x in q_field if str(x).strip()]
+        return [remove_parentheses(str(x).strip()) for x in q_field if remove_parentheses(str(x).strip())]
     if isinstance(q_field, dict):
         if "questions" in q_field and isinstance(q_field["questions"], list):
-            return [str(x).strip() for x in q_field["questions"] if str(x).strip()]
+            return [remove_parentheses(str(x).strip()) for x in q_field["questions"] if remove_parentheses(str(x).strip())]
         return []
     if isinstance(q_field, str):
         s = q_field.strip()
-        return [s] if s else []
+        return [remove_parentheses(s)] if s else []
     return []
 
 
@@ -87,7 +107,7 @@ def _pairs_from_dict(d: Dict[str, Any]) -> List[Tuple[str, str]]:
     for k, v in d.items():
         lab = str(k).strip().upper()
         if len(lab) == 1 and lab.isalpha():
-            txt = str(v).strip()
+            txt = remove_parentheses(str(v).strip())
             if txt:
                 items.append((lab, txt))
     items.sort(key=lambda x: x[0])  # 알파벳 순
@@ -119,11 +139,38 @@ def normalize_options(opt_field: Any):
     return {"mode": "none", "sets": []}
 
 
+
+def japanese_number(n: int) -> str:
+    """숫자를 일본어로 변환
+    1 -> いち, 2 -> に, 3 -> さん, ..."""
+    japanese_nums = {
+        1: "いち", 2: "に", 3: "さん", 4: "よん", 5: "ご",
+        6: "ろく", 7: "なな", 8: "はち", 9: "きゅう", 10: "じゅう",
+        11: "じゅういち", 12: "じゅうに", 13: "じゅうさん", 14: "じゅうよん", 15: "じゅうご",
+        16: "じゅうろく", 17: "じゅうなな", 18: "じゅうはち", 19: "じゅうきゅう", 20: "にじゅう"
+    }
+    if n in japanese_nums:
+        return japanese_nums[n]
+    else:
+        # 21以上은 기본적으로 "にじゅういち" 형태로 구성
+        if n <= 99:
+            tens = n // 10
+            ones = n % 10
+            tens_word = japanese_nums.get(tens, str(tens)) + "じゅう" if tens > 1 else "じゅう"
+            if ones == 0:
+                return tens_word.replace("いちじゅう", "じゅう")
+            ones_word = japanese_nums.get(ones, str(ones))
+            return tens_word + ones_word
+        else:
+            return str(n)  # 100 이상은 그대로 숫자 사용
+
 def synthesize(
     client: texttospeech.TextToSpeechClient,
     text: str,
     voice: texttospeech.VoiceSelectionParams,
 ) -> AudioSegment:
+    # 소괄호 내용 제거, 다른 괄호는 괄호만 제거
+    text = remove_parentheses(text)
     if not text:
         return AudioSegment.silent(duration=0)
     synthesis_input = texttospeech.SynthesisInput(text=text)
@@ -154,13 +201,13 @@ def build_voice_set(language_code: str):
     """언어코드(ja-JP)에 맞는 A/B/Q 보이스 세트 생성"""
     return {
         "A": texttospeech.VoiceSelectionParams(
-            language_code=language_code, name=f"{language_code}-Chirp3-HD-Charon"
+            language_code=language_code, name=f"{language_code}-Chirp3-HD-Orus"
         ),
         "B": texttospeech.VoiceSelectionParams(
             language_code=language_code, name=f"{language_code}-Chirp3-HD-Laomedeia"
         ),
         "Q": texttospeech.VoiceSelectionParams(
-            language_code=language_code, name=f"{language_code}-Chirp3-HD-Aoede"
+            language_code=language_code, name=f"{language_code}-Chirp3-HD-Kore"
         ),
     }
 
@@ -215,8 +262,8 @@ def main():
         default=1500,
         help="질문 끝난 직후 옵션 시작까지 대기(ms). 기본 1500=1.5초",
     )
-    parser.add_argument("--prefix-single", dest="prefix_single", default="Question number one.", help="단일 질문 프리픽스")
-    parser.add_argument("--prefix-format", dest="prefix_format", default="Question number {n}.", help="다수 질문 프리픽스 포맷")
+    parser.add_argument("--prefix-single", dest="prefix_single", default="もんだいばんごういち。", help="단일 질문 프리픽스")
+    parser.add_argument("--prefix-format", dest="prefix_format", default="もんだいばんごう{n}。", help="다수 질문 프리픽스 포맷")
     parser.add_argument("--purge-out", dest="purge_out", action="store_true", help="시작 전 출력 폴더의 기존 MP3 삭제")
     parser.add_argument(
         "--rotate",
@@ -228,7 +275,7 @@ def main():
         "--tempo",
         dest="tempo",
         type=float,
-        default=0.8,
+        default=1.0,
         help="전체 출력 배속(피치 유지). 예: 0.8=느리게, 1.0=기본, 1.25=빠르게",
     )
 
@@ -279,6 +326,13 @@ def main():
 
     for idx, it in enumerate(items, 1):
         item_id = sanitize_filename(it.get("id") or f"item_{idx:03d}")
+
+        # 이미 생성된 오디오 파일이 있는지 확인
+        out_path = os.path.join(args.out_dir, f"{item_id}.mp3")
+        if os.path.exists(out_path):
+            print(f"[{idx}/{total}] id={item_id}  |  SKIP (이미 존재: {out_path})")
+            continue
+
         script = it.get("script", "")
         questions = normalize_questions(it.get("question"))
         options_norm = normalize_options(it.get("options"))
@@ -350,7 +404,7 @@ def main():
                 # 여러 질문
                 for i, qtext in enumerate(questions, start=1):
                     # 질문 프리픽스 + 본문
-                    audio_mix += synthesize(client, args.prefix_format.format(n=i), VOICES["Q"])
+                    audio_mix += synthesize(client, args.prefix_format.replace("{n}", japanese_number(i)), VOICES["Q"])
                     audio_mix += gap_qprefix
                     audio_mix += synthesize(client, qtext, VOICES["Q"])
 
@@ -382,7 +436,6 @@ def main():
             print("  - question 없음")
 
         # (3) 저장: 항목당 '정확히 한 번' export
-        out_path = os.path.join(args.out_dir, f"{item_id}.mp3")
         if export_count >= 1:
             raise RuntimeError(f"[BUG] export가 2회 이상 시도되었습니다: id={item_id}")
         audio_mix.export(out_path, format="mp3", parameters=export_params)
