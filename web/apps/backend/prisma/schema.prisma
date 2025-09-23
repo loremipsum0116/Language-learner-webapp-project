@@ -198,6 +198,9 @@ model user {
   nextOverdueAlarm DateTime?
   personalizedSRS  Json?
   learningProfile  Json?
+  isApproved       Boolean          @default(false)
+  approvedAt       DateTime?
+  approvedBy       String?
   cardReports      CardReport[]
   category         category[]
   dailystudystat   dailystudystat[]

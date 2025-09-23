@@ -18,22 +18,46 @@ router.post('/register', async (req, res) => {
         if (existingUser) return fail(res, 409, 'User with this email already exists');
 
         const passwordHash = await bcrypt.hash(password, 10);
-        const userRole = email === 'super@naver.com' ? 'admin' : 'USER'; // 특정 이메일에 admin 권한 부여
-        const user = await prisma.user.create({ data: { email, passwordHash, role: userRole } });
+        const userRole = email === 'super@root.com' ? 'admin' : 'USER';
+        const isApproved = email === 'super@root.com'; // super@root.com은 자동 승인
+        const approvedAt = isApproved ? new Date() : null;
+        const approvedBy = isApproved ? 'system' : null;
 
-        // Generate token pair with device info
-        const deviceInfo = jwtService.getDeviceInfo(req);
-        const tokens = await jwtService.generateTokenPair(user, deviceInfo);
-        
-        // Set cookies
-        jwtService.setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+        const user = await prisma.user.create({
+            data: {
+                email,
+                passwordHash,
+                role: userRole,
+                isApproved,
+                approvedAt,
+                approvedBy
+            }
+        });
 
         const { passwordHash: _, ...userSafe } = user;
-        return ok(res, { 
-            user: userSafe,
-            accessToken: tokens.accessToken,
-            refreshTokenExpiresAt: tokens.refreshTokenExpiresAt
-        });
+
+        // 승인된 사용자만 토큰 발급
+        if (isApproved) {
+            // Generate token pair with device info
+            const deviceInfo = jwtService.getDeviceInfo(req);
+            const tokens = await jwtService.generateTokenPair(user, deviceInfo);
+
+            // Set cookies
+            jwtService.setAuthCookies(res, tokens.accessToken, tokens.refreshToken);
+
+            return ok(res, {
+                user: userSafe,
+                accessToken: tokens.accessToken,
+                refreshTokenExpiresAt: tokens.refreshTokenExpiresAt,
+                message: 'Registration successful and approved'
+            });
+        } else {
+            return ok(res, {
+                user: userSafe,
+                message: 'Registration successful. Waiting for admin approval.',
+                requiresApproval: true
+            });
+        }
     } catch (e) {
         console.error('POST /auth/register failed:', e);
         return fail(res, 500, 'Internal Server Error');
@@ -71,6 +95,12 @@ router.post('/login', async (req, res) => {
         if (!okPw) {
             console.log('[LOGIN DEBUG] Password comparison failed');
             return fail(res, 401, 'invalid credentials');
+        }
+
+        // 승인된 사용자만 로그인 허용
+        if (!user.isApproved) {
+            console.log('[LOGIN DEBUG] User not approved');
+            return fail(res, 403, 'Account pending approval. Please wait for admin approval.');
         }
 
         // Generate token pair with device info
@@ -167,7 +197,10 @@ router.get('/me', authMiddleware, async (req, res) => {
                 profile: true,
                 createdAt: true,
                 lastStudiedAt: true,
-                streak: true
+                streak: true,
+                isApproved: true,
+                approvedAt: true,
+                approvedBy: true
             }
         });
 
@@ -216,6 +249,141 @@ router.delete('/devices/:deviceId', authMiddleware, async (req, res) => {
     } catch (e) {
         console.error('DELETE /auth/devices/:deviceId failed:', e);
         return fail(res, 500, 'Failed to revoke device session');
+    }
+});
+
+// Admin-only middleware
+const adminMiddleware = (req, res, next) => {
+    if (req.user.role !== 'admin') {
+        return fail(res, 403, 'Admin access required');
+    }
+    next();
+};
+
+// Get pending user approvals (admin only)
+router.get('/admin/pending-users', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const pendingUsers = await prisma.user.findMany({
+            where: {
+                isApproved: false
+            },
+            select: {
+                id: true,
+                email: true,
+                createdAt: true,
+                role: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        return ok(res, { users: pendingUsers });
+    } catch (e) {
+        console.error('GET /auth/admin/pending-users failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
+
+// Approve user (admin only)
+router.post('/admin/approve-user/:userId', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const adminEmail = req.user.email;
+
+        const user = await prisma.user.findUnique({
+            where: { id: parseInt(userId) }
+        });
+
+        if (!user) {
+            return fail(res, 404, 'User not found');
+        }
+
+        if (user.isApproved) {
+            return fail(res, 400, 'User is already approved');
+        }
+
+        const updatedUser = await prisma.user.update({
+            where: { id: parseInt(userId) },
+            data: {
+                isApproved: true,
+                approvedAt: new Date(),
+                approvedBy: adminEmail
+            },
+            select: {
+                id: true,
+                email: true,
+                isApproved: true,
+                approvedAt: true,
+                approvedBy: true
+            }
+        });
+
+        return ok(res, {
+            user: updatedUser,
+            message: `User ${user.email} has been approved`
+        });
+    } catch (e) {
+        console.error('POST /auth/admin/approve-user failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
+
+// Reject user (admin only)
+router.post('/admin/reject-user/:userId', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const user = await prisma.user.findUnique({
+            where: { id: parseInt(userId) }
+        });
+
+        if (!user) {
+            return fail(res, 404, 'User not found');
+        }
+
+        if (user.isApproved) {
+            return fail(res, 400, 'Cannot reject an approved user');
+        }
+
+        // Delete the user instead of keeping rejected users
+        await prisma.user.delete({
+            where: { id: parseInt(userId) }
+        });
+
+        return ok(res, {
+            message: `User ${user.email} has been rejected and removed`
+        });
+    } catch (e) {
+        console.error('POST /auth/admin/reject-user failed:', e);
+        return fail(res, 500, 'Internal Server Error');
+    }
+});
+
+// Get all users (admin only)
+router.get('/admin/users', authMiddleware, adminMiddleware, async (req, res) => {
+    try {
+        const users = await prisma.user.findMany({
+            select: {
+                id: true,
+                email: true,
+                role: true,
+                createdAt: true,
+                isApproved: true,
+                approvedAt: true,
+                approvedBy: true,
+                lastStudiedAt: true,
+                streak: true
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        });
+
+        return ok(res, { users });
+    } catch (e) {
+        console.error('GET /auth/admin/users failed:', e);
+        return fail(res, 500, 'Internal Server Error');
     }
 });
 

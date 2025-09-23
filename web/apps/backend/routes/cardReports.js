@@ -2,13 +2,24 @@ const express = require('express');
 const router = express.Router();
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
-const { authenticateToken, requireAdmin } = require('../middleware/auth');
+const auth = require('../middleware/auth');
+
+// 관리자 권한 체크 미들웨어
+const requireAdmin = (req, res, next) => {
+  if (req.user?.email !== 'super@root.com') {
+    return res.status(403).json({
+      error: 'ADMIN_REQUIRED',
+      message: '관리자 권한이 필요합니다.'
+    });
+  }
+  next();
+};
 
 // 카드 신고하기
-router.post('/report', authenticateToken, async (req, res) => {
+router.post('/report', auth, async (req, res) => {
   try {
     const userId = req.user.id;
-    const { vocabId, reportType, description, severity } = req.body;
+    const { vocabId, reportType, description, severity, metadata } = req.body;
 
     // 유효성 검사
     const validReportTypes = ['AUDIO_QUALITY', 'WRONG_TRANSLATION', 'INAPPROPRIATE', 'MISSING_INFO', 'TECHNICAL_ISSUE', 'OTHER'];
@@ -112,7 +123,8 @@ router.post('/report', authenticateToken, async (req, res) => {
           metadata: {
             userAgent: req.headers['user-agent'],
             ip: req.ip,
-            firstReportedBy: userId
+            firstReportedBy: userId,
+            ...(metadata || {}) // 프론트엔드에서 보낸 메타데이터 병합
           }
         }
       });
@@ -138,7 +150,7 @@ router.post('/report', authenticateToken, async (req, res) => {
 });
 
 // 사용자의 신고 내역 조회
-router.get('/my-reports', authenticateToken, async (req, res) => {
+router.get('/my-reports', auth, async (req, res) => {
   try {
     const userId = req.user.id;
     const { page = 1, limit = 20, status } = req.query;
@@ -192,7 +204,7 @@ router.get('/my-reports', authenticateToken, async (req, res) => {
 });
 
 // 관리자용: 모든 신고 조회
-router.get('/admin/all', requireAdmin, async (req, res) => {
+router.get('/admin/all', auth, requireAdmin, async (req, res) => {
   try {
     const { 
       page = 1, 
@@ -235,14 +247,17 @@ router.get('/admin/all', requireAdmin, async (req, res) => {
     const stats = await getReportStatistics();
 
     res.json({
-      reports,
-      pagination: {
-        total,
-        page: parseInt(page),
-        limit: parseInt(limit),
-        totalPages: Math.ceil(total / limit)
-      },
-      statistics: stats
+      success: true,
+      data: {
+        reports,
+        pagination: {
+          total,
+          page: parseInt(page),
+          limit: parseInt(limit),
+          totalPages: Math.ceil(total / limit)
+        },
+        statistics: stats
+      }
     });
 
   } catch (error) {
@@ -255,7 +270,7 @@ router.get('/admin/all', requireAdmin, async (req, res) => {
 });
 
 // 관리자용: 신고 상태 업데이트
-router.patch('/admin/:reportId/status', requireAdmin, async (req, res) => {
+router.patch('/admin/:reportId/status', auth, requireAdmin, async (req, res) => {
   try {
     const { reportId } = req.params;
     const { status, resolution } = req.body;

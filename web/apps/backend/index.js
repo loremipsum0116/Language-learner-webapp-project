@@ -41,6 +41,7 @@ const odatNoteRoutes = require('./routes/odat-note');
 const dictRoutes = require('./routes/dict');
 const examVocabRoutes = require('./routes/examVocab');
 const autoFolderRoutes = require('./routes/autoFolder');
+const cardReportsRoutes = require('./routes/cardReports');
 // const idiomRoutes = require('./routes/idiom'); // Removed - using idiom_working.js instead
 
 // (선택) 대시보드 오버라이드/Flat 확장 라우터
@@ -641,7 +642,7 @@ app.use((req, res, next) => {
 app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
 
 // JLPT 오디오 파일 서빙
-app.use('/jlpt', staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'jlpt')));
+app.use('/jlpt', staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'public', 'jlpt')));
 app.use(express.json({ limit: '10mb' })); // JSON 크기 제한 증가
 app.use(cookieParser());
 
@@ -988,6 +989,7 @@ app.use('/api/odat-note', odatNoteRoutes);
 app.use('/time-machine', timeMachineRouter);  // 타임머신 API
 app.use('/admin', adminRoutes);  // 관리자 API
 app.use('/auto-folder', autoFolderRoutes);  // 자동 폴더 생성 API
+app.use('/api/card-reports', cardReportsRoutes);  // 신고 API
 app.use(userRoutes);
 
 // --- 크론 ---

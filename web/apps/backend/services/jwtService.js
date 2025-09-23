@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 class JWTService {
   constructor() {
     this.JWT_SECRET = process.env.JWT_SECRET || 'dev_secret_change_me';
-    this.ACCESS_TOKEN_EXPIRY = '15m'; // Short-lived access tokens
+    this.ACCESS_TOKEN_EXPIRY = '7d'; // Long-lived access tokens
     this.COOKIE_NAME = 'token';
     this.REFRESH_COOKIE_NAME = 'refreshToken';
   }
@@ -78,7 +78,7 @@ class JWTService {
       httpOnly: true,
       sameSite: 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 15 * 60 * 1000, // 15 minutes
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
       path: '/'
     });
 

@@ -406,9 +406,92 @@ PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION="네!" npx prisma db push --force-re
 - 상세보기: 동일한 형태로 표시
 - 전체 텍스트 보존 및 정확한 후리가나 위치
 
-## 📌 개발 방향 (2025-09-17)
+## 📌 최신 업데이트 (2025-09-23)
+
+### 🔥 주요 변경사항
+
+#### 1. 회원가입 승인 시스템 구현
+- **15분 자동 로그아웃 제거**: JWT 토큰 만료시간 15분 → 7일로 변경
+- **관리자 승인 시스템**: 일반 사용자 회원가입 시 승인 대기 상태
+- **super@root.com 특별 권한**: 자동 승인 및 관리자 권한 부여
+- **관리자 대시보드 기능 추가**:
+  - 승인 대기 중인 사용자 목록 표시
+  - 승인/거부 기능 (거부 시 계정 삭제)
+  - 실시간 통계 업데이트
+
+#### 2. JLPT 일본어 단어 완전 재시딩 (N1~N5)
+- **기존 데이터 완전 삭제**: 502개 구 일본어 단어 삭제
+- **신규 시딩 완료**: **총 8,404개** 일본어 단어 시딩
+  - **N1**: 3,463개 단어
+  - **N2**: 1,834개 단어
+  - **N3**: 1,797개 단어
+  - **N4**: 636개 단어
+  - **N5**: 674개 단어
+- **신규 시딩 스크립트**: `seed-jlpt-vocabs-total.js` 생성
+- **데이터 소스**: `succeed-seeding-file/jlpt/N*_fixed.json` 활용
+
+#### 3. JLPT 오디오 파일 서빙 수정
+- **오디오 파일 복사**: `succeed-seeding-file/jlpt/jlpt/` → `web/apps/backend/public/jlpt/`
+- **서버 설정 수정**: Express 정적 파일 경로 수정
+- **오디오 재생 정상화**: N1~N5 모든 레벨 오디오 파일 접근 가능
+
+### 📊 현재 일본어 데이터 현황 (2025-09-23)
+
+#### ✅ 완료된 시딩 데이터
+- **JLPT 일본어**: **8,404개** 일본어 단어 (N1~N5 전체)
+  - 가나 읽기, 로마자 표기 포함
+  - 한국어 번역 및 예문 완비
+  - 오디오 정보 연결 완료
+- **오디오 파일**: 총 **8,404개** 단어별 오디오 세트
+  - 각 단어당 3개 파일: `word.mp3`, `gloss.mp3`, `example.mp3`
+  - 서버에서 정상 서빙 확인
+
+#### 🔧 해결된 주요 문제들 (2025-09-23)
+
+1. **JWT 토큰 만료 문제**: 15분 자동 로그아웃 → 7일 세션으로 연장
+2. **회원가입 보안 강화**: 관리자 승인 시스템으로 무분별한 가입 방지
+3. **일본어 데이터 정리**: 기존 중복/불완전 데이터 → 체계적인 8,404개 단어로 정리
+4. **오디오 재생 문제**: 서버 경로 오류 → 정적 파일 서빙 정상화
+5. **대용량 시딩 최적화**: 배치 처리로 안정적인 대용량 데이터 시딩
+
+### 🚀 신규 시딩 프로세스 (2025-09-23 업데이트)
+
+#### JLPT 전체 레벨 시딩 방법
+```bash
+cd web/apps/backend
+
+# 1. 기존 일본어 단어 삭제 (선택사항)
+node delete-japanese-words.js
+
+# 2. N1~N5 전체 시딩 실행
+PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION="네, 시딩하겠습니다." npx dotenv -e .env -- node seed-jlpt-vocabs-total.js
+```
+
+#### 시딩 결과 확인
+- **성공 메시지**: "Successfully seeded 8404 Japanese vocabulary items and 8404 translations!"
+- **레벨별 통계**: 각 레벨별 시딩된 단어 수 표시
+- **오디오 확인**: `http://localhost:4000/jlpt/{레벨}/{romaji}/word.mp3` 접근 가능
+
+### 📁 관련 파일들 (2025-09-23 업데이트)
+
+**백엔드:**
+- `web/apps/backend/seed-jlpt-vocabs-total.js` (신규 전체 시딩 스크립트)
+- `web/apps/backend/delete-japanese-words.js` (일본어 단어 삭제 스크립트)
+- `web/apps/backend/routes/auth.js` (회원가입 승인 시스템)
+- `web/apps/backend/services/jwtService.js` (JWT 토큰 만료시간 수정)
+- `web/apps/backend/index.js` (JLPT 오디오 정적 파일 서빙 수정)
+
+**프론트엔드:**
+- `web/apps/frontend/src/pages/AdminDashboard.jsx` (회원가입 승인 관리 UI)
+
+**데이터 소스:**
+- `succeed-seeding-file/jlpt/N1_fixed.json ~ N5_fixed.json` (JLPT 단어 데이터)
+- `succeed-seeding-file/jlpt/jlpt/n1/ ~ n5/` (오디오 파일)
+
+## 📌 개발 방향 (2025-09-23 업데이트)
 
 **웹 개발에 집중**
 - 모바일 앱 개발 일시 중단
 - 웹 프론트엔드 기능 완성도 향상에 집중
-- 일본어 학습 기능 강화 예정
+- **일본어 학습 기능 완전 구현**: N1~N5 전 레벨 학습 가능
+- **사용자 관리 시스템 강화**: 승인 기반 회원가입으로 보안 향상
