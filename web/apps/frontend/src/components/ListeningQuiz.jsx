@@ -7,7 +7,7 @@ import EnglishWordPopup from './EnglishWordPopup';
  * 리스닝 퀴즈 컴포넌트
  * A1~C1 레벨의 Listening.json 형식 데이터를 사용
  */
-export default function ListeningQuiz({ questions = [], onComplete, level = 'A1' }) {
+export default function ListeningQuiz({ questions = [], onComplete, level = 'A1', isJapanese = false }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [isAnswered, setIsAnswered] = useState(false);
@@ -248,36 +248,78 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
       timestamp: Date.now()
     };
 
-    // 다중 이벤트 발송으로 즉각 반영 보장
-    localStorage.setItem('englishListeningInstantUpdate', JSON.stringify(updateData));
-    localStorage.setItem('wrongAnswersUpdated', updateData.timestamp.toString());
-    localStorage.setItem('listeningRecordUpdated', updateData.timestamp.toString());
-    localStorage.setItem('forceListeningRefresh', updateData.timestamp.toString());
-    sessionStorage.setItem('needsRefresh', 'true');
+    if (isJapanese) {
+      console.log(`🚨🚨🚨 [일본어 리스닝] 일본어 리스닝 모드에서 답안 처리 시작!`);
+      console.log(`📝 [일본어 리스닝] questionId: ${currentQuestion.id}, level: ${level}, isCorrect: ${isCorrect}`);
 
-    // 커스텀 이벤트 발송
-    window.dispatchEvent(new CustomEvent('englishListeningUpdate', { detail: updateData }));
-    window.dispatchEvent(new CustomEvent('wrongAnswersUpdated', { detail: updateData }));
-    window.dispatchEvent(new CustomEvent('listeningRecordUpdated', { detail: updateData }));
-    window.dispatchEvent(new CustomEvent('forceListeningRefresh', { detail: updateData }));
+      // 일본어 리스닝 이벤트 발송
+      localStorage.setItem('japaneseListeningInstantUpdate', JSON.stringify(updateData));
+      localStorage.setItem('japaneseListeningUpdated', updateData.timestamp.toString());
+      window.dispatchEvent(new CustomEvent('japaneseListeningUpdate', { detail: updateData }));
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'japaneseListeningInstantUpdate',
+        newValue: JSON.stringify(updateData)
+      }));
 
-    // Storage 이벤트 발송
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'englishListeningInstantUpdate',
-      newValue: JSON.stringify(updateData)
-    }));
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'wrongAnswersUpdated',
-      newValue: updateData.timestamp.toString()
-    }));
-    window.dispatchEvent(new StorageEvent('storage', {
-      key: 'listeningRecordUpdated',
-      newValue: updateData.timestamp.toString()
-    }));
+      // 일본어 리스닝 통계 서버 제출
+      console.log(`🚀 [일본어 리스닝] API 호출 시작: /api/japanese-listening/submit`);
+      try {
+        await fetchJSON('/api/japanese-listening/submit', withCreds({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            questionId: currentQuestion.id,
+            level: level,
+            isCorrect: isCorrect,
+            userAnswer: answer,
+            correctAnswer: currentQuestion.answer,
+            question: currentQuestion.question,
+            script: currentQuestion.script,
+            topic: currentQuestion.topic,
+            options: currentQuestion.options,
+            audioFile: `${level}_Listening_mix/${currentQuestion.id}.mp3`
+          })
+        }));
+        console.log(`✅ [일본어 리스닝 통계 제출 완료] ${level} - ${currentQuestion.topic} - ${isCorrect ? '정답' : '오답'}`);
+      } catch (error) {
+        console.error('❌ 일본어 리스닝 통계 제출 실패:', error);
+        if (error.message.includes('Unauthorized')) {
+          console.warn('⚠️ 로그인이 필요합니다. 통계 기록을 위해 로그인해주세요.');
+          toast.warn('로그인이 필요합니다. 통계 기록을 위해 로그인해주세요.');
+        }
+      }
+    } else {
+      // 영어 리스닝 이벤트 발송 (기존 로직)
+      localStorage.setItem('englishListeningInstantUpdate', JSON.stringify(updateData));
+      localStorage.setItem('wrongAnswersUpdated', updateData.timestamp.toString());
+      localStorage.setItem('listeningRecordUpdated', updateData.timestamp.toString());
+      localStorage.setItem('forceListeningRefresh', updateData.timestamp.toString());
+      sessionStorage.setItem('needsRefresh', 'true');
 
-    // 오답인 경우에만 오답노트에 기록
-    if (!isCorrect) {
-      // 오답노트에 리스닝 문제 기록
+      // 커스텀 이벤트 발송
+      window.dispatchEvent(new CustomEvent('englishListeningUpdate', { detail: updateData }));
+      window.dispatchEvent(new CustomEvent('wrongAnswersUpdated', { detail: updateData }));
+      window.dispatchEvent(new CustomEvent('listeningRecordUpdated', { detail: updateData }));
+      window.dispatchEvent(new CustomEvent('forceListeningRefresh', { detail: updateData }));
+
+      // Storage 이벤트 발송
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'englishListeningInstantUpdate',
+        newValue: JSON.stringify(updateData)
+      }));
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'wrongAnswersUpdated',
+        newValue: updateData.timestamp.toString()
+      }));
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'listeningRecordUpdated',
+        newValue: updateData.timestamp.toString()
+      }));
+    }
+
+    // 영어 리스닝인 경우에만 기존 오답노트 API 사용
+    if (!isCorrect && !isJapanese) {
+      // 오답노트에 리스닝 문제 기록 (영어 리스닝만)
       try {
         await fetchJSON('/api/odat-note', withCreds({
           method: 'POST',
@@ -297,12 +339,9 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
             }
           })
         }));
-        console.log(`✅ [리스닝 오답 기록 완료] ${level} - ${currentQuestion.topic}`);
-        // 사용자에게 알림 (선택적)
-        // toast.info(`오답이 오답노트에 저장되었습니다. (리스닝: ${currentQuestion.topic})`);
+        console.log(`✅ [영어 리스닝 오답 기록 완료] ${level} - ${currentQuestion.topic}`);
       } catch (error) {
-        console.error('❌ 리스닝 오답 기록 실패:', error);
-        // 사용자에게 오답 기록 실패 알림
+        console.error('❌ 영어 리스닝 오답 기록 실패:', error);
         if (error.message.includes('Unauthorized')) {
           console.warn('⚠️ 로그인이 필요합니다. 오답노트 기록을 위해 로그인해주세요.');
           toast.warn('로그인이 필요합니다. 오답노트에 기록하려면 로그인해주세요.');
@@ -312,6 +351,8 @@ export default function ListeningQuiz({ questions = [], onComplete, level = 'A1'
         }
       }
     }
+
+    // 일본어 리스닝의 경우 오답노트는 japanese-listening/submit API에서 이미 처리됨
   };
   
   // 다음 문제로 이동

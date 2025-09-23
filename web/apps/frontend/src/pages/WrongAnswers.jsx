@@ -125,6 +125,10 @@ export default function WrongAnswers() {
 
     // 리딩, 리스닝의 경우도 유사하게 처리
     if ((selectedTab === "reading" || selectedTab === "listening") && wrongAnswer.wrongData) {
+      // itemType을 우선 확인 (가장 정확한 방법)
+      if (wrongAnswer.itemType === 'japanese-reading' || wrongAnswer.itemType === 'japanese-listening') {
+        return 'ja';
+      }
       if (wrongAnswer.wrongData.language === 'ja') {
         return 'ja';
       }

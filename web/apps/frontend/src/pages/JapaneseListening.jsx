@@ -152,6 +152,7 @@ export default function JapaneseListening() {
           questions={selectedQuestions}
           onComplete={handleQuizComplete}
           level={level}
+          isJapanese={true}
         />
       </div>
     );

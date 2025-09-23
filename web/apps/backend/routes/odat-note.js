@@ -85,11 +85,18 @@ router.get('/list', async (req, res) => {
     }
     
     // 새로운 WrongAnswer 모델에서 미완료 오답들을 카테고리별로 조회
-    // reading 타입의 경우 japanese-reading도 포함
+    // reading 타입의 경우 japanese-reading도 포함, listening 타입의 경우 japanese-listening도 포함
+    let itemTypes = [type];
+    if (type === 'reading') {
+      itemTypes = ['reading', 'japanese-reading'];
+    } else if (type === 'listening') {
+      itemTypes = ['listening', 'japanese-listening'];
+    }
+
     const baseWhere = {
       userId: req.user.id,
       isCompleted: false,
-      itemType: type === 'reading' ? { in: ['reading', 'japanese-reading'] } : type
+      itemType: { in: itemTypes }
     };
     
     // Raw SQL 쿼리를 Prisma ORM 쿼리로 변경하여 translations을 포함
@@ -325,11 +332,16 @@ router.get('/categories', async (req, res) => {
     };
     
     categories.forEach(cat => {
-      // japanese-reading을 reading 카테고리에 포함
-      const categoryType = cat.itemType === 'japanese-reading' ? 'reading' : cat.itemType;
+      // japanese-reading을 reading 카테고리에 포함, japanese-listening을 listening 카테고리에 포함
+      let categoryType = cat.itemType;
+      if (cat.itemType === 'japanese-reading') {
+        categoryType = 'reading';
+      } else if (cat.itemType === 'japanese-listening') {
+        categoryType = 'listening';
+      }
 
       if (data[categoryType]) {
-        // 기존 값에 누적 (reading과 japanese-reading을 합침)
+        // 기존 값에 누적 (reading과 japanese-reading, listening과 japanese-listening을 합침)
         data[categoryType] = {
           total: data[categoryType].total + Number(cat.totalCount),
           active: data[categoryType].active + Number(cat.activeCount)

@@ -51,28 +51,28 @@ export default function JapaneseListeningList() {
         };
     }, [level, location, refreshTrigger]);
 
-    // 오답노트에서 삭제 시 실시간 업데이트
+    // 일본어 리스닝 통계 업데이트 시 실시간 업데이트
     useEffect(() => {
-        const handleWrongAnswersUpdate = () => {
-            console.log('🔄 [REAL-TIME UPDATE] Wrong answers updated, triggering refresh...');
+        const handleJapaneseListeningUpdate = () => {
+            console.log('🔄 [REAL-TIME UPDATE] Japanese listening updated, triggering refresh...');
             setRefreshTrigger(prev => prev + 1);
         };
 
         // localStorage 변경 이벤트 리스닝
         const handleStorageChange = (e) => {
-            if (e.key === 'wrongAnswersUpdated') {
-                handleWrongAnswersUpdate();
+            if (e.key === 'japaneseListeningInstantUpdate' || e.key === 'japaneseListeningUpdated') {
+                handleJapaneseListeningUpdate();
             }
         };
 
         window.addEventListener('storage', handleStorageChange);
 
         // 같은 탭에서의 변경도 감지 (storage 이벤트는 다른 탭에서만 발생)
-        window.addEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+        window.addEventListener('japaneseListeningUpdate', handleJapaneseListeningUpdate);
 
         return () => {
             window.removeEventListener('storage', handleStorageChange);
-            window.removeEventListener('wrongAnswersUpdated', handleWrongAnswersUpdate);
+            window.removeEventListener('japaneseListeningUpdate', handleJapaneseListeningUpdate);
         };
     }, [level]);
 
@@ -107,7 +107,7 @@ export default function JapaneseListeningList() {
         try {
             console.log(`🚀🆕 [SIMPLIFIED FETCH START] 단순화된 fetch 시작`);
 
-            const response = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+            const response = await fetch(`http://localhost:4000/api/japanese-listening/history/${level}`, {
                 credentials: 'include',
                 signal: signal
             });
