@@ -14,23 +14,45 @@ web/apps/frontend/src/
 **/raw_data/**
 **/backup_data/**
 
+# 임시: 매우 큰 미디어 파일들만 제외 (100MB+ 파일들)
+# 필요시 개별 대용량 파일 제외
+**/large_audio/**
+**/raw_video/**
+**/*_large.*
+**/*_backup.*
+
+# 개발용 샘플 파일들
+**/samples/**
+**/demo_files/**
+
 # 개발 관련 파일들
 *.log
 .DS_Store
 Thumbs.db
 
-# 대용량 비디오 파일들 중 불필요한 것만 제외 (mp4는 앱에서 사용)
+# 미디어 파일들 - GCS 마이그레이션 완료 전까지는 포함
+# *.mp3  # GCS 마이그레이션 후 주석 해제
+# *.wav  # GCS 마이그레이션 후 주석 해제
+# *.mp4  # GCS 마이그레이션 후 주석 해제
+*.webm
+*.ogg
 *.avi
 *.mov
 *.mkv
 *.wmv
 
-# 개발용 대용량 미디어 파일만 제외
+# 대용량 미디어 폴더들만 제외 (필수 파일은 유지)
+**/raw_audio/**
+**/temp_video/**
+**/backup_media/**
+# **/audio/**     # GCS 마이그레이션 후 주석 해제
+# **/video/**     # GCS 마이그레이션 후 주석 해제
+# **/media/**     # GCS 마이그레이션 후 주석 해제
+
+# 개발용 미디어 파일들
 **/test_media/**
 **/temp_media/**
 **/raw_media/**
-# 필요시 특정 대용량 파일만 개별 제외
-# very_large_file.mp4
 
 # 테스트 파일들
 **/*.test.js
