@@ -14,12 +14,17 @@ web/apps/frontend/node_modules/
 .DS_Store
 Thumbs.db
 
-# 대용량 미디어 파일들
-*.mp3
+# 대용량 비디오 파일들 (오디오는 필요하므로 제외하지 않음)
 *.mp4
-*.wav
 *.avi
 *.mov
+*.mkv
+
+# 개발용 대용량 오디오 파일만 제외
+**/test_audio/**
+**/temp_audio/**
+# 필요시 특정 대용량 오디오 파일만 개별 제외
+# large_audio_file.mp3
 
 # 테스트 파일들
 **/*.test.js
