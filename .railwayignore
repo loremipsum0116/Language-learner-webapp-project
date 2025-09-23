@@ -1,0 +1,51 @@
+# 불필요한 파일들 Railway 배포에서 제외
+
+# 모바일 앱 폴더 (백엔드 배포에 불필요)
+app/
+mobile/
+web/apps/mobile/
+
+# Frontend 빌드 결과물
+web/apps/frontend/build/
+web/apps/frontend/node_modules/
+
+# 개발 관련 파일들
+*.log
+.DS_Store
+Thumbs.db
+
+# 대용량 미디어 파일들
+*.mp3
+*.mp4
+*.wav
+*.avi
+*.mov
+
+# 테스트 파일들
+**/*.test.js
+**/*.spec.js
+test/
+tests/
+
+# 캐시 파일들
+.cache/
+dist/
+coverage/
+
+# IDE 파일들
+.vscode/
+.idea/
+
+# 임시 파일들
+*.tmp
+*.temp
+
+# 백업 파일들
+*.backup
+*.bak
+
+# 대용량 JSON 데이터 (필요시 주석 해제)
+# *.json
+
+# Node modules (root level)
+node_modules/
