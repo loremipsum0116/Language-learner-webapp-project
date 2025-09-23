@@ -384,7 +384,7 @@ export default function ListeningPractice() {
                         style={{
                             textDecoration: 'underline dotted',
                             cursor: 'pointer',
-                            color: '#007bff',
+                            color: 'inherit',
                             fontWeight: '500'
                         }}
                         title="클릭하여 뜻 보기"
@@ -776,7 +776,47 @@ export default function ListeningPractice() {
                                 <div className="script-content">
                                     <h6>📝 스크립트:</h6>
                                     <div className="script-text">
-                                        {renderClickableText(current.script, "", true)}
+                                        {(() => {
+                                            // 영어 스크립트를 화자별로 분리하여 표시
+                                            const scriptParts = current.script.split(/(\s[A-Z]:\s)/).filter(part => part.trim());
+                                            const formattedParts = [];
+
+                                            for (let i = 0; i < scriptParts.length; i++) {
+                                                const part = scriptParts[i].trim();
+                                                if (part.match(/^[A-Z]:\s$/)) {
+                                                    // 화자 표시 (A:, B:, C: 등)
+                                                    formattedParts.push(
+                                                        <div key={i} className="mt-3 mb-1">
+                                                            <strong style={{ color: '#0d6efd' }}>{part}</strong>
+                                                        </div>
+                                                    );
+                                                } else if (part.includes(':') && part.match(/^[A-Z]:/)) {
+                                                    // 첫 번째 화자 (A: content 형태)
+                                                    const [speaker, ...content] = part.split(':');
+                                                    formattedParts.push(
+                                                        <div key={i} className="mt-3 mb-1">
+                                                            <strong style={{ color: '#0d6efd' }}>{speaker}:</strong>
+                                                        </div>
+                                                    );
+                                                    if (content.join(':').trim()) {
+                                                        formattedParts.push(
+                                                            <div key={`${i}_content`} style={{ marginLeft: '1rem', marginBottom: '0.5rem' }}>
+                                                                <em>{renderClickableText(content.join(':').trim(), "", true)}</em>
+                                                            </div>
+                                                        );
+                                                    }
+                                                } else if (part.trim()) {
+                                                    // 발화 내용
+                                                    formattedParts.push(
+                                                        <div key={i} style={{ marginLeft: '1rem', marginBottom: '0.5rem' }}>
+                                                            <em>{renderClickableText(part.trim(), "", true)}</em>
+                                                        </div>
+                                                    );
+                                                }
+                                            }
+
+                                            return formattedParts.length > 0 ? formattedParts : renderClickableText(current.script, "", true);
+                                        })()}
                                     </div>
                                     {showTranslation && renderKoreanTranslation(current.script) && (
                                         <div className="translation-text" style={{
@@ -787,7 +827,54 @@ export default function ListeningPractice() {
                                             fontSize: '14px',
                                             color: '#0c5460'
                                         }}>
-                                            <strong>번역:</strong> {renderKoreanTranslation(current.script)}
+                                            <h6 style={{ marginBottom: '10px', color: '#0c5460' }}>📄 번역:</h6>
+                                            <div>
+                                                {(() => {
+                                                    // 스크립트에서 화자별로 분리된 번역 추출
+                                                    const scriptParts = current.script.split(/([A-Z]:\s)/).filter(part => part.trim());
+                                                    const result = [];
+
+                                                    for (let i = 0; i < scriptParts.length; i++) {
+                                                        const part = scriptParts[i].trim();
+
+                                                        if (part.match(/^[A-Z]:\s?$/)) {
+                                                            // 화자 표시 (A:, B:, C: 등)
+                                                            const nextPart = scriptParts[i + 1];
+                                                            if (nextPart) {
+                                                                // 괄호 안의 한국어 번역 추출
+                                                                const koreanMatch = nextPart.match(/\(([^)]+)\)/g);
+                                                                if (koreanMatch) {
+                                                                    // 모든 괄호 안의 내용을 연결
+                                                                    const koreanText = koreanMatch
+                                                                        .map(match => match.replace(/[()]/g, ''))
+                                                                        .join(' ');
+
+                                                                    result.push(
+                                                                        <div key={i} style={{ marginBottom: '8px' }}>
+                                                                            <strong style={{ color: '#17a2b8' }}>{part}</strong>
+                                                                            <span style={{
+                                                                                marginLeft: '1rem',
+                                                                                display: 'inline-block',
+                                                                                paddingTop: '2px'
+                                                                            }}>
+                                                                                {koreanText}
+                                                                            </span>
+                                                                        </div>
+                                                                    );
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+                                                    // 결과가 없으면 기존 방식 사용
+                                                    if (result.length === 0) {
+                                                        const koreanText = renderKoreanTranslation(current.script);
+                                                        return koreanText ? <span>{koreanText}</span> : null;
+                                                    }
+
+                                                    return result;
+                                                })()}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -815,26 +902,38 @@ export default function ListeningPractice() {
 
                         <div className="options-grid">
                             {Object.entries(current.options).map(([key, value]) => (
-                                <button
+                                <div
                                     key={key}
                                     className={`option-btn ${
                                         selectedAnswer === key ? 'selected' : ''
                                     } ${
-                                        showExplanation 
+                                        showExplanation
                                             ? key === (current.correctAnswer || current.answer)
-                                                ? 'correct' 
-                                                : selectedAnswer === key 
-                                                    ? 'incorrect' 
+                                                ? 'correct'
+                                                : selectedAnswer === key
+                                                    ? 'incorrect'
                                                     : ''
                                             : ''
                                     }`}
-                                    onClick={() => handleAnswerSelect(key)}
-                                    disabled={showExplanation}
+                                    onClick={!showExplanation ? () => handleAnswerSelect(key) : undefined}
                                     style={{
                                         fontSize: '1.2rem',
                                         fontWeight: 'bold',
                                         padding: '1rem',
-                                        textAlign: 'left'
+                                        textAlign: 'left',
+                                        cursor: !showExplanation ? 'pointer' : 'default',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '8px',
+                                        marginBottom: '8px',
+                                        backgroundColor: showExplanation
+                                            ? key === (current.correctAnswer || current.answer)
+                                                ? '#d4edda'
+                                                : selectedAnswer === key
+                                                    ? '#f8d7da'
+                                                    : '#f8f9fa'
+                                            : selectedAnswer === key
+                                                ? '#e3f2fd'
+                                                : '#fff'
                                     }}
                                 >
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -859,7 +958,7 @@ export default function ListeningPractice() {
                                             </div>
                                         )}
                                     </div>
-                                </button>
+                                </div>
                             ))}
                         </div>
 

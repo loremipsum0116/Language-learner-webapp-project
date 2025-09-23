@@ -42,6 +42,7 @@ import ListeningList from "./pages/ListeningList";
 import ListeningPractice from "./pages/ListeningPractice";
 import JapaneseListeningList from "./pages/JapaneseListeningList";
 import JapaneseListeningPractice from "./pages/JapaneseListeningPractice";
+import JapaneseListening from "./pages/JapaneseListening";
 
 const Placeholder = ({ title }) => (
   <div className="container py-4">
@@ -352,7 +353,7 @@ export default function App() {
               <>
                 <Header />
                 <div className="main-content">
-                  <Placeholder title="일본어 리스닝 홈" />
+                  <JapaneseListening />
                 </div>
                 <Footer />
               </>

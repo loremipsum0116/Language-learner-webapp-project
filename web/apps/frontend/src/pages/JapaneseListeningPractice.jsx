@@ -694,7 +694,30 @@ export default function JapaneseListeningPractice() {
                                             fontSize: '14px',
                                             color: '#0c5460'
                                         }}>
-                                            <strong>번역:</strong> {current.script_ko}
+                                            <h6 style={{ marginBottom: '10px', color: '#0c5460' }}>📄 번역:</h6>
+                                            <div>
+                                                {(() => {
+                                                    // 스크립트의 화자(A:, B:, C: 등) 추출
+                                                    const speakers = (current.script.match(/[A-Z]:\s/g) || []).map(s => s.trim());
+                                                    // 번역문을 슬래시로 분리
+                                                    const translations = current.script_ko.split('/').map(t => t.trim()).filter(t => t);
+
+                                                    return translations.map((translation, index) => (
+                                                        <div key={index} style={{ marginBottom: '8px' }}>
+                                                            {speakers[index] && (
+                                                                <strong style={{ color: '#17a2b8' }}>{speakers[index]}</strong>
+                                                            )}
+                                                            <span style={{
+                                                                marginLeft: speakers[index] ? '1rem' : '0',
+                                                                display: speakers[index] ? 'inline-block' : 'block',
+                                                                paddingTop: '2px'
+                                                            }}>
+                                                                {translation}
+                                                            </span>
+                                                        </div>
+                                                    ));
+                                                })()}
+                                            </div>
                                         </div>
                                     )}
                                 </div>
@@ -722,7 +745,7 @@ export default function JapaneseListeningPractice() {
 
                         <div className="options-grid">
                             {Object.entries(current.options).map(([key, value]) => (
-                                <button
+                                <div
                                     key={key}
                                     className={`option-btn ${
                                         selectedAnswer === key ? 'selected' : ''
@@ -735,13 +758,25 @@ export default function JapaneseListeningPractice() {
                                                     : ''
                                             : ''
                                     }`}
-                                    onClick={() => handleAnswerSelect(key)}
-                                    disabled={showExplanation}
+                                    onClick={!showExplanation ? () => handleAnswerSelect(key) : undefined}
                                     style={{
                                         fontSize: '1.2rem',
                                         fontWeight: 'bold',
                                         padding: '1rem',
-                                        textAlign: 'left'
+                                        textAlign: 'left',
+                                        cursor: !showExplanation ? 'pointer' : 'default',
+                                        border: '1px solid #ccc',
+                                        borderRadius: '8px',
+                                        marginBottom: '8px',
+                                        backgroundColor: showExplanation
+                                            ? key === (current.correctAnswer || current.answer)
+                                                ? '#d4edda'
+                                                : selectedAnswer === key
+                                                    ? '#f8d7da'
+                                                    : '#f8f9fa'
+                                            : selectedAnswer === key
+                                                ? '#e3f2fd'
+                                                : '#fff'
                                     }}
                                 >
                                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
@@ -766,7 +801,7 @@ export default function JapaneseListeningPractice() {
                                             </div>
                                         )}
                                     </div>
-                                </button>
+                                </div>
                             ))}
                         </div>
 
