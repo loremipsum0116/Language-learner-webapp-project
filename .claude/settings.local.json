@@ -258,7 +258,8 @@
       "Bash(then)",
       "Bash(echo:*)",
       "Bash(fi)",
-      "Bash(if [ -d \"web/apps/backend/$level/$level_$i\" ])"
+      "Bash(if [ -d \"web/apps/backend/$level/$level_$i\" ])",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []
