@@ -5,9 +5,54 @@ const { prisma } = require('../lib/prismaClient');
 const { generateMcqQuizItems } = require('../services/quizService');
 const auth = require('../middleware/auth');
 const { formatKstDateTime } = require('../lib/kst');
+const fs = require('fs');
+const path = require('path');
 
 // ✅ 이 파일의 모든 라우트는 로그인 필요
 router.use(auth);
+
+// 일본어 리스닝 한글 번역을 가져오는 헬퍼 함수
+const getJapaneseListeningTranslation = (questionId, level) => {
+  try {
+    // questionId에서 레벨과 문제 번호 추출 (예: N1_L_001)
+    const levelMatch = questionId.match(/^(N[1-5])_L_(\d+)$/);
+    if (!levelMatch) {
+      return null;
+    }
+
+    const [, questionLevel, questionNumber] = levelMatch;
+
+    // JSON 파일 경로 구성
+    const jsonPath = path.join(__dirname, '..', questionLevel, `${questionLevel}_Listening`, `${questionLevel}_Listening.json`);
+
+    if (!fs.existsSync(jsonPath)) {
+      console.log(`[TRANSLATION] JSON file not found: ${jsonPath}`);
+      return null;
+    }
+
+    // JSON 파일 읽기
+    const jsonData = fs.readFileSync(jsonPath, 'utf8');
+    const listeningData = JSON.parse(jsonData);
+
+    // 해당 문제 찾기
+    const question = listeningData.find(item => item.id === questionId);
+
+    if (!question) {
+      console.log(`[TRANSLATION] Question ${questionId} not found in JSON`);
+      return null;
+    }
+
+    return {
+      topic: question.topic || '',
+      question: question.question || '',
+      script: question.script || '',
+      options: question.options || {}
+    };
+  } catch (error) {
+    console.error(`[TRANSLATION] Error loading translation for ${questionId}:`, error);
+    return null;
+  }
+};
 
 /**
  * POST /odat-note/resolve-many
@@ -232,10 +277,26 @@ router.get('/list', async (req, res) => {
         result.readingId = wa.itemId;
         result.title = wa.wrongData?.title || 'Unknown Title';
         result.passage = wa.wrongData?.passage || '';
-      } else if (wa.itemType === 'listening') {
+      } else if (wa.itemType === 'listening' || wa.itemType === 'japanese-listening') {
         result.listeningId = wa.itemId;
         result.title = wa.wrongData?.title || 'Unknown Title';
         result.audioUrl = wa.wrongData?.audioUrl || '';
+
+        // 일본어 리스닝의 경우 한글 번역 추가
+        if (wa.itemType === 'japanese-listening' && wa.wrongData?.questionId) {
+          const translation = getJapaneseListeningTranslation(wa.wrongData.questionId, wa.wrongData.level);
+          if (translation) {
+            console.log(`[TRANSLATION] Adding Korean translation for ${wa.wrongData.questionId}`);
+            // wrongData에 한글 번역이 포함된 버전으로 업데이트
+            result.wrongData = {
+              ...wa.wrongData,
+              topic: translation.topic,
+              question: translation.question,
+              script: translation.script,
+              options: translation.options
+            };
+          }
+        }
       }
 
       return result;

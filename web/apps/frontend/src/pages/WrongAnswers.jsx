@@ -9,12 +9,150 @@ import RainbowStar from "../components/RainbowStar";
 
 dayjs.locale("ko");
 
+// 텍스트 파싱 함수 (리스닝용 - 발화자 있든 없든 통합)
+function parseTextWithTranslation(text) {
+  if (!text) return { type: 'none', data: null };
+
+  try {
+    // 발화자 패턴 확인 (A:, B:, C: 등)
+    const speakerRegex = /([A-Z]):\s*/g;
+    const hasSpeakers = speakerRegex.test(text);
+
+    if (hasSpeakers) {
+      // 발화자가 있는 경우 - 발화자별로 분리
+      speakerRegex.lastIndex = 0; // 정규식 리셋
+      const parts = [];
+      let match;
+
+      // 모든 발화자 위치 찾기
+      const speakers = [];
+      while ((match = speakerRegex.exec(text)) !== null) {
+        speakers.push({
+          speaker: match[1],
+          start: match.index,
+          end: match.index + match[0].length
+        });
+      }
+
+      // 각 발화자의 텍스트 추출
+      for (let i = 0; i < speakers.length; i++) {
+        const currentSpeaker = speakers[i];
+        const nextSpeaker = speakers[i + 1];
+
+        const startIndex = currentSpeaker.end;
+        const endIndex = nextSpeaker ? nextSpeaker.start : text.length;
+
+        const content = text.substring(startIndex, endIndex).trim();
+
+        if (content) {
+          // 원어와 번역 분리 (마지막 괄호 기준)
+          const lastParenIndex = content.lastIndexOf('(');
+          const lastParenEndIndex = content.lastIndexOf(')');
+
+          if (lastParenIndex !== -1 && lastParenEndIndex !== -1 && lastParenIndex < lastParenEndIndex) {
+            const original = content.substring(0, lastParenIndex).trim();
+            const translation = content.substring(lastParenIndex + 1, lastParenEndIndex).trim();
+
+            parts.push({
+              speaker: currentSpeaker.speaker,
+              original,
+              translation
+            });
+          } else {
+            // 번역이 없는 경우
+            parts.push({
+              speaker: currentSpeaker.speaker,
+              original: content,
+              translation: ''
+            });
+          }
+        }
+      }
+
+      return { type: 'dialogue', data: parts };
+    } else {
+      // 발화자가 없는 경우 - 단일 텍스트
+      const lastParenIndex = text.lastIndexOf('(');
+      const lastParenEndIndex = text.lastIndexOf(')');
+
+      if (lastParenIndex !== -1 && lastParenEndIndex !== -1 && lastParenIndex < lastParenEndIndex) {
+        const original = text.substring(0, lastParenIndex).trim();
+        const translation = text.substring(lastParenIndex + 1, lastParenEndIndex).trim();
+
+        return {
+          type: 'single',
+          data: {
+            original,
+            translation
+          }
+        };
+      } else {
+        // 번역이 없는 경우
+        return {
+          type: 'single',
+          data: {
+            original: text,
+            translation: ''
+          }
+        };
+      }
+    }
+  } catch (error) {
+    console.error('텍스트 파싱 오류:', error);
+    return { type: 'none', data: null };
+  }
+}
+
+// 리딩 지문과 번역을 결합하는 함수
+function parseReadingWithTranslation(passage, translationData, passageId) {
+  if (!passage) return { type: 'none', data: null };
+
+  try {
+    let translation = '';
+
+    // 번역 데이터에서 해당 지문의 번역 찾기
+    if (translationData && passageId) {
+      const translationItem = translationData.find(t => t.id === passageId);
+      if (translationItem) {
+        translation = translationItem.translation;
+      }
+    }
+
+    return {
+      type: 'single',
+      data: {
+        original: passage,
+        translation
+      }
+    };
+  } catch (error) {
+    console.error('리딩 텍스트 파싱 오류:', error);
+    return { type: 'none', data: null };
+  }
+}
+
 function formatTimeRemaining(hours) {
   if (hours <= 0) return "지금";
   if (hours < 24) return `${Math.ceil(hours)}시간 후`;
   const days = Math.floor(hours / 24);
   return `${days}일 후`;
 }
+
+// 슬래시를 기점으로 문단을 나누어 표시하는 함수
+function formatTextWithParagraphs(text) {
+  if (!text) return '';
+
+  // 슬래시(/)를 기준으로 문단 분리
+  const paragraphs = text.split('/').map(paragraph => paragraph.trim()).filter(paragraph => paragraph);
+
+  return paragraphs.map((paragraph, index) => (
+    <div key={index} className={index > 0 ? "mt-3" : ""}>
+      <div dangerouslySetInnerHTML={{ __html: paragraph }}></div>
+    </div>
+  ));
+}
+
+
 
 function getSrsStatusBadge(srsCard) {
   if (!srsCard) {
@@ -82,6 +220,7 @@ export default function WrongAnswers() {
   });
   const [selectedIds, setSelectedIds] = useState(new Set());
   const [expandedDetails, setExpandedDetails] = useState(new Set());
+  const [translationData, setTranslationData] = useState({}); // 번역 데이터 캐시
 
   const loadCategories = async () => {
     try {
@@ -92,6 +231,56 @@ export default function WrongAnswers() {
     } catch (error) {
       console.error("Failed to load categories:", error);
     }
+  };
+
+  // 번역 데이터 로드 함수
+  const loadTranslationData = async (level, isJapanese) => {
+    const cacheKey = `${level}_${isJapanese ? 'ja' : 'en'}`;
+
+    // 이미 로드된 데이터가 있으면 반환
+    if (translationData[cacheKey]) {
+      return translationData[cacheKey];
+    }
+
+    try {
+      // 여러 가능한 경로 시도
+      const possiblePaths = [];
+
+      if (isJapanese) {
+        // 일본어 번역 파일 경로들
+        possiblePaths.push(`/${level}_Reading/${level}_Reading_Translation.json`);
+        possiblePaths.push(`/${level}/${level}_Reading/${level}_Translation.json`);
+        possiblePaths.push(`/${level}_Reading/${level}_Translation.json`);
+      } else {
+        // 영어 번역 파일 경로들
+        possiblePaths.push(`/${level}/${level}_Translation.json`);
+        possiblePaths.push(`/${level}_reading/${level}_reading_Translation.json`);
+        possiblePaths.push(`/${level}_Reading/${level}_Reading_Translation.json`);
+      }
+
+      // 경로를 순서대로 시도
+      for (const translationPath of possiblePaths) {
+        try {
+          const response = await fetch(translationPath);
+          if (response.ok) {
+            const data = await response.json();
+            console.log(`번역 파일 로드 성공: ${translationPath}`, data);
+            setTranslationData(prev => ({
+              ...prev,
+              [cacheKey]: data
+            }));
+            return data;
+          }
+        } catch (pathError) {
+          console.log(`번역 파일 로드 실패: ${translationPath}`, pathError);
+          continue;
+        }
+      }
+    } catch (error) {
+      console.error(`번역 데이터 로드 실패 (${level}):`, error);
+    }
+
+    return null;
   };
 
   // 언어별 필터링 함수
@@ -142,6 +331,126 @@ export default function WrongAnswers() {
 
     return 'en'; // 기본값은 영어
   };
+
+  // 리딩 지문과 번역을 표시하는 컴포넌트
+  function ReadingPassageWithTranslation({ wrongAnswer, loadTranslationData }) {
+    const [translation, setTranslation] = useState('');
+    const [loading, setLoading] = useState(true);
+    const isJapanese = detectLanguage(wrongAnswer) === 'ja';
+
+    useEffect(() => {
+      const loadTranslation = async () => {
+        setLoading(true);
+        try {
+          // questionId에서 레벨과 지문 ID 추출
+          const questionId = wrongAnswer.wrongData?.questionId;
+          console.log(`번역 로드 시도: questionId=${questionId}, isJapanese=${isJapanese}`);
+
+          if (!questionId) {
+            setLoading(false);
+            return;
+          }
+
+          let level, passageId;
+
+          if (isJapanese) {
+            // 일본어 패턴들 시도
+            let match = questionId.match(/^(N[1-5])_JR_(\d+)_Q\d+$/); // N1_JR_002_Q1
+            if (!match) {
+              match = questionId.match(/^(N[1-5])_(\d+)_Q\d+$/); // N1_002_Q1
+            }
+            if (!match) {
+              match = questionId.match(/^(N[1-5]).*?(\d+).*?Q\d+$/); // 더 유연한 패턴
+            }
+
+            if (match) {
+              level = match[1];
+              passageId = parseInt(match[2]);
+              console.log(`일본어 매칭 성공: level=${level}, passageId=${passageId}`);
+            }
+          } else {
+            // 영어 패턴들 시도
+            let match = questionId.match(/^([ABC][12])_R_(\d+)$/); // A2_R_001
+            if (!match) {
+              match = questionId.match(/^([ABC][12])_(\d+)_Q\d+$/); // A1_002_Q1
+            }
+            if (!match) {
+              match = questionId.match(/^([ABC][12])_reading_(\d+)_Q\d+$/); // A1_reading_002_Q1
+            }
+            if (!match) {
+              match = questionId.match(/^([ABC][12])_Reading_(\d+)_Q\d+$/); // A1_Reading_002_Q1
+            }
+            if (!match) {
+              match = questionId.match(/^([ABC][12]).*?(\d+).*?Q?\d*$/); // 더 유연한 패턴
+            }
+
+            if (match) {
+              level = match[1];
+              passageId = parseInt(match[2]);
+              console.log(`영어 매칭 성공: level=${level}, passageId=${passageId}`);
+            } else {
+              console.log(`영어 패턴 매칭 실패: questionId=${questionId}`);
+            }
+          }
+
+          if (level && passageId) {
+            const translationData = await loadTranslationData(level, isJapanese);
+            if (translationData) {
+              const translationItem = translationData.find(t => t.id === passageId);
+              if (translationItem) {
+                setTranslation(translationItem.translation);
+              }
+            }
+          }
+        } catch (error) {
+          console.error('번역 로드 오류:', error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      loadTranslation();
+    }, [wrongAnswer, loadTranslationData, isJapanese]);
+
+    if (loading) {
+      return (
+        <div className="text-center p-3">
+          <div className="spinner-border spinner-border-sm" role="status">
+            <span className="visually-hidden">번역 로딩 중...</span>
+          </div>
+          <div className="small text-muted mt-2">번역을 불러오는 중...</div>
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {/* 원어 지문 */}
+        <div className="mb-3">
+          <h6 className="text-primary mb-2">📝 지문 ({isJapanese ? '일본어' : '영어'})</h6>
+          <div className="p-3 bg-white rounded border">
+            <div className={isJapanese ? "japanese-text" : ""}>
+              {formatTextWithParagraphs(wrongAnswer.wrongData.passage)}
+            </div>
+          </div>
+        </div>
+
+        {/* 한글 번역 */}
+        <div>
+          <h6 className="text-success mb-2">📝 번역 (한국어)</h6>
+          <div className="p-3 bg-white rounded border">
+            {translation ? (
+              <div>
+                {formatTextWithParagraphs(translation)}
+              </div>
+            ) : (
+              <div className="text-muted">번역을 찾을 수 없습니다.</div>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const reload = async () => {
     setLoading(true);
@@ -809,7 +1118,7 @@ export default function WrongAnswers() {
 
                           <div className="mb-2">
                             <div className="mb-2">
-                              <strong>문제:</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></span>
+                              <strong>문제:</strong> <span className={detectLanguage(wa) === 'ja' ? "japanese-text" : ""} dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></span>
                             </div>
                             <div className="mb-2">
                               <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
@@ -817,7 +1126,24 @@ export default function WrongAnswers() {
                             </div>
                             {wa.wrongData.passage && (
                               <div className="small text-muted">
-                                <strong>지문:</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.passage.substring(0, 100) + '...' }}></span>
+                                <strong>지문:</strong>
+                                <div className="mt-1">
+                                  {(() => {
+                                    const isJapanese = detectLanguage(wa) === 'ja';
+                                    const shortOriginal = wa.wrongData.passage.length > 100
+                                      ? wa.wrongData.passage.substring(0, 100) + '...'
+                                      : wa.wrongData.passage;
+
+                                    return (
+                                      <div>
+                                        <div className="text-muted">
+                                          <strong>{isJapanese ? '일본어' : '영어'}:</strong> <span className={isJapanese ? "japanese-text" : ""} dangerouslySetInnerHTML={{ __html: shortOriginal }}></span>
+                                        </div>
+                                        <div className="text-muted small">(번역은 세부정보에서 확인 가능)</div>
+                                      </div>
+                                    );
+                                  })()}
+                                </div>
                               </div>
                             )}
                           </div>
@@ -857,7 +1183,63 @@ export default function WrongAnswers() {
                               <strong>질문:</strong> {wa.wrongData.question || "질문 정보 없음"}
                             </div>
                             <div className="mb-2">
-                              <strong>스크립트:</strong> <em>"{wa.wrongData.script || "스크립트 정보 없음"}"</em>
+                              <strong>스크립트:</strong>
+                              <div className="small mt-1">
+                                {(() => {
+                                  const parsedScript = parseTextWithTranslation(wa.wrongData.script);
+
+                                  if (parsedScript.type === 'dialogue' && parsedScript.data.length > 0) {
+                                    // 발화자가 있는 대화형
+                                    const firstDialogue = parsedScript.data[0];
+                                    const shortOriginal = firstDialogue.original.length > 50
+                                      ? firstDialogue.original.substring(0, 50) + '...'
+                                      : firstDialogue.original;
+                                    const shortTranslation = firstDialogue.translation.length > 50
+                                      ? firstDialogue.translation.substring(0, 50) + '...'
+                                      : firstDialogue.translation;
+
+                                    const isJapanese = detectLanguage(wa) === 'ja';
+
+                                    return (
+                                      <div>
+                                        <div className="text-muted">
+                                          <strong>{firstDialogue.speaker}:</strong> <span className={isJapanese ? "japanese-text" : ""}>{shortOriginal}</span>
+                                        </div>
+                                        <div className="text-muted">
+                                          <strong>{firstDialogue.speaker}:</strong> {shortTranslation}
+                                        </div>
+                                        {parsedScript.data.length > 1 && (
+                                          <div className="text-muted small">... 외 {parsedScript.data.length - 1}명 더 (자세히 보려면 세부정보 보기)</div>
+                                        )}
+                                      </div>
+                                    );
+                                  } else if (parsedScript.type === 'single' && parsedScript.data) {
+                                    // 발화자가 없는 단일 텍스트
+                                    const shortOriginal = parsedScript.data.original.length > 100
+                                      ? parsedScript.data.original.substring(0, 100) + '...'
+                                      : parsedScript.data.original;
+                                    const shortTranslation = parsedScript.data.translation.length > 100
+                                      ? parsedScript.data.translation.substring(0, 100) + '...'
+                                      : parsedScript.data.translation;
+
+                                    const isJapanese = detectLanguage(wa) === 'ja';
+
+                                    return (
+                                      <div>
+                                        <div className="text-muted">
+                                          <strong>{isJapanese ? '일본어' : '영어'}:</strong> <span className={isJapanese ? "japanese-text" : ""}>{shortOriginal}</span>
+                                        </div>
+                                        <div className="text-muted">
+                                          <strong>한글:</strong> {shortTranslation}
+                                        </div>
+                                        <div className="text-muted small">(자세히 보려면 세부정보 보기)</div>
+                                      </div>
+                                    );
+                                  } else {
+                                    return <em>"{wa.wrongData.script || "스크립트 정보 없음"}"</em>;
+                                  }
+                                })()}
+                              </div>
                             </div>
                             <div className="mb-2">
                               <span className="badge bg-danger me-2">내 답: {wa.wrongData.userAnswer}</span>
@@ -1050,12 +1432,17 @@ export default function WrongAnswers() {
                               <>
                                 <div className="mb-3">
                                   <strong>📖 지문 전체:</strong>
-                                  <div className="bg-white p-3 mt-2 rounded border japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.passage }}></div>
+                                  <div className="bg-light p-3 mt-2 rounded border">
+                                    <ReadingPassageWithTranslation
+                                      wrongAnswer={wa}
+                                      loadTranslationData={loadTranslationData}
+                                    />
+                                  </div>
                                 </div>
 
                                 <div className="mb-3">
                                   <strong>❓ 문제:</strong>
-                                  <div className="bg-white p-2 mt-1 rounded border japanese-text" dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></div>
+                                  <div className={`bg-white p-2 mt-1 rounded border ${detectLanguage(wa) === 'ja' ? 'japanese-text' : ''}`} dangerouslySetInnerHTML={{ __html: wa.wrongData.question }}></div>
                                 </div>
 
                                 <div className="mb-3">
@@ -1072,7 +1459,7 @@ export default function WrongAnswers() {
                                             : "bg-white"
                                         }`}
                                       >
-                                        <strong>{key}.</strong> <span className="japanese-text" dangerouslySetInnerHTML={{ __html: value }}></span>
+                                        <strong>{key}.</strong> <span className={detectLanguage(wa) === 'ja' ? "japanese-text" : ""} dangerouslySetInnerHTML={{ __html: value }}></span>
                                         {key === wa.wrongData.correctAnswer && (
                                           <span key={`reading-correct-${wa.id}-${key}`} className="ms-2">✅ 정답</span>
                                         )}
@@ -1187,7 +1574,61 @@ export default function WrongAnswers() {
                                 <div className="mb-3">
                                   <strong>📝 스크립트:</strong>
                                   <div className="bg-light p-3 mt-2 rounded border">
-                                    <em>"{wa.wrongData.script}"</em>
+                                    {(() => {
+                                      const parsedScript = parseTextWithTranslation(wa.wrongData.script);
+                                      const isJapanese = detectLanguage(wa) === 'ja';
+
+                                      if (parsedScript.type === 'dialogue' && parsedScript.data.length > 0) {
+                                        return (
+                                          <div>
+                                            {/* 원어 대화 */}
+                                            <div className="mb-3">
+                                              <h6 className="text-primary mb-2">🗣️ 대화 ({isJapanese ? '일본어' : '영어'})</h6>
+                                              {parsedScript.data.map((dialogue, idx) => (
+                                                <div key={`original-${idx}`} className="mb-2 p-2 bg-white rounded border">
+                                                  <div className="fw-bold text-info">{dialogue.speaker}:</div>
+                                                  <div className={isJapanese ? "japanese-text" : ""}>{dialogue.original}</div>
+                                                </div>
+                                              ))}
+                                            </div>
+
+                                            {/* 한글 번역 */}
+                                            <div>
+                                              <h6 className="text-success mb-2">🗣️ 번역 (한국어)</h6>
+                                              {parsedScript.data.map((dialogue, idx) => (
+                                                <div key={`translation-${idx}`} className="mb-2 p-2 bg-white rounded border">
+                                                  <div className="fw-bold text-info">{dialogue.speaker}:</div>
+                                                  <div>{dialogue.translation}</div>
+                                                </div>
+                                              ))}
+                                            </div>
+                                          </div>
+                                        );
+                                      } else if (parsedScript.type === 'single' && parsedScript.data) {
+                                        return (
+                                          <div>
+                                            {/* 원어 텍스트 */}
+                                            <div className="mb-3">
+                                              <h6 className="text-primary mb-2">📝 스크립트 ({isJapanese ? '일본어' : '영어'})</h6>
+                                              <div className="p-3 bg-white rounded border">
+                                                <div className={isJapanese ? "japanese-text" : ""}>{parsedScript.data.original}</div>
+                                              </div>
+                                            </div>
+
+                                            {/* 한글 번역 */}
+                                            <div>
+                                              <h6 className="text-success mb-2">📝 번역 (한국어)</h6>
+                                              <div className="p-3 bg-white rounded border">
+                                                <div>{parsedScript.data.translation}</div>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        );
+                                      } else {
+                                        // 파싱 실패시 기존 방식으로 표시
+                                        return <em>"{wa.wrongData.script}"</em>;
+                                      }
+                                    })()}
                                   </div>
                                 </div>
 
