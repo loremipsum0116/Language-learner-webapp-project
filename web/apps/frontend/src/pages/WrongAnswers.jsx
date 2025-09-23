@@ -406,8 +406,14 @@ export default function WrongAnswers() {
         let questionIndex = 0;
         const questionId = wa.wrongData?.questionId;
         if (typeof questionId === 'string' && questionId.includes('_')) {
-          const match = questionId.match(/_(\d+)$/);
-          questionIndex = match ? parseInt(match[1]) - 1 : 0; // 0-based index
+          // 일본어 리딩의 경우 지문 번호 추출 (N1_JR_002_Q1 -> 002)
+          const passageMatch = questionId.match(/_JR_(\d+)(_Q\d+)?$/);
+          if (passageMatch) {
+            questionIndex = parseInt(passageMatch[1]) - 1; // 지문 번호에서 0-based index
+          } else {
+            const match = questionId.match(/_(\d+)$/);
+            questionIndex = match ? parseInt(match[1]) - 1 : 0; // 기존 로직
+          }
         } else if (questionId) {
           questionIndex = parseInt(questionId) - 1 || 0;
         }
@@ -783,8 +789,14 @@ export default function WrongAnswers() {
                                 // questionId에서 숫자 부분 추출
                                 const questionId = wa.wrongData.questionId;
                                 if (typeof questionId === 'string' && questionId.includes('_')) {
-                                  const match = questionId.match(/_(\d+)$/);
-                                  return match ? parseInt(match[1]) : 'NaN';
+                                  // 일본어 리딩의 경우 지문 번호 추출 (N1_JR_002_Q1 -> 002)
+                                  const passageMatch = questionId.match(/_JR_(\d+)(_Q\d+)?$/);
+                                  if (passageMatch) {
+                                    return parseInt(passageMatch[1]); // 지문 번호
+                                  } else {
+                                    const match = questionId.match(/_(\d+)$/);
+                                    return match ? parseInt(match[1]) : 'NaN';
+                                  }
                                 }
                                 return questionId || 'NaN';
                               })()}

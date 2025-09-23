@@ -237,14 +237,132 @@ export default function JapaneseReadingList() {
         });
     };
 
-    // 문제별 학습 기록 가져오기
+    // 문제별 학습 기록 가져오기 (복수 문제 통계 합산)
     const getStudyRecord = (questionId) => {
-        const record = studyHistory[questionId];
-        if (record) {
-            console.log(`🔍 [STUDY RECORD DEBUG] questionId: ${questionId}`, record);
-            console.log(`🔍 [WRONG DATA DEBUG] wrongData:`, record.wrongData);
+        // 우선 지문 단위 통계 기록을 찾아보기 (복수 문제인 경우)
+        const passageRecord = studyHistory[questionId];
+        if (passageRecord && passageRecord.source === 'passage') {
+            console.log(`🔍 [PASSAGE RECORD] Found passage stats for ${questionId}:`, passageRecord);
+            return passageRecord;
         }
-        return record;
+
+        // 단일 문제인 경우 기존 로직
+        const directRecord = studyHistory[questionId];
+        if (directRecord) {
+            console.log(`🔍 [STUDY RECORD DEBUG] questionId: ${questionId}`, directRecord);
+            return directRecord;
+        }
+
+        // 지문 통계가 없으면 개별 문제들을 찾아서 통계 합산
+        const relatedQuestions = Object.keys(studyHistory).filter(key =>
+            key.startsWith(questionId + '_Q') || key === questionId
+        );
+
+        if (relatedQuestions.length === 0) {
+            return null;
+        }
+
+        console.log(`🔍 [MULTI QUESTION DEBUG] Found ${relatedQuestions.length} related questions for ${questionId}:`, relatedQuestions);
+
+        // 관련 문제들을 시간 순으로 정렬하여 세션별로 그룹화
+        const recordsWithTime = relatedQuestions.map(qId => {
+            const record = studyHistory[qId];
+            if (record) {
+                return {
+                    questionId: qId,
+                    record: record,
+                    time: new Date(record.solvedAt || record.wrongAt)
+                };
+            }
+            return null;
+        }).filter(Boolean);
+
+        if (recordsWithTime.length === 0) {
+            return null;
+        }
+
+        // 시간 순으로 정렬
+        recordsWithTime.sort((a, b) => a.time - b.time);
+
+        // 세션별로 그룹화 (같은 시간대의 기록들을 하나의 시도로 간주)
+        const sessions = [];
+        let currentSession = [];
+        let lastTime = null;
+
+        recordsWithTime.forEach(item => {
+            // 5분 이내의 기록들은 같은 세션으로 간주
+            if (!lastTime || Math.abs(item.time - lastTime) <= 5 * 60 * 1000) {
+                currentSession.push(item);
+                lastTime = item.time;
+            } else {
+                if (currentSession.length > 0) {
+                    sessions.push([...currentSession]);
+                }
+                currentSession = [item];
+                lastTime = item.time;
+            }
+        });
+
+        if (currentSession.length > 0) {
+            sessions.push(currentSession);
+        }
+
+        // 각 세션별로 정답/오답 판정 및 누적 계산
+        let totalCorrectAttempts = 0;
+        let totalIncorrectAttempts = 0;
+        let lastStudyTime = null;
+
+        sessions.forEach(session => {
+            // 해당 세션에서 모든 문제가 정답인지 확인
+            const allCorrectInSession = session.every(item => {
+                const isCorrect = item.record.isCompleted || item.record.wrongData?.isCorrect;
+                return isCorrect;
+            });
+
+            // 세션의 가장 늦은 시간 기록
+            session.forEach(item => {
+                if (!lastStudyTime || item.time > lastStudyTime) {
+                    lastStudyTime = item.time;
+                }
+            });
+
+            // 누적 통계 업데이트
+            if (allCorrectInSession) {
+                totalCorrectAttempts++;
+            } else {
+                totalIncorrectAttempts++;
+            }
+        });
+
+        const totalAttempts = totalCorrectAttempts + totalIncorrectAttempts;
+        const isCurrentlyCorrect = sessions.length > 0 && sessions[sessions.length - 1].every(item => {
+            const isCorrect = item.record.isCompleted || item.record.wrongData?.isCorrect;
+            return isCorrect;
+        });
+
+        // 누적 통계를 포함한 결과
+        const consolidatedStats = {
+            isCompleted: isCurrentlyCorrect,
+            attempts: totalAttempts,
+            solvedAt: lastStudyTime?.toISOString(),
+            wrongAt: lastStudyTime?.toISOString(),
+            wrongData: {
+                isCorrect: isCurrentlyCorrect,
+                correctCount: totalCorrectAttempts,
+                incorrectCount: totalIncorrectAttempts,
+                totalAttempts: totalAttempts
+            }
+        };
+
+        console.log(`🔍 [CONSOLIDATED STATS] ${questionId}:`, {
+            relatedCount: relatedQuestions.length,
+            sessions: sessions.length,
+            totalCorrect: totalCorrectAttempts,
+            totalIncorrect: totalIncorrectAttempts,
+            consolidatedStats
+        });
+
+        return consolidatedStats;
     };
 
     // 문제 선택/해제

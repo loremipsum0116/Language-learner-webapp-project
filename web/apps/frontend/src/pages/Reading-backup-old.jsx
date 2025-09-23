@@ -24,96 +24,29 @@ export default function Reading() {
     const [selectedWord, setSelectedWord] = useState(null);
     const [wordPopupPosition, setWordPopupPosition] = useState(null);
     const [showTranslation, setShowTranslation] = useState(false);
-    const [translationData, setTranslationData] = useState(new Map());
-    const [translationByIndex, setTranslationByIndex] = useState([]);
 
     useEffect(() => {
         loadReadingData();
         loadEnglishDictionary();
-        loadTranslationData();
     }, [level, startIndex]);
 
-    // 영어 사전 데이터 로드 (모든 레벨의 모든 IELTS JSON 파일)
     const loadEnglishDictionary = async () => {
         try {
-            const dictMap = new Map();
-
-            // 모든 레벨의 세부 폴더 수
-            const allLevelFolders = {
-                'A1': 9, 'A2': 9, 'B1': 8, 'B2': 8, 'C1': 5
-            };
-
-            // 모든 레벨의 모든 IELTS 파일 로드
-            for (const [levelName, folderCount] of Object.entries(allLevelFolders)) {
-                for (let i = 1; i <= folderCount; i++) {
-                    try {
-                        const response = await fetch(`/${levelName}/${levelName}_${i}/ielts_${levelName.toLowerCase()}_${i}.json`);
-                        if (response.ok) {
-                            const words = await response.json();
-                            words.forEach(word => {
-                                if (word.lemma && word.koGloss) {
-                                    // 기본 단어 추출 (괄호 앞 부분)
-                                    const baseWord = word.lemma.split('(')[0].trim().toLowerCase();
-
-                                    // 해당 기본 단어에 대한 배열이 없으면 생성
-                                    if (!dictMap.has(baseWord)) {
-                                        dictMap.set(baseWord, []);
-                                    }
-
-                                    // 동음이의어 배열에 추가
-                                    dictMap.get(baseWord).push({
-                                        lemma: word.lemma,
-                                        koGloss: word.koGloss,
-                                        pos: word.pos,
-                                        definition: word.definition,
-                                        example: word.example,
-                                        koExample: word.koExample,
-                                        level: levelName
-                                    });
-                                }
-                            });
-                        }
-                    } catch (error) {
-                        console.warn(`Failed to load ${levelName}_${i} dictionary:`, error);
-                    }
-                }
-            }
-
-            console.log(`✅ [영어 사전 로드 완료] 전체 레벨: ${dictMap.size}개 단어`);
-            setEnglishDict(dictMap);
-        } catch (error) {
-            console.error('❌ 영어 사전 로드 실패:', error);
-            setEnglishDict(new Map());
-        }
-    };
-
-    // 번역 데이터 로드 (백엔드 파일 직접 접근)
-    const loadTranslationData = async () => {
-        try {
-            // 프론트엔드 public 폴더의 번역 파일 접근
-            const response = await fetch(`/${level}/${level}_Translation.json`);
+            const response = await fetch('/english-dict.json');
             if (response.ok) {
-                const translations = await response.json();
-                const translationMap = new Map();
-                const translationArray = [];
-                translations.forEach((item, index) => {
-                    // 번역 데이터의 id(숫자)를 리딩 데이터의 dbId와 매핑
-                    translationMap.set(item.id, item.translation);
-                    // 인덱스 기반 배열로도 저장 (C1 등 dbId가 다른 레벨용)
-                    translationArray[index] = item.translation;
+                const words = await response.json();
+                const wordMap = new Map();
+                words.forEach(word => {
+                    const key = word.word?.toLowerCase();
+                    if (key) {
+                        wordMap.set(key, word);
+                    }
                 });
-                setTranslationData(translationMap);
-                setTranslationByIndex(translationArray);
-                console.log(`✅ [번역 데이터 로드 완료] ${level}: ${translations.length}개 번역`);
-            } else {
-                console.warn(`번역 데이터 로드 실패: ${level}`);
-                setTranslationData(new Map());
-                setTranslationByIndex([]);
+                setEnglishDict(wordMap);
+                console.log(`영어 사전 ${words.length}개 단어 로드 완료`);
             }
         } catch (error) {
-            console.error('번역 데이터 로드 오류:', error);
-            setTranslationData(new Map());
-            setTranslationByIndex([]);
+            console.error('영어 사전 로드 실패:', error);
         }
     };
 
@@ -138,15 +71,11 @@ export default function Reading() {
                             key={index}
                             onClick={(e) => {
                                 if (hasDefinition) {
-                                    const wordData = englishDict.get(cleanWord);
-                                    console.log('클릭된 단어:', word, 'cleanWord:', cleanWord, 'wordData:', wordData);
-                                    if (wordData && wordData.length > 0) {
-                                        setSelectedWord(wordData);
-                                        setWordPopupPosition({
-                                            x: e.clientX,
-                                            y: e.clientY - 10
-                                        });
-                                    }
+                                    setSelectedWord(englishDict.get(cleanWord));
+                                    setWordPopupPosition({
+                                        x: e.clientX,
+                                        y: e.clientY - 10
+                                    });
                                 }
                             }}
                             style={{
@@ -220,6 +149,8 @@ export default function Reading() {
         }
     };
 
+    // 오답노트 기록은 /api/reading/record에서 통합 처리됨
+
     const handleAnswerSelect = (option) => {
         if (showExplanation) return;
         setSelectedAnswer(option);
@@ -229,10 +160,20 @@ export default function Reading() {
         if (!selectedAnswer) return;
 
         const current = readingData[currentQuestion];
+        console.log('Debug - Selected Answer:', selectedAnswer, 'Type:', typeof selectedAnswer);
+        console.log('Debug - Correct Answer:', current.correctAnswer, 'Type:', typeof current.correctAnswer);
+        console.log('Debug - Comparison Result:', selectedAnswer === current.correctAnswer);
+
         const correct = String(selectedAnswer).trim() === String(current.correctAnswer).trim();
         setIsCorrect(correct);
 
+        console.log('Debug - isCorrect:', correct);
+        console.log('Debug - completedQuestions has question:', completedQuestions.has(currentQuestion));
+        console.log('Debug - Will increase score?', correct && !completedQuestions.has(currentQuestion));
+
         // 즉시 업데이트: 문제 제출 후 바로 목록 페이지 데이터 새로고침 신호
+        console.log('🚀 [IMMEDIATE UPDATE] Triggering instant refresh for English reading question:', current.id);
+
         const updateData = {
             questionId: current.id,
             level: level,
@@ -241,6 +182,7 @@ export default function Reading() {
         };
 
         // 여러 방법으로 알림 발송
+        console.log('🔔 [EVENT] Dispatching English reading update events...');
         localStorage.setItem('englishReadingInstantUpdate', JSON.stringify(updateData));
         window.dispatchEvent(new CustomEvent('englishReadingUpdate', { detail: updateData }));
         window.dispatchEvent(new StorageEvent('storage', {
@@ -269,23 +211,28 @@ export default function Reading() {
             });
 
             if (response.ok) {
-                console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
+                const result = await response.json();
+                console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`, result);
             } else if (response.status === 401) {
                 console.log('📝 [비로그인 사용자] 리딩 기록은 로그인 후 저장됩니다.');
             } else {
-                console.error(`❌ 리딩 기록 저장 실패 (${response.status})`);
+                const errorText = await response.text();
+                console.error(`❌ 리딩 기록 저장 실패 (${response.status}):`, errorText);
             }
         } catch (error) {
             console.error('❌ 리딩 기록 저장 실패:', error);
         }
 
         if (correct && !completedQuestions.has(currentQuestion)) {
+            console.log('Debug - Increasing score');
             setScore(score + 1);
             setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
+        } else if (!correct) {
+            console.log('Debug - Wrong answer recorded via /api/reading/record');
+            // 오답은 이미 /api/reading/record에서 처리됨 - 중복 기록 방지
         }
 
         setShowExplanation(true);
-        setShowTranslation(true); // 정답 확인 후 번역 표시
     };
 
     const handleNext = () => {
@@ -294,7 +241,6 @@ export default function Reading() {
             setSelectedAnswer(null);
             setShowExplanation(false);
             setIsCorrect(false);
-            setShowTranslation(false);
         }
     };
 
@@ -304,7 +250,6 @@ export default function Reading() {
             setSelectedAnswer(null);
             setShowExplanation(false);
             setIsCorrect(false);
-            setShowTranslation(false);
         }
     };
 
@@ -315,7 +260,6 @@ export default function Reading() {
         setIsCorrect(false);
         setScore(0);
         setCompletedQuestions(new Set());
-        setShowTranslation(false);
     };
 
     const navigateToList = () => {
@@ -410,20 +354,6 @@ export default function Reading() {
                         <div className="passage-text" style={{ cursor: 'pointer' }}>
                             {makeClickableText(current.passage)}
                         </div>
-                        {showTranslation && showExplanation && translationByIndex[currentQuestion] && (
-                            <div className="translation-text" style={{
-                                marginTop: '12px',
-                                padding: '12px',
-                                backgroundColor: '#e8f4f8',
-                                borderRadius: '6px',
-                                borderLeft: '4px solid #0d6efd'
-                            }}>
-                                <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
-                                <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
-                                    {translationByIndex[currentQuestion]}
-                                </div>
-                            </div>
-                        )}
                     </div>
 
                     <div className="question-section">
@@ -445,18 +375,37 @@ export default function Reading() {
                                                     : ''
                                             : ''
                                     }`}
-                                    onClick={() => {
+                                    onClick={(e) => {
                                         if (!showExplanation) {
                                             handleAnswerSelect(key);
+                                        } else {
+                                            // 정답 확인 후 단어 클릭 팝업 기능
+                                            const target = e.target;
+                                            const text = target.textContent;
+                                            const words = text.match(/\b[a-zA-Z]+\b/g);
+
+                                            if (words) {
+                                                for (const word of words) {
+                                                    const wordLower = word.toLowerCase();
+                                                    if (englishDict.has(wordLower)) {
+                                                        setSelectedWord(englishDict.get(wordLower));
+                                                        setWordPopupPosition({
+                                                            x: e.clientX,
+                                                            y: e.clientY - 10
+                                                        });
+                                                        break;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }}
                                     disabled={showExplanation}
+                                    style={{
+                                        cursor: showExplanation ? 'pointer' : 'default'
+                                    }}
                                 >
                                     <span className="option-letter">{key}</span>
-                                    <span
-                                        className="option-text"
-                                        style={{ cursor: showExplanation ? 'pointer' : 'default' }}
-                                    >
+                                    <span className="option-text">
                                         {showExplanation ? makeClickableText(value) : value}
                                     </span>
                                 </button>
@@ -554,8 +503,7 @@ export default function Reading() {
                 {/* Word Popup */}
                 {selectedWord && wordPopupPosition && (
                     <EnglishWordPopup
-                        word={selectedWord[0]?.lemma}
-                        definitions={selectedWord}
+                        word={selectedWord}
                         position={wordPopupPosition}
                         onClose={() => {
                             setSelectedWord(null);

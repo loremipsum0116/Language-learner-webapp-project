@@ -5,21 +5,44 @@ const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 const authMiddleware = require('../middleware/auth');
 
+// 모든 요청 로깅 미들웨어
+router.use((req, res, next) => {
+    console.log(`🔗 [JAPANESE READING ROUTER] ${req.method} ${req.path} - ${new Date().toISOString()}`);
+    next();
+});
+
 
 // GET /japanese-reading/level/:level - 레벨별 Japanese reading 데이터 개수 조회
 router.get('/level/:level', async (req, res) => {
+    console.log(`🚨🚨🚨 [JAPANESE READING LEVEL] API CALLED! Level: ${req.params.level} 🚨🚨🚨`);
+    console.log(`🔥 [JAPANESE READING LEVEL] Request URL: ${req.originalUrl}`);
+    console.log(`🔥 [JAPANESE READING LEVEL] Request method: ${req.method}`);
     try {
         const { level } = req.params;
+        // 일본어 리딩 데이터 ID 범위 설정
+        let idRangeStart = 6001;
+        if (level.toUpperCase() === 'N1') {
+            idRangeStart = 6901; // N1은 6901부터 시작
+        } else if (level.toUpperCase() === 'N2') {
+            idRangeStart = 6601; // N2는 6601부터 시작
+        } else if (level.toUpperCase() === 'N3') {
+            idRangeStart = 6401; // N3은 6401부터 시작
+        } else if (level.toUpperCase() === 'N4') {
+            idRangeStart = 6201; // N4는 6201부터 시작
+        } else if (level.toUpperCase() === 'N5') {
+            idRangeStart = 6001; // N5는 6001부터 시작
+        }
+
         const count = await prisma.reading.count({
             where: {
                 levelCEFR: level.toUpperCase(),
-                glosses: {
-                    path: '$.language',
-                    equals: 'japanese'
+                id: {
+                    gte: idRangeStart
                 }
             }
         });
 
+        console.log(`🔍 [JAPANESE READING] Level: ${level}, ID range start: ${idRangeStart}, Count: ${count}`);
         return res.json({ level, count, available: count > 0 });
     } catch (e) {
         console.error(`GET /japanese-reading/level/${req.params.level} Error:`, e);
@@ -31,29 +54,98 @@ router.get('/level/:level', async (req, res) => {
 router.get('/practice/:level', async (req, res) => {
     try {
         const { level } = req.params;
+        // 일본어 리딩 데이터 ID 범위 설정
+        let idRangeStart = 6001;
+        if (level.toUpperCase() === 'N1') {
+            idRangeStart = 6901; // N1은 6901부터 시작
+        } else if (level.toUpperCase() === 'N2') {
+            idRangeStart = 6601; // N2는 6601부터 시작
+        } else if (level.toUpperCase() === 'N3') {
+            idRangeStart = 6401; // N3은 6401부터 시작
+        } else if (level.toUpperCase() === 'N4') {
+            idRangeStart = 6201; // N4는 6201부터 시작
+        } else if (level.toUpperCase() === 'N5') {
+            idRangeStart = 6001; // N5는 6001부터 시작
+        }
+
         const readings = await prisma.reading.findMany({
             where: {
                 levelCEFR: level.toUpperCase(),
-                glosses: {
-                    path: '$.language',
-                    equals: 'japanese'
+                id: {
+                    gte: idRangeStart
                 }
             },
             orderBy: { id: 'asc' }
         });
 
-        // glosses에서 문제 형태로 변환
-        const questions = readings.map((reading, index) => ({
-            id: `${level}_JR_${String(index + 1).padStart(3, '0')}`, // N1_JR_001 형태로 표준화
-            dbId: reading.id, // 원본 DB ID 보존
-            passage: reading.glosses?.passage || reading.body,
-            question: reading.glosses?.question || 'No question',
-            options: reading.glosses?.options || {},
-            answer: reading.glosses?.answer || 'A',
-            explanation_ko: reading.glosses?.explanation || 'No explanation'
-        }));
+        // 같은 지문의 문제들을 그룹화
+        const passageGroups = new Map();
+        let passageOrder = 0;
 
-        return res.json({ data: questions });
+        readings.forEach((reading) => {
+            const passage = reading.body; // body 필드가 passage 내용임
+
+            // 지문의 처음 100자를 키로 사용 (완전히 같은 텍스트 매칭 대신)
+            let passageKey = passage.substring(0, 100);
+
+            // 기존 그룹 찾기
+            let existingKey = null;
+            for (const [key, group] of passageGroups) {
+                if (group.passage === passage) {
+                    existingKey = key;
+                    break;
+                }
+            }
+
+            if (existingKey) {
+                // 기존 그룹에 추가
+                passageGroups.get(existingKey).questions.push({
+                    dbId: reading.id,
+                    question: reading.glosses?.question || 'No question',
+                    options: reading.glosses?.options || {},
+                    correctAnswer: reading.glosses?.correctAnswer || reading.glosses?.answer || 'A',
+                    explanation: reading.glosses?.explanation || 'No explanation'
+                });
+            } else {
+                // 새 그룹 생성
+                passageOrder++;
+                passageGroups.set(passageKey, {
+                    passage: passage,
+                    order: passageOrder,
+                    questions: [{
+                        dbId: reading.id,
+                        question: reading.glosses?.question || 'No question',
+                        options: reading.glosses?.options || {},
+                        correctAnswer: reading.glosses?.correctAnswer || reading.glosses?.answer || 'A',
+                        explanation: reading.glosses?.explanation || 'No explanation'
+                    }]
+                });
+            }
+        });
+
+        // 그룹화된 지문들을 배열로 변환
+        const groupedQuestions = Array.from(passageGroups.values())
+            .sort((a, b) => a.order - b.order)
+            .map((group, index) => ({
+                id: `${level}_JR_${String(index + 1).padStart(3, '0')}`,
+                passage: group.passage,
+                questions: group.questions.map((q, qIndex) => ({
+                    questionId: `${level}_JR_${String(index + 1).padStart(3, '0')}_Q${qIndex + 1}`,
+                    dbId: q.dbId,
+                    question: q.question,
+                    options: q.options,
+                    correctAnswer: q.correctAnswer,
+                    explanation: q.explanation
+                })),
+                isMultiQuestion: group.questions.length > 1
+            }));
+
+        console.log(`🔍 [JAPANESE READING] Grouped ${readings.length} questions into ${groupedQuestions.length} passages`);
+        groupedQuestions.forEach((group, i) => {
+            console.log(`  📖 Passage ${i + 1}: ${group.questions.length} questions`);
+        });
+
+        return res.json({ data: groupedQuestions });
     } catch (e) {
         console.error(`GET /japanese-reading/practice/${req.params.level} Error:`, e);
         return res.status(500).json({ error: 'Internal Server Error' });
@@ -63,13 +155,14 @@ router.get('/practice/:level', async (req, res) => {
 // 일본어 리딩 답안 제출 및 오답노트 저장
 router.post('/submit', authMiddleware, async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE READING SUBMIT] API CALLED! 🚨🚨🚨');
+    console.log(`🚀🎯 [JAPANESE READING SUBMIT] 답안 제출 시작!`);
+    console.log(`📝🎯 [REQUEST BODY]`, req.body);
+    console.log(`🔐🎯 [REQ.USER]`, req.user);
+
     try {
-        console.log(`🚀🎯 [JAPANESE READING SUBMIT] 답안 제출 시작!`);
-        console.log(`📝🎯 [REQUEST BODY]`, req.body);
-        console.log(`🔐🎯 [REQ.USER]`, req.user);
 
         const {
-            questionId, level, isCorrect, userAnswer, correctAnswer,
+            questionId, dbId, level, isCorrect, userAnswer, correctAnswer,
             passage, question, options, explanation
         } = req.body;
 
@@ -90,16 +183,22 @@ router.post('/submit', authMiddleware, async (req, res) => {
             });
         }
 
-        // itemId 생성 (일본어 리딩은 2000번대)
-        // N1_JR_001 -> extract "001" -> convert to number -> add 2000
-        const questionNumMatch = questionId.match(/_(\d+)$/);
-        if (!questionNumMatch) {
-            console.error(`[ERROR] Could not extract number from questionId: "${questionId}"`);
+        // itemId로 dbId 직접 사용 (복수 문제 구조에서 더 정확)
+        const itemId = dbId || (() => {
+            // dbId가 없는 경우 기존 로직 사용 (호환성)
+            const questionNumMatch = questionId.match(/_(\d+)(_Q\d+)?$/);
+            if (!questionNumMatch) {
+                console.error(`[ERROR] Could not extract number from questionId: "${questionId}"`);
+                return null;
+            }
+            const questionNum = parseInt(questionNumMatch[1]);
+            return questionNum + 2000;
+        })();
+
+        if (!itemId) {
+            console.error(`[ERROR] Could not determine itemId for questionId: "${questionId}"`);
             return res.status(400).json({ error: 'Invalid questionId format - no number found' });
         }
-
-        const questionNum = parseInt(questionNumMatch[1]);
-        const itemId = questionNum + 2000;
 
         // 기존 기록 찾기 (통합 오답노트 시스템)
         console.log(`🔍 [EXISTING SEARCH] 기존 기록 검색 시작: userId=${userId}, questionId=${questionId}, itemId=${itemId}`);
@@ -244,11 +343,13 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
         // 해당 레벨의 모든 일본어 리딩 학습 기록 조회
         console.log(`🔍 [JAPANESE READING DEBUG] Searching for records: userId=${userId}, level=${level}`);
 
-        // wronganswer 테이블에서 조회
+        // wronganswer 테이블에서 조회 (개별 문제와 지문 통계 모두)
         const wrongAnswerRecords = await prisma.wronganswer.findMany({
             where: {
                 userId: userId,
-                itemType: 'japanese-reading'
+                itemType: {
+                    in: ['japanese-reading', 'japanese-reading-passage']
+                }
             },
             orderBy: { wrongAt: 'desc' }
         });
@@ -267,18 +368,36 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
 
         // wrongAnswer 기록 추가
         filteredWrongRecords.forEach(record => {
-            const questionId = record.wrongData?.questionId;
-            if (questionId) {
-                console.log(`🔍 [JAPANESE READING DEBUG] Adding wrongAnswer: questionId=${questionId}, isCorrect=${record.wrongData?.isCorrect}`);
-                combinedRecords[questionId] = {
-                    questionId: questionId,
-                    isCorrect: record.wrongData?.isCorrect || record.isCompleted,
-                    solvedAt: record.wrongAt.toISOString(),
-                    isCompleted: record.isCompleted,
-                    attempts: record.attempts,
-                    wrongData: record.wrongData,
-                    source: 'wrongAnswer'
-                };
+            if (record.itemType === 'japanese-reading-passage') {
+                // 지문 통계 (복수 문제)
+                const passageId = record.wrongData?.passageId;
+                if (passageId) {
+                    console.log(`🔍 [PASSAGE DEBUG] Adding passage stats: passageId=${passageId}`);
+                    combinedRecords[passageId] = {
+                        questionId: passageId,
+                        isCorrect: record.wrongData?.isCorrect || record.isCompleted,
+                        solvedAt: record.wrongAt.toISOString(),
+                        isCompleted: record.isCompleted,
+                        attempts: record.attempts,
+                        wrongData: record.wrongData,
+                        source: 'passage'
+                    };
+                }
+            } else {
+                // 개별 문제 기록
+                const questionId = record.wrongData?.questionId;
+                if (questionId) {
+                    console.log(`🔍 [JAPANESE READING DEBUG] Adding wrongAnswer: questionId=${questionId}, isCorrect=${record.wrongData?.isCorrect}`);
+                    combinedRecords[questionId] = {
+                        questionId: questionId,
+                        isCorrect: record.wrongData?.isCorrect || record.isCompleted,
+                        solvedAt: record.wrongAt.toISOString(),
+                        isCompleted: record.isCompleted,
+                        attempts: record.attempts,
+                        wrongData: record.wrongData,
+                        source: 'wrongAnswer'
+                    };
+                }
             }
         });
 
@@ -293,6 +412,109 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
     } catch (e) {
         console.error(`❌ [JAPANESE READING HISTORY ERROR] GET /japanese-reading/history/${req.params.level} Error:`, e);
         return res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// 테스트 라우트 추가
+router.post('/test-passage', (req, res) => {
+    console.log('🔥 [TEST PASSAGE] Route working!');
+    res.json({ message: 'Test route working!' });
+});
+
+// 복수 문제 지문 단위 통계 제출 및 저장
+router.post('/submit-passage', authMiddleware, async (req, res) => {
+    console.log('🚨🚨🚨 [PASSAGE SUBMIT] API CALLED! 🚨🚨🚨');
+    try {
+        const { passageId, level, isCorrect, questionCount, correctCount, passage } = req.body;
+        const userId = req.user.userId || req.user.id;
+
+        if (!userId || !passageId || !level || typeof isCorrect !== 'boolean') {
+            return res.status(400).json({
+                error: 'Missing required fields: passageId, level, isCorrect'
+            });
+        }
+
+        console.log(`🚀🎯 [PASSAGE SUBMIT] passageId: ${passageId}, isCorrect: ${isCorrect}`);
+
+        // 기존 지문 통계 기록 찾기 - JavaScript 필터링 방식 사용
+        const allPassageRecords = await prisma.wronganswer.findMany({
+            where: {
+                userId: userId,
+                itemType: 'japanese-reading-passage'
+            }
+        });
+
+        const existingRecord = allPassageRecords.find(record =>
+            record.wrongData && record.wrongData.passageId === passageId
+        );
+
+        const now = new Date();
+
+        if (existingRecord) {
+            // 기존 기록 업데이트 - 누적 통계
+            const currentData = existingRecord.wrongData || {};
+            const newCorrectCount = (currentData.correctCount || 0) + (isCorrect ? 1 : 0);
+            const newIncorrectCount = (currentData.incorrectCount || 0) + (isCorrect ? 0 : 1);
+            const newTotalAttempts = existingRecord.attempts + 1;
+
+            console.log(`📊 [PASSAGE STATS] Before: correct=${currentData.correctCount || 0}, incorrect=${currentData.incorrectCount || 0}`);
+            console.log(`📊 [PASSAGE STATS] After: correct=${newCorrectCount}, incorrect=${newIncorrectCount}`);
+
+            await prisma.wronganswer.update({
+                where: { id: existingRecord.id },
+                data: {
+                    attempts: newTotalAttempts,
+                    wrongAt: now,
+                    isCompleted: isCorrect,
+                    wrongData: {
+                        ...currentData,
+                        passageId: passageId,
+                        level: level,
+                        isCorrect: isCorrect,
+                        correctCount: newCorrectCount,
+                        incorrectCount: newIncorrectCount,
+                        totalAttempts: newTotalAttempts,
+                        questionCount: questionCount,
+                        passage: passage,
+                        recordedAt: now.toISOString()
+                    }
+                }
+            });
+
+            console.log(`✅ [PASSAGE SUBMIT] Updated passage stats for ${passageId}`);
+        } else {
+            // 새 지문 통계 기록 생성
+            await prisma.wronganswer.create({
+                data: {
+                    userId: userId,
+                    itemType: 'japanese-reading-passage',
+                    itemId: parseInt(passageId.match(/_(\d+)$/)?.[1] || '0', 10), // passageId에서 숫자 추출
+                    attempts: 1,
+                    wrongAt: now,
+                    isCompleted: isCorrect,
+                    reviewWindowStart: now,
+                    reviewWindowEnd: new Date(now.getTime() + 24 * 60 * 60 * 1000),
+                    wrongData: {
+                        passageId: passageId,
+                        level: level,
+                        isCorrect: isCorrect,
+                        correctCount: isCorrect ? 1 : 0,
+                        incorrectCount: isCorrect ? 0 : 1,
+                        totalAttempts: 1,
+                        questionCount: questionCount,
+                        passage: passage,
+                        recordedAt: now.toISOString()
+                    }
+                }
+            });
+
+            console.log(`✅ [PASSAGE SUBMIT] Created new passage stats for ${passageId}`);
+        }
+
+        res.json({ success: true });
+    } catch (error) {
+        console.error('❌ [PASSAGE SUBMIT ERROR]:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

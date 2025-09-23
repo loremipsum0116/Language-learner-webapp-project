@@ -54,18 +54,64 @@ router.get('/practice/:level', async (req, res) => {
             },
             orderBy: { id: 'asc' }
         });
-        
-        // glosses에서 문제 형태로 변환
-        const questions = readings.map((reading, index) => ({
-            id: `${level}_R_${String(index + 1).padStart(3, '0')}`, // A1_R_001 형태로 표준화
-            dbId: reading.id, // 원본 DB ID 보존
-            passage: reading.glosses?.fullPassage || reading.glosses?.passage || reading.body,
-            question: reading.glosses?.question || 'No question',
-            options: reading.glosses?.options || {},
-            correctAnswer: reading.glosses?.correctAnswer || 'A',
-            explanation: reading.glosses?.explanation || 'No explanation'
-        }));
-        
+
+        // 지문별로 문제 그룹화
+        const passageGroups = new Map();
+
+        readings.forEach((reading) => {
+            const passage = reading.glosses?.fullPassage || reading.glosses?.passage || reading.body;
+
+            if (!passageGroups.has(passage)) {
+                passageGroups.set(passage, []);
+            }
+
+            passageGroups.get(passage).push({
+                dbId: reading.id,
+                question: reading.glosses?.question || reading.question || 'No question',
+                options: reading.glosses?.options || reading.options || {},
+                correctAnswer: reading.glosses?.correctAnswer || reading.glosses?.answer || reading.answer || 'A',
+                explanation: reading.glosses?.explanation || reading.glosses?.explanation_ko || reading.explanation_ko || 'No explanation'
+            });
+        });
+
+        // 그룹화된 문제들을 변환
+        const questions = [];
+        let questionIndex = 1;
+
+        for (const [passage, groupedQuestions] of passageGroups) {
+            if (groupedQuestions.length === 1) {
+                // 단일 문제인 경우 기존 방식
+                questions.push({
+                    id: `${level}_R_${String(questionIndex).padStart(3, '0')}`,
+                    dbId: groupedQuestions[0].dbId,
+                    passage: passage,
+                    question: groupedQuestions[0].question,
+                    options: groupedQuestions[0].options,
+                    correctAnswer: groupedQuestions[0].correctAnswer,
+                    explanation: groupedQuestions[0].explanation,
+                    isMultiQuestion: false
+                });
+                questionIndex++;
+            } else {
+                // 복수 문제인 경우 그룹으로 처리
+                questions.push({
+                    id: `${level}_R_${String(questionIndex).padStart(3, '0')}`,
+                    dbIds: groupedQuestions.map(q => q.dbId),
+                    passage: passage,
+                    questions: groupedQuestions.map((q, idx) => ({
+                        questionNumber: idx + 1,
+                        question: q.question,
+                        options: q.options,
+                        correctAnswer: q.correctAnswer,
+                        explanation: q.explanation
+                    })),
+                    isMultiQuestion: true,
+                    totalQuestions: groupedQuestions.length
+                });
+                questionIndex++;
+            }
+        }
+
         return res.json({ data: questions });
     } catch (e) {
         console.error(`GET /reading/practice/${req.params.level} Error:`, e);
@@ -507,6 +553,32 @@ router.get('/debug/records/:userId', async (req, res) => {
     } catch (e) {
         console.error('Debug endpoint error:', e);
         res.status(500).json({ error: e.message });
+    }
+});
+
+// GET /reading/translation/:level - 레벨별 번역 데이터 조회
+router.get('/translation/:level', async (req, res) => {
+    try {
+        const { level } = req.params;
+        const fs = require('fs').promises;
+        const path = require('path');
+
+        // 번역 파일 경로 설정
+        const translationPath = path.join(__dirname, `../${level}/${level}_Reading/${level}_Translation.json`);
+
+        // 파일 존재 여부 확인 후 읽기
+        try {
+            const data = await fs.readFile(translationPath, 'utf8');
+            const translations = JSON.parse(data);
+            console.log(`✅ [번역 데이터 로드] ${level}: ${translations.length}개 번역 제공`);
+            return res.json(translations);
+        } catch (fileError) {
+            console.warn(`번역 파일 없음: ${translationPath}`);
+            return res.json([]);
+        }
+    } catch (error) {
+        console.error(`GET /reading/translation/${req.params.level} Error:`, error);
+        return res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 

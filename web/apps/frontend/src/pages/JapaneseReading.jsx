@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { fetchJSON, withCreds } from '../api/client';
+import WordMeaningPopup from '../components/WordMeaningPopup';
 import './Reading.css';
 
 export default function JapaneseReading() {
@@ -11,18 +12,229 @@ export default function JapaneseReading() {
     const selectedQuestions = searchParams.get('questions')?.split(',').map(Number) || null;
 
     const [readingData, setReadingData] = useState([]);
-    const [currentQuestion, setCurrentQuestion] = useState(startIndex);
+    const [currentPassage, setCurrentPassage] = useState(startIndex);
     const [selectedAnswer, setSelectedAnswer] = useState(null);
+    const [selectedAnswers, setSelectedAnswers] = useState({}); // 복수 문제용 (questionId: answer)
     const [showExplanation, setShowExplanation] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
     const [score, setScore] = useState(0);
     const [completedQuestions, setCompletedQuestions] = useState(new Set());
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [jlptWords, setJlptWords] = useState({});
+    const [selectedWord, setSelectedWord] = useState(null);
+    const [wordPopupPosition, setWordPopupPosition] = useState({ x: 0, y: 0 });
+    const [showTranslation, setShowTranslation] = useState(false);
+    const [translationData, setTranslationData] = useState(new Map());
+    const [translationByIndex, setTranslationByIndex] = useState([]);
 
     useEffect(() => {
         loadReadingData();
+        loadJlptWords();
+        loadTranslationData();
     }, [level, startIndex]);
+
+    // JLPT 단어 데이터 로드 (lemma + kana 기준)
+    const loadJlptWords = async () => {
+        try {
+            const wordsDict = {};
+            const levels = ['N1', 'N2', 'N3', 'N4', 'N5'];
+
+            for (const levelName of levels) {
+                const response = await fetch(`/jlpt/${levelName}.json`);
+                if (response.ok) {
+                    const words = await response.json();
+                    words.forEach(word => {
+                        // lemma(한자)로 매핑
+                        if (word.lemma) {
+                            if (!wordsDict[word.lemma]) {
+                                wordsDict[word.lemma] = [];
+                            }
+                            wordsDict[word.lemma].push(word);
+                        }
+
+                        // kana(히라가나)로 매핑
+                        if (word.kana && word.kana !== word.lemma) {
+                            if (!wordsDict[word.kana]) {
+                                wordsDict[word.kana] = [];
+                            }
+                            wordsDict[word.kana].push(word);
+                        }
+                    });
+                }
+            }
+
+            setJlptWords(wordsDict);
+            console.log(`✅ JLPT 단어 로드 완료 (lemma + kana 기준):`, Object.keys(wordsDict).length, '개 단어');
+            console.log('🔍 샘플 단어들:', Object.keys(wordsDict).slice(0, 10));
+        } catch (error) {
+            console.error('❌ JLPT 단어 로드 실패:', error);
+        }
+    };
+
+    // 단어 클릭 핸들러
+    const handleWordClick = (word, event) => {
+        console.log('🔍 Word clicked:', word);
+        console.log('🔍 selectedWord state before:', selectedWord);
+
+        if (jlptWords[word] && jlptWords[word].length > 0) {
+            console.log('✅ Setting popup for word:', word, jlptWords[word][0]);
+            setSelectedWord(jlptWords[word][0]);
+            setWordPopupPosition({
+                x: event.clientX,
+                y: event.clientY - 10
+            });
+            console.log('✅ Popup position set:', { x: event.clientX, y: event.clientY - 10 });
+        } else {
+            console.log('❌ No definition found for:', word);
+        }
+    };
+
+
+    // 일본어 텍스트를 클릭 가능한 단어로 분리 (슬래시 기반 문단 구분)
+    const makeClickableText = (text) => {
+        if (!text) return null;
+
+        // 슬래시를 기준으로 문단 분리
+        const paragraphs = text.split('/');
+
+        return (
+            <div>
+                {paragraphs.map((paragraph, paragraphIndex) => {
+                    if (!paragraph.trim()) return null;
+
+                    // 단어 분리를 위한 함수
+                    const parseJapaneseText = (text) => {
+                        const result = [];
+                        let i = 0;
+
+                        while (i < text.length) {
+                            // 공백이나 구두점 처리
+                            if (/[\s、。！？]/.test(text[i])) {
+                                result.push({ text: text[i], type: 'punctuation' });
+                                i++;
+                                continue;
+                            }
+
+                            // 가장 긴 매칭 단어 찾기 (최대 10글자)
+                            let bestMatch = null;
+                            let bestLength = 0;
+
+                            for (let len = Math.min(10, text.length - i); len >= 1; len--) {
+                                const possibleWord = text.substring(i, i + len);
+                                if (jlptWords[possibleWord] && jlptWords[possibleWord].length > 0) {
+                                    bestMatch = possibleWord;
+                                    bestLength = len;
+                                    break; // 가장 긴 매칭을 찾았으므로 중단
+                                }
+                            }
+
+                            if (bestMatch) {
+                                result.push({ text: bestMatch, type: 'word', hasDefinition: true });
+                                i += bestLength;
+                            } else {
+                                result.push({ text: text[i], type: 'char' });
+                                i++;
+                            }
+                        }
+
+                        return result;
+                    };
+
+                    const tokens = parseJapaneseText(paragraph);
+
+                    return (
+                        <div key={paragraphIndex} style={{
+                            marginBottom: paragraphIndex < paragraphs.length - 1 ? '16px' : '0',
+                            lineHeight: '1.8'
+                        }}>
+                            {tokens.map((token, tokenIndex) => {
+                                if (token.type === 'word' && token.hasDefinition) {
+                                    // JLPT 단어 데이터에서 kana 정보 가져오기
+                                    const wordData = jlptWords[token.text] && jlptWords[token.text][0];
+                                    const hasKanji = /[\u4e00-\u9faf]/.test(token.text); // 한자 포함 여부 확인
+                                    const furigana = wordData && hasKanji ? wordData.kana : null;
+
+                                    return (
+                                        <span
+                                            key={tokenIndex}
+                                            onClick={(e) => handleWordClick(token.text, e)}
+                                            style={{
+                                                cursor: 'pointer',
+                                                textDecoration: 'underline dotted',
+                                                color: 'inherit',
+                                                position: 'relative',
+                                                display: 'inline-block'
+                                            }}
+                                            className="kanji-hover"
+                                        >
+                                            {token.text}
+                                            {furigana && (
+                                                <span
+                                                    style={{
+                                                        position: 'absolute',
+                                                        top: '-20px',
+                                                        left: '50%',
+                                                        transform: 'translateX(-50%)',
+                                                        fontSize: '10px',
+                                                        color: '#666',
+                                                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                                        padding: '2px 4px',
+                                                        borderRadius: '3px',
+                                                        border: '1px solid #ddd',
+                                                        whiteSpace: 'nowrap',
+                                                        opacity: '0',
+                                                        transition: 'opacity 0.2s ease',
+                                                        pointerEvents: 'none',
+                                                        zIndex: '1000'
+                                                    }}
+                                                    className="furigana-tooltip"
+                                                >
+                                                    {furigana}
+                                                </span>
+                                            )}
+                                        </span>
+                                    );
+                                } else {
+                                    return <span key={tokenIndex}>{token.text}</span>;
+                                }
+                            })}
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    };
+
+    // 번역 데이터 로드
+    const loadTranslationData = async () => {
+        try {
+            // 프론트엔드 public 폴더의 번역 파일 접근 (일본어 경로)
+            const response = await fetch(`/${level}_Reading/${level}_Reading_Translation.json`);
+            if (response.ok) {
+                const translations = await response.json();
+                const translationMap = new Map();
+                const translationArray = [];
+                translations.forEach((item, index) => {
+                    // 번역 데이터의 id(숫자)를 리딩 데이터의 dbId와 매핑
+                    translationMap.set(item.id, item.translation);
+                    // 인덱스 기반 배열로도 저장
+                    translationArray[index] = item.translation;
+                });
+                setTranslationData(translationMap);
+                setTranslationByIndex(translationArray);
+                console.log(`✅ [일본어 번역 데이터 로드 완료] ${level}: ${translations.length}개 번역`);
+            } else {
+                console.warn(`일본어 번역 데이터 로드 실패: ${level}`);
+                setTranslationData(new Map());
+                setTranslationByIndex([]);
+            }
+        } catch (error) {
+            console.error('일본어 번역 데이터 로드 오류:', error);
+            setTranslationData(new Map());
+            setTranslationByIndex([]);
+        }
+    };
 
     const loadReadingData = async () => {
         try {
@@ -41,15 +253,15 @@ export default function JapaneseReading() {
                 if (selectedQuestions && selectedQuestions.length > 0) {
                     const filteredData = selectedQuestions.map(index => result.data[index]).filter(Boolean);
                     setReadingData(filteredData);
-                    setCurrentQuestion(0); // 필터된 데이터에서는 처음부터 시작
+                    setCurrentPassage(0); // 필터된 데이터에서는 처음부터 시작
                 } else if (!selectedQuestions && startIndex >= 0 && searchParams.get('start')) {
-                    // 단일 문제 모드: start 파라미터가 있고 questions 파라미터가 없는 경우
-                    const singleQuestion = result.data[startIndex];
-                    if (singleQuestion) {
-                        setReadingData([singleQuestion]);
-                        setCurrentQuestion(0);
+                    // 단일 지문 모드: start 파라미터가 있고 questions 파라미터가 없는 경우
+                    const singlePassage = result.data[startIndex];
+                    if (singlePassage) {
+                        setReadingData([singlePassage]);
+                        setCurrentPassage(0);
                     } else {
-                        throw new Error(`Question at index ${startIndex} not found`);
+                        throw new Error(`Passage at index ${startIndex} not found`);
                     }
                 } else {
                     // 전체 데이터 모드
@@ -67,110 +279,195 @@ export default function JapaneseReading() {
         }
     };
 
-    const handleAnswerSelect = (answer) => {
+    const handleAnswerSelect = (answer, questionId = null) => {
         if (showExplanation) return;
-        setSelectedAnswer(answer);
+
+        if (questionId) {
+            // 복수 문제 구조: 각 문제별로 답안 저장
+            setSelectedAnswers(prev => ({
+                ...prev,
+                [questionId]: answer
+            }));
+        } else {
+            // 단일 문제 구조 (호환성 유지)
+            setSelectedAnswer(answer);
+        }
     };
 
     const submitAnswer = async () => {
-        if (selectedAnswer === null) {
-            alert('답을 선택해주세요.');
+        console.log('🎯 [SUBMIT START] submitAnswer function called');
+        const currentPassageData = readingData[currentPassage];
+        console.log('🎯 [SUBMIT DATA]', {
+            currentPassage,
+            currentPassageData: currentPassageData ? {
+                questions: currentPassageData.questions?.length,
+                firstQuestionId: currentPassageData.questions?.[0]?.questionId
+            } : null,
+            selectedAnswers
+        });
+
+        // 모든 문제에 답이 선택되었는지 확인
+        const unansweredQuestions = currentPassageData.questions.filter(
+            question => !selectedAnswers[question.questionId]
+        );
+
+        if (unansweredQuestions.length > 0) {
+            alert(`모든 문제에 답을 선택해주세요. (${unansweredQuestions.length}개 문제 미완료)`);
             return;
         }
 
-        const currentQuestionData = readingData[currentQuestion];
-        const correct = selectedAnswer === currentQuestionData.answer;
-        setIsCorrect(correct);
-        setShowExplanation(true);
+        // 각 문제별 정답 확인 및 점수 계산
+        let correctCount = 0;
+        const questionResults = currentPassageData.questions.map(question => {
+            const userAnswer = selectedAnswers[question.questionId];
+            const isCorrect = userAnswer === question.correctAnswer;
+            if (isCorrect) correctCount++;
 
-        if (correct) {
-            setScore(score + 1);
-            setCompletedQuestions(prev => new Set([...prev, currentQuestion]));
+            return {
+                questionId: question.questionId,
+                dbId: question.dbId,
+                userAnswer: userAnswer,
+                correctAnswer: question.correctAnswer,
+                isCorrect: isCorrect,
+                question: question.question,
+                options: question.options,
+                explanation: question.explanation
+            };
+        });
+
+        // UI 업데이트
+        setIsCorrect(correctCount === currentPassageData.questions.length); // 모든 문제가 맞아야 전체 정답
+        setShowExplanation(true);
+        setShowTranslation(true);
+        setScore(score + correctCount);
+        setCompletedQuestions(prev => new Set([...prev, currentPassage]));
+
+        // 각 문제를 개별적으로 서버에 제출
+        for (const result of questionResults) {
+            try {
+                console.log('🚀 [SUBMIT] Submitting question:', result.questionId);
+
+                const updateData = {
+                    questionId: result.questionId,
+                    level: level,
+                    isCorrect: result.isCorrect,
+                    timestamp: Date.now()
+                };
+
+                // 즉시 업데이트 신호
+                localStorage.setItem('japaneseReadingInstantUpdate', JSON.stringify(updateData));
+                window.dispatchEvent(new CustomEvent('japaneseReadingUpdate', { detail: updateData }));
+                window.dispatchEvent(new StorageEvent('storage', {
+                    key: 'japaneseReadingInstantUpdate',
+                    newValue: JSON.stringify(updateData)
+                }));
+
+                const response = await fetch('http://localhost:4000/api/japanese-reading/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        questionId: result.questionId,
+                        dbId: result.dbId,
+                        level: level,
+                        userAnswer: result.userAnswer,
+                        correctAnswer: result.correctAnswer,
+                        isCorrect: result.isCorrect,
+                        passage: currentPassageData.passage,
+                        question: result.question,
+                        options: result.options,
+                        explanation: result.explanation
+                    })
+                });
+
+                if (!response.ok) {
+                    console.error('Failed to submit answer to server for:', result.questionId);
+                }
+            } catch (error) {
+                console.error('Error submitting answer for:', result.questionId, error);
+            }
         }
 
-        // 즉시 업데이트: 문제 제출 후 바로 목록 페이지 데이터 새로고침 신호
-        console.log('🚀 [IMMEDIATE UPDATE] Triggering instant refresh for question:', currentQuestionData.id);
+        // 복수 문제인 경우 지문 단위 통계도 별도로 제출
+        console.log('🔍 [DEBUG] currentPassageData:', currentPassageData);
+        console.log('🔍 [DEBUG] questions.length:', currentPassageData.questions?.length);
+        console.log('🔍 [DEBUG] passageId:', currentPassageData.id);
 
-        const updateData = {
-            questionId: currentQuestionData.id,
-            level: level,
-            isCorrect: correct,
-            timestamp: Date.now()
-        };
-        localStorage.setItem('japaneseReadingInstantUpdate', JSON.stringify(updateData));
+        if (currentPassageData.questions.length > 1) {
+            try {
+                const passageId = currentPassageData.id; // 지문 ID (예: N1_JR_002)
+                const allCorrect = correctCount === currentPassageData.questions.length;
 
-        // 여러 방법으로 알림 발송
-        console.log('🔔 [EVENT] Dispatching CustomEvent...');
-        window.dispatchEvent(new CustomEvent('japaneseReadingUpdate', { detail: updateData }));
+                console.log('🚀 [PASSAGE SUBMIT] Submitting passage stats:', passageId, 'allCorrect:', allCorrect);
 
-        console.log('🔔 [EVENT] Dispatching StorageEvent...');
-        window.dispatchEvent(new StorageEvent('storage', {
-            key: 'japaneseReadingInstantUpdate',
-            newValue: JSON.stringify(updateData)
-        }));
+                const passageResponse = await fetch('http://localhost:4000/api/japanese-reading/submit-passage', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        passageId: passageId,
+                        level: level,
+                        isCorrect: allCorrect,
+                        questionCount: currentPassageData.questions.length,
+                        correctCount: correctCount,
+                        passage: currentPassageData.passage
+                    })
+                });
 
-        // 서버에 답안 제출
-        try {
-            const response = await fetch('http://localhost:4000/api/japanese-reading/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                credentials: 'include',
-                body: JSON.stringify({
-                    questionId: currentQuestionData.id,
-                    level: level,
-                    userAnswer: selectedAnswer,
-                    correctAnswer: currentQuestionData.answer,
-                    isCorrect: correct,
-                    passage: currentQuestionData.passage,
-                    question: currentQuestionData.question,
-                    options: currentQuestionData.options,
-                    explanation: currentQuestionData.explanation_ko
-                })
-            });
-
-            if (!response.ok) {
-                console.error('Failed to submit answer to server');
-                // 서버 실패 시 롤백 로직을 여기에 추가할 수 있음
+                if (passageResponse.ok) {
+                    console.log('✅ [PASSAGE SUBMIT] Passage stats submitted successfully');
+                } else {
+                    console.error('❌ [PASSAGE SUBMIT] Failed to submit passage stats:', passageResponse.status);
+                }
+            } catch (error) {
+                console.error('Error submitting passage stats:', error);
             }
-        } catch (error) {
-            console.error('Error submitting answer:', error);
         }
     };
 
     const nextQuestion = () => {
-        if (currentQuestion < readingData.length - 1) {
-            setCurrentQuestion(currentQuestion + 1);
+        if (currentPassage < readingData.length - 1) {
+            setCurrentPassage(currentPassage + 1);
             setSelectedAnswer(null);
+            setSelectedAnswers({}); // 복수 문제 답안 초기화
             setShowExplanation(false);
             setIsCorrect(false);
+            setShowTranslation(false);
         }
     };
 
     const prevQuestion = () => {
-        if (currentQuestion > 0) {
-            setCurrentQuestion(currentQuestion - 1);
+        if (currentPassage > 0) {
+            setCurrentPassage(currentPassage - 1);
             setSelectedAnswer(null);
+            setSelectedAnswers({}); // 복수 문제 답안 초기화
             setShowExplanation(false);
             setIsCorrect(false);
+            setShowTranslation(false);
         }
     };
 
     const goToQuestion = (index) => {
-        setCurrentQuestion(index);
+        setCurrentPassage(index);
         setSelectedAnswer(null);
+        setSelectedAnswers({});
         setShowExplanation(false);
         setIsCorrect(false);
+        setShowTranslation(false);
     };
 
     const resetQuiz = () => {
-        setCurrentQuestion(0);
+        setCurrentPassage(0);
         setSelectedAnswer(null);
         setShowExplanation(false);
         setIsCorrect(false);
         setScore(0);
         setCompletedQuestions(new Set());
+        setShowTranslation(false);
     };
 
     const navigateToList = () => {
@@ -232,10 +529,11 @@ export default function JapaneseReading() {
         );
     }
 
-    const currentQuestionData = readingData[currentQuestion];
-    const progress = ((currentQuestion + 1) / readingData.length) * 100;
+    const currentPassageData = readingData[currentPassage];
+    const progress = ((currentPassage + 1) / readingData.length) * 100;
 
     return (
+        <div>
         <main className="container py-4">
             <div className="reading-container">
                 {/* Header */}
@@ -253,7 +551,12 @@ export default function JapaneseReading() {
                     <div className="reading-stats">
                         <div className="progress-info">
                             <span className="question-counter">
-                                {currentQuestion + 1} / {readingData.length}
+                                지문 {currentPassage + 1} / {readingData.length}
+                                {currentPassageData && currentPassageData.questions && (
+                                    <span className="ml-2">
+                                        (문제 {currentPassageData.questions.length}개)
+                                    </span>
+                                )}
                             </span>
                             <span className="score-display">
                                 점수: {score} / {readingData.length}
@@ -272,69 +575,155 @@ export default function JapaneseReading() {
                 <div className="reading-card">
                     <div className="passage-section">
                         <h5 className="passage-title">📖 지문</h5>
-                        <div className="passage-text">
-                            <div
-                                className="japanese-text"
-                                dangerouslySetInnerHTML={{ __html: currentQuestionData.passage }}
-                            />
+                        <div className="passage-text" style={{ cursor: 'pointer' }}>
+                            <div className="japanese-text">
+                                {makeClickableText(currentPassageData.passage)}
+                            </div>
                         </div>
-                    </div>
-
-                    <div className="question-section">
-                        <h5 className="question-title">❓ 문제</h5>
-                        <p className="question-text">
-                            <div
-                                className="japanese-text"
-                                dangerouslySetInnerHTML={{ __html: currentQuestionData.question }}
-                            />
-                        </p>
-
-                        <div className="options-grid">
-                            {Object.entries(currentQuestionData.options).map(([key, value]) => (
-                                <button
-                                    key={key}
-                                    className={`option-btn ${
-                                        selectedAnswer === key ? 'selected' : ''
-                                    } ${
-                                        showExplanation
-                                            ? key === currentQuestionData.answer
-                                                ? 'correct'
-                                                : selectedAnswer === key
-                                                    ? 'incorrect'
-                                                    : ''
-                                            : ''
-                                    }`}
-                                    onClick={() => handleAnswerSelect(key)}
-                                    disabled={showExplanation}
-                                >
-                                    <span className="option-letter">{key}</span>
-                                    <span className="option-text">
-                                        <div
-                                            className="japanese-text"
-                                            dangerouslySetInnerHTML={{ __html: value }}
-                                        />
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
-
-                        {showExplanation && (
-                            <div className={`explanation-box ${isCorrect ? 'correct' : 'incorrect'}`}>
-                                <div className="explanation-header">
-                                    {isCorrect ? (
-                                        <span className="result-icon correct">✅ 정답!</span>
-                                    ) : (
-                                        <span className="result-icon incorrect">❌ 틀렸습니다</span>
-                                    )}
-                                    <span className="correct-answer">정답: {currentQuestionData.answer}</span>
+                        {showTranslation && showExplanation && translationByIndex[currentPassage] && (
+                            <div className="translation-text" style={{
+                                marginTop: '12px',
+                                padding: '12px',
+                                backgroundColor: '#e7f3ff',
+                                borderRadius: '6px',
+                                borderLeft: '4px solid #0d6efd'
+                            }}>
+                                <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
+                                <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
+                                    {translationByIndex[currentPassage].split('/').map((paragraph, index) => (
+                                        <div key={index} style={{
+                                            marginBottom: index < translationByIndex[currentPassage].split('/').length - 1 ? '12px' : '0'
+                                        }}>
+                                            {paragraph.trim()}
+                                        </div>
+                                    ))}
                                 </div>
-                                {currentQuestionData.explanation_ko && (
-                                    <p className="explanation-text">{currentQuestionData.explanation_ko}</p>
-                                )}
                             </div>
                         )}
                     </div>
-                </div>
+
+                    {/* 복수 문제 표시 */}
+                    {currentPassageData.questions && currentPassageData.questions.map((questionData, questionIndex) => (
+                        <div key={questionData.questionId} className="question-section" style={{
+                            marginTop: questionIndex > 0 ? '32px' : '0',
+                            paddingTop: questionIndex > 0 ? '24px' : '0',
+                            borderTop: questionIndex > 0 ? '1px solid #e0e0e0' : 'none'
+                        }}>
+                            <h5 className="question-title">❓ 문제 {questionIndex + 1}</h5>
+                            <div className="question-text" style={{ cursor: 'pointer' }}>
+                                <div className="japanese-text">
+                                    {makeClickableText(questionData.question)}
+                                </div>
+                            </div>
+
+                            <div className="options-grid">
+                                {Object.entries(questionData.options).map(([key, value]) => {
+                                    if (!showExplanation) {
+                                        // 문제 풀기 전: 리딩에서는 선택지 내용 즉시 표시
+                                        return (
+                                            <div
+                                                key={key}
+                                                className={`option-btn ${
+                                                    selectedAnswers[questionData.questionId] === key ? 'selected' : ''
+                                                }`}
+                                                onClick={() => handleAnswerSelect(key, questionData.questionId)}
+                                                style={{
+                                                    cursor: 'pointer',
+                                                    border: '2px solid #dee2e6',
+                                                    borderRadius: '8px',
+                                                    padding: '12px 16px',
+                                                    margin: '8px 0',
+                                                    backgroundColor: selectedAnswers[questionData.questionId] === key ? '#e3f2fd' : '#f8f9fa',
+                                                    transition: 'all 0.2s ease',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '12px'
+                                                }}
+                                            >
+                                                <span className="option-letter" style={{
+                                                    fontWeight: 'bold',
+                                                    color: '#495057',
+                                                    minWidth: '24px'
+                                                }}>{key}.</span>
+                                                <span style={{ color: '#495057' }}>{value}</span>
+                                            </div>
+                                        );
+                                    } else {
+                                        // 정답 확인 후: 전체 내용 표시
+                                        return (
+                                            <div
+                                                key={key}
+                                                className={`option-btn ${
+                                                    selectedAnswers[questionData.questionId] === key ? 'selected' : ''
+                                                } ${
+                                                    key === questionData.correctAnswer
+                                                        ? 'correct'
+                                                        : selectedAnswers[questionData.questionId] === key
+                                                            ? 'incorrect'
+                                                            : ''
+                                                }`}
+                                                style={{
+                                                    cursor: 'default',
+                                                    border: '2px solid #dee2e6',
+                                                    borderRadius: '8px',
+                                                    padding: '12px 16px',
+                                                    margin: '8px 0',
+                                                    backgroundColor:
+                                                        key === questionData.correctAnswer ? '#d4edda' :
+                                                        selectedAnswers[questionData.questionId] === key ? '#f8d7da' :
+                                                        '#f8f9fa',
+                                                    transition: 'all 0.2s ease',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '12px'
+                                                }}
+                                            >
+                                                <span className="option-letter" style={{
+                                                    fontWeight: 'bold',
+                                                    color: '#495057',
+                                                    minWidth: '24px'
+                                                }}>{key}.</span>
+                                                <span className="option-text" style={{
+                                                    cursor: 'pointer',
+                                                    color: 'inherit'
+                                                }}>
+                                                    <div className="japanese-text">
+                                                        {makeClickableText(value)}
+                                                    </div>
+                                                </span>
+                                            </div>
+                                        );
+                                    }
+                                })}
+                            </div>
+
+                            {/* 개별 문제 해설 */}
+                            {showExplanation && (
+                                <div className="explanation-section">
+                                    <h6 className="explanation-title">💡 해설 {questionIndex + 1}</h6>
+                                    <div className="explanation-text">
+                                        <div className="japanese-text">
+                                            {makeClickableText(questionData.explanation)}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ))}
+
+                {/* 전체 지문 결과 표시 */}
+                {showExplanation && (
+                    <div className={`explanation-box ${isCorrect ? 'correct' : 'incorrect'}`}>
+                        <div className="explanation-header">
+                            {isCorrect ? (
+                                <span className="result-icon correct">✅ 모든 문제 정답!</span>
+                            ) : (
+                                <span className="result-icon incorrect">❌ 일부 오답 있음</span>
+                            )}
+                        </div>
+                    </div>
+                )}
+                </div> {/* reading-card 닫기 */}
 
                 {/* Control Buttons */}
                 <div className="reading-controls">
@@ -342,7 +731,7 @@ export default function JapaneseReading() {
                         <button
                             className="btn btn-outline-secondary"
                             onClick={prevQuestion}
-                            disabled={currentQuestion === 0}
+                            disabled={currentPassage === 0}
                         >
                             ← 이전
                         </button>
@@ -350,7 +739,7 @@ export default function JapaneseReading() {
                         <button
                             className="btn btn-outline-secondary"
                             onClick={nextQuestion}
-                            disabled={currentQuestion === readingData.length - 1}
+                            disabled={currentPassage === readingData.length - 1}
                         >
                             다음 →
                         </button>
@@ -361,16 +750,20 @@ export default function JapaneseReading() {
                             <button
                                 className="btn btn-primary"
                                 onClick={submitAnswer}
-                                disabled={!selectedAnswer}
+                                disabled={
+                                    currentPassageData && currentPassageData.questions && currentPassageData.questions.length > 1
+                                        ? currentPassageData.questions.some(q => !selectedAnswers[q.questionId])
+                                        : !selectedAnswer
+                                }
                             >
                                 정답 확인
                             </button>
                         ) : (
                             <button
                                 className="btn btn-success"
-                                onClick={currentQuestion === readingData.length - 1 ? resetQuiz : nextQuestion}
+                                onClick={currentPassage === readingData.length - 1 ? resetQuiz : nextQuestion}
                             >
-                                {currentQuestion === readingData.length - 1 ? '다시 시작' : '다음 문제'}
+                                {currentPassage === readingData.length - 1 ? '다시 시작' : '다음 문제'}
                             </button>
                         )}
                     </div>
@@ -386,7 +779,7 @@ export default function JapaneseReading() {
                 </div>
 
                 {/* Final Results */}
-                {currentQuestion === readingData.length - 1 && showExplanation && (
+                {currentPassage === readingData.length - 1 && showExplanation && (
                     <div className="results-summary">
                         <h4>🎉 완료!</h4>
                         <p>
@@ -405,7 +798,18 @@ export default function JapaneseReading() {
                         </div>
                     </div>
                 )}
-            </div>
+            </div> {/* reading-container 닫기 */}
         </main>
+
+        {/* Word Meaning Popup */}
+        {selectedWord && (
+            <WordMeaningPopup
+                kana={selectedWord.kana}
+                wordDataArray={[selectedWord]}
+                position={wordPopupPosition}
+                onClose={() => setSelectedWord(null)}
+            />
+        )}
+    </div>
     );
 }
