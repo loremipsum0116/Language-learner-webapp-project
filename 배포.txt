@@ -80,50 +80,80 @@ GOOGLE_APPLICATION_CREDENTIALS="./gcs-service-account.json"
 
 ---
 
-## 🚧 현재 상태 및 문제점
+## 🚧 현재 상태 및 문제점 (2025년 9월 24일 업데이트)
 
-### ⚠️ 1. Railway 배포 지연 문제
-- **Initialization 단계**: 6분 30초 소요 (정상: 30초-1분)
-- **Build 단계**: pnpm workspace 호환성 오류 발생
-- **원인**: 대용량 프로젝트 (미디어 파일 포함)
+### ✅ **해결된 문제들**
+1. **railway.json 파일 충돌 해결**
+   - railway.json 파일 제거하여 Settings UI와 충돌 방지
+   - Settings에서만 빌드 설정 관리
 
-### ⚠️ 2. 빌드 오류
-```
-npm error code EUNSUPPORTEDPROTOCOL
-npm error Unsupported URL Type "workspace:"
-```
-- **원인**: pnpm workspace 프로젝트에서 npm 명령어 사용
-- **해결책**: Build Command 수정 필요
+2. **Windows/Linux 빌드 스크립트 호환성 문제 해결**
+   - Windows 명령어 (`if not exist`, `copy`, `xcopy`) → Linux 명령어 (`mkdir -p`, `cp`) 변경
+   - Railway의 Linux 환경에서 정상 작동하도록 수정
 
-### ⚠️ 3. 미디어 파일 접근 문제
-- 현재 서버에 직접 저장된 오디오/비디오 파일들
-- 배포 속도 저하의 주요 원인
-- GCS 마이그레이션으로 해결 예정
+3. **workspace 의존성 문제 해결**
+   - `"@language-learner/core": "workspace:*"` 의존성 제거
+   - npm ci 에러의 주요 원인이었던 workspace 프로토콜 해결
+
+### ⚠️ **현재 진행 중인 문제**
+1. **package-lock.json 동기화 문제**
+   ```
+   npm error Missing: react@19.1.1 from lock file
+   npm error Missing: react-dom@19.1.1 from lock file
+   npm error Missing: scheduler@0.26.0 from lock file
+   ```
+   - **원인**: package.json 변경 후 package-lock.json이 완전히 동기화되지 않음
+   - **현재 브랜치**: `railway-deploy-fix`
+   - **해결 방안**: react 관련 의존성이 백엔드에 필요한지 재검토 필요
+
+2. **의존성 분석 결과**
+   - 백엔드 프로젝트에서 React 의존성이 필요하지 않을 가능성
+   - package.json에서 불필요한 frontend 의존성 제거 필요
+
+### 🔍 **디버깅 완료된 항목들**
+- ✅ Core 패키지 분석: 타입 정의 및 공통 유틸리티 (현재 미사용)
+- ✅ 디렉토리 구조 확인: lib, routes, middleware, services 폴더 존재 확인
+- ✅ Build 명령어 최적화: Linux 호환 명령어로 변경
+- ✅ Railway 설정 검증: ROOT_DIRECTORY, 환경변수, 빌드 명령어 확인
 
 ---
 
-## 📋 **즉시 해야 할 TODO 리스트**
+## 📋 **즉시 해야 할 TODO 리스트** (2025년 9월 24일 업데이트)
 
-### 🔥 **URGENT (Railway 배포 완료를 위해)**
+### 🔥 **URGENT (Railway 배포 완료를 위해) - 내일 작업**
 
-#### 1. Railway Build 명령어 수정
-**위치**: Railway Console → Settings → Build
+#### 1. **React 의존성 문제 해결** ⭐ **최우선**
+**위치**: `web/apps/backend/package.json`
 ```bash
-# 현재 (문제)
-cd ../../ && pnpm install && cd web/apps/backend && npm run build
+# 문제: 백엔드에 불필요한 React 의존성이 포함되어 있음
+npm error Missing: react@19.1.1 from lock file
+npm error Missing: react-dom@19.1.1 from lock file
 
-# 수정할 내용
-pnpm install && pnpm run build
+# 해결방안:
+1. package.json에서 react, react-dom 의존성 제거
+2. npm install --legacy-peer-deps 재실행
+3. package-lock.json 재생성 후 커밋
 ```
 
-#### 2. Railway 재배포 실행
-- 현재 실패한 배포 취소
-- Build Command 수정 후 재배포
-- Deploy 성공 확인
+#### 2. **현재 Railway 설정 상태** ✅
+- **Build Command**: `npm install --legacy-peer-deps && npm run build` ✅
+- **Start Command**: `npm start` ✅
+- **Root Directory**: `web/apps/backend` ✅
+- **Branch**: `railway-deploy-fix` ✅
+- **환경변수**: DATABASE_URL, JWT_SECRET, NODE_ENV, PORT 모두 설정 완료 ✅
 
-#### 3. 백엔드 서버 URL 확인
-- Railway에서 제공하는 공개 URL 확인
-- 예: `https://language-learner-backend-production.up.railway.app`
+#### 3. **완료된 수정사항들**
+- ✅ railway.json 파일 제거 (Settings UI 충돌 방지)
+- ✅ Windows → Linux 명령어 변환 (build 스크립트)
+- ✅ workspace 의존성 제거 (`@language-learner/core`)
+- ✅ .railwayignore 최적화 (미디어 파일 제외)
+
+#### 4. **내일 진행할 순서**
+1. `web/apps/backend/package.json`에서 react 관련 의존성 제거
+2. `npm install --legacy-peer-deps` 실행하여 lock 파일 재생성
+3. git add, commit, push로 변경사항 배포
+4. Railway 자동 배포 성공 확인
+5. 백엔드 서비스 URL 획득 및 API 테스트
 
 ---
 
@@ -303,5 +333,37 @@ GENERATE_SOURCEMAP=false
 
 ---
 
-**마지막 업데이트**: 2025년 1월 24일
-**상태**: Railway Backend 배포 진행 중, GCS 마이그레이션 준비 완료
+---
+
+## 📊 **2025년 9월 24일 세션 완료 요약**
+
+### ✅ **오늘 해결한 문제들**
+1. **Railway 배포 환경 분석 및 설정 최적화**
+   - Build/Start 명령어 확인 및 수정
+   - 환경변수 설정 상태 확인
+   - Root Directory 및 브랜치 설정 검증
+
+2. **여러 배포 실패 원인 진단 및 해결**
+   - railway.json과 Settings UI 충돌 → railway.json 제거
+   - Windows/Linux 명령어 호환성 → Linux 명령어로 변환
+   - workspace 의존성 → `@language-learner/core` 제거
+   - package-lock.json 동기화 → npm install로 재생성
+
+3. **Core 패키지 분석**
+   - `@language-learner/core`의 역할과 구조 파악
+   - 백엔드에서 실제 사용 여부 확인 (미사용 확인)
+
+### ⚠️ **남은 문제**
+- **React 의존성 문제**: 백엔드 package.json에 불필요한 react 의존성 존재
+- **최종 해결 필요**: package.json 정리 후 Railway 배포 완료
+
+### 📋 **내일 작업 우선순위**
+1. **최우선**: React 의존성 제거 → Railway 배포 성공
+2. **그 다음**: Google Cloud Storage 설정 시작
+3. **최종**: 프론트엔드 Vercel 배포
+
+---
+
+**마지막 업데이트**: 2025년 9월 24일 오후
+**상태**: Railway 배포 99% 완료, React 의존성 문제 1개 남음
+**다음 세션 시작점**: `web/apps/backend/package.json`에서 react 관련 의존성 제거
