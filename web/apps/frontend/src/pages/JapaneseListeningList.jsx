@@ -54,7 +54,15 @@ export default function JapaneseListeningList() {
     // 일본어 리스닝 통계 업데이트 시 실시간 업데이트
     useEffect(() => {
         const handleJapaneseListeningUpdate = () => {
-            console.log('🔄 [REAL-TIME UPDATE] Japanese listening updated, triggering refresh...');
+            console.log('🔄 [INSTANT UPDATE] Japanese listening completed, forcing immediate refresh...');
+
+            // 즉시 강제 새로고침
+            if (level) {
+                console.log('🚀 [FORCE REFRESH] Immediately reloading data for level:', level);
+                loadListeningData();
+            }
+
+            // 상태 업데이트 트리거
             setRefreshTrigger(prev => prev + 1);
         };
 
@@ -107,8 +115,9 @@ export default function JapaneseListeningList() {
         try {
             console.log(`🚀🆕 [SIMPLIFIED FETCH START] 단순화된 fetch 시작`);
 
-            const response = await fetch(`http://localhost:4000/api/japanese-listening/history/${level}`, {
+            const response = await fetch(`http://localhost:4000/api/japanese-listening/history/${level}?t=${Date.now()}`, {
                 credentials: 'include',
+                cache: 'no-cache',
                 signal: signal
             });
 

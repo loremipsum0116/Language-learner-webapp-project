@@ -414,8 +414,8 @@ export default function ReadingList() {
                                                     <span className="question-number">#{index + 1}</span>
                                                 </div>
                                                 <div className="question-actions">
-                                                    <Link 
-                                                        to={`/reading/practice?level=${selectedLevel}&start=${index}`}
+                                                    <Link
+                                                        to={`/reading/practice?level=${selectedLevel}&start=${index + 1}`}
                                                         className="btn btn-primary btn-sm"
                                                     >
                                                         풀어보기

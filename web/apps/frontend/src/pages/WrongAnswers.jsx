@@ -14,12 +14,34 @@ function parseTextWithTranslation(text) {
   if (!text) return { type: 'none', data: null };
 
   try {
+    console.log('🔍 [PARSE DEBUG] Raw text:', text);
+
     // 발화자 패턴 확인 (A:, B:, C: 등)
     const speakerRegex = /([A-Z]):\s*/g;
     const hasSpeakers = speakerRegex.test(text);
+    console.log('🔍 [PARSE DEBUG] Has speakers:', hasSpeakers);
 
     if (hasSpeakers) {
-      // 발화자가 있는 경우 - 발화자별로 분리
+      // 영어 리스닝 특수 형식 확인: "A:\n영어문장 (\nA:\n한국어번역)"
+      const englishListeningPattern = /([A-Z]):\s*([^(]+?)\s*\(\s*\1:\s*([^)]+?)\)/g;
+      const englishMatches = [...text.matchAll(englishListeningPattern)];
+      console.log('🔍 [PARSE DEBUG] English listening matches:', englishMatches);
+
+      if (englishMatches.length > 0) {
+        // 영어 리스닝 형식으로 파싱
+        const parts = englishMatches.map(match => {
+          console.log('🔍 [PARSE DEBUG] Match groups:', match);
+          return {
+            speaker: match[1],
+            original: match[2].trim(),
+            translation: match[3].trim()
+          };
+        });
+        console.log('🔍 [PARSE DEBUG] Parsed parts:', parts);
+        return { type: 'dialogue', data: parts };
+      }
+
+      // 기존 일반 형식으로 파싱 (일본어 리스닝 등)
       speakerRegex.lastIndex = 0; // 정규식 리셋
       const parts = [];
       let match;

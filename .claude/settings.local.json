@@ -262,7 +262,12 @@
       "Bash(git fetch:*)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-japanese-reading.js)",
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" node seed-japanese-reading.js)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(findstr:*)",
+      "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-jlpt-vocabs-total.js)",
+      "Bash(pnpm:*)",
+      "Bash(npm run build:*)",
+      "Bash(deploy.bat)"
     ],
     "deny": [],
     "ask": []

@@ -175,6 +175,7 @@ export default function Reading() {
             }
             const result = await response.json();
 
+
             if (result.data && result.data.length > 0) {
                 // 선택된 문제들만 필터링
                 if (selectedQuestions && selectedQuestions.length > 0) {
@@ -183,7 +184,9 @@ export default function Reading() {
                     setCurrentQuestion(0); // 필터된 데이터에서는 처음부터 시작
                 } else if (!selectedQuestions && startIndex >= 0 && searchParams.get('start')) {
                     // 단일 문제 모드: start 파라미터가 있고 questions 파라미터가 없는 경우
-                    const singleQuestion = result.data[startIndex];
+                    // start=1은 첫 번째 문제를 의미하므로 인덱스를 1 빼야 함
+                    const questionIndex = startIndex > 0 ? startIndex - 1 : 0;
+                    const singleQuestion = result.data[questionIndex];
                     if (singleQuestion) {
                         setReadingData([singleQuestion]);
                         setCurrentQuestion(0);
@@ -271,9 +274,12 @@ export default function Reading() {
             if (response.ok) {
                 console.log(`✅ [리딩 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
             } else if (response.status === 401) {
+                const errorText = await response.text();
                 console.log('📝 [비로그인 사용자] 리딩 기록은 로그인 후 저장됩니다.');
+                console.log('📝 [응답 내용]:', errorText);
             } else {
-                console.error(`❌ 리딩 기록 저장 실패 (${response.status})`);
+                const errorText = await response.text();
+                console.error(`❌ 리딩 기록 저장 실패 (${response.status}):`, errorText);
             }
         } catch (error) {
             console.error('❌ 리딩 기록 저장 실패:', error);
@@ -370,6 +376,21 @@ export default function Reading() {
     const current = readingData[currentQuestion];
     const progress = ((currentQuestion + 1) / readingData.length) * 100;
 
+
+    // 데이터가 로드되지 않았거나 current가 없으면 로딩 표시
+    if (!readingData.length || !current) {
+        return (
+            <main className="container py-4">
+                <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                    <p className="mt-2">리딩 데이터를 불러오는 중...</p>
+                </div>
+            </main>
+        );
+    }
+
     return (
         <main className="container py-4">
             <div className="reading-container">
@@ -431,7 +452,7 @@ export default function Reading() {
                         <p className="question-text">{current.question}</p>
 
                         <div className="options-grid">
-                            {Object.entries(current.options).map(([key, value]) => (
+                            {current.options && Object.entries(current.options).map(([key, value]) => (
                                 <button
                                     key={key}
                                     className={`option-btn ${
