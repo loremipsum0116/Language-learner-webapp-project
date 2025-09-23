@@ -1,0 +1,307 @@
+# Language Learner 웹앱 배포 진행사항 및 TODO
+
+## 📋 현재까지 완료된 작업들
+
+### ✅ 1. Railway 기본 설정 완료
+- **MySQL 데이터베이스 생성 완료**
+  - Railway에서 MySQL 서비스 생성
+  - DATABASE_URL 환경변수 설정
+  - Variables 탭에서 MYSQL_URL 확인 완료
+
+- **백엔드 서비스 연결 완료**
+  - GitHub 저장소 연결: `loremipsum0116/Language-learner-webapp-project`
+  - 브랜치: `feature/mobile-app-development`
+  - Root Directory: `web/apps/backend`
+
+### ✅ 2. 환경변수 설정 완료
+```env
+DATABASE_URL=mysql://[Railway MySQL URL]
+JWT_SECRET=language-learner-super-secret-jwt-key-2024-minimum-32-chars
+NODE_ENV=production
+PORT=3000
+```
+
+### ✅ 3. 빌드 설정 최적화
+- **Build Command**: `pnpm install && pnpm run build`
+- **Start Command**: `npm start`
+- **Builder**: Railpack
+- **Runtime**: V2
+
+### ✅ 4. 배포 최적화 파일 생성
+#### A) railway.json
+```json
+{
+  "build": {
+    "builder": "RAILPACK",
+    "buildCommand": "pnpm install && pnpm run build"
+  },
+  "deploy": {
+    "startCommand": "npm start",
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10
+  }
+}
+```
+
+#### B) .railwayignore (최종 버전)
+- 모바일 앱 폴더 제외 (`app/`, `mobile/`, `web/apps/mobile/`)
+- Frontend 소스 제외 (`web/apps/frontend/src/`, `build/`)
+- **모든 미디어 파일 제외** (GCS 마이그레이션 준비)
+- 개발 파일들 제외 (로그, IDE 설정, 테스트 파일)
+
+#### C) vercel.json (프론트엔드 배포용)
+```json
+{
+  "buildCommand": "cd web/apps/frontend && npm install && npm run build",
+  "outputDirectory": "web/apps/frontend/build",
+  "framework": "create-react-app"
+}
+```
+
+### ✅ 5. 환경 파일 생성
+- `.env.example`: 백엔드 환경변수 템플릿
+- `.env.production`: 프론트엔드 환경변수
+- `deploy.bat`: Windows 배포 스크립트
+
+### ✅ 6. Google Cloud Storage 준비 완료
+#### A) 유틸리티 파일 생성
+- `upload-to-gcs.js`: 미디어 파일 GCS 업로드 스크립트
+- `web/apps/backend/lib/gcsUrls.js`: GCS URL 생성 유틸리티
+
+#### B) 의존성 추가
+- `@google-cloud/storage`: GCS 라이브러리 추가
+
+#### C) 환경변수 준비
+```env
+GCS_BUCKET_NAME="language-learner-audio"
+GCS_PROJECT_ID="your-project-id"
+GOOGLE_APPLICATION_CREDENTIALS="./gcs-service-account.json"
+```
+
+---
+
+## 🚧 현재 상태 및 문제점
+
+### ⚠️ 1. Railway 배포 지연 문제
+- **Initialization 단계**: 6분 30초 소요 (정상: 30초-1분)
+- **Build 단계**: pnpm workspace 호환성 오류 발생
+- **원인**: 대용량 프로젝트 (미디어 파일 포함)
+
+### ⚠️ 2. 빌드 오류
+```
+npm error code EUNSUPPORTEDPROTOCOL
+npm error Unsupported URL Type "workspace:"
+```
+- **원인**: pnpm workspace 프로젝트에서 npm 명령어 사용
+- **해결책**: Build Command 수정 필요
+
+### ⚠️ 3. 미디어 파일 접근 문제
+- 현재 서버에 직접 저장된 오디오/비디오 파일들
+- 배포 속도 저하의 주요 원인
+- GCS 마이그레이션으로 해결 예정
+
+---
+
+## 📋 **즉시 해야 할 TODO 리스트**
+
+### 🔥 **URGENT (Railway 배포 완료를 위해)**
+
+#### 1. Railway Build 명령어 수정
+**위치**: Railway Console → Settings → Build
+```bash
+# 현재 (문제)
+cd ../../ && pnpm install && cd web/apps/backend && npm run build
+
+# 수정할 내용
+pnpm install && pnpm run build
+```
+
+#### 2. Railway 재배포 실행
+- 현재 실패한 배포 취소
+- Build Command 수정 후 재배포
+- Deploy 성공 확인
+
+#### 3. 백엔드 서버 URL 확인
+- Railway에서 제공하는 공개 URL 확인
+- 예: `https://language-learner-backend-production.up.railway.app`
+
+---
+
+## 🎯 **Google Cloud Storage 마이그레이션 TODO**
+
+### Phase 1: GCS 설정 (1-2시간)
+
+#### 1. Google Cloud Console 설정
+- [ ] Google Cloud Console 접속 (https://console.cloud.google.com)
+- [ ] 새 프로젝트 생성: "language-learner-production"
+- [ ] Cloud Storage API 활성화
+- [ ] 결제 계정 설정 (월 $2-5 예상)
+
+#### 2. 서비스 계정 생성
+- [ ] IAM → Service Account 생성
+- [ ] 권한: Storage Admin
+- [ ] JSON 키 다운로드 → `gcs-service-account.json`
+
+#### 3. GCS 버킷 생성
+```bash
+# gsutil 또는 웹 콘솔에서
+gsutil mb gs://language-learner-audio
+gsutil mb gs://language-learner-video
+
+# 공개 액세스 설정
+gsutil iam ch allUsers:objectViewer gs://language-learner-audio
+gsutil iam ch allUsers:objectViewer gs://language-learner-video
+```
+
+### Phase 2: 미디어 파일 업로드 (2-3시간)
+
+#### 4. 로컬 미디어 파일 분석
+- [ ] 오디오 파일 위치 확인
+  - `web/apps/backend/public/audio/`
+  - `web/apps/backend/assets/`
+  - 기타 미디어 폴더들
+- [ ] 파일 크기 및 개수 확인
+
+#### 5. GCS 업로드 실행
+```bash
+# 의존성 설치
+cd web/apps/backend
+npm install @google-cloud/storage
+
+# 업로드 스크립트 실행
+node ../../../upload-to-gcs.js
+```
+
+#### 6. 업로드 결과 확인
+- [ ] GCS Console에서 파일 업로드 확인
+- [ ] 공개 URL 접속 테스트
+- [ ] 예: `https://storage.googleapis.com/language-learner-audio/hello.mp3`
+
+### Phase 3: 코드 마이그레이션 (2-3시간)
+
+#### 7. 백엔드 API 수정
+**현재 방식 (수정 필요):**
+```javascript
+// routes/audio.js
+app.get('/audio/:filename', (req, res) => {
+  const filePath = path.join(__dirname, 'public/audio', req.params.filename);
+  res.sendFile(filePath); // ❌ 서버 리소스 사용
+});
+```
+
+**수정할 방식:**
+```javascript
+const { getAudioUrl } = require('../lib/gcsUrls');
+
+app.get('/api/audio/:filename', (req, res) => {
+  const audioURL = getAudioUrl(req.params.filename);
+  res.json({ audioURL }); // ✅ GCS URL 제공
+});
+```
+
+#### 8. 데이터베이스 마이그레이션
+- [ ] 기존 오디오 경로 → GCS URL 변환
+- [ ] Prisma 스키마 확인 및 수정
+- [ ] 데이터 마이그레이션 스크립트 작성
+
+#### 9. 프론트엔드 수정
+**현재 방식:**
+```javascript
+const audioURL = `/api/audio/${filename}`; // 서버 경유
+```
+
+**수정할 방식:**
+```javascript
+const audioURL = word.audioURL; // 직접 GCS URL 사용
+```
+
+### Phase 4: 배포 및 테스트 (1시간)
+
+#### 10. Railway 환경변수 추가
+```env
+GCS_BUCKET_NAME=language-learner-audio
+GCS_PROJECT_ID=language-learner-production
+```
+
+#### 11. .railwayignore 최종 적용
+- [✅] 모든 미디어 파일 제외 완료
+- [ ] 커밋 및 푸시
+
+#### 12. Railway 재배포
+- [ ] 변경사항 커밋
+- [ ] GitHub 푸시
+- [ ] Railway 자동 배포 확인
+
+#### 13. 기능 테스트
+- [ ] 백엔드 API 응답 확인
+- [ ] 오디오 재생 테스트
+- [ ] 비디오 재생 테스트
+- [ ] 성능 측정 (로딩 속도)
+
+---
+
+## 🎯 **Vercel Frontend 배포 TODO**
+
+### 1. Vercel 설정
+- [ ] Vercel 계정 연결
+- [ ] GitHub 저장소 연결
+- [ ] Build 설정 확인
+
+### 2. 환경변수 설정
+```env
+REACT_APP_API_URL=https://[Railway Backend URL]
+GENERATE_SOURCEMAP=false
+```
+
+### 3. 배포 및 테스트
+- [ ] Vercel 배포 실행
+- [ ] Frontend-Backend 연동 테스트
+
+---
+
+## 📊 **예상 개선 효과**
+
+### 배포 속도
+- **현재**: Initialization 6분 30초 + Build 실패
+- **개선 후**: Initialization 30초 + Build 2분 = **총 3분**
+
+### 서버 비용
+- **현재**: Railway 스토리지 비용 높음
+- **개선 후**: Railway 서버 비용 + GCS 스토리지 비용 (월 $2-5)
+
+### 성능
+- **현재**: 서버를 통한 미디어 서빙 (느림)
+- **개선 후**: GCS CDN 직접 접근 (빠름)
+
+---
+
+## 🚨 **주의사항 및 백업**
+
+### 1. 백업 필수
+- [ ] 현재 미디어 파일들 로컬 백업
+- [ ] 데이터베이스 백업
+- [ ] 설정 파일들 백업
+
+### 2. 점진적 마이그레이션
+- [ ] 테스트용 버킷으로 일부 파일 먼저 업로드
+- [ ] 기능 확인 후 전체 마이그레이션
+- [ ] 기존 서버 파일은 즉시 삭제하지 말고 일정 기간 보존
+
+### 3. 모니터링
+- [ ] GCS 사용량 모니터링
+- [ ] 네트워크 비용 모니터링
+- [ ] 오디오 재생 오류 모니터링
+
+---
+
+## 📞 **다음 단계 권장 순서**
+
+1. **즉시 (오늘)**: Railway Build Command 수정 → 배포 성공
+2. **1-2일 내**: Google Cloud Storage 설정 및 미디어 업로드
+3. **3-4일 내**: 코드 마이그레이션 및 테스트
+4. **1주일 내**: Vercel Frontend 배포 완료
+
+---
+
+**마지막 업데이트**: 2025년 1월 24일
+**상태**: Railway Backend 배포 진행 중, GCS 마이그레이션 준비 완료
