@@ -2,12 +2,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
-    "declaration": true,
+    "declaration": false,
     "sourceMap": false,
-    "removeComments": true
+    "removeComments": true,
+    "allowJs": true
   },
   "include": [
-    "*.js",
+    "index.js",
     "lib/**/*.js",
     "services/**/*.js",
     "routes/**/*.js",
