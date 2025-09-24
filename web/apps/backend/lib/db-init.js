@@ -27,6 +27,18 @@ async function initializeDatabase() {
             env: process.env
           });
           console.log('[DB] Database schema created successfully');
+
+          // Run admin seeding after schema creation
+          console.log('[DB] Running admin seeding...');
+          try {
+            execSync('node scripts/seed-admin.js', {
+              stdio: 'inherit',
+              env: process.env
+            });
+            console.log('[DB] Admin seeding completed');
+          } catch (seedError) {
+            console.error('[DB] Admin seeding failed:', seedError.message);
+          }
         } catch (migrationError) {
           console.error('[DB] Migration failed:', migrationError.message);
           // Continue anyway - some tables might exist

@@ -73,22 +73,27 @@ class JWTService {
    * @param {string} refreshToken - Refresh token
    */
   setAuthCookies(res, accessToken, refreshToken) {
-    // Set access token cookie (short-lived)
+    // For cross-origin deployment, use more permissive cookie settings
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    // Set access token cookie
     res.cookie(this.COOKIE_NAME, accessToken, {
       httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: isProduction ? 'none' : 'lax', // 'none' for cross-origin
+      secure: isProduction, // HTTPS required for sameSite=none
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      path: '/'
+      path: '/',
+      domain: isProduction ? undefined : undefined // Let browser handle domain
     });
 
-    // Set refresh token cookie (long-lived)
+    // Set refresh token cookie
     res.cookie(this.REFRESH_COOKIE_NAME, refreshToken, {
       httpOnly: true,
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: isProduction ? 'none' : 'lax',
+      secure: isProduction,
       maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-      path: '/auth' // Only send refresh token to auth endpoints
+      path: '/auth',
+      domain: isProduction ? undefined : undefined
     });
   }
 
