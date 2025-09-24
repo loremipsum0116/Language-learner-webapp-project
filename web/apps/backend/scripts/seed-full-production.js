@@ -4,6 +4,7 @@ const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const fs = require('fs');
 const path = require('path');
+const { execSync } = require('child_process');
 
 const prisma = new PrismaClient();
 
@@ -25,6 +26,24 @@ async function runScript(scriptPath, description) {
     return true;
   } catch (error) {
     console.error(`[ERROR] Failed ${description}:`, error.message);
+    return false;
+  }
+}
+
+async function runSeeder(scriptName, description) {
+  console.log(`\n📦 [SEEDING] ${description}`);
+  try {
+    const backendDir = __dirname.replace('/scripts', '');
+    execSync(`node ${scriptName}`, {
+      stdio: 'inherit',
+      cwd: backendDir,
+      env: process.env,
+      timeout: 300000 // 5 minutes timeout
+    });
+    console.log(`✅ [SEEDING] ${description} completed`);
+    return true;
+  } catch (error) {
+    console.error(`❌ [SEEDING] ${description} failed:`, error.message);
     return false;
   }
 }
@@ -85,6 +104,20 @@ async function seedFullProduction() {
       }
     }
 
+    // Step 6: English Reading (CEFR A1-C1)
+    console.log('\n📋 STEP 6: English Reading seeding');
+    const englishReadingSuccess = await runSeeder('seed-reading.js', 'English Reading (CEFR A1-C1)');
+    if (!englishReadingSuccess) {
+      console.log('⚠️  English reading seeding failed, but continuing...');
+    }
+
+    // Step 7: Japanese Reading (JLPT N5-N1)
+    console.log('\n📋 STEP 7: Japanese Reading seeding');
+    const japaneseReadingSuccess = await runSeeder('seed-japanese-reading.js', 'Japanese Reading (JLPT N5-N1)');
+    if (!japaneseReadingSuccess) {
+      console.log('⚠️  Japanese reading seeding failed, but continuing...');
+    }
+
     console.log('\n' + '='.repeat(60));
     console.log('🎉 FULL PRODUCTION SEEDING COMPLETED!');
     console.log('='.repeat(60));
@@ -94,10 +127,12 @@ async function seedFullProduction() {
     const vocabCount = await prisma.vocab.count();
     const userCount = await prisma.user.count();
     const languageCount = await prisma.language.count();
+    const readingCount = await prisma.reading.count();
 
     console.log(`👤 Users: ${userCount}`);
     console.log(`🌐 Languages: ${languageCount}`);
     console.log(`📚 Vocabulary: ${vocabCount}`);
+    console.log(`📖 Reading Problems: ${readingCount}`);
 
     console.log('\n🔐 ADMIN LOGIN:');
     console.log('Email: super@root.com');
