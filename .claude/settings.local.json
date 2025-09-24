@@ -267,7 +267,8 @@
       "Bash(PRISMA_USER_CONSENT_FOR_DANGEROUS_AI_ACTION=\"네, 시딩하겠습니다.\" npx dotenv -e .env -- node seed-jlpt-vocabs-total.js)",
       "Bash(pnpm:*)",
       "Bash(npm run build:*)",
-      "Bash(deploy.bat)"
+      "Bash(deploy.bat)",
+      "Bash(railway login:*)"
     ],
     "deny": [],
     "ask": []

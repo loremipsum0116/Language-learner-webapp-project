@@ -15,6 +15,29 @@ async function initializeDatabase() {
     try {
       await prisma.user.findFirst();
       console.log('[DB] Database tables exist');
+
+      // Force seeding if RUN_FULL_SEEDING is true and no vocab data exists
+      if (process.env.RUN_FULL_SEEDING === 'true') {
+        const vocabCount = await prisma.vocab.count();
+        console.log(`[DB] Current vocabulary count: ${vocabCount}`);
+
+        if (vocabCount === 0) {
+          console.log('[DB] No vocabulary data found, running full seeding...');
+          const { execSync } = require('child_process');
+          try {
+            execSync('node scripts/seed-full-production.js', {
+              stdio: 'inherit',
+              env: process.env,
+              timeout: 600000 // 10 minutes timeout
+            });
+            console.log('[DB] Full production seeding completed');
+          } catch (seedError) {
+            console.error('[DB] Full seeding failed:', seedError.message);
+          }
+        } else {
+          console.log('[DB] Vocabulary data already exists, skipping seeding');
+        }
+      }
     } catch (error) {
       if (error.code === 'P2021') {
         console.log('[DB] Tables do not exist, creating schema...');
