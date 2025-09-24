@@ -1801,6 +1801,7 @@ export default function VocabList() {
                                     onPlayGlossAudio={playGlossAudio}
                                     playingAudio={playingAudio}
                                     onAddSRS={(ids) => handleAddSRS(ids)}
+                                    stopAudio={stopAudio}
                                 />
                             )}
                         </div>

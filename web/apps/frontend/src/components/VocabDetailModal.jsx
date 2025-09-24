@@ -1,5 +1,5 @@
 // src/components/VocabDetailModal.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Pron from './Pron';
 import { API_BASE } from '../api/client';
 // ❌ Do not import SrsFolderPickerModal / SrsApi here. The parent (VocabList) handles SRS.
@@ -81,13 +81,24 @@ export default function VocabDetailModal({
   onPlayGlossAudio, // 새로 추가된 gloss 오디오 재생 함수
   playingAudio,
   onAddSRS,
+  stopAudio, // 오디오 정지 함수
 }) {
   console.log('🐛 [VocabDetailModal] vocab.lemma:', vocab.lemma);
   console.log('🐛 [VocabDetailModal] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
   const dictentry = vocab?.dictentry || {};
   const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
                      (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
-  
+
+  // Cleanup audio when component unmounts
+  useEffect(() => {
+    return () => {
+      // Stop audio when modal is closed/unmounted
+      if (stopAudio && playingAudio) {
+        stopAudio();
+      }
+    };
+  }, [stopAudio, playingAudio]);
+
   // Parse examples if it's a string - handle all possible cases
   let rawMeanings = [];
   console.log('VocabDetailModal - dictentry.examples type:', typeof dictentry.examples);
@@ -336,6 +347,19 @@ export default function VocabDetailModal({
                       glossAudioPath = `/${baseUrl}`;
                       console.log('🔍 [VocabDetailModal] Fallback to database audioUrl for JLPT gloss:', vocab.lemma, '->', glossAudioPath);
                     }
+                    // Final fallback: Generate path using folder structure (same as VocabList)
+                    else {
+                      const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                      let folderName;
+                      if (vocab.romaji) {
+                        folderName = vocab.romaji.toLowerCase();
+                      } else {
+                        // Convert Japanese punctuation ・ to space for folder matching
+                        folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                      }
+                      glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(folderName)}/gloss.mp3`;
+                      console.log('🔍 [VocabDetailModal] Final fallback for JLPT gloss:', vocab.lemma, '->', glossAudioPath);
+                    }
                   } else if (isIdiomOrPhrasal) {
                     // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용
                     if (vocab.dictentry?.audioUrl) {
@@ -493,6 +517,19 @@ export default function VocabDetailModal({
                             const baseUrl = vocab.dictentry.audioUrl.replace('/word.mp3', '/example.mp3');
                             exampleAudioPath = `/${baseUrl}`;
                             console.log('🔍 [VocabDetailModal] Fallback to database audioUrl for JLPT example:', vocab.lemma, '->', exampleAudioPath);
+                          }
+                          // Final fallback: Generate path using folder structure (same as VocabList)
+                          else {
+                            const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                            let folderName;
+                            if (vocab.romaji) {
+                              folderName = vocab.romaji.toLowerCase();
+                            } else {
+                              // Convert Japanese punctuation ・ to space for folder matching
+                              folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                            }
+                            exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(folderName)}/example.mp3`;
+                            console.log('🔍 [VocabDetailModal] Final fallback for JLPT example:', vocab.lemma, '->', exampleAudioPath);
                           }
                         }
                         // For English vocabulary
