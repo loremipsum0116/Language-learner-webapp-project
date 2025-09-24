@@ -324,7 +324,7 @@ export default function VocabDetailModal({
                     // JLPT 단어의 경우 우선 audioLocal 데이터 사용
                     const audioData = parseAudioLocal(dictentry.audioLocal);
                     if (audioData?.gloss) {
-                      glossAudioPath = audioData.gloss.startsWith('/') ? audioData.gloss : `/${audioData.gloss}`;
+                      glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
                       console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
                     }
                     // Fallback: 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
@@ -374,10 +374,11 @@ export default function VocabDetailModal({
                   }
                   
                   if (glossAudioPath && onPlayUrl) {
-                    // 절대 경로로 변환
-                    const absolutePath = glossAudioPath.startsWith('/') ? glossAudioPath : `/${glossAudioPath}`;
-                    console.log('🔊 [VocabDetailModal] Playing GLOSS audio:', absolutePath);
-                    onPlayUrl(absolutePath, 'vocab', vocab.id);
+                    // GCS URL은 그대로 사용, Railway 경로만 / 추가
+                    const finalPath = glossAudioPath.startsWith('https://') ? glossAudioPath :
+                                    (glossAudioPath.startsWith('/') ? glossAudioPath : `/${glossAudioPath}`);
+                    console.log('🔊 [VocabDetailModal] Playing GLOSS audio:', finalPath);
+                    onPlayUrl(finalPath, 'vocab', vocab.id);
                   } else if (onPlayGlossAudio) {
                     // 새로운 gloss 전용 재생 함수 사용
                     console.log('🔊 [VocabDetailModal] Using onPlayGlossAudio function');
@@ -511,9 +512,10 @@ export default function VocabDetailModal({
                               onClick={(e) => {
                                 e.stopPropagation();
                                 if (onPlayUrl) {
-                                  // 절대 경로로 변환
-                                  const absolutePath = exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`;
-                                  onPlayUrl(absolutePath, 'example', vocab.id);
+                                  // GCS URL은 그대로 사용, Railway 경로만 / 추가
+                                  const finalPath = exampleAudioPath.startsWith('https://') ? exampleAudioPath :
+                                                  (exampleAudioPath.startsWith('/') ? exampleAudioPath : `/${exampleAudioPath}`);
+                                  onPlayUrl(finalPath, 'example', vocab.id);
                                 }
                               }}
                               aria-label="예문 오디오 재생"

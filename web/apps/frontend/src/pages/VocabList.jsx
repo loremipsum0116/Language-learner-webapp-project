@@ -652,6 +652,21 @@ export default function VocabList() {
             'elementary/rest-sleep/relax/gloss.mp3': 'elementary/rest-sleeprelax/gloss.mp3'
         };
 
+        // GCS URL인 경우 그대로 사용 (변환하지 않음)
+        if (url.startsWith('https://')) {
+            console.log('[AUDIO DEBUG] Using direct GCS URL:', url);
+            const newAudio = new Audio(url);
+            newAudio.onended = () => setPlayingAudio(null);
+            newAudio.play().then(() => {
+                console.log('🎵 Playing audio from GCS:', url);
+                setPlayingAudio({ type, id, audio: newAudio });
+            }).catch(err => {
+                console.error('오디오 재생 실패:', err, url);
+                setPlayingAudio(null);
+            });
+            return;
+        }
+
         // Apply special mappings first
         let mappedUrl = url;
         if (url.startsWith('/')) {
