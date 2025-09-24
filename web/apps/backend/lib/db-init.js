@@ -28,16 +28,27 @@ async function initializeDatabase() {
           });
           console.log('[DB] Database schema created successfully');
 
-          // Run admin seeding after schema creation
-          console.log('[DB] Running admin seeding...');
+          // Run seeding after schema creation
+          console.log('[DB] Running data seeding...');
           try {
-            execSync('node scripts/seed-admin.js', {
-              stdio: 'inherit',
-              env: process.env
-            });
-            console.log('[DB] Admin seeding completed');
+            if (process.env.RUN_FULL_SEEDING === 'true') {
+              console.log('[DB] Full production seeding requested...');
+              execSync('node scripts/seed-full-production.js', {
+                stdio: 'inherit',
+                env: process.env,
+                timeout: 600000 // 10 minutes timeout for full seeding
+              });
+              console.log('[DB] Full production seeding completed');
+            } else {
+              // Basic seeding only
+              execSync('node scripts/seed-admin.js', {
+                stdio: 'inherit',
+                env: process.env
+              });
+              console.log('[DB] Basic admin seeding completed');
+            }
           } catch (seedError) {
-            console.error('[DB] Admin seeding failed:', seedError.message);
+            console.error('[DB] Seeding failed:', seedError.message);
           }
         } catch (migrationError) {
           console.error('[DB] Migration failed:', migrationError.message);
