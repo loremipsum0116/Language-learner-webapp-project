@@ -659,12 +659,12 @@ app.get('/api/simple-vocab', async (req, res) => {
     const { PrismaClient } = require('@prisma/client');
     const prisma = new PrismaClient();
 
-    const { limit = 100, levelCEFR = 'A1', pos, search } = req.query;
+    const { limit = 100, offset = 0, levelCEFR = 'A1', pos, search } = req.query;
     console.log('Extracted params:', { limit, levelCEFR, pos, search });
 
     if (pos) {
-      // 실제 데이터베이스의 pos 값과 매핑
-      const dbPos = pos; // 'idiom' 또는 'phrasal verb' 그대로 사용
+      // 실제 데이터베이스의 pos 값과 매핑 (phrasal_verb -> phrasal verb 변환)
+      const dbPos = pos === 'phrasal_verb' ? 'phrasal verb' : pos;
       const dbSource = 'idiom_migration'; // 모든 숙어·구동사는 같은 소스
 
       console.log(`Querying for pos: ${dbPos}, source: ${dbSource}`);
@@ -703,6 +703,11 @@ app.get('/api/simple-vocab', async (req, res) => {
 
       console.log('Final where clause:', JSON.stringify(whereClause, null, 2));
 
+      // Get total count first
+      const totalCount = await prisma.vocab.count({
+        where: whereClause
+      });
+
       const vocabData = await prisma.vocab.findMany({
         where: whereClause,
         include: {
@@ -712,17 +717,19 @@ app.get('/api/simple-vocab', async (req, res) => {
           },
           dictentry: true
         },
-        take: parseInt(limit)
+        take: parseInt(limit),
+        skip: parseInt(offset)
       });
 
-      console.log(`Found ${vocabData.length} vocab items`);
+      console.log(`Found ${vocabData.length} vocab items out of ${totalCount} total`);
 
       if (vocabData.length === 0) {
         return res.json({
           success: true,
           data: [],
           message: `No ${pos} found${search ? ` for search: "${search}"` : ''}`,
-          total: 0
+          total: totalCount,
+          returned: 0
         });
       }
 
@@ -755,7 +762,8 @@ app.get('/api/simple-vocab', async (req, res) => {
       return res.json({
         success: true,
         data: transformedData,
-        total: transformedData.length,
+        total: totalCount,
+        returned: transformedData.length,
         pos: pos,
         search: search || ''
       });
