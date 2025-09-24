@@ -826,6 +826,7 @@ app.use('/api/japanese-listening', japaneseListeningRoutes);  // Japanese Listen
 app.use('/api/listening', require('./routes/listening'));  // Listening API
 app.use('/api/idiom', require('./routes/idiom_working')); // Idiom API (인증 불필요) - Working version from test server
 app.use('/test-vocab', require('./routes/test-vocab')); // Simple vocab API for mobile app testing
+app.use('/api/admin', require('./routes/admin-seeding')); // Admin seeding API
 // Vocab-by-pos endpoint for idiom/phrasal verb integration (unauthenticated)
 app.get('/api/vocab/vocab-by-pos', async (req, res) => {
   try {
