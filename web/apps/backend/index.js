@@ -999,4 +999,19 @@ require('./cron');
 app.use(errorResponseMiddleware);
 
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
+
+// Initialize database before starting server
+const { initializeDatabase } = require('./lib/db-init');
+
+async function startServer() {
+  // Initialize database (create tables if needed)
+  await initializeDatabase();
+
+  // Start server
+  app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
+}
+
+startServer().catch(error => {
+  console.error('Failed to start server:', error);
+  process.exit(1);
+});
