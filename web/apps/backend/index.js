@@ -605,10 +605,17 @@ app.use('/api/video', staticFileLogging, preCompressedStatic(path.join(__dirname
 // CORS 설정을 정적 파일보다 먼저 적용
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
-    if (!origin || allowedOrigins.includes(origin)) {
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://project-1ujdn.vercel.app',
+      'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app'
+    ];
+    // Allow requests with no origin (like mobile apps or Postman)
+    if (!origin || allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
       callback(null, true);
     } else {
+      console.log('[CORS] Blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -622,9 +629,14 @@ app.use(cors(corsOptions));
 // 추가 CORS 헤더 보장 미들웨어
 app.use((req, res, next) => {
   const origin = req.headers.origin;
-  const allowedOrigins = ['http://localhost:3000', 'http://localhost:3001'];
-  
-  if (allowedOrigins.includes(origin)) {
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001',
+    'https://project-1ujdn.vercel.app',
+    'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app'
+  ];
+
+  if (allowedOrigins.includes(origin) || (origin && origin.includes('vercel.app'))) {
     res.setHeader('Access-Control-Allow-Origin', origin);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
   }
