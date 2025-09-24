@@ -79,7 +79,7 @@ const mobileRouter = require('./routes/api/mobile');
 
 const app = express();
 
-console.log('[STARTUP] Express app created, setting up routes...');
+console.log('[STARTUP] Express app created, setting up routes... v2024-12-28');
 
 // TEST ENDPOINTS - Very early in the middleware stack
 app.get('/immediate-test', (req, res) => {
