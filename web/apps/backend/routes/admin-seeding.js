@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { execSync } = require('child_process');
 const authMiddleware = require('../middleware/auth');
-const adminMiddleware = require('../middleware/admin');
+const adminMiddleware = require('../middleware/adminOnly');
 
 // Manual seeding trigger (admin only)
 router.post('/trigger-seeding', authMiddleware, adminMiddleware, async (req, res) => {
