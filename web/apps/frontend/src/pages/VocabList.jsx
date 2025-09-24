@@ -8,6 +8,7 @@ import VocabDetailModal from '../components/VocabDetailModal.jsx';
 import IdiomDetailModal from '../components/IdiomDetailModal.jsx';
 import { SrsApi } from '../api/srs';
 import HierarchicalFolderPickerModal from '../components/HierarchicalFolderPickerModal';
+import { parseAudioLocal } from '../utils/audioUtils';
 import RainbowStar from '../components/RainbowStar';
 import AutoFolderModal from '../components/AutoFolderModal';
 import JapaneseVocabCard from '../components/JapaneseVocabCard';
@@ -1016,39 +1017,8 @@ export default function VocabList() {
             'C2': 'advanced'
         };
         
-        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
-        let audioData = null;
-        if (vocab.dictentry?.audioLocal) {
-            try {
-                if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
-                    audioData = JSON.parse(vocab.dictentry.audioLocal);
-                } else if (typeof vocab.dictentry.audioLocal === 'string') {
-                    const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
-                    console.log('🔍 [DEBUG] playGlossAudio basePath:', basePath);
-                    // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
-                    const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
-                    console.log('🔍 [DEBUG] playGlossAudio isIdiomOrPhrasal:', isIdiomOrPhrasal);
-                    audioData = { 
-                        word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
-                        gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
-                        example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
-                    };
-                    console.log('🔍 [DEBUG] playGlossAudio generated audioData:', audioData);
-                } else {
-                    audioData = vocab.dictentry.audioLocal;
-                }
-            } catch (e) {
-                console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
-                const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
-                // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
-                const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
-                audioData = { 
-                    word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
-                    gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
-                    example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
-                };
-            }
-        }
+        // 1. GCS 오디오 경로 사용 (최우선) - utils 함수 사용
+        const audioData = parseAudioLocal(vocab.dictentry?.audioLocal);
         
         // 경로 수정: bank-money -> bank (money) 등 괄호 포함 단어 처리
         let glossAudioPath = audioData?.gloss;
@@ -1110,25 +1080,12 @@ export default function VocabList() {
         if (vocab.source === 'jlpt_vocabs' || vocab.source === 'jlpt' || vocab.levelJLPT) {
             console.log('🔍 [DEBUG] Detected Japanese word:', vocab.lemma, 'levelJLPT:', vocab.levelJLPT);
 
-            // Try to parse audioLocal for Japanese words
-            if (vocab.dictentry?.audioLocal) {
-                try {
-                    let audioData = null;
-                    if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
-                        audioData = JSON.parse(vocab.dictentry.audioLocal);
-                    } else if (typeof vocab.dictentry.audioLocal === 'object') {
-                        audioData = vocab.dictentry.audioLocal;
-                    }
-
-                    if (audioData?.word) {
-                        const audioPath = audioData.word.startsWith('/') ? audioData.word : `/${audioData.word}`;
-                        console.log('✅ Playing Japanese WORD audio:', audioPath);
-                        playUrl(audioPath, 'vocab', vocab.id);
-                        return;
-                    }
-                } catch (e) {
-                    console.warn('Failed to parse Japanese audioLocal:', e);
-                }
+            // Try to parse audioLocal for Japanese words using utils function
+            const audioData = parseAudioLocal(vocab.dictentry?.audioLocal);
+            if (audioData?.word) {
+                console.log('✅ Playing Japanese WORD audio from GCS:', audioData.word);
+                playUrl(audioData.word, 'vocab', vocab.id);
+                return;
             }
 
             // Fallback to JLPT folder structure
@@ -1188,48 +1145,19 @@ export default function VocabList() {
         console.log('🔍 [DEBUG] vocab.dictentry:', vocab.dictentry);
         console.log('🔍 [DEBUG] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
         
-        // 1. cefr_vocabs.json의 audio 경로 사용 (최우선)
-        let audioData = null;
-        if (vocab.dictentry?.audioLocal) {
-            console.log('🔍 [DEBUG] audioLocal raw value:', vocab.dictentry.audioLocal);
-            try {
-                // JSON 형태인지 확인
-                if (typeof vocab.dictentry.audioLocal === 'string' && vocab.dictentry.audioLocal.startsWith('{')) {
-                    audioData = JSON.parse(vocab.dictentry.audioLocal);
-                    console.log('🔍 [DEBUG] Parsed as JSON:', audioData);
-                } else if (typeof vocab.dictentry.audioLocal === 'string') {
-                    // 단순한 경로 문자열인 경우, 적절한 경로들 생성
-                    const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
-                    // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
-                    const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
-                    audioData = { 
-                        word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
-                        gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
-                        example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
-                    };
-                    console.log('🔍 [DEBUG] Treated as simple string, created audioData:', audioData);
-                } else {
-                    audioData = vocab.dictentry.audioLocal;
-                    console.log('🔍 [DEBUG] Used as object:', audioData);
-                }
-            } catch (e) {
-                console.warn('Failed to parse audioLocal:', e, vocab.dictentry.audioLocal);
-                // 파싱 실패 시 단순한 경로로 처리
-                const basePath = vocab.dictentry.audioLocal.replace(/\/(word|gloss|example)\.mp3$/, '');
-                // 숙어 및 구동사의 경우 하이픈을 언더스코어로 변환
-                const isIdiomOrPhrasal = basePath.includes('idiom/') || basePath.includes('phrasal/') || basePath.includes('phrasal_verb/');
-                audioData = { 
-                    word: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}.mp3` : `${basePath}/word.mp3`, 
-                    gloss: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_gloss.mp3` : `${basePath}/gloss.mp3`,
-                    example: isIdiomOrPhrasal ? `${basePath.replace(/-/g, '_')}_example.mp3` : `${basePath}/example.mp3` 
-                };
-            }
+        // 1. GCS 오디오 경로 사용 (최우선) - utils 함수 사용
+        const audioData = parseAudioLocal(vocab.dictentry?.audioLocal);
+        // 단어 발음: GCS URL 직접 사용
+        const wordAudioPath = audioData?.word;
+
+        if (wordAudioPath) {
+            console.log('✅ Playing WORD audio from GCS:', wordAudioPath);
+            playUrl(wordAudioPath, 'vocab', vocab.id);
+            return;
         }
-        // 단어 발음: audio.word 경로 우선 사용
-        let wordAudioPath = audioData?.word;
-        
-        // 경로 수정: bank-money -> bank (money) 등 괄호 포함 단어 처리
-        if (wordAudioPath && (wordAudioPath.includes('-') || wordAudioPath.includes(' '))) {
+
+        // 백업 로직 (이제 필요 시에만 사용)
+        if (false && wordAudioPath && (wordAudioPath.includes('-') || wordAudioPath.includes(' '))) {
             console.log('🔍 [DEBUG] Original wordAudioPath:', wordAudioPath);
             
             // 특별한 경우들을 먼저 처리

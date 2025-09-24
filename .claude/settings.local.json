@@ -281,7 +281,10 @@
       "Bash(railway status:*)",
       "WebFetch(domain:clever-elegance-production.up.railway.app)",
       "WebFetch(domain:project-1ujdn-d6hzr4zt9-hyunseoks-projects-8b90da92.vercel.app)",
-      "WebFetch(domain:project-1ujdn.vercel.app)"
+      "WebFetch(domain:project-1ujdn.vercel.app)",
+      "Bash(git filter-branch:*)",
+      "Bash(\"git rm --cached --ignore-unmatch gcs-service-account.json\" )",
+      "Bash(git reset:*)"
     ],
     "deny": [],
     "ask": []
