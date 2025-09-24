@@ -61,5 +61,12 @@
 
 # Cache
 **/.cache/
-**/.parcel-cache/gcs-service-account.json
+**/.parcel-cache/
+
+# Google Cloud credentials and sensitive files
 gcs-service-account.json
+**/gcs-service-account.json
+**/*-service-account.json
+**/*.pem
+**/*.key
+**/*-credentials.json
