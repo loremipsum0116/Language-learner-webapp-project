@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git ls-tree:*)",
+      "Bash(git checkout-index:*)",
+      "Bash(find:*)",
+      "Bash(for dir in LanguageLearnerApp53 app web docs scripts)",
+      "Bash(do git checkout HEAD -- \"$dir/\")",
+      "Bash(echo:*)",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
