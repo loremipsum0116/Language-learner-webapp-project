@@ -4,6 +4,7 @@ const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
 const auth = require('../middleware/auth');
 const { ok, fail } = require('../lib/resp');
+const { convertLocalPathToGcsUrl } = require('../lib/gcsUrls');
 
 // 인증 미들웨어 적용 - 서버 레벨에서 처리되므로 여기서는 불필요
 // router.use(auth);
@@ -286,7 +287,7 @@ function formatDictEntry(vocab) {
           }
         }
       } else if (vocab.dictentry.audioUrl) {
-        entry.audio = vocab.dictentry.audioUrl.startsWith('/') ? vocab.dictentry.audioUrl : `/${vocab.dictentry.audioUrl}`;
+        entry.audio = convertLocalPathToGcsUrl(vocab.dictentry.audioUrl);
       }
 
       // Examples 처리 - VocabTranslation과 dictentry 모두 확인

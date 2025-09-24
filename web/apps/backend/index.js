@@ -24,6 +24,9 @@ const {
   staticFileLogging
 } = require('./middleware/staticCompression');
 
+// GCS 리다이렉트 미들웨어
+const { createGcsRedirect, gcsAudioRedirect, gcsListeningRedirect } = require('./middleware/gcsRedirect');
+
 // --- 라우터 임포트 ---
 const authRoutes = require('./routes/auth');
 const learnRoutes = require('./routes/learn');
@@ -519,80 +522,34 @@ app.get('/test-static', (req, res) => {
   res.json({ message: 'Static routing works', timestamp: new Date().toISOString() });
 });
 
-// vocabs_example.py로 생성된 레벨별 오디오 라우팅 (인증 불필요)
-app.use('/starter', (req, res, next) => {
-  console.log('[STATIC] starter audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'starter')));
+// vocabs_example.py로 생성된 레벨별 오디오 라우팅 (인증 불필요) - GCS 리다이렉트
+app.use('/starter', createGcsRedirect('starter'));
 
-app.use('/elementary', (req, res, next) => {
-  console.log('[STATIC] elementary audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'elementary')));
+app.use('/elementary', createGcsRedirect('elementary'));
 
-app.use('/intermediate', (req, res, next) => {
-  console.log('[STATIC] intermediate audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'intermediate')));
+app.use('/intermediate', createGcsRedirect('intermediate'));
 
-app.use('/upper', (req, res, next) => {
-  console.log('[STATIC] upper audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'upper')));
+app.use('/upper', createGcsRedirect('upper'));
 
-app.use('/advanced', (req, res, next) => {
-  console.log('[STATIC] advanced audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'advanced')));
+app.use('/advanced', createGcsRedirect('advanced'));
 
-// === 기존 정적 파일 서빙 (최우선) ===
-console.log('Setting up A1 audio:', path.join(__dirname, 'A1', 'audio'));
-console.log('Setting up A2 audio:', path.join(__dirname, 'A2', 'audio'));
-console.log('Setting up B1 audio:', path.join(__dirname, 'B1', 'audio'));
-console.log('Setting up B2 audio:', path.join(__dirname, 'B2', 'audio'));
-console.log('Setting up C1 audio:', path.join(__dirname, 'C1', 'audio'));
-console.log('Setting up C2 audio:', path.join(__dirname, 'C2', 'audio'));
-app.use('/A1/audio', (req, res, next) => {
-  console.log('[STATIC] A1 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'A1', 'audio')));
+// === CEFR 레벨 오디오 파일 (GCS 리다이렉트) ===
+app.use('/A1/audio', createGcsRedirect('A1/audio'));
 
-app.use('/A2/audio', (req, res, next) => {
-  console.log('[STATIC] A2 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'A2', 'audio')));
+app.use('/A2/audio', createGcsRedirect('A2/audio'));
 
-app.use('/B1/audio', (req, res, next) => {
-  console.log('[STATIC] B1 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'B1', 'audio')));
+app.use('/B1/audio', createGcsRedirect('B1/audio'));
 
-app.use('/B2/audio', (req, res, next) => {
-  console.log('[STATIC] B2 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'B2', 'audio')));
+app.use('/B2/audio', createGcsRedirect('B2/audio'));
 
-app.use('/C1/audio', (req, res, next) => {
-  console.log('[STATIC] C1 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'C1', 'audio')));
+app.use('/C1/audio', createGcsRedirect('C1/audio'));
 
-app.use('/C2/audio', (req, res, next) => {
-  console.log('[STATIC] C2 audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'C2', 'audio')));
+app.use('/C2/audio', createGcsRedirect('C2/audio'));
 
-// 숙어/구동사 오디오 서빙 (인증 불필요)
-app.use('/idiom', (req, res, next) => {
-  console.log('[STATIC] idiom audio request:', req.path);
-  // CORS handled by global middleware
-  next();
-}, express.static(path.join(__dirname, 'idiom')));
+// 숙어/구동사 오디오 서빙 (인증 불필요) - GCS 리다이렉트
+app.use('/idiom', createGcsRedirect('idiom'));
 
-app.use('/phrasal_verb', (req, res, next) => {
-  console.log('[STATIC] phrasal_verb audio request:', req.path);
-  next();
-}, staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'phrasal_verb')));
+app.use('/phrasal_verb', createGcsRedirect('phrasal_verb'));
 
 // 비디오 파일 서빙 - 압축 최적화 적용
 app.use('/api/video', staticFileLogging, preCompressedStatic(path.join(__dirname, 'out')));
@@ -655,8 +612,24 @@ app.use((req, res, next) => {
 // 정적 파일 최적화 적용
 app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
 
-// JLPT 오디오 파일 서빙
-app.use('/jlpt', staticFileLogging, audioOptimization, preCompressedStatic(path.join(__dirname, 'public', 'jlpt')));
+// JLPT 오디오 파일 서빙 - GCS 리다이렉트
+app.use('/jlpt', createGcsRedirect('public/jlpt'));
+
+// 리스닝 오디오 파일 서빙 - GCS 리다이렉트
+// 영어 리스닝
+app.use('/A1_Listening_mix', gcsListeningRedirect('A1'));
+app.use('/A2_Listening_mix', gcsListeningRedirect('A2'));
+app.use('/B1_Listening_mix', gcsListeningRedirect('B1'));
+app.use('/B2_Listening_mix', gcsListeningRedirect('B2'));
+app.use('/C1_Listening_mix', gcsListeningRedirect('C1'));
+app.use('/C2_Listening_mix', gcsListeningRedirect('C2'));
+
+// 일본어 리스닝
+app.use('/N1_Listening_mix', gcsListeningRedirect('N1'));
+app.use('/N2_Listening_mix', gcsListeningRedirect('N2'));
+app.use('/N3_Listening_mix', gcsListeningRedirect('N3'));
+app.use('/N4_Listening_mix', gcsListeningRedirect('N4'));
+app.use('/N5_Listening_mix', gcsListeningRedirect('N5'));
 app.use(express.json({ limit: '10mb' })); // JSON 크기 제한 증가
 app.use(cookieParser());
 

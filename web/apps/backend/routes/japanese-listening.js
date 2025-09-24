@@ -111,7 +111,7 @@ router.post('/submit', async (req, res) => {
             script: script || "스크립트 정보 없음",
             topic: topic || "일본어 리스닝 문제",
             options: options || {},
-            audioFile: audioFile || `${level}_Listening_mix/${questionId}.mp3`
+            audioFile: audioFile || `https://storage.googleapis.com/language-learner-audio/${level}/${level}_Listening/${level}_Listening_mix/${questionId}.mp3`
         };
 
         let result;
@@ -333,7 +333,7 @@ router.post('/record', async (req, res) => {
             script: script || "스크립트 정보 없음",
             topic: topic || "일본어 리스닝 문제",
             options: options || {},
-            audioFile: audioFile || `${level}_Listening_mix/${questionId}.mp3`
+            audioFile: audioFile || `https://storage.googleapis.com/language-learner-audio/${level}/${level}_Listening/${level}_Listening_mix/${questionId}.mp3`
         };
 
         let result;

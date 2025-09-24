@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const { prisma } = require('../lib/prismaClient');
+const { convertLocalPathToGcsUrl } = require('../lib/gcsUrls');
 
 console.log('📊 [VOCAB ROUTER] vocab.js router loaded');
 
@@ -174,7 +175,7 @@ router.get('/list', async (req, res) => {
       return {
         id: v.id, lemma: v.lemma, pos: v.pos, levelCEFR: v.levelCEFR,
         ko_gloss: primaryGloss, ipa: dictentry?.ipa ?? null,
-        ipaKo: dictentry?.ipaKo ?? null, audio: dictentry?.audioUrl ?? null,
+        ipaKo: dictentry?.ipaKo ?? null, audio: convertLocalPathToGcsUrl(dictentry?.audioUrl) ?? null,
         examples: rawMeanings
       };
     });
@@ -660,7 +661,7 @@ router.get('/japanese-list', async (req, res) => {
         example: examples.example || '',
         exampleKana: examples.exampleKana || '',
         exampleTranslation: examples.exampleTranslation || '',
-        audio: dictentry?.audioUrl || null
+        audio: convertLocalPathToGcsUrl(dictentry?.audioUrl) || null
       };
     });
 

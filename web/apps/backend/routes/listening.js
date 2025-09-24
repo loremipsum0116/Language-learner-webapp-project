@@ -111,7 +111,7 @@ router.post('/record', async (req, res) => {
             topic: topic || "리스닝 문제",
             options: options || {},
             explanation: explanation || "",
-            audioFile: `${questionId}.mp3`
+            audioFile: `https://storage.googleapis.com/language-learner-audio/${level}/${level}_Listening/${level}_Listening_mix/${questionId}.mp3`
         };
 
         let result;

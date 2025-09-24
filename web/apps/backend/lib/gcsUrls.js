@@ -46,23 +46,11 @@ function getMediaUrl(type, filename) {
 function convertLocalPathToGcsUrl(localPath) {
   if (!localPath) return null;
 
-  // 로컬 경로에서 파일명 추출
-  const filename = localPath.split('/').pop();
+  // 슬래시로 시작하는 경우 제거
+  const cleanPath = localPath.startsWith('/') ? localPath.substring(1) : localPath;
 
-  // 경로에 따라 적절한 GCS URL 생성
-  if (localPath.includes('/audio/')) {
-    return getAudioUrl(filename);
-  } else if (localPath.includes('/video/')) {
-    return getVideoUrl(filename);
-  } else if (localPath.includes('/jlpt/')) {
-    const level = localPath.match(/jlpt\/([^\/]+)\//)?.[1];
-    return getJlptAudioUrl(level, filename);
-  } else if (localPath.includes('/cefr/')) {
-    const level = localPath.match(/cefr\/([^\/]+)\//)?.[1];
-    return getCefrAudioUrl(level, filename);
-  }
-
-  return `${GCS_BASE_URL}/${filename}`;
+  // 직접 GCS URL로 변환 (폴더 구조 그대로 유지)
+  return `${GCS_BASE_URL}/${cleanPath}`;
 }
 
 module.exports = {
