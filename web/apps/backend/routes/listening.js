@@ -5,17 +5,45 @@ const authMiddleware = require('../middleware/auth');
 
 // 리스닝 문제 해결 기록 저장 (통합 오답노트 시스템 사용)
 console.log('🌟 [LISTENING ROUTER] /record route registered!');
-router.post('/record', authMiddleware, async (req, res) => {
+router.post('/record', async (req, res) => {
     console.log('🚨🚨🚨 [LISTENING RECORD] API CALLED! 🚨🚨🚨');
     try {
         console.log(`🚀🎯 [LISTENING RECORD START] 기록 저장 시작!`);
         console.log(`📝🎯 [REQUEST BODY]`, req.body);
         
-        const { 
+        const {
             questionId, level, isCorrect, userAnswer, correctAnswer, timeTaken,
-            question, script, topic, options, explanation 
+            question, script, topic, options, explanation
         } = req.body;
-        const userId = req.user.id;
+
+        // JWT 토큰에서 사용자 ID 추출 (cross-origin 환경 지원)
+        const jwt = require('jsonwebtoken');
+        let userId = null;
+
+        try {
+            // Authorization 헤더에서 토큰 확인
+            const authHeader = req.headers.authorization;
+            let token = null;
+
+            if (authHeader && authHeader.startsWith('Bearer ')) {
+                token = authHeader.substring(7);
+            } else if (req.cookies && req.cookies.token) {
+                // 쿠키에서 토큰 확인 (fallback)
+                token = req.cookies.token;
+            }
+
+            if (token) {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                userId = decoded.userId || decoded.id;
+            }
+        } catch (error) {
+            console.log('[LISTENING RECORD] Token verification failed, continuing without user');
+        }
+
+        if (!userId) {
+            console.log('❌🎯 [AUTH ERROR] No userId found');
+            return res.status(401).json({ error: 'Authentication required' });
+        }
         
         console.log(`👤🎯 [USER INFO] userId: ${userId}, questionId: ${questionId}, isCorrect: ${isCorrect}`);
         console.log(`🔍🎯 [FIELD DEBUG] question: "${question}", script: "${script}", topic: "${topic}"`);

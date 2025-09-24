@@ -108,8 +108,9 @@ app.get('/simple-vocab', async (req, res) => {
     const { PrismaClient } = require('@prisma/client');
     const prisma = new PrismaClient();
 
-    const { limit = 100, levelCEFR = 'A1', pos, search } = req.query;
+    const { limit = 100, levelCEFR = 'A1', pos, search, offset = 0 } = req.query;
     const limitInt = Math.min(parseInt(limit), 1000);
+    const offsetInt = Math.max(parseInt(offset), 0);
 
     console.log(`[SIMPLE-VOCAB] Request params:`, { levelCEFR, limit, pos, search });
 
@@ -144,6 +145,7 @@ app.get('/simple-vocab', async (req, res) => {
 
       const vocabs = await prisma.vocab.findMany({
         where: whereClause,
+        skip: offsetInt,
         take: limitInt,
         orderBy: { lemma: 'asc' },
         include: {

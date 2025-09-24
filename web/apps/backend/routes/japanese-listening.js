@@ -12,7 +12,7 @@ router.use((req, res, next) => {
 });
 
 // 일본어 리스닝 답안 제출 및 오답노트 저장
-router.post('/submit', authMiddleware, async (req, res) => {
+router.post('/submit', async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE LISTENING SUBMIT] API CALLED! 🚨🚨🚨');
     console.log(`🚀🎯 [JAPANESE LISTENING SUBMIT] 답안 제출 시작!`);
     console.log(`📝🎯 [REQUEST BODY]`, req.body);
@@ -24,8 +24,29 @@ router.post('/submit', authMiddleware, async (req, res) => {
             question, script, topic, options, audioFile
         } = req.body;
 
-        // authMiddleware가 설정한 req.user 사용
-        const userId = req.user.userId || req.user.id;
+        // JWT 토큰에서 사용자 ID 추출 (cross-origin 환경 지원)
+        const jwt = require('jsonwebtoken');
+        let userId = null;
+
+        try {
+            // Authorization 헤더에서 토큰 확인
+            const authHeader = req.headers.authorization;
+            let token = null;
+
+            if (authHeader && authHeader.startsWith('Bearer ')) {
+                token = authHeader.substring(7);
+            } else if (req.cookies && req.cookies.token) {
+                // 쿠키에서 토큰 확인 (fallback)
+                token = req.cookies.token;
+            }
+
+            if (token) {
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                userId = decoded.userId || decoded.id;
+            }
+        } catch (error) {
+            console.log('[JAPANESE LISTENING SUBMIT] Token verification failed, continuing without user');
+        }
 
         if (!userId) {
             console.log('❌🎯 [AUTH ERROR] No userId found in req.user');
@@ -250,7 +271,7 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
 });
 
 // 별칭으로 /record 엔드포인트 추가 (기존 프론트엔드 코드 호환성을 위해)
-router.post('/record', authMiddleware, async (req, res) => {
+router.post('/record', async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE LISTENING RECORD] API CALLED (alias for /submit)! 🚨🚨🚨');
 
     try {

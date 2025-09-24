@@ -341,9 +341,9 @@ export default function VocabList() {
                     // CEFR 탭에서도 totalCount 설정
                     setTotalCount(Array.isArray(data) ? data.length : 0);
                 } else if (activeTab === 'idiom') {
-                    // 숙어·구동사 조회 - 이제 vocab 테이블에서 조회
+                    // 숙어·구동사 조회 - 페이징 지원으로 수정
                     const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
-                    url = `/api/simple-vocab?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}&limit=1000`;
+                    url = `/api/simple-vocab?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}&limit=100`;
                     console.log('🔍 [IDIOM UNIFIED] Calling API:', url);
                     const response = await fetchJSON(url, { signal: ac.signal });
                     console.log('📥 [IDIOM UNIFIED] API Response:', response);
@@ -353,7 +353,8 @@ export default function VocabList() {
                     setWords(data.slice(0, displayCount));
                     setAllWords(data);
                     setTotalCount(Array.isArray(data) ? data.length : 0);
-                    setDisplayCount(data.length); // 전체 데이터 표시
+                    setDisplayCount(100); // 초기 100개 표시
+                    setHasNextPage(data.length >= 100); // 100개 이상이면 다음 페이지 있음
                     return; // 숙어 탭에서는 여기서 종료
                 } else if (activeTab === 'japanese') {
                     // 일본어 JLPT 레벨별 조회 (검색 포함)
@@ -1469,22 +1470,47 @@ export default function VocabList() {
 
     // 더 보기 버튼 핸들러 - 페이지네이션으로 추가 데이터 로드
     const handleLoadMore = async () => {
-        if (!hasNextPage || loading || activeTab !== 'exam' || !activeExam) return;
+        if (!hasNextPage || loading) return;
         
         try {
             setLoading(true);
-            const nextPage = currentPage + 1;
-            const url = `/exam-vocab/${activeExam}?page=${nextPage}&limit=100${debouncedSearchTerm ? `&search=${encodeURIComponent(debouncedSearchTerm)}` : ''}`;
-            const response = await fetchJSON(url, withCreds());
-            const newVocabs = response.data?.vocabs || [];
-            
-            // 기존 단어에 새 단어 추가
-            setAllWords(prev => [...prev, ...newVocabs]);
-            setWords(prev => [...prev, ...newVocabs]);
-            
-            // 페이지네이션 상태 업데이트
-            setCurrentPage(nextPage);
-            setHasNextPage(response.data?.pagination?.hasNext || false);
+            let url, response, newData;
+
+            if (activeTab === 'exam' && activeExam) {
+                // 시험별 단어 페이징
+                const nextPage = currentPage + 1;
+                url = `/exam-vocab/${activeExam}?page=${nextPage}&limit=100${debouncedSearchTerm ? `&search=${encodeURIComponent(debouncedSearchTerm)}` : ''}`;
+                response = await fetchJSON(url, withCreds());
+                newData = response.data?.vocabs || [];
+
+                // 기존 단어에 새 단어 추가
+                setAllWords(prev => [...prev, ...newData]);
+                setWords(prev => [...prev, ...newData]);
+
+                // 페이지네이션 상태 업데이트
+                setCurrentPage(nextPage);
+                setHasNextPage(response.data?.pagination?.hasNext || false);
+
+            } else if (activeTab === 'idiom') {
+                // 숙어/구동사 페이징
+                const posType = activeIdiomCategory === '숙어' ? 'idiom' : 'phrasal verb';
+                const currentOffset = allWords.length;
+                url = `/api/simple-vocab?pos=${encodeURIComponent(posType)}&search=${encodeURIComponent(debouncedSearchTerm)}&limit=100&offset=${currentOffset}`;
+                response = await fetchJSON(url);
+                newData = response.data || [];
+
+                // 기존 단어에 새 단어 추가
+                setAllWords(prev => [...prev, ...newData]);
+                setWords(prev => [...prev, ...newData]);
+                setDisplayCount(prev => prev + newData.length);
+
+                // 다음 페이지 여부 확인 (100개 미만이면 마지막)
+                setHasNextPage(newData.length >= 100);
+
+            } else {
+                // 다른 탭들도 여기서 처리 가능
+                return;
+            }
             
         } catch (error) {
             console.error('Failed to load more words:', error);
@@ -1784,8 +1810,8 @@ export default function VocabList() {
                 )}
             </div>
             
-            {/* 더 보기 버튼 */}
-            {!loading && !err && hasNextPage && activeTab === 'exam' && (
+            {/* 더 보기 버튼 - 시험별 및 숙어/구동사 */}
+            {!loading && !err && hasNextPage && (activeTab === 'exam' || activeTab === 'idiom') && (
                 <div className="text-center mt-4">
                     <button 
                         className="btn btn-outline-primary btn-lg"
