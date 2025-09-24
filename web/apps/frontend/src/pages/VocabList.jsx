@@ -1108,10 +1108,15 @@ export default function VocabList() {
             // Fallback to JLPT folder structure
             const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
             // Use romaji for the folder name instead of Japanese characters
-            // Replace spaces with underscores for folder names (e.g., "issho ni" -> "issho_ni")
-            const folderName = vocab.romaji
-                ? vocab.romaji.toLowerCase().replace(/\s+/g, '_')
-                : vocab.lemma.toLowerCase().replace(/\s+/g, '_');
+            // For Japanese words, convert ・ to space and keep spaces (not underscores)
+            // This matches the actual folder structure in succeed-seeding-file
+            let folderName;
+            if (vocab.romaji) {
+                folderName = vocab.romaji.toLowerCase();
+            } else {
+                // Convert Japanese punctuation ・ to space for folder matching
+                folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+            }
             const audioPath = `/jlpt/${jlptLevel}/${folderName}/word.mp3`;
             console.log('⚠️ Playing Japanese audio from JLPT folder:', audioPath);
             console.log('Using romaji/folder name:', folderName, 'from lemma:', vocab.lemma);
