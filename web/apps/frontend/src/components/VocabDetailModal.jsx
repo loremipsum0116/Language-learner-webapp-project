@@ -572,11 +572,17 @@ export default function VocabDetailModal({
                   let glossAudioPath = null;
 
                   if (isJapanese) {
-                    // JLPT 단어의 경우 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
-                    if (vocab.dictentry?.audioUrl) {
+                    // JLPT 단어의 경우 우선 audioLocal 데이터 사용
+                    const audioData = parseAudioLocal(dictentry.audioLocal);
+                    if (audioData?.gloss) {
+                      glossAudioPath = audioData.gloss.startsWith('/') ? audioData.gloss : `/${audioData.gloss}`;
+                      console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
+                    }
+                    // Fallback: 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
+                    else if (vocab.dictentry?.audioUrl) {
                       const baseUrl = vocab.dictentry.audioUrl.replace('/word.mp3', '/gloss.mp3');
                       glossAudioPath = `/${baseUrl}`;
-                      console.log('🔍 [VocabDetailModal] Using JLPT gloss audio:', vocab.lemma, '->', glossAudioPath);
+                      console.log('🔍 [VocabDetailModal] Fallback to database audioUrl for JLPT gloss:', vocab.lemma, '->', glossAudioPath);
                     }
                   } else if (isIdiomOrPhrasal) {
                     // 숙어/구동사의 경우 실제 데이터베이스의 audioUrl을 사용

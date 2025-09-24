@@ -76,7 +76,7 @@ export default function Dashboard() {
                 // 1) 카드/오답/마스터 통계 병렬 로딩
                 const [srsQueueRes, odatNoteRes, masteredCardsRes] = await Promise.all([
                     fetchJSON('/srs/available', withCreds({ signal: ac.signal })),
-                    fetchJSON('/srs/wrong-answers?includeCompleted=false', withCreds({ signal: ac.signal })),
+                    fetchJSON('/api/odat-note/categories', withCreds({ signal: ac.signal })), // 카테고리별 통계 사용
                     fetchJSON('/srs/mastered-cards', withCreds({ signal: ac.signal })),
                 ]);
 
@@ -100,7 +100,7 @@ export default function Dashboard() {
 
                     setStats({
                         srsQueue: totalSrsCards,
-                        odatNote: Array.isArray(odatNoteRes.data) ? odatNoteRes.data.length : 0,
+                        odatNote: odatNoteRes.data?.vocab?.total || 0, // 어휘 오답 노트 개수만 표시
                         masteredWords: masteredCount,
                         // 언어별 정보 추가
                         srsJapanese: japaneseCards.length,

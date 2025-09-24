@@ -61,4 +61,4 @@
 
 # Cache
 **/.cache/
-**/.parcel-cache/
+**/.parcel-cache/gcs-service-account.json

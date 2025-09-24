@@ -158,7 +158,7 @@ router.post('/generate', async (req, res) => {
         // 필요한 폴더 수 계산
         const totalDays = Math.ceil(vocabs.length / dailyWordCount);
 
-        // 트랜잭션으로 폴더들 생성
+        // 트랜잭션으로 폴더들 생성 (타임아웃 30초로 증가)
         const result = await prisma.$transaction(async (tx) => {
             const createdFolders = [];
             
@@ -270,6 +270,8 @@ router.post('/generate', async (req, res) => {
                 totalWordsProcessed: vocabs.length,
                 dailyWordCount
             };
+        }, {
+            timeout: 30000 // 30초 타임아웃
         });
 
         const responseData = {

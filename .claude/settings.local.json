@@ -280,7 +280,8 @@
       "Bash(gsutil iam:*)",
       "Bash(railway status:*)",
       "WebFetch(domain:clever-elegance-production.up.railway.app)",
-      "WebFetch(domain:project-1ujdn-d6hzr4zt9-hyunseoks-projects-8b90da92.vercel.app)"
+      "WebFetch(domain:project-1ujdn-d6hzr4zt9-hyunseoks-projects-8b90da92.vercel.app)",
+      "WebFetch(domain:project-1ujdn.vercel.app)"
     ],
     "deny": [],
     "ask": []

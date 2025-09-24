@@ -91,9 +91,47 @@ export default function JapaneseReading() {
     };
 
 
-    // 일본어 텍스트를 클릭 가능한 단어로 분리 (슬래시 기반 문단 구분)
+    // 일본어 텍스트를 클릭 가능한 단어로 분리 (Ruby 태그와 슬래시 기반 문단 구분)
     const makeClickableText = (text) => {
         if (!text) return null;
+
+        // Ruby 태그를 먼저 처리하여 올바르게 렌더링
+        const processRubyTags = (text) => {
+            // <ruby>漢字<rt>ひらがな</rt></ruby> 패턴을 찾아서 처리
+            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)<\/rt><\/ruby>/g;
+            const parts = [];
+            let lastIndex = 0;
+            let match;
+
+            while ((match = rubyRegex.exec(text)) !== null) {
+                // Ruby 태그 앞의 텍스트 추가
+                if (match.index > lastIndex) {
+                    parts.push({
+                        type: 'text',
+                        content: text.slice(lastIndex, match.index)
+                    });
+                }
+
+                // Ruby 태그 추가
+                parts.push({
+                    type: 'ruby',
+                    kanji: match[1],
+                    furigana: match[2]
+                });
+
+                lastIndex = match.index + match[0].length;
+            }
+
+            // 나머지 텍스트 추가
+            if (lastIndex < text.length) {
+                parts.push({
+                    type: 'text',
+                    content: text.slice(lastIndex)
+                });
+            }
+
+            return parts;
+        };
 
         // 슬래시를 기준으로 문단 분리
         const paragraphs = text.split('/');
@@ -103,100 +141,114 @@ export default function JapaneseReading() {
                 {paragraphs.map((paragraph, paragraphIndex) => {
                     if (!paragraph.trim()) return null;
 
-                    // 단어 분리를 위한 함수
-                    const parseJapaneseText = (text) => {
-                        const result = [];
-                        let i = 0;
-
-                        while (i < text.length) {
-                            // 공백이나 구두점 처리
-                            if (/[\s、。！？]/.test(text[i])) {
-                                result.push({ text: text[i], type: 'punctuation' });
-                                i++;
-                                continue;
-                            }
-
-                            // 가장 긴 매칭 단어 찾기 (최대 10글자)
-                            let bestMatch = null;
-                            let bestLength = 0;
-
-                            for (let len = Math.min(10, text.length - i); len >= 1; len--) {
-                                const possibleWord = text.substring(i, i + len);
-                                if (jlptWords[possibleWord] && jlptWords[possibleWord].length > 0) {
-                                    bestMatch = possibleWord;
-                                    bestLength = len;
-                                    break; // 가장 긴 매칭을 찾았으므로 중단
-                                }
-                            }
-
-                            if (bestMatch) {
-                                result.push({ text: bestMatch, type: 'word', hasDefinition: true });
-                                i += bestLength;
-                            } else {
-                                result.push({ text: text[i], type: 'char' });
-                                i++;
-                            }
-                        }
-
-                        return result;
-                    };
-
-                    const tokens = parseJapaneseText(paragraph);
+                    const rubyParts = processRubyTags(paragraph);
 
                     return (
                         <div key={paragraphIndex} style={{
                             marginBottom: paragraphIndex < paragraphs.length - 1 ? '16px' : '0',
                             lineHeight: '1.8'
                         }}>
-                            {tokens.map((token, tokenIndex) => {
-                                if (token.type === 'word' && token.hasDefinition) {
-                                    // JLPT 단어 데이터에서 kana 정보 가져오기
-                                    const wordData = jlptWords[token.text] && jlptWords[token.text][0];
-                                    const hasKanji = /[\u4e00-\u9faf]/.test(token.text); // 한자 포함 여부 확인
-                                    const furigana = wordData && hasKanji ? wordData.kana : null;
-
+                            {rubyParts.map((part, partIndex) => {
+                                if (part.type === 'ruby') {
                                     return (
-                                        <span
-                                            key={tokenIndex}
-                                            onClick={(e) => handleWordClick(token.text, e)}
-                                            style={{
-                                                cursor: 'pointer',
-                                                textDecoration: 'underline dotted',
-                                                color: 'inherit',
-                                                position: 'relative',
-                                                display: 'inline-block'
-                                            }}
-                                            className="kanji-hover"
-                                        >
-                                            {token.text}
-                                            {furigana && (
-                                                <span
-                                                    style={{
-                                                        position: 'absolute',
-                                                        top: '-20px',
-                                                        left: '50%',
-                                                        transform: 'translateX(-50%)',
-                                                        fontSize: '10px',
-                                                        color: '#666',
-                                                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                                                        padding: '2px 4px',
-                                                        borderRadius: '3px',
-                                                        border: '1px solid #ddd',
-                                                        whiteSpace: 'nowrap',
-                                                        opacity: '0',
-                                                        transition: 'opacity 0.2s ease',
-                                                        pointerEvents: 'none',
-                                                        zIndex: '1000'
-                                                    }}
-                                                    className="furigana-tooltip"
-                                                >
-                                                    {furigana}
-                                                </span>
-                                            )}
-                                        </span>
+                                        <ruby key={partIndex} style={{ cursor: 'pointer' }}
+                                            onClick={(e) => handleWordClick(part.kanji, e)}>
+                                            {part.kanji}
+                                            <rt style={{ fontSize: '0.6em' }}>{part.furigana}</rt>
+                                        </ruby>
                                     );
                                 } else {
-                                    return <span key={tokenIndex}>{token.text}</span>;
+                                    // 일반 텍스트를 단어별로 분리
+                                    const parseJapaneseText = (text) => {
+                                        const result = [];
+                                        let i = 0;
+
+                                        while (i < text.length) {
+                                            // 공백이나 구두점 처리
+                                            if (/[\s、。！？]/.test(text[i])) {
+                                                result.push({ text: text[i], type: 'punctuation' });
+                                                i++;
+                                                continue;
+                                            }
+
+                                            // 가장 긴 매칭 단어 찾기 (최대 10글자)
+                                            let bestMatch = null;
+                                            let bestLength = 0;
+
+                                            for (let len = Math.min(10, text.length - i); len >= 1; len--) {
+                                                const possibleWord = text.substring(i, i + len);
+                                                if (jlptWords[possibleWord] && jlptWords[possibleWord].length > 0) {
+                                                    bestMatch = possibleWord;
+                                                    bestLength = len;
+                                                    break; // 가장 긴 매칭을 찾았으므로 중단
+                                                }
+                                            }
+
+                                            if (bestMatch) {
+                                                result.push({ text: bestMatch, type: 'word', hasDefinition: true });
+                                                i += bestLength;
+                                            } else {
+                                                result.push({ text: text[i], type: 'char' });
+                                                i++;
+                                            }
+                                        }
+
+                                        return result;
+                                    };
+
+                                    const tokens = parseJapaneseText(part.content);
+
+                                    return tokens.map((token, tokenIndex) => {
+                                        if (token.type === 'word' && token.hasDefinition) {
+                                            // JLPT 단어 데이터에서 kana 정보 가져오기
+                                            const wordData = jlptWords[token.text] && jlptWords[token.text][0];
+                                            const hasKanji = /[\u4e00-\u9faf]/.test(token.text); // 한자 포함 여부 확인
+                                            const furigana = wordData && hasKanji ? wordData.kana : null;
+
+                                            return (
+                                                <span
+                                                    key={`${partIndex}-${tokenIndex}`}
+                                                    onClick={(e) => handleWordClick(token.text, e)}
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                        textDecoration: 'underline dotted',
+                                                        color: 'inherit',
+                                                        position: 'relative',
+                                                        display: 'inline-block'
+                                                    }}
+                                                    className="kanji-hover"
+                                                >
+                                                    {token.text}
+                                                    {furigana && (
+                                                        <span
+                                                            style={{
+                                                                position: 'absolute',
+                                                                top: '-20px',
+                                                                left: '50%',
+                                                                transform: 'translateX(-50%)',
+                                                                fontSize: '10px',
+                                                                color: '#666',
+                                                                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                                                padding: '2px 4px',
+                                                                borderRadius: '3px',
+                                                                border: '1px solid #ddd',
+                                                                whiteSpace: 'nowrap',
+                                                                opacity: '0',
+                                                                transition: 'opacity 0.2s ease',
+                                                                pointerEvents: 'none',
+                                                                zIndex: '1000'
+                                                            }}
+                                                            className="furigana-tooltip"
+                                                        >
+                                                            {furigana}
+                                                        </span>
+                                                    )}
+                                                </span>
+                                            );
+                                        } else {
+                                            return <span key={`${partIndex}-${tokenIndex}`}>{token.text}</span>;
+                                        }
+                                    });
                                 }
                             })}
                         </div>
