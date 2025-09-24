@@ -85,7 +85,8 @@ export default function VocabDetailModal({
   console.log('🐛 [VocabDetailModal] vocab.lemma:', vocab.lemma);
   console.log('🐛 [VocabDetailModal] vocab.dictentry?.audioLocal:', vocab.dictentry?.audioLocal);
   const dictentry = vocab?.dictentry || {};
-  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
+  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
+                     (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
   
   // Parse examples if it's a string - handle all possible cases
   let rawMeanings = [];
@@ -126,7 +127,8 @@ export default function VocabDetailModal({
               {/* Check if it's actually Japanese based on new database structure */}
               {(() => {
                 // Use levelJLPT or source to identify Japanese words
-                const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
+                const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
+                                   (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
 
                 if (isJapanese) {
                   return (
@@ -316,7 +318,8 @@ export default function VocabDetailModal({
                   const audioData = parseAudioLocal(dictentry.audioLocal);
                   
                   // 상세 보기 상단 오디오는 gloss 경로 사용
-                  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt';
+                  const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
+                                     (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
                   const isIdiomOrPhrasal = vocab.source === 'idiom_migration' || vocab.source === 'phrasal_verb_migration' || (vocab.lemma && (vocab.lemma.includes(' ') || vocab.lemma.includes('-') || vocab.lemma.includes("'")));
                   let glossAudioPath = null;
 
