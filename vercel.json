@@ -4,7 +4,7 @@
   "buildCommand": "cd web/apps/frontend && npm install && npm run build",
   "outputDirectory": "web/apps/frontend/build",
   "framework": "create-react-app",
-  "installCommand": "cd web && pnpm install",
+  "installCommand": "cd web/apps/frontend && npm install",
   "rewrites": [
     {
       "source": "/(.*)",
