@@ -1,7 +1,7 @@
 // src/api/client.js
 import { getGlobalAuthContext } from "../context/AuthContext";
 
-export const API_BASE = process.env.REACT_APP_API_URL || "http://localhost:4000";
+export const API_BASE = process.env.REACT_APP_API_URL || "https://clever-elegance-production.up.railway.app";
 
 export const withCreds = (opts = {}) => ({
   credentials: "include",
