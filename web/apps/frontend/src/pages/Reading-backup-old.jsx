@@ -98,7 +98,7 @@ export default function Reading() {
             setError(null);
 
             // API를 통해 모든 레벨 데이터 로드
-            const response = await fetch(`http://localhost:4000/api/reading/practice/${level}`);
+            const response = await fetch(`https://clever-elegance-production.up.railway.app/api/reading/practice/${level}`);
             if (!response.ok) {
                 throw new Error(`Failed to load ${level} reading data`);
             }
@@ -192,7 +192,7 @@ export default function Reading() {
 
         // 정답/오답 모두 기록 저장 (로그인된 사용자만)
         try {
-            const response = await fetch('http://localhost:4000/api/reading/record', {
+            const response = await fetch('https://clever-elegance-production.up.railway.app/api/reading/record', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

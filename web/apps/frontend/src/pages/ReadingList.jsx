@@ -113,7 +113,7 @@ export default function ReadingList() {
         for (const level of levels) {
             if (level.available) {
                 try {
-                    const response = await fetch(`http://localhost:4000/api/reading/level/${level.code}`);
+                    const response = await fetch(`https://clever-elegance-production.up.railway.app/api/reading/level/${level.code}`);
                     if (response.ok) {
                         const result = await response.json();
                         data[level.code] = {
@@ -140,7 +140,7 @@ export default function ReadingList() {
         setQuestionsLoading(true);
         try {
             // 문제 목록 로드
-            const questionsResponse = await fetch(`http://localhost:4000/api/reading/practice/${level}`);
+            const questionsResponse = await fetch(`https://clever-elegance-production.up.railway.app/api/reading/practice/${level}`);
             if (questionsResponse.ok) {
                 const questionsResult = await questionsResponse.json();
                 setQuestions(questionsResult.data || []);
@@ -152,7 +152,7 @@ export default function ReadingList() {
             // 학습 기록 로드 (로그인된 경우만)
             try {
                 console.log(`🔍 [HISTORY FETCH] Starting history fetch for ${level}...`);
-                const historyResponse = await fetch(`http://localhost:4000/api/reading/history/${level}?t=${Date.now()}`, {
+                const historyResponse = await fetch(`https://clever-elegance-production.up.railway.app/api/reading/history/${level}?t=${Date.now()}`, {
                     credentials: 'include',
                     cache: 'no-cache' // 캐시 방지
                 });

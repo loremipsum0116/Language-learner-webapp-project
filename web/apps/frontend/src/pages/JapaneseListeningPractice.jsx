@@ -261,7 +261,7 @@ export default function JapaneseListeningPractice() {
     // 사용자 일본어 리스닝 학습 기록 로드
     const loadHistory = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/api/japanese-listening/history/${level}`, {
+            const response = await fetch(`https://clever-elegance-production.up.railway.app/api/japanese-listening/history/${level}`, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -427,7 +427,7 @@ export default function JapaneseListeningPractice() {
         };
 
         try {
-            const response = await fetch('http://localhost:4000/api/japanese-listening/record', {
+            const response = await fetch('https://clever-elegance-production.up.railway.app/api/japanese-listening/record', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },

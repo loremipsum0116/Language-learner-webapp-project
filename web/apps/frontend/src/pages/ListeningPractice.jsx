@@ -160,7 +160,7 @@ export default function ListeningPractice() {
     // 사용자 리스닝 학습 기록 로드
     const loadHistory = async () => {
         try {
-            const response = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+            const response = await fetch(`https://clever-elegance-production.up.railway.app/api/listening/history/${level}`, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -453,7 +453,7 @@ export default function ListeningPractice() {
         console.log('🔍 [API REQUEST DATA] topic field:', requestData.topic);
         
         try {
-            const response = await fetch('http://localhost:4000/api/listening/record', {
+            const response = await fetch('https://clever-elegance-production.up.railway.app/api/listening/record', {
                 method: 'POST',
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' },
@@ -466,7 +466,7 @@ export default function ListeningPractice() {
 
                 // 백엔드에서 최신 데이터 다시 가져오기
                 try {
-                    const historyResponse = await fetch(`http://localhost:4000/api/listening/history/${level}`, {
+                    const historyResponse = await fetch(`https://clever-elegance-production.up.railway.app/api/listening/history/${level}`, {
                         method: 'GET',
                         credentials: 'include'
                     });

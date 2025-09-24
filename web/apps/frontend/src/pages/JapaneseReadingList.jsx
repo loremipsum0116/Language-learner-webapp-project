@@ -124,7 +124,7 @@ export default function JapaneseReadingList() {
         for (const level of levels) {
             if (level.available) {
                 try {
-                    const response = await fetch(`http://localhost:4000/api/japanese-reading/level/${level.code}`);
+                    const response = await fetch(`https://clever-elegance-production.up.railway.app/api/japanese-reading/level/${level.code}`);
                     if (response.ok) {
                         const result = await response.json();
                         data[level.code] = {
@@ -151,7 +151,7 @@ export default function JapaneseReadingList() {
         setQuestionsLoading(true);
         try {
             // 문제 목록 로드
-            const questionsResponse = await fetch(`http://localhost:4000/api/japanese-reading/practice/${level}`);
+            const questionsResponse = await fetch(`https://clever-elegance-production.up.railway.app/api/japanese-reading/practice/${level}`);
             if (questionsResponse.ok) {
                 const questionsResult = await questionsResponse.json();
                 setQuestions(questionsResult.data || []);
@@ -163,10 +163,10 @@ export default function JapaneseReadingList() {
             // 학습 기록 로드 (로그인된 경우만)
             try {
                 console.log(`🔍 [HISTORY FETCH] Starting history fetch for ${level}...`);
-                console.log(`🔍 [HISTORY URL] Fetching: http://localhost:4000/api/japanese-reading/history/${level}`);
+                console.log(`🔍 [HISTORY URL] Fetching: https://clever-elegance-production.up.railway.app/api/japanese-reading/history/${level}`);
                 console.log(`🔍 [HISTORY TIME] Current time: ${new Date().toISOString()}`);
 
-                const historyResponse = await fetch(`http://localhost:4000/api/japanese-reading/history/${level}?t=${Date.now()}`, {
+                const historyResponse = await fetch(`https://clever-elegance-production.up.railway.app/api/japanese-reading/history/${level}?t=${Date.now()}`, {
                     credentials: 'include',
                     cache: 'no-cache' // 캐시 방지
                 });

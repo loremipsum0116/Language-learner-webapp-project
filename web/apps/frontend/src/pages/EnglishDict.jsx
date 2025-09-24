@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { fetchJSON, withCreds } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+const API_URL = process.env.REACT_APP_API_URL || 'https://clever-elegance-production.up.railway.app';
 
 /* 오디오 플레이어 (속도 조절) */
 function AudioPlayer({ src, license, attribution }) {

@@ -215,7 +215,7 @@ export default function JapaneseQuiz({
 
         try {
             // JLPT 오디오 경로 구성: /jlpt/{level}/{folder}/word.mp3
-            const fullAudioUrl = `${process.env.REACT_APP_API_URL || 'http://localhost:4000'}${audioPath}`;
+            const fullAudioUrl = `${process.env.REACT_APP_API_URL || 'https://clever-elegance-production.up.railway.app'}${audioPath}`;
             console.log('🔊 Playing audio:', fullAudioUrl);
 
             const audio = new Audio(fullAudioUrl);

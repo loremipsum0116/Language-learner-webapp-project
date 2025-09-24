@@ -242,7 +242,7 @@ export default function JapaneseReading() {
             setError(null);
 
             // API를 통해 모든 레벨 데이터 로드
-            const response = await fetch(`http://localhost:4000/api/japanese-reading/practice/${level}`);
+            const response = await fetch(`https://clever-elegance-production.up.railway.app/api/japanese-reading/practice/${level}`);
             if (!response.ok) {
                 throw new Error(`Failed to load ${level} Japanese reading data`);
             }
@@ -362,7 +362,7 @@ export default function JapaneseReading() {
                     newValue: JSON.stringify(updateData)
                 }));
 
-                const response = await fetch('http://localhost:4000/api/japanese-reading/submit', {
+                const response = await fetch('https://clever-elegance-production.up.railway.app/api/japanese-reading/submit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -402,7 +402,7 @@ export default function JapaneseReading() {
 
                 console.log('🚀 [PASSAGE SUBMIT] Submitting passage stats:', passageId, 'allCorrect:', allCorrect);
 
-                const passageResponse = await fetch('http://localhost:4000/api/japanese-reading/submit-passage', {
+                const passageResponse = await fetch('https://clever-elegance-production.up.railway.app/api/japanese-reading/submit-passage', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

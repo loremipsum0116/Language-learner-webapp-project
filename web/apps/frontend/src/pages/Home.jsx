@@ -6,7 +6,7 @@ import { fetchJSON, withCreds } from "../api/client";
 import LanguageSelectionModal from "../components/LanguageSelectionModal";
 import "./Home.css";
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:4000';
+const API_URL = process.env.REACT_APP_API_URL || 'https://clever-elegance-production.up.railway.app';
 
 /**
  * English special characters virtual keypad (common symbols)

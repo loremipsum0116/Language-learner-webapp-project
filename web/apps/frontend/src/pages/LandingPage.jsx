@@ -85,7 +85,7 @@ const LandingPage = () => {
                         onCanPlay={() => console.log('비디오 재생 가능')}
                         onError={() => console.log('비디오 로드 실패')}
                       >
-                        <source src="http://localhost:4000/api/video/final_23sec_video.mp4" type="video/mp4" />
+                        <source src="https://clever-elegance-production.up.railway.app/api/video/final_23sec_video.mp4" type="video/mp4" />
                         <source src="/merged_clip_raw_final.mp4" type="video/mp4" />
                         Your browser does not support video playback.
                       </video>

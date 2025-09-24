@@ -157,7 +157,7 @@ export default function ListeningList() {
         try {
             console.log(`🚀🆕 [SIMPLIFIED FETCH START] 단순화된 fetch 시작`);
 
-            const response = await fetch(`http://localhost:4000/api/listening/history/${level}?t=${Date.now()}`, {
+            const response = await fetch(`https://clever-elegance-production.up.railway.app/api/listening/history/${level}?t=${Date.now()}`, {
                 credentials: 'include',
                 cache: 'no-cache',
                 signal: signal
