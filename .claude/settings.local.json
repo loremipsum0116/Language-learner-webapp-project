@@ -268,7 +268,16 @@
       "Bash(pnpm:*)",
       "Bash(npm run build:*)",
       "Bash(deploy.bat)",
-      "Bash(railway login:*)"
+      "Bash(railway login:*)",
+      "Bash(gcloud:*)",
+      "Read(//Users/simhyunseok/Downloads/**)",
+      "Bash(gsutil ls:*)",
+      "Bash(gsutil -m cp -r /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/*/audio /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/*/*_Listening*/*_mix /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/starter /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/elementary /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/intermediate /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/upper /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/advanced /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/idiom /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/phrasal_verb /Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/web/apps/backend/public/jlpt gs://language-learner-audio/)",
+      "Bash(gsutil -m rm -r gs://language-learner-audio/*)",
+      "Bash(gsutil rm:*)",
+      "Bash(gsutil -m rm -r gs://language-learner-audio/**/*)",
+      "Bash(xargs:*)",
+      "Bash(gsutil iam:*)"
     ],
     "deny": [],
     "ask": []
