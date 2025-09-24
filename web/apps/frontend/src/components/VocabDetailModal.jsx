@@ -338,8 +338,21 @@ export default function VocabDetailModal({
                     // JLPT 단어의 경우 우선 audioLocal 데이터 사용
                     const audioData = parseAudioLocal(dictentry.audioLocal);
                     if (audioData?.gloss) {
-                      glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
-                      console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
+                      // Check if the lemma contains ・ (needs space conversion) and path seems incorrect
+                      const needsSpaceConversion = vocab.lemma.includes('・');
+                      const currentFolderInPath = audioData.gloss.match(/\/jlpt\/[^/]+\/([^/]+)\//)?.[1];
+                      const expectedFolder = encodeURIComponent(vocab.lemma.toLowerCase().replace(/・/g, ' '));
+
+                      if (needsSpaceConversion && currentFolderInPath && currentFolderInPath !== expectedFolder) {
+                        // Fix the path by replacing incorrect folder name with correct one
+                        const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                        const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/gloss.mp3`;
+                        console.log('🔍 [VocabDetailModal] Fixed JLPT gloss audio path:', vocab.lemma, 'from', currentFolderInPath, 'to', expectedFolder);
+                      } else {
+                        glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
+                        console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
+                      }
                     }
                     // Fallback: 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
                     else if (vocab.dictentry?.audioUrl) {
@@ -509,8 +522,21 @@ export default function VocabDetailModal({
                           // Parse audioLocal data for JLPT words
                           const audioData = parseAudioLocal(dictentry.audioLocal);
                           if (audioData?.example) {
-                            exampleAudioPath = audioData.example;
-                            console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);
+                            // Check if the lemma contains ・ (needs space conversion) and path seems incorrect
+                            const needsSpaceConversion = vocab.lemma.includes('・');
+                            const currentFolderInPath = audioData.example.match(/\/jlpt\/[^/]+\/([^/]+)\//)?.[1];
+                            const expectedFolder = encodeURIComponent(vocab.lemma.toLowerCase().replace(/・/g, ' '));
+
+                            if (needsSpaceConversion && currentFolderInPath && currentFolderInPath !== expectedFolder) {
+                              // Fix the path by replacing incorrect folder name with correct one
+                              const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                              const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/example.mp3`;
+                              console.log('🔍 [VocabDetailModal] Fixed JLPT example audio path:', vocab.lemma, 'from', currentFolderInPath, 'to', expectedFolder);
+                            } else {
+                              exampleAudioPath = audioData.example;
+                              console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);
+                            }
                           }
                           // Fallback: use database audioUrl if available
                           else if (vocab.dictentry?.audioUrl) {

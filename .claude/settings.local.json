@@ -284,7 +284,11 @@
       "WebFetch(domain:project-1ujdn.vercel.app)",
       "Bash(git filter-branch:*)",
       "Bash(\"git rm --cached --ignore-unmatch gcs-service-account.json\" )",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(gsutil -m cp -r \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n1/koukou to\" gs://language-learner-audio/jlpt/n1/)",
+      "Bash(gsutil -m cp -r \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n4/chekku suru\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n4/kenka suru\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n4/goran ni naru\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n4/bikkuri suru\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n4/aisatsu suru\" gs://language-learner-audio/jlpt/n4/)",
+      "Bash(gsutil -m cp -r \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n2/wariai ni\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n2/shakai kagaku\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n2/ki o tsukeru\" gs://language-learner-audio/jlpt/n2/)",
+      "Bash(gsutil -m cp -r \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n5/mou ichido\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n5/sugu ni\" \"/Users/simhyunseok/Desktop/Node_PJ/language-learner-web-project/succeed-seeding-file/jlpt/jlpt/n5/kopii suru\" gs://language-learner-audio/jlpt/n5/)"
     ],
     "deny": [],
     "ask": []
