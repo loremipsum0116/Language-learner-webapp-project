@@ -8,7 +8,7 @@
     "start:prod": "node dist/index.js",
     "dev": "nodemon --watch . index.js",
     "dev:ts": "nodemon --exec ts-node index.ts",
-    "build": "mkdir -p dist && cp index.js dist/ && cp -r lib dist/ && cp -r routes dist/ && cp -r middleware dist/ && cp -r services dist/ && cp -r utils dist/ && cp -r prisma dist/",
+    "build": "npx prisma generate && npx prisma db push --accept-data-loss && mkdir -p dist && cp index.js dist/ && cp -r lib dist/ && cp -r routes dist/ && cp -r middleware dist/ && cp -r services dist/ && cp -r utils dist/ && cp -r prisma dist/",
     "build:watch": "tsc --watch --project tsconfig.build.json",
     "type-check": "tsc --noEmit",
     "seed": "node prisma/seed.js",
