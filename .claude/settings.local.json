@@ -277,7 +277,10 @@
       "Bash(gsutil rm:*)",
       "Bash(gsutil -m rm -r gs://language-learner-audio/**/*)",
       "Bash(xargs:*)",
-      "Bash(gsutil iam:*)"
+      "Bash(gsutil iam:*)",
+      "Bash(railway status:*)",
+      "WebFetch(domain:clever-elegance-production.up.railway.app)",
+      "WebFetch(domain:project-1ujdn-d6hzr4zt9-hyunseoks-projects-8b90da92.vercel.app)"
     ],
     "deny": [],
     "ask": []

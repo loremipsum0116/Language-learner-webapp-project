@@ -349,10 +349,11 @@ export default function VocabList() {
                     console.log('📥 [IDIOM UNIFIED] API Response:', response);
                     data = response.data || [];
                     console.log('📋 [IDIOM UNIFIED] Data length:', Array.isArray(data) ? data.length : 'Not array');
+                    console.log('📊 [IDIOM UNIFIED] Total count from API:', response.total);
 
                     setWords(data.slice(0, displayCount));
                     setAllWords(data);
-                    setTotalCount(Array.isArray(data) ? data.length : 0);
+                    setTotalCount(response.total || 0);
                     setDisplayCount(100); // 초기 100개 표시
                     setHasNextPage(data.length >= 100); // 100개 이상이면 다음 페이지 있음
                     return; // 숙어 탭에서는 여기서 종료
@@ -1822,8 +1823,8 @@ export default function VocabList() {
                 </div>
             )}
             
-            {/* CEFR 레벨, 숙어·구동사, 일본어에서 더 보기 버튼 표시 */}
-            {!loading && !err && (activeTab === 'cefr' || activeTab === 'idiom' || activeTab === 'japanese') && allWords.length > displayCount && (
+            {/* CEFR 레벨, 일본어에서 더 보기 버튼 표시 (숙어/구동사는 위의 API 페이지네이션 사용) */}
+            {!loading && !err && (activeTab === 'cefr' || activeTab === 'japanese') && allWords.length > displayCount && (
                 <div className="text-center mt-4">
                     <button
                         className="btn btn-outline-primary btn-lg"

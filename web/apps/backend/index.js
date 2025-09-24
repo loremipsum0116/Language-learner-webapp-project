@@ -660,7 +660,7 @@ app.get('/api/simple-vocab', async (req, res) => {
     const prisma = new PrismaClient();
 
     const { limit = 100, offset = 0, levelCEFR = 'A1', pos, search } = req.query;
-    console.log('Extracted params:', { limit, levelCEFR, pos, search });
+    console.log('Extracted params:', { limit, offset, levelCEFR, pos, search });
 
     if (pos) {
       // 실제 데이터베이스의 pos 값과 매핑 (phrasal_verb -> phrasal verb 변환)
