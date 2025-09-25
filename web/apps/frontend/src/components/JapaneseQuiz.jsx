@@ -676,12 +676,22 @@ export default function JapaneseQuiz({
                                 {/* 발음 정보 및 뜻 표시 */}
                                 {(currentQuiz.pron || currentQuiz.vocab) && (
                                     <div className="pronunciation-info mt-3 p-3 bg-light rounded">
-                                        {/* 히라가나 발음만 표시 */}
+                                        {/* 히라가나 발음 표시 */}
                                         {(currentQuiz.pron?.hiragana || currentQuiz.vocab?.dictentry?.examples?.kana || currentQuiz.vocab?.dictentry?.ipa) && (
-                                            <div className="mb-3">
+                                            <div className="mb-2">
                                                 <strong>발음: </strong>
                                                 <span className="fs-4 text-primary ms-1" lang="ja">
                                                     {currentQuiz.pron?.hiragana || currentQuiz.vocab?.dictentry?.examples?.kana || currentQuiz.vocab?.dictentry?.ipa}
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        {/* 로마지 발음 표시 */}
+                                        {(currentQuiz.pron?.romaji || currentQuiz.vocab?.dictentry?.examples?.romaji) && (
+                                            <div className="mb-3">
+                                                <strong>로마지: </strong>
+                                                <span className="fs-5 text-secondary ms-1">
+                                                    {currentQuiz.pron?.romaji || currentQuiz.vocab?.dictentry?.examples?.romaji}
                                                 </span>
                                             </div>
                                         )}
