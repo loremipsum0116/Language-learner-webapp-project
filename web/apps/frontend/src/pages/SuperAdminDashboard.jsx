@@ -465,10 +465,7 @@ const SuperAdminDashboard = () => {
         {/* 학습 현황 탭 */}
         {activeTab === 'learning' && (
           <div className="tab-pane fade show active">
-            <div style={{ border: '1px solid red', padding: '10px', margin: '10px' }}>
-              <h5>학습 현황 탭 렌더링됨 (activeTab: {activeTab})</h5>
-              <UserLearningAnalytics />
-            </div>
+            <UserLearningAnalytics />
           </div>
         )}
 

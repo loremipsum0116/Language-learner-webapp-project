@@ -223,7 +223,16 @@ export default function AdminDashboard() {
 
     return (
         <main className="container py-4">
-            <h1 className="mb-4">🛠️ 관리자 대시보드</h1>
+            <div className="d-flex justify-content-between align-items-center mb-4">
+                <h1 className="mb-0">🛠️ 관리자 대시보드</h1>
+                <a
+                    href="/admin/super-dashboard"
+                    className="btn btn-outline-primary"
+                    title="고급 분석 및 유저별 학습 현황"
+                >
+                    <i className="bi bi-graph-up me-1"></i>Super Admin 대시보드
+                </a>
+            </div>
             
             {/* 시스템 통계 */}
             <div className="row mb-4">
