@@ -561,10 +561,17 @@ export default function JapaneseQuiz({
                                         });
                                         return null;
                                     })()}
-                                    <FuriganaDisplay
-                                        kanji={currentQuiz.question}
-                                        kana={currentQuiz.pron?.hiragana || currentQuiz.pron?.kana}
-                                    />
+                                    {/* 한국어→일본어 퀴즈인 경우 한국어 그대로 표시 */}
+                                    {actualQuizType === JapaneseQuizTypes.KO_MEANING_TO_JP_WORD ? (
+                                        <span className="text-dark" style={{ lineHeight: '1.4' }}>
+                                            {currentQuiz.question}
+                                        </span>
+                                    ) : (
+                                        <FuriganaDisplay
+                                            kanji={currentQuiz.question}
+                                            kana={currentQuiz.pron?.hiragana || currentQuiz.pron?.kana}
+                                        />
+                                    )}
                                 </div>
                             )}
 
