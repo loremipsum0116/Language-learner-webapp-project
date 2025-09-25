@@ -97,8 +97,6 @@ export default function JapaneseReading() {
 
         // Ruby 태그를 먼저 처리하여 올바르게 렌더링
         const processRubyTags = (text) => {
-            console.log('🔍 [Ruby Debug] Input text:', text.substring(0, 200) + '...');
-
             // 다양한 Ruby 태그 형태와 줄바꿈 처리:
             // 1) <ruby>学生<rt>がくせい<rt><ruby>
             // 2) <ruby>日本語<rt>にほんご</rt></ruby>
@@ -109,8 +107,6 @@ export default function JapaneseReading() {
             let match;
 
             while ((match = rubyRegex.exec(text)) !== null) {
-                console.log('🔍 [Ruby Debug] Found match:', match[0], 'Kanji:', match[1], 'Furigana:', match[2]);
-
                 // Ruby 태그 앞의 텍스트 추가
                 if (match.index > lastIndex) {
                     parts.push({
@@ -128,8 +124,6 @@ export default function JapaneseReading() {
                 const cleanKanji = kanjiMatch ? kanjiMatch[1] : kanjiText;
                 const cleanFurigana = furiganaText;
 
-                console.log('🔍 [Ruby Debug] Processed:', cleanKanji, '→', cleanFurigana);
-
                 parts.push({
                     type: 'ruby',
                     kanji: cleanKanji,
@@ -138,8 +132,6 @@ export default function JapaneseReading() {
 
                 lastIndex = match.index + match[0].length;
             }
-
-            console.log('🔍 [Ruby Debug] Total matches found:', parts.filter(p => p.type === 'ruby').length);
 
             // 나머지 텍스트 추가
             if (lastIndex < text.length) {
@@ -152,15 +144,41 @@ export default function JapaneseReading() {
             return parts;
         };
 
-        // 슬래시를 기준으로 문단 분리
-        const paragraphs = text.split('/');
+        // 먼저 전체 텍스트에서 Ruby 태그를 처리
+        const allRubyParts = processRubyTags(text);
+
+        // Ruby 처리된 결과를 슬래시 기준으로 문단 분리
+        const paragraphs = [];
+        let currentParagraph = [];
+
+        allRubyParts.forEach((part) => {
+            if (part.type === 'text' && part.content.includes('/')) {
+                // 텍스트에 슬래시가 있으면 분리
+                const textParts = part.content.split('/');
+                textParts.forEach((textPart, index) => {
+                    if (index > 0) {
+                        // 새 문단 시작
+                        paragraphs.push(currentParagraph);
+                        currentParagraph = [];
+                    }
+                    if (textPart.trim()) {
+                        currentParagraph.push({ type: 'text', content: textPart });
+                    }
+                });
+            } else {
+                currentParagraph.push(part);
+            }
+        });
+
+        // 마지막 문단 추가
+        if (currentParagraph.length > 0) {
+            paragraphs.push(currentParagraph);
+        }
 
         return (
             <div>
-                {paragraphs.map((paragraph, paragraphIndex) => {
-                    if (!paragraph.trim()) return null;
-
-                    const rubyParts = processRubyTags(paragraph);
+                {paragraphs.map((rubyParts, paragraphIndex) => {
+                    if (!rubyParts.length) return null;
 
                     return (
                         <div key={paragraphIndex} style={{
