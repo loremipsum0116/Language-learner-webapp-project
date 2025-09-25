@@ -683,26 +683,54 @@ export default function JapaneseReading() {
                                 {makeClickableText(currentPassageData.passage)}
                             </div>
                         </div>
-                        {showTranslation && showExplanation && translationByIndex[currentPassage] && (
-                            <div className="translation-text" style={{
-                                marginTop: '12px',
-                                padding: '12px',
-                                backgroundColor: '#e7f3ff',
-                                borderRadius: '6px',
-                                borderLeft: '4px solid #0d6efd'
-                            }}>
-                                <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
-                                <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
-                                    {translationByIndex[currentPassage].split('/').map((paragraph, index) => (
-                                        <div key={index} style={{
-                                            marginBottom: index < translationByIndex[currentPassage].split('/').length - 1 ? '12px' : '0'
-                                        }}>
-                                            {paragraph.trim()}
-                                        </div>
-                                    ))}
+                        {showTranslation && showExplanation && (() => {
+                            // 현재 지문의 첫 번째 문제 DB ID를 기준으로 번역 찾기
+                            const currentDbId = currentPassageData?.questions?.[0]?.dbId;
+                            let translation = null;
+
+                            if (currentDbId) {
+                                // DB ID를 기준으로 번역 매핑
+                                translation = translationData.get(currentDbId);
+
+                                // 번역을 찾지 못한 경우, ID 오프셋 계산으로 폴백
+                                if (!translation) {
+                                    // N5: 6001~, N4: 6201~, N3: 6401~, N2: 6601~, N1: 6901~
+                                    const levelOffsets = {
+                                        'N5': 6001, 'N4': 6201, 'N3': 6401, 'N2': 6601, 'N1': 6901
+                                    };
+                                    const offset = levelOffsets[level] || 6001;
+                                    const translationIndex = currentDbId - offset + 1; // 번역 파일 ID는 1부터 시작
+                                    translation = translationData.get(translationIndex);
+                                    console.log(`[TRANSLATION FALLBACK] dbId=${currentDbId}, offset=${offset}, translationIndex=${translationIndex}`);
+                                }
+                            }
+
+                            // 마지막 폴백: 인덱스 기반
+                            if (!translation) {
+                                translation = translationByIndex[currentPassage];
+                            }
+
+                            return translation && (
+                                <div className="translation-text" style={{
+                                    marginTop: '12px',
+                                    padding: '12px',
+                                    backgroundColor: '#e7f3ff',
+                                    borderRadius: '6px',
+                                    borderLeft: '4px solid #0d6efd'
+                                }}>
+                                    <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
+                                    <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
+                                        {translation.split('/').map((paragraph, index) => (
+                                            <div key={index} style={{
+                                                marginBottom: index < translation.split('/').length - 1 ? '12px' : '0'
+                                            }}>
+                                                {paragraph.trim()}
+                                            </div>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            );
+                        })()}
                     </div>
 
                     {/* 복수 문제 표시 */}

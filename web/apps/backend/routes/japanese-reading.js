@@ -129,6 +129,7 @@ router.get('/practice/:level', async (req, res) => {
             .map((group, index) => ({
                 id: `${level}_JR_${String(index + 1).padStart(3, '0')}`,
                 passage: group.passage,
+                firstDbId: group.questions[0]?.dbId, // 번역 매핑을 위한 첫 번째 문제 DB ID
                 questions: group.questions.map((q, qIndex) => ({
                     questionId: `${level}_JR_${String(index + 1).padStart(3, '0')}_Q${qIndex + 1}`,
                     dbId: q.dbId,
