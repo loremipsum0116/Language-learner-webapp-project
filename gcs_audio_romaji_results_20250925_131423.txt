@@ -1,0 +1,84 @@
+=== GCS 오디오 파일 검증 결과 (로마자) ===
+시작 시간: #오후
+
+--- あいさつ する ---
+  공백 포함 (aisatsu suru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsu suru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsu suru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsu suru/example.mp3
+  공백 제거 (aisatsusuru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsusuru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsusuru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/aisatsusuru/example.mp3
+--- びっくり する ---
+  공백 포함 (bikkuri suru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkuri suru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkuri suru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkuri suru/example.mp3
+  공백 제거 (bikkurisuru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkurisuru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkurisuru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/bikkurisuru/example.mp3
+--- チェック する ---
+  공백 포함 (chekku suru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekku suru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekku suru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekku suru/example.mp3
+  공백 제거 (chekkusuru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekkusuru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekkusuru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/chekkusuru/example.mp3
+--- ごらん に なる ---
+  공백 포함 (goran ni naru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goran ni naru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goran ni naru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goran ni naru/example.mp3
+  공백 제거 (goranninaru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goranninaru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goranninaru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/goranninaru/example.mp3
+--- けんか する ---
+  공백 포함 (kenka suru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenka suru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenka suru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenka suru/example.mp3
+  공백 제거 (kenkasuru):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenkasuru/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenkasuru/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/kenkasuru/example.mp3
+
+=== 최종 검증 결과 ===
+완료 시간: #오후
+총 검증: 30개
+성공: 0개
+실패: 30개

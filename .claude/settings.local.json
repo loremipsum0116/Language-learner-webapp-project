@@ -17,7 +17,13 @@
       "Bash(npm install:*)",
       "Read(//Users/simhyunseok/.npm/_logs/**)",
       "Bash(DISABLE_ESLINT_PLUGIN=true npx react-scripts build)",
-      "Bash(DISABLE_ESLINT_PLUGIN=true ../../../node_modules/.bin/react-scripts build)"
+      "Bash(DISABLE_ESLINT_PLUGIN=true ../../../node_modules/.bin/react-scripts build)",
+      "Bash(tree:*)",
+      "Bash(python3:*)",
+      "Bash(chmod:*)",
+      "Bash(./test_gcs_audio_urls.sh:*)",
+      "Bash(./test_gcs_audio_romaji.sh:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

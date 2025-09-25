@@ -1,0 +1,28 @@
+=== GCS 오디오 파일 검증 최종 결과 ===
+검증 시간: 2025-09-25 13:15
+
+== 발견된 패턴 ==
+✅ 올바른 패턴: URL 인코딩된 공백 사용 (%20)
+❌ 틀린 패턴: 공백 제거, 언더스코어 변환
+
+== 테스트 결과 ==
+
+1. あいさつ する (aisatsu suru)
+   ✅ aisatsu%20suru/word.mp3 - 200 OK
+   ❌ aisatsusuru/word.mp3 - 404 NOT FOUND
+
+2. びっくり する (bikkuri suru)
+   ✅ bikkuri%20suru/word.mp3 - 200 OK
+
+3. 기존 작동 확인
+   ✅ asatte/word.mp3 - 200 OK (공백 없는 단어는 정상 작동)
+
+== 결론 ==
+- 공백이 있는 일본어 단어는 URL 인코딩(%20)을 사용해야 함
+- 현재 코드에서 encodeURIComponent() 제거하고 공백을 언더스코어로 변환한 것이 문제
+- 원래 encodeURIComponent()를 사용하는 것이 정답이었음
+
+== 수정 방향 ==
+1. encodeURIComponent() 다시 사용
+2. 공백을 언더스코어로 변환하지 말고 그대로 유지
+3. URL 인코딩은 브라우저/HTTP 클라이언트가 자동으로 처리하도록 함

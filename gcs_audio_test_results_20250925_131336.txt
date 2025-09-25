@@ -1,0 +1,148 @@
+=== GCS 오디오 파일 검증 결과 ===
+시작 시간: #오후
+
+--- あいさつ する ---
+  original (あいさつ する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/example.mp3
+  spaces (あいさつ する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ する/example.mp3
+  no_spaces (あいさつする):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつする/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつする/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつする/example.mp3
+  underscores (あいさつ_する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ_する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ_する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/あいさつ_する/example.mp3
+--- びっくり する ---
+  original (びっくり する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/example.mp3
+  spaces (びっくり する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり する/example.mp3
+  no_spaces (びっくりする):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくりする/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくりする/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくりする/example.mp3
+  underscores (びっくり_する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり_する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり_する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/びっくり_する/example.mp3
+--- チェック する ---
+  original (チェック する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/example.mp3
+  spaces (チェック する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック する/example.mp3
+  no_spaces (チェックする):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェックする/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェックする/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェックする/example.mp3
+  underscores (チェック_する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック_する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック_する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/チェック_する/example.mp3
+--- ごらん に なる ---
+  original (ごらん に なる):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/example.mp3
+  spaces (ごらん に なる):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん に なる/example.mp3
+  no_spaces (ごらんになる):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらんになる/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらんになる/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらんになる/example.mp3
+  underscores (ごらん_に_なる):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん_に_なる/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん_に_なる/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/ごらん_に_なる/example.mp3
+--- けんか する ---
+  original (けんか する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/example.mp3
+  spaces (けんか する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか する/example.mp3
+  no_spaces (けんかする):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんかする/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんかする/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんかする/example.mp3
+  underscores (けんか_する):
+    word: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか_する/word.mp3
+    gloss: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか_する/gloss.mp3
+    example: ❌ FAILED
+      URL: https://storage.googleapis.com/language-learner-audio/jlpt/n4/けんか_する/example.mp3
