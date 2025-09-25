@@ -25,20 +25,50 @@ const UserLearningAnalytics = () => {
                 dateTo: filters.dateTo
             });
 
-            const response = await fetch(`/api/admin/users/learning-analytics?${params}`, {
+            const url = `/api/admin/users/learning-analytics?${params}`;
+            console.log(`[USER_ANALYTICS] Calling API: ${url}`);
+
+            const response = await fetch(url, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
             });
 
+            console.log(`[USER_ANALYTICS] Response status: ${response.status}`);
+
             if (response.ok) {
                 const data = await response.json();
-                setUsers(data.users);
-                setPagination(data.pagination);
+                console.log('[USER_ANALYTICS] Data received:', data);
+                setUsers(data.users || []);
+                setPagination(data.pagination || {});
             } else {
-                toast.error('사용자 목록 로드에 실패했습니다.');
+                console.warn(`[USER_ANALYTICS] API failed with status ${response.status}`);
+
+                // HTML 응답인지 확인
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('text/html')) {
+                    console.error('[USER_ANALYTICS] Received HTML instead of JSON - API endpoint may not exist');
+                    toast.error('학습 분석 API를 찾을 수 없습니다. 서버 배포를 확인해주세요.');
+                } else {
+                    const error = await response.text();
+                    console.error('[USER_ANALYTICS] Error response:', error);
+                    toast.error('사용자 목록 로드에 실패했습니다.');
+                }
+
+                // Fallback data
+                setUsers([]);
+                setPagination({});
             }
         } catch (error) {
             console.error('Load users error:', error);
-            toast.error('네트워크 오류가 발생했습니다.');
+
+            if (error.message.includes('Unexpected token')) {
+                toast.error('학습 분석 API가 아직 배포되지 않았습니다.');
+            } else {
+                toast.error('네트워크 오류가 발생했습니다.');
+            }
+
+            // Fallback data
+            setUsers([]);
+            setPagination({});
         } finally {
             setLoading(false);
         }
@@ -54,20 +84,36 @@ const UserLearningAnalytics = () => {
                 dateTo: filters.dateTo
             });
 
-            const response = await fetch(`/api/admin/users/learning-analytics?${params}`, {
+            const url = `/api/admin/users/learning-analytics?${params}`;
+            console.log(`[USER_DETAIL] Calling API: ${url}`);
+
+            const response = await fetch(url, {
                 headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
             });
 
             if (response.ok) {
                 const data = await response.json();
+                console.log('[USER_DETAIL] Data received:', data);
                 setUserDetail(data);
                 setSelectedUser(userId);
             } else {
-                toast.error('사용자 상세 정보 로드에 실패했습니다.');
+                console.warn(`[USER_DETAIL] API failed with status ${response.status}`);
+
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('text/html')) {
+                    toast.error('학습 분석 API를 찾을 수 없습니다. 서버 배포를 확인해주세요.');
+                } else {
+                    toast.error('사용자 상세 정보 로드에 실패했습니다.');
+                }
             }
         } catch (error) {
             console.error('Load user detail error:', error);
-            toast.error('네트워크 오류가 발생했습니다.');
+
+            if (error.message.includes('Unexpected token')) {
+                toast.error('학습 분석 API가 아직 배포되지 않았습니다.');
+            } else {
+                toast.error('네트워크 오류가 발생했습니다.');
+            }
         } finally {
             setLoading(false);
         }

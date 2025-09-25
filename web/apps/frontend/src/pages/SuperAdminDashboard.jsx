@@ -17,34 +17,71 @@ const SuperAdminDashboard = () => {
   const loadDashboardData = async () => {
     try {
       setLoading(true);
-      const [dashboardRes, reportsRes, usersRes, qualityRes] = await Promise.all([
-        fetch('/api/admin/dashboard/overview', {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-        }),
-        fetch('/api/card-reports/admin/all?limit=10&status=PENDING', {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-        }),
-        fetch('/api/admin/users/analytics', {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-        }),
-        fetch('/api/admin/content/quality-metrics', {
-          headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
-        })
-      ]);
 
-      const dashboard = await dashboardRes.json();
-      const reportsData = await reportsRes.json();
-      const usersData = await usersRes.json();
-      const qualityData = await qualityRes.json();
+      // API 호출들을 개별적으로 처리하여 하나가 실패해도 다른 것들이 로드되도록 함
+      const apiCalls = [
+        {
+          name: 'dashboard',
+          url: '/api/admin/dashboard/overview',
+          fallback: { totalUsers: 0, activeUsers: 0, totalCards: 0, pendingReports: 0, completionRate: 0 }
+        },
+        {
+          name: 'reports',
+          url: '/api/card-reports/admin/all?limit=10&status=PENDING',
+          fallback: { data: { reports: [] } }
+        },
+        {
+          name: 'users',
+          url: '/api/admin/users/analytics',
+          fallback: { retention: { daily: 0, weekly: 0, monthly: 0 }, averageSessionTime: 0 }
+        },
+        {
+          name: 'quality',
+          url: '/api/admin/content/quality-metrics',
+          fallback: { audioQuality: { good: 0, issues: 0, missing: 0 }, translations: { verified: 0, pending: 0, reported: 0 } }
+        }
+      ];
 
-      setDashboardData(dashboard);
-      // cardReports API 응답 구조에 맞춰 수정
-      setReports(reportsData.data?.reports || []);
-      setUsers(usersData);
-      setContentQuality(qualityData);
+      const results = {};
+
+      for (const apiCall of apiCalls) {
+        try {
+          console.log(`[DASHBOARD] Calling ${apiCall.name} API: ${apiCall.url}`);
+          const response = await fetch(apiCall.url, {
+            headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            results[apiCall.name] = data;
+            console.log(`[DASHBOARD] ${apiCall.name} API success:`, data);
+          } else {
+            console.warn(`[DASHBOARD] ${apiCall.name} API failed with status ${response.status}`);
+            results[apiCall.name] = apiCall.fallback;
+          }
+        } catch (error) {
+          console.error(`[DASHBOARD] ${apiCall.name} API error:`, error);
+          results[apiCall.name] = apiCall.fallback;
+        }
+      }
+
+      // 결과 설정
+      setDashboardData(results.dashboard);
+      setReports(results.reports.data?.reports || results.reports.reports || []);
+      setUsers(results.users);
+      setContentQuality(results.quality);
+
+      console.log('[DASHBOARD] All data loaded:', results);
+
     } catch (error) {
       console.error('Dashboard load error:', error);
       toast.error('대시보드 데이터 로드 중 오류가 발생했습니다.');
+
+      // 완전 실패 시 기본값 설정
+      setDashboardData({ totalUsers: 0, activeUsers: 0, totalCards: 0, pendingReports: 0, completionRate: 0 });
+      setReports([]);
+      setUsers({ retention: { daily: 0, weekly: 0, monthly: 0 }, averageSessionTime: 0 });
+      setContentQuality({ audioQuality: { good: 0, issues: 0, missing: 0 }, translations: { verified: 0, pending: 0, reported: 0 } });
     } finally {
       setLoading(false);
     }
