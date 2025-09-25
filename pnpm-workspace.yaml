@@ -1,0 +1,5 @@
+packages:
+  - 'web/packages/*'
+  - 'web/apps/*'
+  - 'app/*'
+  - 'LanguageLearnerApp53'

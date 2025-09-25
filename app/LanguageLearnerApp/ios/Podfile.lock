@@ -1559,7 +1559,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: d7d429af166e632081fc0933bebad668e8e700b7
   RNFastImage: 462a183c4b0b6b26fdfd639e1ed6ba37536c3b87
   RNGestureHandler: 5d95b0a3cffed8325ed0c181f4f411c1dcd49317
-  RNReanimated: f6c3a3aa35de5a312c01b9256a61f23eed660b34
+  RNReanimated: b574303ce5668edff8a7bd0a5dda113b292d3311
   RNScreens: 5b35d863db10f9be81da4e8f4e08096ee7644f8c
   RNVectorIcons: b99459bc8fad0e571c6e11bf38ac25b4b0f0f54c
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
