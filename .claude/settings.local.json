@@ -10,7 +10,14 @@
       "Bash(done)",
       "Bash(npm run build:*)",
       "Bash(pnpm install:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npm install)",
+      "Bash(npm install:*)",
+      "Read(//Users/simhyunseok/.npm/_logs/**)",
+      "Bash(DISABLE_ESLINT_PLUGIN=true npx react-scripts build)",
+      "Bash(DISABLE_ESLINT_PLUGIN=true ../../../node_modules/.bin/react-scripts build)"
     ],
     "deny": [],
     "ask": []

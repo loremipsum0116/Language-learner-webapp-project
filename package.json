@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Language learning application monorepo",
   "private": true,
-  "packageManager": "pnpm@9.5.0",
+  "packageManager": "npm@10.8.2",
   "engines": {
     "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
+    "npm": ">=8.0.0"
   },
   "scripts": {
-    "build": "turbo run build --filter=@language-learner/frontend",
+    "build": "cd web/apps/frontend && npm run build",
     "dev": "turbo dev",
     "test": "turbo test",
     "test:watch": "turbo test:watch",
@@ -46,5 +46,9 @@
     "*.{json,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "workspaces": [
+    "web/packages/*",
+    "web/apps/*"
+  ]
 }
