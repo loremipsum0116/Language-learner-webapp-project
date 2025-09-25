@@ -449,19 +449,26 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
         let romaji = null;
         let hiragana = null;
 
-        if (vocab.dictentry && vocab.dictentry.examples) {
-            const examples = vocab.dictentry.examples;
-            console.log(`[KO-JP QUIZ] Processing vocab ${vocab.id} (${vocab.lemma}), examples type: ${typeof examples}`);
+        if (vocab.dictentry) {
+            // dictentry.ipaKo와 dictentry.ipa에서 romaji와 hiragana 정보 추출
+            if (vocab.dictentry.ipaKo) {
+                romaji = vocab.dictentry.ipaKo;
+            }
+            if (vocab.dictentry.ipa) {
+                hiragana = vocab.dictentry.ipa;
+            }
 
-            if (examples && typeof examples === 'object') {
-                // 보조 정보만 추출 (로마자, 히라가나)
-                if (examples.romaji) {
-                    romaji = examples.romaji;
+            // examples 객체에서도 확인 (fallback)
+            if (vocab.dictentry.examples && typeof vocab.dictentry.examples === 'object') {
+                if (!romaji && vocab.dictentry.examples.romaji) {
+                    romaji = vocab.dictentry.examples.romaji;
                 }
-                if (examples.kana) {
-                    hiragana = examples.kana;
+                if (!hiragana && vocab.dictentry.examples.kana) {
+                    hiragana = vocab.dictentry.examples.kana;
                 }
             }
+
+            console.log(`[KO-JP QUIZ] Processing vocab ${vocab.id} (${vocab.lemma}): romaji=${romaji}, hiragana=${hiragana}`);
         }
 
         return { displayText, romaji, hiragana };
