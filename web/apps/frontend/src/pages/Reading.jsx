@@ -431,20 +431,48 @@ export default function Reading() {
                         <div className="passage-text" style={{ cursor: 'pointer' }}>
                             {makeClickableText(current.passage)}
                         </div>
-                        {showTranslation && showExplanation && translationByIndex[currentQuestion] && (
-                            <div className="translation-text" style={{
-                                marginTop: '12px',
-                                padding: '12px',
-                                backgroundColor: '#e8f4f8',
-                                borderRadius: '6px',
-                                borderLeft: '4px solid #0d6efd'
-                            }}>
-                                <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
-                                <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
-                                    {translationByIndex[currentQuestion]}
+                        {showTranslation && showExplanation && (() => {
+                            // 현재 문제의 DB ID를 기준으로 번역 찾기
+                            const currentDbId = current.dbId;
+                            let translation = null;
+
+                            if (currentDbId) {
+                                // DB ID를 기준으로 번역 매핑
+                                translation = translationData.get(currentDbId);
+
+                                // 번역을 찾지 못한 경우, ID 오프셋 계산으로 폴백
+                                if (!translation) {
+                                    // A1: 2600~, A2: 2700~, B1: 2800~, B2: 2900~, C1: 3200~
+                                    const levelOffsets = {
+                                        'A1': 2600, 'A2': 2700, 'B1': 2800, 'B2': 2900, 'C1': 3200
+                                    };
+                                    const offset = levelOffsets[level] || 2600;
+                                    const translationIndex = currentDbId - offset + 1; // 번역 파일 ID는 1부터 시작
+                                    translation = translationData.get(translationIndex);
+                                    console.log(`[ENGLISH TRANSLATION FALLBACK] dbId=${currentDbId}, offset=${offset}, translationIndex=${translationIndex}`);
+                                }
+                            }
+
+                            // 마지막 폴백: 인덱스 기반
+                            if (!translation) {
+                                translation = translationByIndex[currentQuestion];
+                            }
+
+                            return translation && (
+                                <div className="translation-text" style={{
+                                    marginTop: '12px',
+                                    padding: '12px',
+                                    backgroundColor: '#e8f4f8',
+                                    borderRadius: '6px',
+                                    borderLeft: '4px solid #0d6efd'
+                                }}>
+                                    <h6 style={{ marginBottom: '8px', color: '#0c5460' }}>📄 번역:</h6>
+                                    <div style={{ color: '#2c3e50', fontSize: '14px', lineHeight: '1.6' }}>
+                                        {translation}
+                                    </div>
                                 </div>
-                            </div>
-                        )}
+                            );
+                        })()}
                     </div>
 
                     <div className="question-section">

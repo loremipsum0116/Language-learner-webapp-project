@@ -208,21 +208,46 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
                     select: { translation: true }
                 }
             },
-            take: 200
+            select: {
+                id: true,
+                lemma: true,
+                pos: true, // 품사 정보 포함
+                translations: {
+                    where: { languageId: 2 },
+                    select: { translation: true }
+                }
+            },
+            take: 500 // distractor 풀 크기 증가
         }),
     ]);
 
     const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
 
-    // 일본어 단어의 한국어 뜻들을 distractor로 수집
-    const distractorMeanings = new Set();
+    // 품사별로 일본어 단어의 한국어 뜻들을 distractor로 수집
+    const distractorsByPos = new Map();
     distractorPool.forEach(v => {
-        if (v.translations && v.translations.length > 0) {
+        if (v.translations && v.translations.length > 0 && v.pos) {
             const meaning = v.translations[0].translation;
             if (meaning) {
                 // 여러 뜻이 ; 또는 , 로 구분되어 있을 경우 첫 번째만 사용
                 const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
-                distractorMeanings.add(cleanMeaning);
+
+                if (!distractorsByPos.has(v.pos)) {
+                    distractorsByPos.set(v.pos, new Set());
+                }
+                distractorsByPos.get(v.pos).add(cleanMeaning);
+            }
+        }
+    });
+
+    // 기본 distractor 풀 (품사별 distractor가 부족할 때 사용)
+    const allDistractors = new Set();
+    distractorPool.forEach(v => {
+        if (v.translations && v.translations.length > 0) {
+            const meaning = v.translations[0].translation;
+            if (meaning) {
+                const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
+                allDistractors.add(cleanMeaning);
             }
         }
     });
@@ -240,16 +265,32 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
         // 정답에서 첫 번째 뜻만 사용
         const correctAnswer = koreanMeaning.split(';')[0].split(',')[0].trim();
 
-        // Distractor 선택 (정답 제외)
-        const availableDistractors = Array.from(distractorMeanings).filter(
-            meaning => meaning !== correctAnswer
-        );
+        // 품사별 Distractor 선택 (정답 제외)
+        const vocabPos = vocab.pos || 'unknown';
+        let availableDistractors = [];
+
+        // 먼저 같은 품사의 distractor를 사용
+        if (distractorsByPos.has(vocabPos)) {
+            availableDistractors = Array.from(distractorsByPos.get(vocabPos)).filter(
+                meaning => meaning !== correctAnswer
+            );
+        }
+
+        // 같은 품사의 distractor가 부족하면 전체 풀에서 보충
+        if (availableDistractors.length < 3) {
+            const allAvailable = Array.from(allDistractors).filter(
+                meaning => meaning !== correctAnswer && !availableDistractors.includes(meaning)
+            );
+            availableDistractors = [...availableDistractors, ...allAvailable];
+        }
+
         const wrongOptions = _.sampleSize(availableDistractors, 3);
         const options = [correctAnswer, ...wrongOptions];
 
         // 선택지가 4개 미만일 경우 기본 distractor 추가
         while (options.length < 4) {
-            options.push("관련 없는 뜻");
+            const fallbackOptions = [`기타 의미 ${options.length - 3}`, "관련 없는 뜻", "다른 뜻"];
+            options.push(fallbackOptions[options.length - 4] || "추가 선택지");
         }
 
         // 일본어 표시 형태 결정 - 체크한 단어의 lemma를 그대로 사용
@@ -367,7 +408,13 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
             include: {
                 dictentry: true
             },
-            take: 200
+            select: {
+                id: true,
+                lemma: true,
+                pos: true, // 품사 정보 포함
+                dictentry: true
+            },
+            take: 500 // distractor 풀 크기 증가
         }),
     ]);
 
@@ -397,15 +444,27 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
         return { displayText, romaji, hiragana };
     }
 
-    // distractor용 일본어 단어들을 로마자 정보와 함께 수집
-    const distractorOptions = [];
+    // 품사별로 distractor용 일본어 단어들을 로마자 정보와 함께 수집
+    const distractorsByPos = new Map();
+    const allDistractorOptions = [];
+
     distractorPool.forEach(v => {
         const info = getJapaneseDisplayInfo(v);
-        if (info.displayText) {
-            distractorOptions.push({
+        if (info.displayText && v.pos) {
+            const option = {
                 text: info.displayText,
-                romaji: info.romaji
-            });
+                romaji: info.romaji,
+                pos: v.pos
+            };
+
+            // 품사별 분류
+            if (!distractorsByPos.has(v.pos)) {
+                distractorsByPos.set(v.pos, []);
+            }
+            distractorsByPos.get(v.pos).push(option);
+
+            // 전체 풀에도 추가
+            allDistractorOptions.push(option);
         }
     });
 
@@ -426,10 +485,26 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
         console.log(`[KO-JP QUIZ] Question: ${questionText}`);
         console.log(`[KO-JP QUIZ] Correct answer: ${correctAnswer} (${correctInfo.romaji})`);
 
-        // Distractor 선택 (정답 제외)
-        const availableDistractors = distractorOptions.filter(
-            option => option.text !== correctAnswer
-        );
+        // 품사별 Distractor 선택 (정답 제외)
+        const vocabPos = vocab.pos || 'unknown';
+        let availableDistractors = [];
+
+        // 먼저 같은 품사의 distractor를 사용
+        if (distractorsByPos.has(vocabPos)) {
+            availableDistractors = distractorsByPos.get(vocabPos).filter(
+                option => option.text !== correctAnswer
+            );
+        }
+
+        // 같은 품사의 distractor가 부족하면 전체 풀에서 보충
+        if (availableDistractors.length < 3) {
+            const additionalDistractors = allDistractorOptions.filter(
+                option => option.text !== correctAnswer &&
+                !availableDistractors.some(ad => ad.text === option.text)
+            );
+            availableDistractors = [...availableDistractors, ...additionalDistractors];
+        }
+
         const wrongOptions = _.sampleSize(availableDistractors, 3);
 
         // 선택지를 로마자 정보와 함께 구성
@@ -440,7 +515,11 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
 
         // 선택지가 4개 미만일 경우 기본 distractor 추가
         while (options.length < 4) {
-            options.push({ text: "関連ない", romaji: null });
+            const fallbackOptions = ["関連ない", "その他", "別の語"];
+            options.push({
+                text: fallbackOptions[options.length - 4] || `選択肢${options.length}`,
+                romaji: null
+            });
         }
 
         console.log(`[KO-JP QUIZ] Final options:`, options);
@@ -508,17 +587,32 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
             include: {
                 dictentry: true
             },
-            take: 200
+            select: {
+                id: true,
+                lemma: true,
+                pos: true, // 품사 정보 포함
+                dictentry: true
+            },
+            take: 500 // distractor 풀 크기 증가
         }),
     ]);
 
     const cardIdMap = new Map(cards.map(c => [c.itemId, c.id]));
 
-    // 일본어 단어들을 distractor로 수집 (2025-09-17 수정)
-    const distractorWords = new Set();
+    // 품사별로 일본어 단어들을 distractor로 수집
+    const distractorsByPos = new Map();
+    const allDistractorWords = new Set();
+
     distractorPool.forEach(v => {
-        if (v.lemma) {
-            distractorWords.add(v.lemma);
+        if (v.lemma && v.pos) {
+            // 품사별 분류
+            if (!distractorsByPos.has(v.pos)) {
+                distractorsByPos.set(v.pos, new Set());
+            }
+            distractorsByPos.get(v.pos).add(v.lemma);
+
+            // 전체 풀에도 추가
+            allDistractorWords.add(v.lemma);
         }
     });
 
@@ -550,15 +644,31 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
         const questionAudio = `/${audioInfo.word}`; // 오디오 파일 경로
         const correctAnswer = japaneseLemma;
 
-        // Distractor 선택 (정답 제외)
-        const availableDistractors = Array.from(distractorWords).filter(
-            word => word !== correctAnswer
-        );
+        // 품사별 Distractor 선택 (정답 제외)
+        const vocabPos = vocab.pos || 'unknown';
+        let availableDistractors = [];
+
+        // 먼저 같은 품사의 distractor를 사용
+        if (distractorsByPos.has(vocabPos)) {
+            availableDistractors = Array.from(distractorsByPos.get(vocabPos)).filter(
+                word => word !== correctAnswer
+            );
+        }
+
+        // 같은 품사의 distractor가 부족하면 전체 풀에서 보충
+        if (availableDistractors.length < 3) {
+            const additionalDistractors = Array.from(allDistractorWords).filter(
+                word => word !== correctAnswer && !availableDistractors.includes(word)
+            );
+            availableDistractors = [...availableDistractors, ...additionalDistractors];
+        }
+
         const wrongOptions = _.sampleSize(availableDistractors, 3);
         const options = [correctAnswer, ...wrongOptions];
 
         while (options.length < 4) {
-            options.push("未知");
+            const fallbackOptions = ["未知", "不明", "その他"];
+            options.push(fallbackOptions[options.length - 4] || `選択${options.length}`);
         }
 
         quizItems.push({

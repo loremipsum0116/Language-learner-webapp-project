@@ -688,6 +688,36 @@ export default function JapaneseQuiz({
                                     )}
                                 </div>
 
+                                {/* 발음 정보 표시 */}
+                                {(currentQuiz.pron || currentQuiz.vocab) && (
+                                    <div className="pronunciation-info mt-3 p-3 bg-light rounded">
+                                        <div className="mb-2">
+                                            <strong>🎵 발음 정보</strong>
+                                        </div>
+
+                                        {/* Romaji 표시 */}
+                                        {(currentQuiz.pron?.romaji || currentQuiz.vocab?.dictentry?.examples?.romaji) && (
+                                            <div className="mb-1">
+                                                <span className="text-primary">
+                                                    <strong>Romaji:</strong> {currentQuiz.pron?.romaji || currentQuiz.vocab?.dictentry?.examples?.romaji}
+                                                </span>
+                                            </div>
+                                        )}
+
+                                        {/* 히라가나 표시 */}
+                                        {(currentQuiz.pron?.hiragana || currentQuiz.vocab?.dictentry?.examples?.kana || currentQuiz.vocab?.dictentry?.ipa) && (
+                                            <div className="mb-1">
+                                                <span className="text-success">
+                                                    <strong>히라가나:</strong>
+                                                    <span className="fs-5 ms-1" lang="ja">
+                                                        {currentQuiz.pron?.hiragana || currentQuiz.vocab?.dictentry?.examples?.kana || currentQuiz.vocab?.dictentry?.ipa}
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
                                 {/* 추가 정보 표시 */}
                                 {currentQuiz.vocab && currentQuiz.vocab.translations && (
                                     <div className="additional-info mt-3">
