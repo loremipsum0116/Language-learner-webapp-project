@@ -97,10 +97,10 @@ export default function JapaneseReading() {
 
         // Ruby 태그를 먼저 처리하여 올바르게 렌더링
         const processRubyTags = (text) => {
-            // 다양한 형태의 ruby 태그 패턴을 처리
-            // Pattern 1: <ruby>漢字ひらがな<rt>ひらがな<rt><ruby>
-            // Pattern 2: <ruby>漢字ひらがな<rt>ひらがな<rt></ruby>
-            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)<rt>(?:<\/ruby>|<ruby>)/g;
+            // 두 가지 Ruby 태그 형태 모두 처리:
+            // 1) 잘못된 형태: <ruby>学生<rt>がくせい<rt><ruby>
+            // 2) 올바른 형태: <ruby>日本語<rt>にほんご</rt></ruby>
+            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)(?:<rt><ruby>|<\/rt><\/ruby>)/g;
             const parts = [];
             let lastIndex = 0;
             let match;
@@ -115,12 +115,12 @@ export default function JapaneseReading() {
                 }
 
                 // Ruby 태그 추가
-                const fullText = match[1];  // 예: "学生がくせい"
-                const furiganaText = match[2]; // 예: "がくせい"
+                const kanjiText = match[1];     // 예: "学生" 또는 "学生がくせい"
+                const furiganaText = match[2];  // 예: "がくせい"
 
-                // 한자 부분만 추출 ("学生がくせい"에서 "学生"만)
-                const kanjiMatch = fullText.match(/^([一-龯]+)/);
-                const cleanKanji = kanjiMatch ? kanjiMatch[1] : fullText;
+                // 이미 한자만 있는 경우와 한자+히라가나가 섞인 경우 모두 처리
+                const kanjiMatch = kanjiText.match(/^([一-龯々〇]+)/);
+                const cleanKanji = kanjiMatch ? kanjiMatch[1] : kanjiText;
                 const cleanFurigana = furiganaText;
 
                 parts.push({
@@ -700,9 +700,20 @@ export default function JapaneseReading() {
                                             <div
                                                 key={key}
                                                 className={`option-btn ${
-                                                    selectedAnswers[questionData.questionId] === key ? 'selected' : ''
+                                                    // 단일 문제는 selectedAnswer, 복수 문제는 selectedAnswers 사용
+                                                    currentPassageData.questions.length === 1
+                                                        ? selectedAnswer === key ? 'selected' : ''
+                                                        : selectedAnswers[questionData.questionId] === key ? 'selected' : ''
                                                 }`}
-                                                onClick={() => handleAnswerSelect(key, questionData.questionId)}
+                                                onClick={() => {
+                                                    // 단일 문제인 경우 questionId를 전달하지 않음
+                                                    const questionsCount = currentPassageData.questions.length;
+                                                    if (questionsCount === 1) {
+                                                        handleAnswerSelect(key); // questionId 없음
+                                                    } else {
+                                                        handleAnswerSelect(key, questionData.questionId); // questionId 전달
+                                                    }
+                                                }}
                                                 style={{
                                                     cursor: 'pointer',
                                                     border: '2px solid #dee2e6',
@@ -730,11 +741,16 @@ export default function JapaneseReading() {
                                             <div
                                                 key={key}
                                                 className={`option-btn ${
-                                                    selectedAnswers[questionData.questionId] === key ? 'selected' : ''
+                                                    // 단일 문제는 selectedAnswer, 복수 문제는 selectedAnswers 사용
+                                                    currentPassageData.questions.length === 1
+                                                        ? selectedAnswer === key ? 'selected' : ''
+                                                        : selectedAnswers[questionData.questionId] === key ? 'selected' : ''
                                                 } ${
                                                     key === questionData.correctAnswer
                                                         ? 'correct'
-                                                        : selectedAnswers[questionData.questionId] === key
+                                                        : (currentPassageData.questions.length === 1
+                                                            ? selectedAnswer === key
+                                                            : selectedAnswers[questionData.questionId] === key)
                                                             ? 'incorrect'
                                                             : ''
                                                 }`}
