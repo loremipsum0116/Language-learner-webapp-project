@@ -239,12 +239,67 @@ export default function JapaneseReadingList() {
 
     // 문제별 학습 기록 가져오기
     const getStudyRecord = (questionId) => {
-        const record = studyHistory[questionId];
-        if (record) {
-            console.log(`🔍 [STUDY RECORD DEBUG] questionId: ${questionId}`, record);
-            console.log(`🔍 [WRONG DATA DEBUG] wrongData:`, record.wrongData);
+        // 1. 직접적인 기록 확인 (단일 문제 또는 지문 전체 통계)
+        const directRecord = studyHistory[questionId];
+        if (directRecord) {
+            console.log(`🔍 [DIRECT RECORD] Found for ${questionId}:`, directRecord);
+            return directRecord;
         }
-        return record;
+
+        // 2. 복수 문제인 경우: questionId_Q1, questionId_Q2 등의 개별 문제들 찾기
+        const relatedQuestions = Object.keys(studyHistory).filter(key =>
+            key.startsWith(questionId + '_Q')
+        );
+
+        // 3. 복수 문제가 있는 경우에만 통합 처리
+        if (relatedQuestions.length > 0) {
+            console.log(`🔍 [MULTI QUESTIONS] Found ${relatedQuestions.length} sub-questions for ${questionId}:`, relatedQuestions);
+
+            const latestRecords = relatedQuestions.map(qId => studyHistory[qId]).filter(Boolean);
+
+            if (latestRecords.length === 0) {
+                return null;
+            }
+
+            // 모든 서브 문제가 정답인지 확인
+            const allCorrect = latestRecords.every(record =>
+                record.isCompleted || record.wrongData?.isCorrect
+            );
+
+            // 가장 최근 학습 시간
+            const latestTime = Math.max(...latestRecords.map(record =>
+                new Date(record.solvedAt || record.wrongAt).getTime()
+            ));
+
+            // 통계 계산
+            const totalCorrectCount = latestRecords.reduce((sum, record) =>
+                sum + (record.wrongData?.correctCount || (record.isCompleted ? 1 : 0)), 0
+            );
+
+            const totalIncorrectCount = latestRecords.reduce((sum, record) =>
+                sum + (record.wrongData?.incorrectCount || (!record.isCompleted ? 1 : 0)), 0
+            );
+
+            const consolidatedRecord = {
+                isCompleted: allCorrect,
+                attempts: totalCorrectCount + totalIncorrectCount,
+                solvedAt: new Date(latestTime).toISOString(),
+                wrongAt: new Date(latestTime).toISOString(),
+                wrongData: {
+                    isCorrect: allCorrect,
+                    correctCount: totalCorrectCount,
+                    incorrectCount: totalIncorrectCount,
+                    totalAttempts: totalCorrectCount + totalIncorrectCount
+                }
+            };
+
+            console.log(`🔍 [CONSOLIDATED] ${questionId}:`, consolidatedRecord);
+            return consolidatedRecord;
+        }
+
+        // 4. 단일 문제인데 직접 기록이 없는 경우 - null 반환 (통계 없음)
+        console.log(`🔍 [NO RECORD] No records found for single question ${questionId}`);
+        return null;
     };
 
     // 문제 선택/해제

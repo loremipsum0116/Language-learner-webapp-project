@@ -440,12 +440,25 @@ export default function JapaneseListeningPractice() {
                 // UI 상태 즉시 업데이트
                 setHistory(prev => {
                     const newHistory = new Map(prev);
+                    const existingRecord = prev.get(String(current.id));
+                    const currentAttempts = existingRecord?.attempts || 0;
+                    const currentCorrectCount = existingRecord?.wrongData?.correctCount || 0;
+                    const currentIncorrectCount = existingRecord?.wrongData?.incorrectCount || 0;
+
                     newHistory.set(String(current.id), {
                         questionId: current.id,
                         isCorrect: correct,
                         solvedAt: new Date().toISOString(),
                         isCompleted: correct,
-                        attempts: 1
+                        attempts: currentAttempts + 1,
+                        wrongData: {
+                            questionId: current.id,
+                            isCorrect: correct,
+                            correctCount: correct ? currentCorrectCount + 1 : currentCorrectCount,
+                            incorrectCount: correct ? currentIncorrectCount : currentIncorrectCount + 1,
+                            totalAttempts: currentAttempts + 1,
+                            recordedAt: new Date().toISOString()
+                        }
                     });
                     return newHistory;
                 });

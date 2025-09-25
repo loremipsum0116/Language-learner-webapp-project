@@ -300,11 +300,48 @@ export default function JapaneseListeningList() {
     };
 
     const getQuestionStats = (questionId) => {
-        const record = history.get(questionId);
-        if (!record || !record.wrongData) return null;
+        // 1. 직접적인 기록 확인 (단일 문제 또는 지문 전체 통계)
+        const directRecord = history.get(questionId);
+        if (directRecord && directRecord.wrongData) {
+            const { correctCount = 0, incorrectCount = 0, totalAttempts = 0 } = directRecord.wrongData;
+            return { correctCount, incorrectCount, totalAttempts };
+        }
 
-        const { correctCount = 0, incorrectCount = 0, totalAttempts = 0 } = record.wrongData;
-        return { correctCount, incorrectCount, totalAttempts };
+        // 2. 복수 문제인 경우: questionId_Q1, questionId_Q2 등의 개별 문제들 찾기
+        const relatedQuestions = Array.from(history.keys()).filter(key =>
+            key.startsWith(questionId + '_Q')
+        );
+
+        // 3. 복수 문제가 있는 경우에만 통합 처리
+        if (relatedQuestions.length > 0) {
+            const latestRecords = relatedQuestions
+                .map(qId => history.get(qId))
+                .filter(record => record && record.wrongData);
+
+            if (latestRecords.length === 0) {
+                return null;
+            }
+
+            // 통계 계산
+            const totalCorrectCount = latestRecords.reduce((sum, record) =>
+                sum + (record.wrongData.correctCount || 0), 0
+            );
+
+            const totalIncorrectCount = latestRecords.reduce((sum, record) =>
+                sum + (record.wrongData.incorrectCount || 0), 0
+            );
+
+            const totalAttempts = totalCorrectCount + totalIncorrectCount;
+
+            return {
+                correctCount: totalCorrectCount,
+                incorrectCount: totalIncorrectCount,
+                totalAttempts: totalAttempts
+            };
+        }
+
+        // 4. 단일 문제인데 기록이 없는 경우
+        return null;
     };
 
     if (loading) {
