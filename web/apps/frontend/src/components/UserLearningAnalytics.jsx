@@ -7,6 +7,7 @@ const UserLearningAnalytics = () => {
     const [selectedUser, setSelectedUser] = useState(null);
     const [userDetail, setUserDetail] = useState(null);
     const [pagination, setPagination] = useState({});
+    const [apiError, setApiError] = useState(false);
     const [filters, setFilters] = useState({
         sortBy: 'recent',
         dateFrom: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
@@ -35,22 +36,34 @@ const UserLearningAnalytics = () => {
             console.log(`[USER_ANALYTICS] Response status: ${response.status}`);
 
             if (response.ok) {
-                const data = await response.json();
-                console.log('[USER_ANALYTICS] Data received:', data);
+                const responseData = await response.json();
+                console.log('[USER_ANALYTICS] Full response:', responseData);
+
+                // API 응답 구조: { data: { users: [], pagination: {} } }
+                const data = responseData.data || responseData;
+                console.log('[USER_ANALYTICS] Extracted data:', data);
+
                 setUsers(data.users || []);
                 setPagination(data.pagination || {});
+                setApiError(false);
             } else {
                 console.warn(`[USER_ANALYTICS] API failed with status ${response.status}`);
+                setApiError(true);
 
                 // HTML 응답인지 확인
                 const contentType = response.headers.get('content-type');
                 if (contentType && contentType.includes('text/html')) {
                     console.error('[USER_ANALYTICS] Received HTML instead of JSON - API endpoint may not exist');
-                    toast.error('학습 분석 API를 찾을 수 없습니다. 서버 배포를 확인해주세요.');
+                    // toast는 한 번만 표시하도록 조건부로 처리
+                    if (!apiError) {
+                        toast.error('학습 분석 API를 찾을 수 없습니다. 서버 배포를 확인해주세요.');
+                    }
                 } else {
                     const error = await response.text();
                     console.error('[USER_ANALYTICS] Error response:', error);
-                    toast.error('사용자 목록 로드에 실패했습니다.');
+                    if (!apiError) {
+                        toast.error('사용자 목록 로드에 실패했습니다.');
+                    }
                 }
 
                 // Fallback data
@@ -59,11 +72,15 @@ const UserLearningAnalytics = () => {
             }
         } catch (error) {
             console.error('Load users error:', error);
+            setApiError(true);
 
-            if (error.message.includes('Unexpected token')) {
-                toast.error('학습 분석 API가 아직 배포되지 않았습니다.');
-            } else {
-                toast.error('네트워크 오류가 발생했습니다.');
+            // toast는 한 번만 표시하도록 조건부로 처리
+            if (!apiError) {
+                if (error.message.includes('Unexpected token')) {
+                    toast.error('학습 분석 API가 아직 배포되지 않았습니다.');
+                } else {
+                    toast.error('네트워크 오류가 발생했습니다.');
+                }
             }
 
             // Fallback data
@@ -92,8 +109,13 @@ const UserLearningAnalytics = () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log('[USER_DETAIL] Data received:', data);
+                const responseData = await response.json();
+                console.log('[USER_DETAIL] Full response:', responseData);
+
+                // API 응답 구조: { data: { user: {...}, vocabLearning: {...}, ... } }
+                const data = responseData.data || responseData;
+                console.log('[USER_DETAIL] Extracted data:', data);
+
                 setUserDetail(data);
                 setSelectedUser(userId);
             } else {
@@ -133,6 +155,7 @@ const UserLearningAnalytics = () => {
 
     // 초기 로드
     useEffect(() => {
+        console.log('[USER_ANALYTICS] Component mounted, loading users...');
         loadUsers();
     }, []);
 
@@ -159,6 +182,30 @@ const UserLearningAnalytics = () => {
             <div className="d-flex justify-content-center py-5">
                 <div className="spinner-border text-primary">
                     <span className="visually-hidden">로딩 중...</span>
+                </div>
+            </div>
+        );
+    }
+
+    // API 에러 상태 표시
+    if (apiError && !users.length) {
+        return (
+            <div className="user-learning-analytics">
+                <div className="alert alert-warning" role="alert">
+                    <h4 className="alert-heading">⚠️ 학습 분석 데이터 로드 실패</h4>
+                    <p>학습 현황 API에 문제가 있거나 아직 배포되지 않았습니다.</p>
+                    <hr />
+                    <p className="mb-0">
+                        <button
+                            className="btn btn-primary"
+                            onClick={() => {
+                                setApiError(false);
+                                loadUsers(1);
+                            }}
+                        >
+                            다시 시도
+                        </button>
+                    </p>
                 </div>
             </div>
         );
@@ -479,7 +526,7 @@ const UserLearningAnalytics = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {users.map(user => (
+                                    {users.length > 0 ? users.map(user => (
                                         <tr key={user.id}>
                                             <td>
                                                 <div>
@@ -524,7 +571,30 @@ const UserLearningAnalytics = () => {
                                                 </button>
                                             </td>
                                         </tr>
-                                    ))}
+                                    )) : (
+                                        <tr>
+                                            <td colSpan="7" className="text-center py-4">
+                                                <div className="text-muted">
+                                                    <i className="bi bi-people fs-1 mb-2"></i>
+                                                    <p>표시할 사용자가 없습니다.</p>
+                                                    <small>
+                                                        {apiError ?
+                                                            'API 연결에 문제가 있거나 데이터가 없습니다.' :
+                                                            '선택된 필터 조건에 맞는 사용자가 없습니다.'
+                                                        }
+                                                    </small>
+                                                    <div className="mt-2">
+                                                        <button
+                                                            className="btn btn-outline-primary btn-sm"
+                                                            onClick={() => loadUsers(1)}
+                                                        >
+                                                            <i className="bi bi-arrow-clockwise me-1"></i>새로고침
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
