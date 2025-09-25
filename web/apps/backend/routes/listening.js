@@ -208,9 +208,28 @@ router.post('/record', async (req, res) => {
                 }
             });
         } else {
-            // 정답이고 기존 기록이 없는 경우 - 아무것도 하지 않음
-            console.log(`✅ [LISTENING RECORD] User ${userId} - Question ${questionId} - CORRECT (첫 번째 시도) - 오답노트에 저장하지 않음`);
-            result = null;
+            // 정답이고 기존 기록이 없는 경우 - 첫 번째 정답도 통계로 기록
+            console.log(`✅ [LISTENING RECORD] User ${userId} - Question ${questionId} - CORRECT (첫 번째 시도) - 통계 기록 생성`);
+
+            result = await prisma.wronganswer.create({
+                data: {
+                    userId: userId,
+                    itemType: 'listening',
+                    itemId: itemId,
+                    attempts: 1, // 첫 시도
+                    wrongAt: finalTime,
+                    wrongData: {
+                        ...recordData,
+                        correctCount: 1, // 첫 정답
+                        incorrectCount: 0, // 오답 없음
+                        totalAttempts: 1,
+                        lastResult: 'correct'
+                    },
+                    isCompleted: true, // 정답이므로 완료
+                    reviewWindowStart: finalTime,
+                    reviewWindowEnd: new Date(finalTime.getTime() + 24 * 60 * 60 * 1000)
+                }
+            });
         }
 
         // 기존 listeningRecord 테이블에도 호환성을 위해 저장 (선택적)
