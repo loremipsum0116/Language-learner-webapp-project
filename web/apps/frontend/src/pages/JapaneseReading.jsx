@@ -368,20 +368,34 @@ export default function JapaneseReading() {
             selectedAnswers
         });
 
-        // 모든 문제에 답이 선택되었는지 확인
-        const unansweredQuestions = currentPassageData.questions.filter(
-            question => !selectedAnswers[question.questionId]
-        );
+        // 답안 선택 여부 확인 (단일 문제 vs 복수 문제)
+        const questionsCount = currentPassageData.questions.length;
 
-        if (unansweredQuestions.length > 0) {
-            alert(`모든 문제에 답을 선택해주세요. (${unansweredQuestions.length}개 문제 미완료)`);
-            return;
+        if (questionsCount === 1) {
+            // 단일 문제: selectedAnswer 확인
+            if (!selectedAnswer) {
+                alert('문제에 답을 선택해주세요.');
+                return;
+            }
+        } else {
+            // 복수 문제: selectedAnswers 확인
+            const unansweredQuestions = currentPassageData.questions.filter(
+                question => !selectedAnswers[question.questionId]
+            );
+
+            if (unansweredQuestions.length > 0) {
+                alert(`모든 문제에 답을 선택해주세요. (${unansweredQuestions.length}개 문제 미완료)`);
+                return;
+            }
         }
 
         // 각 문제별 정답 확인 및 점수 계산
         let correctCount = 0;
         const questionResults = currentPassageData.questions.map(question => {
-            const userAnswer = selectedAnswers[question.questionId];
+            // 단일 문제는 selectedAnswer 사용, 복수 문제는 selectedAnswers 사용
+            const userAnswer = questionsCount === 1
+                ? selectedAnswer
+                : selectedAnswers[question.questionId];
             const isCorrect = userAnswer === question.correctAnswer;
             if (isCorrect) correctCount++;
 
