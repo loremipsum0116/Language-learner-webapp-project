@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd web/apps/frontend && npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "web/apps/frontend/build",
+  "framework": null,
+  "installCommand": "npm install",
+  "devCommand": null
+}
