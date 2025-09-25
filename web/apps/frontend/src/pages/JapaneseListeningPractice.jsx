@@ -426,6 +426,8 @@ export default function JapaneseListeningPractice() {
             options: current.options
         };
 
+        console.log('🔍 [REQUEST DEBUG] Sending data to server:', requestData);
+
         try {
             const response = await fetch('https://clever-elegance-production.up.railway.app/api/japanese-listening/record', {
                 method: 'POST',
@@ -433,6 +435,8 @@ export default function JapaneseListeningPractice() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(requestData)
             });
+
+            console.log('📡 [RESPONSE DEBUG] Server response status:', response.status);
 
             if (response.ok) {
                 console.log(`✅ [일본어 리스닝 기록 저장 완료] ${level} - Question ${current.id} - ${correct ? '정답' : '오답'}`);
@@ -462,14 +466,72 @@ export default function JapaneseListeningPractice() {
                     });
                     return newHistory;
                 });
-            } else if (response.status === 401) {
-                console.log('📝 [비로그인 사용자] 일본어 리스닝 기록은 로그인 후 저장됩니다.');
             } else {
                 const errorText = await response.text();
                 console.error(`❌ 일본어 리스닝 기록 저장 실패 (${response.status}):`, errorText);
+
+                if (response.status === 401) {
+                    console.log('📝 [비로그인 사용자] 일본어 리스닝 기록은 로그인 후 저장됩니다.');
+                } else {
+                    // 서버 에러라도 로컬 상태는 업데이트 (사용자 경험 향상)
+                    console.log('🔄 [FALLBACK] Updating local state despite server error...');
+                }
+
+                // 서버 에러나 비로그인 상태에서도 로컬 상태 업데이트
+                setHistory(prev => {
+                    const newHistory = new Map(prev);
+                    const existingRecord = prev.get(String(current.id));
+                    const currentAttempts = existingRecord?.attempts || 0;
+                    const currentCorrectCount = existingRecord?.wrongData?.correctCount || 0;
+                    const currentIncorrectCount = existingRecord?.wrongData?.incorrectCount || 0;
+
+                    newHistory.set(String(current.id), {
+                        questionId: current.id,
+                        isCorrect: correct,
+                        solvedAt: new Date().toISOString(),
+                        isCompleted: correct,
+                        attempts: currentAttempts + 1,
+                        wrongData: {
+                            questionId: current.id,
+                            isCorrect: correct,
+                            correctCount: correct ? currentCorrectCount + 1 : currentCorrectCount,
+                            incorrectCount: correct ? currentIncorrectCount : currentIncorrectCount + 1,
+                            totalAttempts: currentAttempts + 1,
+                            recordedAt: new Date().toISOString()
+                        }
+                    });
+                    return newHistory;
+                });
             }
         } catch (error) {
             console.error('❌ 일본어 리스닝 기록 저장 실패:', error);
+
+            // 네트워크 에러라도 로컬 상태는 업데이트 (오프라인 지원)
+            console.log('🔄 [FALLBACK] Updating local state despite network error...');
+            setHistory(prev => {
+                const newHistory = new Map(prev);
+                const existingRecord = prev.get(String(current.id));
+                const currentAttempts = existingRecord?.attempts || 0;
+                const currentCorrectCount = existingRecord?.wrongData?.correctCount || 0;
+                const currentIncorrectCount = existingRecord?.wrongData?.incorrectCount || 0;
+
+                newHistory.set(String(current.id), {
+                    questionId: current.id,
+                    isCorrect: correct,
+                    solvedAt: new Date().toISOString(),
+                    isCompleted: correct,
+                    attempts: currentAttempts + 1,
+                    wrongData: {
+                        questionId: current.id,
+                        isCorrect: correct,
+                        correctCount: correct ? currentCorrectCount + 1 : currentCorrectCount,
+                        incorrectCount: correct ? currentIncorrectCount : currentIncorrectCount + 1,
+                        totalAttempts: currentAttempts + 1,
+                        recordedAt: new Date().toISOString()
+                    }
+                });
+                return newHistory;
+            });
         }
 
         if (correct && !completedQuestions.has(currentQuestion)) {

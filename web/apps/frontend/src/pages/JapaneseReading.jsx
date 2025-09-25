@@ -837,13 +837,9 @@ export default function JapaneseReading() {
                     <div className={`explanation-box ${isCorrect ? 'correct' : 'incorrect'}`}>
                         <div className="explanation-header">
                             {isCorrect ? (
-                                <span className="result-icon correct">✅ {currentPassageData.questions.length === 1 ? '정답!' : '모든 문제 정답!'}</span>
+                                <span className="result-icon correct">✅ 정답</span>
                             ) : (
-                                currentPassageData.questions.length === 1 ? (
-                                    <span className="result-icon incorrect">❌ 오답</span>
-                                ) : (
-                                    <span className="result-icon incorrect">❌ 일부 오답 있음</span>
-                                )
+                                <span className="result-icon incorrect">❌ 오답</span>
                             )}
                         </div>
                     </div>
