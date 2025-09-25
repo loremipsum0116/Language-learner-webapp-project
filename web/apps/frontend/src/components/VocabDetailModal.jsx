@@ -354,7 +354,7 @@ export default function VocabDetailModal({
 
                       if (needsSpaceConversion) {
                         // For words with ・, extract romaji from audioLocal and add space
-                        const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                        const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
 
                         // Extract folder name from audioLocal path: "jlpt/n4/aisatsusuru/gloss.mp3" -> "aisatsusuru"
                         const pathParts = audioData.gloss.split('/');
@@ -381,7 +381,7 @@ export default function VocabDetailModal({
                     }
                     // Final fallback: Generate path using folder structure (same as VocabList)
                     else {
-                      const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                      const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
                       let folderName;
                       if (vocab.romaji) {
                         folderName = vocab.romaji.toLowerCase();
@@ -547,7 +547,7 @@ export default function VocabDetailModal({
 
                             if (needsSpaceConversion) {
                               // For words with ・, extract romaji from audioLocal and add space
-                              const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                              const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
 
                               // Extract folder name from audioLocal path: "jlpt/n4/aisatsusuru/example.mp3" -> "aisatsusuru"
                               const pathParts = audioData.example.split('/');
@@ -574,7 +574,7 @@ export default function VocabDetailModal({
                           }
                           // Final fallback: Generate path using folder structure (same as VocabList)
                           else {
-                            const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                            const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
                             let folderName;
                             if (vocab.romaji) {
                               folderName = vocab.romaji.toLowerCase();

@@ -2008,8 +2008,8 @@ export default function LearnVocab() {
 
                         if (isJapaneseWord) {
                             // 일본어는 JLPT 경로 사용 (레벨이 없으면 N5 기본값)
-                            const jlptLevel = current.vocab?.levelJLPT || 'N5';
-                            return `jlpt/${jlptLevel.toLowerCase()}/${safeFileName(word)}.mp3`;
+                            const jlptLevel = current.vocab?.levelJLPT || 'n5';
+                            return `jlpt/${jlptLevel.toLowerCase()}/${safeFileName(word)}/word.mp3`;
                         } else {
                             // 영어는 CEFR 경로 사용
                             return `cefr/${current.vocab?.levelCEFR}/${safeFileName(word)}.mp3`;

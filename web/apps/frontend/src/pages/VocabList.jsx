@@ -1128,7 +1128,7 @@ export default function VocabList() {
 
                 // Fix path for words with ・ character
                 if (vocab.lemma.includes('・')) {
-                    const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                    const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
                     const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
                     wordAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/word.mp3`;
                     console.log('🔍 [VocabList] Fixed JLPT word audio path for ・ word:', vocab.lemma, '->', wordAudioPath);
@@ -1140,7 +1140,7 @@ export default function VocabList() {
             }
 
             // Fallback to JLPT folder structure
-            const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+            const jlptLevel = (vocab.levelJLPT || 'n5').toLowerCase();
             // Use romaji for the folder name instead of Japanese characters
             // For Japanese words, convert ・ to space and keep spaces (not underscores)
             // This matches the actual folder structure in succeed-seeding-file

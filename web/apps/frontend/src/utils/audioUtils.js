@@ -52,9 +52,15 @@ export function parseAudioLocal(audioLocal) {
       // Check if it's Japanese (jlpt) or English/Idiom audio
       // Japanese audio needs /public/ prefix, English and idioms don't
       const isJapanese = cleanPath.startsWith('jlpt/');
-      const baseUrl = isJapanese ? GCS_BASE_URL : GCS_BASE_URL_ENGLISH;
 
-      return `${baseUrl}/${cleanPath}`;
+      // For Japanese audio, ensure JLPT levels are lowercase (N5 -> n5)
+      let finalPath = cleanPath;
+      if (isJapanese) {
+        finalPath = cleanPath.replace(/jlpt\/N(\d)/g, 'jlpt/n$1');
+      }
+
+      const baseUrl = isJapanese ? GCS_BASE_URL : GCS_BASE_URL_ENGLISH;
+      return `${baseUrl}/${finalPath}`;
     };
 
     return {
