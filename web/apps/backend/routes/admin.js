@@ -864,4 +864,363 @@ router.get('/logs', auth, adminOnly, async (req, res) => {
     }
 });
 
+// GET /admin/users/learning-analytics - 유저별 학습 현황
+router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
+    try {
+        const { userId, page = 1, limit = 20, sortBy = 'recent', dateFrom, dateTo } = req.query;
+
+        const pageNum = Math.max(1, parseInt(page));
+        const limitNum = Math.min(50, parseInt(limit));
+        const skip = (pageNum - 1) * limitNum;
+
+        let users;
+        let totalCount;
+
+        // 날짜 범위 설정 (기본값: 최근 30일)
+        const endDate = dateTo ? new Date(dateTo) : new Date();
+        const startDate = dateFrom ? new Date(dateFrom) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+
+        if (userId) {
+            // 특정 사용자의 상세 학습 현황
+            const user = await prisma.user.findUnique({
+                where: { id: parseInt(userId) },
+                include: {
+                    _count: {
+                        select: {
+                            srscard: true,
+                            wronganswer: true,
+                            studySessions: true
+                        }
+                    }
+                }
+            });
+
+            if (!user) {
+                return fail(res, 404, 'User not found');
+            }
+
+            // 단어 학습 통계
+            const vocabStats = await prisma.srscard.aggregate({
+                where: {
+                    userId: parseInt(userId),
+                    itemType: 'vocab'
+                },
+                _count: { id: true },
+                _sum: {
+                    correctTotal: true,
+                    wrongTotal: true
+                },
+                _avg: {
+                    correctTotal: true,
+                    wrongTotal: true
+                }
+            });
+
+            // 최근 학습한 단어들 (최근 7일)
+            const recentVocabStudied = await prisma.srscard.findMany({
+                where: {
+                    userId: parseInt(userId),
+                    itemType: 'vocab',
+                    lastReviewedAt: {
+                        gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                    }
+                },
+                take: 20,
+                orderBy: { lastReviewedAt: 'desc' },
+                include: {
+                    vocab: {
+                        select: {
+                            id: true,
+                            lemma: true,
+                            pos: true,
+                            levelCEFR: true,
+                            translations: {
+                                where: { languageId: 2 }, // Korean translations
+                                select: { translation: true }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 리딩 학습 통계
+            const readingStats = await prisma.readingRecord.groupBy({
+                by: ['level'],
+                where: {
+                    userId: parseInt(userId),
+                    solvedAt: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                _count: { id: true },
+                _sum: {
+                    isCorrect: true
+                }
+            });
+
+            // 리스닝 학습 통계
+            const listeningStats = await prisma.listeningRecord.groupBy({
+                by: ['level'],
+                where: {
+                    userId: parseInt(userId),
+                    solvedAt: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                _count: { id: true },
+                _sum: {
+                    isCorrect: true
+                }
+            });
+
+            // 최근 리딩/리스닝 문제 풀이 내역
+            const recentReading = await prisma.readingRecord.findMany({
+                where: {
+                    userId: parseInt(userId),
+                    solvedAt: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                take: 10,
+                orderBy: { solvedAt: 'desc' },
+                select: {
+                    questionId: true,
+                    level: true,
+                    isCorrect: true,
+                    solvedAt: true
+                }
+            });
+
+            const recentListening = await prisma.listeningRecord.findMany({
+                where: {
+                    userId: parseInt(userId),
+                    solvedAt: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                take: 10,
+                orderBy: { solvedAt: 'desc' },
+                select: {
+                    questionId: true,
+                    level: true,
+                    isCorrect: true,
+                    solvedAt: true
+                }
+            });
+
+            // 일별 학습 통계
+            const dailyStats = await prisma.dailystudystat.findMany({
+                where: {
+                    userId: parseInt(userId),
+                    date: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                orderBy: { date: 'desc' },
+                take: 30
+            });
+
+            // 잘못 답한 단어들 (TOP 10)
+            const topWrongVocabs = await prisma.wronganswer.findMany({
+                where: {
+                    userId: parseInt(userId),
+                    wrongAt: {
+                        gte: startDate,
+                        lte: endDate
+                    }
+                },
+                include: {
+                    vocab: {
+                        select: {
+                            id: true,
+                            lemma: true,
+                            pos: true,
+                            levelCEFR: true,
+                            translations: {
+                                where: { languageId: 2 },
+                                select: { translation: true }
+                            }
+                        }
+                    }
+                },
+                take: 10,
+                orderBy: { wrongAt: 'desc' }
+            });
+
+            const userDetail = {
+                user: {
+                    id: user.id,
+                    email: user.email,
+                    streak: user.streak,
+                    createdAt: user.createdAt,
+                    lastStudiedAt: user.lastStudiedAt,
+                    totalCards: user._count.srscard,
+                    totalWrongAnswers: user._count.wronganswer,
+                    totalStudySessions: user._count.studySessions
+                },
+                vocabLearning: {
+                    totalCards: vocabStats._count.id || 0,
+                    totalCorrect: vocabStats._sum.correctTotal || 0,
+                    totalWrong: vocabStats._sum.wrongTotal || 0,
+                    avgCorrect: Math.round(vocabStats._avg.correctTotal || 0),
+                    avgWrong: Math.round(vocabStats._avg.wrongTotal || 0),
+                    accuracyRate: vocabStats._sum.correctTotal && vocabStats._sum.wrongTotal ?
+                        Math.round((vocabStats._sum.correctTotal / (vocabStats._sum.correctTotal + vocabStats._sum.wrongTotal)) * 100) : 0,
+                    recentStudied: recentVocabStudied.map(card => ({
+                        vocabId: card.vocab?.id,
+                        lemma: card.vocab?.lemma,
+                        pos: card.vocab?.pos,
+                        level: card.vocab?.levelCEFR,
+                        meaning: card.vocab?.translations[0]?.translation || 'No translation',
+                        correctCount: card.correctTotal,
+                        wrongCount: card.wrongTotal,
+                        lastReviewed: card.lastReviewedAt,
+                        stage: card.stage
+                    }))
+                },
+                readingLearning: {
+                    byLevel: readingStats.map(stat => ({
+                        level: stat.level,
+                        totalSolved: stat._count.id,
+                        correctCount: stat._sum.isCorrect || 0,
+                        accuracyRate: Math.round(((stat._sum.isCorrect || 0) / stat._count.id) * 100)
+                    })),
+                    recentActivity: recentReading
+                },
+                listeningLearning: {
+                    byLevel: listeningStats.map(stat => ({
+                        level: stat.level,
+                        totalSolved: stat._count.id,
+                        correctCount: stat._sum.isCorrect || 0,
+                        accuracyRate: Math.round(((stat._sum.isCorrect || 0) / stat._count.id) * 100)
+                    })),
+                    recentActivity: recentListening
+                },
+                dailyActivity: dailyStats,
+                topWrongVocabs: topWrongVocabs.map(wrong => ({
+                    vocabId: wrong.vocab?.id,
+                    lemma: wrong.vocab?.lemma,
+                    pos: wrong.vocab?.pos,
+                    level: wrong.vocab?.levelCEFR,
+                    meaning: wrong.vocab?.translations[0]?.translation || 'No translation',
+                    wrongAt: wrong.wrongAt,
+                    attempts: wrong.attempts,
+                    isCompleted: wrong.isCompleted
+                }))
+            };
+
+            return ok(res, userDetail);
+        } else {
+            // 모든 사용자의 학습 현황 요약
+            const orderBy = (() => {
+                switch (sortBy) {
+                    case 'recent': return { lastStudiedAt: 'desc' };
+                    case 'streak': return { streak: 'desc' };
+                    case 'cards': return { srscard: { _count: 'desc' } };
+                    default: return { id: 'desc' };
+                }
+            })();
+
+            users = await prisma.user.findMany({
+                skip,
+                take: limitNum,
+                orderBy,
+                include: {
+                    _count: {
+                        select: {
+                            srscard: true,
+                            wronganswer: true,
+                            studySessions: true
+                        }
+                    },
+                    // 최근 일별 통계 1개만
+                    dailystudystat: {
+                        take: 1,
+                        orderBy: { date: 'desc' }
+                    }
+                }
+            });
+
+            totalCount = await prisma.user.count();
+
+            // 각 사용자의 추가 통계 계산
+            const usersWithStats = await Promise.all(users.map(async (user) => {
+                // 최근 30일간의 리딩/리스닝 통계
+                const [readingCount, listeningCount, vocabAccuracy] = await Promise.all([
+                    prisma.readingRecord.count({
+                        where: {
+                            userId: user.id,
+                            solvedAt: {
+                                gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+                            }
+                        }
+                    }),
+                    prisma.listeningRecord.count({
+                        where: {
+                            userId: user.id,
+                            solvedAt: {
+                                gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+                            }
+                        }
+                    }),
+                    prisma.srscard.aggregate({
+                        where: {
+                            userId: user.id,
+                            itemType: 'vocab'
+                        },
+                        _sum: {
+                            correctTotal: true,
+                            wrongTotal: true
+                        }
+                    })
+                ]);
+
+                return {
+                    id: user.id,
+                    email: user.email,
+                    streak: user.streak,
+                    createdAt: user.createdAt,
+                    lastStudiedAt: user.lastStudiedAt,
+                    totalCards: user._count.srscard,
+                    totalWrongAnswers: user._count.wronganswer,
+                    totalStudySessions: user._count.studySessions,
+                    recentActivity: {
+                        readingProblems: readingCount,
+                        listeningProblems: listeningCount,
+                        lastDailyStudy: user.dailystudystat[0] || null
+                    },
+                    vocabAccuracy: vocabAccuracy._sum.correctTotal && vocabAccuracy._sum.wrongTotal ?
+                        Math.round((vocabAccuracy._sum.correctTotal / (vocabAccuracy._sum.correctTotal + vocabAccuracy._sum.wrongTotal)) * 100) : 0
+                };
+            }));
+
+            return ok(res, {
+                users: usersWithStats,
+                pagination: {
+                    page: pageNum,
+                    limit: limitNum,
+                    totalCount,
+                    totalPages: Math.ceil(totalCount / limitNum),
+                    hasNext: skip + limitNum < totalCount,
+                    hasPrev: pageNum > 1
+                },
+                filters: {
+                    sortBy,
+                    dateFrom: startDate.toISOString(),
+                    dateTo: endDate.toISOString()
+                }
+            });
+        }
+
+    } catch (e) {
+        console.error('[ADMIN] Learning analytics error:', e);
+        return fail(res, 500, 'Failed to load learning analytics');
+    }
+});
+
 module.exports = router;

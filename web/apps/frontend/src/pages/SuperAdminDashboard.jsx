@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import UserLearningAnalytics from '../components/UserLearningAnalytics';
 
 const SuperAdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -112,6 +113,7 @@ const SuperAdminDashboard = () => {
           { id: 'reports', label: '🚨 신고 관리', icon: 'bi-flag' },
           { id: 'content', label: '🎯 컨텐츠 품질', icon: 'bi-clipboard-check' },
           { id: 'users', label: '👥 사용자 분석', icon: 'bi-people' },
+          { id: 'learning', label: '📚 학습 현황', icon: 'bi-book' },
           { id: 'system', label: '⚙️ 시스템', icon: 'bi-gear' }
         ].map(tab => (
           <li key={tab.id} className="nav-item">
@@ -448,6 +450,13 @@ const SuperAdminDashboard = () => {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* 학습 현황 탭 */}
+        {activeTab === 'learning' && (
+          <div className="tab-pane fade show active">
+            <UserLearningAnalytics />
           </div>
         )}
 
