@@ -29,7 +29,7 @@ export default function AdminDashboard() {
     const loadDashboard = async () => {
         try {
             setLoading(true);
-            const { data } = await fetchJSON('/admin/dashboard', withCreds());
+            const { data } = await fetchJSON('/api/admin/dashboard', withCreds());
             setDashboardData(data);
             setTimeOffset(data.timeMachine.dayOffset);
         } catch (error) {
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
         
         try {
             setIsSubmitting(true);
-            const { data } = await fetchJSON('/admin/cleanup-data', withCreds({
+            const { data } = await fetchJSON('/api/admin/cleanup-data', withCreds({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ type })
