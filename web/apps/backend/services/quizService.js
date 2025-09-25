@@ -677,78 +677,20 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
             acceptableAnswers.push(vocab.lemma);
         }
 
-        // lemma와 예문에서 단어 형태가 다른지 확인
+        // 무조건 뜻 표시 모드로 통일
         let useExample = false;
         let contextBlank = null;
 
-        if (targetExample) {
-            // 예문에 lemma나 다른 정답 형태가 포함되어 있는지 확인
-            const hasMatchInExample = acceptableAnswers.some(answer =>
-                answer && targetExample.includes(answer)
-            );
-
-            if (hasMatchInExample) {
-                // 예문에서 정답을 찾을 수 있으면 빈칸 처리
-                contextBlank = targetExample;
-                const allAnswers = [...acceptableAnswers].sort((a, b) => b.length - a.length);
-
-                for (const answer of allAnswers) {
-                    if (answer && contextBlank.includes(answer)) {
-                        const escapedAnswer = answer.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                        const regex = new RegExp(escapedAnswer, 'g');
-                        contextBlank = contextBlank.replace(regex, '___');
-                        useExample = true;
-                        console.log(`[FILL IN BLANK] Using example with blank: ${contextBlank}`);
-                        break;
-                    }
-                }
-            }
-        }
-
-        // 예문을 사용할 수 없는 경우, 힌트 방식 사용
-        if (!useExample) {
-            contextBlank = null; // 예문 사용하지 않음
-            console.log(`[FILL IN BLANK] No matching word in example, using hint mode for vocab ${vocab.id}`);
-        }
+        console.log(`[FILL IN BLANK] Using hint mode (meaning only) for vocab ${vocab.id}`);
+        // 예문 사용하지 않고 항상 뜻만 표시
 
         // 한국어 번역 추출
         const koreanTranslation = vocab.translations && vocab.translations[0]
             ? vocab.translations[0].translation
             : null;
 
-        // 한국어 해석에서 강조할 단어 찾기
-        let highlightedTranslation = koExample;
-        if (koExample && koreanTranslation) {
-            // 품사 정보 제거 (n., v., adj. 등)
-            const cleanedTranslation = koreanTranslation.replace(/^[a-zA-Z]+\.\s*/, '');
-
-            // 정답 번역에서 가능한 모든 의미 추출
-            const meanings = cleanedTranslation.split(/[,;\/]/).map(m => m.trim());
-
-            let foundMatch = false;
-            for (const meaning of meanings) {
-                if (meaning && koExample.includes(meaning)) {
-                    highlightedTranslation = koExample.replace(
-                        new RegExp(meaning.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
-                        `{{HIGHLIGHT_START}}${meaning}{{HIGHLIGHT_END}}`
-                    );
-                    foundMatch = true;
-                    break;
-                }
-            }
-
-            // 만약 직접 매칭되지 않으면 단어의 일부를 찾아보기
-            if (!foundMatch && cleanedTranslation.length >= 1) {
-                // 번역의 첫 글자라도 해석에 있는지 확인
-                const firstChar = cleanedTranslation.charAt(0);
-                if (koExample.includes(firstChar)) {
-                    highlightedTranslation = koExample.replace(
-                        new RegExp(firstChar.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
-                        `{{HIGHLIGHT_START}}${firstChar}{{HIGHLIGHT_END}}`
-                    );
-                }
-            }
-        }
+        // 예문 해석은 사용하지 않음 (뜻 표시 모드로 통일)
+        let highlightedTranslation = null;
 
         // 디버깅: 데이터 로깅 (2025-09-17 수정)
         console.log('Japanese Fill-in-Blank Quiz Item:', {
@@ -770,15 +712,15 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
         quizItems.push({
             cardId: cardIdMap.get(vocab.id) || null,
             vocabId: vocab.id,
-            question: useExample ? contextBlank : (koreanTranslation || '의미 없음'),
+            question: koreanTranslation || '의미 없음', // 항상 뜻만 표시
             answer: targetWord, // 기본 정답
             quizType: 'jp_fill_in_blank',
-            contextSentence: useExample ? targetExample : null,
-            contextBlank: useExample ? contextBlank : null,
-            contextTranslation: useExample ? highlightedTranslation : null, // 예문 모드에서만 해석 표시
+            contextSentence: null, // 예문 사용하지 않음
+            contextBlank: null, // 빈칸 사용하지 않음
+            contextTranslation: null, // 예문 해석 사용하지 않음
             answerTranslation: koreanTranslation, // 정답의 한국어 번역
             acceptableAnswers: acceptableAnswers,
-            useExample: useExample, // 프론트엔드에서 모드 구분용
+            useExample: false, // 항상 false로 통일
             pron: {
                 romaji: romaji,
                 hiragana: hiragana
