@@ -759,7 +759,9 @@ export default function JapaneseReading() {
                                                     color: '#495057',
                                                     minWidth: '24px'
                                                 }}>{key}.</span>
-                                                <span style={{ color: '#495057' }}>{value}</span>
+                                                <span style={{ color: '#495057' }}>
+                                                    {makeClickableText(value)}
+                                                </span>
                                             </div>
                                         );
                                     } else {
