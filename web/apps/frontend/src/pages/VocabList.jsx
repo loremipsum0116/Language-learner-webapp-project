@@ -1114,8 +1114,10 @@ export default function VocabList() {
         console.log('🔍 [DEBUG] playVocabAudio vocab.source:', vocab.source, 'lemma:', vocab.lemma);
 
         // Check if this is a Japanese word first - 여러 조건으로 감지
+        // 일본어 문자(히라가나, 카타카나, 한자) 포함 여부도 확인
+        const hasJapaneseChars = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(vocab.lemma || '');
         if (vocab.source === 'jlpt_vocabs' || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
-            vocab.levelJLPT ||
+            vocab.levelJLPT || hasJapaneseChars ||
             (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'))) {
             console.log('🔍 [DEBUG] Detected Japanese word:', vocab.lemma, 'levelJLPT:', vocab.levelJLPT);
 

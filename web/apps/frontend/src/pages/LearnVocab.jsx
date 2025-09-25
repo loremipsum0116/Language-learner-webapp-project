@@ -1998,9 +1998,23 @@ export default function LearnVocab() {
                 metadata: {
                     word: current.question || current.vocab?.lemma,
                     meaning: current.answer || current.vocab?.ko_gloss,
-                    audioPath: current.vocab?.source === 'jlpt' ?
-                        `jlpt/${current.vocab?.levelJLPT}/${safeFileName(current.question || current.vocab?.lemma)}.mp3` :
-                        `cefr/${current.vocab?.levelCEFR}/${safeFileName(current.question || current.vocab?.lemma)}.mp3`,
+                    audioPath: (() => {
+                        // 일본어 판별 (히라가나, 카타카나, 한자 포함 여부 확인)
+                        const word = current.question || current.vocab?.lemma || '';
+                        const isJapaneseWord = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(word) ||
+                                              current.vocab?.levelJLPT ||
+                                              current.vocab?.source === 'jlpt' ||
+                                              current.vocab?.source === 'jlpt_total';
+
+                        if (isJapaneseWord) {
+                            // 일본어는 JLPT 경로 사용 (레벨이 없으면 N5 기본값)
+                            const jlptLevel = current.vocab?.levelJLPT || 'N5';
+                            return `jlpt/${jlptLevel.toLowerCase()}/${safeFileName(word)}.mp3`;
+                        } else {
+                            // 영어는 CEFR 경로 사용
+                            return `cefr/${current.vocab?.levelCEFR}/${safeFileName(word)}.mp3`;
+                        }
+                    })(),
                     url: window.location.href,
                     reportType: reportType,
                     userAgent: navigator.userAgent,
