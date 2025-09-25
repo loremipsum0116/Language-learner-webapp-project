@@ -89,10 +89,10 @@ export default function VocabDetailModal({
   const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
                      (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
 
-  // Cleanup audio when component unmounts or modal closes
+  // Cleanup audio only when component unmounts (not on every prop change)
   useEffect(() => {
-    const handleCleanup = () => {
-      console.log('🔇 VocabDetailModal cleanup: stopping audio');
+    return () => {
+      console.log('🔇 VocabDetailModal cleanup: stopping audio on unmount');
       if (stopAudio) {
         stopAudio();
       }
@@ -105,19 +105,10 @@ export default function VocabDetailModal({
         }
       });
     };
+  }, []); // Empty dependency array - only run on mount/unmount
 
-    return handleCleanup;
-  }, [stopAudio]);
-
-  // Also cleanup when the modal is about to be closed
-  useEffect(() => {
-    if (!vocab) {
-      console.log('🔇 VocabDetailModal: vocab is null, cleaning up audio');
-      if (stopAudio) {
-        stopAudio();
-      }
-    }
-  }, [vocab, stopAudio]);
+  // Only cleanup when component is actually unmounting (not on every vocab change)
+  // This prevents audio from being stopped when users are just switching between audio buttons
 
   // Parse examples if it's a string - handle all possible cases
   let rawMeanings = [];
