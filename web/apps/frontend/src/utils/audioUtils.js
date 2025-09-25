@@ -1,7 +1,7 @@
 // 오디오 관련 유틸리티 함수들
 
-// GCS 베이스 URL
-const GCS_BASE_URL = 'https://storage.googleapis.com/language-learner-audio';
+// GCS 베이스 URL - public 경로 포함 수정
+const GCS_BASE_URL = 'https://storage.googleapis.com/language-learner-audio/public';
 
 /**
  * audioLocal 데이터를 파싱하고 GCS URL로 변환하는 함수

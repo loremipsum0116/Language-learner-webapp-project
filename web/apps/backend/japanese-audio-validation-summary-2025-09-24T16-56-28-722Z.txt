@@ -1,0 +1,101 @@
+
+=== 일본어 단어 오디오 경로 검증 리포트 ===
+검증 시간: 2025. 9. 25. 오전 1:56:28
+
+📊 전체 통계:
+- 검증된 일본어 단어: 8404개
+- 총 파일 검사 수: 25212개
+- 존재하는 파일: 0개 (0.0%)
+- 누락된 파일: 25212개 (100.0%)
+- 에러 발생: 0개
+
+🎯 VocabList word.mp3 경로 검증:
+- 성공: 0개
+- 실패: 8404개
+- 성공률: 0.0%
+
+🎯 VocabDetailModal gloss.mp3 경로 검증:
+- 성공: 0개
+- 실패: 8404개
+- 성공률: 0.0%
+
+🎯 VocabDetailModal example.mp3 경로 검증:
+- 성공: 0개
+- 실패: 8404개
+- 성공률: 0.0%
+
+❌ 문제가 있는 주요 단어들:
+
+VocabList word.mp3 실패 상위 20개:
+- アイデア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%A4%E3%83%87%E3%82%A2/word.mp3 [404]
+- アクセル (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%AF%E3%82%BB%E3%83%AB/word.mp3 [404]
+- あくどい (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%8F%E3%81%A9%E3%81%84/word.mp3 [404]
+- あざ笑う (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%96%E7%AC%91%E3%81%86/word.mp3 [404]
+- あっさり (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%A3%E3%81%95%E3%82%8A/word.mp3 [404]
+- アップ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%83%E3%83%97/word.mp3 [404]
+- アプローチ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81/word.mp3 [404]
+- あべこべ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%B9%E3%81%93%E3%81%B9/word.mp3 [404]
+- アマチュア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%9E%E3%83%81%E3%83%A5%E3%82%A2/word.mp3 [404]
+- あやふや (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%84%E3%81%B5%E3%82%84/word.mp3 [404]
+- あら (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%89/word.mp3 [404]
+- アラブ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%A9%E3%83%96/word.mp3 [404]
+- アルカリ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%82%AB%E3%83%AA/word.mp3 [404]
+- アルミ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%83%9F/word.mp3 [404]
+- アワー (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AF%E3%83%BC/word.mp3 [404]
+- アンケート (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/word.mp3 [404]
+- アンコール (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%AB/word.mp3 [404]
+- いい加減 (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%84%E5%8A%A0%E6%B8%9B/word.mp3 [404]
+- イエス (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A4%E3%82%A8%E3%82%B9/word.mp3 [404]
+- いく (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%8F/word.mp3 [404]
+
+VocabDetailModal gloss.mp3 실패 상위 20개:
+- アイデア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%A4%E3%83%87%E3%82%A2/gloss.mp3 [404]
+- アクセル (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%AF%E3%82%BB%E3%83%AB/gloss.mp3 [404]
+- あくどい (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%8F%E3%81%A9%E3%81%84/gloss.mp3 [404]
+- あざ笑う (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%96%E7%AC%91%E3%81%86/gloss.mp3 [404]
+- あっさり (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%A3%E3%81%95%E3%82%8A/gloss.mp3 [404]
+- アップ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%83%E3%83%97/gloss.mp3 [404]
+- アプローチ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81/gloss.mp3 [404]
+- あべこべ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%B9%E3%81%93%E3%81%B9/gloss.mp3 [404]
+- アマチュア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%9E%E3%83%81%E3%83%A5%E3%82%A2/gloss.mp3 [404]
+- あやふや (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%84%E3%81%B5%E3%82%84/gloss.mp3 [404]
+- あら (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%89/gloss.mp3 [404]
+- アラブ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%A9%E3%83%96/gloss.mp3 [404]
+- アルカリ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%82%AB%E3%83%AA/gloss.mp3 [404]
+- アルミ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%83%9F/gloss.mp3 [404]
+- アワー (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AF%E3%83%BC/gloss.mp3 [404]
+- アンケート (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/gloss.mp3 [404]
+- アンコール (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%AB/gloss.mp3 [404]
+- いい加減 (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%84%E5%8A%A0%E6%B8%9B/gloss.mp3 [404]
+- イエス (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A4%E3%82%A8%E3%82%B9/gloss.mp3 [404]
+- いく (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%8F/gloss.mp3 [404]
+
+VocabDetailModal example.mp3 실패 상위 20개:
+- アイデア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%A4%E3%83%87%E3%82%A2/example.mp3 [404]
+- アクセル (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%82%AF%E3%82%BB%E3%83%AB/example.mp3 [404]
+- あくどい (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%8F%E3%81%A9%E3%81%84/example.mp3 [404]
+- あざ笑う (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%96%E7%AC%91%E3%81%86/example.mp3 [404]
+- あっさり (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%A3%E3%81%95%E3%82%8A/example.mp3 [404]
+- アップ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%83%E3%83%97/example.mp3 [404]
+- アプローチ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%97%E3%83%AD%E3%83%BC%E3%83%81/example.mp3 [404]
+- あべこべ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%81%B9%E3%81%93%E3%81%B9/example.mp3 [404]
+- アマチュア (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%9E%E3%83%81%E3%83%A5%E3%82%A2/example.mp3 [404]
+- あやふや (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%84%E3%81%B5%E3%82%84/example.mp3 [404]
+- あら (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%82%E3%82%89/example.mp3 [404]
+- アラブ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%A9%E3%83%96/example.mp3 [404]
+- アルカリ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%82%AB%E3%83%AA/example.mp3 [404]
+- アルミ (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AB%E3%83%9F/example.mp3 [404]
+- アワー (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%AF%E3%83%BC/example.mp3 [404]
+- アンケート (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B1%E3%83%BC%E3%83%88/example.mp3 [404]
+- アンコール (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A2%E3%83%B3%E3%82%B3%E3%83%BC%E3%83%AB/example.mp3 [404]
+- いい加減 (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%84%E5%8A%A0%E6%B8%9B/example.mp3 [404]
+- イエス (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%82%A4%E3%82%A8%E3%82%B9/example.mp3 [404]
+- いく (N1): https://storage.googleapis.com/language-learner-audio/jlpt/n1/%E3%81%84%E3%81%8F/example.mp3 [404]
+
+✅ 추천 해결 방안:
+1. 실패한 파일들의 실제 GCS 경로 확인
+2. 데이터베이스 audioLocal 필드 수정
+3. 프론트엔드 경로 생성 로직 개선
+4. 누락된 오디오 파일 업로드
+
+상세한 데이터는 JSON 파일을 확인하세요.

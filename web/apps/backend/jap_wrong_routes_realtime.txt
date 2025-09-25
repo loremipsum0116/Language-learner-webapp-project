@@ -1,0 +1,4473 @@
+=== 일본어 단어 잘못된 오디오 경로 목록 (실시간) ===
+시작 시간: 2025. 9. 25. 오전 2:06:35
+
+🔴 一敗 (N1) - ID: 14083
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ippai_defeat/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:08:44
+
+🔴 一敗 (N1) - ID: 14083
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ippai_defeat/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:08:44
+
+🔴 一敗 (N1) - ID: 14083
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ippai_defeat/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:08:44
+
+🔴 仕舞 (N1) - ID: 13433
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/shimai_noun/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:49
+
+🔴 仕舞 (N1) - ID: 13433
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/shimai_noun/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:49
+
+🔴 仕舞 (N1) - ID: 13433
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/shimai_noun/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:49
+
+🔴 伐る (N1) - ID: 13644
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiru_batsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:59
+
+🔴 伐る (N1) - ID: 13644
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiru_batsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:59
+
+🔴 伐る (N1) - ID: 13644
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiru_batsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:09:59
+
+🔴 僧 (N1) - ID: 14231
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sou_monk/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:10:46
+
+🔴 僧 (N1) - ID: 14231
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sou_monk/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:10:46
+
+🔴 僧 (N1) - ID: 14231
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sou_monk/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:10:47
+
+🔴 切り (N1) - ID: 14031
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiri_suffix/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:11:39
+
+🔴 切り (N1) - ID: 14031
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiri_suffix/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:11:39
+
+🔴 切り (N1) - ID: 14031
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/kiri_suffix/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:11:39
+
+🔴 対辺 (N1) - ID: 13892
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/taihen_noun/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:14:59
+
+🔴 対辺 (N1) - ID: 13892
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/taihen_noun/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:14:59
+
+🔴 対辺 (N1) - ID: 13892
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/taihen_noun/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:14:59
+
+🔴 差異 (N1) - ID: 14078
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sai_noun/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:15:20
+
+🔴 差異 (N1) - ID: 14078
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sai_noun/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:15:20
+
+🔴 差異 (N1) - ID: 14078
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/sai_noun/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:15:20
+
+🔴 権 (N1) - ID: 12149
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ken_2/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:19:17
+
+🔴 権 (N1) - ID: 12149
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ken_2/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:19:17
+
+🔴 権 (N1) - ID: 12149
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/ken_2/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:19:17
+
+🔴 煌々と (N1) - ID: 12484
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/koukouto/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:21:03
+
+🔴 煌々と (N1) - ID: 12484
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/koukouto/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:21:03
+
+🔴 煌々と (N1) - ID: 12484
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/koukouto/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:21:03
+
+🔴 絶つ (N1) - ID: 14059
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/tatsu_zetsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:23:22
+
+🔴 絶つ (N1) - ID: 14059
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/tatsu_zetsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:23:22
+
+🔴 絶つ (N1) - ID: 14059
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n1/tatsu_zetsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:23:22
+
+🔴 イコール (N2) - ID: 15483
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikoru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:26
+
+🔴 イコール (N2) - ID: 15483
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikoru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:26
+
+🔴 イコール (N2) - ID: 15483
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikoru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:26
+
+🔴 ウーマン (N2) - ID: 16228
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/uman/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:29
+
+🔴 ウーマン (N2) - ID: 16228
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/uman/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:29
+
+🔴 ウーマン (N2) - ID: 16228
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/uman/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:29
+
+🔴 おおざっぱ (N2) - ID: 16007
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ozappa/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:34
+
+🔴 おおざっぱ (N2) - ID: 16007
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ozappa/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:34
+
+🔴 おおざっぱ (N2) - ID: 16007
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ozappa/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:34
+
+🔴 おまちどおさま (N2) - ID: 15564
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/omachidosama/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:39
+
+🔴 おまちどおさま (N2) - ID: 15564
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/omachidosama/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:39
+
+🔴 おまちどおさま (N2) - ID: 15564
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/omachidosama/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:40
+
+🔴 カバー (N2) - ID: 15516
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaba/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:47
+
+🔴 カバー (N2) - ID: 15516
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaba/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:47
+
+🔴 カバー (N2) - ID: 15516
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaba/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:48
+
+🔴 カロリー (N2) - ID: 16230
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/karori/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:50
+
+🔴 カロリー (N2) - ID: 16230
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/karori/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:50
+
+🔴 カロリー (N2) - ID: 16230
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/karori/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:50
+
+🔴 こうして (N2) - ID: 15997
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koushite/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 こうして (N2) - ID: 15997
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koushite/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 こうして (N2) - ID: 15997
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koushite/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 ごくろうさま (N2) - ID: 15753
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gokurosama/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 ごくろうさま (N2) - ID: 15753
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gokurosama/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 ごくろうさま (N2) - ID: 15753
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gokurosama/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:28:59
+
+🔴 コンクリート (N2) - ID: 15510
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/konkurito/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:05
+
+🔴 コンクリート (N2) - ID: 15510
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/konkurito/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:05
+
+🔴 コンクリート (N2) - ID: 15510
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/konkurito/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:05
+
+🔴 さようなら (N2) - ID: 15978
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sayounara/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:07
+
+🔴 さようなら (N2) - ID: 15978
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sayounara/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:07
+
+🔴 さようなら (N2) - ID: 15978
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sayounara/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:07
+
+🔴 シーツ (N2) - ID: 15890
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shitsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:09
+
+🔴 シーツ (N2) - ID: 15890
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shitsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:09
+
+🔴 シーツ (N2) - ID: 15890
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shitsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:09
+
+🔴 シャッター (N2) - ID: 16498
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shatta/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:13
+
+🔴 シャッター (N2) - ID: 16498
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shatta/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:13
+
+🔴 シャッター (N2) - ID: 16498
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shatta/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:13
+
+🔴 シリーズ (N2) - ID: 15883
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirizu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 シリーズ (N2) - ID: 15883
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirizu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 シリーズ (N2) - ID: 15883
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirizu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 ずうずうしい (N2) - ID: 16040
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuzushii/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 ずうずうしい (N2) - ID: 16040
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuzushii/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 ずうずうしい (N2) - ID: 16040
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuzushii/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:15
+
+🔴 ずうっと (N2) - ID: 16268
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zutto/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:16
+
+🔴 ずうっと (N2) - ID: 16268
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zutto/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:16
+
+🔴 ずうっと (N2) - ID: 16268
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zutto/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:16
+
+🔴 スクール (N2) - ID: 15716
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:16
+
+🔴 スクール (N2) - ID: 15716
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:16
+
+🔴 スクール (N2) - ID: 15716
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:17
+
+🔴 スケジュール (N2) - ID: 16275
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukejuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:17
+
+🔴 スケジュール (N2) - ID: 16275
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukejuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:17
+
+🔴 スケジュール (N2) - ID: 16275
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sukejuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:17
+
+🔴 ステージ (N2) - ID: 16494
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suteji/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:18
+
+🔴 ステージ (N2) - ID: 16494
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suteji/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:19
+
+🔴 ステージ (N2) - ID: 16494
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suteji/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:19
+
+🔴 スマート (N2) - ID: 16396
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sumato/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:20
+
+🔴 スマート (N2) - ID: 16396
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sumato/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:20
+
+🔴 スマート (N2) - ID: 16396
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sumato/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:20
+
+🔴 チョーク (N2) - ID: 16493
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:32
+
+🔴 チョーク (N2) - ID: 16493
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:32
+
+🔴 チョーク (N2) - ID: 16493
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:32
+
+🔴 テーマ (N2) - ID: 16049
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tema/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:33
+
+🔴 テーマ (N2) - ID: 16049
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tema/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:33
+
+🔴 テーマ (N2) - ID: 16049
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tema/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:33
+
+🔴 トレーニング (N2) - ID: 15507
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toreningu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:37
+
+🔴 トレーニング (N2) - ID: 15507
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toreningu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:37
+
+🔴 トレーニング (N2) - ID: 15507
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toreningu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:37
+
+🔴 ブローチ (N2) - ID: 16491
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/burochi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:53
+
+🔴 ブローチ (N2) - ID: 16491
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/burochi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:53
+
+🔴 ブローチ (N2) - ID: 16491
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/burochi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:53
+
+🔴 ヘリコプター (N2) - ID: 15761
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/herikoputa/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:55
+
+🔴 ヘリコプター (N2) - ID: 15761
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/herikoputa/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:55
+
+🔴 ヘリコプター (N2) - ID: 15761
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/herikoputa/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:55
+
+🔴 まあまあ (N2) - ID: 16053
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mama/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:58
+
+🔴 まあまあ (N2) - ID: 16053
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mama/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:58
+
+🔴 まあまあ (N2) - ID: 16053
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mama/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:29:58
+
+🔴 マフラー (N2) - ID: 15972
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mafura/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:01
+
+🔴 マフラー (N2) - ID: 15972
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mafura/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:01
+
+🔴 マフラー (N2) - ID: 15972
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mafura/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:01
+
+🔴 メニュー (N2) - ID: 16004
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/menyu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:06
+
+🔴 メニュー (N2) - ID: 16004
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/menyu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:07
+
+🔴 メニュー (N2) - ID: 16004
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/menyu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:07
+
+🔴 レインコート (N2) - ID: 16241
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reinkoto/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:16
+
+🔴 レインコート (N2) - ID: 16241
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reinkoto/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:17
+
+🔴 レインコート (N2) - ID: 16241
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reinkoto/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:17
+
+🔴 レクリエーション (N2) - ID: 16489
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rekurieshon/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:17
+
+🔴 レクリエーション (N2) - ID: 16489
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rekurieshon/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:17
+
+🔴 レクリエーション (N2) - ID: 16489
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rekurieshon/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:17
+
+🔴 ローマ字 (N2) - ID: 16398
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/romaji/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:18
+
+🔴 ローマ字 (N2) - ID: 16398
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/romaji/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:18
+
+🔴 ローマ字 (N2) - ID: 16398
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/romaji/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:18
+
+🔴 わりあいに (N2) - ID: 15569
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/wariaini/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:19
+
+🔴 わりあいに (N2) - ID: 15569
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/wariaini/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:19
+
+🔴 わりあいに (N2) - ID: 15569
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/wariaini/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:20
+
+🔴 上下 (N2) - ID: 16080
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouge/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:25
+
+🔴 上下 (N2) - ID: 16080
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouge/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:25
+
+🔴 上下 (N2) - ID: 16080
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouge/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:25
+
+🔴 下降 (N2) - ID: 15570
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_ka/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:29
+
+🔴 下降 (N2) - ID: 15570
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_ka/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:29
+
+🔴 下降 (N2) - ID: 15570
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_ka/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:29
+
+🔴 両側 (N2) - ID: 15522
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryougawa/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:31
+
+🔴 両側 (N2) - ID: 15522
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryougawa/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:31
+
+🔴 両側 (N2) - ID: 15522
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryougawa/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:31
+
+🔴 中年 (N2) - ID: 16433
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuunen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:33
+
+🔴 中年 (N2) - ID: 16433
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuunen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:33
+
+🔴 中年 (N2) - ID: 16433
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuunen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:33
+
+🔴 中途 (N2) - ID: 15984
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuuto/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 中途 (N2) - ID: 15984
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuuto/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 中途 (N2) - ID: 15984
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuuto/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 中間 (N2) - ID: 15963
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuukan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 中間 (N2) - ID: 15963
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuukan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 中間 (N2) - ID: 15963
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chuukan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:35
+
+🔴 交替 (N2) - ID: 15779
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:42
+
+🔴 交替 (N2) - ID: 15779
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:42
+
+🔴 交替 (N2) - ID: 15779
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:42
+
+🔴 交流 (N2) - ID: 16185
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouryuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:42
+
+🔴 交流 (N2) - ID: 16185
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouryuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:43
+
+🔴 交流 (N2) - ID: 16185
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouryuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:43
+
+🔴 交通機関 (N2) - ID: 16391
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutsuukikan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:43
+
+🔴 交通機関 (N2) - ID: 16391
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutsuukikan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:43
+
+🔴 交通機関 (N2) - ID: 16391
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koutsuukikan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:43
+
+🔴 人通り (N2) - ID: 15503
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hitodouri/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:44
+
+🔴 人通り (N2) - ID: 15503
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hitodouri/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:44
+
+🔴 人通り (N2) - ID: 15503
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hitodouri/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:44
+
+🔴 代える (N2) - ID: 16248
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaeru_dai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:46
+
+🔴 代える (N2) - ID: 16248
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaeru_dai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:46
+
+🔴 代える (N2) - ID: 16248
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaeru_dai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:46
+
+🔴 以降 (N2) - ID: 16447
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:47
+
+🔴 以降 (N2) - ID: 16447
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:47
+
+🔴 以降 (N2) - ID: 16447
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ikou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:47
+
+🔴 伯母さん (N2) - ID: 15930
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/obasan_haku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:52
+
+🔴 伯母さん (N2) - ID: 15930
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/obasan_haku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:52
+
+🔴 伯母さん (N2) - ID: 15930
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/obasan_haku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:52
+
+🔴 伯父さん (N2) - ID: 15894
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ojisan_haku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:52
+
+🔴 伯父さん (N2) - ID: 15894
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ojisan_haku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:53
+
+🔴 伯父さん (N2) - ID: 15894
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ojisan_haku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:30:53
+
+🔴 修繕 (N2) - ID: 15518
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shuuzen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:02
+
+🔴 修繕 (N2) - ID: 15518
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shuuzen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:02
+
+🔴 修繕 (N2) - ID: 15518
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shuuzen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:02
+
+🔴 倉庫 (N2) - ID: 16231
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/souko/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:02
+
+🔴 倉庫 (N2) - ID: 16231
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/souko/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:02
+
+🔴 倉庫 (N2) - ID: 16231
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/souko/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:03
+
+🔴 偶数 (N2) - ID: 16077
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/guusuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:06
+
+🔴 偶数 (N2) - ID: 16077
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/guusuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:06
+
+🔴 偶数 (N2) - ID: 16077
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/guusuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:06
+
+🔴 公共 (N2) - ID: 15940
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koukyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:17
+
+🔴 公共 (N2) - ID: 15940
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koukyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:17
+
+🔴 公共 (N2) - ID: 15940
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koukyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:17
+
+🔴 公務 (N2) - ID: 15907
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:17
+
+🔴 公務 (N2) - ID: 15907
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:18
+
+🔴 公務 (N2) - ID: 15907
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:18
+
+🔴 公害 (N2) - ID: 16242
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:18
+
+🔴 公害 (N2) - ID: 16242
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:18
+
+🔴 公害 (N2) - ID: 16242
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:18
+
+🔴 円周 (N2) - ID: 15725
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/enshuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:23
+
+🔴 円周 (N2) - ID: 15725
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/enshuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:23
+
+🔴 円周 (N2) - ID: 15725
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/enshuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:23
+
+🔴 冷凍 (N2) - ID: 15958
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reitou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:28
+
+🔴 冷凍 (N2) - ID: 15958
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reitou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:28
+
+🔴 冷凍 (N2) - ID: 15958
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/reitou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:28
+
+🔴 出張 (N2) - ID: 16443
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shucchou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:31
+
+🔴 出張 (N2) - ID: 16443
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shucchou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:31
+
+🔴 出張 (N2) - ID: 16443
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shucchou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:31
+
+🔴 別荘 (N2) - ID: 15962
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bessou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:38
+
+🔴 別荘 (N2) - ID: 15962
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bessou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:38
+
+🔴 別荘 (N2) - ID: 15962
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bessou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:38
+
+🔴 功績 (N2) - ID: 15973
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouseki/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:45
+
+🔴 功績 (N2) - ID: 15973
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouseki/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:45
+
+🔴 功績 (N2) - ID: 15973
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouseki/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:45
+
+🔴 努める (N2) - ID: 16265
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsutomeru_do/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:47
+
+🔴 努める (N2) - ID: 16265
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsutomeru_do/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:47
+
+🔴 努める (N2) - ID: 16265
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsutomeru_do/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:47
+
+🔴 動作 (N2) - ID: 16475
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/dousa/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:48
+
+🔴 動作 (N2) - ID: 16475
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/dousa/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:48
+
+🔴 動作 (N2) - ID: 16475
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/dousa/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:48
+
+🔴 勝負 (N2) - ID: 15709
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoubu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:49
+
+🔴 勝負 (N2) - ID: 15709
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoubu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:50
+
+🔴 勝負 (N2) - ID: 15709
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoubu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:50
+
+🔴 包装 (N2) - ID: 16208
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:51
+
+🔴 包装 (N2) - ID: 16208
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:51
+
+🔴 包装 (N2) - ID: 16208
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:51
+
+🔴 単数 (N2) - ID: 15731
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tansuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:55
+
+🔴 単数 (N2) - ID: 15731
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tansuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:55
+
+🔴 単数 (N2) - ID: 15731
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tansuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:55
+
+🔴 原料 (N2) - ID: 15703
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genryou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:57
+
+🔴 原料 (N2) - ID: 15703
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genryou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:57
+
+🔴 原料 (N2) - ID: 15703
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genryou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:58
+
+🔴 原稿 (N2) - ID: 16260
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genkou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:58
+
+🔴 原稿 (N2) - ID: 16260
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genkou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:59
+
+🔴 原稿 (N2) - ID: 16260
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/genkou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:59
+
+🔴 友好 (N2) - ID: 16197
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:31:59
+
+🔴 友好 (N2) - ID: 16197
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:00
+
+🔴 友好 (N2) - ID: 16197
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:00
+
+🔴 反映 (N2) - ID: 16032
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:00
+
+🔴 反映 (N2) - ID: 16032
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:00
+
+🔴 反映 (N2) - ID: 16032
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:00
+
+🔴 口実 (N2) - ID: 16221
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koujitsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:04
+
+🔴 口実 (N2) - ID: 16221
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koujitsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:04
+
+🔴 口実 (N2) - ID: 16221
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koujitsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:04
+
+🔴 句読点 (N2) - ID: 16470
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kutouten/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:05
+
+🔴 句読点 (N2) - ID: 16470
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kutouten/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:05
+
+🔴 句読点 (N2) - ID: 16470
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kutouten/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:05
+
+🔴 合同 (N2) - ID: 15991
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/godou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:07
+
+🔴 合同 (N2) - ID: 15991
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/godou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:07
+
+🔴 合同 (N2) - ID: 15991
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/godou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:08
+
+🔴 名字 (N2) - ID: 15704
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/myouji/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:10
+
+🔴 名字 (N2) - ID: 15704
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/myouji/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:10
+
+🔴 名字 (N2) - ID: 15704
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/myouji/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:10
+
+🔴 商業 (N2) - ID: 15759
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 商業 (N2) - ID: 15759
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 商業 (N2) - ID: 15759
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 商社 (N2) - ID: 16269
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousha/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 商社 (N2) - ID: 16269
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousha/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 商社 (N2) - ID: 16269
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousha/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:17
+
+🔴 回数 (N2) - ID: 16060
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaisuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:22
+
+🔴 回数 (N2) - ID: 16060
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaisuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:22
+
+🔴 回数 (N2) - ID: 16060
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaisuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:22
+
+🔴 図表 (N2) - ID: 16492
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuhyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:24
+
+🔴 図表 (N2) - ID: 16492
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuhyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:25
+
+🔴 図表 (N2) - ID: 16492
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zuhyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:25
+
+🔴 坊や (N2) - ID: 15496
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bouya/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:32
+
+🔴 坊や (N2) - ID: 15496
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bouya/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:32
+
+🔴 坊や (N2) - ID: 15496
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bouya/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:33
+
+🔴 境界 (N2) - ID: 16423
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyoukai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:40
+
+🔴 境界 (N2) - ID: 16423
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyoukai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:40
+
+🔴 境界 (N2) - ID: 16423
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyoukai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:40
+
+🔴 夕刊 (N2) - ID: 16400
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:45
+
+🔴 夕刊 (N2) - ID: 16400
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:45
+
+🔴 夕刊 (N2) - ID: 16400
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yuukan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:32:45
+
+🔴 安易 (N2) - ID: 16013
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ani/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:01
+
+🔴 安易 (N2) - ID: 16013
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ani/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:01
+
+🔴 安易 (N2) - ID: 16013
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ani/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:01
+
+🔴 定規 (N2) - ID: 16063
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jougi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:03
+
+🔴 定規 (N2) - ID: 16063
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jougi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:03
+
+🔴 定規 (N2) - ID: 16063
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jougi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:04
+
+🔴 将棋 (N2) - ID: 15713
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:14
+
+🔴 将棋 (N2) - ID: 15713
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:14
+
+🔴 将棋 (N2) - ID: 15713
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shougi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:14
+
+🔴 小便 (N2) - ID: 15692
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shouben/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:14
+
+🔴 小便 (N2) - ID: 15692
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shouben/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:14
+
+🔴 小便 (N2) - ID: 15692
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shouben/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:15
+
+🔴 小数 (N2) - ID: 15743
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:15
+
+🔴 小数 (N2) - ID: 15743
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:16
+
+🔴 小数 (N2) - ID: 15743
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shousuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:16
+
+🔴 工員 (N2) - ID: 16033
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:21
+
+🔴 工員 (N2) - ID: 16033
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工員 (N2) - ID: 16033
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kouin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工夫 (N2) - ID: 16229
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kufuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工夫 (N2) - ID: 16229
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kufuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工夫 (N2) - ID: 16229
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kufuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工芸 (N2) - ID: 15751
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工芸 (N2) - ID: 15751
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 工芸 (N2) - ID: 15751
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kougei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:22
+
+🔴 幼児 (N2) - ID: 15688
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youji/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:26
+
+🔴 幼児 (N2) - ID: 15688
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youji/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:26
+
+🔴 幼児 (N2) - ID: 15688
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youji/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:27
+
+🔴 庖丁 (N2) - ID: 15530
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houchou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:30
+
+🔴 庖丁 (N2) - ID: 15530
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houchou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:30
+
+🔴 庖丁 (N2) - ID: 15530
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houchou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:30
+
+🔴 強化 (N2) - ID: 15888
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouka/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:38
+
+🔴 強化 (N2) - ID: 15888
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouka/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:38
+
+🔴 強化 (N2) - ID: 15888
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouka/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:38
+
+🔴 当日 (N2) - ID: 16203
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujitsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:39
+
+🔴 当日 (N2) - ID: 16203
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujitsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:39
+
+🔴 当日 (N2) - ID: 16203
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujitsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:39
+
+🔴 形容動詞 (N2) - ID: 16210
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keiyoudoushi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:39
+
+🔴 形容動詞 (N2) - ID: 16210
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keiyoudoushi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:39
+
+🔴 形容動詞 (N2) - ID: 16210
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keiyoudoushi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:40
+
+🔴 往復 (N2) - ID: 16278
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/oufuku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:42
+
+🔴 往復 (N2) - ID: 16278
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/oufuku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:43
+
+🔴 往復 (N2) - ID: 16278
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/oufuku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:43
+
+🔴 御馳走 (N2) - ID: 16386
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gochisou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:47
+
+🔴 御馳走 (N2) - ID: 16386
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gochisou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:47
+
+🔴 御馳走 (N2) - ID: 16386
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gochisou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:47
+
+🔴 応ずる (N2) - ID: 15531
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouzuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:50
+
+🔴 応ずる (N2) - ID: 15531
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouzuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:50
+
+🔴 応ずる (N2) - ID: 15531
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouzuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:50
+
+🔴 応援 (N2) - ID: 15981
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:51
+
+🔴 応援 (N2) - ID: 15981
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:51
+
+🔴 応援 (N2) - ID: 15981
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ouen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:33:51
+
+🔴 慶ぶ (N2) - ID: 16490
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yorokobu_kei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:04
+
+🔴 慶ぶ (N2) - ID: 16490
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yorokobu_kei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:04
+
+🔴 慶ぶ (N2) - ID: 16490
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yorokobu_kei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:04
+
+🔴 放る (N2) - ID: 15904
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:31
+
+🔴 放る (N2) - ID: 15904
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:31
+
+🔴 放る (N2) - ID: 15904
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/houru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:31
+
+🔴 教養 (N2) - ID: 16199
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:32
+
+🔴 教養 (N2) - ID: 16199
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:32
+
+🔴 教養 (N2) - ID: 16199
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyouyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:33
+
+🔴 斬る (N2) - ID: 15500
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiru_zuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:39
+
+🔴 斬る (N2) - ID: 15500
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiru_zuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:39
+
+🔴 斬る (N2) - ID: 15500
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiru_zuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:39
+
+🔴 方角 (N2) - ID: 15690
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougaku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 方角 (N2) - ID: 15690
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougaku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 方角 (N2) - ID: 15690
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougaku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 方言 (N2) - ID: 16213
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 方言 (N2) - ID: 16213
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 方言 (N2) - ID: 16213
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hougen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:41
+
+🔴 日用品 (N2) - ID: 16188
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nichiyouhin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:44
+
+🔴 日用品 (N2) - ID: 16188
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nichiyouhin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:44
+
+🔴 日用品 (N2) - ID: 16188
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nichiyouhin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:44
+
+🔴 映る (N2) - ID: 15708
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/utsuru_ei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:47
+
+🔴 映る (N2) - ID: 15708
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/utsuru_ei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:47
+
+🔴 映る (N2) - ID: 15708
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/utsuru_ei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:34:47
+
+🔴 校舎 (N2) - ID: 15535
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousha/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:02
+
+🔴 校舎 (N2) - ID: 15535
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousha/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:03
+
+🔴 校舎 (N2) - ID: 15535
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousha/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:03
+
+🔴 標識 (N2) - ID: 16254
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyoushiki/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:09
+
+🔴 標識 (N2) - ID: 16254
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyoushiki/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:10
+
+🔴 標識 (N2) - ID: 16254
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyoushiki/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:10
+
+🔴 正方形 (N2) - ID: 15735
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seihoukei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:14
+
+🔴 正方形 (N2) - ID: 15735
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seihoukei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:14
+
+🔴 正方形 (N2) - ID: 15735
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seihoukei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:14
+
+🔴 気を付ける (N2) - ID: 15571
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiwotsukeru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:21
+
+🔴 気を付ける (N2) - ID: 15571
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiwotsukeru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:21
+
+🔴 気を付ける (N2) - ID: 15571
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kiwotsukeru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:22
+
+🔴 水曜 (N2) - ID: 16045
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suiyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:24
+
+🔴 水曜 (N2) - ID: 16045
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suiyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:24
+
+🔴 水曜 (N2) - ID: 16045
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/suiyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:24
+
+🔴 法則 (N2) - ID: 16227
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housoku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:28
+
+🔴 法則 (N2) - ID: 16227
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housoku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:29
+
+🔴 法則 (N2) - ID: 16227
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/housoku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:29
+
+🔴 浸ける (N2) - ID: 16488
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukeru_shin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:35
+
+🔴 浸ける (N2) - ID: 16488
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukeru_shin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:35
+
+🔴 浸ける (N2) - ID: 16488
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukeru_shin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:35
+
+🔴 消極的 (N2) - ID: 16255
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoukyokuteki/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:35
+
+🔴 消極的 (N2) - ID: 16255
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoukyokuteki/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:35
+
+🔴 消極的 (N2) - ID: 16255
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoukyokuteki/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:36
+
+🔴 消毒 (N2) - ID: 15956
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoudoku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:36
+
+🔴 消毒 (N2) - ID: 15956
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoudoku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:36
+
+🔴 消毒 (N2) - ID: 15956
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shoudoku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:36
+
+🔴 深夜 (N2) - ID: 15985
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shinya/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:38
+
+🔴 深夜 (N2) - ID: 15985
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shinya/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:38
+
+🔴 深夜 (N2) - ID: 15985
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shinya/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:38
+
+🔴 測量 (N2) - ID: 15568
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sokuryou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:44
+
+🔴 測量 (N2) - ID: 15568
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sokuryou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:44
+
+🔴 測量 (N2) - ID: 15568
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sokuryou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:44
+
+🔴 激増 (N2) - ID: 15891
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gekizou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:53
+
+🔴 激増 (N2) - ID: 15891
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gekizou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:53
+
+🔴 激増 (N2) - ID: 15891
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gekizou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:53
+
+🔴 火口 (N2) - ID: 15529
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_kako/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:55
+
+🔴 火口 (N2) - ID: 15529
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_kako/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:55
+
+🔴 火口 (N2) - ID: 15529
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kakou_kako/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:35:55
+
+🔴 牧場 (N2) - ID: 16272
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bokujou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:09
+
+🔴 牧場 (N2) - ID: 16272
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bokujou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:09
+
+🔴 牧場 (N2) - ID: 16272
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bokujou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:09
+
+🔴 物騒 (N2) - ID: 15504
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bussou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:11
+
+🔴 物騒 (N2) - ID: 15504
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bussou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:11
+
+🔴 物騒 (N2) - ID: 15504
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/bussou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:11
+
+🔴 用語 (N2) - ID: 16262
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yougo/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:23
+
+🔴 用語 (N2) - ID: 16262
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yougo/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:23
+
+🔴 用語 (N2) - ID: 16262
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yougo/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:23
+
+🔴 登場 (N2) - ID: 15694
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:31
+
+🔴 登場 (N2) - ID: 15694
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:31
+
+🔴 登場 (N2) - ID: 15694
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toujou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:31
+
+🔴 相互 (N2) - ID: 15884
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sogo/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:46
+
+🔴 相互 (N2) - ID: 15884
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sogo/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:46
+
+🔴 相互 (N2) - ID: 15884
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sogo/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:46
+
+🔴 相違 (N2) - ID: 15491
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soui/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:47
+
+🔴 相違 (N2) - ID: 15491
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soui/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:48
+
+🔴 相違 (N2) - ID: 15491
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soui/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:36:48
+
+🔴 社会科学 (N2) - ID: 15881
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shakaikagaku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:03
+
+🔴 社会科学 (N2) - ID: 15881
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shakaikagaku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:03
+
+🔴 社会科学 (N2) - ID: 15881
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shakaikagaku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:03
+
+🔴 空中 (N2) - ID: 15982
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuuchuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 空中 (N2) - ID: 15982
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuuchuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 空中 (N2) - ID: 15982
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuuchuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 空想 (N2) - ID: 16214
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuusou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 空想 (N2) - ID: 16214
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuusou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 空想 (N2) - ID: 16214
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kuusou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:09
+
+🔴 符号 (N2) - ID: 16051
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/fugou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:12
+
+🔴 符号 (N2) - ID: 16051
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/fugou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:12
+
+🔴 符号 (N2) - ID: 16051
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/fugou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:13
+
+🔴 算数 (N2) - ID: 16503
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sansuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:14
+
+🔴 算数 (N2) - ID: 16503
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sansuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:14
+
+🔴 算数 (N2) - ID: 16503
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/sansuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:14
+
+🔴 素人 (N2) - ID: 15998
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirouto/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:19
+
+🔴 素人 (N2) - ID: 15998
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirouto/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:19
+
+🔴 素人 (N2) - ID: 15998
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shirouto/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:19
+
+🔴 給与 (N2) - ID: 16420
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyuuyo/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:23
+
+🔴 給与 (N2) - ID: 16420
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyuuyo/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:23
+
+🔴 給与 (N2) - ID: 16420
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kyuuyo/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:23
+
+🔴 編集 (N2) - ID: 16029
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/henshuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:27
+
+🔴 編集 (N2) - ID: 16029
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/henshuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:27
+
+🔴 編集 (N2) - ID: 16029
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/henshuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:28
+
+🔴 縮小 (N2) - ID: 15711
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shukushou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:30
+
+🔴 縮小 (N2) - ID: 15711
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shukushou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:31
+
+🔴 縮小 (N2) - ID: 15711
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shukushou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:31
+
+🔴 胡椒 (N2) - ID: 15951
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koshou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:39
+
+🔴 胡椒 (N2) - ID: 15951
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koshou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:39
+
+🔴 胡椒 (N2) - ID: 15951
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koshou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:40
+
+🔴 能率 (N2) - ID: 15901
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nouritsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:40
+
+🔴 能率 (N2) - ID: 15901
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nouritsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:40
+
+🔴 能率 (N2) - ID: 15901
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/nouritsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:40
+
+🔴 膨大 (N2) - ID: 16014
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/boudai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:43
+
+🔴 膨大 (N2) - ID: 16014
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/boudai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:43
+
+🔴 膨大 (N2) - ID: 16014
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/boudai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:43
+
+🔴 芸能 (N2) - ID: 16011
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/geinou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:49
+
+🔴 芸能 (N2) - ID: 16011
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/geinou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:49
+
+🔴 芸能 (N2) - ID: 16011
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/geinou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:49
+
+🔴 草履 (N2) - ID: 16277
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zouri/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:52
+
+🔴 草履 (N2) - ID: 16277
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zouri/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:53
+
+🔴 草履 (N2) - ID: 16277
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zouri/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:53
+
+🔴 蒸発 (N2) - ID: 15770
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouhatsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:56
+
+🔴 蒸発 (N2) - ID: 15770
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouhatsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:56
+
+🔴 蒸発 (N2) - ID: 15770
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/jouhatsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:37:56
+
+🔴 蛍光灯 (N2) - ID: 16075
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keikoutou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:01
+
+🔴 蛍光灯 (N2) - ID: 16075
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keikoutou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:01
+
+🔴 蛍光灯 (N2) - ID: 16075
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/keikoutou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:01
+
+🔴 行列 (N2) - ID: 15920
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gyouretsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:03
+
+🔴 行列 (N2) - ID: 15920
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gyouretsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:03
+
+🔴 行列 (N2) - ID: 15920
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/gyouretsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:03
+
+🔴 衣食住 (N2) - ID: 16043
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ishokujuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:03
+
+🔴 衣食住 (N2) - ID: 16043
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ishokujuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:04
+
+🔴 衣食住 (N2) - ID: 16043
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ishokujuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:04
+
+🔴 要旨 (N2) - ID: 15520
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youshi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:08
+
+🔴 要旨 (N2) - ID: 15520
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youshi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:08
+
+🔴 要旨 (N2) - ID: 15520
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/youshi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:08
+
+🔴 診る (N2) - ID: 15210
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/miru_shin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:19
+
+🔴 診る (N2) - ID: 15210
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/miru_shin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:19
+
+🔴 診る (N2) - ID: 15210
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/miru_shin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:19
+
+🔴 評論 (N2) - ID: 16445
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyouron/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:20
+
+🔴 評論 (N2) - ID: 16445
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyouron/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:20
+
+🔴 評論 (N2) - ID: 16445
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hyouron/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:20
+
+🔴 話中 (N2) - ID: 16397
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanashichuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:21
+
+🔴 話中 (N2) - ID: 16397
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanashichuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:21
+
+🔴 話中 (N2) - ID: 16397
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/hanashichuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:21
+
+🔴 資料 (N2) - ID: 15763
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shiryou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:28
+
+🔴 資料 (N2) - ID: 15763
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shiryou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:29
+
+🔴 資料 (N2) - ID: 15763
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/shiryou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:29
+
+🔴 載る (N2) - ID: 16437
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/noru_sai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:37
+
+🔴 載る (N2) - ID: 16437
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/noru_sai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:37
+
+🔴 載る (N2) - ID: 16437
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/noru_sai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:37
+
+🔴 輸送 (N2) - ID: 16056
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yusou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:38
+
+🔴 輸送 (N2) - ID: 16056
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yusou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:38
+
+🔴 輸送 (N2) - ID: 16056
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/yusou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:38
+
+🔴 送別 (N2) - ID: 16426
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soubetsu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:44
+
+🔴 送別 (N2) - ID: 16426
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soubetsu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:44
+
+🔴 送別 (N2) - ID: 16426
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/soubetsu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:44
+
+🔴 透明 (N2) - ID: 15990
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toumei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:46
+
+🔴 透明 (N2) - ID: 15990
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toumei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:46
+
+🔴 透明 (N2) - ID: 15990
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/toumei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:47
+
+🔴 通り掛かる (N2) - ID: 15734
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/torikakaru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:49
+
+🔴 通り掛かる (N2) - ID: 15734
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/torikakaru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:49
+
+🔴 通り掛かる (N2) - ID: 15734
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/torikakaru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:49
+
+🔴 通用 (N2) - ID: 15969
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:51
+
+🔴 通用 (N2) - ID: 15969
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:51
+
+🔴 通用 (N2) - ID: 15969
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:51
+
+🔴 通訳 (N2) - ID: 15506
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyaku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:52
+
+🔴 通訳 (N2) - ID: 15506
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyaku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:52
+
+🔴 通訳 (N2) - ID: 15506
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsuuyaku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:52
+
+🔴 造る (N2) - ID: 15202
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukuru_zou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:55
+
+🔴 造る (N2) - ID: 15202
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukuru_zou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:55
+
+🔴 造る (N2) - ID: 15202
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/tsukuru_zou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:55
+
+🔴 連合 (N2) - ID: 15909
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rengou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:56
+
+🔴 連合 (N2) - ID: 15909
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rengou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:56
+
+🔴 連合 (N2) - ID: 15909
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/rengou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:57
+
+🔴 過半数 (N2) - ID: 16271
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kahansuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:59
+
+🔴 過半数 (N2) - ID: 16271
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kahansuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:38:59
+
+🔴 過半数 (N2) - ID: 16271
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kahansuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:00
+
+🔴 重体 (N2) - ID: 15922
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juutai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:14
+
+🔴 重体 (N2) - ID: 15922
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juutai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:14
+
+🔴 重体 (N2) - ID: 15922
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juutai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:14
+
+🔴 重役 (N2) - ID: 16187
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuyaku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:15
+
+🔴 重役 (N2) - ID: 16187
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuyaku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:15
+
+🔴 重役 (N2) - ID: 16187
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuyaku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:15
+
+🔴 重点 (N2) - ID: 16183
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuten/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:15
+
+🔴 重点 (N2) - ID: 16183
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuten/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:16
+
+🔴 重点 (N2) - ID: 16183
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/juuten/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:16
+
+🔴 長女 (N2) - ID: 16474
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choujo/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:28
+
+🔴 長女 (N2) - ID: 16474
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choujo/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:28
+
+🔴 長女 (N2) - ID: 16474
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/choujo/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:28
+
+🔴 長所 (N2) - ID: 15539
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chousho/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長所 (N2) - ID: 15539
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chousho/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長所 (N2) - ID: 15539
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chousho/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長方形 (N2) - ID: 15748
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouhoukei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長方形 (N2) - ID: 15748
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouhoukei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長方形 (N2) - ID: 15748
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouhoukei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長男 (N2) - ID: 16012
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chounan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長男 (N2) - ID: 16012
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chounan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:29
+
+🔴 長男 (N2) - ID: 16012
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chounan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:30
+
+🔴 開通 (N2) - ID: 15745
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaitsuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:31
+
+🔴 開通 (N2) - ID: 15745
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaitsuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:31
+
+🔴 開通 (N2) - ID: 15745
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kaitsuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:31
+
+🔴 関東 (N2) - ID: 15764
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kantou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:33
+
+🔴 関東 (N2) - ID: 15764
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kantou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:33
+
+🔴 関東 (N2) - ID: 15764
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kantou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:33
+
+🔴 雑巾 (N2) - ID: 15488
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zoukin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:38
+
+🔴 雑巾 (N2) - ID: 15488
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zoukin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:38
+
+🔴 雑巾 (N2) - ID: 15488
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zoukin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:38
+
+🔴 電流 (N2) - ID: 16186
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/denryuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:41
+
+🔴 電流 (N2) - ID: 16186
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/denryuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:41
+
+🔴 電流 (N2) - ID: 16186
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/denryuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:41
+
+🔴 青少年 (N2) - ID: 15939
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seishounen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:41
+
+🔴 青少年 (N2) - ID: 15939
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seishounen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:41
+
+🔴 青少年 (N2) - ID: 15939
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/seishounen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:42
+
+🔴 面倒臭い (N2) - ID: 16196
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mendoukusai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:42
+
+🔴 面倒臭い (N2) - ID: 16196
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mendoukusai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:43
+
+🔴 面倒臭い (N2) - ID: 16196
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/mendoukusai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:43
+
+🔴 頂点 (N2) - ID: 15527
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouten/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:44
+
+🔴 頂点 (N2) - ID: 15527
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouten/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:44
+
+🔴 頂点 (N2) - ID: 15527
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/chouten/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:44
+
+🔴 項目 (N2) - ID: 15525
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumoku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:44
+
+🔴 項目 (N2) - ID: 15525
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumoku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:45
+
+🔴 項目 (N2) - ID: 15525
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/koumoku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:45
+
+🔴 領事 (N2) - ID: 15755
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryouji/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:46
+
+🔴 領事 (N2) - ID: 15755
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryouji/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:46
+
+🔴 領事 (N2) - ID: 15755
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/ryouji/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:46
+
+🔴 頭脳 (N2) - ID: 16414
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zunou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:47
+
+🔴 頭脳 (N2) - ID: 16414
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zunou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:47
+
+🔴 頭脳 (N2) - ID: 16414
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/zunou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:47
+
+🔴 顕微鏡 (N2) - ID: 15722
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kenbikyou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:48
+
+🔴 顕微鏡 (N2) - ID: 15722
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kenbikyou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:48
+
+🔴 顕微鏡 (N2) - ID: 15722
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kenbikyou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:48
+
+🔴 高層 (N2) - ID: 16030
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:54
+
+🔴 高層 (N2) - ID: 16030
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:54
+
+🔴 高層 (N2) - ID: 16030
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n2/kousou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:39:54
+
+🔴 平等 (N3) - ID: 18051
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n3/byoudou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:44:47
+
+🔴 あいさつ・する (N4) - ID: 19025
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/aisatsusuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:50:57
+
+🔴 あいさつ・する (N4) - ID: 19025
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/aisatsusuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:50:58
+
+🔴 あいさつ・する (N4) - ID: 19025
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/aisatsusuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:50:58
+
+🔴 けんか・する (N4) - ID: 19022
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/kenkasuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:14
+
+🔴 けんか・する (N4) - ID: 19022
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/kenkasuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:15
+
+🔴 けんか・する (N4) - ID: 19022
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/kenkasuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:15
+
+🔴 ごらんになる (N4) - ID: 19027
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/goranninaru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:17
+
+🔴 ごらんになる (N4) - ID: 19027
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/goranninaru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:17
+
+🔴 ごらんになる (N4) - ID: 19027
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/goranninaru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:17
+
+🔴 チェック・する (N4) - ID: 18670
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/chekkusuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:31
+
+🔴 チェック・する (N4) - ID: 18670
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/chekkusuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:31
+
+🔴 チェック・する (N4) - ID: 18670
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/chekkusuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:32
+
+🔴 びっくり・する (N4) - ID: 18878
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/bikkurisuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:40
+
+🔴 びっくり・する (N4) - ID: 18878
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/bikkurisuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:40
+
+🔴 びっくり・する (N4) - ID: 18878
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/bikkurisuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:51:40
+
+🔴 亡くなる (N4) - ID: 18855
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/nakunaru_die/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:00
+
+🔴 亡くなる (N4) - ID: 18855
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/nakunaru_die/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:00
+
+🔴 亡くなる (N4) - ID: 18855
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/nakunaru_die/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:00
+
+🔴 堅い (N4) - ID: 18948
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/katai_ken/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:26
+
+🔴 堅い (N4) - ID: 18948
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/katai_ken/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:26
+
+🔴 堅い (N4) - ID: 18948
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/katai_ken/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:26
+
+🔴 建てる (N4) - ID: 18727
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/tateru_build/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:45
+
+🔴 建てる (N4) - ID: 18727
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/tateru_build/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:45
+
+🔴 建てる (N4) - ID: 18727
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n4/tateru_build/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:52:45
+
+🔴 あちら (N5) - ID: 19672
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/achira/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:46
+
+🔴 あちら (N5) - ID: 19672
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/achira/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:47
+
+🔴 あちら (N5) - ID: 19672
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/achira/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:47
+
+🔴 いかが (N5) - ID: 19678
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ikaga/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:50
+
+🔴 いかが (N5) - ID: 19678
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ikaga/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:50
+
+🔴 いかが (N5) - ID: 19678
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ikaga/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:50
+
+🔴 お弁当 (N5) - ID: 19661
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obentou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:56
+
+🔴 お弁当 (N5) - ID: 19661
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obentou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:56
+
+🔴 お弁当 (N5) - ID: 19661
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obentou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:54:56
+
+🔴 コピーする (N5) - ID: 19598
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/kopiisuru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:07
+
+🔴 コピーする (N5) - ID: 19598
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/kopiisuru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:08
+
+🔴 コピーする (N5) - ID: 19598
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/kopiisuru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:08
+
+🔴 さあ (N5) - ID: 19682
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/saa/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:08
+
+🔴 さあ (N5) - ID: 19682
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/saa/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:09
+
+🔴 さあ (N5) - ID: 19682
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/saa/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:09
+
+🔴 さ来年 (N5) - ID: 19246
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sarainen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:09
+
+🔴 さ来年 (N5) - ID: 19246
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sarainen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:09
+
+🔴 さ来年 (N5) - ID: 19246
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sarainen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:09
+
+🔴 スカート (N5) - ID: 19673
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sukaato/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:11
+
+🔴 スカート (N5) - ID: 19673
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sukaato/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:11
+
+🔴 スカート (N5) - ID: 19673
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sukaato/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:11
+
+🔴 すぐに (N5) - ID: 19474
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/suguni/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 すぐに (N5) - ID: 19474
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/suguni/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 すぐに (N5) - ID: 19474
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/suguni/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 ストーブ (N5) - ID: 19679
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sutoobu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 ストーブ (N5) - ID: 19679
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sutoobu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 ストーブ (N5) - ID: 19679
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sutoobu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:12
+
+🔴 せっけん (N5) - ID: 19719
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sekken/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:14
+
+🔴 せっけん (N5) - ID: 19719
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sekken/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:14
+
+🔴 せっけん (N5) - ID: 19719
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sekken/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:15
+
+🔴 そちら (N5) - ID: 19696
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sochira/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:16
+
+🔴 そちら (N5) - ID: 19696
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sochira/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:16
+
+🔴 そちら (N5) - ID: 19696
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sochira/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:16
+
+🔴 それから (N5) - ID: 19668
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sorekara/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:18
+
+🔴 それから (N5) - ID: 19668
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sorekara/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:18
+
+🔴 それから (N5) - ID: 19668
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sorekara/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:18
+
+🔴 どなた (N5) - ID: 19692
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/donata/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:30
+
+🔴 どなた (N5) - ID: 19692
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/donata/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:30
+
+🔴 どなた (N5) - ID: 19692
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/donata/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:30
+
+🔴 パーティー (N5) - ID: 19671
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/paatii/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:34
+
+🔴 パーティー (N5) - ID: 19671
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/paatii/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:34
+
+🔴 パーティー (N5) - ID: 19671
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/paatii/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 2:55:34
+
+🔴 ボールペン (N5) - ID: 19578
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/boorupen/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 3:11:36
+
+🔴 ほう (N5) - ID: 19654
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:37
+
+🔴 ほう (N5) - ID: 19654
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:37
+
+🔴 ほう (N5) - ID: 19654
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:37
+
+🔴 ボタン (N5) - ID: 19675
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/botan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:38
+
+🔴 ボタン (N5) - ID: 19675
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/botan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:38
+
+🔴 ボタン (N5) - ID: 19675
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/botan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:11:39
+
+🔴 マッチ (N5) - ID: 19463
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/matchi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 3:29:13
+
+🔴 もう一度 (N5) - ID: 19611
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/mouichido/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:15
+
+🔴 もう一度 (N5) - ID: 19611
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/mouichido/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:15
+
+🔴 もう一度 (N5) - ID: 19611
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/mouichido/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:15
+
+🔴 より (N5) - ID: 19653
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/yori/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:17
+
+🔴 より (N5) - ID: 19653
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/yori/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:17
+
+🔴 より (N5) - ID: 19653
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/yori/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:29:17
+
+🔴 りっぱ (N5) - ID: 19443
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/rippa/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 3:45:43
+
+🔴 一人 (N5) - ID: 19373
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/hitori/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 3:49:09
+
+🔴 下手 (N5) - ID: 19148
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/heta/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:20
+
+🔴 下手 (N5) - ID: 19148
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/heta/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:20
+
+🔴 下手 (N5) - ID: 19148
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/heta/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:20
+
+🔴 丸い (N5) - ID: 19657
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/marui/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:22
+
+🔴 丸い (N5) - ID: 19657
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/marui/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:22
+
+🔴 丸い (N5) - ID: 19657
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/marui/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:22
+
+🔴 伯母さん (N5) - ID: 19666
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obasan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 伯母さん (N5) - ID: 19666
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obasan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 伯母さん (N5) - ID: 19666
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/obasan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 伯父 (N5) - ID: 19621
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/oji1/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 伯父 (N5) - ID: 19621
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/oji1/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 伯父 (N5) - ID: 19621
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/oji1/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 3:49:37
+
+🔴 六つ (N5) - ID: 19705
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/muttsu/word.mp3
+    방법: audioLocal_parsed
+    상태: read ECONNRESET
+    시간: 2025. 9. 25. 오전 4:07:41
+
+🔴 出かける (N5) - ID: 19697
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/dekakeru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:07:43
+
+🔴 出かける (N5) - ID: 19697
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/dekakeru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:07:43
+
+🔴 出かける (N5) - ID: 19697
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/dekakeru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:07:43
+
+🔴 切る (N5) - ID: 19500
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/kiru2/gloss.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 4:25:25
+
+🔴 初め (N5) - ID: 19720
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hajime/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:27
+
+🔴 初め (N5) - ID: 19720
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hajime/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:27
+
+🔴 初め (N5) - ID: 19720
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hajime/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:27
+
+🔴 勤める (N5) - ID: 19131
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/tsutomeru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:28
+
+🔴 勤める (N5) - ID: 19131
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/tsutomeru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:28
+
+🔴 勤める (N5) - ID: 19131
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/tsutomeru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:25:29
+
+🔴 十日 (N5) - ID: 19363
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/tooka/example.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 4:43:17
+
+🔴 叔父 (N5) - ID: 19622
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/oji2/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 4:51:22
+
+🔴 問題 (N5) - ID: 19049
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/mondai/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:51:33
+
+🔴 問題 (N5) - ID: 19049
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/mondai/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:51:33
+
+🔴 問題 (N5) - ID: 19049
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/mondai/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:51:33
+
+🔴 家庭 (N5) - ID: 19670
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/katei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:00
+
+🔴 家庭 (N5) - ID: 19670
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/katei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:00
+
+🔴 家庭 (N5) - ID: 19670
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/katei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:00
+
+🔴 差す (N5) - ID: 19137
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sasu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:05
+
+🔴 差す (N5) - ID: 19137
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sasu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:05
+
+🔴 差す (N5) - ID: 19137
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sasu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:05
+
+🔴 廊下 (N5) - ID: 19119
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/rouka/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:08
+
+🔴 廊下 (N5) - ID: 19119
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/rouka/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:08
+
+🔴 廊下 (N5) - ID: 19119
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/rouka/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 4:52:08
+
+🔴 引く (N5) - ID: 19058
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/hiku/example.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 5:09:57
+
+🔴 後ろ (N5) - ID: 19422
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/ushiro/gloss.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 5:25:54
+
+🔴 押す (N5) - ID: 19061
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/osu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:25:58
+
+🔴 押す (N5) - ID: 19061
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/osu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:25:58
+
+🔴 押す (N5) - ID: 19061
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/osu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:25:58
+
+🔴 掃除 (N5) - ID: 19201
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/souji/example.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 5:41:46
+
+🔴 授業 (N5) - ID: 19239
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/jugyou/word.mp3
+    방법: audioLocal_parsed
+    상태: read ECONNRESET
+    시간: 2025. 9. 25. 오전 5:52:23
+
+🔴 明い (N5) - ID: 19669
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/akarui/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:30
+
+🔴 明い (N5) - ID: 19669
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/akarui/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:30
+
+🔴 明い (N5) - ID: 19669
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/akarui/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:30
+
+🔴 昨夜 (N5) - ID: 19709
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sakuya/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:33
+
+🔴 昨夜 (N5) - ID: 19709
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sakuya/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:33
+
+🔴 昨夜 (N5) - ID: 19709
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/sakuya/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:33
+
+🔴 暑い (N5) - ID: 19072
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/atsui_weather/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:37
+
+🔴 暑い (N5) - ID: 19072
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/atsui_weather/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:37
+
+🔴 暑い (N5) - ID: 19072
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/atsui_weather/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:38
+
+🔴 曲る (N5) - ID: 19659
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/magaru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:39
+
+🔴 曲る (N5) - ID: 19659
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/magaru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:39
+
+🔴 曲る (N5) - ID: 19659
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/magaru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:39
+
+🔴 池 (N5) - ID: 19195
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ike/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:55
+
+🔴 池 (N5) - ID: 19195
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ike/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:55
+
+🔴 池 (N5) - ID: 19195
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ike/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:55
+
+🔴 渡る (N5) - ID: 19665
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/wataru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:52:59
+
+🔴 渡る (N5) - ID: 19665
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/wataru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:00
+
+🔴 渡る (N5) - ID: 19665
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/wataru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:00
+
+🔴 玄関 (N5) - ID: 19099
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/genkan/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:04
+
+🔴 玄関 (N5) - ID: 19099
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/genkan/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:05
+
+🔴 玄関 (N5) - ID: 19099
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/genkan/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:05
+
+🔴 留学生 (N5) - ID: 19699
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ryuugakusei/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:07
+
+🔴 留学生 (N5) - ID: 19699
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ryuugakusei/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:07
+
+🔴 留学生 (N5) - ID: 19699
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/ryuugakusei/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 5:53:07
+
+🔴 痛い (N5) - ID: 19441
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/itai/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 6:08:39
+
+🔴 登る (N5) - ID: 19112
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/noboru/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:08:40
+
+🔴 登る (N5) - ID: 19112
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/noboru/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:08:40
+
+🔴 登る (N5) - ID: 19112
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/noboru/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:08:40
+
+🔴 砂糖 (N5) - ID: 19528
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/satou/example.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 6:16:13
+
+🔴 磨く (N5) - ID: 19060
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/migaku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:13
+
+🔴 磨く (N5) - ID: 19060
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/migaku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:13
+
+🔴 磨く (N5) - ID: 19060
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/migaku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:14
+
+🔴 細い (N5) - ID: 19704
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hosoi/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:17
+
+🔴 細い (N5) - ID: 19704
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hosoi/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:17
+
+🔴 細い (N5) - ID: 19704
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hosoi/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結婚 (N5) - ID: 19663
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkon/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結婚 (N5) - ID: 19663
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkon/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結婚 (N5) - ID: 19663
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkon/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結構 (N5) - ID: 19707
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkou/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結構 (N5) - ID: 19707
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkou/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:18
+
+🔴 結構 (N5) - ID: 19707
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kekkou/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:19
+
+🔴 練習 (N5) - ID: 19105
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/renshuu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:20
+
+🔴 練習 (N5) - ID: 19105
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/renshuu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:20
+
+🔴 練習 (N5) - ID: 19105
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/renshuu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:20
+
+🔴 置く (N5) - ID: 19664
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/oku/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:20
+
+🔴 置く (N5) - ID: 19664
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/oku/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:21
+
+🔴 置く (N5) - ID: 19664
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/oku/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:21
+
+🔴 自分 (N5) - ID: 19214
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/jibun/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:23
+
+🔴 自分 (N5) - ID: 19214
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/jibun/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:23
+
+🔴 自分 (N5) - ID: 19214
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/jibun/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:23
+
+🔴 花瓶 (N5) - ID: 19056
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kabin/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:25
+
+🔴 花瓶 (N5) - ID: 19056
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kabin/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:25
+
+🔴 花瓶 (N5) - ID: 19056
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kabin/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:26
+
+🔴 要る (N5) - ID: 19123
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/iru_need/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:29
+
+🔴 要る (N5) - ID: 19123
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/iru_need/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:29
+
+🔴 要る (N5) - ID: 19123
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/iru_need/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:29
+
+🔴 質問 (N5) - ID: 19691
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/shitsumon/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:38
+
+🔴 質問 (N5) - ID: 19691
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/shitsumon/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:38
+
+🔴 質問 (N5) - ID: 19691
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/shitsumon/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:38
+
+🔴 辺 (N5) - ID: 19145
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hen/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:41
+
+🔴 辺 (N5) - ID: 19145
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hen/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:42
+
+🔴 辺 (N5) - ID: 19145
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/hen/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:42
+
+🔴 返す (N5) - ID: 19677
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kaesu/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:42
+
+🔴 返す (N5) - ID: 19677
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kaesu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:43
+
+🔴 返す (N5) - ID: 19677
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/kaesu/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:43
+
+🔴 違う (N5) - ID: 19100
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/chigau/word.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:44
+
+🔴 違う (N5) - ID: 19100
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/chigau/gloss.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:44
+
+🔴 違う (N5) - ID: 19100
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/N5/chigau/example.mp3
+    방법: audioLocal_parsed
+    상태: 404
+    시간: 2025. 9. 25. 오전 6:16:44
+
+🔴 靴 (N5) - ID: 19674
+  - example: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/kutsu/example.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 6:34:46
+
+🔴 飲む (N5) - ID: 19104
+  - gloss: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/nomu/gloss.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 6:50:11
+
+🔴 鼻 (N5) - ID: 19660
+  - word: https://storage.googleapis.com/language-learner-audio/public/jlpt/n5/hana2/word.mp3
+    방법: audioLocal_parsed
+    상태: timeout
+    시간: 2025. 9. 25. 오전 6:53:22
+
+
+=== 최종 검증 결과 ===
+완료 시간: 2025. 9. 25. 오전 6:53:23
+총 검증: 25212개
+성공: 24468개 (97.0%)
+실패: 744개 (3.0%)
