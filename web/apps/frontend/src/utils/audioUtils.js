@@ -2,6 +2,7 @@
 
 // GCS 베이스 URL - public 경로 포함 수정
 const GCS_BASE_URL = 'https://storage.googleapis.com/language-learner-audio/public';
+const GCS_BASE_URL_ENGLISH = 'https://storage.googleapis.com/language-learner-audio';
 
 /**
  * audioLocal 데이터를 파싱하고 GCS URL로 변환하는 함수
@@ -47,7 +48,13 @@ export function parseAudioLocal(audioLocal) {
       if (path.startsWith('https://storage.googleapis.com/')) return path;
       // 슬래시로 시작하는 경우 제거
       const cleanPath = path.startsWith('/') ? path.substring(1) : path;
-      return `${GCS_BASE_URL}/${cleanPath}`;
+
+      // Check if it's Japanese (jlpt) or English/Idiom audio
+      // Japanese audio needs /public/ prefix, English and idioms don't
+      const isJapanese = cleanPath.startsWith('jlpt/');
+      const baseUrl = isJapanese ? GCS_BASE_URL : GCS_BASE_URL_ENGLISH;
+
+      return `${baseUrl}/${cleanPath}`;
     };
 
     return {
@@ -74,4 +81,4 @@ export function createGcsUrl(path) {
   return `${GCS_BASE_URL}/${cleanPath}`;
 }
 
-export { GCS_BASE_URL };
+export { GCS_BASE_URL, GCS_BASE_URL_ENGLISH };

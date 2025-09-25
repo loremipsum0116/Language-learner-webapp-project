@@ -424,7 +424,8 @@ export default function VocabDetailModal({
                       cleanLemma = cleanLemma.replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-+|-+$/g, '');
 
                       const folderName = cefrToFolder[vocab.levelCEFR] || 'starter';
-                      glossAudioPath = `/${folderName}/${cleanLemma}/gloss.mp3`;
+                      // For English, don't use /public/ prefix in GCS URL
+                      glossAudioPath = `https://storage.googleapis.com/language-learner-audio/${folderName}/${cleanLemma}/gloss.mp3`;
                       console.log('🔍 [VocabDetailModal] Fallback to folder structure:', vocab.lemma, '->', folderName, 'cleanLemma:', cleanLemma);
                     }
                   } else {
@@ -808,9 +809,10 @@ export default function VocabDetailModal({
                                     style={{ width: '32px', height: '32px' }}
                                     onClick={(e) => {
                                       e.stopPropagation();
-                                      // 절대 경로로 변환
-                                      const absolutePath = usageAudioPath.startsWith('/') ? usageAudioPath : `/${usageAudioPath}`;
-                                      onPlayUrl(absolutePath, 'usage', vocab.id);
+                                      // GCS URL은 그대로 사용, Railway 경로만 / 추가
+                                      const finalPath = usageAudioPath.startsWith('https://') ? usageAudioPath :
+                                                      (usageAudioPath.startsWith('/') ? usageAudioPath : `/${usageAudioPath}`);
+                                      onPlayUrl(finalPath, 'usage', vocab.id);
                                     }}
                                     aria-label="사용법 오디오 재생"
                                     title="사용법 듣기"
