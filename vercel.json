@@ -3,5 +3,11 @@
   "outputDirectory": "web/apps/frontend/build",
   "framework": null,
   "installCommand": "npm install",
-  "devCommand": null
+  "devCommand": null,
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
 }

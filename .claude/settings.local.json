@@ -23,7 +23,9 @@
       "Bash(chmod:*)",
       "Bash(./test_gcs_audio_urls.sh:*)",
       "Bash(./test_gcs_audio_romaji.sh:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(sudo rm:*)",
+      "Bash(lsof:*)"
     ],
     "deny": [],
     "ask": []
