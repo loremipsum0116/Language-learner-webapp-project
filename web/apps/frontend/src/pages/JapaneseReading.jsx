@@ -97,15 +97,20 @@ export default function JapaneseReading() {
 
         // Ruby 태그를 먼저 처리하여 올바르게 렌더링
         const processRubyTags = (text) => {
-            // 두 가지 Ruby 태그 형태 모두 처리:
-            // 1) 잘못된 형태: <ruby>学生<rt>がくせい<rt><ruby>
-            // 2) 올바른 형태: <ruby>日本語<rt>にほんご</rt></ruby>
-            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)(?:<rt><ruby>|<\/rt><\/ruby>)/g;
+            console.log('🔍 [Ruby Debug] Input text:', text.substring(0, 200) + '...');
+
+            // 다양한 Ruby 태그 형태와 줄바꿈 처리:
+            // 1) <ruby>学生<rt>がくせい<rt><ruby>
+            // 2) <ruby>日本語<rt>にほんご</rt></ruby>
+            // 3) 줄바꿈이 포함된 경우도 처리
+            const rubyRegex = /<ruby>([^<]+)<rt>\s*([^<]+)\s*(?:<rt>\s*<ruby>|<\/rt>\s*<\/ruby>)/gs;
             const parts = [];
             let lastIndex = 0;
             let match;
 
             while ((match = rubyRegex.exec(text)) !== null) {
+                console.log('🔍 [Ruby Debug] Found match:', match[0], 'Kanji:', match[1], 'Furigana:', match[2]);
+
                 // Ruby 태그 앞의 텍스트 추가
                 if (match.index > lastIndex) {
                     parts.push({
@@ -115,13 +120,15 @@ export default function JapaneseReading() {
                 }
 
                 // Ruby 태그 추가
-                const kanjiText = match[1];     // 예: "学生" 또는 "学生がくせい"
-                const furiganaText = match[2];  // 예: "がくせい"
+                const kanjiText = match[1].trim();     // 예: "学生" 또는 "学生がくせい"
+                const furiganaText = match[2].trim();  // 예: "がくせい"
 
                 // 이미 한자만 있는 경우와 한자+히라가나가 섞인 경우 모두 처리
                 const kanjiMatch = kanjiText.match(/^([一-龯々〇]+)/);
                 const cleanKanji = kanjiMatch ? kanjiMatch[1] : kanjiText;
                 const cleanFurigana = furiganaText;
+
+                console.log('🔍 [Ruby Debug] Processed:', cleanKanji, '→', cleanFurigana);
 
                 parts.push({
                     type: 'ruby',
@@ -131,6 +138,8 @@ export default function JapaneseReading() {
 
                 lastIndex = match.index + match[0].length;
             }
+
+            console.log('🔍 [Ruby Debug] Total matches found:', parts.filter(p => p.type === 'ruby').length);
 
             // 나머지 텍스트 추가
             if (lastIndex < text.length) {
