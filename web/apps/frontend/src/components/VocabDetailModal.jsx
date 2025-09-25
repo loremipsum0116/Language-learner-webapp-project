@@ -89,15 +89,35 @@ export default function VocabDetailModal({
   const isJapanese = vocab.levelJLPT || vocab.source === 'jlpt' || vocab.source === 'jlpt_total' ||
                      (vocab.dictentry?.audioLocal && vocab.dictentry.audioLocal.includes('jlpt/'));
 
-  // Cleanup audio when component unmounts
+  // Cleanup audio when component unmounts or modal closes
   useEffect(() => {
-    return () => {
-      // Stop audio when modal is closed/unmounted
-      if (stopAudio && playingAudio) {
+    const handleCleanup = () => {
+      console.log('🔇 VocabDetailModal cleanup: stopping audio');
+      if (stopAudio) {
         stopAudio();
       }
+      // Also try to stop any currently playing audio elements globally
+      document.querySelectorAll('audio').forEach(audio => {
+        if (!audio.paused) {
+          console.log('🔇 Force stopping audio element:', audio.src);
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      });
     };
-  }, [stopAudio, playingAudio]);
+
+    return handleCleanup;
+  }, [stopAudio]);
+
+  // Also cleanup when the modal is about to be closed
+  useEffect(() => {
+    if (!vocab) {
+      console.log('🔇 VocabDetailModal: vocab is null, cleaning up audio');
+      if (stopAudio) {
+        stopAudio();
+      }
+    }
+  }, [vocab, stopAudio]);
 
   // Parse examples if it's a string - handle all possible cases
   let rawMeanings = [];
@@ -340,15 +360,13 @@ export default function VocabDetailModal({
                     if (audioData?.gloss) {
                       // Check if the lemma contains ・ (needs space conversion) and path seems incorrect
                       const needsSpaceConversion = vocab.lemma.includes('・');
-                      const currentFolderInPath = audioData.gloss.match(/\/jlpt\/[^/]+\/([^/]+)\//)?.[1];
-                      const expectedFolder = encodeURIComponent(vocab.lemma.toLowerCase().replace(/・/g, ' '));
 
-                      if (needsSpaceConversion && currentFolderInPath && currentFolderInPath !== expectedFolder) {
-                        // Fix the path by replacing incorrect folder name with correct one
+                      if (needsSpaceConversion) {
+                        // Always use corrected path for words with ・
                         const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
                         const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
                         glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/gloss.mp3`;
-                        console.log('🔍 [VocabDetailModal] Fixed JLPT gloss audio path:', vocab.lemma, 'from', currentFolderInPath, 'to', expectedFolder);
+                        console.log('🔍 [VocabDetailModal] Fixed JLPT gloss audio path for ・ word:', vocab.lemma, '->', glossAudioPath);
                       } else {
                         glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
                         console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
@@ -522,17 +540,15 @@ export default function VocabDetailModal({
                           // Parse audioLocal data for JLPT words
                           const audioData = parseAudioLocal(dictentry.audioLocal);
                           if (audioData?.example) {
-                            // Check if the lemma contains ・ (needs space conversion) and path seems incorrect
+                            // Check if the lemma contains ・ (needs space conversion)
                             const needsSpaceConversion = vocab.lemma.includes('・');
-                            const currentFolderInPath = audioData.example.match(/\/jlpt\/[^/]+\/([^/]+)\//)?.[1];
-                            const expectedFolder = encodeURIComponent(vocab.lemma.toLowerCase().replace(/・/g, ' '));
 
-                            if (needsSpaceConversion && currentFolderInPath && currentFolderInPath !== expectedFolder) {
-                              // Fix the path by replacing incorrect folder name with correct one
+                            if (needsSpaceConversion) {
+                              // Always use corrected path for words with ・
                               const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
                               const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
                               exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/example.mp3`;
-                              console.log('🔍 [VocabDetailModal] Fixed JLPT example audio path:', vocab.lemma, 'from', currentFolderInPath, 'to', expectedFolder);
+                              console.log('🔍 [VocabDetailModal] Fixed JLPT example audio path for ・ word:', vocab.lemma, '->', exampleAudioPath);
                             } else {
                               exampleAudioPath = audioData.example;
                               console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);

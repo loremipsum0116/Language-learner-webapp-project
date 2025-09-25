@@ -603,12 +603,34 @@ export default function VocabList() {
     };
 
     const stopAudio = () => {
+        console.log('🔇 [stopAudio] Attempting to stop all audio');
+
+        // Stop ref-tracked audio
         if (audioRef.current) {
+            console.log('🔇 [stopAudio] Stopping audioRef:', audioRef.current.src);
             audioRef.current.pause();
             audioRef.current.currentTime = 0;
             audioRef.current = null;
         }
+
+        // Stop playingAudio.audio if it exists (from GCS direct play)
+        if (playingAudio && playingAudio.audio) {
+            console.log('🔇 [stopAudio] Stopping playingAudio.audio:', playingAudio.audio.src);
+            playingAudio.audio.pause();
+            playingAudio.audio.currentTime = 0;
+        }
+
+        // Fallback: Force stop all audio elements on the page
+        document.querySelectorAll('audio').forEach((audio, index) => {
+            if (!audio.paused) {
+                console.log(`🔇 [stopAudio] Force stopping audio element ${index}:`, audio.src);
+                audio.pause();
+                audio.currentTime = 0;
+            }
+        });
+
         setPlayingAudio(null);
+        console.log('🔇 [stopAudio] All audio stopped, playingAudio reset to null');
     };
 
     const playUrl = (url, type, id) => {
@@ -1100,8 +1122,18 @@ export default function VocabList() {
             // Try to parse audioLocal for Japanese words using utils function
             const audioData = parseAudioLocal(vocab.dictentry?.audioLocal);
             if (audioData?.word) {
-                console.log('✅ Playing Japanese WORD audio from GCS:', audioData.word);
-                playUrl(audioData.word, 'vocab', vocab.id);
+                let wordAudioPath = audioData.word;
+
+                // Fix path for words with ・ character
+                if (vocab.lemma.includes('・')) {
+                    const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
+                    const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                    wordAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/word.mp3`;
+                    console.log('🔍 [VocabList] Fixed JLPT word audio path for ・ word:', vocab.lemma, '->', wordAudioPath);
+                }
+
+                console.log('✅ Playing Japanese WORD audio from GCS:', wordAudioPath);
+                playUrl(wordAudioPath, 'vocab', vocab.id);
                 return;
             }
 
