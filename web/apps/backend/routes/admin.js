@@ -28,6 +28,40 @@ const upload = multer({
   }
 });
 
+// GET /admin/dashboard/overview - Super Admin 대시보드 개요 정보
+router.get('/dashboard/overview', auth, adminOnly, async (req, res) => {
+    try {
+        const [totalUsers, activeUsers, totalCards, pendingReports] = await Promise.all([
+            prisma.user.count(),
+            prisma.user.count({
+                where: {
+                    lastStudiedAt: {
+                        gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                    }
+                }
+            }),
+            prisma.srscard.count(),
+            prisma.cardReport.count({
+                where: { status: 'PENDING' }
+            })
+        ]);
+
+        // 학습 완료율 계산 (예시)
+        const completionRate = totalCards > 0 ? Math.round((activeUsers / totalUsers) * 100) : 0;
+
+        return ok(res, {
+            totalUsers,
+            activeUsers,
+            totalCards,
+            pendingReports,
+            completionRate
+        });
+    } catch (e) {
+        console.error('[ADMIN] Dashboard overview error:', e);
+        return fail(res, 500, 'Failed to load dashboard overview');
+    }
+});
+
 // GET /admin/dashboard - 관리자 대시보드 정보
 router.get('/dashboard', auth, adminOnly, async (req, res) => {
     try {
@@ -1220,6 +1254,100 @@ router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
     } catch (e) {
         console.error('[ADMIN] Learning analytics error:', e);
         return fail(res, 500, 'Failed to load learning analytics');
+    }
+});
+
+// GET /admin/users/analytics - 사용자 분석 데이터
+router.get('/users/analytics', auth, adminOnly, async (req, res) => {
+    try {
+        const now = new Date();
+        const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+        const monthAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        const [dailyRetention, weeklyRetention, monthlyRetention, avgSessionTime] = await Promise.all([
+            // 일일 리텐션 (오늘 활동한 사용자 / 어제 활동한 사용자)
+            Promise.all([
+                prisma.user.count({
+                    where: {
+                        lastStudiedAt: {
+                            gte: new Date(now.getTime() - 24 * 60 * 60 * 1000)
+                        }
+                    }
+                }),
+                prisma.user.count({
+                    where: {
+                        lastStudiedAt: {
+                            gte: new Date(now.getTime() - 48 * 60 * 60 * 1000)
+                        }
+                    }
+                })
+            ]).then(([today, yesterday]) => yesterday > 0 ? Math.round((today / yesterday) * 100) : 0),
+
+            // 주간 리텐션
+            Promise.all([
+                prisma.user.count({
+                    where: {
+                        lastStudiedAt: {
+                            gte: weekAgo
+                        }
+                    }
+                }),
+                prisma.user.count()
+            ]).then(([active, total]) => total > 0 ? Math.round((active / total) * 100) : 0),
+
+            // 월간 리텐션
+            Promise.all([
+                prisma.user.count({
+                    where: {
+                        lastStudiedAt: {
+                            gte: monthAgo
+                        }
+                    }
+                }),
+                prisma.user.count()
+            ]).then(([active, total]) => total > 0 ? Math.round((active / total) * 100) : 0),
+
+            // 평균 세션 시간 (mock data)
+            15
+        ]);
+
+        return ok(res, {
+            retention: {
+                daily: dailyRetention,
+                weekly: weeklyRetention,
+                monthly: monthlyRetention
+            },
+            averageSessionTime: avgSessionTime
+        });
+    } catch (e) {
+        console.error('[ADMIN] Users analytics error:', e);
+        return fail(res, 500, 'Failed to load users analytics');
+    }
+});
+
+// GET /admin/content/quality-metrics - 컨텐츠 품질 메트릭
+router.get('/content/quality-metrics', auth, adminOnly, async (req, res) => {
+    try {
+        // Mock data for content quality metrics
+        const audioQuality = {
+            good: 1500,
+            issues: 50,
+            missing: 10
+        };
+
+        const translations = {
+            verified: 2000,
+            pending: 100,
+            reported: 25
+        };
+
+        return ok(res, {
+            audioQuality,
+            translations
+        });
+    } catch (e) {
+        console.error('[ADMIN] Content quality metrics error:', e);
+        return fail(res, 500, 'Failed to load content quality metrics');
     }
 });
 

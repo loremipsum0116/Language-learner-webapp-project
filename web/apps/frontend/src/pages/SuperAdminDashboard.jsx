@@ -65,11 +65,19 @@ const SuperAdminDashboard = () => {
       });
 
       if (response.ok) {
-        toast.success(`신고가 ${action === 'RESOLVED' ? '해결' : '거부'}되었습니다.`);
+        const result = await response.json();
+        toast.success(result.message || `신고가 ${action === 'RESOLVED' ? '해결' : '거부'}되었습니다.`);
         loadDashboardData(); // 데이터 새로고침
       } else {
-        const error = await response.json();
-        toast.error(error.message || '처리 중 오류가 발생했습니다.');
+        let errorMessage = '처리 중 오류가 발생했습니다.';
+        try {
+          const error = await response.json();
+          errorMessage = error.message || error.error || errorMessage;
+        } catch (parseError) {
+          console.error('Error parsing response:', parseError);
+          errorMessage = `HTTP ${response.status} ${response.statusText}`;
+        }
+        toast.error(errorMessage);
       }
     } catch (error) {
       console.error('Report action error:', error);
