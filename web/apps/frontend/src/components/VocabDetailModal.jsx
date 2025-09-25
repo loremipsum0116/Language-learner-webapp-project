@@ -355,8 +355,8 @@ export default function VocabDetailModal({
                       if (needsSpaceConversion) {
                         // Always use corrected path for words with ・
                         const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                        const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/gloss.mp3`;
+                        const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ').replace(/\s+/g, '_');
+                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${correctFolderName}/gloss.mp3`;
                         console.log('🔍 [VocabDetailModal] Fixed JLPT gloss audio path for ・ word:', vocab.lemma, '->', glossAudioPath);
                       } else {
                         glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
@@ -376,10 +376,10 @@ export default function VocabDetailModal({
                       if (vocab.romaji) {
                         folderName = vocab.romaji.toLowerCase();
                       } else {
-                        // Convert Japanese punctuation ・ to space for folder matching
-                        folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                        // Convert Japanese punctuation ・ to space, then replace spaces with underscores for folder matching
+                        folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ').replace(/\s+/g, '_');
                       }
-                      glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(folderName)}/gloss.mp3`;
+                      glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${folderName}/gloss.mp3`;
                       console.log('🔍 [VocabDetailModal] Final fallback for JLPT gloss:', vocab.lemma, '->', glossAudioPath);
                     }
                   } else if (isIdiomOrPhrasal) {
@@ -537,8 +537,8 @@ export default function VocabDetailModal({
                             if (needsSpaceConversion) {
                               // Always use corrected path for words with ・
                               const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                              const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/example.mp3`;
+                              const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ').replace(/\s+/g, '_');
+                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${correctFolderName}/example.mp3`;
                               console.log('🔍 [VocabDetailModal] Fixed JLPT example audio path for ・ word:', vocab.lemma, '->', exampleAudioPath);
                             } else {
                               exampleAudioPath = audioData.example;
@@ -558,10 +558,10 @@ export default function VocabDetailModal({
                             if (vocab.romaji) {
                               folderName = vocab.romaji.toLowerCase();
                             } else {
-                              // Convert Japanese punctuation ・ to space for folder matching
-                              folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
+                              // Convert Japanese punctuation ・ to space, then replace spaces with underscores for folder matching
+                              folderName = vocab.lemma.toLowerCase().replace(/・/g, ' ').replace(/\s+/g, '_');
                             }
-                            exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(folderName)}/example.mp3`;
+                            exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${folderName}/example.mp3`;
                             console.log('🔍 [VocabDetailModal] Final fallback for JLPT example:', vocab.lemma, '->', exampleAudioPath);
                           }
                         }
