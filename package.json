@@ -9,7 +9,7 @@
     "npm": ">=8.0.0"
   },
   "scripts": {
-    "build": "cd web/apps/frontend && npm run build",
+    "build": "cd web/apps/frontend && npm install --legacy-peer-deps && npm run build",
     "dev": "turbo dev",
     "test": "turbo test",
     "test:watch": "turbo test:watch",
@@ -47,8 +47,4 @@
       "prettier --write"
     ]
   },
-  "workspaces": [
-    "web/packages/*",
-    "web/apps/*"
-  ]
 }
