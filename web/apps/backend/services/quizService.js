@@ -202,12 +202,6 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
                     some: { languageId: 2 }
                 }
             },
-            include: {
-                translations: {
-                    where: { languageId: 2 },
-                    select: { translation: true }
-                }
-            },
             select: {
                 id: true,
                 lemma: true,
@@ -405,9 +399,6 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
                     { source: 'jlpt_vocabs' }
                 ]
             },
-            include: {
-                dictentry: true
-            },
             select: {
                 id: true,
                 lemma: true,
@@ -583,9 +574,6 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
                     { levelJLPT: { not: null } },
                     { source: 'jlpt_vocabs' }
                 ]
-            },
-            include: {
-                dictentry: true
             },
             select: {
                 id: true,
