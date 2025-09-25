@@ -349,19 +349,11 @@ export default function VocabDetailModal({
                     // JLPT 단어의 경우 우선 audioLocal 데이터 사용
                     const audioData = parseAudioLocal(dictentry.audioLocal);
                     if (audioData?.gloss) {
-                      // Check if the lemma contains ・ (needs space conversion) and path seems incorrect
-                      const needsSpaceConversion = vocab.lemma.includes('・');
-
-                      if (needsSpaceConversion) {
-                        // Always use corrected path for words with ・
-                        const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                        const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/gloss.mp3`;
-                        console.log('🔍 [VocabDetailModal] Fixed JLPT gloss audio path for ・ word:', vocab.lemma, '->', glossAudioPath);
-                      } else {
-                        glossAudioPath = audioData.gloss; // GCS URL은 이미 완전한 URL이므로 / 추가하지 않음
-                        console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
-                      }
+                      // First try using the audioLocal path as-is
+                      glossAudioPath = audioData.gloss.startsWith('http')
+                        ? audioData.gloss
+                        : `https://storage.googleapis.com/language-learner-audio/public/${audioData.gloss}`;
+                      console.log('🔍 [VocabDetailModal] Using JLPT gloss audio from audioLocal:', vocab.lemma, '->', glossAudioPath);
                     }
                     // Fallback: 데이터베이스의 audioUrl을 사용하되, gloss.mp3로 변경
                     else if (vocab.dictentry?.audioUrl) {
@@ -531,19 +523,11 @@ export default function VocabDetailModal({
                           // Parse audioLocal data for JLPT words
                           const audioData = parseAudioLocal(dictentry.audioLocal);
                           if (audioData?.example) {
-                            // Check if the lemma contains ・ (needs space conversion)
-                            const needsSpaceConversion = vocab.lemma.includes('・');
-
-                            if (needsSpaceConversion) {
-                              // Always use corrected path for words with ・
-                              const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                              const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/example.mp3`;
-                              console.log('🔍 [VocabDetailModal] Fixed JLPT example audio path for ・ word:', vocab.lemma, '->', exampleAudioPath);
-                            } else {
-                              exampleAudioPath = audioData.example;
-                              console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);
-                            }
+                            // First try using the audioLocal path as-is
+                            exampleAudioPath = audioData.example.startsWith('http')
+                              ? audioData.example
+                              : `https://storage.googleapis.com/language-learner-audio/public/${audioData.example}`;
+                            console.log('🔍 [VocabDetailModal] Using JLPT example audio from audioLocal:', vocab.lemma, '->', exampleAudioPath);
                           }
                           // Fallback: use database audioUrl if available
                           else if (vocab.dictentry?.audioUrl) {
