@@ -223,8 +223,15 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
         if (v.translations && v.translations.length > 0 && v.pos) {
             const meaning = v.translations[0].translation;
             if (meaning && meaning.trim() !== '') {
-                // 여러 뜻이 ; 또는 , 로 구분되어 있을 경우 첫 번째만 사용
-                const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
+                // 여러 뜻 처리: 80자 이내면 여러 뜻 포함, 초과하면 첫 번째 뜻만
+                let cleanMeaning;
+                if (meaning.length <= 80) {
+                    // 짧으면 전체 뜻 사용 (세미콜론은 쉼표로 변경)
+                    cleanMeaning = meaning.replace(/;/g, ', ').trim();
+                } else {
+                    // 길면 첫 번째 뜻만 사용
+                    cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
+                }
 
                 // 빈 문자열이 아닌 경우만 추가
                 if (cleanMeaning !== '') {
@@ -243,7 +250,13 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
         if (v.translations && v.translations.length > 0) {
             const meaning = v.translations[0].translation;
             if (meaning && meaning.trim() !== '') {
-                const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
+                // 여러 뜻 처리: 80자 이내면 여러 뜻 포함, 초과하면 첫 번째 뜻만
+                let cleanMeaning;
+                if (meaning.length <= 80) {
+                    cleanMeaning = meaning.replace(/;/g, ', ').trim();
+                } else {
+                    cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
+                }
                 // 빈 문자열이 아닌 경우만 추가
                 if (cleanMeaning !== '') {
                     allDistractors.add(cleanMeaning);
@@ -262,8 +275,13 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
 
         if (!koreanMeaning) continue;
 
-        // 정답에서 첫 번째 뜻만 사용
-        const correctAnswer = koreanMeaning.split(';')[0].split(',')[0].trim();
+        // 정답 처리: 80자 이내면 여러 뜻 포함, 초과하면 첫 번째 뜻만
+        let correctAnswer;
+        if (koreanMeaning.length <= 80) {
+            correctAnswer = koreanMeaning.replace(/;/g, ', ').trim();
+        } else {
+            correctAnswer = koreanMeaning.split(';')[0].split(',')[0].trim();
+        }
 
         // 품사별 Distractor 선택 (정답 제외)
         const vocabPos = vocab.pos || 'unknown';
@@ -482,7 +500,13 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
 
         if (!koreanMeaning) continue;
 
-        const questionText = koreanMeaning.split(';')[0].split(',')[0].trim();
+        // 질문 텍스트 처리: 80자 이내면 여러 뜻 포함, 초과하면 첫 번째 뜻만
+        let questionText;
+        if (koreanMeaning.length <= 80) {
+            questionText = koreanMeaning.replace(/;/g, ', ').trim();
+        } else {
+            questionText = koreanMeaning.split(';')[0].split(',')[0].trim();
+        }
         const correctInfo = getJapaneseDisplayInfo(vocab);
         const correctAnswer = correctInfo.displayText;
 
