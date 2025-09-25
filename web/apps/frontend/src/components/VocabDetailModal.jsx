@@ -353,11 +353,18 @@ export default function VocabDetailModal({
                       const needsSpaceConversion = vocab.lemma.includes('・');
 
                       if (needsSpaceConversion) {
-                        // For words with ・, use space conversion instead of audioLocal
+                        // For words with ・, extract romaji from audioLocal and add space
                         const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                        const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/gloss.mp3`;
-                        console.log('🔍 [VocabDetailModal] Using space-converted path for ・ word:', vocab.lemma, '->', glossAudioPath);
+
+                        // Extract folder name from audioLocal path: "jlpt/n4/aisatsusuru/gloss.mp3" -> "aisatsusuru"
+                        const pathParts = audioData.gloss.split('/');
+                        const folderName = pathParts[pathParts.length - 2]; // Second to last part
+
+                        // Convert "aisatsusuru" to "aisatsu suru" by adding space before "suru"
+                        const correctedFolderName = folderName.replace(/suru$/, ' suru');
+
+                        glossAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctedFolderName)}/gloss.mp3`;
+                        console.log('🔍 [VocabDetailModal] Using romaji-based path for ・ word:', vocab.lemma, folderName, '->', correctedFolderName, '->', glossAudioPath);
                       } else {
                         // Use audioLocal path for normal words
                         glossAudioPath = audioData.gloss.startsWith('http')
@@ -538,11 +545,18 @@ export default function VocabDetailModal({
                             const needsSpaceConversion = vocab.lemma.includes('・');
 
                             if (needsSpaceConversion) {
-                              // For words with ・, use space conversion instead of audioLocal
+                              // For words with ・, extract romaji from audioLocal and add space
                               const jlptLevel = (vocab.levelJLPT || 'N5').toLowerCase();
-                              const correctFolderName = vocab.lemma.toLowerCase().replace(/・/g, ' ');
-                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctFolderName)}/example.mp3`;
-                              console.log('🔍 [VocabDetailModal] Using space-converted path for ・ word:', vocab.lemma, '->', exampleAudioPath);
+
+                              // Extract folder name from audioLocal path: "jlpt/n4/aisatsusuru/example.mp3" -> "aisatsusuru"
+                              const pathParts = audioData.example.split('/');
+                              const folderName = pathParts[pathParts.length - 2]; // Second to last part
+
+                              // Convert "aisatsusuru" to "aisatsu suru" by adding space before "suru"
+                              const correctedFolderName = folderName.replace(/suru$/, ' suru');
+
+                              exampleAudioPath = `https://storage.googleapis.com/language-learner-audio/jlpt/${jlptLevel}/${encodeURIComponent(correctedFolderName)}/example.mp3`;
+                              console.log('🔍 [VocabDetailModal] Using romaji-based path for ・ word:', vocab.lemma, folderName, '->', correctedFolderName, '->', exampleAudioPath);
                             } else {
                               // Use audioLocal path for normal words
                               exampleAudioPath = audioData.example.startsWith('http')
