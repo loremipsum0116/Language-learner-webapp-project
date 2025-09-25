@@ -915,6 +915,7 @@ router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
         const startDate = dateFrom ? new Date(dateFrom) : new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
 
         if (userId) {
+            console.log(`[ADMIN] Loading detailed analytics for userId: ${userId}`);
             // 특정 사용자의 상세 학습 현황
             const user = await prisma.user.findUnique({
                 where: { id: parseInt(userId) },
@@ -928,12 +929,14 @@ router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
                     }
                 }
             });
+            console.log(`[ADMIN] User query result:`, user ? { id: user.id, email: user.email } : 'null');
 
             if (!user) {
                 return fail(res, 404, 'User not found');
             }
 
             // 단어 학습 통계
+            console.log(`[ADMIN] Querying vocab stats for userId: ${userId}`);
             const vocabStats = await prisma.srscard.aggregate({
                 where: {
                     userId: parseInt(userId),
@@ -949,6 +952,7 @@ router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
                     wrongTotal: true
                 }
             });
+            console.log(`[ADMIN] Vocab stats result:`, vocabStats);
 
             // 최근 학습한 단어들 (최근 7일)
             const recentVocabStudied = await prisma.srscard.findMany({
@@ -1253,7 +1257,11 @@ router.get('/users/learning-analytics', auth, adminOnly, async (req, res) => {
 
     } catch (e) {
         console.error('[ADMIN] Learning analytics error:', e);
-        return fail(res, 500, 'Failed to load learning analytics');
+        console.error('[ADMIN] Error message:', e.message);
+        console.error('[ADMIN] Stack trace:', e.stack);
+        console.error('[ADMIN] Request query params:', req.query);
+        console.error('[ADMIN] User requesting:', req.user?.email);
+        return fail(res, 500, `Failed to load learning analytics: ${e.message}`);
     }
 });
 
