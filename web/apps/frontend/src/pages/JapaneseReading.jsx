@@ -97,8 +97,10 @@ export default function JapaneseReading() {
 
         // Ruby 태그를 먼저 처리하여 올바르게 렌더링
         const processRubyTags = (text) => {
-            // <ruby>漢字<rt>ひらがな</rt></ruby> 패턴을 찾아서 처리
-            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)<\/rt><\/ruby>/g;
+            // 다양한 형태의 ruby 태그 패턴을 처리
+            // Pattern 1: <ruby>漢字ひらがな<rt>ひらがな<rt><ruby>
+            // Pattern 2: <ruby>漢字ひらがな<rt>ひらがな<rt></ruby>
+            const rubyRegex = /<ruby>([^<]+)<rt>([^<]+)<rt>(?:<\/ruby>|<ruby>)/g;
             const parts = [];
             let lastIndex = 0;
             let match;
@@ -113,10 +115,18 @@ export default function JapaneseReading() {
                 }
 
                 // Ruby 태그 추가
+                const fullText = match[1];  // 예: "学生がくせい"
+                const furiganaText = match[2]; // 예: "がくせい"
+
+                // 한자 부분만 추출 ("学生がくせい"에서 "学生"만)
+                const kanjiMatch = fullText.match(/^([一-龯]+)/);
+                const cleanKanji = kanjiMatch ? kanjiMatch[1] : fullText;
+                const cleanFurigana = furiganaText;
+
                 parts.push({
                     type: 'ruby',
-                    kanji: match[1],
-                    furigana: match[2]
+                    kanji: cleanKanji,
+                    furigana: cleanFurigana
                 });
 
                 lastIndex = match.index + match[0].length;
