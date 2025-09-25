@@ -271,7 +271,7 @@ router.get('/history/:level', authMiddleware, async (req, res) => {
 });
 
 // 별칭으로 /record 엔드포인트 추가 (기존 프론트엔드 코드 호환성을 위해)
-router.post('/record', async (req, res) => {
+router.post('/record', authMiddleware, async (req, res) => {
     console.log('🚨🚨🚨 [JAPANESE LISTENING RECORD] API CALLED (alias for /submit)! 🚨🚨🚨');
 
     try {
