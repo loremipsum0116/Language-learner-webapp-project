@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
+import { API_BASE } from '../api/client';
 
 const UserLearningAnalytics = () => {
     const [loading, setLoading] = useState(false);
@@ -29,7 +30,7 @@ const UserLearningAnalytics = () => {
             const url = `/api/admin/users/learning-analytics?${params}`;
             console.log(`[USER_ANALYTICS] Calling API: ${url}`);
 
-            const response = await fetch(url, {
+            const response = await fetch(API_BASE + url, {
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -105,7 +106,7 @@ const UserLearningAnalytics = () => {
             const url = `/api/admin/users/learning-analytics?${params}`;
             console.log(`[USER_DETAIL] Calling API: ${url}`);
 
-            const response = await fetch(url, {
+            const response = await fetch(API_BASE + url, {
                 credentials: 'include',
                 headers: { 'Content-Type': 'application/json' }
             });

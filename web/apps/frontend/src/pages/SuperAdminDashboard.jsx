@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import UserLearningAnalytics from '../components/UserLearningAnalytics';
+import { API_BASE } from '../api/client';
 
 const SuperAdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
@@ -49,10 +50,10 @@ const SuperAdminDashboard = () => {
 
       for (const apiCall of apiCalls) {
         try {
-          const fullUrl = window.location.origin + apiCall.url;
+          const fullUrl = API_BASE + apiCall.url;
           console.log(`[DASHBOARD] Calling ${apiCall.name} API: ${apiCall.url}`);
           console.log(`[DASHBOARD] Full URL: ${fullUrl}`);
-          const response = await fetch(apiCall.url, {
+          const response = await fetch(API_BASE + apiCall.url, {
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' }
           });
@@ -69,7 +70,7 @@ const SuperAdminDashboard = () => {
             const contentType = response.headers.get('content-type');
             if (contentType && contentType.includes('text/html')) {
               console.error(`[DASHBOARD] ${apiCall.name} API returned HTML instead of JSON - endpoint may not exist`);
-              console.error(`[DASHBOARD] Full URL was: ${window.location.origin + apiCall.url}`);
+              console.error(`[DASHBOARD] Full URL was: ${API_BASE + apiCall.url}`);
             }
 
             console.warn(`[DASHBOARD] ${apiCall.name} API failed with status ${response.status}`);
