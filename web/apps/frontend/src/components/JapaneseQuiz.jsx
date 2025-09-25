@@ -568,21 +568,6 @@ export default function JapaneseQuiz({
                                 </div>
                             )}
 
-                            {/* 발음 정보 표시 (일본어 → 한국어 뜻 퀴즈에서) */}
-                            {actualQuizType === JapaneseQuizTypes.JP_WORD_TO_KO_MEANING && currentQuiz.pron && (
-                                <div className="pronunciation-info mb-3">
-                                    {currentQuiz.pron.hiragana && (
-                                        <div className="text-muted">
-                                            <small>히라가나: {currentQuiz.pron.hiragana}</small>
-                                        </div>
-                                    )}
-                                    {currentQuiz.pron.romaji && (
-                                        <div className="text-muted">
-                                            <small>로마자: {currentQuiz.pron.romaji}</small>
-                                        </div>
-                                    )}
-                                </div>
-                            )}
                         </div>
 
                         {/* 답안 입력 영역 */}
