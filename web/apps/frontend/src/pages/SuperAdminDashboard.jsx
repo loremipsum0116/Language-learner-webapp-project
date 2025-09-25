@@ -18,15 +18,8 @@ const SuperAdminDashboard = () => {
     try {
       setLoading(true);
 
-      // 로그인 토큰 확인
-      const token = localStorage.getItem('accessToken');
-      if (!token) {
-        console.error('[DASHBOARD] No access token found');
-        toast.error('로그인이 필요합니다. super@root.com으로 로그인해주세요.');
-        return;
-      }
-
-      console.log('[DASHBOARD] Using token:', token ? 'Token found' : 'No token');
+      // 쿠키 기반 인증 사용 - localStorage 토큰 확인 제거
+      console.log('[DASHBOARD] Using cookie-based authentication');
 
       // API 호출들을 개별적으로 처리하여 하나가 실패해도 다른 것들이 로드되도록 함
       const apiCalls = [
@@ -60,7 +53,8 @@ const SuperAdminDashboard = () => {
           console.log(`[DASHBOARD] Calling ${apiCall.name} API: ${apiCall.url}`);
           console.log(`[DASHBOARD] Full URL: ${fullUrl}`);
           const response = await fetch(apiCall.url, {
-            headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' }
           });
 
           console.log(`[DASHBOARD] ${apiCall.name} response status:`, response.status);

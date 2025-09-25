@@ -30,7 +30,8 @@ const UserLearningAnalytics = () => {
             console.log(`[USER_ANALYTICS] Calling API: ${url}`);
 
             const response = await fetch(url, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
             });
 
             console.log(`[USER_ANALYTICS] Response status: ${response.status}`);
@@ -105,7 +106,8 @@ const UserLearningAnalytics = () => {
             console.log(`[USER_DETAIL] Calling API: ${url}`);
 
             const response = await fetch(url, {
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
+                credentials: 'include',
+                headers: { 'Content-Type': 'application/json' }
             });
 
             if (response.ok) {
