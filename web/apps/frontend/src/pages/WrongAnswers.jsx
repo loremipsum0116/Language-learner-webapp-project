@@ -161,17 +161,99 @@ function formatTimeRemaining(hours) {
 }
 
 // 슬래시를 기점으로 문단을 나누어 표시하는 함수
-function formatTextWithParagraphs(text) {
-  if (!text) return '';
+// Ruby 태그를 올바르게 렌더링하는 함수
+function makeClickableTextForWrongAnswers(text) {
+  if (!text) return null;
 
-  // 슬래시(/)를 기준으로 문단 분리
-  const paragraphs = text.split('/').map(paragraph => paragraph.trim()).filter(paragraph => paragraph);
+  // Ruby 태그를 먼저 처리하여 올바르게 렌더링
+  const processRubyTags = (text) => {
+    const rubyRegex = /<ruby>([^<]+)<rt>\s*([^<]+)\s*(?:<rt>\s*<ruby>|<\/rt>\s*<\/ruby>)/gs;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
 
-  return paragraphs.map((paragraph, index) => (
-    <div key={index} className={index > 0 ? "mt-3" : ""}>
-      <div dangerouslySetInnerHTML={{ __html: paragraph }}></div>
+    while ((match = rubyRegex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push({
+          type: 'text',
+          content: text.slice(lastIndex, match.index)
+        });
+      }
+
+      const kanjiText = match[1].trim();
+      const furiganaText = match[2].trim();
+      const kanjiMatch = kanjiText.match(/^([一-龯々〇]+)/);
+      const cleanKanji = kanjiMatch ? kanjiMatch[1] : kanjiText;
+
+      parts.push({
+        type: 'ruby',
+        kanji: cleanKanji,
+        furigana: furiganaText
+      });
+
+      lastIndex = match.index + match[0].length;
+    }
+
+    if (lastIndex < text.length) {
+      parts.push({
+        type: 'text',
+        content: text.slice(lastIndex)
+      });
+    }
+
+    return parts;
+  };
+
+  // 전체 텍스트에서 Ruby 태그 처리
+  const allRubyParts = processRubyTags(text);
+
+  // 문단 분리 처리
+  const paragraphs = [];
+  let currentParagraph = [];
+
+  allRubyParts.forEach((part) => {
+    if (part.type === 'text' && part.content.includes('/')) {
+      const textParts = part.content.split('/');
+      textParts.forEach((textPart, index) => {
+        if (index > 0) {
+          paragraphs.push(currentParagraph);
+          currentParagraph = [];
+        }
+        if (textPart.trim()) {
+          currentParagraph.push({ type: 'text', content: textPart });
+        }
+      });
+    } else {
+      currentParagraph.push(part);
+    }
+  });
+
+  if (currentParagraph.length > 0) {
+    paragraphs.push(currentParagraph);
+  }
+
+  return paragraphs.map((rubyParts, paragraphIndex) => (
+    <div key={paragraphIndex} className={paragraphIndex > 0 ? "mt-3" : ""}>
+      {rubyParts.map((part, partIndex) => {
+        if (part.type === 'ruby') {
+          return (
+            <ruby key={partIndex}>
+              {part.kanji}
+              <rt style={{ fontSize: '0.6em' }}>{part.furigana}</rt>
+            </ruby>
+          );
+        } else {
+          return <span key={partIndex}>{part.content}</span>;
+        }
+      })}
     </div>
   ));
+}
+
+function formatTextWithParagraphs(text) {
+  if (!text) return '';
+  // Ruby 태그를 올바르게 처리하는 새로운 함수 사용
+  return makeClickableTextForWrongAnswers(text);
 }
 
 
