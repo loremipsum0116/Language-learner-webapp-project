@@ -222,14 +222,17 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
     distractorPool.forEach(v => {
         if (v.translations && v.translations.length > 0 && v.pos) {
             const meaning = v.translations[0].translation;
-            if (meaning) {
+            if (meaning && meaning.trim() !== '') {
                 // 여러 뜻이 ; 또는 , 로 구분되어 있을 경우 첫 번째만 사용
                 const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
 
-                if (!distractorsByPos.has(v.pos)) {
-                    distractorsByPos.set(v.pos, new Set());
+                // 빈 문자열이 아닌 경우만 추가
+                if (cleanMeaning !== '') {
+                    if (!distractorsByPos.has(v.pos)) {
+                        distractorsByPos.set(v.pos, new Set());
+                    }
+                    distractorsByPos.get(v.pos).add(cleanMeaning);
                 }
-                distractorsByPos.get(v.pos).add(cleanMeaning);
             }
         }
     });
@@ -239,9 +242,12 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
     distractorPool.forEach(v => {
         if (v.translations && v.translations.length > 0) {
             const meaning = v.translations[0].translation;
-            if (meaning) {
+            if (meaning && meaning.trim() !== '') {
                 const cleanMeaning = meaning.split(';')[0].split(',')[0].trim();
-                allDistractors.add(cleanMeaning);
+                // 빈 문자열이 아닌 경우만 추가
+                if (cleanMeaning !== '') {
+                    allDistractors.add(cleanMeaning);
+                }
             }
         }
     });
@@ -279,12 +285,20 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
         }
 
         const wrongOptions = _.sampleSize(availableDistractors, 3);
-        const options = [correctAnswer, ...wrongOptions];
+        let options = [correctAnswer, ...wrongOptions];
+
+        // 빈 문자열이나 undefined인 선택지 제거
+        options = options.filter(option => option && option.trim() !== '');
 
         // 선택지가 4개 미만일 경우 기본 distractor 추가
+        const fallbackOptions = ["기타 의미", "관련 없는 뜻", "다른 뜻", "추가 선택지", "기본 선택지"];
         while (options.length < 4) {
-            const fallbackOptions = [`기타 의미 ${options.length - 3}`, "관련 없는 뜻", "다른 뜻"];
-            options.push(fallbackOptions[options.length - 4] || "추가 선택지");
+            const fallback = fallbackOptions[options.length - 1] || `선택지 ${options.length + 1}`;
+            if (!options.includes(fallback)) {
+                options.push(fallback);
+            } else {
+                options.push(`선택지 ${options.length + 1}`);
+            }
         }
 
         // 일본어 표시 형태 결정 - 체크한 단어의 lemma를 그대로 사용
