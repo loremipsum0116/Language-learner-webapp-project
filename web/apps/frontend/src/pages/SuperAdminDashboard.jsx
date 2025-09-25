@@ -18,6 +18,16 @@ const SuperAdminDashboard = () => {
     try {
       setLoading(true);
 
+      // 로그인 토큰 확인
+      const token = localStorage.getItem('accessToken');
+      if (!token) {
+        console.error('[DASHBOARD] No access token found');
+        toast.error('로그인이 필요합니다. super@root.com으로 로그인해주세요.');
+        return;
+      }
+
+      console.log('[DASHBOARD] Using token:', token ? 'Token found' : 'No token');
+
       // API 호출들을 개별적으로 처리하여 하나가 실패해도 다른 것들이 로드되도록 함
       const apiCalls = [
         {
@@ -46,16 +56,28 @@ const SuperAdminDashboard = () => {
 
       for (const apiCall of apiCalls) {
         try {
+          const fullUrl = window.location.origin + apiCall.url;
           console.log(`[DASHBOARD] Calling ${apiCall.name} API: ${apiCall.url}`);
+          console.log(`[DASHBOARD] Full URL: ${fullUrl}`);
           const response = await fetch(apiCall.url, {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
           });
+
+          console.log(`[DASHBOARD] ${apiCall.name} response status:`, response.status);
+          console.log(`[DASHBOARD] ${apiCall.name} response content-type:`, response.headers.get('content-type'));
 
           if (response.ok) {
             const data = await response.json();
             results[apiCall.name] = data;
             console.log(`[DASHBOARD] ${apiCall.name} API success:`, data);
           } else {
+            // HTML 응답인지 확인
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('text/html')) {
+              console.error(`[DASHBOARD] ${apiCall.name} API returned HTML instead of JSON - endpoint may not exist`);
+              console.error(`[DASHBOARD] Full URL was: ${window.location.origin + apiCall.url}`);
+            }
+
             console.warn(`[DASHBOARD] ${apiCall.name} API failed with status ${response.status}`);
             results[apiCall.name] = apiCall.fallback;
           }
