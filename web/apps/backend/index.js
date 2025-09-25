@@ -568,7 +568,8 @@ const corsOptions = {
       'http://localhost:3000',
       'http://localhost:3001',
       'https://project-1ujdn.vercel.app',
-      'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app'
+      'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app',
+      'https://project-1ujdn-9npzyfdcg-hyunseoks-projects-8b90da92.vercel.app'
     ];
     // Allow requests with no origin (like mobile apps or Postman)
     if (!origin || allowedOrigins.includes(origin) || origin.includes('vercel.app')) {
@@ -592,7 +593,8 @@ app.use((req, res, next) => {
     'http://localhost:3000',
     'http://localhost:3001',
     'https://project-1ujdn.vercel.app',
-    'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app'
+    'https://project-1ujdn-git-railway-deploy-fix-hyunseoks-projects-8b90da92.vercel.app',
+    'https://project-1ujdn-9npzyfdcg-hyunseoks-projects-8b90da92.vercel.app'
   ];
 
   if (allowedOrigins.includes(origin) || (origin && origin.includes('vercel.app'))) {
