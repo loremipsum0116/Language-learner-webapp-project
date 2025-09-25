@@ -118,8 +118,14 @@ const UserLearningAnalytics = () => {
         );
     }
 
+    console.log('[UserLearningAnalytics] Component rendering, loading:', loading, 'users:', users.length);
+
     return (
-        <div className="user-learning-analytics">
+        <div className="user-learning-analytics" style={{ border: '2px solid blue', minHeight: '200px' }}>
+            <div style={{ background: 'yellow', padding: '5px' }}>
+                <strong>UserLearningAnalytics 컴포넌트 로드됨!</strong>
+                <br />Loading: {loading.toString()}, Users: {users.length}
+            </div>
             {/* 필터 영역 */}
             <div className="card mb-4">
                 <div className="card-header">
