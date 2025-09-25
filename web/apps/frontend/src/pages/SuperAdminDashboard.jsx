@@ -21,7 +21,7 @@ const SuperAdminDashboard = () => {
         fetch('/api/admin/dashboard/overview', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
         }),
-        fetch('/api/cards/admin/all?limit=10&status=PENDING', {
+        fetch('/api/card-reports/admin/all?limit=10&status=PENDING', {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('accessToken')}` }
         }),
         fetch('/api/admin/users/analytics', {
@@ -38,7 +38,8 @@ const SuperAdminDashboard = () => {
       const qualityData = await qualityRes.json();
 
       setDashboardData(dashboard);
-      setReports(reportsData.reports || []);
+      // cardReports API 응답 구조에 맞춰 수정
+      setReports(reportsData.data?.reports || []);
       setUsers(usersData);
       setContentQuality(qualityData);
     } catch (error) {
@@ -51,7 +52,7 @@ const SuperAdminDashboard = () => {
 
   const handleReportAction = async (reportId, action, resolution = '') => {
     try {
-      const response = await fetch(`/api/cards/admin/${reportId}/status`, {
+      const response = await fetch(`/api/card-reports/admin/${reportId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

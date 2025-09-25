@@ -16,6 +16,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Logout from "./pages/Logout";
 import Admin from "./pages/Admin";
 import AdminDashboard from "./pages/AdminDashboard";
+import SuperAdminDashboard from "./pages/SuperAdminDashboard";
 import AdminRoute from "./components/AdminRoute";
 import VocabList from "./pages/VocabList";
 import MyWordbook from "./pages/MyWordbook";
@@ -398,8 +399,8 @@ export default function App() {
                 </>
               } 
             />
-            <Route 
-              path="/admin/dashboard" 
+            <Route
+              path="/admin/dashboard"
               element={
                 <>
                   <Header />
@@ -408,7 +409,19 @@ export default function App() {
                   </div>
                   <Footer />
                 </>
-              } 
+              }
+            />
+            <Route
+              path="/admin/super-dashboard"
+              element={
+                <>
+                  <Header />
+                  <div className="main-content">
+                    <SuperAdminDashboard />
+                  </div>
+                  <Footer />
+                </>
+              }
             />
           </Route>
         </Route>
