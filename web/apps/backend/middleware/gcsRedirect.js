@@ -60,7 +60,7 @@ function gcsListeningRedirect(level) {
 
 /**
  * JLPT 오디오를 위한 특별 리다이렉트
- * /jlpt/N5/obentou/word.mp3 -> /jlpt/jlpt/n5/obentou/word.mp3
+ * /jlpt/N5/obentou/word.mp3 -> public/jlpt/n5/obentou/word.mp3
  */
 function gcsJlptRedirect(req, res, next) {
   if (req.path.endsWith('.mp3')) {
@@ -70,7 +70,7 @@ function gcsJlptRedirect(req, res, next) {
       // pathParts[2]는 N5, N4 등의 레벨
       const level = pathParts[2].toLowerCase(); // N5 -> n5
       const remainingPath = pathParts.slice(3).join('/'); // obentou/word.mp3
-      const gcsPath = `jlpt/jlpt/${level}/${remainingPath}`;
+      const gcsPath = `public/jlpt/${level}/${remainingPath}`;
       const gcsUrl = `${GCS_BASE_URL}/${gcsPath}`;
 
       console.log(`[GCS JLPT Redirect] ${req.originalUrl} -> ${gcsUrl}`);

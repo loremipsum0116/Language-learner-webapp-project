@@ -32,7 +32,9 @@
       "Bash(pkill:*)",
       "Bash(grep:*)",
       "Bash(xargs cat:*)",
-      "Bash(mysql:*)"
+      "Bash(mysql:*)",
+      "Bash(vercel:*)",
+      "Bash(npx vercel:*)"
     ],
     "deny": [],
     "ask": []
