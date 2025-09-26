@@ -11,7 +11,7 @@ function parseServerError(e) {
         const j = JSON.parse(msg);
         if (j?.error) msg = j.error;
         if (j?.message) msg = j.message;
-        if (j?.pending || j?.type === 'ACCOUNT_PENDING') isPending = true;
+        if (j?.pending || j?.type === 'ACCOUNT_PENDING' || j?.requiresApproval) isPending = true;
     } catch { }
     return { status: e?.status, message: msg, isPending };
 }
@@ -76,12 +76,13 @@ export default function Register() {
         try {
             setLoading(true);
             await register(email.trim(), password);
+            // 승인이 필요 없는 경우만 홈으로 리다이렉트 (super@root.com만)
             nav("/", { replace: true });
         } catch (e2) {
             const { status, message, isPending } = parseServerError(e2);
 
-            // 회원가입 성공 시 감사 메시지 표시 (requiresApproval 포함)
-            if (status === 200 || (message && /requiresApproval/i.test(String(message))) || isPending) {
+            // 승인 대기 상태인 경우 성공 메시지 표시하고 리다이렉트하지 않음
+            if (isPending || (status === 200 && message && /requiresApproval/i.test(String(message)))) {
                 setServerSuccess(message || "회원가입 신청해주셔서 감사합니다! 운영자가 검토 후 빠른 시일 내에 승인 해 드리겠습니다.");
                 setIsPendingApproval(true);
                 return;

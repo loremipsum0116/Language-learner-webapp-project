@@ -10,7 +10,7 @@ function parseServerError(e) {
         const j = JSON.parse(msg);
         if (j?.error) msg = j.error;
         if (j?.message) msg = j.message;
-        if (j?.pending || j?.type === 'ACCOUNT_PENDING') isPending = true;
+        if (j?.pending || j?.type === 'ACCOUNT_PENDING' || j?.requiresApproval) isPending = true;
     } catch { }
     return { status: e?.status, message: msg, isPending };
 }

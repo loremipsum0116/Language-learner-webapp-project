@@ -100,11 +100,24 @@ export function AuthProvider({ children }) {
     // ✅ 1. register 함수 정의
     const register = async (email, password) => {
         // 회원가입 API 호출
-        await fetchJSON("/auth/register", withCreds({ 
-            method: "POST", 
-            body: JSON.stringify({ email, password }) 
+        const response = await fetchJSON("/auth/register", withCreds({
+            method: "POST",
+            body: JSON.stringify({ email, password })
         }));
-        // 가입 성공 후 바로 로그인 처리
+
+        // 승인이 필요한 경우 자동 로그인하지 않음
+        if (response.data?.requiresApproval) {
+            // 승인 대기 상태를 알리기 위해 에러로 던짐
+            const err = new Error(JSON.stringify({
+                message: response.data.message,
+                requiresApproval: true,
+                type: 'ACCOUNT_PENDING'
+            }));
+            err.status = 200;
+            throw err;
+        }
+
+        // 가입 성공 후 바로 로그인 처리 (super@root.com만)
         await login(email, password);
     };
 
