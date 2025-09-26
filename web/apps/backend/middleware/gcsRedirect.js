@@ -58,9 +58,32 @@ function gcsListeningRedirect(level) {
   };
 }
 
+/**
+ * JLPT 오디오를 위한 특별 리다이렉트
+ * /jlpt/N5/obentou/word.mp3 -> /jlpt/jlpt/n5/obentou/word.mp3
+ */
+function gcsJlptRedirect(req, res, next) {
+  if (req.path.endsWith('.mp3')) {
+    // /jlpt/N5/obentou/word.mp3 형태의 경로 파싱
+    const pathParts = req.path.split('/');
+    if (pathParts.length >= 4 && pathParts[1] === 'jlpt') {
+      // pathParts[2]는 N5, N4 등의 레벨
+      const level = pathParts[2].toLowerCase(); // N5 -> n5
+      const remainingPath = pathParts.slice(3).join('/'); // obentou/word.mp3
+      const gcsPath = `jlpt/jlpt/${level}/${remainingPath}`;
+      const gcsUrl = `${GCS_BASE_URL}/${gcsPath}`;
+
+      console.log(`[GCS JLPT Redirect] ${req.originalUrl} -> ${gcsUrl}`);
+      return res.redirect(301, gcsUrl);
+    }
+  }
+  next();
+}
+
 module.exports = {
   createGcsRedirect,
   gcsAudioRedirect,
   gcsListeningRedirect,
+  gcsJlptRedirect,
   GCS_BASE_URL
 };

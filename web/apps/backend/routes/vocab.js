@@ -6,6 +6,16 @@ const { convertLocalPathToGcsUrl } = require('../lib/gcsUrls');
 
 console.log('📊 [VOCAB ROUTER] vocab.js router loaded');
 
+/**
+ * 로마지에서 숫자를 제거하는 함수
+ * @param {string} romaji - 숫자가 포함된 로마지 (예: "kiro2")
+ * @returns {string} - 숫자가 제거된 로마지 (예: "kiro")
+ */
+function removeNumbersFromRomaji(romaji) {
+    if (!romaji || typeof romaji !== 'string') return romaji;
+    return romaji.replace(/\d+/g, '');
+}
+
 // Add middleware to log all requests to this router
 router.use((req, res, next) => {
   console.log(`🎯 [VOCAB ROUTER] Request: ${req.method} ${req.path} | Query:`, req.query);
@@ -652,7 +662,7 @@ router.get('/japanese-list', async (req, res) => {
         pos: v.pos,
         levelJLPT: v.levelJLPT,
         kana: dictentry?.ipa || examples.kana || '',
-        romaji: dictentry?.ipaKo || examples.romaji || '',
+        romaji: removeNumbersFromRomaji(dictentry?.ipaKo || examples.romaji || ''),
         kanji: examples.kanji || null,
         onyomi: examples.onyomi || null,
         kunyomi: examples.kunyomi || null,
@@ -759,7 +769,7 @@ router.get('/:id', async (req, res) => {
     // Add Japanese-specific fields if this is a Japanese word
     if (isJapanese) {
       result.kana = dictentry?.ipa || examples.kana || '';
-      result.romaji = dictentry?.ipaKo || examples.romaji || '';
+      result.romaji = removeNumbersFromRomaji(dictentry?.ipaKo || examples.romaji || '');
       result.kanji = examples.kanji || null;
       result.onyomi = examples.onyomi || null;
       result.kunyomi = examples.kunyomi || null;

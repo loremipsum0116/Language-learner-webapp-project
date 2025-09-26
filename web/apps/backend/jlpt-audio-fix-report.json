@@ -1,0 +1,4949 @@
+{
+  "timestamp": "2025-09-26T09:09:49.907Z",
+  "totalEntries": 8404,
+  "fixedCount": 2,
+  "problematicPaths": [
+    {
+      "lemma": "権",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n1/ken_2/word.mp3",
+      "correctedPath": "jlpt/jlpt/n1/ken_2/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "権",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n1/ken_2/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n1/ken_2/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "権",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n1/ken_2/example.mp3",
+      "correctedPath": "jlpt/jlpt/n1/ken_2/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "煌々と",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n1/koukouto/word.mp3",
+      "correctedPath": "jlpt/jlpt/n1/koukouto/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "煌々と",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n1/koukouto/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n1/koukouto/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "煌々と",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n1/koukouto/example.mp3",
+      "correctedPath": "jlpt/jlpt/n1/koukouto/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "絶つ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n1/tatsu_zetsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n1/tatsu_zetsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "絶つ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n1/tatsu_zetsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n1/tatsu_zetsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "絶つ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n1/tatsu_zetsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n1/tatsu_zetsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "造る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tsukuru_zou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukuru_zou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "造る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tsukuru_zou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukuru_zou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "造る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tsukuru_zou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukuru_zou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "診る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/miru_shin/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/miru_shin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "診る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/miru_shin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/miru_shin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "診る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/miru_shin/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/miru_shin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "イコール",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ikoru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikoru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "イコール",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ikoru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikoru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "イコール",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ikoru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikoru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "雑巾",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zoukin/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zoukin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "雑巾",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zoukin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zoukin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "雑巾",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zoukin/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zoukin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相違",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/soui/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soui/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相違",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/soui/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soui/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相違",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/soui/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soui/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "坊や",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/bouya/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bouya/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "坊や",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/bouya/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bouya/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "坊や",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/bouya/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bouya/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "斬る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kiru_zuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiru_zuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "斬る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kiru_zuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiru_zuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "斬る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kiru_zuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiru_zuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "人通り",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hitodouri/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hitodouri/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "人通り",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hitodouri/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hitodouri/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "人通り",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hitodouri/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hitodouri/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "物騒",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/bussou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bussou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "物騒",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/bussou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bussou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "物騒",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/bussou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bussou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通訳",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tsuuyaku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyaku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通訳",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tsuuyaku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyaku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通訳",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tsuuyaku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyaku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "トレーニング",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/toreningu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toreningu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "トレーニング",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/toreningu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toreningu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "トレーニング",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/toreningu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toreningu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コンクリート",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/konkurito/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/konkurito/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コンクリート",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/konkurito/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/konkurito/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コンクリート",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/konkurito/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/konkurito/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カバー",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kaba/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaba/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カバー",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kaba/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaba/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カバー",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kaba/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaba/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "修繕",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shuuzen/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shuuzen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "修繕",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shuuzen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shuuzen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "修繕",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shuuzen/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shuuzen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要旨",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/youshi/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youshi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要旨",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/youshi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youshi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要旨",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/youshi/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youshi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "両側",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ryougawa/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryougawa/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "両側",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ryougawa/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryougawa/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "両側",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ryougawa/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryougawa/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "項目",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koumoku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumoku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "項目",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koumoku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumoku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "項目",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koumoku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumoku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頂点",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chouten/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouten/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頂点",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chouten/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouten/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頂点",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chouten/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouten/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "火口",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kakou_kako/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_kako/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "火口",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kakou_kako/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_kako/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "火口",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kakou_kako/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_kako/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "庖丁",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/houchou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houchou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "庖丁",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/houchou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houchou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "庖丁",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/houchou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houchou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応ずる",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ouzuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouzuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応ずる",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ouzuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouzuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応ずる",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ouzuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouzuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "校舎",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kousha/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousha/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "校舎",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kousha/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousha/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "校舎",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kousha/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousha/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長所",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chousho/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chousho/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長所",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chousho/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chousho/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長所",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chousho/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chousho/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おまちどおさま",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/omachidosama/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/omachidosama/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おまちどおさま",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/omachidosama/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/omachidosama/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おまちどおさま",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/omachidosama/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/omachidosama/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "測量",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sokuryou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sokuryou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "測量",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sokuryou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sokuryou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "測量",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sokuryou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sokuryou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "わりあいに",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/wariaini/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/wariaini/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "わりあいに",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/wariaini/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/wariaini/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "わりあいに",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/wariaini/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/wariaini/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下降",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kakou_ka/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_ka/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下降",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kakou_ka/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_ka/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下降",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kakou_ka/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kakou_ka/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "気を付ける",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kiwotsukeru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiwotsukeru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "気を付ける",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kiwotsukeru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiwotsukeru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "気を付ける",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kiwotsukeru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kiwotsukeru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "幼児",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/youji/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youji/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "幼児",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/youji/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youji/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "幼児",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/youji/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/youji/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方角",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hougaku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougaku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方角",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hougaku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougaku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方角",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hougaku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougaku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小便",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shouben/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shouben/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小便",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shouben/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shouben/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小便",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shouben/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shouben/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登場",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/toujou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登場",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/toujou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登場",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/toujou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原料",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/genryou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genryou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原料",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/genryou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genryou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原料",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/genryou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genryou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "名字",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/myouji/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/myouji/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "名字",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/myouji/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/myouji/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "名字",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/myouji/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/myouji/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "映る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/utsuru_ei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/utsuru_ei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "映る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/utsuru_ei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/utsuru_ei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "映る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/utsuru_ei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/utsuru_ei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勝負",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shoubu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoubu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勝負",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shoubu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoubu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勝負",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shoubu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoubu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "縮小",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shukushou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shukushou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "縮小",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shukushou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shukushou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "縮小",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shukushou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shukushou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "将棋",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shougi/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "将棋",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shougi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "将棋",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shougi/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スクール",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sukuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スクール",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sukuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スクール",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sukuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "顕微鏡",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kenbikyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kenbikyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "顕微鏡",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kenbikyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kenbikyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "顕微鏡",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kenbikyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kenbikyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "円周",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/enshuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/enshuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "円周",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/enshuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/enshuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "円周",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/enshuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/enshuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "単数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tansuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tansuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "単数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tansuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tansuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "単数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tansuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tansuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通り掛かる",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/torikakaru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/torikakaru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通り掛かる",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/torikakaru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/torikakaru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通り掛かる",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/torikakaru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/torikakaru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "正方形",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/seihoukei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seihoukei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "正方形",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/seihoukei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seihoukei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "正方形",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/seihoukei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seihoukei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shousuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shousuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "小数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shousuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "開通",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kaitsuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaitsuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "開通",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kaitsuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaitsuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "開通",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kaitsuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaitsuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長方形",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chouhoukei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouhoukei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長方形",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chouhoukei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouhoukei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長方形",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chouhoukei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chouhoukei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工芸",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kougei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工芸",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kougei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工芸",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kougei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごくろうさま",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/gokurosama/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gokurosama/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごくろうさま",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/gokurosama/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gokurosama/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごくろうさま",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/gokurosama/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gokurosama/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "領事",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ryouji/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryouji/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "領事",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ryouji/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryouji/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "領事",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ryouji/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ryouji/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商業",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shougyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商業",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shougyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商業",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shougyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shougyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ヘリコプター",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/herikoputa/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/herikoputa/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ヘリコプター",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/herikoputa/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/herikoputa/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ヘリコプター",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/herikoputa/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/herikoputa/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "資料",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shiryou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shiryou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "資料",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shiryou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shiryou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "資料",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shiryou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shiryou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "関東",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kantou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kantou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "関東",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kantou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kantou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "関東",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kantou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kantou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蒸発",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/jouhatsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouhatsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蒸発",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/jouhatsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouhatsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蒸発",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/jouhatsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouhatsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交替",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koutai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交替",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koutai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交替",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koutai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "社会科学",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shakaikagaku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shakaikagaku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "社会科学",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shakaikagaku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shakaikagaku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "社会科学",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shakaikagaku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shakaikagaku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シリーズ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shirizu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirizu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シリーズ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shirizu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirizu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シリーズ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shirizu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirizu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相互",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sogo/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sogo/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相互",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sogo/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sogo/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "相互",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sogo/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sogo/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "強化",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kyouka/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouka/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "強化",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kyouka/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouka/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "強化",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kyouka/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouka/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シーツ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shitsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shitsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シーツ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shitsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shitsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シーツ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shitsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shitsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "激増",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/gekizou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gekizou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "激増",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/gekizou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gekizou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "激増",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/gekizou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gekizou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父さん",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ojisan_haku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ojisan_haku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父さん",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ojisan_haku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ojisan_haku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父さん",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ojisan_haku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ojisan_haku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "能率",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/nouritsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nouritsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "能率",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/nouritsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nouritsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "能率",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/nouritsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nouritsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "放る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/houru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "放る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/houru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "放る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/houru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/houru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公務",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koumu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公務",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koumu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公務",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koumu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koumu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "連合",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/rengou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rengou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "連合",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/rengou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rengou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "連合",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/rengou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rengou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "行列",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/gyouretsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gyouretsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "行列",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/gyouretsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gyouretsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "行列",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/gyouretsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gyouretsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重体",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/juutai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juutai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重体",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/juutai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juutai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重体",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/juutai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juutai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/obasan_haku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/obasan_haku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/obasan_haku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/obasan_haku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/obasan_haku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/obasan_haku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "青少年",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/seishounen/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seishounen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "青少年",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/seishounen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seishounen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "青少年",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/seishounen/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/seishounen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公共",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koukyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koukyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公共",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koukyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koukyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公共",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koukyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koukyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "胡椒",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koshou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koshou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "胡椒",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koshou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koshou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "胡椒",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koshou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koshou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消毒",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shoudoku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoudoku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消毒",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shoudoku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoudoku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消毒",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shoudoku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoudoku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "冷凍",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/reitou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reitou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "冷凍",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/reitou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reitou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "冷凍",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/reitou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reitou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "別荘",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/bessou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bessou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "別荘",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/bessou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bessou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "別荘",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/bessou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bessou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中間",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chuukan/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuukan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中間",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chuukan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuukan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中間",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chuukan/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuukan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通用",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tsuuyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通用",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tsuuyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "通用",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tsuuyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsuuyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "マフラー",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/mafura/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mafura/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "マフラー",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/mafura/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mafura/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "マフラー",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/mafura/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mafura/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "功績",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kouseki/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouseki/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "功績",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kouseki/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouseki/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "功績",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kouseki/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouseki/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さようなら",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sayounara/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sayounara/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さようなら",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sayounara/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sayounara/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さようなら",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sayounara/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sayounara/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応援",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ouen/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応援",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ouen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "応援",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ouen/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ouen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空中",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kuuchuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuuchuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空中",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kuuchuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuuchuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空中",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kuuchuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuuchuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中途",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chuuto/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuuto/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中途",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chuuto/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuuto/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中途",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chuuto/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuuto/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "深夜",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shinya/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shinya/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "深夜",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shinya/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shinya/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "深夜",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shinya/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shinya/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "透明",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/toumei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toumei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "透明",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/toumei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toumei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "透明",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/toumei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toumei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "合同",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/godou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/godou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "合同",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/godou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/godou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "合同",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/godou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/godou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "こうして",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koushite/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koushite/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "こうして",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koushite/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koushite/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "こうして",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koushite/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koushite/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "素人",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shirouto/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirouto/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "素人",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shirouto/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirouto/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "素人",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shirouto/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shirouto/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "メニュー",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/menyu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/menyu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "メニュー",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/menyu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/menyu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "メニュー",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/menyu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/menyu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おおざっぱ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ozappa/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ozappa/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おおざっぱ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ozappa/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ozappa/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "おおざっぱ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ozappa/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ozappa/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "芸能",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/geinou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/geinou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "芸能",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/geinou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/geinou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "芸能",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/geinou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/geinou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長男",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chounan/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chounan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長男",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chounan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chounan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長男",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chounan/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chounan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "安易",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ani/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ani/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "安易",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ani/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ani/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "安易",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ani/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ani/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "膨大",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/boudai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/boudai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "膨大",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/boudai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/boudai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "膨大",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/boudai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/boudai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "編集",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/henshuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/henshuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "編集",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/henshuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/henshuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "編集",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/henshuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/henshuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "高層",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kousou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "高層",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kousou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "高層",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kousou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kousou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "反映",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hanei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "反映",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hanei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "反映",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hanei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工員",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kouin/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工員",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kouin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工員",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kouin/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうずうしい",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zuzushii/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuzushii/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうずうしい",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zuzushii/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuzushii/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうずうしい",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zuzushii/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuzushii/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "衣食住",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ishokujuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ishokujuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "衣食住",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ishokujuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ishokujuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "衣食住",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ishokujuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ishokujuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "水曜",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/suiyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suiyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "水曜",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/suiyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suiyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "水曜",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/suiyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suiyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "テーマ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tema/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tema/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "テーマ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tema/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tema/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "テーマ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tema/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tema/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "符号",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/fugou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/fugou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "符号",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/fugou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/fugou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "符号",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/fugou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/fugou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "まあまあ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/mama/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mama/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "まあまあ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/mama/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mama/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "まあまあ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/mama/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mama/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "輸送",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/yusou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yusou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "輸送",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/yusou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yusou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "輸送",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/yusou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yusou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "回数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kaisuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaisuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "回数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kaisuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaisuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "回数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kaisuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaisuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "定規",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/jougi/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jougi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "定規",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/jougi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jougi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "定規",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/jougi/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jougi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蛍光灯",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/keikoutou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keikoutou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蛍光灯",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/keikoutou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keikoutou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "蛍光灯",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/keikoutou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keikoutou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "偶数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/guusuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/guusuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "偶数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/guusuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/guusuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "偶数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/guusuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/guusuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "上下",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/jouge/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouge/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "上下",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/jouge/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouge/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "上下",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/jouge/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/jouge/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重点",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/juuten/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuten/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重点",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/juuten/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuten/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重点",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/juuten/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuten/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交流",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kouryuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouryuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交流",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kouryuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouryuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交流",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kouryuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kouryuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "電流",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/denryuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/denryuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "電流",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/denryuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/denryuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "電流",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/denryuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/denryuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重役",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/juuyaku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuyaku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重役",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/juuyaku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuyaku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "重役",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/juuyaku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/juuyaku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "日用品",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/nichiyouhin/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nichiyouhin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "日用品",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/nichiyouhin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nichiyouhin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "日用品",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/nichiyouhin/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/nichiyouhin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "面倒臭い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/mendoukusai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mendoukusai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "面倒臭い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/mendoukusai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mendoukusai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "面倒臭い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/mendoukusai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/mendoukusai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "友好",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/yuukou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "友好",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/yuukou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "友好",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/yuukou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "教養",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kyouyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "教養",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kyouyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "教養",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kyouyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyouyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "当日",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/toujitsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujitsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "当日",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/toujitsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujitsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "当日",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/toujitsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/toujitsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "包装",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/housou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "包装",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/housou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "包装",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/housou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "形容動詞",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/keiyoudoushi/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keiyoudoushi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "形容動詞",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/keiyoudoushi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keiyoudoushi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "形容動詞",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/keiyoudoushi/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/keiyoudoushi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方言",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hougen/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方言",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hougen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "方言",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hougen/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hougen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空想",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kuusou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuusou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空想",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kuusou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuusou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "空想",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kuusou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kuusou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "口実",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koujitsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koujitsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "口実",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koujitsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koujitsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "口実",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koujitsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koujitsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "法則",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/housoku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housoku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "法則",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/housoku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housoku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "法則",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/housoku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/housoku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ウーマン",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/uman/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/uman/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ウーマン",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/uman/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/uman/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ウーマン",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/uman/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/uman/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工夫",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kufuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kufuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工夫",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kufuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kufuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "工夫",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kufuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kufuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カロリー",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/karori/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/karori/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カロリー",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/karori/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/karori/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "カロリー",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/karori/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/karori/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "倉庫",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/souko/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/souko/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "倉庫",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/souko/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/souko/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "倉庫",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/souko/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/souko/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レインコート",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/reinkoto/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reinkoto/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レインコート",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/reinkoto/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reinkoto/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レインコート",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/reinkoto/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/reinkoto/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公害",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kougai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公害",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kougai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "公害",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kougai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kougai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "代える",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kaeru_dai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaeru_dai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "代える",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kaeru_dai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaeru_dai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "代える",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kaeru_dai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kaeru_dai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "標識",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hyoushiki/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyoushiki/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "標識",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hyoushiki/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyoushiki/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "標識",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hyoushiki/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyoushiki/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消極的",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shoukyokuteki/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoukyokuteki/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消極的",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shoukyokuteki/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoukyokuteki/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "消極的",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shoukyokuteki/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shoukyokuteki/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原稿",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/genkou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genkou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原稿",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/genkou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genkou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "原稿",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/genkou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/genkou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "用語",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/yougo/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yougo/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "用語",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/yougo/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yougo/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "用語",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/yougo/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yougo/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "努める",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tsutomeru_do/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsutomeru_do/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "努める",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tsutomeru_do/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsutomeru_do/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "努める",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tsutomeru_do/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsutomeru_do/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうっと",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zutto/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zutto/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうっと",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zutto/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zutto/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ずうっと",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zutto/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zutto/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商社",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shousha/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousha/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商社",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shousha/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousha/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "商社",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shousha/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shousha/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "過半数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kahansuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kahansuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "過半数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kahansuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kahansuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "過半数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kahansuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kahansuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "牧場",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/bokujou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bokujou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "牧場",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/bokujou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bokujou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "牧場",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/bokujou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/bokujou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スケジュール",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sukejuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukejuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スケジュール",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sukejuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukejuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スケジュール",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sukejuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sukejuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "草履",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zouri/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zouri/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "草履",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zouri/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zouri/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "草履",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zouri/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zouri/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "往復",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/oufuku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/oufuku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "往復",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/oufuku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/oufuku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "往復",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/oufuku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/oufuku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "御馳走",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/gochisou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gochisou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "御馳走",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/gochisou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gochisou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "御馳走",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/gochisou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/gochisou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交通機関",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/koutsuukikan/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutsuukikan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交通機関",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/koutsuukikan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutsuukikan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "交通機関",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/koutsuukikan/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/koutsuukikan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スマート",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sumato/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sumato/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スマート",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sumato/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sumato/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スマート",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sumato/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sumato/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "話中",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hanashichuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanashichuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "話中",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hanashichuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanashichuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "話中",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hanashichuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hanashichuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ローマ字",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/romaji/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/romaji/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ローマ字",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/romaji/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/romaji/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ローマ字",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/romaji/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/romaji/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "夕刊",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/yuukan/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "夕刊",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/yuukan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "夕刊",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/yuukan/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yuukan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頭脳",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zunou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zunou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頭脳",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zunou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zunou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "頭脳",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zunou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zunou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "給与",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kyuuyo/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyuuyo/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "給与",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kyuuyo/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyuuyo/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "給与",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kyuuyo/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyuuyo/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "境界",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kyoukai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyoukai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "境界",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kyoukai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyoukai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "境界",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kyoukai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kyoukai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "送別",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/soubetsu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soubetsu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "送別",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/soubetsu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soubetsu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "送別",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/soubetsu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/soubetsu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中年",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/chuunen/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuunen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中年",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/chuunen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuunen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "中年",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/chuunen/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/chuunen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "載る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/noru_sai/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/noru_sai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "載る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/noru_sai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/noru_sai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "載る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/noru_sai/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/noru_sai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出張",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shucchou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shucchou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出張",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shucchou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shucchou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出張",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shucchou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shucchou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "評論",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/hyouron/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyouron/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "評論",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/hyouron/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyouron/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "評論",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/hyouron/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/hyouron/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "以降",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/ikou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "以降",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/ikou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "以降",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/ikou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/ikou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "句読点",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/kutouten/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kutouten/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "句読点",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/kutouten/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kutouten/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "句読点",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/kutouten/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/kutouten/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長女",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/choujo/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choujo/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長女",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/choujo/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choujo/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "長女",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/choujo/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choujo/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "動作",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/dousa/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/dousa/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "動作",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/dousa/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/dousa/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "動作",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/dousa/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/dousa/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "浸ける",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/tsukeru_shin/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukeru_shin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "浸ける",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/tsukeru_shin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukeru_shin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "浸ける",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/tsukeru_shin/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/tsukeru_shin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レクリエーション",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/rekurieshon/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rekurieshon/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レクリエーション",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/rekurieshon/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rekurieshon/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "レクリエーション",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/rekurieshon/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/rekurieshon/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "慶ぶ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/yorokobu_kei/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yorokobu_kei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "慶ぶ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/yorokobu_kei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yorokobu_kei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "慶ぶ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/yorokobu_kei/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/yorokobu_kei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ブローチ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/burochi/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/burochi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ブローチ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/burochi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/burochi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ブローチ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/burochi/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/burochi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "図表",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/zuhyou/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuhyou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "図表",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/zuhyou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuhyou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "図表",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/zuhyou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/zuhyou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チョーク",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/choku/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チョーク",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/choku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チョーク",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/choku/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/choku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ステージ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/suteji/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suteji/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ステージ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/suteji/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suteji/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ステージ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/suteji/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/suteji/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シャッター",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/shatta/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shatta/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シャッター",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/shatta/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shatta/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "シャッター",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/shatta/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/shatta/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "算数",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n2/sansuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sansuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "算数",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n2/sansuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sansuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "算数",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n2/sansuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/n2/sansuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "平等",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n3/byoudou/example.mp3",
+      "correctedPath": "jlpt/jlpt/n3/byoudou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チェック・する",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/chekkusuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/chekkusuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チェック・する",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/chekkusuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/chekkusuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "チェック・する",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/chekkusuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/chekkusuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "建てる",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/tateru_build/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/tateru_build/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "建てる",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/tateru_build/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/tateru_build/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "建てる",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/tateru_build/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/tateru_build/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "亡くなる",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/nakunaru_die/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/nakunaru_die/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "亡くなる",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/nakunaru_die/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/nakunaru_die/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "亡くなる",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/nakunaru_die/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/nakunaru_die/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "びっくり・する",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/bikkurisuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/bikkurisuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "びっくり・する",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/bikkurisuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/bikkurisuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "びっくり・する",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/bikkurisuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/bikkurisuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "堅い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/katai_ken/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/katai_ken/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "堅い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/katai_ken/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/katai_ken/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "堅い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/katai_ken/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/katai_ken/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "けんか・する",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/kenkasuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/kenkasuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "けんか・する",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/kenkasuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/kenkasuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "けんか・する",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/kenkasuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/kenkasuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あいさつ・する",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/aisatsusuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/aisatsusuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あいさつ・する",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/aisatsusuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/aisatsusuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あいさつ・する",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/aisatsusuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/aisatsusuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごらんになる",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n4/goranninaru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n4/goranninaru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごらんになる",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n4/goranninaru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n4/goranninaru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ごらんになる",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n4/goranninaru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n4/goranninaru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "問題",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/mondai/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/mondai/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "問題",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/mondai/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/mondai/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "問題",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/mondai/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/mondai/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "花瓶",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/kabin/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kabin/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "花瓶",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/kabin/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kabin/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "花瓶",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/kabin/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kabin/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "磨く",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/migaku/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/migaku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "磨く",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/migaku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/migaku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "磨く",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/migaku/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/migaku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "押す",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/osu/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/osu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "押す",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/osu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/osu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "押す",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/osu/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/osu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "暑い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/atsui_weather/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/atsui_weather/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "暑い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/atsui_weather/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/atsui_weather/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "暑い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/atsui_weather/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/atsui_weather/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "玄関",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/genkan/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/genkan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "玄関",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/genkan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/genkan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "玄関",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/genkan/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/genkan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "違う",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/chigau/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/chigau/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "違う",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/chigau/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/chigau/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "違う",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/chigau/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/chigau/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "練習",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/renshuu/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/renshuu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "練習",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/renshuu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/renshuu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "練習",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/renshuu/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/renshuu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/noboru/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/noboru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/noboru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/noboru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "登る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/noboru/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/noboru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "廊下",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/rouka/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/rouka/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "廊下",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/rouka/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/rouka/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "廊下",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/rouka/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/rouka/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/iru_need/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/iru_need/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/iru_need/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/iru_need/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "要る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/iru_need/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/iru_need/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勤める",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/tsutomeru/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/tsutomeru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勤める",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/tsutomeru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/tsutomeru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "勤める",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/tsutomeru/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/tsutomeru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "差す",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sasu/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sasu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "差す",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sasu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sasu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "差す",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sasu/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sasu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "辺",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/hen/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "辺",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/hen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "辺",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/hen/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下手",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/heta/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/heta/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下手",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/heta/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/heta/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "下手",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/heta/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/heta/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "池",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/ike/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ike/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "池",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/ike/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ike/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "池",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/ike/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ike/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "自分",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/jibun/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/jibun/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "自分",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/jibun/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/jibun/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "自分",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/jibun/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/jibun/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さ来年",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sarainen/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sarainen/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さ来年",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sarainen/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sarainen/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さ来年",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sarainen/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sarainen/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "すぐに",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/suguni/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/suguni/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "すぐに",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/suguni/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/suguni/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "すぐに",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/suguni/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/suguni/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コピーする",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/kopiisuru/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/kopiisuru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コピーする",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/kopiisuru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/kopiisuru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "コピーする",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/kopiisuru/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/kopiisuru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "もう一度",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/mouichido/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/mouichido/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "もう一度",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/mouichido/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/mouichido/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "もう一度",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/mouichido/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/mouichido/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父",
+      "audioType": "word",
+      "originalPath": "public/jlpt/n5/oji1/word.mp3",
+      "correctedPath": "jlpt/jlpt/n5/oji1/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/n5/oji1/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/n5/oji1/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯父",
+      "audioType": "example",
+      "originalPath": "public/jlpt/n5/oji1/example.mp3",
+      "correctedPath": "jlpt/jlpt/n5/oji1/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "より",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/yori/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/yori/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "より",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/yori/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/yori/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "より",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/yori/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/yori/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ほう",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/hou/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ほう",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/hou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ほう",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/hou/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "丸い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/marui/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/marui/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "丸い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/marui/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/marui/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "丸い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/marui/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/marui/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "曲る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/magaru/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/magaru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "曲る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/magaru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/magaru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "曲る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/magaru/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/magaru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "お弁当",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/obentou/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obentou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "お弁当",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/obentou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obentou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "お弁当",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/obentou/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obentou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結婚",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/kekkon/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkon/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結婚",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/kekkon/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkon/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結婚",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/kekkon/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkon/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "置く",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/oku/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/oku/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "置く",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/oku/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/oku/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "置く",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/oku/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/oku/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "渡る",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/wataru/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/wataru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "渡る",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/wataru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/wataru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "渡る",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/wataru/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/wataru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/obasan/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obasan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/obasan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obasan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "伯母さん",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/obasan/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/obasan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "それから",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sorekara/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sorekara/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "それから",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sorekara/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sorekara/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "それから",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sorekara/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sorekara/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "明い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/akarui/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/akarui/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "明い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/akarui/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/akarui/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "明い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/akarui/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/akarui/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "家庭",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/katei/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/katei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "家庭",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/katei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/katei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "家庭",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/katei/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/katei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "パーティー",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/paatii/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/paatii/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "パーティー",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/paatii/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/paatii/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "パーティー",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/paatii/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/paatii/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あちら",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/achira/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/achira/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あちら",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/achira/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/achira/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "あちら",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/achira/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/achira/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スカート",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sukaato/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sukaato/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スカート",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sukaato/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sukaato/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "スカート",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sukaato/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sukaato/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ボタン",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/botan/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/botan/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ボタン",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/botan/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/botan/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ボタン",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/botan/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/botan/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "返す",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/kaesu/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kaesu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "返す",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/kaesu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kaesu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "返す",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/kaesu/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kaesu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "いかが",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/ikaga/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ikaga/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "いかが",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/ikaga/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ikaga/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "いかが",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/ikaga/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ikaga/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ストーブ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sutoobu/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sutoobu/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ストーブ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sutoobu/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sutoobu/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "ストーブ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sutoobu/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sutoobu/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さあ",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/saa/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/saa/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さあ",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/saa/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/saa/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "さあ",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/saa/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/saa/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "質問",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/shitsumon/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/shitsumon/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "質問",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/shitsumon/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/shitsumon/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "質問",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/shitsumon/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/shitsumon/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "どなた",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/donata/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/donata/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "どなた",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/donata/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/donata/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "どなた",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/donata/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/donata/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "そちら",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sochira/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sochira/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "そちら",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sochira/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sochira/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "そちら",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sochira/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sochira/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出かける",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/dekakeru/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/dekakeru/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出かける",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/dekakeru/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/dekakeru/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "出かける",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/dekakeru/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/dekakeru/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "留学生",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/ryuugakusei/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ryuugakusei/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "留学生",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/ryuugakusei/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ryuugakusei/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "留学生",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/ryuugakusei/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/ryuugakusei/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "細い",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/hosoi/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hosoi/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "細い",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/hosoi/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hosoi/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "細い",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/hosoi/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hosoi/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結構",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/kekkou/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkou/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結構",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/kekkou/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkou/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "結構",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/kekkou/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/kekkou/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "昨夜",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sakuya/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sakuya/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "昨夜",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sakuya/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sakuya/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "昨夜",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sakuya/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sakuya/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "せっけん",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/sekken/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sekken/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "せっけん",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/sekken/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sekken/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "せっけん",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/sekken/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/sekken/example.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "初め",
+      "audioType": "word",
+      "originalPath": "public/jlpt/N5/hajime/word.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hajime/word.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "初め",
+      "audioType": "gloss",
+      "originalPath": "public/jlpt/N5/hajime/gloss.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hajime/gloss.mp3",
+      "issue": "File not found in both locations"
+    },
+    {
+      "lemma": "初め",
+      "audioType": "example",
+      "originalPath": "public/jlpt/N5/hajime/example.mp3",
+      "correctedPath": "jlpt/jlpt/N5/hajime/example.mp3",
+      "issue": "File not found in both locations"
+    }
+  ]
+}

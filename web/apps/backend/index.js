@@ -25,7 +25,7 @@ const {
 } = require('./middleware/staticCompression');
 
 // GCS 리다이렉트 미들웨어
-const { createGcsRedirect, gcsAudioRedirect, gcsListeningRedirect } = require('./middleware/gcsRedirect');
+const { createGcsRedirect, gcsAudioRedirect, gcsListeningRedirect, gcsJlptRedirect } = require('./middleware/gcsRedirect');
 
 // --- 라우터 임포트 ---
 const authRoutes = require('./routes/auth');
@@ -615,7 +615,7 @@ app.use((req, res, next) => {
 app.use('/public', staticFileLogging, imageOptimization, preCompressedStatic(path.join(__dirname, 'public')));
 
 // JLPT 오디오 파일 서빙 - GCS 리다이렉트
-app.use('/jlpt', createGcsRedirect('public/jlpt'));
+app.use('/jlpt', gcsJlptRedirect);
 
 // 리스닝 오디오 파일 서빙 - GCS 리다이렉트
 // 영어 리스닝

@@ -37,6 +37,16 @@ function detectLanguage(vocab) {
 }
 
 /**
+ * 로마지에서 숫자를 제거하는 함수
+ * @param {string} romaji - 숫자가 포함된 로마지 (예: "kiro2")
+ * @returns {string} - 숫자가 제거된 로마지 (예: "kiro")
+ */
+function removeNumbersFromRomaji(romaji) {
+    if (!romaji || typeof romaji !== 'string') return romaji;
+    return romaji.replace(/\d+/g, '');
+}
+
+/**
  * 안정적으로 MCQ 퀴즈 데이터를 생성하는 함수
  */
 async function generateMcqQuizItems(prisma, userId, vocabIds) {
@@ -381,6 +391,7 @@ async function generateJapaneseToKoreanQuiz(prisma, userId, vocabIds) {
             options: shuffleArray(options),
             pron: {
                 romaji: romaji,
+                romajiWithoutNumbers: removeNumbersFromRomaji(romaji),
                 hiragana: hiragana
             },
             jlptLevel: vocab.levelJLPT || extractJlptLevel(vocab.source),
@@ -543,19 +554,16 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
 
         const wrongOptions = _.sampleSize(availableDistractors, 3);
 
-        // 선택지를 로마자 정보와 함께 구성
+        // 선택지를 일본어 텍스트만으로 구성 (로마자 제거)
         const options = [
-            { text: correctAnswer, romaji: correctInfo.romaji },
-            ...wrongOptions
+            correctAnswer,
+            ...wrongOptions.map(option => option.text)
         ];
 
         // 선택지가 4개 미만일 경우 기본 distractor 추가
         while (options.length < 4) {
             const fallbackOptions = ["関連ない", "その他", "別の語"];
-            options.push({
-                text: fallbackOptions[options.length - 4] || `選択肢${options.length}`,
-                romaji: null
-            });
+            options.push(fallbackOptions[options.length - 4] || `選択肢${options.length}`);
         }
 
         console.log(`[KO-JP QUIZ] Final options:`, options);
@@ -566,10 +574,11 @@ async function generateKoreanToJapaneseQuiz(prisma, userId, vocabIds) {
             question: questionText,
             answer: correctAnswer,
             quizType: 'ko_meaning_to_jp_word',
-            options: shuffleArray(options), // 로마자 정보가 포함된 options
-            optionsWithRomaji: true, // 프론트엔드에 로마자 정보가 포함되어 있음을 알림
+            options: shuffleArray(options), // 일본어 텍스트만 포함된 options
+            optionsWithRomaji: false, // 프론트엔드에 로마자 정보가 제거되었음을 알림
             pron: {
                 romaji: correctInfo.romaji,
+                romajiWithoutNumbers: removeNumbersFromRomaji(correctInfo.romaji),
                 hiragana: correctInfo.hiragana
             },
             jlptLevel: vocab.levelJLPT,
@@ -714,6 +723,7 @@ async function generateJapaneseToRomajiQuiz(prisma, userId, vocabIds) {
             options: shuffleArray(options),
             pron: {
                 romaji: vocab.dictentry?.ipaKo || null,
+                romajiWithoutNumbers: removeNumbersFromRomaji(vocab.dictentry?.ipaKo),
                 hiragana: vocab.dictentry?.ipa || null
             },
             jlptLevel: vocab.levelJLPT,
@@ -813,6 +823,12 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
         }
         if (romaji && romaji !== targetWord) {
             acceptableAnswers.push(romaji);
+
+            // 로마지에서 숫자를 제거한 버전도 정답으로 추가 (예: kiro2 -> kiro)
+            const romajiWithoutNumbers = removeNumbersFromRomaji(romaji);
+            if (romajiWithoutNumbers && romajiWithoutNumbers !== romaji && !acceptableAnswers.includes(romajiWithoutNumbers)) {
+                acceptableAnswers.push(romajiWithoutNumbers);
+            }
         }
 
         // vocab.lemma도 정답에 추가 (중복 제거)
@@ -866,6 +882,7 @@ async function generateJapaneseFillInBlankQuiz(prisma, userId, vocabIds) {
             useExample: false, // 항상 false로 통일
             pron: {
                 romaji: romaji,
+                romajiWithoutNumbers: removeNumbersFromRomaji(romaji),
                 hiragana: hiragana
             },
             jlptLevel: vocab.levelJLPT,
