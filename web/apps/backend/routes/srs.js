@@ -3694,5 +3694,206 @@ router.post('/cleanup/specific-card/:cardId', async (req, res, next) => {
     }
 });
 
+// === 타이머 동일화 API ===
+
+// 타이머 동일화 서비스 임포트
+const { synchronizeSubfolderTimers, getCardState } = require('../services/timerSyncService');
+
+// POST /srs/timer-sync/subfolder/:subfolderId - 하위 폴더 타이머 동일화
+router.post('/timer-sync/subfolder/:subfolderId', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const subfolderId = Number(req.params.subfolderId);
+
+        console.log(`[TIMER SYNC API] User ${userId} requesting timer sync for subfolder ${subfolderId}`);
+
+        // 파라미터 검증
+        if (!subfolderId || isNaN(subfolderId)) {
+            return fail(res, 400, 'Invalid subfolder ID');
+        }
+
+        // 해당 하위 폴더가 사용자의 것인지 확인
+        const subfolder = await prisma.srsfolder.findFirst({
+            where: {
+                id: subfolderId,
+                userId: userId
+            }
+        });
+
+        if (!subfolder) {
+            return fail(res, 404, 'Subfolder not found or access denied');
+        }
+
+        // 타이머 동일화 실행
+        const result = await synchronizeSubfolderTimers(userId, subfolderId);
+
+        if (result.success) {
+            console.log(`[TIMER SYNC API] Success: ${result.message}`);
+            return ok(res, {
+                success: true,
+                message: result.message,
+                syncedGroups: result.syncedGroups,
+                totalSyncedCards: result.totalSyncedCards,
+                totalCards: result.totalCards,
+                subfolderId: subfolderId,
+                subfolderName: subfolder.name
+            });
+        } else {
+            console.error(`[TIMER SYNC API] Failed: ${result.message}`);
+            return fail(res, 500, result.message);
+        }
+
+    } catch (e) {
+        console.error('[TIMER SYNC API] Error in timer sync:', e);
+        return fail(res, 500, 'Failed to synchronize timers');
+    }
+});
+
+// GET /srs/timer-sync/preview/:subfolderId - 타이머 동일화 미리보기
+router.get('/timer-sync/preview/:subfolderId', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const subfolderId = Number(req.params.subfolderId);
+
+        console.log(`[TIMER SYNC PREVIEW] User ${userId} requesting preview for subfolder ${subfolderId}`);
+
+        // 파라미터 검증
+        if (!subfolderId || isNaN(subfolderId)) {
+            return fail(res, 400, 'Invalid subfolder ID');
+        }
+
+        // 해당 하위 폴더가 사용자의 것인지 확인
+        const subfolder = await prisma.srsfolder.findFirst({
+            where: {
+                id: subfolderId,
+                userId: userId
+            }
+        });
+
+        if (!subfolder) {
+            return fail(res, 404, 'Subfolder not found or access denied');
+        }
+
+        // 해당 하위 폴더의 모든 카드 조회
+        const allCards = await prisma.srscard.findMany({
+            where: {
+                userId: userId,
+                srsfolderitem: {
+                    some: {
+                        srsfolder: {
+                            parentId: subfolderId
+                        }
+                    }
+                }
+            },
+            include: {
+                srsfolderitem: {
+                    include: {
+                        srsfolder: true,
+                        vocab: {
+                            select: {
+                                word: true,
+                                meaning: true
+                            }
+                        }
+                    }
+                }
+            },
+            orderBy: {
+                stage: 'asc'
+            }
+        });
+
+        if (allCards.length === 0) {
+            return ok(res, {
+                success: true,
+                message: 'No cards found in subfolder',
+                groups: [],
+                totalCards: 0
+            });
+        }
+
+        // Stage와 상태별로 카드 그룹화
+        const cardGroups = {};
+
+        for (const card of allCards) {
+            const state = getCardState(card);
+            const groupKey = `stage_${card.stage}_state_${state}`;
+
+            if (!cardGroups[groupKey]) {
+                cardGroups[groupKey] = {
+                    stage: card.stage,
+                    state: state,
+                    cards: [],
+                    canSync: false,
+                    timeDifferenceMs: 0,
+                    minTime: null,
+                    maxTime: null
+                };
+            }
+            cardGroups[groupKey].cards.push({
+                id: card.id,
+                stage: card.stage,
+                state: state,
+                waitingUntil: card.waitingUntil,
+                frozenUntil: card.frozenUntil,
+                overdueDeadline: card.overdueDeadline,
+                isFromWrongAnswer: card.isFromWrongAnswer,
+                word: card.srsfolderitem[0]?.vocab?.word || 'Unknown'
+            });
+        }
+
+        // 각 그룹의 동일화 가능 여부 계산
+        for (const group of Object.values(cardGroups)) {
+            if (group.cards.length <= 1) continue;
+
+            const timerEndTimes = group.cards
+                .map(card => {
+                    switch (group.state) {
+                        case 'frozen': return card.frozenUntil;
+                        case 'overdue': return card.overdueDeadline;
+                        case 'waiting_correct':
+                        case 'waiting_wrong': return card.waitingUntil;
+                        default: return null;
+                    }
+                })
+                .filter(time => time !== null)
+                .map(time => new Date(time).getTime());
+
+            if (timerEndTimes.length > 1) {
+                const minTime = Math.min(...timerEndTimes);
+                const maxTime = Math.max(...timerEndTimes);
+                const timeDifferenceMs = maxTime - minTime;
+                const oneHourMs = 60 * 60 * 1000;
+
+                group.canSync = timeDifferenceMs <= oneHourMs;
+                group.timeDifferenceMs = timeDifferenceMs;
+                group.minTime = new Date(minTime);
+                group.maxTime = new Date(maxTime);
+                group.syncToTime = new Date(minTime); // 가장 이른 시간으로 동일화
+            }
+        }
+
+        const groups = Object.values(cardGroups).filter(group => group.cards.length > 1);
+        const syncableGroups = groups.filter(group => group.canSync);
+        const totalSyncableCards = syncableGroups.reduce((sum, group) => sum + group.cards.length, 0);
+
+        return ok(res, {
+            success: true,
+            subfolderId: subfolderId,
+            subfolderName: subfolder.name,
+            totalCards: allCards.length,
+            groups: groups,
+            syncableGroups: syncableGroups.length,
+            totalSyncableCards: totalSyncableCards,
+            message: `${syncableGroups.length}개 그룹의 ${totalSyncableCards}개 카드가 동일화 가능합니다.`
+        });
+
+    } catch (e) {
+        console.error('[TIMER SYNC PREVIEW] Error:', e);
+        return fail(res, 500, 'Failed to generate timer sync preview');
+    }
+});
+
 
 module.exports = router;
