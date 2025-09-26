@@ -66,21 +66,21 @@ function gcsJlptRedirect(req, res, next) {
   console.log(`[GCS JLPT Debug] Request path: ${req.path}, endsWith .mp3: ${req.path.endsWith('.mp3')}`);
 
   if (req.path.endsWith('.mp3')) {
-    // /jlpt/N5/obentou/word.mp3 형태의 경로 파싱
+    // app.use('/jlpt', ...) 때문에 경로는 /n5/obentou/word.mp3 형태가 됨
     const pathParts = req.path.split('/');
     console.log(`[GCS JLPT Debug] Path parts: ${JSON.stringify(pathParts)}, length: ${pathParts.length}`);
 
-    if (pathParts.length >= 4 && pathParts[1] === 'jlpt') {
-      // pathParts[2]는 N5, N4 등의 레벨
-      const level = pathParts[2].toLowerCase(); // N5 -> n5
-      const remainingPath = pathParts.slice(3).join('/'); // obentou/word.mp3
+    if (pathParts.length >= 3) {
+      // pathParts[1]은 N5, N4 등의 레벨
+      const level = pathParts[1].toLowerCase(); // N5 -> n5
+      const remainingPath = pathParts.slice(2).join('/'); // obentou/word.mp3
       const gcsPath = `public/jlpt/${level}/${remainingPath}`;
       const gcsUrl = `${GCS_BASE_URL}/${gcsPath}`;
 
       console.log(`[GCS JLPT Redirect] ${req.originalUrl} -> ${gcsUrl}`);
       return res.redirect(301, gcsUrl);
     } else {
-      console.log(`[GCS JLPT Debug] Path doesn't match JLPT pattern`);
+      console.log(`[GCS JLPT Debug] Path doesn't have enough parts`);
     }
   }
   next();
