@@ -54,7 +54,7 @@ router.post('/register', async (req, res) => {
         } else {
             return ok(res, {
                 user: userSafe,
-                message: 'Registration successful. Waiting for admin approval.',
+                message: '가입신청 해주셔서 감사드립니다! 운영자가 확인 후 빠른 시일내에 승인 해드리겠습니다. 단무새와 함께 단어를 정복하세요!',
                 requiresApproval: true
             });
         }
