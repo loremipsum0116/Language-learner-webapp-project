@@ -4007,5 +4007,29 @@ router.post('/auto-sync/trigger', async (req, res, next) => {
     }
 });
 
+// POST /srs/railway-immediate-sync - Railway 서버에서 즉시 동일화 실행
+router.post('/railway-immediate-sync', async (req, res, next) => {
+    try {
+        console.log('[RAILWAY IMMEDIATE SYNC] Starting immediate synchronization...');
+
+        const { railwayImmediateSync } = require('../railway-immediate-sync');
+
+        // 비동기로 실행하고 즉시 응답 (긴 작업이므로)
+        railwayImmediateSync().catch(error => {
+            console.error('[RAILWAY IMMEDIATE SYNC] Background error:', error);
+        });
+
+        return ok(res, {
+            success: true,
+            message: 'Railway immediate synchronization started in background',
+            timestamp: new Date().toISOString()
+        });
+
+    } catch (e) {
+        console.error('[RAILWAY IMMEDIATE SYNC] Error:', e);
+        return fail(res, 500, 'Failed to start railway immediate sync');
+    }
+});
+
 
 module.exports = router;
