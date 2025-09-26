@@ -90,6 +90,19 @@ export function AuthProvider({ children }) {
 
             const data = await response.json();
             console.log('[LOGIN DEBUG] Login successful:', data);
+
+            // 승인 대기 상태인 경우 에러로 처리
+            if (data.pending || data.type === 'ACCOUNT_PENDING' || !data.success) {
+                console.log('[LOGIN DEBUG] Account pending approval');
+                const err = new Error(JSON.stringify({
+                    message: data.message,
+                    pending: true,
+                    type: 'ACCOUNT_PENDING'
+                }));
+                err.status = 200;
+                throw err;
+            }
+
             await refreshUser();
         } catch (error) {
             console.error('[LOGIN DEBUG] Login failed:', error);
