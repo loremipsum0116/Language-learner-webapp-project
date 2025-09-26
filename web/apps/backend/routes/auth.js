@@ -100,7 +100,12 @@ router.post('/login', async (req, res) => {
         // 승인된 사용자만 로그인 허용
         if (!user.isApproved) {
             console.log('[LOGIN DEBUG] User not approved');
-            return fail(res, 403, 'Account pending approval. Please wait for admin approval.');
+            return res.status(200).json({
+                success: false,
+                pending: true,
+                message: '가입신청 해주셔서 감사드립니다! 운영자가 확인 후 빠른 시일내에 승인 해드리겠습니다. 단무새와 함께 단어를 정복하세요!',
+                type: 'ACCOUNT_PENDING'
+            });
         }
 
         // Generate token pair with device info

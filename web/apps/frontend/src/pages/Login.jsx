@@ -5,11 +5,14 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 
 function parseServerError(e) {
     let msg = e?.message || "로그인 실패";
+    let isPending = false;
     try {
         const j = JSON.parse(msg);
         if (j?.error) msg = j.error;
+        if (j?.message) msg = j.message;
+        if (j?.pending || j?.type === 'ACCOUNT_PENDING') isPending = true;
     } catch { }
-    return { status: e?.status, message: msg };
+    return { status: e?.status, message: msg, isPending };
 }
 
 export default function Login() {
@@ -25,6 +28,7 @@ export default function Login() {
     const [loading, setLoading] = useState(false);
     const [serverErr, setServerErr] = useState(null);
     const [invalidCred, setInvalidCred] = useState(false); // 401 표시
+    const [isPendingApproval, setIsPendingApproval] = useState(false); // 승인 대기 표시
 
     const errors = useMemo(() => {
         const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -45,6 +49,7 @@ export default function Login() {
         setTouched({ email: true, password: true });
         setServerErr(null);
         setInvalidCred(false);
+        setIsPendingApproval(false);
         if (!canSubmit) return;
 
         try {
@@ -52,9 +57,11 @@ export default function Login() {
             await login(email.trim(), password);
             nav(redirect, { replace: true });
         } catch (e2) {
-            const { status, message } = parseServerError(e2);
+            const { status, message, isPending } = parseServerError(e2);
             setServerErr(message || "로그인 실패");
-            if (status === 401 || /invalid credentials/i.test(String(message))) {
+            if (isPending) {
+                setIsPendingApproval(true); // 승인 대기 메시지를 초록색으로
+            } else if (status === 401 || /invalid credentials/i.test(String(message))) {
                 setInvalidCred(true); // 두 필드 모두 붉게
             }
         } finally {
@@ -66,7 +73,11 @@ export default function Login() {
         <main className="container py-4" style={{ maxWidth: 480 }}>
             <h2 className="mb-3">로그인</h2>
 
-            {serverErr && <div className="alert alert-danger">{serverErr}</div>}
+            {serverErr && (
+                <div className={`alert ${isPendingApproval ? 'alert-success' : 'alert-danger'}`}>
+                    {serverErr}
+                </div>
+            )}
 
             <form noValidate onSubmit={onSubmit}>
                 {/* 이메일 */}

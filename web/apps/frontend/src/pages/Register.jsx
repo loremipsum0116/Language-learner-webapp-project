@@ -6,11 +6,14 @@ import { useNavigate, Link } from "react-router-dom";
 function parseServerError(e) {
     // api/client.js의 fetchJSON은 err.status를 넣어줍니다.
     let msg = e?.message || "회원가입 실패";
+    let isPending = false;
     try {
         const j = JSON.parse(msg);
         if (j?.error) msg = j.error;
+        if (j?.message) msg = j.message;
+        if (j?.pending || j?.type === 'ACCOUNT_PENDING') isPending = true;
     } catch { }
-    return { status: e?.status, message: msg };
+    return { status: e?.status, message: msg, isPending };
 }
 
 export default function Register() {
@@ -28,6 +31,7 @@ export default function Register() {
     const [serverErr, setServerErr] = useState(null);
     const [serverSuccess, setServerSuccess] = useState(null);
     const [emailTaken, setEmailTaken] = useState(false);
+    const [isPendingApproval, setIsPendingApproval] = useState(false);
 
     // 클라이언트 유효성 규칙
     const errors = useMemo(() => {
@@ -65,6 +69,7 @@ export default function Register() {
         setServerErr(null);
         setServerSuccess(null);
         setEmailTaken(false);
+        setIsPendingApproval(false);
 
         if (!canSubmit) return;
 
@@ -73,11 +78,12 @@ export default function Register() {
             await register(email.trim(), password);
             nav("/", { replace: true });
         } catch (e2) {
-            const { status, message } = parseServerError(e2);
+            const { status, message, isPending } = parseServerError(e2);
 
             // 회원가입 성공 시 감사 메시지 표시 (requiresApproval 포함)
-            if (status === 200 || (message && /requiresApproval/i.test(String(message)))) {
-                setServerSuccess("회원가입 신청해주셔서 감사합니다! 운영자가 검토 후 빠른 시일 내에 승인 해 드리겠습니다.");
+            if (status === 200 || (message && /requiresApproval/i.test(String(message))) || isPending) {
+                setServerSuccess(message || "회원가입 신청해주셔서 감사합니다! 운영자가 검토 후 빠른 시일 내에 승인 해 드리겠습니다.");
+                setIsPendingApproval(true);
                 return;
             }
 
