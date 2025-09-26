@@ -20,14 +20,19 @@ async function getUserAutoSyncSettings(userId) {
 
         const settings = user?.personalizedSRS || {};
         return {
-            enabled: settings.autoTimerSync?.enabled || false,
+            enabled: settings.autoTimerSync?.enabled ?? true, // 기본값을 true로 변경
             maxDifference: settings.autoTimerSync?.maxDifference || 60, // 분 단위
             excludeSubfolders: settings.autoTimerSync?.excludeSubfolders || [],
-            onlyOnReview: settings.autoTimerSync?.onlyOnReview || true // 복습 완료 시에만
+            onlyOnReview: settings.autoTimerSync?.onlyOnReview ?? false // 주기적 실행도 허용
         };
     } catch (error) {
         console.error('[AUTO SYNC] Error getting user settings:', error);
-        return { enabled: false };
+        return {
+            enabled: true, // 에러 시에도 기본값 활성화
+            maxDifference: 60,
+            excludeSubfolders: [],
+            onlyOnReview: false
+        };
     }
 }
 
@@ -139,19 +144,14 @@ async function runPeriodicAutoSync(userId = null) {
     try {
         console.log(`[AUTO SYNC] Starting periodic auto sync${userId ? ` for user ${userId}` : ''}`);
 
-        // 1. 자동 동일화가 활성화된 사용자들 조회
-        const whereClause = {
-            personalizedSRS: {
-                path: ['autoTimerSync', 'enabled'],
-                equals: true
-            }
-        };
+        // 1. 모든 사용자 조회 (설정 무시하고 무조건 실행)
+        const whereClause = {};
 
         if (userId) {
             whereClause.id = userId;
         }
 
-        const usersWithAutoSync = await prisma.user.findMany({
+        const allUsers = await prisma.user.findMany({
             where: whereClause,
             select: {
                 id: true,
@@ -159,25 +159,19 @@ async function runPeriodicAutoSync(userId = null) {
             }
         });
 
-        console.log(`[AUTO SYNC] Found ${usersWithAutoSync.length} users with auto sync enabled`);
+        console.log(`[AUTO SYNC] Found ${allUsers.length} users for auto sync processing`);
 
         let totalProcessed = 0;
         let totalSynced = 0;
 
-        for (const user of usersWithAutoSync) {
-            const settings = user.personalizedSRS?.autoTimerSync || {};
+        for (const user of allUsers) {
+            // 설정 확인 없이 무조건 실행
 
-            // onlyOnReview가 true인 경우 주기적 실행 제외
-            if (settings.onlyOnReview) {
-                continue;
-            }
-
-            // 2. 사용자의 모든 하위 폴더 조회
+            // 2. 사용자의 모든 하위 폴더 조회 (제외 없이 모든 폴더)
             const subfolders = await prisma.srsfolder.findMany({
                 where: {
                     userId: user.id,
-                    parentId: { not: null }, // 하위 폴더만
-                    id: { notIn: settings.excludeSubfolders || [] }
+                    parentId: { not: null } // 하위 폴더만
                 },
                 select: { id: true, name: true }
             });
