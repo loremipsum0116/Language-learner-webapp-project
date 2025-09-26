@@ -26,7 +26,13 @@
       "Bash(curl:*)",
       "Bash(sudo rm:*)",
       "Bash(lsof:*)",
-      "Bash(psql:*)"
+      "Bash(psql:*)",
+      "Bash(node:*)",
+      "Bash(cat:*)",
+      "Bash(pkill:*)",
+      "Bash(grep:*)",
+      "Bash(xargs cat:*)",
+      "Bash(mysql:*)"
     ],
     "deny": [],
     "ask": []

@@ -6,7 +6,7 @@ export default function Pron({ ipa, ipaKo, hiragana, romaji }) {
   if (romaji) {
     return (
       <div className="text-muted small mt-1" style={{ lineHeight: 1.2 }}>
-        {romaji && <span>{romaji}</span>}
+        {romaji && <span>{romaji.replace(/\d+$/, '')}</span>}
       </div>
     );
   }

@@ -26,6 +26,7 @@ export default function Register() {
 
     const [loading, setLoading] = useState(false);
     const [serverErr, setServerErr] = useState(null);
+    const [serverSuccess, setServerSuccess] = useState(null);
     const [emailTaken, setEmailTaken] = useState(false);
 
     // 클라이언트 유효성 규칙
@@ -62,6 +63,7 @@ export default function Register() {
         // 모든 필드를 터치 상태로 만들어 에러 노출
         setTouched({ email: true, password: true, confirm: true });
         setServerErr(null);
+        setServerSuccess(null);
         setEmailTaken(false);
 
         if (!canSubmit) return;
@@ -72,6 +74,13 @@ export default function Register() {
             nav("/", { replace: true });
         } catch (e2) {
             const { status, message } = parseServerError(e2);
+
+            // 회원가입 성공 시 감사 메시지 표시 (requiresApproval 포함)
+            if (status === 200 || (message && /requiresApproval/i.test(String(message)))) {
+                setServerSuccess("회원가입 신청해주셔서 감사합니다! 운영자가 검토 후 빠른 시일 내에 승인 해 드리겠습니다.");
+                return;
+            }
+
             setServerErr(message || "회원가입 실패");
             if (status === 409 || /already exists/i.test(String(message))) {
                 setEmailTaken(true); // 이메일 중복을 필드 에러로 표시
@@ -86,6 +95,7 @@ export default function Register() {
             <h2 className="mb-3">회원가입</h2>
 
             {serverErr && <div className="alert alert-danger">{serverErr}</div>}
+            {serverSuccess && <div className="alert alert-success">{serverSuccess}</div>}
 
             <form noValidate onSubmit={onSubmit}>
                 {/* 이메일 */}

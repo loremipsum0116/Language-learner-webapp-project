@@ -32,10 +32,10 @@ export default function Footer() {
                     </div>
                     <div className="col-md-4">
                         <h6 className="text-uppercase mb-3">회사 정보</h6>
-                        <p className="small text-muted mb-1">단무새</p>
-                        <p className="small text-muted mb-1">대표자: 심현석</p>
-                        <p className="small text-muted mb-1">사업자등록번호: 000-00-00000</p>
-                        <p className="small text-muted mb-0">통신판매업신고번호: 제0000-서울-00000호</p>
+                        <p className="small text-light mb-1">단무새</p>
+                        <p className="small text-light mb-1">대표자: 심현석</p>
+                        <p className="small text-light mb-1">사업자등록번호: 미정</p>
+                        <p className="small text-light mb-0">통신판매업신고번호: 제0000-청주-00000호</p>
                     </div>
                 </div>
                 <hr className="my-3" />

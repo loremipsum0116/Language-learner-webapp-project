@@ -198,7 +198,7 @@ export default function JapaneseVocabCard({
 
           {vocab.romaji && (
             <div className="text-center text-muted small mb-1">
-              {vocab.romaji}
+              {vocab.romaji.replace(/\d+$/, '')}
             </div>
           )}
 

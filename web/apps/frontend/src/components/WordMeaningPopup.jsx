@@ -79,7 +79,7 @@ export default function WordMeaningPopup({ kana, wordDataArray, position, onClos
                   </strong>
                   {wordData.romaji && (
                     <span className="text-muted ms-2" style={{ fontSize: '12px' }}>
-                      [{wordData.romaji}]
+                      [{wordData.romaji.replace(/\d+$/, '')}]
                     </span>
                   )}
                 </div>

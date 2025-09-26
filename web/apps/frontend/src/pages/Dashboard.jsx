@@ -471,22 +471,22 @@ export default function Dashboard() {
                                     
                                     {/* 진행률 바 */}
                                     <div className="progress mb-2" style={{height: '20px'}}>
-                                        <div 
+                                        <div
                                             className={`progress-bar ${
-                                                totalAttempts >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
+                                                (streakInfo?.dailyQuizCount || 0) >= streakInfo.requiredDaily ? 'bg-success' : 'bg-primary'
                                             }`}
-                                            style={{width: `${Math.min(100, (totalAttempts / streakInfo.requiredDaily) * 100)}%`}}
+                                            style={{width: `${Math.min(100, ((streakInfo?.dailyQuizCount || 0) / streakInfo.requiredDaily) * 100)}%`}}
                                         >
-                                            {totalAttempts}/{streakInfo.requiredDaily}
+                                            {streakInfo?.dailyQuizCount || 0}/{streakInfo.requiredDaily}
                                         </div>
                                     </div>
                                     
                                     {/* 상태 메시지 */}
                                     <div className="d-flex justify-content-between align-items-center mb-3">
                                         <small className="text-muted">
-                                            {totalAttempts >= streakInfo.requiredDaily ? 
-                                                '오늘 목표 달성! 🎉' : 
-                                                `오늘 ${streakInfo.requiredDaily - totalAttempts}개 더 필요`}
+                                            {(streakInfo?.dailyQuizCount || 0) >= streakInfo.requiredDaily ?
+                                                '오늘 목표 달성! 🎉' :
+                                                `오늘 ${streakInfo.requiredDaily - (streakInfo?.dailyQuizCount || 0)}개 더 필요`}
                                         </small>
                                         {streakInfo?.bonus?.next && (
                                             <small className="text-muted">
@@ -500,8 +500,8 @@ export default function Dashboard() {
                                     <div className="border-top pt-3 position-relative">
                                         <div className="d-flex justify-content-between align-items-center mb-2">
                                             <small className="text-muted">
-                                                {totalAttempts > 0 ? (
-                                                    <>📊 오늘 학습: {totalAttempts}회 | 오답율: <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
+                                                {(streakInfo?.dailyQuizCount || 0) > 0 ? (
+                                                    <>📊 오늘 학습: {streakInfo?.dailyQuizCount || 0}회 | 오답율: <span className={errorRate > 30 ? 'text-danger' : errorRate > 15 ? 'text-warning' : 'text-success'}>{errorRate}%</span>
                                                     {isEstimated && <span className="text-info"> (추정)</span>}</>
                                                 ) : (
                                                     <>📊 오늘 학습: 0회 | 오답율: 0%</>
