@@ -3698,6 +3698,11 @@ router.post('/cleanup/specific-card/:cardId', async (req, res, next) => {
 
 // 타이머 동일화 서비스 임포트
 const { synchronizeSubfolderTimers, getCardState } = require('../services/timerSyncService');
+const {
+    getUserAutoSyncSettings,
+    updateUserAutoSyncSettings,
+    runImmediateAutoSync
+} = require('../services/autoTimerSyncService');
 
 // POST /srs/timer-sync/subfolder/:subfolderId - 하위 폴더 타이머 동일화
 router.post('/timer-sync/subfolder/:subfolderId', async (req, res, next) => {
@@ -3892,6 +3897,113 @@ router.get('/timer-sync/preview/:subfolderId', async (req, res, next) => {
     } catch (e) {
         console.error('[TIMER SYNC PREVIEW] Error:', e);
         return fail(res, 500, 'Failed to generate timer sync preview');
+    }
+});
+
+// === 자동 타이머 동일화 설정 API ===
+
+// GET /srs/auto-sync/settings - 자동 동일화 설정 조회
+router.get('/auto-sync/settings', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const settings = await getUserAutoSyncSettings(userId);
+
+        return ok(res, {
+            success: true,
+            settings: settings
+        });
+    } catch (e) {
+        console.error('[AUTO SYNC SETTINGS] Error getting settings:', e);
+        return fail(res, 500, 'Failed to get auto sync settings');
+    }
+});
+
+// PUT /srs/auto-sync/settings - 자동 동일화 설정 업데이트
+router.put('/auto-sync/settings', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { enabled, maxDifference, excludeSubfolders, onlyOnReview } = req.body;
+
+        const settings = {};
+        if (typeof enabled === 'boolean') settings.enabled = enabled;
+        if (typeof maxDifference === 'number' && maxDifference > 0 && maxDifference <= 60) {
+            settings.maxDifference = maxDifference;
+        }
+        if (Array.isArray(excludeSubfolders)) settings.excludeSubfolders = excludeSubfolders;
+        if (typeof onlyOnReview === 'boolean') settings.onlyOnReview = onlyOnReview;
+
+        const success = await updateUserAutoSyncSettings(userId, settings);
+
+        if (success) {
+            const updatedSettings = await getUserAutoSyncSettings(userId);
+            return ok(res, {
+                success: true,
+                message: '자동 동일화 설정이 업데이트되었습니다.',
+                settings: updatedSettings
+            });
+        } else {
+            return fail(res, 500, 'Failed to update auto sync settings');
+        }
+    } catch (e) {
+        console.error('[AUTO SYNC SETTINGS] Error updating settings:', e);
+        return fail(res, 500, 'Failed to update auto sync settings');
+    }
+});
+
+// POST /srs/auto-sync/run/:subfolderId - 특정 하위 폴더 즉시 자동 동일화
+router.post('/auto-sync/run/:subfolderId', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const subfolderId = Number(req.params.subfolderId);
+
+        if (!subfolderId || isNaN(subfolderId)) {
+            return fail(res, 400, 'Invalid subfolder ID');
+        }
+
+        const result = await runImmediateAutoSync(userId, subfolderId);
+
+        if (result.triggered) {
+            return ok(res, {
+                success: true,
+                message: '자동 동일화가 실행되었습니다.',
+                result: result.result
+            });
+        } else {
+            return ok(res, {
+                success: false,
+                message: result.reason || '자동 동일화가 실행되지 않았습니다.',
+                reason: result.reason
+            });
+        }
+    } catch (e) {
+        console.error('[AUTO SYNC RUN] Error:', e);
+        return fail(res, 500, 'Failed to run auto sync');
+    }
+});
+
+// POST /srs/auto-sync/trigger - 복습 완료 후 자동 동일화 트리거 (내부 API)
+router.post('/auto-sync/trigger', async (req, res, next) => {
+    try {
+        const userId = req.user.id;
+        const { cardId } = req.body;
+
+        if (!cardId || isNaN(cardId)) {
+            return fail(res, 400, 'Invalid card ID');
+        }
+
+        const { triggerAutoSyncAfterReview } = require('../services/autoTimerSyncService');
+        const result = await triggerAutoSyncAfterReview(userId, cardId);
+
+        return ok(res, {
+            triggered: result.triggered,
+            message: result.triggered ?
+                `자동 동일화 실행: ${result.subfolderName}에서 ${result.result?.totalSyncedCards || 0}개 카드 동일화` :
+                result.reason || '자동 동일화 조건 미충족',
+            result: result.result || null
+        });
+    } catch (e) {
+        console.error('[AUTO SYNC TRIGGER] Error:', e);
+        return fail(res, 500, 'Failed to trigger auto sync');
     }
 });
 

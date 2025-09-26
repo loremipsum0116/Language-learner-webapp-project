@@ -2,6 +2,7 @@
 const cron = require('node-cron');
 const { sixHourlyNotify, midnightRoll, manageOverdueCards } = require('../services/srsJobs');
 const { scheduleStreakReset } = require('./streak-reset');
+const { runPeriodicAutoSync } = require('../services/autoTimerSyncService');
 
 // 동적 크론잡 관리 객체
 let dynamicManageOverdueTask = null;
@@ -11,6 +12,12 @@ cron.schedule('0 */6 * * *', () => sixHourlyNotify().catch(console.error), { tim
 
 // 자정 00:05 롤업 — 매일 KST
 cron.schedule('5 0 * * *', () => midnightRoll().catch(console.error), { timezone: 'Asia/Seoul' });
+
+// 자동 타이머 동일화 — 매 30분마다 실행
+cron.schedule('*/30 * * * *', () => {
+    console.log('[cron] Running periodic auto timer sync...');
+    runPeriodicAutoSync().catch(console.error);
+}, { timezone: 'Asia/Seoul' });
 
 // 가속 팩터에 따른 동적 overdue 관리 크론잡 설정
 function updateOverdueCronFrequency() {
