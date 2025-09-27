@@ -13,8 +13,8 @@ cron.schedule('0 */6 * * *', () => sixHourlyNotify().catch(console.error), { tim
 // 자정 00:05 롤업 — 매일 KST
 cron.schedule('5 0 * * *', () => midnightRoll().catch(console.error), { timezone: 'Asia/Seoul' });
 
-// 자동 타이머 동일화 — 매 30분마다 실행
-cron.schedule('*/30 * * * *', () => {
+// 자동 타이머 동일화 — 매 1분마다 실행 (향상된 사용자 경험)
+cron.schedule('*/1 * * * *', () => {
     console.log('[cron] Running periodic auto timer sync...');
     runPeriodicAutoSync().catch(console.error);
 }, { timezone: 'Asia/Seoul' });
