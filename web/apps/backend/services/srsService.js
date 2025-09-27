@@ -1456,6 +1456,24 @@ async function markAnswer(userId, { folderId, cardId, correct, vocabId }) {
         }
     }
 
+    // --- 자동 타이머 동기화 실행 ---
+    if (folderId && canUpdateCardState) {
+        try {
+            // autoTimerSyncService의 함수 동적 import
+            const { triggerAutoSyncAfterReview } = require('./autoTimerSyncService');
+            const syncResult = await triggerAutoSyncAfterReview(userId, cardId, folderId);
+
+            if (syncResult.triggered) {
+                console.log(`[SRS SERVICE] Auto timer sync triggered for folder ${folderId}`);
+            } else {
+                console.log(`[SRS SERVICE] Auto timer sync not triggered: ${syncResult.reason}`);
+            }
+        } catch (error) {
+            console.error(`[SRS SERVICE] Error triggering auto timer sync:`, error);
+            // 동기화 실패해도 복습 결과는 정상 반환
+        }
+    }
+
     return result;
 }
 

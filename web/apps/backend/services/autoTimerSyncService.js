@@ -76,35 +76,32 @@ async function updateUserAutoSyncSettings(userId, settings) {
  * 복습 완료 후 자동 동일화 실행
  * @param {number} userId - 사용자 ID
  * @param {number} cardId - 복습 완료된 카드 ID
+ * @param {number} folderId - 폴더 ID
  */
-async function triggerAutoSyncAfterReview(userId, cardId) {
+async function triggerAutoSyncAfterReview(userId, cardId, folderId) {
     try {
         // 1. 사용자 설정 확인
         const settings = await getUserAutoSyncSettings(userId);
-        if (!settings.enabled || !settings.onlyOnReview) {
+        if (!settings.enabled) {
             return { triggered: false, reason: 'Auto sync disabled' };
         }
 
-        // 2. 카드가 속한 하위 폴더 확인
-        const card = await prisma.srscard.findUnique({
-            where: { id: cardId },
-            include: {
-                srsfolderitem: {
-                    include: {
-                        srsfolder: {
-                            select: { id: true, parentId: true, name: true }
-                        }
-                    }
-                }
-            }
-        });
-
-        if (!card || !card.srsfolderitem?.[0]?.srsfolder?.parentId) {
-            return { triggered: false, reason: 'Card not in subfolder' };
+        // 2. 폴더 정보 확인 (folderId를 직접 받아서 사용)
+        if (!folderId) {
+            return { triggered: false, reason: 'No folder ID provided' };
         }
 
-        const subfolderId = card.srsfolderitem[0].srsfolder.parentId;
-        const subfolderName = card.srsfolderitem[0].srsfolder.name;
+        const folder = await prisma.srsfolder.findUnique({
+            where: { id: folderId },
+            select: { id: true, name: true }
+        });
+
+        if (!folder) {
+            return { triggered: false, reason: 'Folder not found' };
+        }
+
+        const subfolderId = folderId;
+        const subfolderName = folder.name;
 
         // 3. 제외 목록 확인
         if (settings.excludeSubfolders.includes(subfolderId)) {
